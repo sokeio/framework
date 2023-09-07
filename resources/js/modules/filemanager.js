@@ -13,11 +13,19 @@ export class FileManagerModule {
     let component = window.Livewire.find(componentId)?.__instance;
     let self = this;
     this.manager.showFileManager(function (items) {
-      self.manager.dataSet(
-        component.$wire,
-        filemanagerModel,
-        items.map((item) => item.url)
-      );
+      if (elCurrentTarget?.hasAttribute("byte:filemanager-mutil")) {
+        self.manager.dataSet(
+          component.$wire,
+          filemanagerModel,
+          items.map((item) => item.url)
+        );
+      } else {
+        self.manager.dataSet(
+          component.$wire,
+          filemanagerModel,
+          items.map((item) => item.url)?.[0]
+        );
+      }
     }, filemanagerType);
     return false;
   }

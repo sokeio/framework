@@ -32,11 +32,14 @@ class UserCrud extends CrudManager
             //     ];
             //choose-modal.
             // }),
+
+            Item::Add('avatar')->Title('avatar')->Type('images')->When(function ($item, $manager) {
+                return !$manager->IsTable();
+            }),
             Item::Add('name')->Title('Name')->Required(),
             Item::Add('email')->Title('Email')->Required(),
             Item::Add('phone_number')
                 ->Title('Phone Number')
-                ->Required()
                 ->Rules(['min:6']),
             Item::Add('password')
                 ->Title('Password')
