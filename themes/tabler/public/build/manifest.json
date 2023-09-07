@@ -1,0 +1,1508 @@
+{
+  "../../node_modules/@tabler/core/dist/img/flags/ad.svg": {
+    "file": "assets/ad-105c4c4f.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ad.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ae.svg": {
+    "file": "assets/ae-b0178c1e.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ae.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/af.svg": {
+    "file": "assets/af-4dab3fa2.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/af.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ag.svg": {
+    "file": "assets/ag-4f63b5f4.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ag.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ai.svg": {
+    "file": "assets/ai-7af82e33.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ai.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/al.svg": {
+    "file": "assets/al-23011ac9.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/al.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/am.svg": {
+    "file": "assets/am-0cd9c4f1.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/am.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ao.svg": {
+    "file": "assets/ao-926f3e37.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ao.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/aq.svg": {
+    "file": "assets/aq-56273c33.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/aq.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ar.svg": {
+    "file": "assets/ar-b3863a0c.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ar.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/as.svg": {
+    "file": "assets/as-eb4b30fa.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/as.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/at.svg": {
+    "file": "assets/at-c7eac2eb.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/at.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/au.svg": {
+    "file": "assets/au-8fe93f7c.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/au.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/aw.svg": {
+    "file": "assets/aw-5106abac.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/aw.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ax.svg": {
+    "file": "assets/ax-20033267.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ax.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/az.svg": {
+    "file": "assets/az-105ddf40.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/az.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ba.svg": {
+    "file": "assets/ba-d6bc72fd.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ba.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/bb.svg": {
+    "file": "assets/bb-f08db7fb.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/bb.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/bd.svg": {
+    "file": "assets/bd-22687cfd.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/bd.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/be.svg": {
+    "file": "assets/be-fdda0865.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/be.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/bf.svg": {
+    "file": "assets/bf-2919f6e3.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/bf.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/bg.svg": {
+    "file": "assets/bg-d87f8904.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/bg.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/bh.svg": {
+    "file": "assets/bh-009442ff.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/bh.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/bi.svg": {
+    "file": "assets/bi-64dd8a0a.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/bi.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/bj.svg": {
+    "file": "assets/bj-f0a0af2d.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/bj.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/bl.svg": {
+    "file": "assets/bl-e7a7c5a1.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/wf.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/bm.svg": {
+    "file": "assets/bm-673d9638.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/bm.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/bn.svg": {
+    "file": "assets/bn-c5247f81.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/bn.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/bo.svg": {
+    "file": "assets/bo-07d966d0.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/bo.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/bq.svg": {
+    "file": "assets/bq-4142686d.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/bq.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/br.svg": {
+    "file": "assets/br-ffbbc165.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/br.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/bs.svg": {
+    "file": "assets/bs-4dac518c.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/bs.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/bt.svg": {
+    "file": "assets/bt-4b42bd3f.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/bt.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/bv.svg": {
+    "file": "assets/bv-3b67aabb.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/bv.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/bw.svg": {
+    "file": "assets/bw-b362ec47.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/bw.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/by.svg": {
+    "file": "assets/by-96a570cc.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/by.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/bz.svg": {
+    "file": "assets/bz-c942fa5c.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/bz.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ca.svg": {
+    "file": "assets/ca-aa59dd39.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ca.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/cc.svg": {
+    "file": "assets/cc-1c65c66e.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/cc.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/cd.svg": {
+    "file": "assets/cd-e941fde9.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/cd.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/cf.svg": {
+    "file": "assets/cf-0baa9261.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/cf.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/cg.svg": {
+    "file": "assets/cg-6c23b834.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/cg.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ch.svg": {
+    "file": "assets/ch-d18f4811.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ch.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ci.svg": {
+    "file": "assets/ci-2848ebe4.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ci.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ck.svg": {
+    "file": "assets/ck-34448787.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ck.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/cl.svg": {
+    "file": "assets/cl-b053b661.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/cl.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/cm.svg": {
+    "file": "assets/cm-faab91fa.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/cm.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/cn.svg": {
+    "file": "assets/cn-7962c100.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/cn.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/co.svg": {
+    "file": "assets/co-f33c4e9f.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/co.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/cr.svg": {
+    "file": "assets/cr-e38da602.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/cr.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/cu.svg": {
+    "file": "assets/cu-91ae4b2f.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/cu.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/cv.svg": {
+    "file": "assets/cv-2b46cff5.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/cv.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/cw.svg": {
+    "file": "assets/cw-cfce7f15.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/cw.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/cx.svg": {
+    "file": "assets/cx-f350e296.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/cx.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/cy.svg": {
+    "file": "assets/cy-2ab7fdc5.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/cy.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/cz.svg": {
+    "file": "assets/cz-c9fd3549.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/cz.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/de.svg": {
+    "file": "assets/de-60b3ba5a.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/de.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/dj.svg": {
+    "file": "assets/dj-a28e44c9.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/dj.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/dk.svg": {
+    "file": "assets/dk-0105fe5a.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/dk.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/dm.svg": {
+    "file": "assets/dm-0232e903.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/dm.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/do.svg": {
+    "file": "assets/do-da49c3cc.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/do.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/dz.svg": {
+    "file": "assets/dz-73cd2aa1.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/dz.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ec.svg": {
+    "file": "assets/ec-caa8ee2c.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ec.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ee.svg": {
+    "file": "assets/ee-f2b5d2bf.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ee.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/eg.svg": {
+    "file": "assets/eg-e54b44ad.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/eg.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/eh.svg": {
+    "file": "assets/eh-494ad903.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/eh.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/er.svg": {
+    "file": "assets/er-69fb05ce.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/er.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/es-ct.svg": {
+    "file": "assets/es-ct-803e0880.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/es-ct.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/es.svg": {
+    "file": "assets/es-b3642e67.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/es.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/et.svg": {
+    "file": "assets/et-bb011e12.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/et.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/eu.svg": {
+    "file": "assets/eu-a376f267.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/eu.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/fi.svg": {
+    "file": "assets/fi-540c2749.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/fi.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/fj.svg": {
+    "file": "assets/fj-75cd7e49.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/fj.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/fk.svg": {
+    "file": "assets/fk-1ccf12b9.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/fk.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/fm.svg": {
+    "file": "assets/fm-081de70f.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/fm.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/fo.svg": {
+    "file": "assets/fo-794553d7.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/fo.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/fr.svg": {
+    "file": "assets/bl-e7a7c5a1.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/wf.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ga.svg": {
+    "file": "assets/ga-8d6361fe.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ga.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/gb-eng.svg": {
+    "file": "assets/gb-eng-5cc27311.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/gb-eng.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/gb-nir.svg": {
+    "file": "assets/gb-nir-0fb525a6.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/gb-nir.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/gb-sct.svg": {
+    "file": "assets/gb-sct-c789d4e4.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/gb-sct.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/gb-wls.svg": {
+    "file": "assets/gb-wls-1b904749.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/gb-wls.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/gb.svg": {
+    "file": "assets/gb-e538254c.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/gb.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/gd.svg": {
+    "file": "assets/gd-9c5b1c33.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/gd.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ge.svg": {
+    "file": "assets/ge-f2d39b25.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ge.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/gf.svg": {
+    "file": "assets/gf-1285bf2f.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/gf.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/gg.svg": {
+    "file": "assets/gg-9e0d73e2.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/gg.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/gh.svg": {
+    "file": "assets/gh-a6b3546a.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/gh.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/gi.svg": {
+    "file": "assets/gi-fc65498c.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/gi.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/gl.svg": {
+    "file": "assets/gl-7f2d6b5c.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/gl.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/gm.svg": {
+    "file": "assets/gm-6acd19b6.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/gm.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/gn.svg": {
+    "file": "assets/gn-2c5daf6e.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/gn.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/gp.svg": {
+    "file": "assets/bl-e7a7c5a1.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/wf.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/gq.svg": {
+    "file": "assets/gq-0b81b05f.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/gq.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/gr.svg": {
+    "file": "assets/gr-0454b439.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/gr.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/gs.svg": {
+    "file": "assets/gs-c4cce050.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/gs.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/gt.svg": {
+    "file": "assets/gt-026ee8a3.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/gt.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/gu.svg": {
+    "file": "assets/gu-455257a7.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/gu.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/gw.svg": {
+    "file": "assets/gw-386688ed.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/gw.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/gy.svg": {
+    "file": "assets/gy-623c83a5.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/gy.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/hk.svg": {
+    "file": "assets/hk-83533ad2.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/hk.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/hm.svg": {
+    "file": "assets/hm-3fe42787.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/hm.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/hn.svg": {
+    "file": "assets/hn-e1b825b5.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/hn.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/hr.svg": {
+    "file": "assets/hr-98a223e2.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/hr.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ht.svg": {
+    "file": "assets/ht-04616725.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ht.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/hu.svg": {
+    "file": "assets/hu-3a88a827.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/hu.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/id.svg": {
+    "file": "assets/id-f0cf94a0.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/id.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ie.svg": {
+    "file": "assets/ie-22d4868b.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ie.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/il.svg": {
+    "file": "assets/il-687ba8d6.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/il.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/im.svg": {
+    "file": "assets/im-3b05932f.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/im.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/in.svg": {
+    "file": "assets/in-483cdbea.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/in.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/io.svg": {
+    "file": "assets/io-72248798.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/io.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/iq.svg": {
+    "file": "assets/iq-f3dfc657.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/iq.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ir.svg": {
+    "file": "assets/ir-ed72f741.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ir.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/is.svg": {
+    "file": "assets/is-e0b31438.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/is.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/it.svg": {
+    "file": "assets/it-f073035f.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/it.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/je.svg": {
+    "file": "assets/je-8254fdee.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/je.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/jm.svg": {
+    "file": "assets/jm-a507c27d.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/jm.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/jo.svg": {
+    "file": "assets/jo-db34de18.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/jo.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/jp.svg": {
+    "file": "assets/jp-371fd895.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/jp.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ke.svg": {
+    "file": "assets/ke-5c3e6415.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ke.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/kg.svg": {
+    "file": "assets/kg-759737e7.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/kg.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/kh.svg": {
+    "file": "assets/kh-1a3da00e.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/kh.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ki.svg": {
+    "file": "assets/ki-432a28c5.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ki.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/km.svg": {
+    "file": "assets/km-8d8aea0b.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/km.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/kn.svg": {
+    "file": "assets/kn-e46b9e75.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/kn.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/kp.svg": {
+    "file": "assets/kp-536e8602.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/kp.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/kr.svg": {
+    "file": "assets/kr-b5d78532.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/kr.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/kw.svg": {
+    "file": "assets/kw-d96fe603.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/kw.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ky.svg": {
+    "file": "assets/ky-9c749b01.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ky.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/kz.svg": {
+    "file": "assets/kz-d159aba6.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/kz.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/la.svg": {
+    "file": "assets/la-ac0a2703.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/la.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/lb.svg": {
+    "file": "assets/lb-6026d2bf.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/lb.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/lc.svg": {
+    "file": "assets/lc-4f46b61c.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/lc.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/li.svg": {
+    "file": "assets/li-127fdbda.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/li.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/lk.svg": {
+    "file": "assets/lk-b6ebea74.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/lk.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/lr.svg": {
+    "file": "assets/lr-e1080118.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/lr.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ls.svg": {
+    "file": "assets/ls-6680b116.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ls.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/lt.svg": {
+    "file": "assets/lt-6a3559e8.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/lt.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/lu.svg": {
+    "file": "assets/lu-56a072fd.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/lu.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/lv.svg": {
+    "file": "assets/lv-1f02d810.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/lv.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ly.svg": {
+    "file": "assets/ly-26e679e0.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ly.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ma.svg": {
+    "file": "assets/ma-0bb275b8.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ma.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/mc.svg": {
+    "file": "assets/mc-ffb2aeb7.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/mc.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/md.svg": {
+    "file": "assets/md-35569066.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/md.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/me.svg": {
+    "file": "assets/me-37d319a2.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/me.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/mf.svg": {
+    "file": "assets/bl-e7a7c5a1.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/wf.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/mg.svg": {
+    "file": "assets/mg-cccf377d.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/mg.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/mh.svg": {
+    "file": "assets/mh-bb9cbca6.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/mh.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/mk.svg": {
+    "file": "assets/mk-3d525f43.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/mk.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ml.svg": {
+    "file": "assets/ml-6f52424c.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ml.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/mm.svg": {
+    "file": "assets/mm-eb95c0b1.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/mm.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/mn.svg": {
+    "file": "assets/mn-d5d8c187.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/mn.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/mo.svg": {
+    "file": "assets/mo-5df9e464.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/mo.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/mp.svg": {
+    "file": "assets/mp-234385ff.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/mp.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/mq.svg": {
+    "file": "assets/bl-e7a7c5a1.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/wf.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/mr.svg": {
+    "file": "assets/mr-69e51ec9.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/mr.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ms.svg": {
+    "file": "assets/ms-96253f54.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ms.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/mt.svg": {
+    "file": "assets/mt-bbcb0ed1.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/mt.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/mu.svg": {
+    "file": "assets/mu-b82393b0.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/mu.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/mv.svg": {
+    "file": "assets/mv-6a7e35ac.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/mv.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/mw.svg": {
+    "file": "assets/mw-70bdb196.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/mw.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/mx.svg": {
+    "file": "assets/mx-c0d5554a.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/mx.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/my.svg": {
+    "file": "assets/my-15a0e38b.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/my.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/mz.svg": {
+    "file": "assets/mz-d84ddea6.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/mz.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/na.svg": {
+    "file": "assets/na-fcbf521a.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/na.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/nc.svg": {
+    "file": "assets/bl-e7a7c5a1.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/wf.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ne.svg": {
+    "file": "assets/ne-7873b643.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ne.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/nf.svg": {
+    "file": "assets/nf-ff748973.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/nf.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ng.svg": {
+    "file": "assets/ng-c5765016.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ng.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ni.svg": {
+    "file": "assets/ni-0dd568ab.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ni.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/nl.svg": {
+    "file": "assets/nl-7f90ed61.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/nl.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/no.svg": {
+    "file": "assets/no-50fcd560.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/no.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/np.svg": {
+    "file": "assets/np-47558f0a.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/np.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/nr.svg": {
+    "file": "assets/nr-0db0c756.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/nr.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/nu.svg": {
+    "file": "assets/nu-d40bc68d.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/nu.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/nz.svg": {
+    "file": "assets/nz-ece146e7.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/nz.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/om.svg": {
+    "file": "assets/om-2aa9baa7.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/om.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/pa.svg": {
+    "file": "assets/pa-f4ede04a.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/pa.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/pe.svg": {
+    "file": "assets/pe-39779379.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/pe.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/pf.svg": {
+    "file": "assets/pf-f157f54a.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/pf.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/pg.svg": {
+    "file": "assets/pg-1895a96f.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/pg.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ph.svg": {
+    "file": "assets/ph-808b0463.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ph.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/pk.svg": {
+    "file": "assets/pk-06d6e0e8.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/pk.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/pl.svg": {
+    "file": "assets/pl-a3dc7a60.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/pl.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/pm.svg": {
+    "file": "assets/bl-e7a7c5a1.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/wf.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/pn.svg": {
+    "file": "assets/pn-064a7aa9.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/pn.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/pr.svg": {
+    "file": "assets/pr-a97a04ee.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/pr.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ps.svg": {
+    "file": "assets/ps-2cd083ae.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ps.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/pt.svg": {
+    "file": "assets/pt-b8cffdf9.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/pt.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/pw.svg": {
+    "file": "assets/pw-702ea17c.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/pw.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/py.svg": {
+    "file": "assets/py-02e47d2e.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/py.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/qa.svg": {
+    "file": "assets/qa-4173d915.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/qa.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/re.svg": {
+    "file": "assets/bl-e7a7c5a1.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/wf.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ro.svg": {
+    "file": "assets/ro-2e5d06bf.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ro.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/rs.svg": {
+    "file": "assets/rs-d599229c.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/rs.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ru.svg": {
+    "file": "assets/ru-70f6bf30.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ru.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/rw.svg": {
+    "file": "assets/rw-09620b0f.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/rw.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/sa.svg": {
+    "file": "assets/sa-bc074d98.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/sa.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/sb.svg": {
+    "file": "assets/sb-d37085aa.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/sb.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/sc.svg": {
+    "file": "assets/sc-9e048214.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/sc.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/sd.svg": {
+    "file": "assets/sd-473420aa.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/sd.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/se.svg": {
+    "file": "assets/se-3d02e113.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/se.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/sg.svg": {
+    "file": "assets/sg-5abddbe1.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/sg.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/sh.svg": {
+    "file": "assets/sh-d68c645e.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/sh.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/si.svg": {
+    "file": "assets/si-a0d19d6e.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/si.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/sj.svg": {
+    "file": "assets/sj-938895e6.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/sj.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/sk.svg": {
+    "file": "assets/sk-b087d108.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/sk.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/sl.svg": {
+    "file": "assets/sl-8eacf74a.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/sl.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/sm.svg": {
+    "file": "assets/sm-f6f6add7.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/sm.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/sn.svg": {
+    "file": "assets/sn-7a6e12de.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/sn.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/so.svg": {
+    "file": "assets/so-19a53b16.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/so.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/sr.svg": {
+    "file": "assets/sr-31eeebfc.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/sr.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ss.svg": {
+    "file": "assets/ss-fb513d30.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ss.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/st.svg": {
+    "file": "assets/st-b5808aa1.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/st.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/sv.svg": {
+    "file": "assets/sv-d4ef047d.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/sv.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/sx.svg": {
+    "file": "assets/sx-c4100b57.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/sx.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/sy.svg": {
+    "file": "assets/sy-a6330314.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/sy.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/sz.svg": {
+    "file": "assets/sz-1539e260.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/sz.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/tc.svg": {
+    "file": "assets/tc-6d0ee7b9.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/tc.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/td.svg": {
+    "file": "assets/td-7f50a255.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/td.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/tf.svg": {
+    "file": "assets/tf-faedcc75.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/tf.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/tg.svg": {
+    "file": "assets/tg-3577e207.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/tg.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/th.svg": {
+    "file": "assets/th-84a03e58.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/th.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/tj.svg": {
+    "file": "assets/tj-ae6d74bf.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/tj.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/tk.svg": {
+    "file": "assets/tk-ce85be1c.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/tk.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/tl.svg": {
+    "file": "assets/tl-51a21778.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/tl.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/tm.svg": {
+    "file": "assets/tm-f5ed4fc4.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/tm.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/tn.svg": {
+    "file": "assets/tn-29e281fb.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/tn.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/to.svg": {
+    "file": "assets/to-de17d934.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/to.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/tr.svg": {
+    "file": "assets/tr-abe34a9e.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/tr.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/tt.svg": {
+    "file": "assets/tt-3d46570b.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/tt.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/tv.svg": {
+    "file": "assets/tv-5b183709.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/tv.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/tw.svg": {
+    "file": "assets/tw-84a2ea23.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/tw.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/tz.svg": {
+    "file": "assets/tz-bbe2db4d.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/tz.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ua.svg": {
+    "file": "assets/ua-114b0fa3.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ua.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ug.svg": {
+    "file": "assets/ug-4c6d1b40.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ug.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/um.svg": {
+    "file": "assets/um-cf547b0b.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/um.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/un.svg": {
+    "file": "assets/un-464f3e9f.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/un.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/us.svg": {
+    "file": "assets/us-db49bb7d.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/us.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/uy.svg": {
+    "file": "assets/uy-cff8d626.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/uy.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/uz.svg": {
+    "file": "assets/uz-5d3a68e2.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/uz.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/va.svg": {
+    "file": "assets/va-5519defb.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/va.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/vc.svg": {
+    "file": "assets/vc-5c399919.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/vc.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ve.svg": {
+    "file": "assets/ve-df0f8a5c.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ve.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/vg.svg": {
+    "file": "assets/vg-097c3a44.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/vg.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/vi.svg": {
+    "file": "assets/vi-da9067f5.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/vi.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/vn.svg": {
+    "file": "assets/vn-caf44a66.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/vn.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/vu.svg": {
+    "file": "assets/vu-7eee6344.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/vu.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/wf.svg": {
+    "file": "assets/bl-e7a7c5a1.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/wf.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ws.svg": {
+    "file": "assets/ws-e3edb8f8.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ws.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/ye.svg": {
+    "file": "assets/ye-1a1dfb7a.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/ye.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/yt.svg": {
+    "file": "assets/bl-e7a7c5a1.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/wf.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/za.svg": {
+    "file": "assets/za-e0b33a03.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/za.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/zm.svg": {
+    "file": "assets/zm-794e73a0.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/zm.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/flags/zw.svg": {
+    "file": "assets/zw-e4519e37.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/flags/zw.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/2checkout-dark.svg": {
+    "file": "assets/2checkout-dark-b2c8631b.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/2checkout-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/2checkout.svg": {
+    "file": "assets/2checkout-00376ebd.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/2checkout.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/alipay-dark.svg": {
+    "file": "assets/alipay-dark-f37ce014.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/alipay-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/alipay.svg": {
+    "file": "assets/alipay-721d9916.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/alipay.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/amazon-dark.svg": {
+    "file": "assets/amazon-dark-1adc18bc.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/amazon-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/amazon.svg": {
+    "file": "assets/amazon-a029f121.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/amazon.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/americanexpress-dark.svg": {
+    "file": "assets/americanexpress-dark-09f80ca1.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/americanexpress-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/americanexpress.svg": {
+    "file": "assets/americanexpress-6e20c51d.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/americanexpress.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/applepay-dark.svg": {
+    "file": "assets/applepay-dark-e3a04768.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/applepay-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/applepay.svg": {
+    "file": "assets/applepay-e426c2b2.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/applepay.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/bancontact-dark.svg": {
+    "file": "assets/bancontact-dark-4b19b4b8.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/bancontact-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/bancontact.svg": {
+    "file": "assets/bancontact-ed2b096c.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/bancontact.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/bitcoin-dark.svg": {
+    "file": "assets/bitcoin-dark-1ed53248.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/bitcoin-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/bitcoin.svg": {
+    "file": "assets/bitcoin-58159afd.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/bitcoin.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/bitpay-dark.svg": {
+    "file": "assets/bitpay-dark-66a79347.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/bitpay-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/bitpay.svg": {
+    "file": "assets/bitpay-6c7874c6.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/bitpay.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/blik-dark.svg": {
+    "file": "assets/blik-dark-036d52aa.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/blik-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/blik.svg": {
+    "file": "assets/blik-7c5fc4c0.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/blik.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/cirrus-dark.svg": {
+    "file": "assets/cirrus-dark-b52ddac8.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/cirrus-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/cirrus.svg": {
+    "file": "assets/cirrus-7feb886a.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/cirrus.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/clickandbuy-dark.svg": {
+    "file": "assets/clickandbuy-dark-d83d42db.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/clickandbuy-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/clickandbuy.svg": {
+    "file": "assets/clickandbuy-3e98bf40.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/clickandbuy.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/coinkite-dark.svg": {
+    "file": "assets/coinkite-dark-38c30810.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/coinkite-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/coinkite.svg": {
+    "file": "assets/coinkite-20aaeb46.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/coinkite.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/dinersclub-dark.svg": {
+    "file": "assets/dinersclub-dark-3d4a7d83.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/dinersclub-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/dinersclub.svg": {
+    "file": "assets/dinersclub-9f2c1518.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/dinersclub.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/directdebit-dark.svg": {
+    "file": "assets/directdebit-dark-d09198a8.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/directdebit-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/directdebit.svg": {
+    "file": "assets/directdebit-0d3865a0.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/directdebit.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/discover-dark.svg": {
+    "file": "assets/discover-dark-303a7bab.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/discover-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/discover.svg": {
+    "file": "assets/discover-bfa17456.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/discover.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/dotpay-dark.svg": {
+    "file": "assets/dotpay-dark-f836fd7f.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/dotpay-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/dotpay.svg": {
+    "file": "assets/dotpay-76de8d31.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/dotpay.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/dwolla-dark.svg": {
+    "file": "assets/dwolla-dark-15bca227.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/dwolla-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/dwolla.svg": {
+    "file": "assets/dwolla-4f0ac761.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/dwolla.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/ebay-dark.svg": {
+    "file": "assets/ebay-dark-c0465c4a.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/ebay-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/ebay.svg": {
+    "file": "assets/ebay-eafbc3c4.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/ebay.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/eway-dark.svg": {
+    "file": "assets/eway-dark-d14e9ab3.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/eway-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/eway.svg": {
+    "file": "assets/eway-669f5c3a.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/eway.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/giropay-dark.svg": {
+    "file": "assets/giropay-dark-9af19549.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/giropay-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/giropay.svg": {
+    "file": "assets/giropay-b3e8ce5d.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/giropay.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/googlewallet-dark.svg": {
+    "file": "assets/googlewallet-dark-806ed133.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/googlewallet-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/googlewallet.svg": {
+    "file": "assets/googlewallet-3e374628.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/googlewallet.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/ingenico-dark.svg": {
+    "file": "assets/ingenico-dark-7fb115ee.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/ingenico-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/ingenico.svg": {
+    "file": "assets/ingenico-01e4e9d6.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/ingenico.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/jcb-dark.svg": {
+    "file": "assets/jcb-dark-929ccd7e.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/jcb-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/jcb.svg": {
+    "file": "assets/jcb-ef022436.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/jcb.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/klarna-dark.svg": {
+    "file": "assets/klarna-dark-44e260b9.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/klarna-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/klarna.svg": {
+    "file": "assets/klarna-0e53de2e.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/klarna.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/laser-dark.svg": {
+    "file": "assets/laser-dark-ef44a5e7.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/laser-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/laser.svg": {
+    "file": "assets/laser-3867a2fa.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/laser.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/maestro-dark.svg": {
+    "file": "assets/maestro-dark-f46deaa6.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/maestro-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/maestro.svg": {
+    "file": "assets/maestro-4996b5b6.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/maestro.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/mastercard-dark.svg": {
+    "file": "assets/mastercard-dark-5b7e7c0b.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/mastercard-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/mastercard.svg": {
+    "file": "assets/mastercard-865c93df.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/mastercard.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/mir-dark.svg": {
+    "file": "assets/mir-dark-633606dd.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/mir-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/mir.svg": {
+    "file": "assets/mir-1a8362b1.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/mir.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/monero-dark.svg": {
+    "file": "assets/monero-dark-7549f494.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/monero-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/monero.svg": {
+    "file": "assets/monero-e4b45a07.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/monero.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/neteller-dark.svg": {
+    "file": "assets/neteller-dark-638b7c73.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/neteller-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/neteller.svg": {
+    "file": "assets/neteller-234e50e4.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/neteller.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/ogone-dark.svg": {
+    "file": "assets/ogone-dark-742daf4a.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/ogone-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/ogone.svg": {
+    "file": "assets/ogone-625898ea.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/ogone.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/okpay-dark.svg": {
+    "file": "assets/okpay-dark-48436491.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/okpay-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/okpay.svg": {
+    "file": "assets/okpay-f85bb8f3.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/okpay.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/paybox-dark.svg": {
+    "file": "assets/paybox-dark-f29a68dc.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/paybox-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/paybox.svg": {
+    "file": "assets/paybox-06c21790.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/paybox.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/paymill-dark.svg": {
+    "file": "assets/paymill-dark-12e11ad8.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/paymill-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/paymill.svg": {
+    "file": "assets/paymill-253b7556.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/paymill.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/payone-dark.svg": {
+    "file": "assets/payone-dark-2660afeb.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/payone-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/payone.svg": {
+    "file": "assets/payone-871479b8.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/payone.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/payoneer-dark.svg": {
+    "file": "assets/payoneer-dark-16393294.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/payoneer-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/payoneer.svg": {
+    "file": "assets/payoneer-c74366b4.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/payoneer.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/paypal-dark.svg": {
+    "file": "assets/paypal-dark-176f159e.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/paypal-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/paypal.svg": {
+    "file": "assets/paypal-4fd14557.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/paypal.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/paysafecard-dark.svg": {
+    "file": "assets/paysafecard-dark-9a0be81a.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/paysafecard-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/paysafecard.svg": {
+    "file": "assets/paysafecard-f011fa6f.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/paysafecard.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/payu-dark.svg": {
+    "file": "assets/payu-dark-e68e95ba.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/payu-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/payu.svg": {
+    "file": "assets/payu-a26fd049.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/payu.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/payza-dark.svg": {
+    "file": "assets/payza-dark-5e58368a.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/payza-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/payza.svg": {
+    "file": "assets/payza-fc8b3703.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/payza.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/przelewy24-dark.svg": {
+    "file": "assets/przelewy24-dark-be4162e8.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/przelewy24-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/przelewy24.svg": {
+    "file": "assets/przelewy24-9bfbc41e.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/przelewy24.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/ripple-dark.svg": {
+    "file": "assets/ripple-dark-c1f4abd5.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/ripple-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/ripple.svg": {
+    "file": "assets/ripple-09854059.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/ripple.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/sage-dark.svg": {
+    "file": "assets/sage-dark-186c0dc0.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/sage-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/sage.svg": {
+    "file": "assets/sage-5f716553.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/sage.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/sepa-dark.svg": {
+    "file": "assets/sepa-dark-bf51b377.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/sepa-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/sepa.svg": {
+    "file": "assets/sepa-199776b2.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/sepa.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/shopify-dark.svg": {
+    "file": "assets/shopify-dark-68ce0710.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/shopify-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/shopify.svg": {
+    "file": "assets/shopify-755f68d6.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/shopify.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/skrill-dark.svg": {
+    "file": "assets/skrill-dark-933cbdfc.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/skrill-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/skrill.svg": {
+    "file": "assets/skrill-d64c9f92.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/skrill.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/solo-dark.svg": {
+    "file": "assets/solo-dark-2b9ff386.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/solo-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/solo.svg": {
+    "file": "assets/solo-3567b4b7.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/solo.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/square-dark.svg": {
+    "file": "assets/square-dark-90dd6046.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/square-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/square.svg": {
+    "file": "assets/square-acbce264.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/square.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/stripe-dark.svg": {
+    "file": "assets/stripe-dark-9e641bed.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/stripe-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/stripe.svg": {
+    "file": "assets/stripe-54f7cae9.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/stripe.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/switch-dark.svg": {
+    "file": "assets/switch-dark-a0cbde07.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/switch-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/switch.svg": {
+    "file": "assets/switch-3a403470.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/switch.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/tpay-dark.svg": {
+    "file": "assets/tpay-dark-a00c96c3.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/tpay-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/tpay.svg": {
+    "file": "assets/tpay-e40e909a.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/tpay.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/ukash-dark.svg": {
+    "file": "assets/ukash-dark-548c2a98.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/ukash-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/ukash.svg": {
+    "file": "assets/ukash-7d54cc2f.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/ukash.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/unionpay-dark.svg": {
+    "file": "assets/unionpay-dark-ca4156af.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/unionpay-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/unionpay.svg": {
+    "file": "assets/unionpay-de0d0c23.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/unionpay.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/verifone-dark.svg": {
+    "file": "assets/verifone-dark-4358348f.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/verifone-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/verifone.svg": {
+    "file": "assets/verifone-76f541b1.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/verifone.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/verisign-dark.svg": {
+    "file": "assets/verisign-dark-e614f4e3.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/verisign-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/verisign.svg": {
+    "file": "assets/verisign-1d10bf20.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/verisign.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/visa-dark.svg": {
+    "file": "assets/visa-dark-689041b0.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/visa-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/visa.svg": {
+    "file": "assets/visa-a3df6639.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/visa.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/webmoney-dark.svg": {
+    "file": "assets/webmoney-dark-932c514c.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/webmoney-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/webmoney.svg": {
+    "file": "assets/webmoney-637d6503.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/webmoney.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/westernunion-dark.svg": {
+    "file": "assets/westernunion-dark-4c16eef2.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/westernunion-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/westernunion.svg": {
+    "file": "assets/westernunion-a4e1b2b3.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/westernunion.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/worldpay-dark.svg": {
+    "file": "assets/worldpay-dark-4a139d35.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/worldpay-dark.svg"
+  },
+  "../../node_modules/@tabler/core/dist/img/payments/worldpay.svg": {
+    "file": "assets/worldpay-38508242.svg",
+    "src": "../../node_modules/@tabler/core/dist/img/payments/worldpay.svg"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-b2e47fb3.js",
+    "isEntry": true,
+    "src": "resources/js/app.js"
+  },
+  "resources/sass/app.scss": {
+    "file": "assets/app-6ce28c6a.css",
+    "isEntry": true,
+    "src": "resources/sass/app.scss"
+  }
+}

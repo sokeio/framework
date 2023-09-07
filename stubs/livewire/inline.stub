@@ -1,0 +1,19 @@
+<?php
+
+namespace $NAMESPACE$;
+
+use BytePlatform\Reojs\Component;
+
+class $CLASS$ extends Component
+{
+    public function render()
+    {
+        return <<<'blade'
+            <div>
+                <h3>
+                $QUOTE$
+                </h3>
+            </div>
+        blade;
+    }
+}

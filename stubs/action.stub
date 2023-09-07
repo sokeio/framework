@@ -1,0 +1,13 @@
+<?php
+
+namespace $NAMESPACE$;
+
+use BytePlatform\Traits\WithAction;
+
+class $CLASS$ extends ActionBase
+{
+    use WithAction;
+    public function DoAction()
+    {
+    }
+}

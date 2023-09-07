@@ -1,0 +1,11 @@
+{
+    "id":"$BASE_TYPE_LOWER_NAME$-$LOWER_NAME$-$JSON_ID$",
+    "name": "$STUDLY_NAME$",
+    "alias": "$LOWER_NAME$",
+    "description": "$DESCRIPTION$",
+    "keywords": [],
+    "priority": 200,
+    "aliases": {},
+    "namespace":"$NAMESPACE$",
+    "requires": []
+}

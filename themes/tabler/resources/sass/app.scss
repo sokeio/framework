@@ -1,0 +1,92 @@
+@charset "UTF-8";
+@import '@tabler/core/dist/css/tabler.min.css';
+@import '@tabler/core/dist/css/tabler-flags.min.css';
+@import '@tabler/core/dist/css/tabler-payments.min.css';
+@import '@tabler/core/dist/css/tabler-vendors.min.css';
+
+body {
+    overflow-y: auto;
+}
+
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/variables-dark";
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/utilities";
+
+$utilities: (
+    "position": (property: position,
+        responsive: true,
+        values: (static, relative, absolute, fixed, sticky)),
+    "width": (property: width,
+        responsive: true,
+        class: w,
+        values: (25: 25%,
+            50: 50%,
+            75: 75%,
+            100: 100%,
+            auto: auto)),
+    "max-width": (property: max-width,
+        responsive: true,
+        class: mw,
+        values: (25: 25%,
+            50: 50%,
+            75: 75%,
+            100: 100%,
+            auto: auto)),
+    "min-width": (property: max-width,
+        responsive: true,
+        class: miw,
+        values: (25: 25%,
+            50: 50%,
+            75: 75%,
+            100: 100%,
+            auto: auto)),
+    "viewport-width": (property: width,
+        responsive: true,
+        class: vw,
+        values: (100: 100vw)),
+    "min-viewport-width": (property: min-width,
+        responsive: true,
+        class: min-vw,
+        values: (100: 100vw)),
+    "height": (property: height,
+        responsive: true,
+        class: h,
+        values: (25: 25%,
+            50: 50%,
+            75: 75%,
+            100: 100%,
+            auto: auto)),
+    "max-height": (property: max-height,
+        responsive: true,
+        class: mh,
+        values: (25: 25%,
+            50: 50%,
+            75: 75%,
+            100: 100%,
+            auto: auto)),
+    "min-height": (property: max-height,
+        responsive: true,
+        class: mih,
+        values: (25: 25%,
+            50: 50%,
+            75: 75%,
+            100: 100%,
+            auto: auto)),
+    "viewport-height": (property: height,
+        responsive: true,
+        class: vh,
+        values: (25:25vh,
+            50:50vh,
+            75:75vh,
+            100: 100vh)),
+    "min-viewport-height": (property: min-height,
+        responsive: true,
+        class: min-vh,
+        values: (100: 100vh)),
+);
+
+@import "bootstrap/scss/utilities/api";
+

@@ -1,0 +1,23 @@
+{
+    "name": "byteplatform/theme-tabler",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nguyen Van Hau",
+            "email": "nguyenvanhaudev@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": ["ByteTheme\\Tabler\\TablerServiceProvider"],
+            "aliases": {}
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "ByteTheme\\Tabler\\": "src",
+            "ByteTheme\\Tabler\\Database\\Factories\\": "database/factories",
+            "ByteTheme\\Tabler\\Database\\Seeders\\": "database/seeders"
+        }
+    }
+}

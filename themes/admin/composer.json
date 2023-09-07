@@ -1,0 +1,29 @@
+{
+  "name": "byteplatform/theme-admin",
+  "description": "",
+  "authors": [
+    {
+      "name": "Nguyen Van Hau",
+      "email": "nguyenvanhaudev@gmail.com"
+    }
+  ],
+  "extra": {
+    "laravel": {
+      "providers": [
+        "ByteTheme\\Admin\\AdminServiceProvider"
+      ],
+      "aliases": {}
+    }
+  },
+  "autoload": {
+    "files": [
+      "helpers/constraint.php",
+      "helpers/function.php"
+    ],
+    "psr-4": {
+      "ByteTheme\\Admin\\": "src",
+      "ByteTheme\\Admin\\Database\\Factories\\": "database/factories",
+      "ByteTheme\\Admin\\Database\\Seeders\\": "database/seeders"
+    }
+  }
+}

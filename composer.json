@@ -1,0 +1,55 @@
+{
+  "name": "byteplatform/byteplatform",
+  "description": "",
+  "license": "MIT",
+  "keywords": [],
+  "homepage": "https://github.com/byteplatform/byteplatform",
+  "authors": [
+    {
+      "name": "Nguyen Van Hau",
+      "email": "nguyenvanhau.soft@gmail.com",
+      "role": "Developer",
+      "homepage": "https://github.com/devhau"
+    }
+  ],
+  "require": {
+    "byteplatform/laravel": "^1.0.0",
+    "symfony/filesystem": "^6.3.1",
+    "staudenmeir/eloquent-eager-limit": "^1.8.3",
+    "livewire/livewire": "v3.0.1",
+    "unisharp/laravel-filemanager": "^2.6.0"
+  },
+  "require-dev": {},
+  "autoload": {
+    "files": [
+      "helpers/constraint.php",
+      "helpers/function.php"
+    ],
+    "psr-4": {
+      "BytePlatform\\": "src/",
+      "BytePlatform\\Seeders\\": "database/seeders/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {}
+  },
+  "scripts": {
+    "analyse": "vendor/bin/phpstan analyse",
+    "test": "vendor/bin/pest",
+    "test-coverage": "vendor/bin/pest --coverage",
+    "format": "vendor/bin/pint"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "BytePlatform\\BytePlatformServiceProvider"
+      ],
+      "aliases": {}
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}

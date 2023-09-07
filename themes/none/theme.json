@@ -1,0 +1,13 @@
+{
+  "id":"theme-none-f9687ef3-74a7-47ac-900b-f2cc8f4333b93637842",
+  "name": "none",
+  "alias": "none",
+  "hide": true,
+  "description": "",
+  "keywords": [],
+  "priority": 100,
+  "namespace":"ByteTheme\\None",
+  "aliases": {},
+  "files": [],
+  "requires": []
+}

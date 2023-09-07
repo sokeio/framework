@@ -1,0 +1,25 @@
+{
+  "name": "byteplatform/theme-none",
+  "description": "",
+  "authors": [
+      {
+          "name": "Nguyen Van Hau",
+          "email": "nguyenvanhaudev@gmail.com"
+      }
+  ],
+  "extra": {
+      "laravel": {
+          "providers": [
+              "ByteTheme\\None\\NoneServiceProvider"
+          ],
+          "aliases": {}
+      }
+  },
+  "autoload": {
+      "psr-4": {
+          "ByteTheme\\None\\": "src",
+          "ByteTheme\\None\\Database\\Factories\\": "database/factories",
+          "ByteTheme\\None\\Database\\Seeders\\": "database/seeders"
+      }
+  }
+}

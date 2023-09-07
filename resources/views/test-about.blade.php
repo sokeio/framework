@@ -1,0 +1,1 @@
+{!! setting('page_about') !!}
