@@ -17,6 +17,9 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->longText('description');
+            $table->integer('to_user')->nullable();
+            $table->integer('to_role')->nullable();
+            $table->integer('from_user')->nullable();
             $table->json('meta_data')->nullable();
             $table->timestamps();
         });

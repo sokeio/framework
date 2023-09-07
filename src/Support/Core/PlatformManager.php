@@ -2,11 +2,13 @@
 
 namespace BytePlatform\Support\Core;
 
+use BytePlatform\Events\NotificationAdd;
 use Illuminate\Support\Facades\File;
 use BytePlatform\Laravel\JsonData;
 use BytePlatform\Facades\Module;
 use BytePlatform\Facades\Plugin;
 use BytePlatform\Facades\Theme;
+use BytePlatform\Models\Notification;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -243,5 +245,17 @@ class PlatformManager
         $arr = [...$arr, ...Theme::getModels()];
         $arr = [...$arr, ...Plugin::getModels()];
         return apply_filters(PLATFORM_MODEL_LIST, $arr);
+    }
+    public function NotificationAdd($title, $description, $meta_data = [], $to_role = null, $to_user = null)
+    {
+        $noti = new Notification();
+        $noti->title = $title;
+        $noti->description = $description;
+        $noti->meta_data = $meta_data;
+        $noti->to_role = $to_role;
+        $noti->to_user = $to_user;
+        $noti->save();
+        NotificationAdd::dispatch($noti);
+        NotificationAdd::broadcast($noti);
     }
 }

@@ -34,7 +34,7 @@
                     </svg>
                 </a>
                 <div class="nav-item dropdown d-none d-md-flex me-3">
-                    <livewire:theme::common.notifications>
+                    <livewire:byte::notifications>
                 </div>
             </div>
             @if (auth()->check())

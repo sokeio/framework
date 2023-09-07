@@ -24,7 +24,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static void checkFolderPlatform()
  * @method static mix getDataInfo($path,$register)
  * @method static array getModels()
- *
+ * @method static void NotificationAdd($title,$description,$meta_data,$to_role,$to_user)
+ * 
  * @see \BytePlatform\Facades\Platform
  */
 class Platform extends Facade
