@@ -29,7 +29,7 @@
                                 <a href="#" class="text-body d-block" x-text="item.title"></a>
                                 <div class="d-block text-secondary text-truncate mt-n1" x-html="item.description"></div>
                             </div>
-                            <div x-show="item.show_star" class="col-auto">
+                            <div class="col-auto">
                                 <a href="#" class="list-group-item-actions">
                                     <!-- Download SVG icon from http://tabler-icons.io/i/star -->
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon text-muted" width="24"
