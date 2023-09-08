@@ -44,7 +44,7 @@
                         <span class="avatar avatar-sm" style="background: url('{{ auth()->user()->avatar }}');background-repeat: no-repeat;background-size: cover;"></span>
                         <div class="d-none d-xl-block ps-2">
                             <div>{{ auth()->user()->name }}</div>
-                            <div class="mt-1 small text-muted">{{ auth()->user()->status }}</div>
+                            <div class="mt-1 small text-muted"></div>
                         </div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">

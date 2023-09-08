@@ -32,24 +32,10 @@
                                 </div>
                             </div>
                         </div>
-
-                        <h3 class="card-title">Public profile</h3>
-                        <p class="card-subtitle">Making your profile public means that anyone on the Dashkit network
-                            will be
-                            able to find
-                            you.</p>
-                        <div>
-                            <label class="form-check form-switch form-switch-lg">
-                                <input class="form-check-input" type="checkbox">
-                                <span class="form-check-label form-check-label-on">You're currently visible</span>
-                                <span class="form-check-label form-check-label-off">You're
-                                    currently invisible</span>
-                            </label>
-                        </div>
                     </div>
                     <div class="card-footer bg-transparent mt-auto">
                         <div class="btn-list justify-content-end">
-                            <a href="{{route('admin.profile')}}" class="btn">
+                            <a href="{{ route('admin.profile') }}" class="btn">
                                 Cancel
                             </a>
                             <a wire:click='saveUser()' class="btn btn-primary">
