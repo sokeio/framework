@@ -37,7 +37,7 @@ class BActiveCommand extends Command
         $type = $this->option('type');
         $active = $this->option('active');
         $names = $this->argument('name');
-        $byteplatform = byteplatform_by($type);
+        $byteplatform = platform_by($type);
         $this->components->info('byte:' . $type);
         foreach ($names as $name) {
             $rs_byteplatform = $byteplatform->find($name);

@@ -22,16 +22,24 @@ class UserCrud extends CrudManager
             Item::Add('id')->Title('ID')->DisableFilter()->DisableSort()->When(function ($item, $manager) {
                 return $manager->IsTable();
             })->DisableEdit(),
-            // Item::Add('password')->Title('Test')->Type('choose-modal')->Required()->When(function ($item, $manager) {
-            //     return !$manager->IsTable();
-            // })->DataOption(function () {
-            //     return [
-            //         'modal' => route('admin.user-test1-form'),
-            //         'modal-title' => 'Choose Permission',
-            //         'modal-choose' => 'Choose Permission'
-            //     ];
-            //choose-modal.
-            // }),
+            Item::Add('password')->Title('Test')->Type('choose-modal')->Required()->When(function ($item, $manager) {
+                return !$manager->IsTable();
+            })->DataOption(function () {
+                return [
+                    'modal' => route('admin.user-test1-form'),
+                    'modal-title' => 'Choose Permission',
+                    'modal-choose' => 'Choose Permission'
+                ];
+            // choose-modal.
+            })->DataText(function(){
+                return '
+                <div>
+                    <template x-for="item in dataItems">
+                        <span class="badge bg-blue text-blue-fg m-1" x-text="item.name"></span>
+                    </template>
+                </div>
+                ';
+            }),
 
             Item::Add('avatar')->Title('avatar')->Type('images')->When(function ($item, $manager) {
                 return !$manager->IsTable();

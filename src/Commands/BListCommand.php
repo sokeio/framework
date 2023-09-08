@@ -28,7 +28,7 @@ class BListCommand extends Command
     public function handle(): int
     {
         $type = $this->option('type');
-        $byteplatform = byteplatform_by($type);
+        $byteplatform = platform_by($type);
         $this->components->info('Platform:' . $type);
         foreach ($byteplatform->getAll() as $item) {
             $this->components->info($item->name . ':' . ($item->isActive() ? 'Actived' : 'UnActived'));

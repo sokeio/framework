@@ -230,7 +230,7 @@ return [
     */
     'cache' => [
         'enabled' => false,
-        'key' => 'byteplatform_byteplatform',
+        'key' => 'platform_byteplatform',
         'lifetime' => 60,
     ],
     /*
@@ -269,7 +269,8 @@ return [
                 'layout-none',
                 'composer',
                 'provider-base',
-                'json-theme'
+                'json-theme',
+                'option-hook'
             ],
             'plugin' => [
                 'composer',
@@ -290,6 +291,11 @@ return [
                     'LOWER_NAME',
                     'STUDLY_NAME'
                 ]
+            ],
+            'option-hook' => [
+                'stub' => 'option-hook',
+                'path' => 'base',
+                'name' => 'OptionHook.php'
             ],
             'view' => [
                 'stub' => 'views/index',
@@ -730,6 +736,8 @@ return [
     'paths' => [
         'base' => ['path' => '', 'namespace' => '', 'generate' => false],
         'src' => ['path' => 'src', 'namespace' => '', 'generate' => false],
+        'module-theme' => ['path' => 'themes', 'generate' => true, 'only' => ['module']],
+        'module-plugin' => ['path' => 'plugins', 'generate' => true, 'only' => ['module']],
         'config' => ['path' => 'config', 'generate' => true, 'only' => ['module']],
         'command' => ['path' => 'src/Commands', 'namespace' => 'Commands', 'generate' => true, 'only' => ['module']],
         'migration' => ['path' => 'database/migrations', 'namespace' => 'Database\\Migrations', 'generate' => true, 'only' => ['module']],

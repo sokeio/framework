@@ -178,7 +178,7 @@ class PlatformManager
     {
         $links = $this->arrLink;
         foreach ($this->listExtend() as $base_type) {
-            $links = array_merge($links, byteplatform_by($base_type)->getLinks());
+            $links = array_merge($links, platform_by($base_type)->getLinks());
         }
         return $links;
     }
@@ -227,8 +227,8 @@ class PlatformManager
         foreach ($this->listExtend() as $baseType) {
             if (file_exists(($path . '/' . $baseType . '.json'))) {
                 $data_info = JsonData::getJsonFromFile($path . '/' . $baseType . '.json');
-                if ($register && isset($data_info['id']) && !(byteplatform_by($baseType)->has($data_info['id']))) {
-                    byteplatform_by($baseType)->AddItem($path, true);
+                if ($register && isset($data_info['id']) && !(platform_by($baseType)->has($data_info['id']))) {
+                    platform_by($baseType)->AddItem($path, true);
                 }
                 return [
                     'base_type' => $baseType,

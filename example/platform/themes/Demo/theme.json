@@ -1,0 +1,13 @@
+{
+    "id":"theme-demo-e9df193f-d4d3-4cc2-af89-ffe830b09c7a5899279",
+    "name": "Demo",
+    "alias": "demo",
+    "description": "",
+    "keywords": [],
+    "priority": 200,
+    "aliases": {},
+    "namespace":"Platform\\Themes\\Demo",
+    "locations": [],
+    "layout":"",
+    "requires": []
+}

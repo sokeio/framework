@@ -102,12 +102,12 @@ class Item extends ItemCallback
             })
             ->DataId(function (Item $item, BaseManager $manager) {
                 return  $item->getData()->id;
-            })->ModelField(function (Item $item, BaseManager $manager) {
+            })->ModelForm(function (Item $item, BaseManager $manager) {
                 if ($manager->IsTable()) {
                     $prod =  ItemForms::FormId($item->getDataId());
-                    return "formTable." .  $prod . "." . $item->getField();
+                    return "formTable." .  $prod . ".";
                 } else {
-                    return "form." . $item->getField();
+                    return "form.";
                 }
             })->NoBindData(function () {
                 return false;
@@ -243,13 +243,21 @@ class Item extends ItemCallback
     {
         return $this->getValue('FieldOption', []);
     }
-    public function ModelField($modelField)
+    public function ModelForm($ModelForm)
     {
-        return $this->setKeyValue('modelField', $modelField);
+        return $this->setKeyValue('ModelForm', $ModelForm);
     }
-    public function getModelField()
+    public function getModelForm()
     {
-        return $this->getValue('modelField');
+        return $this->getValue('ModelForm');
+    }
+
+    public function getModelField($field = null)
+    {
+        if ($field && $field != '') {
+            return $this->getModelForm() . $field;
+        }
+        return $this->getModelForm() . $this->getField();
     }
     public function DataText($dataText)
     {

@@ -73,8 +73,8 @@ if (!function_exists('byteplatform_model_dev')) {
     }
 }
 
-if (!function_exists('byteplatform_by')) {
-    function byteplatform_by($type)
+if (!function_exists('platform_by')) {
+    function platform_by($type)
     {
         if ($type == 'module')
             return Module::getFacadeRoot();

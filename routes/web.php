@@ -43,7 +43,7 @@ Route::group(['prefix' => '__byteplatform__'], function () {
         $svg->addAttribute("width", "1280");
         $svg->addAttribute("height", "653");
         $svg->addAttribute("style", "background:#0054a6");
-        $byteplatform = byteplatform_by($types);
+        $byteplatform = platform_by($types);
         if ($byteplatform && ($item = $byteplatform->find($id))) {
             if (File::exists($item->getPath('screenshot.png')))
                 return response(file_get_contents($item->getPath('screenshot.png')))->header('Content-Type', 'image/png');

@@ -20,7 +20,10 @@ export class ModalModule {
     </div>
   </div>`);
   }
-  openModal({ $url, $title, $size, $btnChoose, $modelField }, dataModal = {}) {
+  openModal(
+    { $url, $title, $size, $btnChoose, $modelField, $btnElement },
+    dataModal = {}
+  ) {
     let self = this;
     let elModal = self.getModalHtml(
       $title,
@@ -64,9 +67,20 @@ export class ModalModule {
           let refComponent = dataModal?.refComponent;
           elModal
             .querySelector("." + $btnClass)
-            ?.addEventListener("click", async function () {
+            ?.addEventListener("click", function () {
               let WireComponent = Livewire.find(modalWireId);
-              let dataSelectItem = await WireComponent.getDataSelectItem();
+              let $dataEl = undefined;
+              setTimeout(async () => {
+                if (
+                  $btnElement &&
+                  ($dataEl = $btnElement.closest("[x-data]"))
+                ) {
+                  if ($dataEl._x_dataStack[0].dataItems) {
+                    $dataEl._x_dataStack[0].dataItems =
+                      await WireComponent.getDataSelectItem();
+                  }
+                }
+              }, 0);
               let WireComponentRef = Livewire.find(refComponent);
               if (WireComponentRef && $modelField) {
                 self.manager.dataSet(
@@ -110,7 +124,14 @@ export class ModalModule {
         );
       }
       self.openModal(
-        { $url, $title, $size, $btnChoose, $modelField },
+        {
+          $url,
+          $title,
+          $size,
+          $btnChoose,
+          $modelField,
+          $btnElement: elCurrentTarget,
+        },
         { refComponent, selectIds }
       );
     });

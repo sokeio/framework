@@ -69,7 +69,7 @@ class AssetManager
             if ($type == self::SCRIPT || $type == self::STYLE)
                 $dataLoader[$location][$type][] = $content;
             else {
-                $byteplatform = byteplatform_by($base);
+                $byteplatform = platform_by($base);
                 $byteplatformItem = $byteplatform->find($name);
                 if ($byteplatformItem) {
                     $manifestData = $byteplatformItem->getManifestData();

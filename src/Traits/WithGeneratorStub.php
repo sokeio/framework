@@ -43,7 +43,7 @@ trait WithGeneratorStub
         return $this;
     }
 
-    protected $ConfigStubName = 'byteplatform';
+    protected $ConfigStubName = 'byte';
     protected $GeneratorConfig;
     private $_base_name;
     private $_system_base;
@@ -77,7 +77,7 @@ trait WithGeneratorStub
     }
     public function getSystemBase()
     {
-        return $this->_system_base ?? ($this->_system_base = byteplatform_by($this->getBaseTypeName()));
+        return $this->_system_base ?? ($this->_system_base = platform_by($this->getBaseTypeName()));
     }
     /**
      * Get the module name.
