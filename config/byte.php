@@ -245,37 +245,62 @@ return [
     'stubs' => [
         'enabled' => false,
         'path' => base_path('vendor/byteplatform/byteplatform/stubs'),
-        'files' => [
+
+        'list-files' => [
             'common' => [
-                'index-html',
-                'config',
-                'view',
-                'app-js',
-                'app-sass',
-                'vite-config',
-                'package',
-                'gitignore'
+                "view",
+                "route",
+                "api",
+                "admin",
+                "function",
+                "command",
+                "component-class",
+                "component-view",
+                "controller-api",
+                "controller-plain",
+                "controller",
+                "event",
+                "job",
+                "job-queued",
+                "model",
+                "listener",
+                "listener-queued",
+                "listener-queued-duck",
+                "listener-duck",
+                "mail",
+                "notification",
+                "policy-plain",
+                "provider",
+                "route-provider",
+                "request",
+                "resource",
+                "resource-collection",
+                "rule",
+                "seeder",
+                "action",
+
             ],
             'module' => [
                 'route',
                 'api',
                 'admin',
-                'composer',
-                'provider-base',
-                'json'
+                "migration-create",
+                "migration-add",
+                "migration-delete",
+                "migration-drop",
+                "migration",
+                "middleware",
+                "factory",
             ],
-            'theme' => [
-                'layout',
-                'layout-none',
-                'composer',
-                'provider-base',
-                'json-theme',
-                'option-hook'
-            ],
+            'theme' => [],
             'plugin' => [
-                'composer',
-                'provider-base',
-                'json'
+                "migration-create",
+                "migration-add",
+                "migration-delete",
+                "migration-drop",
+                "migration",
+                "middleware",
+                "factory",
             ]
         ],
         'templates' => [
@@ -732,6 +757,40 @@ return [
             ]
         ],
         'gitkeep' => true,
+    ],
+
+    'files' => [
+        'common' => [
+            'index-html',
+            'config',
+            'view',
+            'app-js',
+            'app-sass',
+            'vite-config',
+            'package',
+            'gitignore'
+        ],
+        'module' => [
+            'route',
+            'api',
+            'admin',
+            'composer',
+            'provider-base',
+            'json'
+        ],
+        'theme' => [
+            'layout',
+            'layout-none',
+            'composer',
+            'provider-base',
+            'json-theme',
+            'option-hook'
+        ],
+        'plugin' => [
+            'composer',
+            'provider-base',
+            'json'
+        ]
     ],
     'paths' => [
         'base' => ['path' => '', 'namespace' => '', 'generate' => false],

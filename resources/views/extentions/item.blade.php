@@ -17,7 +17,18 @@
         <div class="card-footer">
             <div class="row align-items-center">
                 <div class="col-auto">
-                    <a href="#">More information</a>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Add More
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item"
+                                    byte:modal="{{ route('admin.create-extention-file', ['ExtentionType' => $ExtentionType, 'ExtentionId' => $item->getName()]) }}"
+                                    byte:modal-title="Create File In {{ page_title() }}">Add File</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="col-auto ms-auto">
                     @if (!$item->isVendor())
