@@ -22,8 +22,8 @@ class Edit extends Component
                 Item::Add('avatar')->Title('Account Avatar')->Column(Item::Col12)->Layout('column1')->Type('images'),
                 Item::Add('email')->Title('Email')->Type('readonly')->Column(Item::Col12),
                 Item::Add('name')->Title('Account Name')->Column(Item::Col12)->Required(),
-                Item::Add('phone_number')->Title('Phone Number')->Column(Item::Col12)->Required(),
-                Item::Add('info')->Title('Profile Info')->Type('textarea')->Column(Item::Col12)->Required(),
+                Item::Add('phone_number')->Title('Phone Number')->Column(Item::Col12),
+                Item::Add('info')->Title('Profile Info')->Type('textarea')->Column(Item::Col12),
             ]);
     }
     public ItemForm $form;
