@@ -757,41 +757,42 @@ return [
             ]
         ],
         'gitkeep' => true,
+        'files' => [
+            'common' => [
+                'index-html',
+                'config',
+                'view',
+                'app-js',
+                'app-sass',
+                'vite-config',
+                'package',
+                'gitignore'
+            ],
+            'module' => [
+                'route',
+                'api',
+                'admin',
+                'composer',
+                'provider-base',
+                'json'
+            ],
+            'theme' => [
+                'layout',
+                'layout-none',
+                'composer',
+                'provider-base',
+                'json-theme',
+                'option-hook'
+            ],
+            'plugin' => [
+                'composer',
+                'provider-base',
+                'json'
+            ]
+        ],
     ],
 
-    'files' => [
-        'common' => [
-            'index-html',
-            'config',
-            'view',
-            'app-js',
-            'app-sass',
-            'vite-config',
-            'package',
-            'gitignore'
-        ],
-        'module' => [
-            'route',
-            'api',
-            'admin',
-            'composer',
-            'provider-base',
-            'json'
-        ],
-        'theme' => [
-            'layout',
-            'layout-none',
-            'composer',
-            'provider-base',
-            'json-theme',
-            'option-hook'
-        ],
-        'plugin' => [
-            'composer',
-            'provider-base',
-            'json'
-        ]
-    ],
+    
     'paths' => [
         'base' => ['path' => '', 'namespace' => '', 'generate' => false],
         'src' => ['path' => 'src', 'namespace' => '', 'generate' => false],

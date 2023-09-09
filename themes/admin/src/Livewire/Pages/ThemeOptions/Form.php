@@ -12,8 +12,8 @@ class Form extends Component
     use WithItemManager;
     protected function ItemManager()
     {
-        if ($this->tabActive)
-            return Theme::SiteDataInfo()->getOptionDataHook()->getFormByKey($this->tabActive);
+        if ($this->tabActive && ($theme = Theme::SiteDataInfo()))
+            return $theme->getOptionDataHook()->getFormByKey($this->tabActive);
         return null;
     }
     public ItemForm $form;

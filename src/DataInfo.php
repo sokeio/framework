@@ -85,6 +85,15 @@ class DataInfo extends JsonData
     {
         return $this['description'];
     }
+    public function getVersionn()
+    {
+        return $this['version'];
+    }
+    public function getLatestVersion()
+    {
+        //TODO: connect To Store
+        return $this['version'];
+    }
     public function getOptionHook(): OptionHook
     {
         if ($this['optionHook']) return $this['optionHook'];
@@ -126,7 +135,6 @@ class DataInfo extends JsonData
     }
     public function setStatusData($value)
     {
-        $this->getOptionHook()->changeStatus($this, $value);
         if ($value === self::Active) {
             ArrayStatus::Key($this['base_type'])->Active($this->getId());
         } else {
@@ -180,6 +188,7 @@ class DataInfo extends JsonData
     }
     public function update()
     {
+        //TODO: connect To Store
     }
     public function CheckName($name)
     {

@@ -11,22 +11,27 @@
             style="background-image: url('{{ route('byte.screenshot', ['types' => $ExtentionType, 'id' => $item->getId()]) }}')">
         </div>
         <div class="card-body p-3">
-            <h3 class="card-title">{{ $item->getTitle() }}</h3>
+            <h3 class="card-title">{{ $item->getTitle() }} <span
+                    class="badge rounded-pill bg-success">{{ $item->getVersionn() ?? 'dev-main' }}</span></h3>
             <p class="text-secondary">{!! $item->getDescription() !!}</p>
         </div>
         <div class="card-footer">
             <div class="row align-items-center">
                 <div class="col-auto">
                     <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dr{{ $item->getId() }}"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             Add More
                         </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <ul class="dropdown-menu" aria-labelledby="dr{{ $item->getId() }}">
                             <li><a class="dropdown-item"
                                     byte:modal="{{ route('admin.create-extention-file', ['ExtentionType' => $ExtentionType, 'ExtentionId' => $item->getName()]) }}"
                                     byte:modal-title="Create File In {{ page_title() }}">Add File</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a @click="alert('devlop....')" class="dropdown-item" href="#">Add CURD</a></li>
+                            @if($ExtentionType=='module')
+                            <li><a @click="alert('devlop....')" class="dropdown-item" href="#">Add Theme</a></li>
+                            <li><a @click="alert('devlop....')" class="dropdown-item" href="#">Add Plugin</a></li>
+                            @endif
                         </ul>
                     </div>
                 </div>

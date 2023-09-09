@@ -19,7 +19,7 @@ class Index extends Component
     {
         page_title('Setting');
         return view('theme::pages.theme-options.index', [
-            'formWithTitle' => Theme::SiteDataInfo()->getOptionDataHook()->getFormWithTitles()
+            'formWithTitle' => Theme::SiteDataInfo()?->getOptionDataHook()?->getFormWithTitles()
         ]);
     }
 }

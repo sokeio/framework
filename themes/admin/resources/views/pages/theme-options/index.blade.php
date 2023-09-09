@@ -6,15 +6,20 @@
                     <div class="card-body">
                         <h4 class="subheader">Theme Options</h4>
                         <div class="list-group list-group-transparent">
-                            @foreach ($formWithTitle as $item)
-                                <button wire:click='ChangeTab("{{ $item['key'] }}")'
-                                    class="list-group-item list-group-item-action d-flex align-items-center @if ($tabActive == $item['key']) active @endif">{{ $item['title'] ?? $item['key'] }}</button>
-                            @endforeach
+                            @if ($formWithTitle)
+                                @foreach ($formWithTitle as $item)
+                                    <button wire:click='ChangeTab("{{ $item['key'] }}")'
+                                        class="list-group-item list-group-item-action d-flex align-items-center @if ($tabActive == $item['key']) active @endif">{{ $item['title'] ?? $item['key'] }}</button>
+                                @endforeach
+                            @endif
                         </div>
                     </div>
                 </div>
                 <div class="col d-flex flex-column">
-                    <livewire:theme::pages.theme-options.form :$tabActive wire:key='setting-{{ $tabActiveIndex }}' />
+                    @if ($tabActive && $formWithTitle)
+                        <livewire:theme::pages.theme-options.form :$tabActive
+                            wire:key='setting-{{ $tabActiveIndex }}' />
+                    @endif
                 </div>
             </div>
         </div>

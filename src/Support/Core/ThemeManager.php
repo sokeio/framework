@@ -82,14 +82,19 @@ class ThemeManager extends ActionHook
     {
         if (isset($theme['admin']) && $theme['admin'] === 1) {
             $site = $this->AdminDataInfo();
-            $site->getOptionHook()->changeStatus($site, 0);
-            $theme->getOptionHook()->changeStatus($theme, $value);
+            $site?->getOptionHook()?->changeStatus($site, 0);
+            $theme?->getOptionHook()?->changeStatus($theme, $value);
             ArrayStatus::Key(PLATFORM_THEME_ADMIN)->Active($theme->getId(), true);
         } else {
             $site = $this->SiteDataInfo();
-            $site->getOptionHook()->changeStatus($site, 0);
-            $theme->getOptionHook()->changeStatus($theme, $value);
-            ArrayStatus::Key(PLATFORM_THEME_WEB)->Active($theme->getId(), true);
+
+            if ($site == $theme) {
+                ArrayStatus::Key(PLATFORM_THEME_WEB)->Active($site->getId(), $site->status ? false : true);
+            } else {
+                $site?->getOptionHook()?->changeStatus($site, 0);
+                $theme?->getOptionHook()?->changeStatus($theme, $value);
+                ArrayStatus::Key(PLATFORM_THEME_WEB)->Active($theme->getId(), true);
+            }
         }
         PlatformStatusChanged::dispatch($theme);
         Platform::makeLink();

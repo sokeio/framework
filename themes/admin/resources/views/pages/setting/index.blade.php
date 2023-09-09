@@ -6,10 +6,12 @@
                     <div class="card-body">
                         <h4 class="subheader">settings</h4>
                         <div class="list-group list-group-transparent">
-                            @foreach ($formWithTitle as $item)
-                                <button wire:click='ChangeTab("{{ $item['key'] }}")'
-                                    class="list-group-item list-group-item-action d-flex align-items-center @if ($tabActive == $item['key']) active @endif">{{ $item['title'] ?? $item['key'] }}</button>
-                            @endforeach
+                            @if ($formWithTitle)
+                                @foreach ($formWithTitle as $item)
+                                    <button wire:click='ChangeTab("{{ $item['key'] }}")'
+                                        class="list-group-item list-group-item-action d-flex align-items-center @if ($tabActive == $item['key']) active @endif">{{ $item['title'] ?? $item['key'] }}</button>
+                                @endforeach
+                            @endif
                         </div>
                     </div>
                 </div>

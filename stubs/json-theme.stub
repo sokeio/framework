@@ -1,6 +1,7 @@
 {
     "id":"$BASE_TYPE_LOWER_NAME$-$LOWER_NAME$-$JSON_ID$",
     "name": "$STUDLY_NAME$",
+    "version":"v1.0.0",
     "alias": "$LOWER_NAME$",
     "description": "$DESCRIPTION$",
     "keywords": [],
