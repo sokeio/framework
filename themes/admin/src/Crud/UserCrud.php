@@ -209,7 +209,7 @@ class UserCrud extends CrudManager
                 ->NoBindData()
                 ->Model($this->GetModel())->Item([
                     Item::Add('password')->Title('Password')->Column(Item::Col12)->Type('password')->Required()->Rules(['same:check_password']),
-                    Item::Add('check_password')->Title('check_Password')->Column(Item::Col12)->Type('password')->Required(),
+                    Item::Add('check_password')->Title('check_Password')->Column(Item::Col12)->Type('password')->NoBindData()->Required(),
 
                 ])->ButtonSaveText(function () {
                     return 'Change password';
