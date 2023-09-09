@@ -7,26 +7,6 @@
 
 **BytePlatform** là một gói phát triển ứng dụng web dựa trên Laravel, cung cấp hỗ trợ cho việc phát triển các Module, Plugin, Theme, Livewire và shortcode. Với BytePlatform, người dùng có thể phát triển ứng dụng web nhanh hơn và dễ dàng hơn bao giờ hết. Gói phát triển cung cấp các tính năng linh hoạt và tiện ích giúp người dùng tối ưu quy trình phát triển và tăng tốc độ phát triển của ứng dụng web của họ.
 
-## Tính năng(New):
-
-- Modules
-- Themes
-- Plugins
-- Actions
-- ShortCodes
-- CURD Base
-- Auth(User,Role,Permission)
-- Setting
-
-## các công nghệ sử dụng:
-
-- Laravel 10x
-- Livewire 3x
-- unisharp/laravel-filemanager 2.6
-- staudenmeir/eloquent-eager-limit 1.8.3
-- Boostrap 5x
-- Tabler and Tabler-icon
-
 ## Yêu cầu
 
 PHP 8.2+
