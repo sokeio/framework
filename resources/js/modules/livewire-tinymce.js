@@ -88,7 +88,7 @@ export class LiveWireTinymceModule {
           } else {
             window.addScriptToWindow(
               self.manager.getUrlPublic(
-                "byteplatform/modules/byteplatform/tinymce/tinymce.min.js"
+                "platform/modules/byteplatform/tinymce/tinymce.min.js"
               ),
               function () {
                 setTimeout(() => {

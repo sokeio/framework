@@ -53,7 +53,7 @@ export class LiveWireSortablejsModule {
         } else {
           window.addScriptToWindow(
             self.manager.getUrlPublic(
-              "byteplatform/modules/byteplatform/sortable/sortable.min.js"
+              "platform/modules/byteplatform/sortable/sortable.min.js"
             ),
             function () {
               SortableCreate();
@@ -133,7 +133,7 @@ export class LiveWireSortablejsModule {
           } else {
             window.addScriptToWindow(
               self.manager.getUrlPublic(
-                "byteplatform/modules/byteplatform/sortable/sortable.min.js"
+                "platform/modules/byteplatform/sortable/sortable.min.js"
               ),
               function () {
                 SortableCreate();

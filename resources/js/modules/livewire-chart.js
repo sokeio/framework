@@ -31,13 +31,13 @@ export class LiveWireChartModule {
           } else {
             window.addStyleToWindow(
               self.manager.getUrlPublic(
-                "byteplatform/modules/byteplatform/apexcharts/dist/apexcharts.css"
+                "platform/modules/byteplatform/apexcharts/dist/apexcharts.css"
               ),
               function () {}
             );
             window.addScriptToWindow(
               self.manager.getUrlPublic(
-                "byteplatform/modules/byteplatform/apexcharts/dist/apexcharts.min.js"
+                "platform/modules/byteplatform/apexcharts/dist/apexcharts.min.js"
               ),
               function () {
                 apexchartsInit();

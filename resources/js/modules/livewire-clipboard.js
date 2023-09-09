@@ -25,7 +25,7 @@ export class LiveWireFlatpickrModule {
         } else {
           window.addScriptToWindow(
             self.manager.getUrlPublic(
-              "byteplatform/modules/byteplatform/clipboard/dist/clipboard.min.js"
+              "platform/modules/byteplatform/clipboard/dist/clipboard.min.js"
             ),
             function () {
               clipboardCreate();

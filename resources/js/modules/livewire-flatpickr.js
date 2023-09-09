@@ -25,13 +25,13 @@ export class LiveWireFlatpickrModule {
         } else {
           window.addStyleToWindow(
             self.manager.getUrlPublic(
-              "byteplatform/modules/byteplatform/flatpickr/dist/flatpickr.min.css"
+              "platform/modules/byteplatform/flatpickr/dist/flatpickr.min.css"
             ),
             function () {}
           );
           window.addScriptToWindow(
             self.manager.getUrlPublic(
-              "byteplatform/modules/byteplatform/flatpickr/dist/flatpickr.min.js"
+              "platform/modules/byteplatform/flatpickr/dist/flatpickr.min.js"
             ),
             function () {
               flatpickrCreate();

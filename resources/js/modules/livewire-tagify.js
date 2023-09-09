@@ -66,13 +66,13 @@ export class LiveWireTagifyModule {
         } else {
           window.addStyleToWindow(
             self.manager.getUrlPublic(
-              "byteplatform/modules/byteplatform/tagify/dist/tagify.css"
+              "platform/modules/byteplatform/tagify/dist/tagify.css"
             ),
             function () {}
           );
           window.addScriptToWindow(
             self.manager.getUrlPublic(
-              "byteplatform/modules/byteplatform/tagify/dist/tagify.min.js"
+              "platform/modules/byteplatform/tagify/dist/tagify.min.js"
             ),
             function () {
               tagifyCreate();
