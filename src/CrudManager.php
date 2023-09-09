@@ -13,16 +13,25 @@ class CrudManager
     {
         $this->SetupFormCustom();
     }
+    /**
+     * Get config for form page
+     *
+     * @return \BytePlatform\ItemManager
+     */
     public function FormPage()
     {
         return null;
     }
+    /**
+     * Get config for table page
+     *
+     * @return \BytePlatform\ItemManager
+     */
     public function TablePage()
     {
         return null;
     }
     private $formCustom = [];
-
     public function FormCustom($key, $formSetup)
     {
         $this->formCustom[$key] = $formSetup;
@@ -39,35 +48,41 @@ class CrudManager
     {
         return array_keys($this->formCustom);
     }
-    public static function RoutePage($url, $isForm = true, $name = null, $crudClass = null)
+    public static function RoutePage($url, $name = null, $crudClass = null)
     {
         if (!$crudClass)  $crudClass = get_called_class();
-        if (!$name)  $name = $url;
+        if (!$name) $name = $url;
         /**
          * @var \BytePlatform\CrudManager $crud The class instance.
          */
         $crud = app($crudClass);
         if (!$crud) return;
-        Route::get($url . 's', function () use ($crudClass) {
-            $route = Route::current();
-            $route->setParameter('manager', $crudClass);
-            $route->setAction(array_merge($route->getAction(), RouteAction::parse($route->uri(), ['uses' => TablePage::class])));
-            return $route->run();
-        })->name($name . '-list');
-        if ($isForm) {
-            Route::post($url . '-form/{dataId?}', function () use ($crudClass) {
+        if ($tablePage = $crud->TablePage()) {
+            Route::match($tablePage->getMethodType(), $url . 's', function () use ($crudClass) {
+                $route = Route::current();
+                $route->setParameter('manager', $crudClass);
+                $route->setAction(array_merge($route->getAction(), RouteAction::parse($route->uri(), ['uses' => TablePage::class])));
+                return $route->run();
+            })->name($name . '-list');
+        }
+
+        if ($formPage = $crud->FormPage()) {
+            Route::match($formPage->getMethodType(), $url . '-form/{dataId?}', function () use ($crudClass) {
                 $route = Route::current();
                 $route->setParameter('manager', $crudClass);
                 $route->setAction(array_merge($route->getAction(), RouteAction::parse($route->uri(), ['uses' => FormPage::class])));
                 return $route->run();
             })->name($name . '-form');
-            if ($crudClass && $crud = app($crudClass)) {
-                foreach ($crud->getFormCustomKey() as $key) {
-                    Route::post($url . '-' . $key . '-form/{dataId?}', function () use ($crudClass, $key, $crud) {
+        }
+        if ($formCustomKeys = $crud->getFormCustomKey()) {
+            foreach ($formCustomKeys as $key) {
+                $configCustomPage = $crud->getFormCustom($key);
+                if ($configCustomPage) {
+                    Route::match($configCustomPage->getMethodType(), $url . '-' . $key . '-form/{dataId?}', function () use ($crudClass, $key, $configCustomPage) {
                         $route = Route::current();
                         $route->setParameter('manager', $crudClass);
                         $route->setParameter('formCustom', $key);
-                        if ($crud->getFormCustom($key)->IsTable()) {
+                        if ($configCustomPage->IsTable()) {
                             $route->setAction(array_merge($route->getAction(), RouteAction::parse($route->uri(), ['uses' => TablePage::class])));
                         } else {
                             $route->setAction(array_merge($route->getAction(), RouteAction::parse($route->uri(), ['uses' => FormPage::class])));

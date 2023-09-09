@@ -5,7 +5,7 @@ namespace BytePlatform;
 class ItemManager extends BaseManager
 {
     private $__istable = false;
-    private $__post = false;
+    private $__methodType = 'get';
 
     /** @var Item[] $__item */
     private  $__item = [];
@@ -26,7 +26,7 @@ class ItemManager extends BaseManager
                     return false;
                 });
         } else {
-            $this->Manager($this)->FormDoSave(function ($params, $component, $manager) {
+            $this->useMethodPost()->Manager($this)->FormDoSave(function ($params, $component, $manager) {
                 $component->form->DataFromForm();
                 $component->showMessage($manager->getMessage());
                 $component->closeComponent();
@@ -40,11 +40,12 @@ class ItemManager extends BaseManager
     }
     public function useMethodPost()
     {
-        $this->__post = true;
+        $this->__methodType = 'post';
+        return $this;
     }
-    public function checkMethodPost()
+    public function getMethodType()
     {
-        return $this->__post;
+        return $this->__methodType;
     }
     private  $___BeforeFormDoSave = null;
     public function BeforeFormDoSave($callback)

@@ -9,5 +9,5 @@ use Illuminate\Support\Facades\Route;
 Route::group(['as' => 'admin.'], function () {
     UserCrud::RoutePage('user');
     RoleCrud::RoutePage('role');
-    PermissionCrud::RoutePage('permission', false);
+    PermissionCrud::RoutePage('permission');
 });

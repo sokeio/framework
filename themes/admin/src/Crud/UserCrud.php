@@ -22,24 +22,24 @@ class UserCrud extends CrudManager
             Item::Add('id')->Title('ID')->DisableFilter()->DisableSort()->When(function ($item, $manager) {
                 return $manager->IsTable();
             })->DisableEdit(),
-            Item::Add('password')->Title('Test')->Type('choose-modal')->Required()->When(function ($item, $manager) {
-                return !$manager->IsTable();
-            })->DataOption(function () {
-                return [
-                    'modal' => route('admin.user-test1-form'),
-                    'modal-title' => 'Choose Permission',
-                    'modal-choose' => 'Choose Permission'
-                ];
+            // Item::Add('password')->Title('Test')->Type('choose-modal')->Required()->When(function ($item, $manager) {
+            //     return !$manager->IsTable();
+            // })->DataOption(function () {
+            //     return [
+            //         'modal' => route('admin.user-test1-form'),
+            //         'modal-title' => 'Choose Permission',
+            //         'modal-choose' => 'Choose Permission'
+            //     ];
             // choose-modal.
-            })->DataText(function(){
-                return '
-                <div>
-                    <template x-for="item in dataItems">
-                        <span class="badge bg-blue text-blue-fg m-1" x-text="item.name"></span>
-                    </template>
-                </div>
-                ';
-            }),
+            // })->DataText(function(){
+            //     return '
+            //     <div>
+            //         <template x-for="item in dataItems">
+            //             <span class="badge bg-blue text-blue-fg m-1" x-text="item.name"></span>
+            //         </template>
+            //     </div>
+            //     ';
+            // }),
 
             Item::Add('avatar')->Title('avatar')->Type('images')->When(function ($item, $manager) {
                 return !$manager->IsTable();
@@ -131,11 +131,11 @@ class UserCrud extends CrudManager
                 ];
             })->ButtonInAction(function () {
                 return [
-                    Button::Create("Remove All")->ButtonType(function () {
-                        return 'primary';
-                    })->ConfirmTitle("Remove All User")->Confirm("Sure you wanna delete?")->WireClick(function ($button) {
-                        return "callDoAction('testAll',{})";
-                    }),
+                    // Button::Create("Remove All")->ButtonType(function () {
+                    //     return 'primary';
+                    // })->ConfirmTitle("Remove All User")->Confirm("Sure you wanna delete?")->WireClick(function ($button) {
+                    //     return "callDoAction('testAll',{})";
+                    // }),
                     //     Button::Create("Export All")->ButtonType(function () {
                     //         return 'primary';
                     //     }),
@@ -214,11 +214,6 @@ class UserCrud extends CrudManager
                 ])->ButtonSaveText(function () {
                     return 'Change password';
                 });
-        })->FormCustom('test1', function () {
-            return ItemManager::Table()->PageSize(10)->CheckBoxRow()->Model(Permission::class)->Item([
-                Item::Add('name')->Title('Name')->Required(),
-                Item::Add('slug')->Title('Slug')->Required(),
-            ]);
         });
     }
 }
