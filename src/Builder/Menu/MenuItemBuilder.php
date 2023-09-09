@@ -126,7 +126,7 @@ class MenuItemBuilder extends HtmlBuilder
             if (is_array($name)) {
                 ['name' => $name, 'params' => $params] = $name;
             }
-            $this->dataItem[self::KEY_LINK] = byteplatform_action($name, $params);
+            $this->dataItem[self::KEY_LINK] = byte_action($name, $params);
         } else   if ($this->getValueType() === self::ITEM_ROUTE) {
             $params = [];
             $name = $this->getValueData();
@@ -140,7 +140,7 @@ class MenuItemBuilder extends HtmlBuilder
             if (is_array($name)) {
                 ['name' => $name, 'params' => $params] = $name;
             }
-            $this->dataItem[self::KEY_LINK] = byteplatform_component($name, $params, 'livewire');
+            $this->dataItem[self::KEY_LINK] = byte_component($name, $params, 'livewire');
         } else {
             $link = $this->getValueLink();
             if (!$link) return;

@@ -25,7 +25,7 @@ class Index extends Component
     {
         page_title(str($this->ExtentionType)->studly());
         return view('byte::extentions.index', [
-            'mode_dev' => byteplatform_model_dev()
+            'mode_dev' => byte_mode_dev()
         ]);
     }
 }

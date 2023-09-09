@@ -153,7 +153,7 @@ class UrlGenerator extends LaravelUrlGenerator
     {
         if (
             (config('byte.locale.hideDefaultLocale') == true and
-                $locale == config('byte.locale.defaultLocale')) or byteplatform_is_admin()
+                $locale == config('byte.locale.defaultLocale')) or byte_is_admin()
         ) {
             return true;
         }

@@ -64,7 +64,6 @@ class BytePlatformServiceProvider extends ServiceProvider
     }
     protected function registerMiddlewares()
     {
-        //Middleware
         /** @var Router $router */
         $router = $this->app['router'];
 
@@ -112,10 +111,10 @@ class BytePlatformServiceProvider extends ServiceProvider
             $scriptBytePlatform = file_get_contents(__DIR__ . '/../byte.js');
             $arrConfigjs = [
                 'url' => url(''),
-                'byteplatform_url' => route('__byteplatform__'),
+                'byte_url' => route('__byte__'),
                 'csrf_token' => csrf_token(),
-                'byteplatform_filemanager' => route('unisharp.lfm.show'),
-                'byteplatform_shortcode_setting' => route('shortcode-setting'),
+                'byte_filemanager' => route('unisharp.lfm.show'),
+                'byte_shortcode_setting' => route('shortcode-setting'),
                 'tinyecm_option' => [
                     "relative_urls" => false,
                     "content_style" => "
@@ -184,7 +183,7 @@ class BytePlatformServiceProvider extends ServiceProvider
             if (Request::isMethod('get')) {
                 // Only Get Request
                 if (!Platform::checkFolderPlatform()) Platform::makeLink();
-                if (byteplatform_is_admin()) {
+                if (byte_is_admin()) {
                     Menu::DoRegister();
                 }
             }

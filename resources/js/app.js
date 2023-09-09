@@ -21,44 +21,44 @@ window.byteplatformManager.start();
 window.addEventListener("BytePlatformRegister", function () {
   // window.dispatchEvent = document.dispatchEvent;
   // console.log("BytePlatformRegister");
-  window.byteplatformManager.register("BYKIT_CONFIRM_MODULE", new ConfirmModule());
+  window.byteplatformManager.register("BYTE_CONFIRM_MODULE", new ConfirmModule());
   window.byteplatformManager.register(
-    "BYKIT_FILEMANAGER_MODULE",
+    "BYTE_FILEMANAGER_MODULE",
     new FileManagerModule()
   );
-  window.byteplatformManager.register("BYKIT_ACTION_MODULE", new ActionModule());
-  window.byteplatformManager.register("BYKIT_LIVEWIRE_MODULE", new LiveWireModule());
+  window.byteplatformManager.register("BYTE_ACTION_MODULE", new ActionModule());
+  window.byteplatformManager.register("BYTE_LIVEWIRE_MODULE", new LiveWireModule());
   window.byteplatformManager.register(
-    "BYKIT_LIVEWIRE_CHART_MODULE",
+    "BYTE_LIVEWIRE_CHART_MODULE",
     new LiveWireChartModule()
   );
   window.byteplatformManager.register(
-    "BYKIT_LIVEWIRE_FLATPICK_MODULE",
+    "BYTE_LIVEWIRE_FLATPICK_MODULE",
     new LiveWireFlatpickrModule()
   ); 
   window.byteplatformManager.register(
-    "BYKIT_LIVEWIRE_TAGIFY_MODULE",
+    "BYTE_LIVEWIRE_TAGIFY_MODULE",
     new LiveWireTagifyModule()
   );
   window.byteplatformManager.register(
-    "BYKIT_LIVEWIRE_SORTABLEJS_MODULE",
+    "BYTE_LIVEWIRE_SORTABLEJS_MODULE",
     new LiveWireSortablejsModule()
   );
   window.byteplatformManager.register(
-    "BYKIT_LIVEWIRE_COUNTUP_MODULE",
+    "BYTE_LIVEWIRE_COUNTUP_MODULE",
     new LiveWireCountUpModule()
   );
   
-  window.byteplatformManager.register("BYKIT_COMPONENT_MODULE", new ComponentModule());
-  window.byteplatformManager.register("BYKIT_MODAL_MODULE", new ModalModule());
-  window.byteplatformManager.register("BYKIT_TOASTS_MODULE", new ToastsModule());
+  window.byteplatformManager.register("BYTE_COMPONENT_MODULE", new ComponentModule());
+  window.byteplatformManager.register("BYTE_MODAL_MODULE", new ModalModule());
+  window.byteplatformManager.register("BYTE_TOASTS_MODULE", new ToastsModule());
 
   window.byteplatformManager.register(
-    "BYKIT_LIVEWIRE_GET_VALUE_MODULE",
+    "BYTE_LIVEWIRE_GET_VALUE_MODULE",
     new LiveWireGetValueParentModule()
   );
   window.byteplatformManager.register(
-    "BYKIT_LIVEWIRE_TINYMCE_MODULE",
+    "BYTE_LIVEWIRE_TINYMCE_MODULE",
     new LiveWireTinymceModule()
   );
 

@@ -49,7 +49,7 @@ export class LiveWireTinymceModule {
                 });
               },
               file_picker_callback: function (callback, value, meta) {
-                if (!self.manager.$config["byteplatform_filemanager"]) return;
+                if (!self.manager.$config["byte_filemanager"]) return;
                 var x =
                   window.innerWidth ||
                   document.documentElement.clientWidth ||
@@ -60,7 +60,7 @@ export class LiveWireTinymceModule {
                   document.getElementsByTagName("body")[0].clientHeight;
 
                 var cmsURL =
-                  self.manager.$config["byteplatform_filemanager"] +
+                  self.manager.$config["byte_filemanager"] +
                   "?editor=" +
                   meta.fieldname;
                 if (meta.filetype == "image") {

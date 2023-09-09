@@ -66,7 +66,7 @@ export class PlatformModule extends PlatformEvent {
     return this.$config["url"] + "/" + $url;
   }
   getUrl($url) {
-    return this.$config["byteplatform_url"] + "/" + $url;
+    return this.$config["byte_url"] + "/" + $url;
   }
   register(name, $_module) {
     const self = this;
@@ -225,9 +225,9 @@ export class PlatformModule extends PlatformEvent {
     self.$eventDocuments[event][selector] = callback;
   }
   showFileManager(callback, type = "file") {
-    if (this.$config["byteplatform_filemanager"]) {
+    if (this.$config["byte_filemanager"]) {
       window.open(
-        this.$config["byteplatform_filemanager"] + "?type=" + (type || "file"),
+        this.$config["byte_filemanager"] + "?type=" + (type || "file"),
         "FileManager",
         "width=900,height=600"
       );
@@ -237,7 +237,7 @@ export class PlatformModule extends PlatformEvent {
     }
   }
   openModal($url, $title, $size, dataModal = undefined) {
-    this.$module["BYKIT_MODAL_MODULE"].openModal(
+    this.$module["BYTE_MODAL_MODULE"].openModal(
       $url,
       $title,
       $size,
@@ -249,7 +249,7 @@ export class PlatformModule extends PlatformEvent {
       "ShortcodeEventCallBack" + new Date().getTime();
     window[ShortcodeEventCallBack] = callback;
     this.openModal(
-      this.$config["byteplatform_shortcode_setting"],
+      this.$config["byte_shortcode_setting"],
       "Shortcode Setting",
       "",
       {

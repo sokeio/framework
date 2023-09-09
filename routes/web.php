@@ -16,10 +16,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix' => '__byteplatform__'], function () {
-    if (env('BYKIT_DEPLOYMENT_AUTO', false)) { //deployment
+Route::group(['prefix' => '__byte__'], function () {
+    if (env('BYTE_DEPLOYMENT_AUTO', false)) { //deployment
         Route::get('git-pull/{key}', function ($key) {
-            if (env('BYKIT_DEPLOYMENT_KEY') == $key) {
+            if (env('BYTE_DEPLOYMENT_KEY') == $key) {
                 run_cmd(base_path(''), 'git reset --hard HEAD');
                 run_cmd(base_path(''), 'git pull');
                 run_cmd(base_path(''), 'rm -rf bootstrap/cache/*.php');
@@ -59,7 +59,7 @@ Route::group(['prefix' => '__byteplatform__'], function () {
     Route::post('webhook', [BytePlatform\Http\Controllers\PlatformController::class, 'doWebhooks']);
     Route::get('/', function () {
         return 'hello, now is ' . now();
-    })->name('__byteplatform__');
+    })->name('__byte__');
     Route::group(['prefix' => 'filemanager', 'middleware' => ['web', 'auth']], function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();
     });

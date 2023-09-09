@@ -68,8 +68,8 @@ trait WithLivewire
     }
     public function booted()
     {
-        if (function_exists('byteplatform_is_admin')) {
-            $this->___theme___admin = byteplatform_is_admin();
+        if (function_exists('byte_is_admin')) {
+            $this->___theme___admin = byte_is_admin();
         }
         if (!$this->_refComponentId) {
             $this->_refComponentId = request('refComponent');

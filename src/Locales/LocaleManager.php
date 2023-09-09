@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class LocaleManager
 {
-    private const KEY = 'BYKIT_LOCALE_CURRENT';
+    private const KEY = 'BYTE_LOCALE_CURRENT';
     private $hideDefaultLocale;
     private $defaultLocale;
     private $supportedLocales = [];
@@ -20,7 +20,7 @@ class LocaleManager
     public function CurrentLocale()
     {
         $locale = $this->defaultLocale;
-        if (byteplatform_is_admin()) {
+        if (byte_is_admin()) {
             $locale = session(self::KEY);
         } else {
             $route = request()->route();

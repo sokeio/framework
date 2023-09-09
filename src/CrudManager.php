@@ -43,6 +43,11 @@ class CrudManager
     {
         if (!$crudClass)  $crudClass = get_called_class();
         if (!$name)  $name = $url;
+        /**
+         * @var \BytePlatform\CrudManager $crud The class instance.
+         */
+        $crud = app($crudClass);
+        if (!$crud) return;
         Route::get($url . 's', function () use ($crudClass) {
             $route = Route::current();
             $route->setParameter('manager', $crudClass);

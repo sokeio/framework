@@ -174,7 +174,7 @@ class ThemeManager extends ActionHook
     public function ThemeCurrent()
     {
         if (!isset($this->data_active) || !$this->data_active) {
-            if (byteplatform_is_admin()) {
+            if (byte_is_admin()) {
                 $this->data_active = $this->findAndRegister(apply_filters(PLATFORM_THEME_FILTER_LAYOUT, $this->AdminId(), 1));
             } else {
                 $this->data_active = $this->findAndRegister(apply_filters(PLATFORM_THEME_FILTER_LAYOUT, $this->SiteId(), 0));

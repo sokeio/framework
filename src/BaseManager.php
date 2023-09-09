@@ -20,8 +20,8 @@ class BaseManager extends ItemCallback
     public function CheckHook()
     {
         $this->ClearCache();
-        do_action('BYKIT_MANAGER_HOOK', $this);
-        do_action('BYKIT_MANAGER_HOOK_' . str($this->getKeyItem())->upper(), $this);
+        do_action('BYTE_MANAGER_HOOK', $this);
+        do_action('BYTE_MANAGER_HOOK_' . str($this->getKeyItem())->upper(), $this);
         return $this;
     }
     private  $___BeforeQuery = null;

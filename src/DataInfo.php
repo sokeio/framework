@@ -59,7 +59,7 @@ class DataInfo extends JsonData
     }
     public function url($_path = '')
     {
-        return url(byteplatform_path($this->base_type, $this->getName() . ($_path ? ('/' . $_path) : '')));
+        return url(byte_path($this->base_type, $this->getName() . ($_path ? ('/' . $_path) : '')));
     }
     public function getFiles()
     {
@@ -156,7 +156,7 @@ class DataInfo extends JsonData
     }
     public function isVendor()
     {
-        return !Str::contains($this->getPath(), byteplatform_path($this['base_type']), true);
+        return !Str::contains($this->getPath(), byte_path($this['base_type']), true);
     }
     public function isActive()
     {

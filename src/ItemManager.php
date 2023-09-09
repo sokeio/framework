@@ -5,6 +5,7 @@ namespace BytePlatform;
 class ItemManager extends BaseManager
 {
     private $__istable = false;
+    private $__post = false;
 
     /** @var Item[] $__item */
     private  $__item = [];
@@ -36,6 +37,14 @@ class ItemManager extends BaseManager
                 return "Save";
             });
         }
+    }
+    public function useMethodPost()
+    {
+        $this->__post = true;
+    }
+    public function checkMethodPost()
+    {
+        return $this->__post;
     }
     private  $___BeforeFormDoSave = null;
     public function BeforeFormDoSave($callback)

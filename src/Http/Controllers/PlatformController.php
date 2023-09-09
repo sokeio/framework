@@ -13,7 +13,7 @@ class PlatformController extends BaseController
 {
     public function getComponent(Request $request)
     {
-        $data = byteplatform_decode($request->get('key'));
+        $data = byte_decode($request->get('key'));
         if (isset($data['is_admin']) && $data['is_admin']) {
             add_filter(PLATFORM_IS_ADMIN, function () {
                 return true;

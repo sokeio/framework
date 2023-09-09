@@ -16,60 +16,58 @@ use BytePlatform\Facades\Plugin;
 use BytePlatform\Facades\Theme;
 use BytePlatform\Forms\FormManager;
 use BytePlatform\Item;
-use BytePlatform\ItemForm;
-use BytePlatform\ItemManager;
 use BytePlatform\Models\Setting;
 use BytePlatform\Tables\TableManager;
 
-if (!function_exists('byteplatform_encode')) {
-    function byteplatform_encode($data)
+if (!function_exists('byte_encode')) {
+    function byte_encode($data)
     {
         return base64_encode(urlencode(json_encode($data ?? [])));
     }
 }
-if (!function_exists('byteplatform_decode')) {
-    function byteplatform_decode($data)
+if (!function_exists('byte_decode')) {
+    function byte_decode($data)
     {
         return json_decode(urldecode(base64_decode($data)), true);
     }
 }
-if (!function_exists('byteplatform_component')) {
-    function byteplatform_component($component, $params = [], $type = '')
+if (!function_exists('byte_component')) {
+    function byte_component($component, $params = [], $type = '')
     {
-        return byteplatform_encode([
+        return byte_encode([
             'component' => $component,
             'params' => $params,
             'type' => $type,
-            'is_admin' => byteplatform_is_admin()
+            'is_admin' => byte_is_admin()
         ]);
     }
 }
-if (!function_exists('byteplatform_view')) {
-    function byteplatform_view($view, $params = [], $type = '')
+if (!function_exists('byte_view')) {
+    function byte_view($view, $params = [], $type = '')
     {
-        return byteplatform_encode([
+        return byte_encode([
             'view' => $view,
             'params' => $params,
             'type' => $type,
-            'is_admin' => byteplatform_is_admin()
+            'is_admin' => byte_is_admin()
         ]);
     }
 }
-if (!function_exists('byteplatform_action')) {
-    function byteplatform_action($action, $params = [], $type = '')
+if (!function_exists('byte_action')) {
+    function byte_action($action, $params = [], $type = '')
     {
-        return byteplatform_encode([
+        return byte_encode([
             'action' => $action,
             'params' => $params,
             'type' => $type,
-            'is_admin' => byteplatform_is_admin()
+            'is_admin' => byte_is_admin()
         ]);
     }
 }
-if (!function_exists('byteplatform_model_dev')) {
-    function byteplatform_model_dev()
+if (!function_exists('byte_mode_dev')) {
+    function byte_mode_dev()
     {
-        return env('BYKIT_MODEL_DEV', false);
+        return env('BYTE_MODE_DEV', false);
     }
 }
 
@@ -85,16 +83,16 @@ if (!function_exists('platform_by')) {
     }
 }
 
-if (!function_exists('byteplatform_flags')) {
-    function byteplatform_flags($flg, $size = '4x3')
+if (!function_exists('byte_flags')) {
+    function byte_flags($flg, $size = '4x3')
     {
         $fileFlag = __DIR__ . '/../resources/flags/' . $size . '/' . $flg . '.svg';
         if (File::exists($fileFlag)) return file_get_contents($fileFlag);
         return '';
     }
 }
-if (!function_exists('byteplatform_is_admin')) {
-    function byteplatform_is_admin()
+if (!function_exists('byte_is_admin')) {
+    function byte_is_admin()
     {
         $is_admin = false;
         $arrMiddleware = [];
@@ -303,7 +301,7 @@ if (!function_exists('checkRole')) {
 if (!function_exists('adminUrl')) {
     function adminUrl()
     {
-        return apply_filters(BYKIT_URL_ADMIN, env('BYKIT_URL_ADMIN', ''));
+        return apply_filters(BYTE_URL_ADMIN, env('BYTE_URL_ADMIN', ''));
     }
 }
 if (!function_exists('page_title')) {
@@ -425,8 +423,8 @@ if (!function_exists('menu_render')) {
     }
 }
 
-if (!function_exists('byteplatform_path')) {
-    function byteplatform_path($type = '', $path = '')
+if (!function_exists('byte_path')) {
+    function byte_path($type = '', $path = '')
     {
         $pathRoot = config('byte.appdir.root', 'byteplatform');
         $pathType = config('byte.appdir.' . $type, $type . 's');
