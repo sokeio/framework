@@ -5,9 +5,10 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/byteplatform/byteplatform/Fix%20PHP%20code%20style%20issues?label=code%20style)](https://github.com/byteplatform/byteplatform/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/byteplatform/byteplatform.svg?style=flat-square)](https://packagist.org/packages/byteplatform/byteplatform)
 
+**BytePlatform** là một gói phát triển ứng dụng web dựa trên Laravel, cung cấp hỗ trợ cho việc phát triển các Module, Plugin, Theme, Livewire và shortcode. Với BytePlatform, người dùng có thể phát triển ứng dụng web nhanh hơn và dễ dàng hơn bao giờ hết. Gói phát triển cung cấp các tính năng linh hoạt và tiện ích giúp người dùng tối ưu quy trình phát triển và tăng tốc độ phát triển của ứng dụng web của họ.
 
-**BytePlatform** is a Laravel-based web application development package that provides support for developing modules, plugins, themes, livewire, and shortcodes. With BytePlatform, users can develop web applications faster and easier than ever before. The package provides flexible features and utilities to help users optimize the development process and accelerate the development speed of their web applications.
-## Feature(New):
+## Tính năng(New):
+
 - Modules
 - Themes
 - Plugins
@@ -17,7 +18,8 @@
 - Auth(User,Role,Permission)
 - Setting
 
-## Technology used:
+## các công nghệ sử dụng:
+
 - Laravel 10x
 - Livewire 3x
 - unisharp/laravel-filemanager 2.6
@@ -25,14 +27,13 @@
 - Boostrap 5x
 - Tabler and Tabler-icon
 
-
-## Requirements
+## Yêu cầu
 
 PHP 8.2+
 
-## Installation
+## Cài đặt
 
-You can install package via composer
+Bạn có thể cài đặt gói bằng Composer bằng cách thực hiện các bước sau:
 
 ```bash
 $ composer require byteplatform/byteplatform
@@ -42,41 +43,57 @@ $ php artisan vendor:publish --tag=lfm_config
 $ php artisan vendor:publish --tag=lfm_public
 ```
 
+Tài khoản mặc định
+
 ```bash
 account: admin@hau.xyz
 password: AdMin@123
 
 ```
 
-## Usage
+## Sử dụng nhanh
 
-Make module:
+Tạo 1 module mới bằng lệnh:
 
 ```bash
 $ php artisan mb:module Demo3 -a true -f true
 ```
 
-Make plugin:
+Tạo 1 plugin mới bằng lệnh:
 
 ```bash
 $ php artisan mb:plugin Demo3 -a true -f true
 ```
 
-Make theme:
+Tạo 1 theme mới bằng lệnh:
 
 ```bash
-$ php artisan mb:theme Demo3 -a true -t theme -f true
+$ php artisan mb:theme Demo3 -a true -f true
 ```
+
+# Hướng dẫn sử dụng các tính năng dưới dây:
+
+* [Tạo và sử dụng theme](./theme.md)
+* [Tạo và sử dụng module](./module.md)
+* [Tạo và sử dụng plugin](./plugin.md)
+
+# Các tính năng chung cho cả module, plugin và theme:
+
+* [Tính năng Action](./action.md)
+* [Tính năng command](./command.md)
+* [Tính năng common](./common.md)
+* [Tính năng crud](./crud.md)
+* [Tính năng field](./field.md)
+* [Tính năng locale](./locale.md)
+* [Tính năng setting](./setting.md)
+* [Tính năng shortcode](./shortcode.md)
+* [Tính năng widget](./widget.md)
 
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 Please make sure to update tests as appropriate.
-
-## Product list:
-
-[Free Online Tutorials](https://tutorialaz.com/)
 
 ## License
 
