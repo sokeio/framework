@@ -309,7 +309,7 @@ trait WithGeneratorStub
             if ($dataInfo) {
                 $this->_namespace =  $dataInfo->getValue('namespace');
             } else {
-                $this->_namespace = config('byte.namespace.root', config('byte.appdir.root', 'byteplatform')) . '\\' . config('byte.namespace.' . $this->getBaseTypeName(), config('byte.appdir.' . $this->getBaseTypeName())) . "\\" . $this->getStudlyNameReplacement();
+                $this->_namespace = config('byte.namespace.root', config('byte.appdir.root', 'byteplatform')) . config('byte.namespace.' . $this->getBaseTypeName(), config('byte.appdir.' . $this->getBaseTypeName())) . "\\" . $this->getStudlyNameReplacement();
             }
         }
         return $this->_namespace;

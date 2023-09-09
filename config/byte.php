@@ -197,10 +197,10 @@ return [
             }),
     ],
     'namespace' => [
-        'root' => 'Platform',
-        'theme' => 'Themes',
-        'module' => 'Modules',
-        'plugin' => 'Plugins',
+        'root' => 'Byte',
+        'theme' => 'Theme',
+        'module' => 'Module',
+        'plugin' => 'Plugin',
     ],
     /*
     |--------------------------------------------------------------------------
