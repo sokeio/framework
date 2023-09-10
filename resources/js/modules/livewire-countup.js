@@ -37,7 +37,7 @@ export class LiveWireCountUpModule {
         } else {
           window.addScriptToWindow(
             self.manager.getUrlPublic(
-              "platform/modules/byteplatform/countUp/dist/countUp.min.js"
+              "platform/modules/byteplatform/count-up/dist/count-up.min.js"
             ),
             function () {
               countupCreate();
