@@ -182,7 +182,7 @@ class PlatformManager
         }
         return $links;
     }
-    public function makeLink($relative = true, $force = true)
+    public function makeLink($relative = false, $force = true)
     {
         foreach (['theme', 'plugin', 'module'] as $item) {
             $pathType = byte_path($item);
