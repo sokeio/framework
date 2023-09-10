@@ -24,6 +24,9 @@ Route::group(['prefix' => '__byte__'], function () {
                 run_cmd(base_path(''), 'git pull');
                 run_cmd(base_path(''), 'rm -rf bootstrap/cache/*.php');
                 run_cmd(base_path(''), 'composer dump-autoload');
+                if(env('BYTE_DEPLOYMENT_MIGRATE',false)){
+                    run_cmd(base_path(''), 'php artisan migrate');
+                }
                 Artisan::call('cache:clear');
                 Artisan::call('config:clear');
                 Artisan::call('view:clear');
