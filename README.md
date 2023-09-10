@@ -7,6 +7,8 @@
 
 
 **BytePlatform** is a Laravel-based web application development package that provides support for developing modules, plugins, themes, livewire, and shortcodes. With BytePlatform, users can develop web applications faster and easier than ever before. The package provides flexible features and utilities to help users optimize the development process and accelerate the development speed of their web applications.
+
+**Template boilerplate**: https://github.com/ByTechAsia/laravel-boilerplate
 ## Feature(New):
 - Modules
 - Themes
