@@ -78,14 +78,14 @@ window.PlatformLoadScript = function (
     });
     return Promise.all(arrSource)
       .then(function () {
-        if (window.byteplatformManager) {
-          window.byteplatformManager.reloading();
+        if (window.ByteManager) {
+          window.ByteManager.reloading();
           window.PlatformLoadScript = undefined;
         }
       })
       .catch(function () {
-        if (window.byteplatformManager) {
-          window.byteplatformManager.reloading();
+        if (window.ByteManager) {
+          window.ByteManager.reloading();
           window.PlatformLoadScript = undefined;
         }
       });

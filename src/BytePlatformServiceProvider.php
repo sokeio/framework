@@ -134,17 +134,17 @@ class BytePlatformServiceProvider extends ServiceProvider
                 ]
             ];
             echo "
-            <script data-navigate-once type='text/javascript' id='byteplatformManagerjs____12345678901234567'>
+            <script data-navigate-once type='text/javascript' id='ByteManagerjs____12345678901234567'>
             " . $scriptBytePlatform . "
             
             window.addEventListener('BytePlatformInit',function(){
-                if(window.byteplatformManager){
-                    window.byteplatformManager.\$debug=" . (env('MODULE_PLATFORM_DEBUG', false) ? 'true' : 'false') . ";
-                    window.byteplatformManager.\$config=" . json_encode(apply_filters(PLATFORM_CONFIG_JS,  $arrConfigjs)) . ";
+                if(window.ByteManager){
+                    window.ByteManager.\$debug=" . (env('MODULE_PLATFORM_DEBUG', false) ? 'true' : 'false') . ";
+                    window.ByteManager.\$config=" . json_encode(apply_filters(PLATFORM_CONFIG_JS,  $arrConfigjs)) . ";
                 }
             });
             setTimeout(function(){
-                document.getElementById('byteplatformManagerjs____12345678901234567')?.remove();
+                document.getElementById('ByteManagerjs____12345678901234567')?.remove();
             },0)
             </script>";
             Assets::Render(PLATFORM_BODY_AFTER);
