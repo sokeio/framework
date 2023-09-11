@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <div class="col-auto ms-auto">
-                    @if (!$item->isVendor())
+                    @if ($ExtentionType == 'theme' || !$item->isVendor())
                         <label class="form-check form-switch m-0">
                             <input class="form-check-input position-static" type="checkbox" value="1"
                                 @if ($item->isActive()) checked="true" @endif
