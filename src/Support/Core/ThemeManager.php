@@ -121,7 +121,7 @@ class ThemeManager extends ActionHook
         if ($theme_data == null) return null;
         $this->data_themes[$parentId][] = $theme_data;
         if ($parent = $theme_data['parent']) {
-            $this->findAndRegister($parent, $parentId);
+            $this->findAndRegisterRoute($parent, $parentId);
         }
 
         $filenames = glob($theme_data->getPath('/src/Crud/*.php'));

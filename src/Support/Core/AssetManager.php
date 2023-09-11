@@ -93,9 +93,6 @@ class AssetManager
                 }
             }
         }
-        // echo "<pre>";
-        // print_r($dataLoader);
-        // print_r($this->assets);
         $this->dataLoader = $dataLoader;
     }
     public function Render($location)
