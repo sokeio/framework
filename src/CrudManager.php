@@ -67,10 +67,14 @@ class CrudManager
         }
 
         if ($formPage = $crud->FormPage()) {
-            Route::match($formPage->getMethodType(), $url . '-form/{dataId?}', function () use ($crudClass) {
+            Route::match($formPage->getMethodType(), $url . '-form/{dataId?}', function () use ($crudClass, $formPage) {
                 $route = Route::current();
                 $route->setParameter('manager', $crudClass);
-                $route->setAction(array_merge($route->getAction(), RouteAction::parse($route->uri(), ['uses' => FormPage::class])));
+                if ($formPage->getMethodType() == 'post') {
+                    $route->setAction(array_merge($route->getAction(), RouteAction::parse($route->uri(), ['uses' => Form::class])));
+                } else {
+                    $route->setAction(array_merge($route->getAction(), RouteAction::parse($route->uri(), ['uses' => FormPage::class])));
+                }
                 return $route->run();
             })->name($name . '-form');
         }
@@ -85,7 +89,11 @@ class CrudManager
                         if ($configCustomPage->IsTable()) {
                             $route->setAction(array_merge($route->getAction(), RouteAction::parse($route->uri(), ['uses' => TablePage::class])));
                         } else {
-                            $route->setAction(array_merge($route->getAction(), RouteAction::parse($route->uri(), ['uses' => FormPage::class])));
+                            if ($configCustomPage->getMethodType() == 'post') {
+                                $route->setAction(array_merge($route->getAction(), RouteAction::parse($route->uri(), ['uses' => Form::class])));
+                            } else {
+                                $route->setAction(array_merge($route->getAction(), RouteAction::parse($route->uri(), ['uses' => FormPage::class])));
+                            }
                         }
                         return $route->run();
                     })->name($name  . '-' . $key . '-form');

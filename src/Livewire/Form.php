@@ -4,16 +4,19 @@ namespace BytePlatform\Livewire;
 
 use BytePlatform\Component;
 use BytePlatform\Forms\WithFormData;
-use BytePlatform\ItemManager;
 use Livewire\Attributes\Reactive;
 
 class Form extends Component
 {
     use WithFormData;
     #[Reactive]
-    public ItemManager $manager;
+    public $manager;
+    public $formCustom;
     protected function ItemManager()
     {
-        return $this->manager;
+        if ($this->formCustom) {
+            return app($this->manager)->getFormCustom($this->formCustom);
+        }
+        return app($this->manager)->FormPage();
     }
 }

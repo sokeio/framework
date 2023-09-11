@@ -25,10 +25,14 @@ trait WithFormData
     {
         $this->getItemManager()->callDoAction('FORM_DO_SAVE', [], $this);
     }
+    public function getView()
+    {
+        return 'byte::forms.index';
+    }
     public function render()
     {
         page_title($this->getItemManager()->getTitle());
-        return view('byte::forms.index', [
+        return view($this->getView(), [
             'itemManager' => $this->getItemManager()
         ]);
     }
