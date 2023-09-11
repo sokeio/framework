@@ -243,7 +243,6 @@ export class PlatformModule extends PlatformEvent {
     let ShortcodeEventCallBack =
       "ShortcodeEventCallBack" + new Date().getTime();
     window[ShortcodeEventCallBack] = callback;
-    console.log(this.$config["byte_shortcode_setting"]);
     this.openModal(
       {
         $url: this.$config["byte_shortcode_setting"],
