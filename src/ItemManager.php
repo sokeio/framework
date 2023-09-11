@@ -43,6 +43,11 @@ class ItemManager extends BaseManager
         $this->__methodType = 'post';
         return $this;
     }
+    public function useMethodGet()
+    {
+        $this->__methodType = 'get';
+        return $this;
+    }
     public function getMethodType()
     {
         return $this->__methodType;
