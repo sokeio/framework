@@ -77,11 +77,12 @@ export class ToastsModule {
     );
   };
   init() {
-    this.manager.removeListenerAll("byte::message");
-    this.manager.onSafe("byte::message", this.showMessageEvent.bind(this));
-    Object.keys(this.postion).forEach((key) => {
-      this.postion_el[key] = this.manager.appendHtmlToBody(
-        `<div class="toast-container p-3 ${this.postion[key]}" id="toast-${key}">`
+    let self = this;
+    self.manager.removeListenerAll("byte::message");
+    self.manager.onSafe("byte::message", self.showMessageEvent.bind(this));
+    Object.keys(self.postion).forEach((key) => {
+      self.postion_el[key] = self.manager.appendHtmlToBody(
+        `<div style='position: fixed;' class="toast-container p-3 ${self.postion[key]}" id="toast-${key}">`
       );
     });
   }
