@@ -100,7 +100,7 @@ export class PlatformModule extends PlatformEvent {
       })
     );
     document.dispatchEvent(
-      new window.Event("BytePlatformRegister", {
+      new window.Event("byte::register", {
         bubbles: true,
         cancelable: false,
       })
@@ -236,22 +236,19 @@ export class PlatformModule extends PlatformEvent {
       };
     }
   }
-  openModal($url, $title, $size, dataModal = undefined) {
-    this.$module["BYTE_MODAL_MODULE"].openModal(
-      $url,
-      $title,
-      $size,
-      dataModal
-    );
+  openModal($option, dataModal = undefined) {
+    this.$module["BYTE_MODAL_MODULE"].openModal($option, dataModal);
   }
   openShortcodeSetting($shortcode, $attrs = [], $child, callback = undefined) {
     let ShortcodeEventCallBack =
       "ShortcodeEventCallBack" + new Date().getTime();
     window[ShortcodeEventCallBack] = callback;
+    console.log(this.$config["byte_shortcode_setting"]);
     this.openModal(
-      this.$config["byte_shortcode_setting"],
-      "Shortcode Setting",
-      "",
+      {
+        $url: this.$config["byte_shortcode_setting"],
+        $title: "Shortcode Setting",
+      },
       {
         shortcode: $shortcode,
         attrs: $attrs,

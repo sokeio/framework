@@ -163,7 +163,7 @@ class BytePlatformServiceProvider extends ServiceProvider
 
                 Item::Add('page_description')->Attribute(function () {
                     return 'rows="10"';
-                })->Column(Item::Col12)->Type('textarea')->Title('Page Description'),
+                })->Column(Item::Col12)->Type('tinymce')->Title('Page Description'),//tinymce//textarea
                 Item::Add('page_google_analytics')->Title('Google analytics'),
                 Item::Add('page_google_console')->Title('Google console'),
             ]);

@@ -24,7 +24,7 @@ Route::group(['prefix' => '__byte__'], function () {
                 run_cmd(base_path(''), 'git pull');
                 run_cmd(base_path(''), 'rm -rf bootstrap/cache/*.php');
                 run_cmd(base_path(''), 'composer dump-autoload');
-                if(env('BYTE_DEPLOYMENT_MIGRATE',false)){
+                if (env('BYTE_DEPLOYMENT_MIGRATE', false)) {
                     run_cmd(base_path(''), 'php artisan migrate');
                 }
                 Artisan::call('cache:clear');
@@ -66,8 +66,8 @@ Route::group(['prefix' => '__byte__'], function () {
     Route::group(['prefix' => 'filemanager', 'middleware' => ['web', 'auth']], function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();
     });
-    Route::group(['prefix' => 'shortcode-setting', 'middleware' => ['web', 'auth']], function () {
-        Route::post('/', ShortcodeSetting::class)->name('shortcode-setting');
+    Route::group(['middleware' => ['web', 'auth']], function () {
+        Route::post('shortcode-setting/', ShortcodeSetting::class)->name('shortcode-setting');
     });
 });
 Route::get('/', route_theme(function () {

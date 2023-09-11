@@ -18,9 +18,7 @@ import { LiveWireTagifyModule } from "./modules/livewire-tagify";
 import { LiveWireFlatpickrModule } from "./modules/livewire-flatpickr";
 window.ByteManager = modulePlatform;
 window.ByteManager.start();
-window.addEventListener("BytePlatformRegister", function () {
-  // window.dispatchEvent = document.dispatchEvent;
-  // console.log("BytePlatformRegister");
+window.addEventListener("byte::register", function () {
   window.ByteManager.register("BYTE_CONFIRM_MODULE", new ConfirmModule());
   window.ByteManager.register(
     "BYTE_FILEMANAGER_MODULE",
@@ -35,7 +33,7 @@ window.addEventListener("BytePlatformRegister", function () {
   window.ByteManager.register(
     "BYTE_LIVEWIRE_FLATPICK_MODULE",
     new LiveWireFlatpickrModule()
-  ); 
+  );
   window.ByteManager.register(
     "BYTE_LIVEWIRE_TAGIFY_MODULE",
     new LiveWireTagifyModule()
@@ -48,7 +46,7 @@ window.addEventListener("BytePlatformRegister", function () {
     "BYTE_LIVEWIRE_COUNTUP_MODULE",
     new LiveWireCountUpModule()
   );
-  
+
   window.ByteManager.register("BYTE_COMPONENT_MODULE", new ComponentModule());
   window.ByteManager.register("BYTE_MODAL_MODULE", new ModalModule());
   window.ByteManager.register("BYTE_TOASTS_MODULE", new ToastsModule());
@@ -84,10 +82,5 @@ window.openShortcodeSetting = function (
   $child,
   callback = undefined
 ) {
-  window.ByteManager.openShortcodeSetting(
-    $shortcode,
-    $attrs,
-    $child,
-    callback
-  );
+  window.ByteManager.openShortcodeSetting($shortcode, $attrs, $child, callback);
 };
