@@ -2,6 +2,7 @@
 
 namespace BytePlatform;
 
+use BytePlatform\Livewire\Form;
 use BytePlatform\Livewire\FormPage;
 use BytePlatform\Livewire\TablePage;
 use Illuminate\Routing\RouteAction;
