@@ -24,6 +24,14 @@ class Button extends ItemCallback
     {
         return $this->getValue('class');
     }
+    public function ButtonLink($ButtonLink)
+    {
+        return $this->setKeyValue('ButtonLink', $ButtonLink);
+    }
+    public function getButtonLink()
+    {
+        return $this->getValue('ButtonLink');
+    }
     public function ButtonSize($buttonSize)
     {
         return $this->setKeyValue('buttonSize', $buttonSize);

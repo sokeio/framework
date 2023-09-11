@@ -27,6 +27,10 @@
     if ($wireClick = $button->getWireClick()) {
         $buttonAtrr .= ' wire:click="' . $wireClick . '" ';
     }
+    if ($buttonLink = $button->getButtonLink()) {
+        $buttonAtrr .= 'href="' . $buttonLink . '" ';
+    }
+    
     if ($buttonType = $button->getButtonType()) {
         $buttonClass .= ' btn-' . $buttonType . ' ';
     }
@@ -36,6 +40,6 @@
     }
     
 @endphp
-<button class="btn {{ $buttonClass }}" {!! $buttonAtrr !!}>
+<a class="btn {{ $buttonClass }}" {!! $buttonAtrr !!}>
     {{ $button->getTitle() }}
-</button>
+</a>
