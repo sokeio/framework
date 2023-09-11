@@ -329,18 +329,33 @@ return [
             ],
             'layout' => [
                 'stub' => 'views/layout',
-                'path' => 'views',
+                'path' => 'view-layouts',
                 'name' => 'layout.blade.php'
             ],
             'layout-none' => [
                 'stub' => 'views/layout-none',
-                'path' => 'views',
+                'path' => 'view-layouts',
                 'name' => 'none.blade.php'
+            ],
+            'layout-default' => [
+                'stub' => 'views/layout-none',
+                'path' => 'view-layouts',
+                'name' => 'default.blade.php'
             ],
             'layout-name' => [
                 'stub' => 'views/layout-name',
-                'path' => 'views',
+                'path' => 'view-layouts',
                 'name' => '$LOWER_NAME$.blade.php'
+            ],
+            'share-header' => [
+                'stub' => 'views/empty',
+                'path' => 'view-share',
+                'name' => 'header.blade.php'
+            ],
+            'share-footer' => [
+                'stub' => 'views/empty',
+                'path' => 'view-share',
+                'name' => 'footer.blade.php'
             ],
             'app-js' => [
                 'stub' => 'assets/js/app',
@@ -779,6 +794,9 @@ return [
             'theme' => [
                 'layout',
                 'layout-none',
+                'layout-default',
+                'share-header',
+                'share-footer',
                 'composer',
                 'provider-base',
                 'json-theme',
@@ -817,6 +835,12 @@ return [
         'assets' => ['path' => 'resources', 'generate' => true],
         'lang' => ['path' => 'resources/lang', 'generate' => true],
         'views' => ['path' => 'resources/views', 'generate' => true],
+        'view-layouts' => ['path' => 'resources/views/layouts', 'generate' => true, 'only' => ['theme']],
+        'view-common' => ['path' => 'resources/views/common', 'generate' => true, 'only' => ['theme']],
+        'view-errors' => ['path' => 'resources/views/errors', 'generate' => true, 'only' => ['theme']],
+        'view-pages' => ['path' => 'resources/views/pages', 'generate' => true, 'only' => ['theme']],
+        'view-scope' => ['path' => 'resources/views/scope', 'generate' => true, 'only' => ['theme']],
+        'view-share' => ['path' => 'resources/views/share', 'generate' => true, 'only' => ['theme']],
         'public' => ['path' => 'public', 'generate' => true],
         'test' => ['path' => 'Tests/Unit', 'namespace' => 'Tests\\Unit', 'generate' => true, 'only' => ['module']],
         'test-feature' => ['path' => 'Tests/Feature', 'namespace' => 'Feature', 'generate' => true, 'only' => ['module']],

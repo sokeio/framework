@@ -99,8 +99,9 @@ class AssetManager
     {
         $this->loadFirst();
         if (isset($this->dataLoader[$location][self::CSS])) {
-            foreach ($this->dataLoader[$location][self::CSS] as $item) {
-                echo '<link rel="stylesheet" href="' . $item . '"/>';
+            $links = $this->dataLoader[$location][self::CSS];
+            for ($i = count($links) - 1; $i >= 0; $i--) {
+                echo '<link rel="stylesheet" href="' . $links[$i] . '"/>';
             }
         }
         if (isset($this->dataLoader[$location][self::STYLE])) {
