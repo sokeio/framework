@@ -70,17 +70,17 @@ class ItemForm extends DataForm
             if ($data == null) {
                 foreach ($this->itemManager->getItems() as  $item) {
                     if ($item->getWhen() && !$item->getNoBindData())
-                        $this->{$item->getField()} =  '';
+                        $this->{$item->getField()} =  $item->getValueDefault();
                 }
             } else if (is_array($data)) {
                 foreach ($this->itemManager->getItems() as  $item) {
                     if ($item->getWhen() && !$item->getNoBindData())
-                        $this->{$item->getField()} = isset($data[$item->getField()]) ? $data[$item->getField()] : '';
+                        $this->{$item->getField()} = isset($data[$item->getField()]) ? $data[$item->getField()] : $item->getValueDefault();
                 }
             } else {
                 foreach ($this->itemManager->getItems() as  $item) {
                     if ($item->getWhen() && !$item->getNoBindData())
-                        $this->{$item->getField()} = isset($data->{$item->getField()}) ? $data->{$item->getField()} : '';
+                        $this->{$item->getField()} = isset($data->{$item->getField()}) ? $data->{$item->getField()} : $item->getValueDefault();
                 }
             }
         }
@@ -112,7 +112,7 @@ class ItemForm extends DataForm
                 if (!$dataModel)  $dataModel = $this->component->newModel();
                 foreach ($this->itemManager->getItems() as $item) {
                     if ($item->getEdit() && $item->getWhen() && !$item->getNoBindData()) {
-                        $dataModel->{$item->getField()} = $this->{$item->getField()};
+                        $dataModel->{$item->getField()} = $this->{$item->getField()} ? $this->{$item->getField()} : $item->getValueDefault();
                     }
                 }
                 if (method_exists($this->itemManager, 'getBeforeFormDoSave'))

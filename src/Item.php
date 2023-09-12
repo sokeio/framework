@@ -293,6 +293,15 @@ class Item extends ItemCallback
     {
         return $this->getValue('field');
     }
+
+    public function ValueDefault($ValueDefault)
+    {
+        return $this->setKeyValue('ValueDefault', $ValueDefault);
+    }
+    public function getValueDefault()
+    {
+        return $this->getValue('ValueDefault');
+    }
     public function FieldValue($FieldValue)
     {
         return $this->setKeyValue('FieldValue', $FieldValue);
