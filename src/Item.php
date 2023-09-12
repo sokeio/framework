@@ -149,6 +149,7 @@ class Item extends ItemCallback
     {
         $this->Field($field)
             ->Column(self::Col6)
+            ->ValueDefault('')
             ->Data(function (Item $item, BaseManager $manager) {
                 return $manager->getData();
             })
