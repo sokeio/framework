@@ -52,20 +52,7 @@ class ItemManager extends BaseManager
     {
         return $this->__methodType;
     }
-    private  $___BeforeFormDoSave = null;
-    public function BeforeFormDoSave($callback)
-    {
-        $this->___BeforeFormDoSave = $callback;
-        return $this;
-    }
-    public function getBeforeFormDoSave($model)
-    {
-        if ($this->___BeforeFormDoSave && is_callable($this->___BeforeFormDoSave)) {
-            return ($this->___BeforeFormDoSave)($model, $this);
-        }
-        return $model;
-    }
-
+   
     public function FormDoSave($callback)
     {
         return $this->Action('FORM_DO_SAVE', $callback);

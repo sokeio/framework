@@ -125,4 +125,30 @@ class BaseManager extends ItemCallback
     {
         return $this->getValue('LayoutDefault');
     }
+    private  $___BeforeSave = null;
+    public function BeforeSave($callback)
+    {
+        $this->___BeforeSave = $callback;
+        return $this;
+    }
+    public function getBeforeSave($model)
+    {
+        if ($this->___BeforeSave && is_callable($this->___BeforeSave)) {
+            return ($this->___BeforeSave)($model, $this);
+        }
+        return $model;
+    }
+    private  $___AfterSave = null;
+    public function AfterSave($callback)
+    {
+        $this->___AfterSave = $callback;
+        return $this;
+    }
+    public function getAfterSave($model)
+    {
+        if ($this->___AfterSave && is_callable($this->___AfterSave)) {
+            return ($this->___AfterSave)($model, $this);
+        }
+        return $model;
+    }
 }

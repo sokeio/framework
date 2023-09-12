@@ -2,6 +2,7 @@
 
 namespace BytePlatform;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class ItemForm extends DataForm
@@ -115,9 +116,13 @@ class ItemForm extends DataForm
                         $dataModel->{$item->getField()} = $this->{$item->getField()} ? $this->{$item->getField()} : $item->getValueDefault();
                     }
                 }
-                if (method_exists($this->itemManager, 'getBeforeFormDoSave'))
-                    $dataModel = $this->itemManager->getBeforeFormDoSave($dataModel);
-                $dataModel->save();
+                DB::transaction(function () use ($dataModel) {
+                    if (method_exists($this->itemManager, 'getBeforeFormDoSave'))
+                        $dataModel = $this->itemManager->getBeforeSave($dataModel);
+                    $dataModel->save();
+                    if (method_exists($this->itemManager, 'getAfterFormDoSave'))
+                        $dataModel = $this->itemManager->getAfterSave($dataModel);
+                });
             }
         }
     }
