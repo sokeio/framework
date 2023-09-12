@@ -31,7 +31,9 @@ class DataForm extends FormBase implements \JsonSerializable
                 });
                 if (method_exists($this->itemManager, 'getItems')) {
                     foreach ($this->itemManager->getItems() as $item) {
-                        $this->{$item->getField()} = '';
+                        if ($item->getWhen() && !$item->getNoBindData()) {
+                            $this->{$item->getField()} =  $item->getValueDefault();
+                        }
                     }
                 }
             }
@@ -43,7 +45,9 @@ class DataForm extends FormBase implements \JsonSerializable
     {
         if ($this->itemManager && method_exists($this->itemManager, 'getItems')) {
             foreach ($this->itemManager->getItems() as $item) {
-                $this->{$item->getField()} = $data->{$item->getField()};
+                if ($item->getWhen() && !$item->getNoBindData()) {
+                    $this->{$item->getField()} = $data->{$item->getField()} ? $data->{$item->getField()} : $item->getValueDefault();
+                }
             }
         } else if ($data) {
             foreach ($data as $key => $value) {
