@@ -99,6 +99,11 @@ class ThemeManager extends ActionHook
         PlatformStatusChanged::dispatch($theme);
         Platform::makeLink();
     }
+    public function getLayouts()
+    {
+        return $this->data_layouts;
+    }
+    private $data_layouts = [];
     public $data_themes = [];
     private function findAndRegister($theme, $parentId = null)
     {
@@ -111,6 +116,9 @@ class ThemeManager extends ActionHook
             $this->findAndRegister($parent, $parentId);
         }
         $theme_data->DoRegister();
+        foreach ($theme_data->getLayouts() as $layout) {
+            $this->data_layouts[] = 'theme::' . $layout;
+        }
         return $theme_data;
     }
     private function findAndRegisterRoute($theme, $parentId = null)
@@ -128,7 +136,6 @@ class ThemeManager extends ActionHook
         if ($filenames) {
             foreach ($filenames as $filename) {
                 require_once $filename;
-                // echo $filename . '<br>';
             }
         }
         RouteEx::Load($theme_data->getPath('/routes/'));

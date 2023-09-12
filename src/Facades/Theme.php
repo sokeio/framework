@@ -42,6 +42,7 @@ use BytePlatform\Support\Core\ThemeManager;
  * @method static ThemeManager removeListener(string  $hook)
  * @method static array getListeners()
  * @method static mixed fire(string  $action,array  $args)
+ * @method static array getLayouts()
  * @method static array getModels()
  * @method static array getLocations()
  * @method static \BytePlatform\DataInfo SiteDataInfo()

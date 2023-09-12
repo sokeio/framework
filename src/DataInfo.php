@@ -154,6 +154,17 @@ class DataInfo extends JsonData
         }
         return $arr;
     }
+    public function getLayouts()
+    {
+        $arr = [];
+        if ($files =  glob($this->getPath('resources/views/layouts') . '/*.*')) {
+            foreach ($files as $itemFile) {
+                $fileName =  str_replace(".blade.php", "", basename($itemFile));
+                $arr[] = $fileName;
+            }
+        }
+        return $arr;
+    }
     public function isVendor()
     {
         return !Str::contains($this->getPath(), byte_path($this['base_type']), true);
