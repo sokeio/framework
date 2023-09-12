@@ -17,4 +17,8 @@ class FormPage extends Component
         }
         return app($this->manager)->FormPage();
     }
+    protected function getView()
+    {
+        return 'byte::forms.page';
+    }
 }

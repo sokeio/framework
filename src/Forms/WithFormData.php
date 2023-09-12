@@ -25,7 +25,7 @@ trait WithFormData
     {
         $this->getItemManager()->callDoAction('FORM_DO_SAVE', [], $this);
     }
-    public function getView()
+    protected function getView()
     {
         return 'byte::forms.index';
     }
