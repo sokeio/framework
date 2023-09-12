@@ -117,10 +117,10 @@ class ItemForm extends DataForm
                     }
                 }
                 DB::transaction(function () use ($dataModel) {
-                    if (method_exists($this->itemManager, 'getBeforeFormDoSave'))
+                    if (method_exists($this->itemManager, 'getBeforeSave'))
                         $dataModel = $this->itemManager->getBeforeSave($dataModel);
                     $dataModel->save();
-                    if (method_exists($this->itemManager, 'getAfterFormDoSave'))
+                    if (method_exists($this->itemManager, 'getAfterSave'))
                         $dataModel = $this->itemManager->getAfterSave($dataModel);
                 });
             }
