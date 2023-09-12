@@ -29,7 +29,7 @@ trait WithLivewire
     public function refreshData($option = [])
     {
         // if (!isset($option['id']) && !count($option)) $option['id'] = $this->getId();
-        $this->dispatch('byteplatform-refresh', option: $option);
+        $this->dispatch('byte::refresh', option: $option);
     }
     public function refreshRefComponent()
     {
@@ -55,15 +55,15 @@ trait WithLivewire
     }
     public function showMessage($option)
     {
-        $this->dispatch('byteplatform-message', option: $option);
+        $this->dispatch('byte::message', option: $option);
     }
     public function closeComponent($component = null)
     {
         if ($component) {
-            $this->dispatch('byteplatform-close',  option: ['component' => $component]);
+            $this->dispatch('byte::close',  option: ['component' => $component]);
         } else {
 
-            $this->dispatch('byteplatform-close',  option: ['id' => $this->getId()]);
+            $this->dispatch('byte::close',  option: ['id' => $this->getId()]);
         }
     }
     public function booted()

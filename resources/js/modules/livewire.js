@@ -27,7 +27,7 @@ export class LiveWireModule {
     this.manager.on("byte::loaded", (el) => {
       if (!window.Livewire) return;
       window.ByteManager.doTrigger(el);
-      window.addEventListener("byteplatform-close", ({ detail: { option } }) => {
+      window.addEventListener("byte::close", ({ detail: { option } }) => {
         let { id, component } = option;
         if (id) {
           let liveCom = window.Livewire.find(id)?.__instance;
@@ -69,7 +69,7 @@ export class LiveWireModule {
           window.Livewire.dispatch("refreshData" + id);
         } catch (ex) {}
       };
-      window.addEventListener("byteplatform-refresh", ({ detail: { option } }) => {
+      window.addEventListener("byte::refresh", ({ detail: { option } }) => {
         let { module, id, component } = option;
         if (module) {
           LivewireRefreshData(module);
@@ -86,15 +86,15 @@ export class LiveWireModule {
           LivewireRefreshData(id);
         }
       });
-      window.addEventListener("byteplatform-message", ({ detail: { option } }) => {
+      window.addEventListener("byte::message", ({ detail: { option } }) => {
         if (typeof option === "string") {
-          window.ByteManager.addInfo(option, "byteplatform-message");
+          window.ByteManager.addInfo(option, "byte::message");
         } else {
           const { error, message, type, meta, ...data } = option;
           window.ByteManager.addMessage(
             message ?? error,
             type,
-            "byteplatform-message",
+            "byte::message",
             { ...data, ...meta }
           );
         }

@@ -158,7 +158,7 @@ if (!function_exists('theme_class')) {
     /**
      * @param  string 
      */
-    function theme_class($default = 'byteplatform-page')
+    function theme_class($default = 'byte::page')
     {
         return apply_filters(PLATFORM_THEME_CLASS, $default);
     }

@@ -6,10 +6,7 @@ use BytePlatform\Button;
 use BytePlatform\Item;
 use BytePlatform\ItemManager;
 use BytePlatform\Models\Permission;
-use BytePlatform\Models\User;
 use BytePlatform\Traits\WithAction;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Schema;
 
 class TestTable
 {
