@@ -94,7 +94,7 @@ export class PlatformModule extends PlatformEvent {
   }
   init() {
     document.dispatchEvent(
-      new window.Event("BytePlatformInit", {
+      new window.Event("byte::init", {
         bubbles: true,
         cancelable: false,
       })

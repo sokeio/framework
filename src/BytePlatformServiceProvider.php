@@ -137,7 +137,7 @@ class BytePlatformServiceProvider extends ServiceProvider
             <script data-navigate-once type='text/javascript' id='ByteManagerjs____12345678901234567'>
             " . $scriptBytePlatform . "
             
-            window.addEventListener('BytePlatformInit',function(){
+            window.addEventListener('byte::init',function(){
                 if(window.ByteManager){
                     window.ByteManager.\$debug=" . (env('MODULE_PLATFORM_DEBUG', false) ? 'true' : 'false') . ";
                     window.ByteManager.\$config=" . json_encode(apply_filters(PLATFORM_CONFIG_JS,  $arrConfigjs)) . ";
