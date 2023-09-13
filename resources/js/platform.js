@@ -164,7 +164,7 @@ export class PlatformModule extends PlatformEvent {
     self.$loaded = true;
 
     document.body.dispatchEvent(
-      new window.Event("BytePlatformLoaded", {
+      new window.Event("byte::loaded", {
         bubbles: true,
         cancelable: false,
       })
