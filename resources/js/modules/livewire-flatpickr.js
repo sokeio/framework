@@ -1,7 +1,10 @@
-export class LiveWireFlatpickrModule {
-  manager = undefined;
-  init() {}
-  loading() {
+import { BytePlugin } from "../core/plugin";
+
+export class LiveWireFlatpickrModule extends BytePlugin {
+  getKey() {
+    return "BYTE_LIVEWIRE_FLATPICK_MODULE";
+  }
+  booting() {
     if (window.Livewire) {
       let self = this;
       window.Livewire.directive("flatpickr", ({ el, directive, component }) => {
@@ -24,15 +27,19 @@ export class LiveWireFlatpickrModule {
           flatpickrCreate();
         } else {
           window.addStyleToWindow(
-            self.manager.getUrlPublic(
-              "platform/modules/byteplatform/flatpickr/dist/flatpickr.min.css"
-            ),
+            self
+              .getManager()
+              .getUrlPublic(
+                "platform/modules/byteplatform/flatpickr/dist/flatpickr.min.css"
+              ),
             function () {}
           );
           window.addScriptToWindow(
-            self.manager.getUrlPublic(
-              "platform/modules/byteplatform/flatpickr/dist/flatpickr.min.js"
-            ),
+            self
+              .getManager()
+              .getUrlPublic(
+                "platform/modules/byteplatform/flatpickr/dist/flatpickr.min.js"
+              ),
             function () {
               flatpickrCreate();
             }
@@ -41,5 +48,4 @@ export class LiveWireFlatpickrModule {
       });
     }
   }
-  unint() {}
 }

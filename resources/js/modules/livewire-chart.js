@@ -1,7 +1,10 @@
-export class LiveWireChartModule {
-  manager = undefined;
-  init() {}
-  loading() {
+import { BytePlugin } from "../core/plugin";
+
+export class LiveWireChartModule extends BytePlugin{
+  getKey(){
+    return 'BYTE_LIVEWIRE_CHART_MODULE';
+  }
+  booting() {
     if (window.Livewire) {
       const self = this;
       window.Livewire.directive(
@@ -30,13 +33,13 @@ export class LiveWireChartModule {
             apexchartsInit();
           } else {
             window.addStyleToWindow(
-              self.manager.getUrlPublic(
+              self.getManager().getUrlPublic(
                 "platform/modules/byteplatform/apexcharts/dist/apexcharts.css"
               ),
               function () {}
             );
             window.addScriptToWindow(
-              self.manager.getUrlPublic(
+              self.getManager().getUrlPublic(
                 "platform/modules/byteplatform/apexcharts/dist/apexcharts.min.js"
               ),
               function () {
@@ -48,5 +51,4 @@ export class LiveWireChartModule {
       );
     }
   }
-  unint() {}
 }

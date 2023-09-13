@@ -1,7 +1,48 @@
-export class ModalModule {
-  manager = undefined;
+import { BytePlugin } from "../core/plugin";
+
+export class ModalModule extends BytePlugin {
+  getKey() {
+    return "BYTE_MODAL_MODULE";
+  }
+
+  booting() {
+    let self = this;
+    self.getManager().onDocument("click", "[byte\\:modal]", function (e) {
+      let elCurrentTarget = e.target;
+      let $url = elCurrentTarget.getAttribute("byte:modal");
+      let $modelField = elCurrentTarget.getAttribute("byte:model");
+      if (!$url) return;
+      let $title = elCurrentTarget.getAttribute("byte:modal-title") ?? "";
+      let $size = elCurrentTarget.getAttribute("byte:modal-size") ?? "";
+      let $btnChoose = "";
+      if (elCurrentTarget.hasAttribute("byte:modal-choose")) {
+        $btnChoose = elCurrentTarget.getAttribute("byte:modal-choose");
+        if ($btnChoose == "") $btnChoose = "Choose";
+      }
+      let parentEl = elCurrentTarget.closest("[wire\\:id]");
+      let refComponent = parentEl?.getAttribute("wire:id");
+      let selectIds = undefined;
+      if ($btnChoose && $modelField) {
+        selectIds = self
+          .getManager()
+          .dataGet(Livewire.find(refComponent), $modelField);
+      }
+      self.openModal(
+        {
+          $url,
+          $title,
+          $size,
+          $btnChoose,
+          $modelField,
+          $btnElement: elCurrentTarget,
+        },
+        { refComponent, selectIds }
+      );
+    });
+  }
   getModalHtml($title, $size, $modalId) {
-    return this.manager
+    let self = this;
+    return self.getManager()
       .htmlToElement(`<div class="modal modal-blur modal-byteplatform fade" id="${$modalId}" tabindex="-1" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-dialog-centered ${$size}" role="document">
       <div class="modal-content">
@@ -37,8 +78,9 @@ export class ModalModule {
       elModal.remove();
       window.Livewire?.rescan();
     });
-    self.manager.$axios
-      .post($url, dataModal, {
+    self
+      .getManager()
+      .$axios.post($url, dataModal, {
         timeout: 1000 * 10, // Wait for 10 seconds
         headers: {
           "Content-Type": "application/json",
@@ -46,7 +88,7 @@ export class ModalModule {
       })
       .then(({ data: htmlContent }) => {
         let $btnClass = "btn-choose-modal-" + new Date().getTime();
-        if ($btnChoose != "") {
+        if ($btnChoose && $btnChoose != "") {
           htmlContent +=
             '<div class="p-2 text-center"><button class="btn btn-primary ' +
             $btnClass +
@@ -62,7 +104,7 @@ export class ModalModule {
           .insertAdjacentHTML("afterend", htmlContent);
         window.Livewire?.rescan();
         let modalWireComponent = elModal.querySelector("[wire\\:id]");
-        if ($btnChoose != "" && modalWireComponent) {
+        if ($btnChoose && $btnChoose != "" && modalWireComponent) {
           let modalWireId = modalWireComponent.getAttribute("wire:id");
           let refComponent = dataModal?.refComponent;
           elModal
@@ -83,11 +125,13 @@ export class ModalModule {
               }, 0);
               let WireComponentRef = Livewire.find(refComponent);
               if (WireComponentRef && $modelField) {
-                self.manager.dataSet(
-                  WireComponentRef,
-                  $modelField,
-                  self.manager.dataGet(WireComponent, "selectIds")
-                );
+                self
+                  .getManager()
+                  .dataSet(
+                    WireComponentRef,
+                    $modelField,
+                    self.getManager().dataGet(WireComponent, "selectIds")
+                  );
               }
               modalApp.hide();
             });
@@ -100,42 +144,4 @@ export class ModalModule {
         }, 400);
       });
   }
-  init() {
-    let self = this;
-    this.manager.onDocument("click", "[byte\\:modal]", function (e) {
-      let elCurrentTarget = e.target;
-      let $url = elCurrentTarget.getAttribute("byte:modal");
-      let $modelField = elCurrentTarget.getAttribute("byte:model");
-      if (!$url) return;
-      let $title = elCurrentTarget.getAttribute("byte:modal-title") ?? "";
-      let $size = elCurrentTarget.getAttribute("byte:modal-size") ?? "";
-      let $btnChoose = "";
-      if (elCurrentTarget.hasAttribute("byte:modal-choose")) {
-        $btnChoose = elCurrentTarget.getAttribute("byte:modal-choose");
-        if ($btnChoose == "") $btnChoose = "Choose";
-      }
-      let parentEl = elCurrentTarget.closest("[wire\\:id]");
-      let refComponent = parentEl?.getAttribute("wire:id");
-      let selectIds = undefined;
-      if ($btnChoose && $modelField) {
-        selectIds = self.manager.dataGet(
-          Livewire.find(refComponent),
-          $modelField
-        );
-      }
-      self.openModal(
-        {
-          $url,
-          $title,
-          $size,
-          $btnChoose,
-          $modelField,
-          $btnElement: elCurrentTarget,
-        },
-        { refComponent, selectIds }
-      );
-    });
-  }
-  loading() {}
-  unint() {}
 }

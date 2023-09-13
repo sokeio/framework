@@ -1,9 +1,7 @@
-export class DefaultModule {
-    manager = undefined;
-    init() {
-    }
-    loading() {
-     }
-    unint() {}
+import { BytePlugin } from "../core/plugin";
+
+export class DefaultModule extends BytePlugin {
+  getKey() {
+    return "BYTE_FILEMANAGER_MODULE";
   }
-  
+}

@@ -1,11 +1,10 @@
-export class LiveWireTinymceModule {
-  manager = undefined;
-  shortCode = false;
-  addShortCode() {
-    return;
+import { BytePlugin } from "../core/plugin";
+
+export class LiveWireTinymceModule extends BytePlugin {
+  getKey() {
+    return "BYTE_LIVEWIRE_TINYMCE_MODULE";
   }
-  init() {}
-  loading() {
+  booting() {
     const self = this;
     if (window.Livewire) {
       window.Livewire.directive(
@@ -25,10 +24,9 @@ export class LiveWireTinymceModule {
             el.getAttribute("wire:tinymce-model") ??
             el.getAttribute("wire:model");
           const tinymceInit = () => {
-            self.addShortCode();
             if (el.livewire____tinymce) return;
             el.livewire____tinymce = window.tinymce.init({
-              ...(self.manager.$config["tinyecm_option"] ?? {}),
+              ...(self.getManager().$config["tinyecm_option"] ?? {}),
               ...options,
               promotion: false,
               target: el,
@@ -45,11 +43,13 @@ export class LiveWireTinymceModule {
                     el.value = editor.getContent();
                   }
 
-                  self.manager.dataSet(component.$wire, modelKey, el.value);
+                  self
+                    .getManager()
+                    .dataSet(component.$wire, modelKey, el.value);
                 });
               },
               file_picker_callback: function (callback, value, meta) {
-                if (!self.manager.$config["byte_filemanager"]) return;
+                if (!self.getManager().$config["byte_filemanager"]) return;
                 var x =
                   window.innerWidth ||
                   document.documentElement.clientWidth ||
@@ -60,7 +60,7 @@ export class LiveWireTinymceModule {
                   document.getElementsByTagName("body")[0].clientHeight;
 
                 var cmsURL =
-                  self.manager.$config["byte_filemanager"] +
+                  self.getManager().$config["byte_filemanager"] +
                   "?editor=" +
                   meta.fieldname;
                 if (meta.filetype == "image") {
@@ -87,9 +87,11 @@ export class LiveWireTinymceModule {
             tinymceInit();
           } else {
             window.addScriptToWindow(
-              self.manager.getUrlPublic(
-                "platform/modules/byteplatform/tinymce/tinymce.min.js"
-              ),
+              self
+                .getManager()
+                .getUrlPublic(
+                  "platform/modules/byteplatform/tinymce/tinymce.min.js"
+                ),
               function () {
                 setTimeout(() => {
                   tinymceInit();
@@ -101,5 +103,4 @@ export class LiveWireTinymceModule {
       );
     }
   }
-  unint() {}
 }

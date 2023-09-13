@@ -1,21 +1,36 @@
-export class ComponentModule {
-  manager = undefined;
+import { BytePlugin } from "../core/plugin";
+
+export class ComponentModule extends BytePlugin {
+  getKey() {
+    return "BYTE_COMPONENT_MODULE";
+  }
+  booting() {
+    const self = this;
+    self
+      .getManager()
+      .onDocument(
+        "click",
+        "[byte\\:component]",
+        self.clickEventComponent.bind(this)
+      );
+  }
   openComponent(key, toEl) {
     const self = this;
     if (!toEl) toEl = document?.body;
-    self.manager.$axios
-      .post(self.manager.getUrl("component"), {
+    self
+      .getManager()
+      .$axios.post(self.getManager().getUrl("component"), {
         key: key,
       })
       .then(async (response) => {
         if (response.status == 200) {
           let data = response.data;
           if (!data.error_code) {
-            let el = self.manager.htmlToElement(data.html);
+            let el = self.getManager().htmlToElement(data.html);
             toEl.appendChild(el);
-            this.manager.doTrigger(el);
+            self.getManager().doTrigger(el);
           } else {
-            this.manager.addError(data.error, "byte::component", {
+            self.getManager().addError(data.error, "byte::component", {
               toEl,
               key,
               data,
@@ -23,10 +38,10 @@ export class ComponentModule {
           }
 
           if (data.csrf_token)
-            this.manager.$config["csrf_token"] = data.csrf_token;
+            self.getManager().$config["csrf_token"] = data.csrf_token;
         } else {
           let data = await response.data;
-          this.manager.addError(data.error, "byte::component", {
+          self.getManager().addError(data.error, "byte::component", {
             toEl,
             key,
             data,
@@ -49,15 +64,6 @@ export class ComponentModule {
     if (!targetTo) {
       targetTo = document?.body;
     }
-    this.openComponent(strComponent, targetTo);
+    self.openComponent(strComponent, targetTo);
   }
-  init() {}
-  loading() {
-    this.manager.onDocument(
-      "click",
-      "[byte\\:component]",
-      this.clickEventComponent.bind(this)
-    );
-  }
-  unint() {}
 }

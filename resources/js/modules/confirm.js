@@ -1,6 +1,20 @@
-export class ConfirmModule {
-  manager = undefined;
+import { BytePlugin } from "../core/plugin";
+
+export class ConfirmModule extends BytePlugin {
+  getKey() {
+    return "BYTE_CONFIRM_MODULE";
+  }
+  booting() {
+    const self = this;
+    self
+      .getManager()
+      .onDocument("mousedown", "[byte\\:confirm]", self.clickEvent.bind(self));
+    window.showConfirm = (content, title, option = undefined) => {
+      self.showConfirm(content, title, option);
+    };
+  }
   clickEvent(e) {
+    const self = this;
     e.stopPropagation();
     e.stopImmediatePropagation();
     let elCurrentTarget = e.target;
@@ -8,7 +22,7 @@ export class ConfirmModule {
     let title = elCurrentTarget.getAttribute("byte:confirm-title");
     let btnYes = elCurrentTarget.getAttribute("byte:confirm-yes");
     let btnNo = elCurrentTarget.getAttribute("byte:confirm-no");
-    this.showConfirm(message, title, {
+    self.showConfirm(message, title, {
       btnYes,
       btnNo,
       onNo: function () {},
@@ -22,28 +36,15 @@ export class ConfirmModule {
       },
     });
   }
-
-  init() {
-    const self = this;
-    this.manager.onDocument(
-      "mousedown",
-      "[byte\\:confirm]",
-      self.clickEvent.bind(self)
-    );
-    window.showConfirm = (content, title, option = undefined) => {
-      self.showConfirm(content, title, option);
-    };
-  }
-  loading() {}
-  unint() {}
   showConfirm(content, title, option = undefined) {
+    const self = this;
     let { btnYes, btnNo, onYes, onNo } = option ?? {
       btnYes: undefined,
       btnNo: undefined,
       onYes: undefined,
       onNo: undefined,
     };
-    const elConfirm = this.manager
+    const elConfirm = self.getManager()
       .htmlToElement(`<div class="modal " tabindex="-1">
                         <div class="modal-dialog modal-sm">
                           <div class="modal-content">

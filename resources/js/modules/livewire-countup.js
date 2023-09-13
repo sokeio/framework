@@ -1,7 +1,10 @@
-export class LiveWireCountUpModule {
-  manager = undefined;
-  init() {}
-  loading() {
+import { BytePlugin } from "../core/plugin";
+
+export class LiveWireCountUpModule extends BytePlugin {
+  getKey(){
+    return 'BYTE_LIVEWIRE_COUNTUP_MODULE';
+  }
+  booting() {
     if (window.Livewire) {
       let self = this;
       window.Livewire.directive("countup", ({ el, directive, component }) => {
@@ -18,7 +21,7 @@ export class LiveWireCountUpModule {
         }
         let valueNumber = el.getAttribute("wire:countup");
         if (!valueNumber || valueNumber == "") {
-          valueNumber = self.manager.dataGet(
+          valueNumber = self.getManager().dataGet(
             component.$wire,
             el.getAttribute("wire:countup.model")
           );
@@ -36,7 +39,7 @@ export class LiveWireCountUpModule {
           countupCreate();
         } else {
           window.addScriptToWindow(
-            self.manager.getUrlPublic(
+            self.getManager().getUrlPublic(
               "platform/modules/byteplatform/count-up/dist/count-up.min.js"
             ),
             function () {
@@ -47,5 +50,4 @@ export class LiveWireCountUpModule {
       });
     }
   }
-  unint() {}
 }

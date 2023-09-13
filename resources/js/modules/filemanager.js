@@ -1,5 +1,17 @@
-export class FileManagerModule {
-  manager = undefined;
+import { BytePlugin } from "../core/plugin";
+
+export class FileManagerModule extends BytePlugin {
+  getKey() {
+    return "BYTE_FILEMANAGER_MODULE";
+  }
+  booting() {
+    const self = this;
+    self.getManager().onDocument(
+      "click",
+      "[byte\\:filemanager]",
+      self.clickEvent.bind(self)
+    );
+  }
   clickEvent(e) {
     e.stopPropagation && e.stopPropagation();
     e.stopImmediatePropagation && e.stopImmediatePropagation();
@@ -12,15 +24,15 @@ export class FileManagerModule {
       elCurrentTarget?.getAttribute("byte:filemanager-type") || "image";
     let component = window.Livewire.find(componentId)?.__instance;
     let self = this;
-    this.manager.showFileManager(function (items) {
+    self.getManager().showFileManager(function (items) {
       if (elCurrentTarget?.hasAttribute("byte:filemanager-mutil")) {
-        self.manager.dataSet(
+        self.getManager().dataSet(
           component.$wire,
           filemanagerModel,
           items.map((item) => item.url)
         );
       } else {
-        self.manager.dataSet(
+        self.getManager().dataSet(
           component.$wire,
           filemanagerModel,
           items.map((item) => item.url)?.[0]
@@ -29,14 +41,4 @@ export class FileManagerModule {
     }, filemanagerType);
     return false;
   }
-  init() {
-    const self = this;
-    this.manager.onDocument(
-      "click",
-      "[byte\\:filemanager]",
-      self.clickEvent.bind(self)
-    );
-  }
-  loading() {}
-  unint() {}
 }

@@ -1,5 +1,19 @@
-export class ToastsModule {
-  manager = undefined;
+import { BytePlugin } from "../core/plugin";
+
+export class ToastsModule  extends BytePlugin{
+  getKey(){
+    return 'BYTE_TOASTS_MODULE';
+  }
+  booting() {
+    let self = this;
+    self.getManager().removeListenerAll("byte::message");
+    self.getManager().onSafe("byte::message", self.showMessageEvent.bind(this));
+    Object.keys(self.postion).forEach((key) => {
+      self.postion_el[key] = self.getManager().appendHtmlToBody(
+        `<div style='position: fixed;' class="toast-container p-3 ${self.postion[key]}" id="toast-${key}">`
+      );
+    });
+  }
   postion = {
     top_left: "top-0 start-0",
     top_center: "top-0 start-50 translate-middle-x",
@@ -20,6 +34,7 @@ export class ToastsModule {
     autohide = true,
     onCallback = undefined
   ) {
+    let self = this;
     let toastContainer = this.postion_el["bottom_right"];
     if (postion && this.postion_el[postion]) {
       toastContainer = this.postion_el[postion];
@@ -52,7 +67,7 @@ export class ToastsModule {
     <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
   </div>
 </div>`;
-    const toastEl = this.manager.htmlToElement(contenthtml.trim());
+    const toastEl = self.getManager().htmlToElement(contenthtml.trim());
     toastContainer.appendChild(toastEl);
     const toast = new globalThis.bootstrap.Toast(toastEl);
     toast.show();
@@ -76,16 +91,5 @@ export class ToastsModule {
       onCallback
     );
   };
-  init() {
-    let self = this;
-    self.manager.removeListenerAll("byte::message");
-    self.manager.onSafe("byte::message", self.showMessageEvent.bind(this));
-    Object.keys(self.postion).forEach((key) => {
-      self.postion_el[key] = self.manager.appendHtmlToBody(
-        `<div style='position: fixed;' class="toast-container p-3 ${self.postion[key]}" id="toast-${key}">`
-      );
-    });
-  }
-  loading() {}
-  unint() {}
+  
 }

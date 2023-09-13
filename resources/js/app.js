@@ -1,6 +1,6 @@
 "use strict";
 
-import { modulePlatform } from "./platform";
+import { BytePlatform } from "./platform";
 import { ComponentModule } from "./modules/components";
 import { ActionModule } from "./modules/action";
 import { LiveWireModule } from "./modules/livewire";
@@ -16,66 +16,45 @@ import { getShortcodeObjectFromText, onEventListenerFromDom } from "./utils";
 import { LiveWireCountUpModule } from "./modules/livewire-countup";
 import { LiveWireTagifyModule } from "./modules/livewire-tagify";
 import { LiveWireFlatpickrModule } from "./modules/livewire-flatpickr";
-window.ByteManager = modulePlatform;
+let ByteManager = new BytePlatform();
+window.ByteManager = ByteManager;
 window.ByteManager.start();
 window.addEventListener("byte::register", function () {
-  window.ByteManager.register("BYTE_CONFIRM_MODULE", new ConfirmModule());
-  window.ByteManager.register(
-    "BYTE_FILEMANAGER_MODULE",
-    new FileManagerModule()
-  );
-  window.ByteManager.register("BYTE_ACTION_MODULE", new ActionModule());
-  window.ByteManager.register("BYTE_LIVEWIRE_MODULE", new LiveWireModule());
-  window.ByteManager.register(
-    "BYTE_LIVEWIRE_CHART_MODULE",
-    new LiveWireChartModule()
-  );
-  window.ByteManager.register(
-    "BYTE_LIVEWIRE_FLATPICK_MODULE",
-    new LiveWireFlatpickrModule()
-  );
-  window.ByteManager.register(
-    "BYTE_LIVEWIRE_TAGIFY_MODULE",
-    new LiveWireTagifyModule()
-  );
-  window.ByteManager.register(
-    "BYTE_LIVEWIRE_SORTABLEJS_MODULE",
-    new LiveWireSortablejsModule()
-  );
-  window.ByteManager.register(
-    "BYTE_LIVEWIRE_COUNTUP_MODULE",
-    new LiveWireCountUpModule()
-  );
+  window.ByteManager.registerPlugin(ConfirmModule);
+  window.ByteManager.registerPlugin(FileManagerModule);
+  window.ByteManager.registerPlugin(ActionModule);
+  window.ByteManager.registerPlugin(LiveWireModule);
+  window.ByteManager.registerPlugin(LiveWireChartModule);
+  window.ByteManager.registerPlugin(LiveWireFlatpickrModule);
+  window.ByteManager.registerPlugin(LiveWireTagifyModule);
+  window.ByteManager.registerPlugin(LiveWireSortablejsModule);
+  window.ByteManager.registerPlugin(LiveWireCountUpModule);
 
-  window.ByteManager.register("BYTE_COMPONENT_MODULE", new ComponentModule());
-  window.ByteManager.register("BYTE_MODAL_MODULE", new ModalModule());
-  window.ByteManager.register("BYTE_TOASTS_MODULE", new ToastsModule());
+  window.ByteManager.registerPlugin(ComponentModule);
+  window.ByteManager.registerPlugin(ModalModule);
+  window.ByteManager.registerPlugin(ToastsModule);
 
-  window.ByteManager.register(
-    "BYTE_LIVEWIRE_GET_VALUE_MODULE",
-    new LiveWireGetValueParentModule()
-  );
-  window.ByteManager.register(
-    "BYTE_LIVEWIRE_TINYMCE_MODULE",
-    new LiveWireTinymceModule()
-  );
-
-  window.showToast = function (
-    message,
-    title = undefined,
-    postion = undefined,
-    type = undefined,
-    messageType = "info"
-  ) {
-    window.ByteManager.addMessage(message, messageType, "showToast", {
-      title,
-      postion,
-      type,
-    });
-  };
-  window.onEventListenerFromDom = onEventListenerFromDom;
-  window.getShortcodeObjectFromText = getShortcodeObjectFromText;
+  window.ByteManager.registerPlugin(LiveWireGetValueParentModule);
+  window.ByteManager.registerPlugin(LiveWireTinymceModule);
 });
+window.showToast = function (
+  message,
+  title = undefined,
+  postion = undefined,
+  type = undefined,
+  messageType = "info"
+) {
+  window.ByteManager.addMessage(message, messageType, "showToast", {
+    title,
+    postion,
+    type,
+  });
+};
+window.onEventListenerFromDom = onEventListenerFromDom;
+window.getShortcodeObjectFromText = getShortcodeObjectFromText;
+window.showFileManager = function (callback, type = "file") {
+  window.ByteManager.showFileManager(callback, type);
+};
 window.openShortcodeSetting = function (
   $shortcode,
   $attrs = [],

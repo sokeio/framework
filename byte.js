@@ -79,13 +79,13 @@ window.PlatformLoadScript = function (
     return Promise.all(arrSource)
       .then(function () {
         if (window.ByteManager) {
-          window.ByteManager.reloading();
+          window.ByteManager.start();
           window.PlatformLoadScript = undefined;
         }
       })
       .catch(function () {
         if (window.ByteManager) {
-          window.ByteManager.reloading();
+          window.ByteManager.start();
           window.PlatformLoadScript = undefined;
         }
       });

@@ -1,7 +1,10 @@
-export class LiveWireFlatpickrModule {
-  manager = undefined;
-  init() {}
-  loading() {
+import { BytePlugin } from "../core/plugin";
+
+export class LiveWireClipboardModule extends BytePlugin {
+  getKey() {
+    return "BYTE_LIVEWIRE_CLIPBOARD_MODULE";
+  }
+  booting() {
     if (window.Livewire) {
       let self = this;
       window.Livewire.directive("clipboard", ({ el, directive, component }) => {
@@ -24,9 +27,11 @@ export class LiveWireFlatpickrModule {
           clipboardCreate();
         } else {
           window.addScriptToWindow(
-            self.manager.getUrlPublic(
-              "platform/modules/byteplatform/clipboard/dist/clipboard.min.js"
-            ),
+            self
+              .getManager()
+              .getUrlPublic(
+                "platform/modules/byteplatform/clipboard/dist/clipboard.min.js"
+              ),
             function () {
               clipboardCreate();
             }
@@ -35,5 +40,4 @@ export class LiveWireFlatpickrModule {
       });
     }
   }
-  unint() {}
 }

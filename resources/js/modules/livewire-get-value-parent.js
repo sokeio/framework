@@ -1,7 +1,10 @@
-export class LiveWireGetValueParentModule {
-  manager = undefined;
-  init() {}
-  loading() {
+import { BytePlugin } from "../core/plugin";
+
+export class LiveWireGetValueParentModule extends BytePlugin {
+  getKey() {
+    return "BYTE_LIVEWIRE_GET_VALUE_MODULE";
+  }
+  booting() {
     const self = this;
     if (window.Livewire && window.tinymce) {
       window.Livewire.directive(
@@ -23,8 +26,8 @@ export class LiveWireGetValueParentModule {
           if (!componentParent) {
             return;
           }
-          let valueVar = self.manager.dataGet(componentParent, varKey);
-          self.manager.dataSet(component.$wire, modelKey, valueVar);
+          let valueVar = self.getManager().dataGet(componentParent, varKey);
+          self.getManager().dataSet(component.$wire, modelKey, valueVar);
         }
       );
     }

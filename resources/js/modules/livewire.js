@@ -1,12 +1,14 @@
-export class LiveWireModule {
-  manager = undefined;
+import { BytePlugin } from "../core/plugin";
+
+export class LiveWireModule extends BytePlugin {
+  getKey() {
+    return "BYTE_LIVEWIRE_MODULE";
+  }
   CacheRejs = undefined;
-  CacheAlpine = undefined;
   CacheLivewire = undefined;
-  init() {}
-  loading() {
+  booted() {
     let self = this;
-    this.manager.on("byte::trigger_after", (el) => {
+    self.getManager().on("byte::trigger_after", (el) => {
       if (self.CacheRejs != undefined) {
         clearTimeout(self.CacheRejs);
       }
@@ -19,12 +21,9 @@ export class LiveWireModule {
           window.Livewire?.start();
         }
         self.CacheLivewire = true;
-
-        if (!self.CacheAlpine) self.manager.$alpine?.start();
-        self.CacheAlpine = true;
       }, 80);
     });
-    this.manager.on("byte::loaded", (el) => {
+    self.getManager().on("byte::loaded", (el) => {
       if (!window.Livewire) return;
       window.ByteManager.doTrigger(el);
       window.addEventListener("byte::close", ({ detail: { option } }) => {
@@ -87,6 +86,7 @@ export class LiveWireModule {
         }
       });
       window.addEventListener("byte::message", ({ detail: { option } }) => {
+        console.log('byte::message')
         if (typeof option === "string") {
           window.ByteManager.addInfo(option, "byte::message");
         } else {
@@ -101,5 +101,4 @@ export class LiveWireModule {
       });
     });
   }
-  unint() {}
 }

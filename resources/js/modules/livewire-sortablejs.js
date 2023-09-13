@@ -1,7 +1,10 @@
-export class LiveWireSortablejsModule {
-  manager = undefined;
-  init() {}
-  loading() {
+import { BytePlugin } from "../core/plugin";
+
+export class LiveWireSortablejsModule extends BytePlugin {
+  getKey() {
+    return "BYTE_LIVEWIRE_SORTABLEJS_MODULE";
+  }
+  booting() {
     if (window.Livewire) {
       let self = this;
       window.Livewire.directive("sortable", ({ el, directive, component }) => {
@@ -52,9 +55,11 @@ export class LiveWireSortablejsModule {
           SortableCreate();
         } else {
           window.addScriptToWindow(
-            self.manager.getUrlPublic(
-              "platform/modules/byteplatform/sortable/sortable.min.js"
-            ),
+            self
+              .getManager()
+              .getUrlPublic(
+                "platform/modules/byteplatform/sortable/sortable.min.js"
+              ),
             function () {
               SortableCreate();
             }
@@ -132,9 +137,11 @@ export class LiveWireSortablejsModule {
             SortableCreate();
           } else {
             window.addScriptToWindow(
-              self.manager.getUrlPublic(
-                "platform/modules/byteplatform/sortable/sortable.min.js"
-              ),
+              self
+                .getManager()
+                .getUrlPublic(
+                  "platform/modules/byteplatform/sortable/sortable.min.js"
+                ),
               function () {
                 SortableCreate();
               }
@@ -144,5 +151,4 @@ export class LiveWireSortablejsModule {
       );
     }
   }
-  unint() {}
 }

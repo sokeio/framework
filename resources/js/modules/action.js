@@ -1,9 +1,12 @@
-export class ActionModule {
-  manager = undefined;
-  init() {}
-  loading() {
-    let selfManager = this;
-    this.manager.onDocument("click", "[byte\\:action]", function (e) {
+import { BytePlugin } from "../core/plugin";
+
+export class ActionModule extends BytePlugin {
+  getKey() {
+    return "BYTE_ACTION_MODULE";
+  }
+  booting() {
+    let self = this;
+    self.getManager().onDocument("click", "[byte\\:action]", function (e) {
       let elCurrentTarget = e.target;
       elCurrentTarget.setAttribute("byte:action-loading", "");
       let action = elCurrentTarget.getAttribute("byte:action");
@@ -14,8 +17,9 @@ export class ActionModule {
       let error = elCurrentTarget.getAttribute("byte:action-error");
       if (action && action != "") {
         //TODO: CALL TO ACTION
-        self.manager.$axios
-          .post(self.manager.getUrl("action"), {
+        self
+          .getManager()
+          .$axios.post(self.getManager().getUrl("action"), {
             action,
             data: body ?? {},
           })
@@ -28,8 +32,9 @@ export class ActionModule {
             elCurrentTarget.removeAttribute("byte:action-loading");
           });
       } else if (url && url != "") {
-        selfManager.manager.$axios
-          .request({
+        self
+          .getManager()
+          .$axios.request({
             method,
             url,
             data: body ?? {},

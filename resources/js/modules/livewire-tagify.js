@@ -1,7 +1,10 @@
-export class LiveWireTagifyModule {
-  manager = undefined;
-  init() {}
-  loading() {
+import { BytePlugin } from "../core/plugin";
+
+export class LiveWireTagifyModule extends BytePlugin {
+  getKey() {
+    return "BYTE_LIVEWIRE_TAGIFY_MODULE";
+  }
+  booting() {
     if (window.Livewire) {
       let self = this;
       window.Livewire.directive("tagify", ({ el, directive, component }) => {
@@ -52,7 +55,7 @@ export class LiveWireTagifyModule {
             });
         };
         const onChange = (e) => {
-          self.manager.dataSet(component.$wire, modelKey, e.detail.value);
+          self.getManager().dataSet(component.$wire, modelKey, e.detail.value);
         };
         const tagifyCreate = () => {
           if (!el.livewire____tagify) {
@@ -65,15 +68,19 @@ export class LiveWireTagifyModule {
           tagifyCreate();
         } else {
           window.addStyleToWindow(
-            self.manager.getUrlPublic(
-              "platform/modules/byteplatform/tagify/dist/tagify.css"
-            ),
+            self
+              .getManager()
+              .getUrlPublic(
+                "platform/modules/byteplatform/tagify/dist/tagify.css"
+              ),
             function () {}
           );
           window.addScriptToWindow(
-            self.manager.getUrlPublic(
-              "platform/modules/byteplatform/tagify/dist/tagify.min.js"
-            ),
+            self
+              .getManager()
+              .getUrlPublic(
+                "platform/modules/byteplatform/tagify/dist/tagify.min.js"
+              ),
             function () {
               tagifyCreate();
             }
@@ -82,5 +89,4 @@ export class LiveWireTagifyModule {
       });
     }
   }
-  unint() {}
 }
