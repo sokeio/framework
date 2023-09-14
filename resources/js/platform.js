@@ -62,7 +62,7 @@ export class BytePlatform extends ByteManager {
   }
   start() {
     super.start();
-    this.dispatch("byte::loaded",document);
+    this.dispatch("byte::loaded", document);
   }
   showFileManager(callback, type = "file") {
     if (this.$config["byte_filemanager"]) {
@@ -79,16 +79,27 @@ export class BytePlatform extends ByteManager {
   openModal($option, dataModal = undefined) {
     this.find("BYTE_MODAL_MODULE").openModal($option, dataModal);
   }
-  openShortcodeSetting($shortcode, $attrs = [], $child, callback = undefined) {
+  openShortcodeSetting(
+    $editorContainer,
+    $shortcode,
+    $attrs = [],
+    $child,
+    callback = undefined
+  ) {
     let ShortcodeEventCallBack =
       "ShortcodeEventCallBack" + new Date().getTime();
     window[ShortcodeEventCallBack] = callback;
+
+    let parentEl = $editorContainer.closest("[wire\\:id]");
+    let refComponent = parentEl?.getAttribute("wire:id");
     this.openModal(
       {
         $url: this.$config["byte_shortcode_setting"],
         $title: "Shortcode Setting",
       },
       {
+        refComponent,
+        ___theme___admin: Livewire.find(refComponent)?.___theme___admin,
         shortcode: $shortcode,
         attrs: $attrs,
         children: $child,

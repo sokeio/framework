@@ -115,11 +115,11 @@ class ItemCallback
     {
         return $this->setKeyValue('when', $when);
     }
-    public function getAttributeContent()
+    public function getAttributeContent($class = '')
     {
-        $attr = '  class="';
+        $attr = '  class="' . $class;
         if ($this->getManager() && $this->getManager() !== $this) {
-            $attr = ' class="' . $this->getManager()->getClassItem() . " ";;
+            $attr = ' class="' . $this->getManager()->getClassItem() . " " . $class;
         }
         $attr .= ' ' . $this->getClassItem() . ' ' . $this->getClassContent() . ' " ' . $this->getAttribute();
         return trim($attr);

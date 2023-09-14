@@ -49,19 +49,21 @@ trait WithServiceProvider
                 FormManager::RegisterField($fieldTypes);
             }
         }
-        if ($actionTypes = config($this->package->shortName() . '.actions')) {
-            if (is_array($actionTypes) && count($actionTypes) > 0) {
-                Action::Register($actionTypes, $this->package->shortName());
-            }
-        }
         if ($widgetTypes = config($this->package->shortName() . '.widgets')) {
             if (is_array($widgetTypes) && count($widgetTypes) > 0) {
                 Dashboard::Register($widgetTypes, $this->package->shortName());
             }
         }
-        if ($shortcodes = config($this->package->shortName() . '.shortcodes')) {
-            if (is_array($shortcodes) && count($shortcodes) > 0) {
-                Shortcode::Register($shortcodes, $this->package->shortName());
+        if ($this->base_type != 'theme') {
+            if ($shortcodes = config($this->package->shortName() . '.shortcodes')) {
+                if (is_array($shortcodes) && count($shortcodes) > 0) {
+                    Shortcode::Register($shortcodes, $this->package->shortName());
+                }
+            }
+            if ($actionTypes = config($this->package->shortName() . '.actions')) {
+                if (is_array($actionTypes) && count($actionTypes) > 0) {
+                    Action::Register($actionTypes, $this->package->shortName());
+                }
             }
         }
         return $this;

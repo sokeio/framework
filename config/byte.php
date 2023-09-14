@@ -109,7 +109,13 @@ return [
         FieldView::Create('choose-modal'),
     ],
     'shortcodes' => [
-        Shortcode::Create('row')->ClassItem('row')->StripTags(),
+        Shortcode::Create('row')->ClassItem(function () {
+            echo byte_is_admin() ? 'demo' : 'test';
+            if (byte_is_admin()) {
+                return byte_is_admin();
+            }
+            return '';
+        })->StripTags(),
         Shortcode::Create('col')->Parameters([
             Item::Add('column')->Title('Column')->Column(Item::Col3)->Type('select')->DataOption(function () {
                 return Item::getColumnValue();
@@ -810,7 +816,7 @@ return [
         ],
     ],
 
-    
+
     'paths' => [
         'base' => ['path' => '', 'namespace' => '', 'generate' => false],
         'src' => ['path' => 'src', 'namespace' => '', 'generate' => false],

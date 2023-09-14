@@ -53,10 +53,17 @@ window.showFileManager = function (callback, type = "file") {
   window.ByteManager.showFileManager(callback, type);
 };
 window.openShortcodeSetting = function (
+  $editorContainer,
   $shortcode,
   $attrs = [],
   $child,
   callback = undefined
 ) {
-  window.ByteManager.openShortcodeSetting($shortcode, $attrs, $child, callback);
+  window.ByteManager.openShortcodeSetting(
+    $editorContainer,
+    $shortcode,
+    $attrs,
+    $child,
+    callback
+  );
 };

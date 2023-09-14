@@ -12,18 +12,21 @@
             <option>None</option>
             @if (isset($shortcodes))
                 @foreach ($shortcodes as $key => $item)
-                    <option value="{{ $key }}">{{ $item->getName() }}</option>
+                    <option value="{{ $key }}">{{ $key }}</option>
                 @endforeach
             @endif
         </select>
     </div>
-    {{ $shortcode }}
     @if (isset($shortcodeItem))
-        <div class="row mb-3" wire:key='{{ $shortcode }}'>
-            <label class="form-label">Attributes:</label>
-            @foreach ($shortcodeItem->getItems() as $item)
-                {!! field_render($item) !!}
-            @endforeach
+        <div class="row" wire:key='{{ $shortcode }}'>
+            <div class="col-12">
+                <div class=" p-2">
+                    <label class="form-label">Attributes:</label>
+                    @foreach ($shortcodeItem->getItems() as $item)
+                        {!! field_render($item) !!}
+                    @endforeach
+                </div>
+            </div>
         </div>
     @endif
     <div class="mb-2">
