@@ -17,26 +17,23 @@ import { LiveWireCountUpModule } from "./modules/livewire-countup";
 import { LiveWireTagifyModule } from "./modules/livewire-tagify";
 import { LiveWireFlatpickrModule } from "./modules/livewire-flatpickr";
 let ByteManager = new BytePlatform();
-window.ByteManager = ByteManager;
-window.ByteManager.start();
 window.addEventListener("byte::register", function () {
-  window.ByteManager.registerPlugin(ConfirmModule);
-  window.ByteManager.registerPlugin(FileManagerModule);
-  window.ByteManager.registerPlugin(ActionModule);
-  window.ByteManager.registerPlugin(LiveWireModule);
-  window.ByteManager.registerPlugin(LiveWireChartModule);
-  window.ByteManager.registerPlugin(LiveWireFlatpickrModule);
-  window.ByteManager.registerPlugin(LiveWireTagifyModule);
-  window.ByteManager.registerPlugin(LiveWireSortablejsModule);
-  window.ByteManager.registerPlugin(LiveWireCountUpModule);
-
-  window.ByteManager.registerPlugin(ComponentModule);
-  window.ByteManager.registerPlugin(ModalModule);
-  window.ByteManager.registerPlugin(ToastsModule);
-
-  window.ByteManager.registerPlugin(LiveWireGetValueParentModule);
-  window.ByteManager.registerPlugin(LiveWireTinymceModule);
+  ByteManager.registerPlugin(ConfirmModule);
+  ByteManager.registerPlugin(FileManagerModule);
+  ByteManager.registerPlugin(ActionModule);
+  ByteManager.registerPlugin(LiveWireModule);
+  ByteManager.registerPlugin(LiveWireChartModule);
+  ByteManager.registerPlugin(LiveWireFlatpickrModule);
+  ByteManager.registerPlugin(LiveWireTagifyModule);
+  ByteManager.registerPlugin(LiveWireSortablejsModule);
+  ByteManager.registerPlugin(LiveWireCountUpModule);
+  ByteManager.registerPlugin(ComponentModule);
+  ByteManager.registerPlugin(ModalModule);
+  ByteManager.registerPlugin(ToastsModule);
+  ByteManager.registerPlugin(LiveWireGetValueParentModule);
+  ByteManager.registerPlugin(LiveWireTinymceModule);
 });
+window.ByteManager = ByteManager;
 window.showToast = function (
   message,
   title = undefined,
