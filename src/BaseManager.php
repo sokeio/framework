@@ -6,7 +6,7 @@ class BaseManager extends ItemCallback
 {
     public function __construct()
     {
-        $this->Query(function ($item, $manager) {
+        $this->Manager($this)->Query(function ($item, $manager) {
             return $manager->getModel() ? app($manager->getModel())?->newQuery() : null;
         })->PageName(function ($item, $manager) {
             $arr = explode('\\', $manager->getModel());
