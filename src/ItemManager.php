@@ -174,6 +174,7 @@ class ItemManager extends BaseManager
     }
     public function getFormSearch()
     {
+        if (!$this->__formSearch || count($this->__formSearch) == 0) return null;
         return self::Form()->ModelForm(function () {
             return "formSearch.ets.";
         })->Item($this->__formSearch)->Filter();
