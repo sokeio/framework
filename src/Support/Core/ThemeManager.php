@@ -42,10 +42,13 @@ class ThemeManager extends ActionHook
         return "theme";
     }
     private $layout;
+    private $title_lock = false;
     private ?DataInfo $data_active;
-    public function setTitle($title)
+    public function setTitle($title, $lock = false)
     {
+        if ($this->title_lock) return;
         Assets::SetData('page_title', $title);
+        $this->title_lock = $lock;
     }
     public function getTitle()
     {

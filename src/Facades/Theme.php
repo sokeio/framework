@@ -27,7 +27,7 @@ use BytePlatform\Support\Core\ThemeManager;
  * @method static void setUsed(string $name)
  * @method static void update(string $name)
  * @method static string getTitle()
- * @method static void setTitle($title)
+ * @method static void setTitle($title, $lock = false)
  * @method static string Layout($default='')
  * @method static mix ThemeCurrent()
  * @method static void RegisterTheme()

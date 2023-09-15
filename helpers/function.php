@@ -308,10 +308,10 @@ if (!function_exists('adminUrl')) {
     }
 }
 if (!function_exists('page_title')) {
-    function page_title($title = '')
+    function page_title($title = '', $lock = false)
     {
         if ($title) {
-            Theme::setTitle($title);
+            Theme::setTitle($title, $lock = false);
             return;
         }
         return  apply_filters(PLATFORM_PAGE_TITLE, Theme::getTitle());

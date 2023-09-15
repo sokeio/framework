@@ -12,7 +12,7 @@ trait WithTablePageData
 
     public function render()
     {
-        page_title($this->getItemManager()->getTitle());
+        page_title($this->getItemManager()->getTitle(),true);
         return view('byte::tables.page', [
             'itemManager' => $this->getItemManager(),
             'dataItems' => $this->getDataItems(),

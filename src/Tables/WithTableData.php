@@ -97,7 +97,6 @@ trait WithTableData
     }
     public function render()
     {
-        page_title($this->getItemManager()->getTitle());
         return view('byte::tables.index', [
             'itemManager' => $this->getItemManager(),
             'dataItems' => $this->getDataItems()

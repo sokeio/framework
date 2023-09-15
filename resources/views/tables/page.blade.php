@@ -1,28 +1,17 @@
 @php
-    $page_title = page_title();
+    $page_title = $itemManager->getTitle();
     $formSearch = 'formSearch-' . time();
 @endphp
 <div class="table-page">
     <div class="page-header d-print-none">
         <div class="container-fluid">
-            @if ($page_title)
-                <div class="row align-items-center mb-2">
-                    <div class="col">
-                        <h2 class="page-title ps-2">
-                            {{ $page_title }}
-                        </h2>
-                    </div>
-                    <div class="col-auto ms-auto d-print-none">
-                    </div>
-                </div>
-            @endif
             <div class="accordion" wire:ignore id="{{ $formSearch }}-parent">
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="{{ $formSearch }}-header">
-                        <button class="accordion-button p-2" type="button" data-bs-toggle="collapse"
+                        <button class="accordion-button p-2 fs-2 ps-2" type="button" data-bs-toggle="collapse"
                             data-bs-target="#{{ $formSearch }}" aria-expanded="true"
                             aria-controls="{{ $formSearch }}">
-                            Form Search
+                            {{ $page_title }}
                         </button>
                     </h2>
                     <div id="{{ $formSearch }}" class="accordion-collapse collapse show"

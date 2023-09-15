@@ -34,7 +34,7 @@ class Dashboard extends Component
 
     public function render()
     {
-        page_title('Dashboard');
+        page_title('Dashboard', true);
         return view('byte::dashboard', [
             'locked' => $this->locked
         ]);

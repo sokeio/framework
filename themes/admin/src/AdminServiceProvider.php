@@ -79,6 +79,7 @@ class AdminServiceProvider extends ServiceProvider
             }
         });
         Menu::renderItemCallback(function (MenuItemBuilder $item) {
+            $itemActiveClass=' bg-azure text-azure-fg ';
             $classActive = $item->checkActive() ? 'show' : '';
             if (!$item->checkView()) return;
             if ($item->getParent()->checkSub()) {
@@ -91,7 +92,7 @@ class AdminServiceProvider extends ServiceProvider
                     echo '</div>';
                 } else {
                     if ($classActive != '') {
-                        $classActive .= ' bg-dark-lt ';
+                        $classActive .= $itemActiveClass;
                     }
                     echo '<a wire:navigate id="' . $item->getId() . '" class="dropdown-item  ' . $classActive . '" href="' . $item->getValueLink() . '" data-sort="' . $item->getValueSort() . '">';
                     echo $item->getValueText();
@@ -126,7 +127,7 @@ class AdminServiceProvider extends ServiceProvider
                     echo '</li>';
                 } else {
                     if ($classActive != '') {
-                        $classActive .= ' bg-dark-lt ';
+                        $classActive .= $itemActiveClass;
                     }
                     if ($item->getValueType() == MenuItemBuilder::ITEM_LINK || $item->getValueType() == MenuItemBuilder::ITEM_ROUTE) {
                         echo '<li id="' . $item->getId() . '" class="nav-item" data-sort="' . $item->getValueSort() . '">';
