@@ -18,6 +18,9 @@ class ShortcodeManager
     public function registerItem($key, $itemOrCallback, $namespace, $force = false)
     {
         $shortcodeKey = $namespace . '::' . $key;
+        if (!is_callable($itemOrCallback) && method_exists($itemOrCallback, 'NameSpace')) {
+            $itemOrCallback->NameSpace($namespace . "::shortcodes.");
+        }
         if (!isset($this->registered[$shortcodeKey])) {
             $this->registered[$shortcodeKey] = $itemOrCallback;
             return;
