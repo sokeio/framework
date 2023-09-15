@@ -19,7 +19,6 @@ trait WithTableData
     public $selectIds = [];
     public $pageIds = [];
     public $pageSize = 15;
-    public $pageSizeList = [5, 10, 15, 30, 50, 100, 150, 200, 300, 500, 10000];
     public $checkAll = false;
     public function Booted()
     {

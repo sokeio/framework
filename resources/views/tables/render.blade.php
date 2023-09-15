@@ -12,6 +12,7 @@
         })
         ->toArray();
     $checkBoxInTable = $manager->getCheckBoxRow();
+    $pageSizeList = $manager->getPageSizeList();
 @endphp
 <div class="table-responsive" style="min-height: 50px;overflow-x:unset;" x-data="{
     checkAll: false,
@@ -33,9 +34,10 @@ $watch('checkAll', (value) => {
     }
     $wire.selectIds = selectIds;
 })">
-    <div class="p-2">
-        <div class="row g-2 align-items-center">
+    <div class="row mb-2 mt-2 align-items-center">
+        @if ($checkBoxInTable)
             <div class="col btn-bulk-actions">
+
                 <div class="btn-group" role="group">
                     <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
                         aria-expanded="false">
@@ -57,14 +59,14 @@ $watch('checkAll', (value) => {
                     </ul>
                 </div>
             </div>
-            <div class="col-auto ms-auto d-print-none">
-                <div class="btn-list">
-                    @if ($buttonOnPage)
-                        @foreach ($buttonOnPage as $item)
-                            {!! $item->render() !!}
-                        @endforeach
-                    @endif
-                </div>
+        @endif
+        <div class="col-auto ms-auto d-print-none">
+            <div class="btn-list">
+                @if ($buttonOnPage)
+                    @foreach ($buttonOnPage as $item)
+                        {!! $item->render() !!}
+                    @endforeach
+                @endif
             </div>
         </div>
     </div>
@@ -73,13 +75,13 @@ $watch('checkAll', (value) => {
         <thead>
             <tr>
                 @if ($checkBoxInTable)
-                    <th class="w-1 col-field-id  fw-bold">
+                    <th class="w-1 col-checkbox-all  fw-bold">
                         <input wire:key="selectIds-all" value="1" class="form-check-input" x-model="checkAll"
                             type="checkbox">
                     </th>
                 @endif
                 @foreach ($columnInTables as $column)
-                    <th>
+                    <th class="col-field-{{ $column->getField() }}">
                         @include('byte::tables.column-header', [
                             'column' => $column,
                             'manager' => $manager,
@@ -105,7 +107,7 @@ $watch('checkAll', (value) => {
                 @foreach ($items as $item)
                     <tr wire:key='data-row-{{ time() }}-{{ $item->id }}'>
                         @if ($checkBoxInTable)
-                            <td class="col-field-id col-field-id-{{ $item->id }}">
+                            <td class="col-checkbox-id col-checkbox-id-{{ $item->id }}">
                                 <input wire:key="selectIds-{{ $item->id }}" wire:model='selectIds'
                                     class="form-check-input" type="checkbox" value="{{ $item->id }}">
                             </td>
@@ -155,4 +157,16 @@ $watch('checkAll', (value) => {
             @endif
         </tbody>
     </table>
+    <div class="row  align-items-center">
+        <div class="col-auto py-3">
+            <select wire:model.live='pageSize' class="form-select form-select-sm">
+                @foreach ($pageSizeList as $item)
+                    <option value="{{ $item }}">{{ $item }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col">
+            {{ $items->links('byte::pagination') }}
+        </div>
+    </div>
 </div>

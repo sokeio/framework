@@ -83,6 +83,20 @@ class BaseManager extends ItemCallback
     {
         return $this->getValue('PageSize', $size);
     }
+    public function pageSizeList($pageSizeList)
+    {
+        if ($pageSizeList == null) {
+            $pageSizeList = function () {
+                return [5, 10, 15, 30, 50, 100, 150, 200, 300, 500, 10000];
+            };
+        }
+        return $this->setKeyValue('pageSizeList', $pageSizeList);
+    }
+    public function getPageSizeList($pageSizeList = [5, 10, 15, 30, 50, 100, 150, 200, 300, 500, 10000])
+    {
+        return $this->getValue('pageSizeList', $pageSizeList);
+    }
+
     public function Query($Query)
     {
         return $this->setKeyValue('Query', $Query);
