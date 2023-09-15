@@ -155,7 +155,9 @@ class UserCrud extends CrudManager
             })
             ->Action('testAll', function ($params, $compoent) {
                 return $compoent->selectIds;
-            });
+            })->FormSearch([
+                Item::Add('email')->Title('Email')
+            ]);
     }
     public function FormPage()
     {

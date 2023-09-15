@@ -2,11 +2,15 @@
 
 namespace BytePlatform;
 
+use PhpParser\Node\Expr\FuncCall;
+
 class ItemManager extends BaseManager
 {
     private $__istable = false;
     private $__methodType = 'get';
 
+    /** @var Item[] $__item */
+    private  $__formSearch = [];
     /** @var Item[] $__item */
     private  $__item = [];
     private function __construct($__istable)
@@ -52,7 +56,7 @@ class ItemManager extends BaseManager
     {
         return $this->__methodType;
     }
-   
+
     public function FormDoSave($callback)
     {
         return $this->Action('FORM_DO_SAVE', $callback);
@@ -149,6 +153,30 @@ class ItemManager extends BaseManager
         }
         $this->__item[] = $item->Manager($this);
         return $this;
+    }
+    public function FormSearch($item)
+    {
+        if (!$item) return $this;
+        if (is_array($item)) {
+            foreach ($item as $_item) {
+                $this->FormSearch($_item);
+            }
+            return $this;
+        }
+        if (is_callable($item)) {
+            $item = $item($this);
+        }
+        if (is_string($item)) {
+            $item = app($item);
+        }
+        $this->__formSearch[] = $item->Manager($this);
+        return $this;
+    }
+    public function getFormSearch()
+    {
+        return self::Form()->ModelForm(function () {
+            return "formSearch.ets.";
+        })->Item($this->__formSearch)->Filter();
     }
     public function Filter($filter = null)
     {

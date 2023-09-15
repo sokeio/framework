@@ -3,6 +3,7 @@
 namespace BytePlatform\Tables;
 
 use BytePlatform\DataForm;
+use BytePlatform\ItemForm;
 use BytePlatform\ItemForms;
 use BytePlatform\Traits\WithItemManager;
 use BytePlatform\Traits\WithPagination;
@@ -15,6 +16,7 @@ trait WithTableData
     public DataForm $dataFilters;
     public DataForm $dataSorts;
     public ItemForms $formTable;
+    public ItemForm $formSearch;
 
     public $selectIds = [];
     public $pageIds = [];
@@ -24,10 +26,15 @@ trait WithTableData
     {
         $this->dataFilters->___checkProperty = false;
         $this->dataSorts->___checkProperty = false;
+        $this->formSearch->___checkProperty = false;
         if (!$this->selectIds) {
             $this->selectIds = request('selectIds') ?? [];
         }
         parent::Booted();
+    }
+    public function doSearch()
+    {
+        $this->ShowMessage(json_encode($this->formSearch));
     }
     public function mount()
     {

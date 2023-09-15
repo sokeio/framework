@@ -15,6 +15,12 @@ class BaseManager extends ItemCallback
             } else {
                 return  'page';
             }
+        })->ModelForm(function (BaseManager $item, BaseManager $manager) {
+            if ($manager->IsTable()) {
+                return "formTable.";
+            } else {
+                return "form.";
+            }
         });
     }
     public function CheckHook()
@@ -62,6 +68,14 @@ class BaseManager extends ItemCallback
     {
         $this->__model = $model;
         return $this;
+    }
+    public function ModelForm($ModelForm)
+    {
+        return $this->setKeyValue('ModelForm', $ModelForm);
+    }
+    public function getModelForm()
+    {
+        return $this->getValue('ModelForm');
     }
     public function getModel()
     {

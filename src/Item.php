@@ -172,9 +172,9 @@ class Item extends ItemCallback
             })->ModelForm(function (Item $item, BaseManager $manager) {
                 if ($manager->IsTable()) {
                     $prod =  ItemForms::FormId($item->getDataId());
-                    return "formTable." .  $prod . ".";
+                    return $manager->getModelForm() .  $prod . ".";
                 } else {
-                    return "form.";
+                    return  $manager->getModelForm();
                 }
             })->NoBindData(function () {
                 return false;

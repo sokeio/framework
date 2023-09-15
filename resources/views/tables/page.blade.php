@@ -1,22 +1,23 @@
 @php
     $page_title = $itemManager->getTitle();
-    $formSearch = 'formSearch-' . time();
+    $formSearchId = 'formSearch-' . time();
 @endphp
 <div class="table-page">
     <div class="page-header d-print-none">
         <div class="container-fluid">
-            <div class="accordion" wire:ignore id="{{ $formSearch }}-parent">
+            <div class="accordion" wire:ignore id="{{ $formSearchId }}-parent">
                 <div class="accordion-item">
-                    <h2 class="accordion-header" id="{{ $formSearch }}-header">
+                    <h2 class="accordion-header" id="{{ $formSearchId }}-header">
                         <button class="accordion-button p-2 fs-2 ps-2" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#{{ $formSearch }}" aria-expanded="true"
-                            aria-controls="{{ $formSearch }}">
+                            data-bs-target="#{{ $formSearchId }}" aria-expanded="true"
+                            aria-controls="{{ $formSearchId }}">
                             {{ $page_title }}
                         </button>
                     </h2>
-                    <div id="{{ $formSearch }}" class="accordion-collapse collapse show "
-                        aria-labelledby="{{ $formSearch }}-header" data-bs-parent="#{{ $formSearch }}-parent">
+                    <div id="{{ $formSearchId }}" class="accordion-collapse collapse show "
+                        aria-labelledby="{{ $formSearchId }}-header" data-bs-parent="#{{ $formSearchId }}-parent">
                         <div class="accordion-body p-2 bg-white" x-data="{ AdvancedSearch: false }">
+                            {!! form_render($itemManager->getFormSearch(), $formSearch, null) !!}
                             <div style="display: none" x-show="AdvancedSearch">
                                 Advanced Search
                             </div>
