@@ -37,6 +37,9 @@ trait WithTableData
     {
         $this->dataSorts->Clear();
     }
+    public function doReset()
+    {
+    }
     public function clearFilter()
     {
         $this->dataFilters->Clear();

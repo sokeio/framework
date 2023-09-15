@@ -14,33 +14,22 @@
                             {{ $page_title }}
                         </button>
                     </h2>
-                    <div id="{{ $formSearch }}" class="accordion-collapse collapse show"
+                    <div id="{{ $formSearch }}" class="accordion-collapse collapse show "
                         aria-labelledby="{{ $formSearch }}-header" data-bs-parent="#{{ $formSearch }}-parent">
-                        <div class="accordion-body p-0">
-                            <div class="card table-box-search rounded-0 ">
-                                <div class="card-body">
-                                    Advanced Search
-
-                                </div>
-                                <div class="card-footer p-2">
-                                    <div class="row">
-                                        <div class="col fw-bold">
-                                            <button class="btn btn-warning"> Advanced Search </button>
-                                        </div>
-                                        <div class="col-auto">
-                                            <div class="text-end ">
-                                                <a href="#" class="btn btn-secondary">Reset</a>
-                                                <a href="#" class="btn btn-primary">Search</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="accordion-body p-2 bg-white" x-data="{ AdvancedSearch: false }">
+                            <div style="display: none" x-show="AdvancedSearch">
+                                Advanced Search
                             </div>
+                            <div class="text-end mb-2">
+                                <button class="btn btn-warning" @click="AdvancedSearch=!AdvancedSearch">
+                                    Advanced Search </button>
+                                <a wire:click='doSearch()' class="btn btn-primary">Search</a>
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
 
         <div class="page-body">
