@@ -41,7 +41,7 @@ class UserCrud extends CrudManager
             //     ';
             // }),
 
-            Item::Add('avatar')->Title('avatar')->Type('images')->When(function ($item, $manager) {
+            Item::Add('avatar')->Title('Avatar')->Type('images')->When(function ($item, $manager) {
                 return !$manager->IsTable();
             }),
             Item::Add('name')->Title('Name')->Required(),
@@ -136,12 +136,12 @@ class UserCrud extends CrudManager
                     // })->ConfirmTitle("Remove All User")->Confirm("Sure you wanna delete?")->WireClick(function ($button) {
                     //     return "callDoAction('testAll',{})";
                     // }),
-                    //     Button::Create("Export All")->ButtonType(function () {
-                    //         return 'primary';
-                    //     }),
-                    //     Button::Create("Import")->ButtonType(function () {
-                    //         return 'primary';
-                    //     }),
+                    // Button::Create("Export All")->ButtonType(function () {
+                    //     return 'primary';
+                    // }),
+                    // Button::Create("Import")->ButtonType(function () {
+                    //     return 'primary';
+                    // }),
                 ];
             })
             ->Action('changeStatus', function ($params, $compoent) {

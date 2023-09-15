@@ -11,13 +11,14 @@
                 $columnSort = ':class="\'desc\'"';
             }
         @endphp
-        <button {!! $columnSort !!} wire:click='doSort("{{ $column->getField() }}")' class="table-sort me-auto"
+        <button {!! $columnSort !!} wire:click='doSort("{{ $column->getField() }}")' class="table-sort me-auto "
             data-sort="sort-{{ $column->getField() }}">
-            {{ $column->getTitle() ?? $column->getField() }}
+            <span class="fw-bold">{{ $column->getTitle() ?? $column->getField() }}</span>
+
         </button>
     @else
         <div class="me-auto">
-            {{ $column->getTitle() ?? $column->getField() }}
+            <span class="fw-bold">{{ $column->getTitle() ?? $column->getField() }}</span>
         </div>
     @endif
     @if ($column->getFilter() && $manager->getFilter())
@@ -33,7 +34,7 @@
         </button>
         <div x-show="showFilter" class="position-absolute w-100 text-end" style="display:none;">
             <div @click.outside="showFilter = false"
-                class="mt-4 ml-auto border-1 border-azure bg-primary rounded-1 w-100 d-inline-block  p-2"
+                class="mt-4 ml-auto border-1 border-dark  bg-light border rounded-2 w-100 d-inline-block  p-2"
                 style=" min-width:250px; max-width:300px;">
                 <div x-data="{ text_search: '' }">
                     <input x-model="text_search" type="text" class=" form-control mb-3"

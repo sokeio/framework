@@ -1,6 +1,5 @@
 @php
     $page_title = page_title();
-    $buttonOnPage = $itemManager->getButtonOnPage();
 @endphp
 <div class="table-page">
     @if ($page_title || $buttonOnPage)
@@ -13,13 +12,6 @@
                         </h2>
                     </div>
                     <div class="col-auto ms-auto d-print-none">
-                        <div class="btn-list">
-                            @if ($buttonOnPage)
-                                @foreach ($buttonOnPage as $item)
-                                    {!! $item->render() !!}
-                                @endforeach
-                            @endif
-                        </div>
                     </div>
                 </div>
             </div>

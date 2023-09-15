@@ -5,6 +5,7 @@
         })
         ->toArray();
     $ButtonInAction = $manager->getButtonInAction();
+    $buttonOnPage = $manager->getButtonOnPage();
     $columnInTables = collect($manager->getItems() ?? [])
         ->where(function ($item) {
             return $item->getWhen() == true;
@@ -32,33 +33,47 @@ $watch('checkAll', (value) => {
     }
     $wire.selectIds = selectIds;
 })">
-    <div style="display: none" class="p-2" x-show="$wire.selectIds.length">
-        <div class="mb-2">
-            @if ($ButtonInAction)
+    <div class="p-2">
+        <div class="row g-2 align-items-center">
+            <div class="col btn-bulk-actions">
                 <div class="btn-group" role="group">
                     <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
                         aria-expanded="false">
-                        Actions
+                        Bulk Actions
                     </button>
-                    <ul class="dropdown-menu p-1">
-                        @foreach ($ButtonInAction as $button)
-                            <li class="dropdown-item">
-                                {!! $button->render() !!}
-                            </li>
-                        @endforeach
+                    <ul class="dropdown-menu">
+                        @if ($ButtonInAction)
+                            @foreach ($ButtonInAction as $button)
+                                <li class="dropdown-item" :disabled="!$wire.selectIds.length">
+                                    {!! $button->render() !!}
+                                </li>
+                            @endforeach
+                        @endif
+                        <li class="dropdown-item">
+                            <button @click="$wire.selectIds=[];checkAll=false;" class="btn btn-block">
+                                Clear selection
+                            </button>
+                        </li>
                     </ul>
                 </div>
-            @endif
-            <a class="btn btn-danger ms-2" @click="$wire.selectIds=[];checkAll=false; ">Clear</a>
+            </div>
+            <div class="col-auto ms-auto d-print-none">
+                <div class="btn-list">
+                    @if ($buttonOnPage)
+                        @foreach ($buttonOnPage as $item)
+                            {!! $item->render() !!}
+                        @endforeach
+                    @endif
+                </div>
+            </div>
         </div>
-        Select Ids: <span class="pl-2" x-text="$wire.selectIds"></span>
     </div>
 
-    <table class="table">
+    <table class="table table-bordered">
         <thead>
             <tr>
                 @if ($checkBoxInTable)
-                    <th class="w-1">
+                    <th class="w-1 col-field-id  fw-bold">
                         <input wire:key="selectIds-all" value="1" class="form-check-input" x-model="checkAll"
                             type="checkbox">
                     </th>
@@ -90,7 +105,7 @@ $watch('checkAll', (value) => {
                 @foreach ($items as $item)
                     <tr wire:key='data-row-{{ time() }}-{{ $item->id }}'>
                         @if ($checkBoxInTable)
-                            <td>
+                            <td class="col-field-id col-field-id-{{ $item->id }}">
                                 <input wire:key="selectIds-{{ $item->id }}" wire:model='selectIds'
                                     class="form-check-input" type="checkbox" value="{{ $item->id }}">
                             </td>
@@ -99,7 +114,8 @@ $watch('checkAll', (value) => {
                             @php
                                 $column->ClearCache()->Data($item);
                             @endphp
-                            <td>
+                            <td
+                                class="col-field-{{ $column->getField() }} col-field-{{ $column->getField() }}-{{ $item->id }}">
                                 @include('byte::tables.cell-data', [
                                     'column' => $column,
                                     'manager' => $manager,
