@@ -1,6 +1,5 @@
 <?php
 
-use BytePlatform\Facades\Theme;
 use BytePlatform\Livewire\ShortcodeSetting;
 use BytePlatform\Support\Svg\EasySVG;
 use Illuminate\Support\Facades\Artisan;
@@ -75,5 +74,5 @@ Route::get('/', route_theme(function () {
     return apply_filters(PLATFORM_HOMEPAGE, view_scope('byte::homepage'));
 }))->name('homepage');
 Route::get('tesst', function () {
-    return Theme::getLayouts();
+    return view('byte::test-about')->withShortcodes();
 });

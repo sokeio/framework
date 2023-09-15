@@ -131,8 +131,6 @@ trait WithSystemExtend
                 if ($item && $item->isActive()) {
                     if ($this->isRegisterBeforeLoad()) {
                         $item->DoRegister();
-                    } else {
-                        $item->loadRoute();
                     }
                 }
             }
