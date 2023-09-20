@@ -8,4 +8,7 @@ export default defineConfig({
             'resources/sass/app.scss',
         ]),
     ],
+    build: {
+        target: "esnext",
+    },
 });

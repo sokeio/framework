@@ -1,5 +1,3 @@
-"use strict";
-
 import { BytePlatform } from "./platform";
 import { ComponentModule } from "./modules/components";
 import { ActionModule } from "./modules/action";
