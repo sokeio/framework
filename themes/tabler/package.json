@@ -6,7 +6,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "@tabler/core": "1.0.0-beta17",
+    "@tabler/core": "1.0.0-beta20",
     "axios": "^1.3.5",
     "cross-env": "^7.0.3",
     "laravel-vite-plugin2": "^0.7.8",
