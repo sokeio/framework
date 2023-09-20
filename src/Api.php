@@ -32,7 +32,7 @@ class Api
     public const  GATEWAY_TIMEOUT = 504;
     public const  HTTP_VERSION_NOT_SUPPORTED = 505;
 
-    public static function Json($data = [], $message = [], $status = 200, $meta = [])
+    public static function Json($data = [], $message = [], $status = Api::OK, $meta = [])
     {
         return response()->json([
             'data' => $data,

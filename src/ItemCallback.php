@@ -30,18 +30,21 @@ class ItemCallback
     {
         return $this->manager;
     }
-    protected function getValue($__key, $__default = null)
+    protected function getValueByCallback($valueOrCallback)
     {
-        if (isset($this->__dataCache[$__key])) return $this->__dataCache[$__key];
-        $valueOrCallback = isset($this->__data[$__key]) ? $this->__data[$__key] : $__default;
         if ($valueOrCallback && !is_string($valueOrCallback) && is_callable($valueOrCallback)) {
-            return isset($this->__dataCache[$__key]) ? $this->__dataCache[$__key] : ($this->__dataCache[$__key] = (($valueOrCallback($this, $this->getManager()) ?? $__default)));
+            return  $valueOrCallback($this, $this->getManager());
         }
         if ($valueOrCallback &&  is_object($valueOrCallback) && method_exists($valueOrCallback, 'Manager')) {
             $valueOrCallback->Manager($this->getManager());
         }
-        $this->__dataCache[$__key] = $valueOrCallback ?? $__default;
         return $valueOrCallback;
+    }
+    protected function getValue($__key, $__default = null)
+    {
+        if (isset($this->__dataCache[$__key])) return $this->__dataCache[$__key];
+        $valueOrCallback = isset($this->__data[$__key]) ? $this->__data[$__key] : $__default;
+        return ($this->__dataCache[$__key] = ($this->getValueByCallback($valueOrCallback) ?? $__default));
     }
     protected function setKeyValue($__key, $value)
     {
