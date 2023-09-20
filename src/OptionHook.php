@@ -48,6 +48,6 @@ class OptionHook
     }
     public static function Create()
     {
-        return new self();
+        return new static();
     }
 }

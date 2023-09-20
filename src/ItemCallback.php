@@ -153,4 +153,8 @@ class ItemCallback
     {
         return $this->getValue('layout');
     }
+    public static function Create()
+    {
+        return new static();
+    }
 }
