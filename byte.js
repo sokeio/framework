@@ -66,7 +66,8 @@ window.addStyleToWindow = function (
     prior.parentNode.insertBefore(script, prior);
   } catch (ex) {}
 };
-window.PlatformLoadScript = function (
+
+window.ByteLoadStyle = function (
   source,
   beforeEl = null,
   async = true,
@@ -74,23 +75,48 @@ window.PlatformLoadScript = function (
 ) {
   if (Array.isArray(source)) {
     var arrSource = source.map(function (item) {
-      return window.PlatformLoadScript(item);
+      return window.ByteLoadStyle(item);
     });
-    return Promise.all(arrSource)
-      .then(function () {
-        if (window.ByteManager) {
-          window.ByteManager.start();
-          window.PlatformLoadScript = undefined;
-        }
-      })
-      .catch(function () {
-        if (window.ByteManager) {
-          window.ByteManager.start();
-          window.PlatformLoadScript = undefined;
-        }
-      });
+    return Promise.all(arrSource);
+  }
+  return new Promise((resolve, reject) => {
+    window.addStyleToWindow(source, resolve, reject, beforeEl, async, defer);
+  });
+};
+window.ByteLoadScript = function (
+  source,
+  beforeEl = null,
+  async = true,
+  defer = true
+) {
+  if (Array.isArray(source)) {
+    var arrSource = source.map(function (item) {
+      return window.ByteLoadScript(item);
+    });
+    return Promise.all(arrSource);
   }
   return new Promise((resolve, reject) => {
     window.addScriptToWindow(source, resolve, reject, beforeEl, async, defer);
   });
+};
+window.PlatformLoadScript = function (
+  source,
+  beforeEl = null,
+  async = true,
+  defer = true
+) {
+  return window
+    .ByteLoadScript(source, beforeEl, async, defer)
+    .then(function () {
+      if (window.ByteManager) {
+        window.ByteManager.start();
+        window.PlatformLoadScript = undefined;
+      }
+    })
+    .catch(function () {
+      if (window.ByteManager) {
+        window.ByteManager.start();
+        window.PlatformLoadScript = undefined;
+      }
+    });
 };
