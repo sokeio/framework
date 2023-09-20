@@ -1,6 +1,6 @@
 {
   "name": "byteplatform/byteplatform",
-  "description": "",
+  "description": "a Laravel-based web application development package that provides support for developing modules, plugins, themes, livewire, and shortcodes.",
   "license": "MIT",
   "keywords": [],
   "homepage": "https://github.com/byteplatform/byteplatform",
@@ -16,7 +16,7 @@
     "byteplatform/laravel": "^1.0.0",
     "symfony/filesystem": "^6.3.1",
     "staudenmeir/eloquent-eager-limit": "^1.8.3",
-    "livewire/livewire": "v3.0.2",
+    "livewire/livewire": "^3.0.5",
     "unisharp/laravel-filemanager": "^2.6.0"
   },
   "require-dev": {},
