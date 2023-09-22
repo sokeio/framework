@@ -35,13 +35,7 @@ trait WithServiceProvider
             $this->data_info = $info['data_info'];
         }
 
-        if ($this->base_type == 'module') {
-            Theme::Load($this->package->basePath('/../themes/'));
-            Plugin::Load($this->package->basePath('/../plugins/'));
-        }
-        if ($this->base_type != 'theme')
-            RouteEx::Load($this->package->basePath('/../routes/'));
-
+        
         $this->packageRegistered();
 
         if ($fieldTypes = config($this->package->shortName() . '.fields')) {
@@ -66,12 +60,20 @@ trait WithServiceProvider
                 }
             }
         }
+
         return $this;
     }
 
 
     public function boot()
     {
+        if ($this->base_type == 'module') {
+            Theme::Load($this->package->basePath('/../themes/'));
+            Plugin::Load($this->package->basePath('/../plugins/'));
+        }
+        if ($this->base_type != 'theme')
+            RouteEx::Load($this->package->basePath('/../routes/'));
+
         if ($this->base_type && $this->data_info) {
             Assets::AddJs($this->base_type, $this->data_info['name'], 'resources/js/app.js');
             Assets::AddCss($this->base_type, $this->data_info['name'], 'resources/sass/app.scss');
