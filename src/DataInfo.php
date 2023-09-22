@@ -167,7 +167,7 @@ class DataInfo extends JsonData
     }
     public function isVendor()
     {
-        return !Str::contains($this->getPath(), byte_path($this['base_type']), true);
+        return !Str::contains($this->getPath(), byte_path($this['base_type']), true) && !Str::contains($this->getPath(), '/themes/', true) && !Str::contains($this->getPath(), '/plugins/', true);;
     }
     public function isActive()
     {

@@ -6,8 +6,6 @@ use Illuminate\Support\Facades\Cache;
 use BytePlatform\DataInfo;
 use BytePlatform\Facades\Theme;
 
-use function PHPUnit\Framework\returnSelf;
-
 trait WithSystemExtend
 {
     public function __construct()
