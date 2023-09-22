@@ -2,13 +2,11 @@
 
 namespace BytePlatform\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use BytePlatform\Traits\WithSlug;
 
-class Role extends Model
+class Role extends \BytePlatform\Model
 {
-    use HasFactory, WithSlug;
+    use WithSlug;
     public $FieldSlug = "name";
     private static $role_supper_admin = null;
     public static function SupperAdmin()

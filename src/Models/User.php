@@ -2,6 +2,7 @@
 
 namespace BytePlatform\Models;
 
+use BytePlatform\Traits\WithModelHook;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use BytePlatform\Traits\WithPermission;
 use BytePlatform\Traits\WithSlug;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 class User extends Authenticatable
 {
     use WithPermission, WithSlug;
+    use WithModelHook;
     public $FieldSlug = "name";
     protected $fillable = ["*"];
     public function isActive()

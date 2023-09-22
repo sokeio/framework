@@ -2,9 +2,8 @@
 
 namespace BytePlatform\Models;
 
-use Illuminate\Database\Eloquent\Model;
 
-class Notification extends Model
+class Notification extends \BytePlatform\Model
 {
     /**
      * The attributes that should be cast.

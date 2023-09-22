@@ -2,13 +2,9 @@
 
 namespace BytePlatform\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Setting extends Model
+class Setting extends \BytePlatform\Model
 {
-    use HasFactory;
-
     /**
      * The attributes that are mass assignable.
      *

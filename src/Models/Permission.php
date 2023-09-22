@@ -2,12 +2,9 @@
 
 namespace BytePlatform\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Permission extends Model
+class Permission extends \BytePlatform\Model
 {
-    use HasFactory;
 
     protected $fillable = ['name', 'group', 'slug'];
 
