@@ -2,6 +2,7 @@
 
 namespace BytePlatform\Support\Core;
 
+use BytePlatform\DataInfo;
 use BytePlatform\Events\NotificationAdd;
 use Illuminate\Support\Facades\File;
 use BytePlatform\Laravel\JsonData;
@@ -228,7 +229,7 @@ class PlatformManager
             if (file_exists(($path . '/' . $baseType . '.json'))) {
                 $data_info = JsonData::getJsonFromFile($path . '/' . $baseType . '.json');
                 if ($register && isset($data_info['id']) && !(platform_by($baseType)->has($data_info['id']))) {
-                    platform_by($baseType)->AddItem($path, true);
+                    platform_by($baseType)->AddItem($path, DataInfo::checkPathVendor($path, $baseType));
                 }
                 return [
                     'base_type' => $baseType,

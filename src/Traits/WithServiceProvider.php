@@ -30,10 +30,7 @@ trait WithServiceProvider
     {
         $this->ExtendPackage();
         $this->registerBase();
-        if ($info = Platform::getDataInfo($this->package->basePath('/../'))) {
-            $this->base_type = $info['base_type'];
-            $this->data_info = $info['data_info'];
-        }
+      
 
         
         $this->packageRegistered();
@@ -67,6 +64,10 @@ trait WithServiceProvider
 
     public function boot()
     {
+        if ($info = Platform::getDataInfo($this->package->basePath('/../'))) {
+            $this->base_type = $info['base_type'];
+            $this->data_info = $info['data_info'];
+        }
         if ($this->base_type == 'module') {
             Theme::Load($this->package->basePath('/../themes/'));
             Plugin::Load($this->package->basePath('/../plugins/'));

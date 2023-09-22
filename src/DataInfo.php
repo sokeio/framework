@@ -12,6 +12,10 @@ class DataInfo extends JsonData
 {
     const Active = 1;
     const UnActive = 0;
+    public static function checkPathVendor($path, $base_type)
+    {
+        return !Str::contains($path, byte_path($base_type), true) && !Str::contains($path, '/themes/', true) && !Str::contains($path, '/plugins/', true);;
+    }
     public function __construct($path, $parent)
     {
         parent::__construct([], $parent);
@@ -167,7 +171,7 @@ class DataInfo extends JsonData
     }
     public function isVendor()
     {
-        return !Str::contains($this->getPath(), byte_path($this['base_type']), true) && !Str::contains($this->getPath(), '/themes/', true) && !Str::contains($this->getPath(), '/plugins/', true);;
+        return self::checkPathVendor($this->getPath(), $this['base_type']);
     }
     public function isActive()
     {
