@@ -149,6 +149,7 @@ class DataInfo extends JsonData
         $this->getOptionHook()->changeStatus($this, $value);
         PlatformStatusChanged::dispatch($this);
         Platform::makeLink();
+        run_cmd(base_path(''), 'php artisan migrate');
     }
     public function getModels()
     {
