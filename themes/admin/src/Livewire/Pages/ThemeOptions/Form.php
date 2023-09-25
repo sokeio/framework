@@ -13,7 +13,7 @@ class Form extends Component
     protected function ItemManager()
     {
         if ($this->tabActive && ($theme = Theme::SiteDataInfo()))
-            return $theme->getOptionDataHook()->getFormByKey($this->tabActive);
+            return $theme->getOptions()->getFormByKey($this->tabActive);
         return null;
     }
     public ItemForm $form;

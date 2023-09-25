@@ -112,7 +112,7 @@ class DataInfo extends JsonData
         });
         return $this['optionHook'];
     }
-    public function getOptionDataHook(): FormCollection
+    public function getOptions(): FormCollection
     {
         return $this->getOptionHook()->getOptions($this);
     }
