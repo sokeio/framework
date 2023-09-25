@@ -2,10 +2,12 @@
 
 namespace BytePlatform;
 
+use Illuminate\Support\Traits\Macroable;
 use Livewire\Form as FormBase;
 
 class DataForm extends FormBase implements \JsonSerializable
 {
+    use Macroable;
     /** @var ?BaseManager $itemManager */
     protected $itemManager;
     public function setItemManager($itemManager)

@@ -7,9 +7,11 @@ use BytePlatform\Laravel\JsonData;
 use BytePlatform\Events\PlatformStatusChanged;
 use Illuminate\Support\Str;
 use BytePlatform\Facades\Platform;
+use Illuminate\Support\Traits\Macroable;
 
 class DataInfo extends JsonData
 {
+    use Macroable;
     const Active = 1;
     const UnActive = 0;
     public static function checkPathVendor($path, $base_type)

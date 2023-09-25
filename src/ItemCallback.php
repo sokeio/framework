@@ -3,10 +3,11 @@
 namespace BytePlatform;
 
 use BytePlatform\Traits\WithHelpers;
+use Illuminate\Support\Traits\Macroable;
 
 class ItemCallback
 {
-    use WithHelpers;
+    use WithHelpers, Macroable;
     private $__data = [];
     private $__dataCache = [];
     public function Clear()
