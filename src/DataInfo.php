@@ -146,6 +146,7 @@ class DataInfo extends JsonData
         } else {
             ArrayStatus::Key($this['base_type'])->UnActive($this->getId());
         }
+        $this->getOptionHook()->changeStatus($this, $value);
         PlatformStatusChanged::dispatch($this);
         Platform::makeLink();
     }
