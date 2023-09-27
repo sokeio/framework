@@ -85,7 +85,7 @@ export class BytePlatform extends ByteManager {
     $attrs = [],
     $child,
     callback = undefined,
-    callbackClosed
+    callbackClosed = undefined,
   ) {
     let ShortcodeEventCallBack =
       "ShortcodeEventCallBack" + new Date().getTime();
