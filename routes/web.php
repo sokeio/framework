@@ -71,7 +71,15 @@ Route::group(['prefix' => '__byte__'], function () {
     });
 });
 Route::get('/', route_theme(function () {
-    return view_scope(apply_filters(PLATFORM_HOMEPAGE, 'byte::homepage'));
+    $homepage = apply_filters(PLATFORM_HOMEPAGE, 'byte::homepage');
+    $view = '';
+    $params = [];
+    if (is_array($homepage)) {
+        ['view' => $view, 'params' => $params] = $homepage;
+    } else {
+        $view = $homepage;
+    }
+    return view_scope($view, $params);
 }))->name('homepage');
 Route::get('tesst', function () {
     return view('byte::test-about')->withShortcodes();
