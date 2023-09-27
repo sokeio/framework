@@ -30,9 +30,9 @@ trait WithServiceProvider
     {
         $this->ExtendPackage();
         $this->registerBase();
-      
 
-        
+
+
         $this->packageRegistered();
 
         if ($fieldTypes = config($this->package->shortName() . '.fields')) {
@@ -76,8 +76,8 @@ trait WithServiceProvider
             RouteEx::Load($this->package->basePath('/../routes/'));
 
         if ($this->base_type && $this->data_info) {
-            Assets::AddJs($this->base_type, $this->data_info['name'], 'resources/js/app.js');
-            Assets::AddCss($this->base_type, $this->data_info['name'], 'resources/sass/app.scss');
+            Assets::AddJs('resources/js/app.js', $this->base_type, $this->data_info['name']);
+            Assets::AddCss('resources/sass/app.scss', $this->base_type, $this->data_info['name']);
         }
         if ($this->base_type == 'theme') {
             $this->package->name('theme');

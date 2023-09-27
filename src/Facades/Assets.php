@@ -6,11 +6,11 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static void AddAssetType($location, $base, $name, $content, $type = self::JS, $priority = 10000)
- * @method static void AddJs($base, $name, $content, $location = PLATFORM_BODY_AFTER, $priority = 10000)
- * @method static void AddJs($base, $name, $content, $location = PLATFORM_BODY_AFTER, $priority = 10000)
- * @method static void AddCss($base, $name, $content, $location = PLATFORM_BODY_AFTER, $priority = 10000)
- * @method static void AddScript($base, $name, $content, $location = PLATFORM_BODY_AFTER, $priority = 10000)
- * @method static void AddStyle($base, $name, $content, $location = PLATFORM_BODY_AFTER, $priority = 10000)
+ * @method static void AddJs($content,$base=null, $name=null, $location = PLATFORM_BODY_AFTER, $priority = 10000)
+ * @method static void AddJs($content,$base=null, $name=null, $location = PLATFORM_BODY_AFTER, $priority = 10000)
+ * @method static void AddCss($content,$base=null, $name=null, $location = PLATFORM_BODY_AFTER, $priority = 10000)
+ * @method static void AddScript($content,$base=null, $name=null, $location = PLATFORM_BODY_AFTER, $priority = 10000)
+ * @method static void AddStyle($content,$base=null, $name=null, $location = PLATFORM_BODY_AFTER, $priority = 10000)
  * @method static void Render($location)
  * @method static mix GetData($key,$default=null)
  * @method static void SetData($key,$value)

@@ -34,19 +34,19 @@ class AssetManager
         ];
         $this->loaded = false;
     }
-    public function AddJs($base, $name, $content, $location = PLATFORM_BODY_AFTER, $priority = 10000)
+    public function AddJs($content, $base = null, $name = null, $location = PLATFORM_BODY_AFTER, $priority = 10000)
     {
         $this->AddAssetType($location, $base, $name, $content, self::JS, $priority);
     }
-    public function AddCss($base, $name, $content, $location = PLATFORM_HEAD_AFTER, $priority = 10000)
+    public function AddCss($content, $base = null, $name = null, $location = PLATFORM_HEAD_AFTER, $priority = 10000)
     {
         $this->AddAssetType($location, $base, $name, $content, self::CSS, $priority);
     }
-    public function AddScript($base, $name, $content, $location = PLATFORM_BODY_AFTER, $priority = 10000)
+    public function AddScript($content, $base = null, $name = null,  $location = PLATFORM_BODY_AFTER, $priority = 10000)
     {
         $this->AddAssetType($location, $base, $name, $content, self::SCRIPT, $priority);
     }
-    public function AddStyle($base, $name, $content, $location = PLATFORM_HEAD_AFTER, $priority = 10000)
+    public function AddStyle($content, $base = null, $name = null, $location = PLATFORM_HEAD_AFTER, $priority = 10000)
     {
         $this->AddAssetType($location, $base, $name, $content, self::STYLE, $priority);
     }
