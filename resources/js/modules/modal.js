@@ -152,5 +152,6 @@ export class ModalModule extends BytePlugin {
           modalApp.hide();
         }, 400);
       });
+    return modalApp;
   }
 }

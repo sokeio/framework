@@ -77,7 +77,7 @@ export class BytePlatform extends ByteManager {
     }
   }
   openModal($option, dataModal = undefined) {
-    this.find("BYTE_MODAL_MODULE").openModal($option, dataModal);
+   return this.find("BYTE_MODAL_MODULE").openModal($option, dataModal);
   }
   openShortcodeSetting(
     $editorContainer,
