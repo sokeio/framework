@@ -110,7 +110,7 @@ class AssetManager
             foreach ($this->dataLoader[$location][self::STYLE] as $item) {
                 echo  $item;
             }
-            echo '</style>\n';
+            echo '</style>';
         }
         if (isset($this->dataLoader[$location][self::JS])) {
             echo '<script data-navigate-once  type="text/javascript">';
