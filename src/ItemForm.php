@@ -27,12 +27,18 @@ class ItemForm extends DataForm
     {
         return $this->__dataModel;
     }
+    public function addValidationRulesToComponent()
+    {
+        parent::addValidationRulesToComponent();
+        if (method_exists($this->getComponent(), 'getDataId')) {
+            $this->setDataId($this->getComponent()->getDataId());
+        } else if (isset($this->getComponent()->dataId))
+            $this->setDataId($this->getComponent()->dataId);
+    }
     public function rules()
     {
         $rules = [];
         if (!!$this->itemManager) {
-            if (isset($this->getComponent()->dataId))
-                $this->setDataId($this->getComponent()->dataId);
             foreach ($this->itemManager->getItems() as $item) {
                 $ruleField = [];
                 if ($item->getRequired()) {
@@ -123,7 +129,10 @@ class ItemForm extends DataForm
                     if (method_exists($this->itemManager, 'getAfterSave'))
                         $dataModel = $this->itemManager->getAfterSave($dataModel);
                 });
+
+                return $dataModel;
             }
         }
+        return null;
     }
 }

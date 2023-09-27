@@ -71,7 +71,7 @@ Route::group(['prefix' => '__byte__'], function () {
     });
 });
 Route::get('/', route_theme(function () {
-    return apply_filters(PLATFORM_HOMEPAGE, view_scope('byte::homepage'));
+    return view_scope(apply_filters(PLATFORM_HOMEPAGE, 'byte::homepage'));
 }))->name('homepage');
 Route::get('tesst', function () {
     return view('byte::test-about')->withShortcodes();
