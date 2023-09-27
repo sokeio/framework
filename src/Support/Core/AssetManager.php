@@ -68,12 +68,11 @@ class AssetManager
             if (!isset($dataLoader[$location][$type])) $dataLoader[$location][$type] = [];
             if ($type == self::SCRIPT || $type == self::STYLE)
                 $dataLoader[$location][$type][] = $content;
-            else {
+            else if ($base && $name) {
                 $byteplatform = platform_by($base);
                 $byteplatformItem = $byteplatform->find($name);
                 if ($byteplatformItem) {
                     $manifestData = $byteplatformItem->getManifestData();
-                    // print_r($manifestData);
                     if (isset($manifestData[$content]['imports'])) {
                         foreach ($manifestData[$content]['imports'] as $item) {
                             if (isset($manifestData[$item]['file'])) {
@@ -91,6 +90,8 @@ class AssetManager
                         }
                     }
                 }
+            } else {
+                $dataLoader[$location][$type][] = $content;
             }
         }
         $this->dataLoader = $dataLoader;
