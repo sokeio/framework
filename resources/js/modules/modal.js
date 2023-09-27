@@ -62,7 +62,15 @@ export class ModalModule extends BytePlugin {
   </div>`);
   }
   openModal(
-    { $url, $title, $size, $btnChoose, $modelField, $btnElement },
+    {
+      $url,
+      $title,
+      $size,
+      $btnChoose,
+      $modelField,
+      $btnElement,
+      $callbackClosed,
+    },
     dataModal = {}
   ) {
     let self = this;
@@ -77,6 +85,7 @@ export class ModalModule extends BytePlugin {
       elModal.__deleting = true;
       elModal.remove();
       window.Livewire?.rescan();
+      $callbackClosed && $callbackClosed();
     });
     self
       .getManager()

@@ -84,7 +84,8 @@ export class BytePlatform extends ByteManager {
     $shortcode,
     $attrs = [],
     $child,
-    callback = undefined
+    callback = undefined,
+    callbackClosed
   ) {
     let ShortcodeEventCallBack =
       "ShortcodeEventCallBack" + new Date().getTime();
@@ -96,6 +97,7 @@ export class BytePlatform extends ByteManager {
       {
         $url: this.$config["byte_shortcode_setting"],
         $title: "Shortcode Setting",
+        $callbackClosed: callbackClosed,
       },
       {
         refComponent,
