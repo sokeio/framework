@@ -1,9 +1,9 @@
 {
   "id": "module-byteplatform-640e7d39-165b-47c5-a895-5e996e375f9b2832469",
-  "name": "byteplatform",
+  "name": "byte",
   "version":"v1.0.0",
   "title": "BytePlatform",
-  "alias": "byteplatform",
+  "alias": "byte",
   "description": "<b>BytePlatform</b> is a Laravel-based web application development package that provides support for developing modules, plugins, themes,actions, livewire, and shortcodes. ",
   "keywords": [],
   "priority": 100,
