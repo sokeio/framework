@@ -42,9 +42,6 @@ export function getShortcodeObjectFromText(shortcode) {
       attributes[attribute] = value;
     }
     // Access the extracted shortcode name, attributes, and content
-    console.log("Shortcode Name:", shortcodeName);
-    console.log("Attributes:", attributes);
-    console.log("Shortcode Content:", shortcodeContent);
     return { shortcode: shortcodeName, attributes, content: shortcodeContent };
   }
   return null;
