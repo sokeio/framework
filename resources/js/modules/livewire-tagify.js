@@ -71,7 +71,7 @@ export class LiveWireTagifyModule extends BytePlugin {
             self
               .getManager()
               .getUrlPublic(
-                "platform/modules/byteplatform/tagify/dist/tagify.css"
+                "platform/modules/byte/tagify/dist/tagify.css"
               ),
             function () {}
           );
@@ -79,7 +79,7 @@ export class LiveWireTagifyModule extends BytePlugin {
             self
               .getManager()
               .getUrlPublic(
-                "platform/modules/byteplatform/tagify/dist/tagify.min.js"
+                "platform/modules/byte/tagify/dist/tagify.min.js"
               ),
             function () {
               tagifyCreate();

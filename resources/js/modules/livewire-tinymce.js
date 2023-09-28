@@ -90,7 +90,7 @@ export class LiveWireTinymceModule extends BytePlugin {
               self
                 .getManager()
                 .getUrlPublic(
-                  "platform/modules/byteplatform/tinymce/tinymce.min.js"
+                  "platform/modules/byte/tinymce/tinymce.min.js"
                 ),
               function () {
                 setTimeout(() => {

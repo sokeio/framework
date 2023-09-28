@@ -58,7 +58,7 @@ export class LiveWireSortablejsModule extends BytePlugin {
             self
               .getManager()
               .getUrlPublic(
-                "platform/modules/byteplatform/sortable/sortable.min.js"
+                "platform/modules/byte/sortable/sortable.min.js"
               ),
             function () {
               SortableCreate();
@@ -140,7 +140,7 @@ export class LiveWireSortablejsModule extends BytePlugin {
               self
                 .getManager()
                 .getUrlPublic(
-                  "platform/modules/byteplatform/sortable/sortable.min.js"
+                  "platform/modules/byte/sortable/sortable.min.js"
                 ),
               function () {
                 SortableCreate();

@@ -30,7 +30,7 @@ export class LiveWireClipboardModule extends BytePlugin {
             self
               .getManager()
               .getUrlPublic(
-                "platform/modules/byteplatform/clipboard/dist/clipboard.min.js"
+                "platform/modules/byte/clipboard/dist/clipboard.min.js"
               ),
             function () {
               clipboardCreate();

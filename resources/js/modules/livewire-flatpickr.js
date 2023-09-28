@@ -30,7 +30,7 @@ export class LiveWireFlatpickrModule extends BytePlugin {
             self
               .getManager()
               .getUrlPublic(
-                "platform/modules/byteplatform/flatpickr/dist/flatpickr.min.css"
+                "platform/modules/byte/flatpickr/dist/flatpickr.min.css"
               ),
             function () {}
           );
@@ -38,7 +38,7 @@ export class LiveWireFlatpickrModule extends BytePlugin {
             self
               .getManager()
               .getUrlPublic(
-                "platform/modules/byteplatform/flatpickr/dist/flatpickr.min.js"
+                "platform/modules/byte/flatpickr/dist/flatpickr.min.js"
               ),
             function () {
               flatpickrCreate();

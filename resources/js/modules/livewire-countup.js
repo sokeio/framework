@@ -40,7 +40,7 @@ export class LiveWireCountUpModule extends BytePlugin {
         } else {
           window.addScriptToWindow(
             self.getManager().getUrlPublic(
-              "platform/modules/byteplatform/count-up/dist/count-up.min.js"
+              "platform/modules/byte/count-up/dist/count-up.min.js"
             ),
             function () {
               countupCreate();
