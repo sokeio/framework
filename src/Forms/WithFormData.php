@@ -14,7 +14,7 @@ trait WithFormData
 
     public function Items()
     {
-        return $this->getItemManager()->getItems();
+        return $this->getItemManager()?->getItems();
     }
 
     public function mount()
@@ -23,7 +23,7 @@ trait WithFormData
     }
     public function doSave()
     {
-        $this->getItemManager()->callDoAction('FORM_DO_SAVE', [], $this);
+        $this->getItemManager()?->callDoAction('FORM_DO_SAVE', [], $this);
     }
     protected function getView()
     {
@@ -31,7 +31,7 @@ trait WithFormData
     }
     public function render()
     {
-        page_title($this->getItemManager()->getTitle());
+        page_title($this->getItemManager()?->getTitle());
         return view($this->getView(), [
             'itemManager' => $this->getItemManager()
         ]);

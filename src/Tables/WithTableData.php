@@ -22,6 +22,7 @@ trait WithTableData
     public $pageIds = [];
     public $pageSize = 15;
     public $checkAll = false;
+    private const PAGE_SIZE = 15;
     public function Booted()
     {
         $this->dataFilters->___checkProperty = false;
@@ -38,7 +39,7 @@ trait WithTableData
     }
     public function mount()
     {
-        $this->pageSize = $this->getItemManager()->getPageSize(15);
+        $this->pageSize = $this->getItemManager()?->getPageSize(self::PAGE_SIZE) ?? self::PAGE_SIZE;
     }
     public function clearSort()
     {
@@ -74,6 +75,7 @@ trait WithTableData
     public function getDataItems()
     {
         $query = $this->getQuery();
+        if(!$query) return null;
         $arrSort = $this->dataSorts->toArray();
         if (isset($arrSort)) {
             foreach ($arrSort as $key => $value) {

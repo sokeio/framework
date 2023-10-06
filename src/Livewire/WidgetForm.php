@@ -28,8 +28,12 @@ class WidgetForm extends Component
             return;
         }
         $WidgetSetting = Dashboard::getWidgetSettingByKey($this->widgetId);
-        if ($WidgetSetting)
-            return Dashboard::getWidgetByKey($WidgetSetting['widgetType'])?->ClearCache()->Data($WidgetSetting)->beforeRender($this)->getWidgetData()['manager'];
+        if ($WidgetSetting && isset($WidgetSetting['widgetType'])) {
+            $dataWidget = Dashboard::getWidgetByKey($WidgetSetting['widgetType'])?->ClearCache()->Data($WidgetSetting)->beforeRender($this)->getWidgetData();
+            if ($dataWidget && isset($dataWidget['manager'])) {
+                return $dataWidget['manager'];
+            }
+        }
         return null;
     }
 }

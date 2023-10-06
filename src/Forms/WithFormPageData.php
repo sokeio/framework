@@ -11,7 +11,7 @@ trait WithFormPageData
     }
     public function render()
     {
-        page_title($this->getItemManager()->getTitle());
+        page_title($this->getItemManager()?->getTitle(),true);
         return view('byte::forms.page', [
             'itemManager' => $this->getItemManager()
         ]);

@@ -28,12 +28,12 @@ trait WithItemManager
      */
     public function newQuery()
     {
-        return $this->getItemManager()->getBeforeQuery($this->getItemManager()->getQuery());
+        return $this->getItemManager()?->getBeforeQuery($this->getItemManager()?->getQuery());
     }
 
     public function newModel()
     {
-        return new ($this->getItemManager()->getModel());
+        return new ($this->getItemManager()?->getModel());
     }
 
     /**
@@ -47,6 +47,6 @@ trait WithItemManager
     }
     public function callDoAction($key, $params = [])
     {
-        return $this->getItemManager()->callDoAction($key, $params, $this);
+        return $this->getItemManager()?->callDoAction($key, $params, $this);
     }
 }

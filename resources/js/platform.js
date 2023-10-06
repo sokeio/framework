@@ -1,6 +1,8 @@
 import { ByteManager } from "./core/manager";
 import axios from "axios";
 axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
+import _ from "lodash";
+window._ = _;
 export class BytePlatform extends ByteManager {
   $config = {};
   $loaded = false;
@@ -77,7 +79,7 @@ export class BytePlatform extends ByteManager {
     }
   }
   openModal($option, dataModal = undefined) {
-   return this.find("BYTE_MODAL_MODULE").openModal($option, dataModal);
+    return this.find("BYTE_MODAL_MODULE").openModal($option, dataModal);
   }
   openShortcodeSetting(
     $editorContainer,
@@ -85,7 +87,7 @@ export class BytePlatform extends ByteManager {
     $attrs = [],
     $child,
     callback = undefined,
-    callbackClosed = undefined,
+    callbackClosed = undefined
   ) {
     let ShortcodeEventCallBack =
       "ShortcodeEventCallBack" + new Date().getTime();
@@ -98,7 +100,7 @@ export class BytePlatform extends ByteManager {
         $url: this.$config["byte_shortcode_setting"],
         $title: "Shortcode Setting",
         $callbackClosed: callbackClosed,
-        $size:'modal-fullscreen-md-down modal-xl'
+        $size: "modal-fullscreen-md-down modal-xl",
       },
       {
         refComponent,

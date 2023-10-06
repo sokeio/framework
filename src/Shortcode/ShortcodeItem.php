@@ -66,7 +66,7 @@ class ShortcodeItem extends BaseManager
         if (is_string($parameters)) {
             $parameters = app($parameters);
         }
-        $this->__parameters[] = $parameters->Manager($this);
+        $this->__parameters[] = $parameters->Manager($this)->Column(Item::Col12);
         return $this;
     }
     public function getItems()

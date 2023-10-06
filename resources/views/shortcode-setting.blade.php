@@ -13,7 +13,8 @@
                     <option>None</option>
                     @if (isset($shortcodes))
                         @foreach ($shortcodes as $key => $item)
-                            <option value="{{ $key }}">{{ $key }}</option>
+                            <option value="{{ $key }}" title="{{ $key }}">
+                                {{ $item->getTitle() ?? $key }}</option>
                         @endforeach
                     @endif
                 </select>

@@ -109,29 +109,24 @@ return [
         FieldView::Create('choose-modal'),
     ],
     'shortcodes' => [
-        Shortcode::Create('row')->ClassItem(function () {
-            echo byte_is_admin() ? 'demo' : 'test';
-            if (byte_is_admin()) {
-                return byte_is_admin();
-            }
-            return '';
-        })->StripTags(),
-        Shortcode::Create('col')->Parameters([
-            Item::Add('column')->Title('Column')->Column(Item::Col3)->Type('select')->DataOption(function () {
-                return Item::getColumnValue();
-            }),
-        ])->Column(function ($item) {
-            if (isset($item->getData()['attrs']['column'])) {
-                return $item->getData()['attrs']['column'];
-            }
-        }),
+        // Shortcode::Create('row')->Title('DIV ROW')->ClassItem(function () {
+        //     if (byte_is_admin()) {
+        //         return byte_is_admin();
+        //     }
+        //     return '';
+        // })->StripTags(),
+        // Shortcode::Create('col')->Parameters([
+        //     Item::Add('column')->Title('Column')->Column(Item::Col3)->Type('select')->DataOption(function () {
+        //         return Item::getColumnValue();
+        //     }),
+        // ])->Column(function ($item) {
+        //     if (isset($item->getData()['attrs']['column'])) {
+        //         return $item->getData()['attrs']['column'];
+        //     }
+        // }),
     ],
     'actions' => [
         'countModel' => CountModel::class,
-        'helloword' => HelloWord::class,
-        'testChart' => TestChart::class,
-        'testForm' => TestForm::class,
-        'testTable' => TestTable::class
     ],
     'widgets' => [
         Widget::Create('number-widget')

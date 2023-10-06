@@ -28,9 +28,12 @@ class Form extends Component
     public function BindData()
     {
         $arr = [];
-        foreach ($this->getItemManager()->getItems() as $item) {
-            $arr[$item->getField()] = setting($item->getField());
+        if ($manager = $this->getItemManager()) {
+            foreach ($manager->getItems() as $item) {
+                $arr[$item->getField()] = setting($item->getField());
+            }
         }
+
         $this->form->DataToForm($arr);
     }
     public function saveSetting()

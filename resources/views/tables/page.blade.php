@@ -1,7 +1,7 @@
 @php
-    $page_title = $itemManager->getTitle();
+    $page_title = $itemManager?->getTitle();
     $formSearchId = 'formSearch-' . time();
-    $formSearchManger = $itemManager->getFormSearch();
+    $formSearchManger = $itemManager?->getFormSearch();
 @endphp
 <div class="table-page">
     <div class="page-header d-print-none">
@@ -22,7 +22,9 @@
                                 <div class="row">
                                     <div class="col">
                                         {!! form_render($itemManager->getFormSearch(), $formSearch, null) !!}
-                                        <button class="btn btn-warning mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAdvancedSearch" aria-expanded="false" aria-controls="collapseAdvancedSearch">
+                                        <button class="btn btn-warning mt-2" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapseAdvancedSearch" aria-expanded="false"
+                                            aria-controls="collapseAdvancedSearch">
                                             Advanced Search </button>
                                         <div class="collapse" wire:ignore id="collapseAdvancedSearch">
                                             Advanced Search
@@ -51,7 +53,9 @@
             <div class="container-fluid">
                 <div class="card">
                     <div class="card-body {{ $cardBodyClass }}">
-                        {!! table_render($itemManager, $dataItems, $dataFilters, $dataSorts, $formTable, $selectIds) !!}
+                        @if ($itemManager)
+                            {!! table_render($itemManager, $dataItems, $dataFilters, $dataSorts, $formTable, $selectIds) !!}
+                        @endif
                     </div>
                 </div>
             </div>

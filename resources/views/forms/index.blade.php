@@ -1,8 +1,12 @@
 <div class="card card-borderless">
     <div class="card-body">
-        {!! form_render($itemManager, $form, $dataId) !!}
+        @if ($itemManager)
+            {!! form_render($itemManager, $form, $dataId) !!}
+        @endif
     </div>
     <div class="card-footer text-center">
-        <button wire:click='doSave()' class="btn btn-primary">{!! $itemManager->getButtonSaveText() !!}</button>
+        @if ($itemManager)
+            <button wire:click='doSave()' class="btn btn-primary">{!! $itemManager->getButtonSaveText() !!}</button>
+        @endif
     </div>
 </div>
