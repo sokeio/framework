@@ -145,7 +145,7 @@ class Widget extends BaseManager
                     'widget' => $this
                 ]);
             }
-            if (($__aciton = app($action))) {
+            if (class_exists($action) && ($__aciton = app($action))) {
                 return $__aciton->handleWithParams([
                     "params" => $this->getData(),
                     'widget' => $this
