@@ -90,7 +90,7 @@
                     </ul>
                 </div>
                 <div class="card-body">
-                    @livewire('byte::extentions.' . $viewType, ['ExtentionType' => $ExtentionType], key($viewType . $__number_loading))
+                    @livewire('byte::extentions.' . $viewType, ['ExtentionType' => $ExtentionType], key($viewType . $___number_loading))
                 </div>
             </div>
         </div>
