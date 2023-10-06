@@ -23,6 +23,9 @@
             $buttonAtrr .= ' byte:confirm-title="' . $title . '" ';
         }
     }
+    if ($target = $button->getTarget()) {
+        $buttonAtrr .= ' target="' . $target . '" ';
+    }
     
     if ($wireClick = $button->getWireClick()) {
         $buttonAtrr .= ' wire:click="' . $wireClick . '" ';

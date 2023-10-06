@@ -6,7 +6,7 @@
         </button>
         <h1 class="navbar-brand navbar-brand-autodark">
             {!! apply_filters(
-                'THEME_SIDEBAR_LOGO',
+                'THEME_ADMIN_SIDEBAR_LOGO',
                 ' <a href="' .
                     route('admin.dashboard') .
                     '">

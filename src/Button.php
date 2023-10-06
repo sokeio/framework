@@ -16,6 +16,14 @@ class Button extends ItemCallback
     {
         return new self($title);
     }
+    public function Target($Target)
+    {
+        return $this->setKeyValue('Target', $Target);
+    }
+    public function getTarget()
+    {
+        return $this->getValue('Target');
+    }
     public function Class($class)
     {
         return $this->setKeyValue('class', $class);
