@@ -95,6 +95,21 @@ class Shortcode
     }
 
     /**
+     * Compile the given string
+     *
+     * @param  string $value
+     *
+     * @return string
+     */
+    public function compileOnly($value)
+    {
+        $flg = $this->compiler->getStatus();
+        $content = $this->compile($value);
+        if (!$flg) $this->disable();
+        // return compiled contents
+        return $content;
+    }
+    /**
      * Remove all shortcode tags from the given content.
      *
      * @param string $value

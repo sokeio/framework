@@ -11,9 +11,14 @@ trait WithLivewire
     use WithHelpers;
     public $_dataTemps = [];
     public $_refComponentId;
-    public $__method_get_first = false;
+    public $___isPage = false;
+    public $___method_get_first = false;
     public $___theme___admin = false;
-    public $__number_loading = 0;
+    public $___number_loading = 0;
+    public function CurrentIsPage()
+    {
+        return $this->___isPage;
+    }
     protected function getListeners()
     {
         return [
@@ -23,7 +28,7 @@ trait WithLivewire
 
     public function __loadData()
     {
-        $this->__number_loading++;
+        $this->___number_loading++;
     }
 
     public function refreshData($option = [])
@@ -83,9 +88,8 @@ trait WithLivewire
     //     parent::ensureViewHasValidLivewireLayout($view);
     //     $view->extends(theme_layout())->section('content');
     // }
-    public  function __invoke()
+    public function __invoke()
     {
-
         // Here's we're hooking into the "__invoke" method being called on a component.
         // This way, users can pass Livewire components into Routes as if they were
         // simple invokable controllers. Ex: Route::get('...', SomeLivewireComponent::class);
@@ -94,7 +98,7 @@ trait WithLivewire
         $layoutConfig = SupportPageComponents::interceptTheRenderOfTheComponentAndRetreiveTheLayoutConfiguration(function () use (&$html) {
             $params = SupportPageComponents::gatherMountMethodParamsFromRouteParameters($this);
 
-            $html = app('livewire')->mount($this::class, $params);
+            $html = app('livewire')->mount($this::class, [...$params, '___isPage' => true]);
         });
 
         $layoutConfig = $layoutConfig ?: new LayoutConfig();

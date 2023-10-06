@@ -23,7 +23,7 @@ class ShortcodesServiceProvider extends ServiceProvider
     {
         // Check if the compiler is auto enabled
         $state = $this->app['config']->get('byte::shortcodes-enabled', false);
-
+        
         // Enable when needed
         if ($state) {
             $this->app['shortcode.compiler']->enable();

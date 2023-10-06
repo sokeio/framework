@@ -13,13 +13,13 @@ class ShortcodeSetting extends Component
     public  $form = [];
     public function getItemManager()
     {
-        return  Shortcode::getShortCodeByKey($this->shortcode);
+        return Shortcode::getShortCodeByKey($this->shortcode);
     }
     public function mount()
     {
         $this->shortcode = request('shortcode');
         $this->form = request('attrs');
-        $this->children = $this->Base64Decode(request('children')) ;
+        $this->children = $this->Base64Decode(request('children'));
         $this->callbackEvent = request('callbackEvent');
         // $this->form->FillData($this->attrs);
     }
@@ -27,12 +27,10 @@ class ShortcodeSetting extends Component
     {
         return isset($this->form[$field]) ? $this->form[$field] : '';
     }
-    public function getShortCodeHtml2()
+    private function getShortCodeHtml()
     {
-        $this->closeComponent();
-        $this->skipRender();
         $html = '[' . $this->shortcode;
-        if ($items = $this->getItemManager()->getItems()) {
+        if ($items = $this->getItemManager()?->getItems()) {
             foreach ($items as $item) {
                 $value = $this->getValueText($item->getField());
                 if ($value) {
@@ -44,11 +42,21 @@ class ShortcodeSetting extends Component
         $html .= ']' . $this->Base64Encode($this->children) . '[/' . $this->shortcode . ']';
         return   $html;
     }
+    public function getShortCodeHtml2()
+    {
+        $this->closeComponent();
+        $this->skipRender();
+        return $this->getShortCodeHtml();
+    }
+    public function doPreview()
+    {
+    }
     public function render()
     {
         return view('byte::shortcode-setting', [
             'shortcodes' => Shortcode::GetShortCodes(),
-            'shortcodeItem' => $this->getItemManager()
+            'shortcodeItem' => $this->getItemManager(),
+            'shortcodeHtml' =>  $this->getShortCodeHtml()
         ]);
     }
 }

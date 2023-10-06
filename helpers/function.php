@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route as FacadesRoute;
 use BytePlatform\Facades\Module;
 use BytePlatform\Facades\Plugin;
+use BytePlatform\Facades\Shortcode;
 use BytePlatform\Facades\Theme;
 use BytePlatform\Forms\FormManager;
 use BytePlatform\Item;
@@ -460,5 +461,11 @@ if (!function_exists('table_render')) {
     function table_render(BaseManager $itemManager, $dataItems = null, $dataFilters = null, $dataSorts = null, $formTable = null, $selectIds = null)
     {
         return TableManager::Render($itemManager, $dataItems, $dataFilters, $dataSorts, $formTable, $selectIds);
+    }
+}
+if (!function_exists('shortcode_render')) {
+    function shortcode_render($text)
+    {
+        return Shortcode::compileOnly($text);
     }
 }

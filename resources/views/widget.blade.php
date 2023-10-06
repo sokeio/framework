@@ -1,4 +1,4 @@
-<div class="{{ column_size(isset($WidgetSetting['column']) ? $WidgetSetting['column'] : 'col') }}"
+<div class="{{ column_size(isset($WidgetSetting['column']) ? $WidgetSetting['column'] : 'col') }} widget-view"
     @if (isset($WidgetSetting['poll']) && $WidgetSetting['poll'] != '') wire:{!! $WidgetSetting['poll'] !!} @endif
     wire:sortable.item="{{ $WidgetSetting['widgetId'] }}" wire:key="widget-{{ $WidgetSetting['widgetId'] }}">
     <div class="card">

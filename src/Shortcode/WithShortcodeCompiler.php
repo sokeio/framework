@@ -100,7 +100,10 @@ trait WithShortcodeCompiler
     {
         $this->enabled = false;
     }
-
+    public function getStatus()
+    {
+        return $this->enabled;
+    }
     public function attachData($data)
     {
         $this->data = $data;

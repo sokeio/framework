@@ -45,8 +45,19 @@
         border: #ccc 1px solid;
     }
 }
-.btn-bulk-actions{
-    .btn{
+
+.btn-bulk-actions {
+    .btn {
         width: 100%;
+    }
+}
+
+.page-dashboard {
+    .widget-view {
+        .page-body {
+            .card-body {
+                padding: 10px !important;
+            }
+        }
     }
 }

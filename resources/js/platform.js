@@ -98,6 +98,7 @@ export class BytePlatform extends ByteManager {
         $url: this.$config["byte_shortcode_setting"],
         $title: "Shortcode Setting",
         $callbackClosed: callbackClosed,
+        $size:'modal-fullscreen-md-down modal-xl'
       },
       {
         refComponent,
