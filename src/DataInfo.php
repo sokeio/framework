@@ -7,6 +7,7 @@ use BytePlatform\Laravel\JsonData;
 use BytePlatform\Events\PlatformStatusChanged;
 use Illuminate\Support\Str;
 use BytePlatform\Facades\Platform;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Traits\Macroable;
 
 class DataInfo extends JsonData
@@ -142,9 +143,11 @@ class DataInfo extends JsonData
             ArrayStatus::Key($this['base_type'])->UnActive($this->getId());
         }
         $this->getOptionHook()->changeStatus($this, $value);
+        ob_start();
         PlatformStatusChanged::dispatch($this);
         Platform::makeLink();
         run_cmd(base_path(''), 'php artisan migrate');
+        Log::info(ob_get_clean());
     }
     public function getModels()
     {

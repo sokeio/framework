@@ -1,7 +1,7 @@
 <div class="{{ column_size('col3') }}" wire:key='{{ $item->getId() }}_{{ $item->isActive() }}'>
     <div class="card @if ($item->isActiveOrVendor()) card-active @endif">
-        @if ($ExtentionType == 'theme' && $item->isActive())
-            <div class="ribbon bg-red">Active</div>
+        @if (!$item->isVendor() && $item->isActive())
+            <div class="ribbon bg-warning">Active</div>
         @endif
         @if ($ExtentionType == 'module' && $item->isVendor())
             <div class="ribbon bg-red">Vendor</div>
@@ -28,9 +28,11 @@
                                     byte:modal="{{ route('admin.create-extention-file', ['ExtentionType' => $ExtentionType, 'ExtentionId' => $item->getName()]) }}"
                                     byte:modal-title="Create File In {{ page_title() }}">Add File</a></li>
                             <li><a @click="alert('devlop....')" class="dropdown-item" href="#">Add CURD</a></li>
-                            @if($ExtentionType=='module')
-                            <li><a @click="alert('devlop....')" class="dropdown-item" href="#">Add Theme</a></li>
-                            <li><a @click="alert('devlop....')" class="dropdown-item" href="#">Add Plugin</a></li>
+                            @if ($ExtentionType == 'module')
+                                <li><a @click="alert('devlop....')" class="dropdown-item" href="#">Add Theme</a>
+                                </li>
+                                <li><a @click="alert('devlop....')" class="dropdown-item" href="#">Add Plugin</a>
+                                </li>
                             @endif
                         </ul>
                     </div>
