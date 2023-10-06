@@ -119,7 +119,14 @@ class BaseManager extends ItemCallback
     {
         return $this->getValue('Query');
     }
-
+    public function DataDefaultId($DataDefaultId)
+    {
+        return $this->setKeyValue('DataDefaultId', $DataDefaultId);
+    }
+    public function getDataDefaultId()
+    {
+        return $this->getValue('DataDefaultId');
+    }
 
     private  $__actions = [];
     public function Action($key, $action)

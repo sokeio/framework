@@ -10,7 +10,13 @@ trait WithFormData
     use WithItemManager;
     public $dataId;
     public ItemForm $form;
-
+    public function getDataId()
+    {
+        if ($this->dataId) {
+            return  $this->dataId;
+        }
+        return $this->getItemManager()->getDataDefaultId();
+    }
 
     public function Items()
     {
