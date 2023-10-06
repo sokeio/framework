@@ -25,12 +25,7 @@ class DataInfo extends JsonData
         $this['fileInfo'] =  $parent->FileInfoJson();
         $this['public'] =  $parent->PublicFolder();
         $this['base_type'] = $parent->getName();
-        $this->loadAll($path);
         $this->ReLoad();
-    }
-    public function loadAll($path)
-    {
-        Platform::Load($path);
     }
     public function ReLoad()
     {
