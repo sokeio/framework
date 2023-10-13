@@ -158,17 +158,19 @@ $watch('checkAll', (value) => {
                 @endif
             </tbody>
         </table>
-    </div>
-    <div class="row  align-items-center">
-        <div class="col-auto py-3">
-            <select wire:model.live='pageSize' class="form-select form-select-sm">
-                @foreach ($pageSizeList as $item)
-                    <option value="{{ $item }}">{{ $item }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="col">
-            {{ $items->links('byte::pagination') }}
+        <div class="p-1">
+            <div class="row g-1 align-items-center mb-6">
+                <div class="col-auto py-3">
+                    <select wire:model.live='pageSize' class="form-select form-select-sm">
+                        @foreach ($pageSizeList as $item)
+                            <option value="{{ $item }}">{{ $item }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col">
+                    {{ $items->links('byte::pagination') }}
+                </div>
+            </div>
         </div>
     </div>
 </div>
