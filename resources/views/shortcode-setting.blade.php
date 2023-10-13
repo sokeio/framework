@@ -2,7 +2,7 @@
     <div class="row"
         x-data='{
         async getShortCodeHtml(){
-                                    let html = await $wire.getShortCodeHtml2()
+            let html = await $wire.getShortCodeHtml2()
         return html;
     }
 }'>
