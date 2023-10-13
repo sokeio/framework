@@ -48,16 +48,16 @@
                 <div class="p-2 fs-2 ps-2  text-bg-blue bg-blue rounded-2"> {{ $page_title }}</div>
             @endif
         </div>
-
-        <div class="page-body">
-            <div class="container-fluid">
-                <div class="card">
-                    <div class="card-body {{ $cardBodyClass }}">
-                        @if ($itemManager)
-                            {!! table_render($itemManager, $dataItems, $dataFilters, $dataSorts, $formTable, $selectIds) !!}
-                        @endif
-                    </div>
+    </div>
+    <div class="page-body">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-body {{ $cardBodyClass }}">
+                    @if ($itemManager)
+                        {!! table_render($itemManager, $dataItems, $dataFilters, $dataSorts, $formTable, $selectIds) !!}
+                    @endif
                 </div>
             </div>
         </div>
     </div>
+</div>
