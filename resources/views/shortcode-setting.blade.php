@@ -43,7 +43,8 @@
         <div class="col-md-6 col-12">
             <button class=" btn btn-cyan" wire:click='doPreview()'>Preview</button>
             <div class=" p-1 border border-1 border-azure text-bg-warning  mt-2  rounded-1 "
-                style="overflow-wrap:break-word">{!! $shortcodeHtml !!}
+                style="overflow-wrap:break-word">
+                {!! $shortcodeHtml !!}
             </div>
             <div class="p-1 border border-1 border-azure rounded-1 mt-2" style="overflow-wrap:break-word">
                 {!! shortcode_render($shortcodeHtml) !!}
