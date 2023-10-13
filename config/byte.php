@@ -2,10 +2,7 @@
 
 use BytePlatform\Action;
 use BytePlatform\Actions\CountModel;
-use BytePlatform\Actions\HelloWord;
-use BytePlatform\Actions\TestChart;
-use BytePlatform\Actions\TestForm;
-use BytePlatform\Actions\TestTable;
+use BytePlatform\Actions\TimeNowAction;
 use BytePlatform\Forms\FieldView;
 use BytePlatform\Commands\MakeByTypeCommand;
 use BytePlatform\Commands\MakeModuleCommand;
@@ -109,12 +106,9 @@ return [
         FieldView::Create('choose-modal'),
     ],
     'shortcodes' => [
-        // Shortcode::Create('row')->Title('DIV ROW')->ClassItem(function () {
-        //     if (byte_is_admin()) {
-        //         return byte_is_admin();
-        //     }
-        //     return '';
-        // })->StripTags(),
+        Shortcode::Create('time')->Title('Time Now')->Parameters([
+            Item::Add('format')->Title('Format')->ValueDefault('Y-m-d H:i:s'),
+        ])->ActionData(TimeNowAction::class),
         // Shortcode::Create('col')->Parameters([
         //     Item::Add('column')->Title('Column')->Column(Item::Col3)->Type('select')->DataOption(function () {
         //         return Item::getColumnValue();

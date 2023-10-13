@@ -40,14 +40,23 @@
                     @click="{{ $callbackEvent }}(await getShortCodeHtml())">Save
                     Shortcode</button></div>
         </div>
-        <div class="col-md-6 col-12">
-            <button class=" btn btn-cyan" wire:click='doPreview()'>Preview</button>
-            <div class=" p-1 border border-1 border-azure text-bg-warning  mt-2  rounded-1 "
+        <div class="col-md-6 col-12"
+            x-data='{
+            shortCode:" {!! $shortcodeHtml !!}",
+            shortcodeHtml:"{!! shortcode_render($shortcodeHtml) !!}",
+            sync doPreview(){
+             let rs=  await this.$wire.doPreview();
+             this.shortCode=rs.shortCode;
+             this.shortcodeHtml=rs.shortcodeHtml;
+             
+            }
+        }''>
+            <button class=" btn btn-cyan" @click='doPreview()'>Preview</button>
+            <div x-html="shortCode" class=" p-1 border border-1 border-azure text-bg-warning  mt-2  rounded-1 "
                 style="overflow-wrap:break-word">
-                {!! $shortcodeHtml !!}
             </div>
-            <div class="p-1 border border-1 border-azure rounded-1 mt-2" style="overflow-wrap:break-word">
-                {!! shortcode_render($shortcodeHtml) !!}
+            <div x-html="shortcodeHtml" class="p-1 border border-1 border-azure rounded-1 mt-2"
+                style="overflow-wrap:break-word">
             </div>
         </div>
     </div>

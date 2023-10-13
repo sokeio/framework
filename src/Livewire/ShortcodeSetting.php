@@ -50,6 +50,13 @@ class ShortcodeSetting extends Component
     }
     public function doPreview()
     {
+        $this->skipRender();
+        $shortcode = $this->getShortCodeHtml();
+        return [
+
+            'shortcode' => $shortcode,
+            'shortcodeHtml' => shortcode_render($shortcode)
+        ];
     }
     public function render()
     {
