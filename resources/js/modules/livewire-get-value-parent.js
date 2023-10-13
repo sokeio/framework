@@ -6,7 +6,7 @@ export class LiveWireGetValueParentModule extends BytePlugin {
   }
   booting() {
     const self = this;
-    if (window.Livewire && window.tinymce) {
+    if (window.Livewire) {
       window.Livewire.directive(
         "get-value",
         ({ el, directive, component, cleanup }) => {
