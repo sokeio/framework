@@ -95,6 +95,7 @@ class BytePlatformServiceProvider extends ServiceProvider
             echo '<meta charset="utf-8">';
             echo '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">';
             echo '<meta http-equiv="X-UA-Compatible" content="ie=edge">';
+            echo '<meta name="csrf_token" value="' . csrf_token() . '"/>';
             if ($title = Theme::getTitle()) {
                 echo "<title>" . $title . "</title>";
             }

@@ -52,18 +52,23 @@ class ShortcodeSetting extends Component
     {
         $this->skipRender();
         $shortcode = $this->getShortCodeHtml();
+        $shortcodeHtml = shortcode_render($shortcode);
+        $pattern = '/wire:id="([^"]+)"/';
+        $wireId = '';
+        if (preg_match($pattern, $shortcodeHtml, $matches)) {
+            $wireId = $matches[1];
+        }
         return [
-
             'shortcode' => $shortcode,
-            'shortcodeHtml' => shortcode_render($shortcode)
+            'shortcodeHtml' => $shortcodeHtml,
+            'wireId' => $wireId
         ];
     }
     public function render()
     {
         return view('byte::shortcode-setting', [
             'shortcodes' => Shortcode::GetShortCodes(),
-            'shortcodeItem' => $this->getItemManager(),
-            'shortcodeHtml' =>  $this->getShortCodeHtml()
+            'shortcodeItem' => $this->getItemManager()
         ]);
     }
 }

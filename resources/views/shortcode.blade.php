@@ -1,5 +1,4 @@
-<div {!! $manager->getAttributeContent() !!} @if (isset($attrs['poll'])) wire:{{ $attrs['poll'] }} @endif
-    wire:key='short-code-{{ time() }}'>
+<div {!! $manager->getAttributeContent() !!} @if (isset($attrs['poll'])) wire:{{ $attrs['poll'] }} @endif>
     @includeIf($manager->getView(), [
         'shortcodeData' => $manager->getShortcodeData(),
     ])
