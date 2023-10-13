@@ -116,7 +116,7 @@ export class LiveWireSortablejsModule extends BytePlugin {
                   return {
                     order: index + 1,
                     value: el.getAttribute("wire:sortable-group.item-group"),
-                    items: el.livewire_sortable
+                    items: el.livewire____sortable
                       .toArray()
                       .map((value, index) => {
                         return {
