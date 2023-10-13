@@ -14,7 +14,7 @@
     $checkBoxInTable = $manager->getCheckBoxRow();
     $pageSizeList = $manager->getPageSizeList();
 @endphp
-<div class="table-responsive" style="min-height: 50px;overflow-x:unset;" x-data="{
+<div class="table-responsive" style="min-height: 50px;" x-data="{
     checkAll: false,
     intCheckAll() {
         this.checkAll = $wire.pageIds.length == $wire.selectIds.filter(function(item) { return $wire.pageIds.includes(item + 0); }).length;
