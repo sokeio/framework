@@ -131,6 +131,9 @@ export class ByteManager extends ByteEvent {
     this.start();
   }
   public dataSet(object: any, key: string, value: any) {
+    if (!key || !object) {
+      return;
+    }
     let segments = key.split(".");
 
     if (segments.length === 1) {
@@ -147,7 +150,7 @@ export class ByteManager extends ByteEvent {
     }
   }
   public dataGet(object: any, key: string) {
-    if (key === "") return object;
+    if (key === "" || !key) return object;
 
     return key.split(".").reduce((carry, i) => {
       if (carry === undefined) return undefined;
