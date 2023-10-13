@@ -4,12 +4,12 @@
     $layoutDefault = $manager->getLayoutDefault();
     $itemsInForm = collect($manager->getItems() ?? [])
         ->where(function ($item) {
-            return $item->getWhen() == true && !$item->getInputHidden();
+            return $item->getWhen() == true && $item->getInputHidden() !== true;
         })
         ->toArray();
     $itemHiddensInForm = collect($manager->getItems() ?? [])
         ->where(function ($item) {
-            return $item->getWhen() == true && !$item->getInputHidden();
+            return $item->getWhen() == true && $item->getInputHidden() === true;
         })
         ->toArray();
 @endphp
