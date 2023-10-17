@@ -3,7 +3,7 @@
 namespace BytePlatform\Livewire\Extentions;
 
 use BytePlatform\Component;
-use BytePlatform\Traits\WithPagination;
+use BytePlatform\Concerns\WithPagination;
 
 class Manager extends Component
 {

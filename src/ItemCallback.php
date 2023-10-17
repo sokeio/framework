@@ -2,8 +2,8 @@
 
 namespace BytePlatform;
 
-use BytePlatform\Traits\WithHelpers;
-use Illuminate\Support\Traits\Macroable;
+use BytePlatform\Concerns\WithHelpers;
+use Illuminate\Support\Concerns\Macroable;
 
 class ItemCallback
 {

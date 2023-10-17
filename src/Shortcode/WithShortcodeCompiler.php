@@ -2,7 +2,7 @@
 
 namespace BytePlatform\Shortcode;
 
-use BytePlatform\Traits\WithHelpers;
+use BytePlatform\Concerns\WithHelpers;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 

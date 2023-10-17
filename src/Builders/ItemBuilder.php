@@ -1,10 +1,10 @@
 <?php
 
-namespace BytePlatform\Builder;
+namespace BytePlatform\Builders;
 
-use BytePlatform\Builder\Form\FieldItem;
-use BytePlatform\Builder\Table\ColumnItem;
-use Illuminate\Support\Traits\Macroable;
+use BytePlatform\Builders\Form\FieldItem;
+use BytePlatform\Builders\Table\ColumnItem;
+use Illuminate\Support\Concerns\Macroable;
 
 class ItemBuilder
 {

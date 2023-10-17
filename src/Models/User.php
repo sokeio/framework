@@ -2,10 +2,10 @@
 
 namespace BytePlatform\Models;
 
-use BytePlatform\Traits\WithModelHook;
+use BytePlatform\Concerns\WithModelHook;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use BytePlatform\Traits\WithPermission;
-use BytePlatform\Traits\WithSlug;
+use BytePlatform\Concerns\WithPermission;
+use BytePlatform\Concerns\WithSlug;
 use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable

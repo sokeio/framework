@@ -3,7 +3,7 @@
 namespace BytePlatform\Forms;
 
 use BytePlatform\ItemForm;
-use BytePlatform\Traits\WithItemManager;
+use BytePlatform\Concerns\WithItemManager;
 
 trait WithFormData
 {

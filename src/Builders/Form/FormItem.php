@@ -1,8 +1,8 @@
 <?php
 
-namespace BytePlatform\Builder\Form;
+namespace BytePlatform\Builders\Form;
 
-use BytePlatform\Builder\ItemBuilder;
+use BytePlatform\Builders\ItemBuilder;
 
 class FormItem extends ItemBuilder
 {

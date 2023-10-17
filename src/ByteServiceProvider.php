@@ -21,9 +21,9 @@ use BytePlatform\Facades\Theme;
 use BytePlatform\Locales\LocaleServiceProvider;
 use BytePlatform\Middleware\ThemeLayout;
 use BytePlatform\Shortcode\ShortcodesServiceProvider;
-use BytePlatform\Traits\WithServiceProvider;
+use BytePlatform\Concerns\WithServiceProvider;
 
-class BytePlatformServiceProvider extends ServiceProvider
+class ByteServiceProvider extends ServiceProvider
 {
     use WithServiceProvider;
     public function configurePackage(ServicePackage $package): void

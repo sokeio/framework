@@ -4,10 +4,10 @@ namespace ByteTheme\Admin;
 
 use Illuminate\Support\ServiceProvider;
 use BytePlatform\Laravel\ServicePackage;
-use BytePlatform\Builder\Menu\MenuBuilder;
-use BytePlatform\Builder\Menu\MenuItemBuilder;
+use BytePlatform\Builders\Menu\MenuBuilder;
+use BytePlatform\Builders\Menu\MenuItemBuilder;
 use BytePlatform\Facades\Menu;
-use BytePlatform\Traits\WithServiceProvider;
+use BytePlatform\Concerns\WithServiceProvider;
 
 class AdminServiceProvider extends ServiceProvider
 {

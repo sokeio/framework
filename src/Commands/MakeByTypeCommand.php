@@ -3,7 +3,7 @@
 namespace BytePlatform\Commands;
 
 use Illuminate\Console\Command;
-use BytePlatform\Traits\WithGeneratorStub;
+use BytePlatform\Concerns\WithGeneratorStub;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 

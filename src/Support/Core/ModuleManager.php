@@ -4,7 +4,7 @@ namespace BytePlatform\Support\Core;
 
 class ModuleManager
 {
-    use \BytePlatform\Traits\WithSystemExtend;
+    use \BytePlatform\Concerns\WithSystemExtend;
     public function getName()
     {
         return "module";

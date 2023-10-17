@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform\Traits;
+namespace BytePlatform\Concerns;
 
 use Carbon\Carbon;
 use Illuminate\Filesystem\Filesystem;

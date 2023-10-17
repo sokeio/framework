@@ -2,7 +2,7 @@
 
 namespace BytePlatform;
 
-use BytePlatform\Traits\WithModelHook;
+use BytePlatform\Concerns\WithModelHook;
 
 class Model extends \Illuminate\Database\Eloquent\Model
 {

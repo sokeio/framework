@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform\Traits;
+namespace BytePlatform\Concerns;
 
 use BytePlatform\Dashboard;
 use Livewire\Attributes\Computed;

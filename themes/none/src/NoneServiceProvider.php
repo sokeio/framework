@@ -4,7 +4,7 @@ namespace ByteTheme\None;
 
 use Illuminate\Support\ServiceProvider;
 use BytePlatform\Laravel\ServicePackage;
-use BytePlatform\Traits\WithServiceProvider;
+use BytePlatform\Concerns\WithServiceProvider;
 
 class NoneServiceProvider extends ServiceProvider
 {

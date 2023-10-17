@@ -3,7 +3,7 @@
 namespace BytePlatform\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use BytePlatform\Builder\Menu\MenuBuilder;
+use BytePlatform\Builders\Menu\MenuBuilder;
 
 /**
  * 
@@ -34,6 +34,6 @@ class Menu extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \BytePlatform\Builder\Menu\MenuManager::class;
+        return \BytePlatform\Builders\Menu\MenuManager::class;
     }
 }

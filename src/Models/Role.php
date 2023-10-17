@@ -2,7 +2,7 @@
 
 namespace BytePlatform\Models;
 
-use BytePlatform\Traits\WithSlug;
+use BytePlatform\Concerns\WithSlug;
 
 class Role extends \BytePlatform\Model
 {

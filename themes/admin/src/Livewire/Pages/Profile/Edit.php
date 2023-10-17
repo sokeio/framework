@@ -7,7 +7,7 @@ use BytePlatform\Item;
 use BytePlatform\ItemForm;
 use BytePlatform\ItemManager;
 use BytePlatform\Models\User;
-use BytePlatform\Traits\WithItemManager;
+use BytePlatform\Concerns\WithItemManager;
 
 class Edit extends Component
 {

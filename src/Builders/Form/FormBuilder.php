@@ -1,8 +1,8 @@
 <?php
 
-namespace BytePlatform\Builder\Form;
+namespace BytePlatform\Builders\Form;
 
-use BytePlatform\Builder\HtmlBuilder;
+use BytePlatform\Builders\HtmlBuilder;
 
 class FormBuilder extends HtmlBuilder
 {

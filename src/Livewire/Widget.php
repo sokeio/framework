@@ -3,7 +3,7 @@
 namespace BytePlatform\Livewire;
 
 use BytePlatform\Component;
-use BytePlatform\Traits\WithWidgetData;
+use BytePlatform\Concerns\WithWidgetData;
 
 class Widget extends Component
 {

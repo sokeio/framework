@@ -6,7 +6,7 @@ use BytePlatform\Component;
 use BytePlatform\Facades\SettingForm;
 use BytePlatform\Facades\Theme;
 use BytePlatform\ItemForm;
-use BytePlatform\Traits\WithItemManager;
+use BytePlatform\Concerns\WithItemManager;
 
 class Form extends Component
 {

@@ -5,8 +5,8 @@ namespace BytePlatform\Tables;
 use BytePlatform\DataForm;
 use BytePlatform\ItemForm;
 use BytePlatform\ItemForms;
-use BytePlatform\Traits\WithItemManager;
-use BytePlatform\Traits\WithPagination;
+use BytePlatform\Concerns\WithItemManager;
+use BytePlatform\Concerns\WithPagination;
 
 trait WithTableData
 {

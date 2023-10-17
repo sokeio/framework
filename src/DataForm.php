@@ -2,7 +2,7 @@
 
 namespace BytePlatform;
 
-use Illuminate\Support\Traits\Macroable;
+use Illuminate\Support\Concerns\Macroable;
 use Livewire\Form as FormBase;
 
 class DataForm extends FormBase implements \JsonSerializable

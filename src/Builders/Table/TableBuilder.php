@@ -1,8 +1,8 @@
 <?php
 
-namespace BytePlatform\Builder\Table;
+namespace BytePlatform\Builders\Table;
 
-use BytePlatform\Builder\HtmlBuilder;
+use BytePlatform\Builders\HtmlBuilder;
 
 class TableBuilder extends HtmlBuilder
 {

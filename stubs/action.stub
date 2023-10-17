@@ -2,7 +2,7 @@
 
 namespace $NAMESPACE$;
 
-use BytePlatform\Traits\WithAction;
+use BytePlatform\Concerns\WithAction;
 
 class $CLASS$ extends ActionBase
 {

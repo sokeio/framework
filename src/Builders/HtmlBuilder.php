@@ -3,7 +3,7 @@
 namespace BytePlatform\Builder;
 
 use Illuminate\Contracts\Support\Htmlable;
-use Illuminate\Support\Traits\Macroable;
+use Illuminate\Support\Concerns\Macroable;
 
 abstract class HtmlBuilder implements Htmlable
 {

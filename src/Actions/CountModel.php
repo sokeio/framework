@@ -2,7 +2,7 @@
 
 namespace BytePlatform\Actions;
 
-use BytePlatform\Traits\WithAction;
+use BytePlatform\Concerns\WithAction;
 
 class CountModel
 {

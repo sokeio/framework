@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform\Builder\Menu;
+namespace BytePlatform\Builders\Menu;
 
 use Illuminate\Support\Facades\Route;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform\Traits;
+namespace BytePlatform\Concerns;
 
 
 trait WithModelHook

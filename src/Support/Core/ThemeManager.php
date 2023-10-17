@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Request;
 
 class ThemeManager extends ActionHook
 {
-    use \BytePlatform\Traits\WithSystemExtend;
+    use \BytePlatform\Concerns\WithSystemExtend;
     private $isHtmlAjax = true;
     public function DisableHtmlAjax(): self
     {

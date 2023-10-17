@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform\Traits;
+namespace BytePlatform\Concerns;
 
 use BytePlatform\LivewireLoader;
 use Livewire\Features\SupportPageComponents\LayoutConfig;

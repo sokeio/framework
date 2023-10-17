@@ -2,7 +2,7 @@
 
 namespace BytePlatform;
 
-use Illuminate\Support\Traits\Macroable;
+use Illuminate\Support\Concerns\Macroable;
 
 class OptionHook
 {

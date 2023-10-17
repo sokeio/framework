@@ -2,8 +2,8 @@
 
 namespace BytePlatform;
 
-use BytePlatform\Traits\WithDoAction;
-use BytePlatform\Traits\WithLivewire;
+use BytePlatform\Concerns\WithDoAction;
+use BytePlatform\Concerns\WithLivewire;
 use Livewire\Component as ComponentBase;
 
 class Component extends ComponentBase
