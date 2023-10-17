@@ -446,7 +446,7 @@ if (!function_exists('column_size')) {
 if (!function_exists('field_render')) {
     function field_render(Item $item, $itemForm = null, $dataId = null)
     {
-        return FieldView::FieldRender($item, $itemForm, $dataId);
+        return FieldView::Render($item, $itemForm, $dataId);
     }
 }
 if (!function_exists('form_render')) {
