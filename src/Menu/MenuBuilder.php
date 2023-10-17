@@ -1,9 +1,9 @@
 <?php
 
-namespace BytePlatform\Builders\Menu;
+namespace BytePlatform\Menu;
 
 use Illuminate\Support\Facades\Request;
-use BytePlatform\Builders\HtmlBuilder;
+use BytePlatform\HtmlBuilder;
 use Illuminate\Support\Str;
 use BytePlatform\Facades\Menu;
 

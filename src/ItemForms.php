@@ -2,7 +2,6 @@
 
 namespace BytePlatform;
 
-use Illuminate\Contracts\Support\Arrayable;
 
 class ItemForms extends DataForm
 {

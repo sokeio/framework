@@ -4,7 +4,7 @@ namespace BytePlatform\Livewire;
 
 use BytePlatform\Component;
 use BytePlatform\Dashboard;
-use BytePlatform\Tables\WithTablePageData;
+use BytePlatform\Concerns\WithTablePageData;
 use Livewire\Attributes\Reactive;
 
 class WidgetTable extends Component

@@ -15,10 +15,9 @@ use BytePlatform\Facades\Module;
 use BytePlatform\Facades\Plugin;
 use BytePlatform\Facades\Shortcode;
 use BytePlatform\Facades\Theme;
-use BytePlatform\Forms\FormManager;
+use BytePlatform\FieldView;
 use BytePlatform\Item;
 use BytePlatform\Models\Setting;
-use BytePlatform\Tables\TableManager;
 
 if (!function_exists('byte_encode')) {
     function byte_encode($data)
@@ -447,20 +446,31 @@ if (!function_exists('column_size')) {
 if (!function_exists('field_render')) {
     function field_render(Item $item, $itemForm = null, $dataId = null)
     {
-        return FormManager::FieldRender($item, $itemForm, $dataId);
+        return FieldView::FieldRender($item, $itemForm, $dataId);
     }
 }
 if (!function_exists('form_render')) {
     function form_render(BaseManager $itemManager,  $itemForm = null, $dataId = null)
     {
-        return FormManager::FormRender($itemManager, $itemForm, $dataId);
+        return view('byte::forms.render', [
+            'manager' => $itemManager,
+            'form' => $itemForm,
+            'dataId' => $dataId
+        ])->render();
     }
 }
 
 if (!function_exists('table_render')) {
     function table_render(BaseManager $itemManager, $dataItems = null, $dataFilters = null, $dataSorts = null, $formTable = null, $selectIds = null)
     {
-        return TableManager::Render($itemManager, $dataItems, $dataFilters, $dataSorts, $formTable, $selectIds);
+        return view('byte::tables.render', [
+            'manager' => $itemManager,
+            'items' => $dataItems,
+            'filters' => $dataFilters,
+            'sorts' => $dataSorts,
+            'formTable' => $formTable,
+            'selectIds' => $selectIds,
+        ])->render();
     }
 }
 if (!function_exists('shortcode_render')) {

@@ -10,7 +10,7 @@ use BytePlatform\Facades\Platform;
 use BytePlatform\Facades\Plugin;
 use BytePlatform\Facades\Shortcode;
 use BytePlatform\Facades\Theme;
-use BytePlatform\Forms\FormManager;
+use BytePlatform\FieldView;
 use BytePlatform\LivewireLoader;
 use BytePlatform\RouteEx;
 
@@ -37,7 +37,7 @@ trait WithServiceProvider
 
         if ($fieldTypes = config($this->package->shortName() . '.fields')) {
             if (is_array($fieldTypes) && count($fieldTypes) > 0) {
-                FormManager::RegisterField($fieldTypes);
+                FieldView::RegisterField($fieldTypes);
             }
         }
         if ($widgetTypes = config($this->package->shortName() . '.widgets')) {

@@ -3,7 +3,7 @@
 namespace BytePlatform\Livewire;
 
 use BytePlatform\Component;
-use BytePlatform\Tables\WithTablePageData;
+use BytePlatform\Concerns\WithTablePageData;
 
 class TablePage extends Component
 {

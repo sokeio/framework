@@ -4,7 +4,7 @@ namespace BytePlatform\Livewire;
 
 use BytePlatform\Component;
 use BytePlatform\Facades\Shortcode as FacadesShortcode;
-use BytePlatform\Forms\WithFormData;
+use BytePlatform\Concerns\WithFormData;
 use Livewire\Attributes\Reactive;
 
 class Shortcode extends Component

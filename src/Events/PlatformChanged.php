@@ -4,7 +4,7 @@ namespace BytePlatform\Events;
 
 use Illuminate\Foundation\Events\Dispatchable;
 
-class PlatformStatusChanged
+class PlatformChanged
 {
     use Dispatchable;
     public $item;

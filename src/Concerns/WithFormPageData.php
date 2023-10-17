@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform\Forms;
+namespace BytePlatform\Concerns;
 
 trait WithFormPageData
 {

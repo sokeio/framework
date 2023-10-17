@@ -1,9 +1,9 @@
 <?php
 
-namespace BytePlatform\Builders\Menu;
+namespace BytePlatform\Menu;
 
 use BytePlatform\Facades\Menu;
-use BytePlatform\Builders\HtmlBuilder;
+use BytePlatform\HtmlBuilder;
 
 class MenuItemBuilder extends HtmlBuilder
 {

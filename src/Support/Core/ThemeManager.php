@@ -6,7 +6,7 @@ use BytePlatform\Action;
 use BytePlatform\Laravel\Hook\ActionHook;
 use BytePlatform\ArrayStatus;
 use BytePlatform\DataInfo;
-use BytePlatform\Events\PlatformStatusChanged;
+use BytePlatform\Events\PlatformChanged;
 use BytePlatform\Facades\Assets;
 use BytePlatform\Facades\Platform;
 use BytePlatform\Facades\Shortcode;
@@ -102,7 +102,7 @@ class ThemeManager extends ActionHook
                 ArrayStatus::Key(PLATFORM_THEME_WEB)->Active($theme->getId(), true);
             }
         }
-        PlatformStatusChanged::dispatch($theme);
+        PlatformChanged::dispatch($theme);
         Platform::makeLink();
     }
     public function getLayouts()

@@ -4,10 +4,11 @@ namespace ByteTheme\Admin;
 
 use Illuminate\Support\ServiceProvider;
 use BytePlatform\Laravel\ServicePackage;
-use BytePlatform\Builders\Menu\MenuBuilder;
-use BytePlatform\Builders\Menu\MenuItemBuilder;
+use BytePlatform\Menu\MenuBuilder;
+use BytePlatform\Menu\MenuItemBuilder;
 use BytePlatform\Facades\Menu;
 use BytePlatform\Concerns\WithServiceProvider;
+use BytePlatform\Facades\Theme;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -79,7 +80,7 @@ class AdminServiceProvider extends ServiceProvider
             }
         });
         Menu::renderItemCallback(function (MenuItemBuilder $item) {
-            $itemActiveClass=' bg-azure text-azure-fg ';
+            $itemActiveClass = ' bg-azure text-azure-fg ';
             $classActive = $item->checkActive() ? 'show' : '';
             if (!$item->checkView()) return;
             if ($item->getParent()->checkSub()) {
@@ -211,7 +212,9 @@ class AdminServiceProvider extends ServiceProvider
              </svg>', function (MenuBuilder $menu) {
                     $menu->setTargetId('system_appearance_menu');
                     $menu->route(['name' => 'admin.theme', 'params' => []], 'Themes', '', [], 'admin.theme');
-                    $menu->route(['name' => 'admin.theme-options', 'params' => []], 'Theme Options', '', [], 'admin.theme-options');
+                    if (Theme::SiteDataInfo()) {
+                        $menu->route(['name' => 'admin.theme-options', 'params' => []], 'Theme Options', '', [], 'admin.theme-options');
+                    }
                 }, 9999999999999);
                 menu::subMenu('Extension', '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-puzzle" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>

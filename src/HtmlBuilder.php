@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform\Builders;
+namespace BytePlatform;
 
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Traits\Macroable;

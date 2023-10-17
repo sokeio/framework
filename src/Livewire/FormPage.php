@@ -3,7 +3,7 @@
 namespace BytePlatform\Livewire;
 
 use BytePlatform\Component;
-use BytePlatform\Forms\WithFormData;
+use BytePlatform\Concerns\WithFormData;
 
 class FormPage extends Component
 {

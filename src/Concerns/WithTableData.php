@@ -1,12 +1,10 @@
 <?php
 
-namespace BytePlatform\Tables;
+namespace BytePlatform\Concerns;
 
 use BytePlatform\DataForm;
 use BytePlatform\ItemForm;
 use BytePlatform\ItemForms;
-use BytePlatform\Concerns\WithItemManager;
-use BytePlatform\Concerns\WithPagination;
 
 trait WithTableData
 {
@@ -75,7 +73,7 @@ trait WithTableData
     public function getDataItems()
     {
         $query = $this->getQuery();
-        if(!$query) return null;
+        if (!$query) return null;
         $arrSort = $this->dataSorts->toArray();
         if (isset($arrSort)) {
             foreach ($arrSort as $key => $value) {

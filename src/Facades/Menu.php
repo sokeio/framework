@@ -34,6 +34,6 @@ class Menu extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \BytePlatform\Builders\Menu\MenuManager::class;
+        return \BytePlatform\Menu\MenuManager::class;
     }
 }

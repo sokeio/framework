@@ -4,7 +4,7 @@ namespace BytePlatform\Livewire;
 
 use BytePlatform\Component;
 use BytePlatform\ItemManager;
-use BytePlatform\Tables\WithTableData;
+use BytePlatform\Concerns\WithTableData;
 
 class Table extends Component
 {

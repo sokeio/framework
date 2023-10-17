@@ -3,10 +3,7 @@
 namespace BytePlatform\Commands;
 
 use Illuminate\Console\Command;
-use BytePlatform\Facades\Module;
-use BytePlatform\Facades\Theme;
 use Illuminate\Support\Facades\File;
-use Ramsey\Uuid\Guid\Fields;
 use Symfony\Component\Console\Input\InputOption;
 
 class BLinkCommand extends Command

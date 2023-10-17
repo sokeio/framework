@@ -4,7 +4,7 @@ namespace BytePlatform\Livewire;
 
 use BytePlatform\Component;
 use BytePlatform\Dashboard;
-use BytePlatform\Forms\WithFormData;
+use BytePlatform\Concerns\WithFormData;
 use Livewire\Attributes\Reactive;
 
 class WidgetForm extends Component

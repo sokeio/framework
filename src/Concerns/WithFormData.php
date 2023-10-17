@@ -1,9 +1,8 @@
 <?php
 
-namespace BytePlatform\Forms;
+namespace BytePlatform\Concerns;
 
 use BytePlatform\ItemForm;
-use BytePlatform\Concerns\WithItemManager;
 
 trait WithFormData
 {

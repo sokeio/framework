@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform\Tables;
+namespace BytePlatform\Concerns;
 
 trait WithTablePageData
 {

@@ -61,7 +61,7 @@ class LivewireLoader
             function ($class) {
                 if (!class_exists($class)) return false;
                 $refClass = new ReflectionClass($class);
-                return  $refClass && !$refClass->isAbstract() && !$refClass->implementsInterface(SkipLoad::class) && $refClass->isSubclassOf(Component::class);
+                return  $refClass && !$refClass->isAbstract()  && $refClass->isSubclassOf(Component::class);
             }
         );
     }
