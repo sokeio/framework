@@ -1,9 +1,9 @@
 <?php
 
-namespace BytePlatform\Builder;
+namespace BytePlatform\Builders;
 
 use Illuminate\Contracts\Support\Htmlable;
-use Illuminate\Support\Concerns\Macroable;
+use Illuminate\Support\Traits\Macroable;
 
 abstract class HtmlBuilder implements Htmlable
 {

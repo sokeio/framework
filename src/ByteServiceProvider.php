@@ -171,6 +171,7 @@ class ByteServiceProvider extends ServiceProvider
         });
         $this->app->booted(function () {
             Theme::RegisterRoute();
+            Gate::BootApp();
         });
         Route::matched(function ($route) {
             if (Route::currentRouteName() == 'homepage' && adminUrl() == '') {
@@ -179,7 +180,6 @@ class ByteServiceProvider extends ServiceProvider
                 }, 0);
             }
             Theme::reTheme();
-            Gate::BootApp();
             if (Request::isMethod('get')) {
                 // Only Get Request
                 if (!Platform::checkFolderPlatform()) Platform::makeLink();
