@@ -5,7 +5,7 @@ namespace BytePlatform\Forms;
 use BytePlatform\BaseManager;
 use BytePlatform\Item;
 use BytePlatform\ItemForm;
-use BytePlatform\ItemType;
+use BytePlatform\FieldView;
 
 class FormManager
 {
@@ -24,7 +24,7 @@ class FormManager
             return;
         }
         self::$fields[$field->getFieldType()] = $field;
-        ItemType::macro($field->getFieldType(), function () use ($field) {
+        FieldView::macro($field->getFieldType(), function () use ($field) {
             return  $field->getFieldType();
         });
     }

@@ -1,9 +1,12 @@
 <?php
 
-namespace BytePlatform\Forms;
+namespace BytePlatform;
+
+use Illuminate\Support\Traits\Macroable;
 
 class FieldView
 {
+    use Macroable;
     private $namespace = 'byte::fields.';
     private $fieldType = 'text';
     private $callbackBeforeSetup = null;
@@ -24,7 +27,7 @@ class FieldView
         $this->callbackBeforeSetup = $callback;
         return $this;
     }
-    public function NameSpace($name)
+    public function Namespace($name)
     {
         $this->namespace = $name;
         return $this;

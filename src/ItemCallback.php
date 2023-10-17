@@ -3,7 +3,7 @@
 namespace BytePlatform;
 
 use BytePlatform\Concerns\WithHelpers;
-use Illuminate\Support\Concerns\Macroable;
+use Illuminate\Support\Traits\Macroable;
 
 class ItemCallback
 {

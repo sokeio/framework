@@ -3,7 +3,7 @@
 use BytePlatform\Action;
 use BytePlatform\Actions\CountModel;
 use BytePlatform\Actions\TimeNowAction;
-use BytePlatform\Forms\FieldView;
+use BytePlatform\FieldView;
 use BytePlatform\Commands\MakeByTypeCommand;
 use BytePlatform\Commands\MakeModuleCommand;
 use BytePlatform\Commands\MakePluginCommand;

@@ -3,7 +3,7 @@
   array (
     'providers' => 
     array (
-      0 => 'BytePlatform\\BytePlatformServiceProvider',
+      0 => 'BytePlatform\\ByteServiceProvider',
     ),
     'aliases' => 
     array (

@@ -8,7 +8,7 @@ use BytePlatform\Events\PlatformStatusChanged;
 use Illuminate\Support\Str;
 use BytePlatform\Facades\Platform;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Concerns\Macroable;
+use Illuminate\Support\Traits\Macroable;
 
 class DataInfo extends JsonData
 {
