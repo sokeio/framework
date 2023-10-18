@@ -3,7 +3,7 @@
 namespace BytePlatform\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use BytePlatform\Builders\Menu\MenuBuilder;
+use BytePlatform\Menu\MenuBuilder;
 
 /**
  * 
