@@ -822,7 +822,7 @@ return [
         'routes-web' => ['path' => 'routes/web', 'generate' => true],
         'controller' => ['path' => 'src/Http/Controllers', 'namespace' => 'Http\\Controllers', 'generate' => true, 'only' => ['module']],
         'middleware' => ['path' => 'src/Http/Middleware', 'namespace' => 'Http\\Middleware', 'generate' => true, 'only' => ['module']],
-        'action' => ['path' => 'src/Http/Action', 'namespace' => 'Http\\Action', 'generate' => true, 'only' => ['module']],
+        'action' => ['path' => 'src/Actions', 'namespace' => 'Actions', 'generate' => true, 'only' => ['module']],
         'request' => ['path' => 'src/Http/Requests', 'namespace' => 'Http\\Requests', 'generate' => true, 'only' => ['module']],
         'livewire' => ['path' => 'src/Livewire', 'namespace' => 'Livewire', 'generate' => true, 'only' => ['module']],
         'crud' => ['path' => 'src/Crud', 'namespace' => 'Crud', 'generate' => true],
