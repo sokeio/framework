@@ -764,7 +764,17 @@ return [
                 'replacements' => [
                     'FILE_MIGRATION',
                 ]
-            ]
+            ],
+            'helpers-constraint' => [
+                'stub' => 'php',
+                'path' => 'helpers',
+                'name' => 'constraint.php'
+            ],
+            'helpers-function' => [
+                'stub' => 'php',
+                'path' => 'helpers',
+                'name' => 'function.php'
+            ],
         ],
         'gitkeep' => true,
         'files' => [
@@ -776,7 +786,9 @@ return [
                 'app-sass',
                 'vite-config',
                 'package',
-                'gitignore'
+                'gitignore',
+                'helpers-constraint',
+                'helpers-function'
             ],
             'module' => [
                 'route',
@@ -827,6 +839,7 @@ return [
         'livewire' => ['path' => 'src/Livewire', 'namespace' => 'Livewire', 'generate' => true, 'only' => ['module']],
         'crud' => ['path' => 'src/Crud', 'namespace' => 'Crud', 'generate' => true],
         'provider' => ['path' => 'src/Providers', 'namespace' => 'Providers', 'generate' => true, 'only' => ['module']],
+        'helpers' => ['path' => 'helpers', 'generate' => true],
         'assets' => ['path' => 'resources', 'generate' => true],
         'lang' => ['path' => 'resources/lang', 'generate' => true],
         'views' => ['path' => 'resources/views', 'generate' => true],

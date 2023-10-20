@@ -14,9 +14,12 @@
         }
     },
     "autoload": {
+         "files": [
+            "helpers/constraint.php",
+            "helpers/function.php"
+        ],
         "psr-4": {
             "$NAMESPACE$\\": "src",
-            "$NAMESPACE$\\Widget\\": "widgets",
             "$NAMESPACE$\\Database\\Factories\\": "database/factories",
             "$NAMESPACE$\\Database\\Seeders\\": "database/seeders"
         }

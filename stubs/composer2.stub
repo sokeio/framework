@@ -13,11 +13,18 @@
             "aliases": {}
         }
     },
-    "autoload": {
-        "psr-4": {
-            "$NAMESPACE$\\Widget\\": "widgets",
+
+  "autoload": {
+    "files": [
+      "helpers/constraint.php",
+      "helpers/function.php"
+    ],
+   "psr-4": {
             "$NAMESPACE$\\Database\\Factories\\": "database/factories",
             "$NAMESPACE$\\Database\\Seeders\\": "database/seeders"
         }
-    }
+  },
+  "autoload-dev": {
+    "psr-4": {}
+  },    
 }
