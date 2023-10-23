@@ -32,6 +32,8 @@ trait WithAction
                 $arr[] = $params[$param->getName()];
             } else if ($varReq = request($param->getName())) {
                 $arr[] = $varReq;
+            } else if ($param->hasType() && $app = app($param->getType())) {
+                $arr[] = $app;
             } else {
                 $arr[] = null;
             }
@@ -39,5 +41,4 @@ trait WithAction
 
         return $this->DoAction(...$arr);
     }
-
 }
