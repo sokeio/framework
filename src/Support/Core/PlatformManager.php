@@ -205,11 +205,14 @@ class PlatformManager
                     if (is_link($target)) {
                         app('files')->delete($target);
                     }
-
-                    if ($relative) {
-                        app('files')->relativeLink($link, $target);
+                    if (env('BYTE_PUBLIC_COPY')) {
+                        File::copyDirectory($link, $target);
                     } else {
-                        app('files')->link($link, $target);
+                        if ($relative) {
+                            app('files')->relativeLink($link, $target);
+                        } else {
+                            app('files')->link($link, $target);
+                        }
                     }
                 }
             }

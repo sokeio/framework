@@ -8,7 +8,9 @@ use BytePlatform\Menu\MenuBuilder;
 use BytePlatform\Menu\MenuItemBuilder;
 use BytePlatform\Facades\Menu;
 use BytePlatform\Concerns\WithServiceProvider;
+use BytePlatform\Facades\SettingForm;
 use BytePlatform\Facades\Theme;
+use BytePlatform\Item;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -183,6 +185,22 @@ class AdminServiceProvider extends ServiceProvider
                     }
                 }
             }
+        });
+        SettingForm::Register(function (\BytePlatform\ItemManager $form) {
+            $form->Title('System Information')->Item([
+                Item::Add('page_logo')->Type('images')->Title('Logo')->Attribute(function () {
+                    return 'style="max-width:200px;"';
+                }),
+
+                Item::Add('page_site_title')->Column(Item::Col12)->Title('Page Title')->Required(),
+
+                Item::Add('page_description')->Attribute(function () {
+                    return 'rows="10"';
+                })->Column(Item::Col12)->Type('tinymce')->Title('Page Description'), //tinymce//textarea
+                Item::Add('page_google_analytics')->Title('Google analytics'),
+                Item::Add('page_google_console')->Title('Google console'),
+            ]);
+            return $form;
         });
         Menu::Register(function () {
             if (byte_is_admin()) {

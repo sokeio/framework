@@ -16,7 +16,6 @@ use BytePlatform\Facades\Menu;
 use BytePlatform\Facades\Module;
 use BytePlatform\Facades\Platform;
 use BytePlatform\Facades\Plugin;
-use BytePlatform\Facades\SettingForm;
 use BytePlatform\Facades\Theme;
 use BytePlatform\Locales\LocaleServiceProvider;
 use BytePlatform\Middleware\ThemeLayout;
@@ -97,7 +96,7 @@ class ByteServiceProvider extends ServiceProvider
             echo '<meta http-equiv="X-UA-Compatible" content="ie=edge">';
             echo '<meta name="csrf_token" value="' . csrf_token() . '"/>';
             if (!byte_is_admin() && function_exists('seo_header_render')) {
-                seo_header_render();
+                call_user_func('seo_header_render', []);
             } else  if ($title = Theme::getTitle()) {
                 echo "<title>" . $title . "</title>";
             }
@@ -147,7 +146,7 @@ class ByteServiceProvider extends ServiceProvider
             });
             setTimeout(function(){
                 document.getElementById('ByteManagerjs____12345678901234567')?.remove();
-            },0)
+            },400)
             </script>";
             Assets::Render(PLATFORM_BODY_AFTER);
         });
@@ -155,22 +154,7 @@ class ByteServiceProvider extends ServiceProvider
             return $view;
         }, 0);
 
-        SettingForm::Register(function (\BytePlatform\ItemManager $form) {
-            $form->Title('System Information')->Item([
-                Item::Add('page_logo')->Type('images')->Title('Logo')->Attribute(function () {
-                    return 'style="max-width:200px;"';
-                }),
 
-                Item::Add('page_site_title')->Column(Item::Col12)->Title('Page Title')->Required(),
-
-                Item::Add('page_description')->Attribute(function () {
-                    return 'rows="10"';
-                })->Column(Item::Col12)->Type('tinymce')->Title('Page Description'), //tinymce//textarea
-                Item::Add('page_google_analytics')->Title('Google analytics'),
-                Item::Add('page_google_console')->Title('Google console'),
-            ]);
-            return $form;
-        });
         $this->app->booted(function () {
             Theme::RegisterRoute();
             Gate::BootApp();
