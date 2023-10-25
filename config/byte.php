@@ -96,6 +96,7 @@ return [
         FieldView::Create('flatpickr'),
         FieldView::Create('radio'),
         FieldView::Create('toggle'),
+        FieldView::Create('subdomain'),
         FieldView::Create('toggle-multiple'),
         FieldView::Create('textarea'),
         FieldView::Create('tinymce'),
