@@ -14,6 +14,25 @@ class AssetManager
     private $assets = [];
     private $loaded = false;
     private $dataLoader = [];
+    public function AssetType($name, $baseType = 'theme')
+    {
+        $this->AddJs('resources/js/app.js', $baseType, $name);
+        $this->AddJs('resources/sass/app.scss', $baseType, $name);
+    }
+    public function Theme($name)
+    {
+        $this->AssetType($name, 'theme');
+    }
+
+    public function Module($name)
+    {
+        $this->AssetType($name, 'module');
+    }
+
+    public function Plugin($name)
+    {
+        $this->AssetType($name, 'plugin');
+    }
     public function SetData($key, $value)
     {
         $this->data[$key] = $value;

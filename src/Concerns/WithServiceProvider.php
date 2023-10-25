@@ -76,8 +76,7 @@ trait WithServiceProvider
             RouteEx::Load($this->package->basePath('/../routes/'));
 
         if ($this->base_type && $this->data_info) {
-            Assets::AddJs('resources/js/app.js', $this->base_type, $this->data_info['name']);
-            Assets::AddCss('resources/sass/app.scss', $this->base_type, $this->data_info['name']);
+            Assets::AssetType($this->data_info['name'], $this->base_type);
         }
         if ($this->base_type == 'theme') {
             $this->package->name('theme');

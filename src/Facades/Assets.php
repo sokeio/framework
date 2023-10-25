@@ -5,6 +5,10 @@ namespace BytePlatform\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
+ * @method static void AssetType($name, $baseType = 'theme')
+ * @method static void Theme($name)
+ * @method static void Module($name)
+ * @method static void Plugin($name)
  * @method static void AddAssetType($location, $base, $name, $content, $type = self::JS, $priority = 10000)
  * @method static void AddJs($content,$base=null, $name=null, $location = PLATFORM_BODY_AFTER, $priority = 10000)
  * @method static void AddJs($content,$base=null, $name=null, $location = PLATFORM_BODY_AFTER, $priority = 10000)
