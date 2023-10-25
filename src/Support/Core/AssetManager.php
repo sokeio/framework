@@ -17,7 +17,7 @@ class AssetManager
     public function AssetType($name, $baseType = 'theme')
     {
         $this->AddJs('resources/js/app.js', $baseType, $name);
-        $this->AddJs('resources/sass/app.scss', $baseType, $name);
+        $this->AddCss('resources/sass/app.scss', $baseType, $name);
     }
     public function Theme($name)
     {
