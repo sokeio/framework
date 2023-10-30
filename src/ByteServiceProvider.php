@@ -96,7 +96,7 @@ class ByteServiceProvider extends ServiceProvider
             echo '<meta http-equiv="X-UA-Compatible" content="ie=edge">';
             echo '<meta name="csrf_token" value="' . csrf_token() . '"/>';
             if (!byte_is_admin() && function_exists('seo_header_render')) {
-                call_user_func('seo_header_render', []);
+                call_user_func('seo_header_render');
             } else  if ($title = Theme::getTitle()) {
                 echo "<title>" . $title . "</title>";
             }
