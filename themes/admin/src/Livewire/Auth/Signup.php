@@ -24,9 +24,13 @@ class Signup extends Component
         $user->email = $this->email;
         $user->name = $this->name;
         $user->password = $this->password;
-        if ($role = env('BYTE_SIGUP_ROLE_DEFAULT')) {
-        }
+        $user->status = 1;
         $user->save();
+        if ($role = env('BYTE_SIGUP_ROLE_DEFAULT')) {
+            $role =   (config('byte.model.role', \BytePlatform\Models\Role::class))::where('slug', $role)->first();
+            if ($role)
+                $user->roles()->sync([$role->id]);
+        }
         return redirect(route('admin.login'));
     }
     public function mount()
