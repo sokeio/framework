@@ -14,12 +14,12 @@ class SeoBox extends Component
     {
         if (!class_exists('\\BytePlatform\\Seo\\Models\\SEO')) return null;
         return ItemManager::Form()->Model(\BytePlatform\Seo\Models\SEO::class)->Item([
-            Item::Add('title')->Title('Title'),
-            Item::Add('description')->Title('Description')->Type('textarea'),
-            Item::Add('image')->Title('Image')->Type('images'),
-            Item::Add('author')->Title('Author'),
-            Item::Add('robots')->Title('Robots')->Type('textarea'),
-            Item::Add('canonical_url')->Title('Canonical Url'),
+            Item::Add('title')->Column(Item::Col12)->Title('Title'),
+            Item::Add('description')->Column(Item::Col12)->Title('Description')->Type('textarea'),
+            Item::Add('image')->Column(Item::Col12)->Title('Image')->Type('images'),
+            Item::Add('author')->Column(Item::Col12)->Title('Author'),
+            Item::Add('robots')->Column(Item::Col12)->Title('Robots')->Type('textarea'),
+            Item::Add('canonical_url')->Column(Item::Col12)->Title('Canonical Url'),
         ]);
     }
 }
