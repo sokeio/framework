@@ -14,7 +14,7 @@ class Signup extends Component
     protected $rules = [
         'password' => 'required|min:6',
         'name' => 'required|min:6',
-        'email' => 'required|min:6',
+        'email' => 'required|email:rfc,dns|unique:users,email',
         'agree' => 'required',
     ];
     public function DoWork()
@@ -24,6 +24,8 @@ class Signup extends Component
         $user->email = $this->email;
         $user->name = $this->name;
         $user->password = $this->password;
+        if ($role = env('BYTE_SIGUP_ROLE_DEFAULT')) {
+        }
         $user->save();
         return redirect(route('admin.login'));
     }
