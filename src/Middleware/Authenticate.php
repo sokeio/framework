@@ -15,9 +15,6 @@ class Authenticate extends Middleware
         $route = $request->route()->getName();
         //skip with prexfix '_'
         if (!Str::startsWith($route, '_')) {
-            if ($route == 'core.table.slug') {
-                $route = 'core.' . $request->route('module');
-            }
             // Hasn't permission
             if (!checkPermission($route)) {
                 return abort(403);

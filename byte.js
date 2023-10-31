@@ -105,15 +105,26 @@ window.PlatformLoadScript = function (
   async = true,
   defer = true
 ) {
+  const dispatchDocument = (event, details = {}) => {
+    document.dispatchEvent(
+      new window.Event(event, {
+        bubbles: true,
+        cancelable: false,
+        ...(details ?? {}),
+      })
+    );
+  };
   return window
     .ByteLoadScript(source, beforeEl, async, defer)
     .then(function () {
+      dispatchDocument("byte::ready");
       if (window.ByteManager) {
         window.ByteManager.start();
         window.PlatformLoadScript = undefined;
       }
     })
     .catch(function () {
+      dispatchDocument("byte::ready");
       if (window.ByteManager) {
         window.ByteManager.start();
         window.PlatformLoadScript = undefined;
