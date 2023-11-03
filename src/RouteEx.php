@@ -74,7 +74,7 @@ class RouteEx
         self::$cacheRouteLoaded[$path] = true;
 
         if ($subdomain = env('BYTE_SUB_DOMAIN')) {
-            Route::group(['middleware' => ['web'], 'domain' =>  $subdomain], function () use ($path) {
+            Route::domain($subdomain)->group(function () use ($path) {
                 self::LoadRoute($path);
             });
         } else {
