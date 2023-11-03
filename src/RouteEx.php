@@ -29,10 +29,8 @@ class RouteEx
             ->prefix(adminUrl())
             ->group($callback);
     }
-    public static function Load($path)
+    private static function LoadRoute($path)
     {
-        if (self::checkPath($path)) return;
-        self::$cacheRouteLoaded[$path] = true;
         if (file_exists(($path . 'api.php')) || file_exists(($path . 'api'))) {
             self::Api(function () use ($path) {
                 if (file_exists(($path . 'api.php'))) {
@@ -68,6 +66,19 @@ class RouteEx
                     }, null);
                 }
             });
+        }
+    }
+    public static function Load($path)
+    {
+        if (self::checkPath($path)) return;
+        self::$cacheRouteLoaded[$path] = true;
+
+        if ($subdomain = env('BYTE_SUB_DOMAIN')) {
+            Route::group(['middleware' => ['web'], 'domain' =>  $subdomain], function () use ($path) {
+                self::LoadRoute($path);
+            });
+        } else {
+            self::LoadRoute($path);
         }
     }
 }

@@ -81,6 +81,3 @@ Route::get('/', route_theme(function () {
     }
     return view_scope($view, $params);
 }))->name('homepage');
-Route::get('tesst', function () {
-    return view('byte::test-about')->withShortcodes();
-});
