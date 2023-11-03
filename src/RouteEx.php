@@ -15,7 +15,6 @@ class RouteEx
     {
         Route::middleware(apply_filters(PLATFORM_MIDDLEWARE_API, ['api', \BytePlatform\Middleware\Platform::class]))
             ->prefix('api')
-            ->domain(null)
             ->group($callback);
     }
     public static function Web($callback)
