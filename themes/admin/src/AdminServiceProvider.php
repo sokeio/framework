@@ -47,7 +47,7 @@ class AdminServiceProvider extends ServiceProvider
             add_filter(PLATFORM_PERMISSION_IGNORE, function ($prev) {
                 return [
                     'admin.dashboard',
-                    'admin.change-password-account',
+                    'admin.user-change-password-form',
                     'admin.profile',
                     ...$prev
                 ];

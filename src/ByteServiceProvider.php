@@ -161,7 +161,7 @@ class ByteServiceProvider extends ServiceProvider
             Theme::RegisterRoute();
         });
         Route::matched(function ($route) {
-            
+
             if (Route::currentRouteName() == 'homepage' && adminUrl() == '') {
                 add_filter(PLATFORM_IS_ADMIN, function () {
                     return true;
