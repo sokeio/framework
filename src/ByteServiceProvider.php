@@ -161,13 +161,14 @@ class ByteServiceProvider extends ServiceProvider
             Theme::RegisterRoute();
         });
         Route::matched(function ($route) {
-            Gate::BootApp();
+            
             if (Route::currentRouteName() == 'homepage' && adminUrl() == '') {
                 add_filter(PLATFORM_IS_ADMIN, function () {
                     return true;
                 }, 0);
             }
             Theme::reTheme();
+            Gate::BootApp();
             if (Request::isMethod('get')) {
                 // Only Get Request
                 if (!Platform::checkFolderPlatform()) Platform::makeLink();
