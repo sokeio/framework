@@ -1,4 +1,4 @@
-<div class="page page-center" x-data="{ showPass:false }">
+<div class="page page-center" x-data="{ showPass: false }">
     <div class="container container-tight py-4">
         <div class="text-center mb-4">
         </div>
@@ -8,8 +8,8 @@
                 <form wire:submit.prevent='DoWork()' autocomplete="off" novalidate>
                     <div class="mb-3">
                         <label class="form-label">Email address</label>
-                        <input wire:model='username' type="email" class="form-control"
-                            placeholder="your@email.com" autocomplete="off">
+                        <input wire:model='username' type="email" class="form-control" placeholder="your@email.com"
+                            autocomplete="off">
                         @error('username')
                             <span class="error">{{ $message }}</span>
                         @enderror
@@ -22,10 +22,11 @@
                             </span>
                         </label>
                         <div class="input-group input-group-flat">
-                            <input wire:model='password' type="password" :type="showPass ? 'text' : 'password'" class="form-control"
-                                placeholder="Your password" autocomplete="off" >
+                            <input wire:model='password' type="password" :type="showPass ? 'text' : 'password'"
+                                class="form-control" placeholder="Your password" autocomplete="off">
                             <span class="input-group-text">
-                                <a href="#" class="link-secondary" @click="showPass = !showPass" title="Show password" data-bs-toggle="tooltip">
+                                <a href="#" class="link-secondary" @click=" showPass = showPass?false:true "
+                                    title="Show password" data-bs-toggle="tooltip">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                         viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                         stroke-linecap="round" stroke-linejoin="round">
