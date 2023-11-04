@@ -86,8 +86,12 @@ class ItemForm extends DataForm
                 }
             } else {
                 foreach ($this->itemManager->getItems() as  $item) {
-                    if ($item->getWhen() && !$item->getNoBindData())
-                        $this->{$item->getField()} = isset($data->{$item->getField()}) ? $data->{$item->getField()} : $item->getValueDefault();
+                    if ($item->getWhen())
+                        if (!$item->getNoBindData())
+                            $this->{$item->getField()} = isset($data->{$item->getField()}) ? $data->{$item->getField()} : $item->getValueDefault();
+                        else if ($callback = $item->getFieldData()) {
+                            $this->{$item->getField()} = $callback($data, $item, $this->itemManager);
+                        }
                 }
             }
         }

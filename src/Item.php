@@ -184,7 +184,16 @@ class Item extends ItemCallback
     {
         return new self($field);
     }
-
+    private $_fieldDataCallback = null;
+    public function FieldData($_fieldDataCallback)
+    {
+        $this->_fieldDataCallback = $_fieldDataCallback;
+        return $this;
+    }
+    public function getFieldData()
+    {
+        return  $this->_fieldDataCallback;
+    }
     public function DataId($dataId)
     {
         return $this->setKeyValue('dataId', $dataId);
