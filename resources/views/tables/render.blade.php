@@ -168,7 +168,9 @@ $watch('checkAll', (value) => {
                     </select>
                 </div>
                 <div class="col">
-                    {{ $items->links('byte::pagination') }}
+                    @if ($items)
+                        {{ $items->links('byte::pagination') }}
+                    @endif
                 </div>
             </div>
         </div>
