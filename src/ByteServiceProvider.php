@@ -159,9 +159,9 @@ class ByteServiceProvider extends ServiceProvider
 
         $this->app->booted(function () {
             Theme::RegisterRoute();
-            Gate::BootApp();
         });
         Route::matched(function ($route) {
+            Gate::BootApp();
             if (Route::currentRouteName() == 'homepage' && adminUrl() == '') {
                 add_filter(PLATFORM_IS_ADMIN, function () {
                     return true;
