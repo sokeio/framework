@@ -48,6 +48,7 @@ class AdminServiceProvider extends ServiceProvider
                 return [
                     'admin.dashboard',
                     'admin.change-password-account',
+                    'admin.profile',
                     ...$prev
                 ];
             });
