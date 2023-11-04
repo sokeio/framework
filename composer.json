@@ -13,7 +13,7 @@
     }
   ],
   "require": {
-    "byteplatform/laravel": "^1.0.1",
+    "byteplatform/laravel": "^1.0.2",
     "symfony/filesystem": "^6.3.1",
     "staudenmeir/eloquent-eager-limit": "^1.8.3",
     "livewire/livewire": "^3.0.5",
