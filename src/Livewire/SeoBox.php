@@ -20,6 +20,13 @@ class SeoBox extends Component
             Item::Add('author')->Column(Item::Col12)->Title('Author'),
             Item::Add('robots')->Column(Item::Col12)->Title('Robots')->Type('textarea'),
             Item::Add('canonical_url')->Column(Item::Col12)->Title('Canonical Url'),
-        ]);
+        ])->FormDoSave(function ($params, $component, $manager) {
+            $component->form->DataFromForm();
+            $component->showMessage($manager->getMessage());
+            // $component->closeComponent();
+            $component->refreshRefComponent();
+        })->Message(function(){
+            return "seo update successfully";
+        });
     }
 }
