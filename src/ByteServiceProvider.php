@@ -4,15 +4,12 @@ namespace BytePlatform;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 use BytePlatform\Laravel\ServicePackage;
 use BytePlatform\Directives\PlatformBladeDirectives;
 use BytePlatform\Exceptions\ThemeHandler;
 use BytePlatform\Facades\Assets;
-use BytePlatform\Facades\Gate;
-use BytePlatform\Facades\Menu;
 use BytePlatform\Facades\Module;
 use BytePlatform\Facades\Platform;
 use BytePlatform\Facades\Plugin;
