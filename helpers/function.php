@@ -1,8 +1,5 @@
 <?php
 
-use BytePlatform\BaseManager;
-use BytePlatform\Facades\Gate;
-use BytePlatform\Facades\Menu;
 use Illuminate\Routing\RouteAction;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Cache;
@@ -12,10 +9,10 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route as FacadesRoute;
 use BytePlatform\Facades\Module;
+use BytePlatform\Facades\Platform;
 use BytePlatform\Facades\Plugin;
 use BytePlatform\Facades\Shortcode;
 use BytePlatform\Facades\Theme;
-use BytePlatform\FieldView;
 use BytePlatform\Item;
 use BytePlatform\Models\Setting;
 
@@ -281,7 +278,7 @@ if (!function_exists('checkPermission')) {
     {
         $flg = true;
         if ($per) {
-            if (!Gate::check($per)) $flg = false;
+            if (!Platform::CheckGate($per)) $flg = false;
         }
         return apply_filters(PLATFORM_CHECK_PERMISSION,  $flg, $per);
     }
@@ -419,12 +416,6 @@ if (!function_exists('character_limiter')) {
 }
 
 
-if (!function_exists('menu_render')) {
-    function menu_render($_position = '')
-    {
-        return Menu::render($_position);
-    }
-}
 
 if (!function_exists('byte_path')) {
     function byte_path($type = '', $path = '')
@@ -443,36 +434,6 @@ if (!function_exists('column_size')) {
     }
 }
 
-if (!function_exists('field_render')) {
-    function field_render(Item $item, $itemForm = null, $dataId = null)
-    {
-        return FieldView::Render($item, $itemForm, $dataId);
-    }
-}
-if (!function_exists('form_render')) {
-    function form_render(BaseManager $itemManager,  $itemForm = null, $dataId = null)
-    {
-        return view('byte::forms.render', [
-            'manager' => $itemManager,
-            'form' => $itemForm,
-            'dataId' => $dataId
-        ])->render();
-    }
-}
-
-if (!function_exists('table_render')) {
-    function table_render(BaseManager $itemManager, $dataItems = null, $dataFilters = null, $dataSorts = null, $formTable = null, $selectIds = null)
-    {
-        return view('byte::tables.render', [
-            'manager' => $itemManager,
-            'items' => $dataItems,
-            'filters' => $dataFilters,
-            'sorts' => $dataSorts,
-            'formTable' => $formTable,
-            'selectIds' => $selectIds,
-        ])->render();
-    }
-}
 if (!function_exists('shortcode_render')) {
     function shortcode_render($text)
     {

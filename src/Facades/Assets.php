@@ -27,6 +27,6 @@ class Assets extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \BytePlatform\Support\Core\AssetManager::class;
+        return \BytePlatform\AssetManager::class;
     }
 }

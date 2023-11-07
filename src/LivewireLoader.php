@@ -4,7 +4,6 @@ namespace BytePlatform;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
-use BytePlatform\Contracts\SkipLoad;
 use Livewire\Component;
 use Livewire\Livewire;
 use ReflectionClass;

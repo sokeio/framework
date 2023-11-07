@@ -35,6 +35,6 @@ class Plugin extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \BytePlatform\Support\Core\PluginManager::class;
+        return \BytePlatform\PluginManager::class;
     }
 }

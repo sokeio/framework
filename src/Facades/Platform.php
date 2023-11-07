@@ -25,6 +25,10 @@ use Illuminate\Support\Facades\Facade;
  * @method static mix getDataInfo($path,$register)
  * @method static array getModels()
  * @method static void NotificationAdd($title,$description,$meta_data,$to_role,$to_user)
+ * @method static void BootGate()
+ * @method static void Ready($callback = null)
+ * @method static void DoReady()
+ * @method static bool CheckGate();
  * 
  * @see \BytePlatform\Facades\Platform
  */
@@ -32,6 +36,6 @@ class Platform extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \BytePlatform\Support\Core\PlatformManager::class;
+        return \BytePlatform\PlatformManager::class;
     }
 }

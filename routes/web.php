@@ -66,9 +66,7 @@ Route::group(['prefix' => '__byte__'], function () {
     Route::group(['prefix' => 'filemanager', 'middleware' => ['web', 'auth']], function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();
     });
-    Route::group(['middleware' => ['web', 'auth']], function () {
-        Route::post('shortcode-setting/', ShortcodeSetting::class)->name('shortcode-setting');
-    });
+   
 });
 Route::get('/', route_theme(function () {
     $homepage = apply_filters(PLATFORM_HOMEPAGE, 'byte::homepage');

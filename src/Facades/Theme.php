@@ -3,7 +3,7 @@
 namespace BytePlatform\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use BytePlatform\Support\Core\ThemeManager;
+use BytePlatform\ThemeManager;
 
 /**
  * 

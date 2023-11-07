@@ -21,7 +21,6 @@ use BytePlatform\Locales\LocaleServiceProvider;
 use BytePlatform\Middleware\ThemeLayout;
 use BytePlatform\Shortcode\ShortcodesServiceProvider;
 use BytePlatform\Concerns\WithServiceProvider;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class ByteServiceProvider extends ServiceProvider
 {
@@ -83,27 +82,6 @@ class ByteServiceProvider extends ServiceProvider
     {
         Collection::macro('paginate', function ($pageSize) {
             return ColectionPaginate::paginate($this, $pageSize);
-        });
-        Builder::macro('whereLike', function ($attributes, string $searchTerm) {
-            $this->where(function (Builder $query) use ($attributes, $searchTerm) {
-                foreach (array_wrap($attributes) as $attribute) {
-                    $query->when(
-                        str_contains($attribute, '.'),
-                        function (Builder $query) use ($attribute, $searchTerm) {
-                            [$relationName, $relationAttribute] = explode('.', $attribute);
-        
-                            $query->orWhereHas($relationName, function (Builder $query) use ($relationAttribute, $searchTerm) {
-                                $query->where($relationAttribute, 'LIKE', "%{$searchTerm}%");
-                            });
-                        },
-                        function (Builder $query) use ($attribute, $searchTerm) {
-                            $query->orWhere($attribute, 'LIKE', "%{$searchTerm}%");
-                        }
-                    );
-                }
-            });
-        
-            return $this;
         });
         $this->registerMiddlewares();
 
@@ -182,21 +160,14 @@ class ByteServiceProvider extends ServiceProvider
             Theme::RegisterRoute();
         });
         Route::matched(function ($route) {
-
             if (Route::currentRouteName() == 'homepage' && adminUrl() == '') {
                 add_filter(PLATFORM_IS_ADMIN, function () {
                     return true;
                 }, 0);
             }
             Theme::reTheme();
-            Gate::BootApp();
-            if (Request::isMethod('get')) {
-                // Only Get Request
-                if (!Platform::checkFolderPlatform()) Platform::makeLink();
-                if (byte_is_admin()) {
-                    Menu::DoRegister();
-                }
-            }
+            Platform::BootGate();
+            Platform::DoReady();
         });
     }
 }

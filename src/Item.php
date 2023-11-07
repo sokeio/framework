@@ -150,10 +150,10 @@ class Item extends ItemCallback
         $this->Field($field)
             ->Column(self::Col6)
             ->ValueDefault('')
-            ->Data(function (Item $item, BaseManager $manager) {
+            ->Data(function (Item $item, $manager) {
                 return $manager->getData();
             })
-            ->DisableEdit(function (Item $item, BaseManager $manager) {
+            ->DisableEdit(function (Item $item, $manager) {
                 return !$manager->IsTable() || $manager->EditInTable();
             })
             ->When(function () {
@@ -167,9 +167,9 @@ class Item extends ItemCallback
             })->DataText(function (Item $item) {
                 return  $item->getData()->{$item->getField()};
             })
-            ->DataId(function (Item $item, BaseManager $manager) {
+            ->DataId(function (Item $item, $manager) {
                 return  $item->getData()->id;
-            })->ModelForm(function (Item $item, BaseManager $manager) {
+            })->ModelForm(function (Item $item, $manager) {
                 if ($manager->IsTable()) {
                     $prod =  ItemForms::FormId($item->getDataId());
                     return $manager->getModelForm() .  $prod . ".";
@@ -424,10 +424,7 @@ class Item extends ItemCallback
     {
         return $this->getValue('filterView');
     }
-    public function ConvertToButton(): Button
-    {
-        return Button::Create($this->getTitle())->Manager($this->getManager())->Data($this->getData());
-    }
+
     public function getClassContent()
     {
         return column_size($this->getColumn()) . " " . parent::getClassContent();

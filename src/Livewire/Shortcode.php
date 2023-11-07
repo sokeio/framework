@@ -4,7 +4,6 @@ namespace BytePlatform\Livewire;
 
 use BytePlatform\Component;
 use BytePlatform\Facades\Shortcode as FacadesShortcode;
-use BytePlatform\Concerns\WithFormData;
 use Livewire\Attributes\Reactive;
 
 class Shortcode extends Component
@@ -15,7 +14,6 @@ class Shortcode extends Component
     public $attrs = [];
     #[Reactive]
     public $content;
-    use WithFormData;
     protected function getListeners()
     {
         return [
@@ -23,7 +21,7 @@ class Shortcode extends Component
             'refreshData' . $this->shortcode => '__loadData',
         ];
     }
-    protected function ItemManager()
+    protected function getItemManager()
     {
         if (!$this->shortcode) {
             return;

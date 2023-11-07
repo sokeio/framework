@@ -34,6 +34,6 @@ class Module extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \BytePlatform\Support\Core\ModuleManager::class;
+        return \BytePlatform\ModuleManager::class;
     }
 }

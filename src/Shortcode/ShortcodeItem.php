@@ -3,11 +3,11 @@
 namespace BytePlatform\Shortcode;
 
 use BytePlatform\Action;
-use BytePlatform\BaseManager;
 use BytePlatform\Item;
+use BytePlatform\ItemCallback;
 use Livewire\Livewire;
 
-class ShortcodeItem extends BaseManager
+class ShortcodeItem extends ItemCallback
 {
     public static function Create($name)
     {
@@ -15,7 +15,7 @@ class ShortcodeItem extends BaseManager
     }
     private function __construct($name)
     {
-        parent::__construct();
+        // parent::__construct();
         $this->Key($name)->Name(str($name)->replace('-', ' ')->ucfirst())->Parameters([
             Item::Add('poll')->Title('Polling')->Column(Item::Col3)->Type('select')->DataOption(function () {
                 return Item::getPolls();

@@ -35,16 +35,7 @@ trait WithServiceProvider
 
         $this->packageRegistered();
 
-        if ($fieldTypes = config($this->package->shortName() . '.fields')) {
-            if (is_array($fieldTypes) && count($fieldTypes) > 0) {
-                FieldView::RegisterField($fieldTypes);
-            }
-        }
-        if ($widgetTypes = config($this->package->shortName() . '.widgets')) {
-            if (is_array($widgetTypes) && count($widgetTypes) > 0) {
-                Dashboard::Register($widgetTypes, $this->package->shortName());
-            }
-        }
+ 
         if ($this->base_type != 'theme') {
             if ($shortcodes = config($this->package->shortName() . '.shortcodes')) {
                 if (is_array($shortcodes) && count($shortcodes) > 0) {
