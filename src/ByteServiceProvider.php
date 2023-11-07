@@ -116,7 +116,7 @@ class ByteServiceProvider extends ServiceProvider
                 'byte_url' => route('__byte__'),
                 'csrf_token' => csrf_token(),
                 'byte_filemanager' => route('unisharp.lfm.show'),
-                'byte_shortcode_setting' => route('shortcode-setting'),
+
                 'tinyecm_option' => [
                     "relative_urls" => false,
                     "content_style" => "
