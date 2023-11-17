@@ -1,9 +1,9 @@
 <div class="page page-center">
-    <div class="container container-tight py-4">
+    <div class="container container-tight py-2">
         @includeIf('byte::setup.step-' . $step_index)
         <div class="row align-items-center mt-3">
             <div class="col-4">
-                <div class="progress">
+                <div class="progress ">
                     <div class="progress-bar" style="width: {{ (100 * $step_index) / $step_max }}%" role="progressbar"
                         aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"
                         aria-label="{{ (100 * $step_index) / $step_max }}% Complete">
