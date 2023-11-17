@@ -1,5 +1,6 @@
 <?php
 
+use BytePlatform\Livewire\Setup;
 use BytePlatform\Support\Svg\EasySVG;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
@@ -65,7 +66,6 @@ Route::group(['prefix' => '__byte__'], function () {
     Route::group(['prefix' => 'filemanager', 'middleware' => ['web', 'auth']], function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();
     });
-   
 });
 Route::get('/', route_theme(function () {
     $homepage = apply_filters(PLATFORM_HOMEPAGE, 'byte::homepage');
@@ -78,3 +78,5 @@ Route::get('/', route_theme(function () {
     }
     return view_scope($view, $params);
 }))->name('homepage');
+
+Route::get('/setup', Setup::class)->name('byte.setup');
