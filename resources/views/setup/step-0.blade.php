@@ -12,19 +12,15 @@
                     transform="translate(-62.24207 -126.55043)" fill="#d0cde1" />
                 <ellipse cx="536" cy="625.89913" rx="536" ry="21" fill="#d0cde1" />
                 <rect x="184" y="248.03055" width="612" height="364.87" fill="#3f3d56" />
-                <path
-                    d="M397.70209,374.581a146.35424,146.35424,0,0,1-146.32,143.97c-1.72,0-3.43-.03-5.14-.09V374.581Z"
+                <path d="M397.70209,374.581a146.35424,146.35424,0,0,1-146.32,143.97c-1.72,0-3.43-.03-5.14-.09V374.581Z"
                     transform="translate(-62.24207 -126.55043)" fill="#0054a6" />
                 <path d="M582.17908,739.45064H523.9723a31.00847,31.00847,0,0,1,58.20678,0Z"
                     transform="translate(-62.24207 -126.55043)" fill="#0054a6" />
                 <path d="M858.24207,550.72094v122.9a61.52336,61.52336,0,0,1,0-122.9Z"
                     transform="translate(-62.24207 -126.55043)" fill="#0054a6" />
-                <rect x="279.45927" y="380.6149" width="422.14211" height="36.06239" rx="18.03118"
-                    fill="#fff" />
-                <rect x="279.45927" y="451.67903" width="422.14211" height="36.06239" rx="18.03118"
-                    fill="#fff" />
-                <rect x="553.59711" y="522.74315" width="148.00427" height="36.06239" rx="18.03118"
-                    fill="#fff" />
+                <rect x="279.45927" y="380.6149" width="422.14211" height="36.06239" rx="18.03118" fill="#fff" />
+                <rect x="279.45927" y="451.67903" width="422.14211" height="36.06239" rx="18.03118" fill="#fff" />
+                <rect x="553.59711" y="522.74315" width="148.00427" height="36.06239" rx="18.03118" fill="#fff" />
                 <path
                     d="M955.29387,238.67007s16.82875,6.54451,17.76368,28.04791-4.67465,81.33893-4.67465,81.33893,20.56846,29.91777,4.67465,38.33214-17.76368-33.65749-17.76368-33.65749l-18.6986-88.81837S947.81443,237.73514,955.29387,238.67007Z"
                     transform="translate(-62.24207 -126.55043)" fill="#a0616a" />
@@ -58,13 +54,12 @@
     <div class="hr-text hr-text-center hr-text-spaceless"></div>
     <div class="card-body">
         <div class="mb-3">
-            <label class="form-label">Create your Tabler URL</label>
-            <div class="input-group input-group-flat">
-                <span class="input-group-text">
-                    https://tabler.io/
-                </span>
-                <input type="text" class="form-control ps-1" autocomplete="off">
-            </div>
+            <label class="form-label">Language</label>
+
+            <select class="form-select mb-0">
+                <option value="en">english</option>
+                <option value="vi">Vietnamese</option>
+            </select>
             <div class="form-hint">Choose a URL that describes you or your business in a concise way. Make it
                 short and easy to remember so you can share links with ease.</div>
         </div>

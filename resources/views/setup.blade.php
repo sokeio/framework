@@ -1,6 +1,5 @@
 <div class="page page-center">
     <div class="container container-tight py-4">
-        {{ $step_index }}
         @includeIf('byte::setup.step-' . $step_index)
         <div class="row align-items-center mt-3">
             <div class="col-4">
