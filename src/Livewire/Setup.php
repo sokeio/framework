@@ -21,6 +21,10 @@ class Setup extends Component
         if ($this->step_index <= 0) return;
         $this->step_index--;
     }
+    public function stepFinish()
+    {
+        $this->showMessage('done');
+    }
     public function mount()
     {
         Theme::setTitle('System Setup');

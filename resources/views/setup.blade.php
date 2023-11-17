@@ -21,7 +21,7 @@
                         Next Step
                     </button>
                     <button class="btn btn-purple {{ $step_index == $step_max ? '' : 'd-none' }}"
-                        wire:click='stepNext()'>
+                        wire:click='stepFinish()'>
                         Finish Setup
                     </button>
                 </div>
