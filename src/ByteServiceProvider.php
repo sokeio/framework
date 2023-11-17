@@ -70,6 +70,7 @@ class ByteServiceProvider extends ServiceProvider
     }
     public function bootingPackage()
     {
+        if (!Platform::CheckConnectDB()) return;
         Module::LoadApp();
         Theme::LoadApp();
         Plugin::LoadApp();

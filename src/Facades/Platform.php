@@ -29,6 +29,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static void Ready($callback = null)
  * @method static void DoReady()
  * @method static bool CheckGate();
+ * @method static bool CheckConnectDB();
+ * 
  * 
  * @see \BytePlatform\Facades\Platform
  */

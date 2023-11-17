@@ -3,14 +3,12 @@
 namespace BytePlatform\Concerns;
 
 use BytePlatform\Action;
-use BytePlatform\Dashboard;
 use BytePlatform\Laravel\WithServiceProvider as WithServiceProviderBase;
 use BytePlatform\Facades\Assets;
 use BytePlatform\Facades\Platform;
 use BytePlatform\Facades\Plugin;
 use BytePlatform\Facades\Shortcode;
 use BytePlatform\Facades\Theme;
-use BytePlatform\FieldView;
 use BytePlatform\LivewireLoader;
 use BytePlatform\RouteEx;
 
@@ -30,8 +28,6 @@ trait WithServiceProvider
     {
         $this->ExtendPackage();
         $this->registerBase();
-
-
 
         $this->packageRegistered();
 
@@ -109,7 +105,6 @@ trait WithServiceProvider
                     }
                 }
             }
-
             $view->prependNamespace($namespace, $path);
         });
     }

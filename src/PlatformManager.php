@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class PlatformManager
 {
@@ -263,6 +264,19 @@ class PlatformManager
         NotificationAdd::dispatch($noti);
         NotificationAdd::broadcast($noti);
     }
+    public function CheckConnectDB()
+    {
+        try {
+            DB::connection()->getPdo();
+            if (DB::connection()->getDatabaseName()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
     private $gateIgnores = [];
     public function CheckGate()
     {
@@ -272,6 +286,7 @@ class PlatformManager
     }
     public function BootGate()
     {
+        if(!$this->CheckConnectDB()) return;
         $this->gateIgnores = apply_filters(PLATFORM_PERMISSION_IGNORE, []);
         Gate::before(function ($user, $ability) {
             if (!$user) $user = auth()->user();

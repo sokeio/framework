@@ -1,6 +1,5 @@
 <?php
 
-use BytePlatform\Livewire\ShortcodeSetting;
 use BytePlatform\Support\Svg\EasySVG;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
