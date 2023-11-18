@@ -82,5 +82,5 @@ Route::get('/', route_theme(function () {
 
 Route::get('/setup', Setup::class)->name('byte.setup');
 Route::get('test', function () {
-    return TranslationFinder::toJson();
+    TranslationFinder::updateToJson();
 });

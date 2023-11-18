@@ -5,8 +5,11 @@ namespace BytePlatform\Livewire;
 use BytePlatform\Component;
 use BytePlatform\Facades\Assets;
 use BytePlatform\Facades\Locale;
+use BytePlatform\Facades\Module;
 use BytePlatform\Facades\Platform;
+use BytePlatform\Facades\Plugin;
 use BytePlatform\Facades\Theme;
+use BytePlatform\Laravel\JsonData;
 
 class Setup extends Component
 {
@@ -22,6 +25,10 @@ class Setup extends Component
 
     public $step_index = 0;
     public $step_max = 4;
+    public $languages = [];
+    public $active_modules = [];
+    public $active_plugins = [];
+    public $active_theme = 'none';
     public function createUser()
     {
         $roleModel = (config('byte.model.role', \BytePlatform\Models\Role::class));
@@ -42,7 +49,7 @@ class Setup extends Component
     public function updatedLang()
     {
         Locale::SwitchLocale($this->lang);
-        $this->showMessage('change lang');
+        $this->showMessage('change lang' . $this->lang);
     }
     public function stepNext()
     {
@@ -63,9 +70,17 @@ class Setup extends Component
         Theme::setTitle('System Setup');
         Assets::Theme('tabler');
         Assets::AddCss('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css');
+        $this->lang = Locale::CurrentLocale();
+        $this->languages = JsonData::getJsonFromFile(__DIR__ . '/../../database/contents/languages.json');
     }
     public function render()
     {
-        return view('byte::setup');
+        return view(
+            'byte::setup',
+            [
+                'modules' => Module::getAll(),
+                'plugins' => Plugin::getAll()
+            ]
+        );
     }
 }

@@ -48,23 +48,23 @@
                     transform="translate(-62.24207 -126.55043)" fill="#2f2e41" />
             </svg>
         </div>
-        <h1 class="mt-5">Welcome to Byte Platform!</h1>
+        <h1 class="mt-5">@lang('Welcome to Byte Platform!')</h1>
         <p class="text-secondary"></p>
     </div>
     <div class="hr-text hr-text-center hr-text-spaceless"></div>
     <div class="card-body">
         <div class="mb-3">
-            <label class="form-label">Language</label>
+            <label class="form-label">@lang('Language')</label>
 
             <select wire:model.live='lang' class="form-select mb-0">
-                <option value="en">english</option>
-                <option value="vi">Vietnamese</option>
+                @foreach ($languages as $item)
+                    <option value="{{ $item['code'] }}">
+                        {{ $item['name'] }}</option>
+                @endforeach
             </select>
-            <div class="form-hint">Choose a URL that describes you or your business in a concise way. Make it
-                short and easy to remember so you can share links with ease.</div>
         </div>
         <div>
-            <label class="form-label">Timezone</label>
+            <label class="form-label">@lang('Timezone')</label>
             <select wire:model='timezone' class="form-select mb-0">
                 <option value="DST">(UTC-12:00) International Date Line West</option>
                 <option value="U">(UTC-11:00) Coordinated Universal Time-11</option>

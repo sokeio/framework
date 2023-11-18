@@ -2,6 +2,7 @@
 
 namespace BytePlatform\Locales;
 
+use BytePlatform\Facades\Platform;
 
 class LocaleManager
 {
@@ -18,7 +19,7 @@ class LocaleManager
     public function CurrentLocale()
     {
         $locale = $this->defaultLocale;
-        if (byte_is_admin()) {
+        if (byte_is_admin() || !Platform::CheckConnectDB()) {
             $locale = session(self::KEY);
         } else {
             $route = request()->route();
@@ -36,6 +37,7 @@ class LocaleManager
     public function SwitchLocale($locale)
     {
         if (in_array($locale, $this->SupportedLocales())) {
+            app()->setLocale( $locale);
             app('session')->put(self::KEY, $locale);
         }
     }

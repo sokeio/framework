@@ -3,8 +3,11 @@
 namespace BytePlatform\Locales\Extractor;
 
 use BytePlatform\Facades\Module;
+use BytePlatform\Facades\Platform;
 use BytePlatform\Facades\Plugin;
 use BytePlatform\Facades\Theme;
+use BytePlatform\Laravel\JsonData;
+use Directory;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\Finder\Finder;
 
@@ -105,5 +108,31 @@ class TranslationFinder
     public static function toJson()
     {
         return (new self())->find();
+    }
+    public static function updateToJson()
+    {
+        foreach (self::toJson() as $item) {
+            [
+                'type' => $type,
+                'name' => $name,
+                'translation' => $translation
+            ] = $item;
+            if ($type == 'app') {
+            } else {
+                $itemBase = platform_by($type)->find($name);
+                $path_local = $itemBase->getPath('resources/lang/en.json');
+                $arr = File::exists($path_local) ? JsonData::getJsonFromFile($path_local) : [];
+                foreach ($translation as $key => $value) {
+                    if (!isset($arr[$key])) {
+                        $arr[$key] = $value;
+                    }
+                }
+                if (!File::exists($itemBase->getPath('resources/lang')))
+                    File::makeDirectory($itemBase->getPath('resources/lang'), 0775, true);
+                file_put_contents($path_local, json_encode($arr, true));
+                print_r($arr);
+            }
+            // JsonData::getJsonFromFile()
+        }
     }
 }

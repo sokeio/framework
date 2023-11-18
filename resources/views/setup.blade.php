@@ -6,23 +6,23 @@
                 <div class="progress ">
                     <div class="progress-bar" style="width: {{ (100 * $step_index) / $step_max }}%" role="progressbar"
                         aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"
-                        aria-label="{{ (100 * $step_index) / $step_max }}% Complete">
-                        <span class="visually-hidden">{{ (100 * $step_index) / $step_max }}% Complete</span>
+                        aria-label="{{ (100 * $step_index) / $step_max }}% @lang('Complete')">
+                        <span class="visually-hidden">{{ (100 * $step_index) / $step_max }}% @lang('Complete')</span>
                     </div>
                 </div>
             </div>
             <div class="col">
                 <div class="btn-list justify-content-end">
                     <button class="btn btn-warning {{ $step_index == 0 ? 'd-none' : '' }}" wire:click='stepBack()'>
-                        Back Step
+                        @lang('Back Step')
                     </button>
                     <button class="btn btn-primary {{ $step_index == $step_max ? 'd-none' : '' }}"
                         wire:click='stepNext()'>
-                        Next Step
+                        @lang('Next Step')
                     </button>
                     <button class="btn btn-purple {{ $step_index == $step_max ? '' : 'd-none' }}"
                         wire:click='stepFinish()'>
-                        Finish Setup
+                        @lang('Finish Setup')
                     </button>
                 </div>
             </div>

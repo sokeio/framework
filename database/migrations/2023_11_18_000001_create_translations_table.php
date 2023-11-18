@@ -15,6 +15,8 @@ class CreateTranslationsTable extends Migration
     {
         Schema::create('translations', function (Blueprint $table) {
             $table->id();
+            $table->text('type')->nullable();
+            $table->text('name')->nullable();
             $table->text('key')->nullable();
             $table->text('value')->nullable();
             $table->foreignId('lang_id')->constrained('languages')->onDelete('cascade');

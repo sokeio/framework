@@ -70,7 +70,6 @@ class ByteServiceProvider extends ServiceProvider
     }
     public function bootingPackage()
     {
-        if (!Platform::CheckConnectDB()) return;
         Module::LoadApp();
         Theme::LoadApp();
         Plugin::LoadApp();
@@ -162,6 +161,10 @@ class ByteServiceProvider extends ServiceProvider
                 add_filter(PLATFORM_IS_ADMIN, function () {
                     return true;
                 }, 0);
+            }
+            if (Route::currentRouteName() != 'byte.setup' && !Platform::CheckConnectDB()) {
+                Route::redirect(route('byte.setup'));
+                return;
             }
             Theme::reTheme();
             Platform::BootGate();
