@@ -6,22 +6,22 @@
         <div class="mb-3">
             <label class="form-label">Database</label>
 
-            <select class="form-select mb-0">
+            <select wire:model='database' class="form-select mb-0">
                 <option value="mysql">Mysql</option>
                 <option value="sqlite">sqlite</option>
             </select>
         </div>
         <div class="mb-3">
             <label class="form-label">Host</label>
-            <input class=" form-control" value="127.0.0.1" />
+            <input wire:model='host' class=" form-control" value="127.0.0.1" />
         </div>
         <div class="mb-3">
             <label class="form-label">Username</label>
-            <input class=" form-control" value="" />
+            <input wire:model='username' class=" form-control" value="" />
         </div>
         <div class="mb-3">
             <label class="form-label">Password</label>
-            <input class=" form-control" value="" />
+            <input wire:model='password' class=" form-control" value="" />
         </div>
     </div>
 </div>

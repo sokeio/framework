@@ -70,7 +70,26 @@ return [
          *  `/en/about-us` on `en` locale will be
          *  `/hr/o-nama` on `hr` locale.
          */
-        'useTranslatedUrls' => false
+        'useTranslatedUrls' => false,
+        'exporter' => [
+            'functions' => [
+                '__',
+                '_t',
+                '@lang',
+            ],
+            'patterns' => [
+                '*.php',
+                '*.js',
+            ],
+            'excluded-directories'=>[
+                'node_modules'
+            ],
+            'directories'=> [
+                'app',
+                'resources',
+                'src'
+            ]
+        ]
     ],
     'commands' => [
         MakeThemeCommand::class,
@@ -84,9 +103,7 @@ return [
         BInstallCommand::class,
         BActiveCommand::class
     ],
-    'fields' => [
-       
-    ],
+    'fields' => [],
     'shortcodes' => [
         Shortcode::Create('time')->Title('Time Now')->Parameters([
             Item::Add('format')->Title('Format')->ValueDefault('Y-m-d H:i:s'),
@@ -104,9 +121,7 @@ return [
     'actions' => [
         'countModel' => CountModel::class,
     ],
-    'widgets' => [
-        
-    ],
+    'widgets' => [],
     'namespace' => [
         'root' => 'Byte',
         'theme' => 'Theme',

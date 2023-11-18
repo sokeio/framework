@@ -56,7 +56,7 @@
         <div class="mb-3">
             <label class="form-label">Language</label>
 
-            <select class="form-select mb-0">
+            <select wire:model.live='lang' class="form-select mb-0">
                 <option value="en">english</option>
                 <option value="vi">Vietnamese</option>
             </select>
@@ -65,7 +65,7 @@
         </div>
         <div>
             <label class="form-label">Timezone</label>
-            <select class="form-select mb-0">
+            <select wire:model='timezone' class="form-select mb-0">
                 <option value="DST">(UTC-12:00) International Date Line West</option>
                 <option value="U">(UTC-11:00) Coordinated Universal Time-11</option>
                 <option value="HST">(UTC-10:00) Hawaii</option>

@@ -2,8 +2,6 @@
 
 namespace BytePlatform\Locales;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class LocaleManager
 {

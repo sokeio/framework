@@ -1,6 +1,7 @@
 <?php
 
 use BytePlatform\Livewire\Setup;
+use BytePlatform\Locales\Extractor\TranslationFinder;
 use BytePlatform\Support\Svg\EasySVG;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
@@ -80,3 +81,6 @@ Route::get('/', route_theme(function () {
 }))->name('homepage');
 
 Route::get('/setup', Setup::class)->name('byte.setup');
+Route::get('test', function () {
+    return TranslationFinder::toJson();
+});
