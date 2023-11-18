@@ -5,11 +5,11 @@
     <div class="card-body">
         <div class="mb-3">
             <label class="form-label">@lang('Site name')</label>
-            <input class="form-control" />
+            <input wire:model='site_name' class="form-control" />
         </div>
         <div class="mb-3">
             <label class="form-label">@lang('Site Description')</label>
-            <textarea class=" form-control" rows="3"></textarea>
+            <textarea wire:model='site_description' class=" form-control" rows="3"></textarea>
         </div>
     </div>
 </div>

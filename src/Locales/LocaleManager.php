@@ -25,10 +25,8 @@ class LocaleManager
             $route = request()->route();
             $locale = $route->getPrefix();
         }
-        if (in_array($locale, $this->SupportedLocales())) {
-            return $locale;
-        }
-        return $this->defaultLocale;
+
+        return $locale || $this->defaultLocale;
     }
     public function SupportedLocales()
     {
@@ -36,10 +34,8 @@ class LocaleManager
     }
     public function SwitchLocale($locale)
     {
-        if (in_array($locale, $this->SupportedLocales())) {
-            app()->setLocale( $locale);
-            app('session')->put(self::KEY, $locale);
-        }
+        app()->setLocale($locale);
+        app('session')->put(self::KEY, $locale);
     }
     public function SetLocaleApp()
     {

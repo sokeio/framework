@@ -18,6 +18,8 @@ use BytePlatform\Locales\LocaleServiceProvider;
 use BytePlatform\Middleware\ThemeLayout;
 use BytePlatform\Shortcode\ShortcodesServiceProvider;
 use BytePlatform\Concerns\WithServiceProvider;
+use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\File;
 
 class ByteServiceProvider extends ServiceProvider
 {
@@ -29,6 +31,10 @@ class ByteServiceProvider extends ServiceProvider
         $this->app->register(LocaleServiceProvider::class);
         $this->app->register(ShortcodesServiceProvider::class);
 
+        if (!File::exists(base_path('.env'))) {
+            File::copy(base_path('.env.example'), base_path('.env'));
+            run_cmd(base_path(''), 'php artisan key:generate');
+        }
         /*
          * This class is a Package Service Provider
          *
@@ -156,14 +162,15 @@ class ByteServiceProvider extends ServiceProvider
         $this->app->booted(function () {
             Theme::RegisterRoute();
         });
-        Route::matched(function ($route) {
-            if (Route::currentRouteName() == 'homepage' && adminUrl() == '') {
+        Route::matched(function () {
+            $route_name = Route::currentRouteName();
+            if ($route_name == 'homepage' && adminUrl() == '') {
                 add_filter(PLATFORM_IS_ADMIN, function () {
                     return true;
                 }, 0);
             }
-            if (Route::currentRouteName() != 'byte.setup' && !Platform::CheckConnectDB()) {
-                Route::redirect(route('byte.setup'));
+            if ($route_name && $route_name != 'byte.setup' && !Platform::CheckConnectDB() && request()->isMethod('get')) {
+                app(Redirector::class)->to(route('byte.setup'))->send();
                 return;
             }
             Theme::reTheme();

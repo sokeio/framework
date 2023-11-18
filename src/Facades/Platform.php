@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static void DoReady()
  * @method static bool CheckGate();
  * @method static bool CheckConnectDB();
+ * @method static void setEnv($arrs)
  * 
  * 
  * @see \BytePlatform\Facades\Platform

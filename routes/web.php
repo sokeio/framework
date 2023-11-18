@@ -1,5 +1,6 @@
 <?php
 
+use BytePlatform\Facades\Platform;
 use BytePlatform\Livewire\Setup;
 use BytePlatform\Locales\Extractor\TranslationFinder;
 use BytePlatform\Support\Svg\EasySVG;
@@ -79,8 +80,9 @@ Route::get('/', route_theme(function () {
     }
     return view_scope($view, $params);
 }))->name('homepage');
+if (!Platform::CheckConnectDB())
+    Route::get('/setup', Setup::class)->name('byte.setup');
 
-Route::get('/setup', Setup::class)->name('byte.setup');
 Route::get('test', function () {
     TranslationFinder::updateToJson();
 });

@@ -286,7 +286,7 @@ class PlatformManager
     }
     public function BootGate()
     {
-        if(!$this->CheckConnectDB()) return;
+        if (!$this->CheckConnectDB()) return;
         $this->gateIgnores = apply_filters(PLATFORM_PERMISSION_IGNORE, []);
         Gate::before(function ($user, $ability) {
             if (!$user) $user = auth()->user();
@@ -318,6 +318,21 @@ class PlatformManager
     {
         foreach ($this->readyCallback as  $callback) {
             $callback();
+        }
+    }
+    public function setEnv($arrs)
+    {
+
+        $path = base_path('.env');
+
+        if (File::exists($path)) {
+
+        
+            $envContent = file_get_contents($path);
+            foreach ($arrs as $key => $value)
+                $envContent = preg_replace('/^' . $key . '=.*$/m', $key . '=\'' . $value . '\'', $envContent);
+            Log::info($envContent);
+            file_put_contents($path, $envContent);
         }
     }
 }
