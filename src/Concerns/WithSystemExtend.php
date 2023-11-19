@@ -143,6 +143,7 @@ trait WithSystemExtend
             $themes[] = env('PLATFORM_THEME_DEFAULT', 'none');
             $themes[] = Theme::AdminId();
             $themes[] = Theme::SiteId();
+            $themes[] = 'tabler';
         }
         foreach ($this->getAll() as $item) {
             if ($item->isActive() || (isset($item->vendor) && $item->vendor === true) || ($isTheme && (in_array($item->getName(), $themes)))) {

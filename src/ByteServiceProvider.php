@@ -162,6 +162,11 @@ class ByteServiceProvider extends ServiceProvider
         $this->app->booted(function () {
             Theme::RegisterRoute();
         });
+        Platform::Ready(function () {
+            if (!Platform::checkFolderPlatform()) {
+                Platform::makeLink();
+            }
+        });
         Route::matched(function () {
             $route_name = Route::currentRouteName();
             if ($route_name == 'homepage' && adminUrl() == '') {

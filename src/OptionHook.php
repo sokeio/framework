@@ -27,13 +27,13 @@ class OptionHook
         return $this;
     }
     private $cacheOptions = null;
-    public function getOptions($dataInfo): FormCollection
+    public function getOptions($dataInfo)
     {
         if ($this->cacheOptions) return $this->cacheOptions;
         if (isset($this->callbacks['option']) && is_callable($this->callbacks['option'])) {
             return ($this->cacheOptions = $this->callbacks['option']($dataInfo));
         }
-        return ($this->cacheOptions = FormCollection::Create());
+        return null;
     }
     public function changeStatus($dataInfo, $status)
     {

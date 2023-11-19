@@ -96,7 +96,7 @@ class DataInfo extends JsonData
         //TODO: connect To Store
         return $this['version'];
     }
-   
+
     protected function getKeyOption($key)
     {
         return trim(Str::lower("option_datainfo_" . $this['base_type'] . '_' . $this->getId() . '_' . $key . '_value'));
@@ -120,6 +120,12 @@ class DataInfo extends JsonData
             return $this->manifestData ?? ($this->manifestData = self::getJsonFromFile($this->getPath('public/build/manifest.json')));
         return null;
     }
+    public function getOptionHook()
+    {
+        if (File::exists($this->getPath('OptionHook.php')))
+            return include_once $this->getPath('OptionHook.php');
+        return null;
+    }
     public function setStatusData($value)
     {
         if ($value === self::Active) {
@@ -127,7 +133,7 @@ class DataInfo extends JsonData
         } else {
             ArrayStatus::Key($this['base_type'])->UnActive($this->getId());
         }
-        $this->getOptionHook()->changeStatus($this, $value);
+        $this->getOptionHook()?->changeStatus($this, $value);
         ob_start();
         PlatformChanged::dispatch($this);
         Platform::makeLink();

@@ -10,6 +10,8 @@ use BytePlatform\Facades\Platform;
 use BytePlatform\Facades\Plugin;
 use BytePlatform\Facades\Theme;
 use BytePlatform\Laravel\JsonData;
+use BytePlatform\Locales\Extractor\TranslationFinder;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class Setup extends Component
@@ -84,6 +86,11 @@ class Setup extends Component
     public function stepFinish()
     {
         $this->createDataInDB();
+        $this->AcitveExtentions();
+        Locale::FileJsonToTable();
+        Platform::setEnv([
+            'BYTE_SETUP' => false,
+        ]);
         return redirect('/');
     }
     /**
@@ -184,6 +191,8 @@ class Setup extends Component
     }
     public function mount()
     {
+        Cache::clear();
+        TranslationFinder::updateToJson();
         Theme::setTitle('System Setup');
         Assets::Theme('tabler');
         Assets::AddCss('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css');

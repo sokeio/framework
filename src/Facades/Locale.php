@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static string CurrentLocale()
  * @method static array SupportedLocales()
  * @method static void SwitchLocale(string $locale)
- * 
+ * @method static void FileJsonToTable();
+ * @method static void TableToFileJson();
  *
  * @see \BytePlatform\Facades\Locale
  */

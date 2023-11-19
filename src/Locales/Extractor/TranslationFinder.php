@@ -3,11 +3,9 @@
 namespace BytePlatform\Locales\Extractor;
 
 use BytePlatform\Facades\Module;
-use BytePlatform\Facades\Platform;
 use BytePlatform\Facades\Plugin;
 use BytePlatform\Facades\Theme;
 use BytePlatform\Laravel\JsonData;
-use Directory;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\Finder\Finder;
 
@@ -130,7 +128,6 @@ class TranslationFinder
                 if (!File::exists($itemBase->getPath('resources/lang')))
                     File::makeDirectory($itemBase->getPath('resources/lang'), 0775, true);
                 file_put_contents($path_local, json_encode($arr, true));
-                print_r($arr);
             }
             // JsonData::getJsonFromFile()
         }

@@ -1,5 +1,6 @@
 <?php
 
+use BytePlatform\Facades\Locale;
 use BytePlatform\Facades\Platform;
 use BytePlatform\Livewire\Setup;
 use BytePlatform\Locales\Extractor\TranslationFinder;
@@ -80,9 +81,10 @@ Route::get('/', route_theme(function () {
     }
     return view_scope($view, $params);
 }))->name('homepage');
-if (!Platform::CheckConnectDB())
+if (!Platform::CheckConnectDB() || env('BYTE_SETUP', true))
     Route::get('/setup', Setup::class)->name('byte.setup');
 
-Route::get('test', function () {
-    TranslationFinder::updateToJson();
-});
+// Route::get('test', function () {
+//     Locale::TableToFileJson();
+//     // TranslationFinder::updateToJson();
+// });
