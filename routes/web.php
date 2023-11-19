@@ -70,17 +70,6 @@ Route::group(['prefix' => '__byte__'], function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();
     });
 });
-Route::get('/', route_theme(function () {
-    $homepage = apply_filters(PLATFORM_HOMEPAGE, 'byte::homepage');
-    $view = '';
-    $params = [];
-    if (is_array($homepage)) {
-        ['view' => $view, 'params' => $params] = $homepage;
-    } else {
-        $view = $homepage;
-    }
-    return view_scope($view, $params);
-}))->name('homepage');
 if (!Platform::CheckConnectDB() || env('BYTE_SETUP', true))
     Route::get('/setup', Setup::class)->name('byte.setup');
 

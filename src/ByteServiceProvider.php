@@ -87,9 +87,7 @@ class ByteServiceProvider extends ServiceProvider
             return ColectionPaginate::paginate($this, $pageSize);
         });
         $this->registerMiddlewares();
-
-        if ($this->app->runningInConsole())
-            return;
+      
         config(['auth.providers.users.model' => config('byte.model.user')]);
         $this->registerBladeDirectives();
         add_action(PLATFORM_HEAD_BEFORE, function () {
@@ -161,6 +159,19 @@ class ByteServiceProvider extends ServiceProvider
 
         $this->app->booted(function () {
             Theme::RegisterRoute();
+            if (adminUrl() != '') {
+                Route::get('/', route_theme(function () {
+                    $homepage = apply_filters(PLATFORM_HOMEPAGE, 'byte::homepage');
+                    $view = '';
+                    $params = [];
+                    if (is_array($homepage)) {
+                        ['view' => $view, 'params' => $params] = $homepage;
+                    } else {
+                        $view = $homepage;
+                    }
+                    return view_scope($view, $params);
+                }))->name('homepage');
+            }
         });
         Platform::Ready(function () {
             if (!Platform::checkFolderPlatform()) {
