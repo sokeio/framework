@@ -283,7 +283,7 @@ class PlatformManager
     {
         $numArgs = func_get_args();
         if (count($numArgs) < 1) return false;
-        return Gate::check($numArgs[0], array_shift($numArgs));
+        return auth()->check() && Gate::check($numArgs[0], array_shift($numArgs));
     }
     public function BootGate()
     {
@@ -291,6 +291,7 @@ class PlatformManager
         $this->gateIgnores = apply_filters(PLATFORM_PERMISSION_IGNORE, []);
         Gate::before(function ($user, $ability) {
             if (!$user) $user = auth()->user();
+            if (!$user) return false;
             if ($user->isBlock()) return false;
             if ($user->isSuperAdmin()) {
                 return true;
@@ -299,6 +300,7 @@ class PlatformManager
         app(config('byte.model.permission', \BytePlatform\Models\Permission::class))->get()->map(function ($permission) {
             Gate::define($permission->slug, function ($user = null) use ($permission) {
                 if (!$user) $user = auth()->user();
+                if (!$user) return false;
                 if (!apply_filters(PLATFORM_CHECK_PERMISSION, true,  $permission, $user)) return false;
                 return $user->hasPermissionTo($permission);
             });
