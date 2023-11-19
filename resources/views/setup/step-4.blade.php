@@ -49,7 +49,7 @@
 
             <select wire:model='active_theme' class="form-select mb-0">
                 @foreach ($themes as $item)
-                    @if ($item->getName() == 'none')
+                    @if ($item->getName() == 'none' || !($item->hide == true))
                         <option value="{{ $item->getName() }}">{{ $item->getTitle() }}</option>
                     @endif
                 @endforeach

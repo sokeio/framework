@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 
 class Setup extends Component
 {
+    public $system_version = '';
     public $lang = 'en';
     public $timezone;
     // db
@@ -125,16 +126,6 @@ class Setup extends Component
 
     public function updateEnvDB()
     {
-        // $this->showMessage(json_encode([
-        //     'DB_CONNECTION' => $this->db_type,
-        //     'DB_HOST' => $this->host,
-        //     'DB_DATABASE' => $this->database,
-        //     'DB_USERNAME' => $this->username,
-        //     'DB_PASSWORD' => $this->password,
-        //     'APP_NAME' => $this->site_name,
-        //     'APP_URL' => url('')
-        // ]));
-        // return;
         if (!$this->checkDatabaseConnection($this->db_host, $this->db_port, $this->db_name, $this->db_username, $this->db_pass, $this->db_connection)) {
             $this->showMessage('Connection to database fail!');
             return false;
@@ -204,6 +195,7 @@ class Setup extends Component
         $this->db_name = env('DB_DATABASE', 'forge');
         $this->db_username = env('DB_USERNAME', 'forge');
         $this->db_pass = env('DB_PASSWORD', '');
+        $this->system_version = Module::find('byte')?->version ?? 'v1.0.0';
     }
     public function render()
     {

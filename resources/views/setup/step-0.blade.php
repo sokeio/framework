@@ -48,7 +48,7 @@
                     transform="translate(-62.24207 -126.55043)" fill="#2f2e41" />
             </svg>
         </div>
-        <h1 class="mt-5">@lang('Welcome to Byte Platform!')</h1>
+        <h1 class="mt-5">@lang('Byte Platform :version!', ['version' => $system_version]) </h1>
         <p class="text-secondary"></p>
     </div>
     <div class="hr-text hr-text-center hr-text-spaceless"></div>
