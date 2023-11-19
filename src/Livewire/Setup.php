@@ -16,18 +16,18 @@ class Setup extends Component
 {
     public $lang = 'en';
     public $timezone;
+    // db
     public $db_connection = 'mysql';
     public $db_host = '127.0.0.1';
     public $db_port = '3306';
     public $db_name;
     public $db_username;
     public $db_pass;
-
-
-
+    // acc
     public $acc_name;
     public $acc_email;
     public $acc_pass;
+    //site
     public $site_name;
     public $site_description;
 
@@ -44,26 +44,46 @@ class Setup extends Component
     public function stepNext()
     {
         if ($this->step_index == 1) {
+            $this->validate([
+                'db_host' => ['required'],
+                'db_port' => ['required'],
+                'db_name' => ['required'],
+                'db_username' => ['required'],
+                'db_pass' => ['required'],
+            ]);
             if (!$this->updateEnvDB()) {
                 return;
             }
         }
         if ($this->step_index == 2) {
-            $this->createUser();
+            $this->validate([
+                'acc_name' => ['required'],
+                'acc_email' => ['required'],
+                'acc_pass' => ['required'],
+            ]);
+            ob_start();
+            run_cmd(base_path(''), 'php artisan migrate');
+            ob_get_clean();
+        }
+        if ($this->step_index == 3) {
+            $this->validate([
+                'site_name' => ['required'],
+                'site_description' => ['required'],
+            ]);
         }
         if ($this->step_index >= $this->step_max) return;
         $this->step_index++;
     }
     public function stepBack()
     {
+        $this->clearValidation();
         if ($this->step_index <= 0) return;
         $this->step_index--;
     }
     public function stepFinish()
     {
-        $this->showMessage(json_encode($this->active_plugins));
-        if ($this->updateEnv())
-            return redirect('/');
+        $this->createDataInDB();
+        return redirect('/');
     }
     /**
      * -------------------------------------------------------------------------------
@@ -130,32 +150,46 @@ class Setup extends Component
             'APP_NAME' => $this->site_name,
             'APP_URL' => url('')
         ]);
-
-        // //php artisan cache:clear
-        // // run_cmd(base_path(''), 'php artisan key:generate');
-        // // run_cmd(base_path(''), 'php artisan cache:clear');
-        // Artisan::call('migrate');
-        // $this->createUser();
         return true;
     }
 
-    public function createUser()
+    public function createDataInDB()
     {
-        run_cmd(base_path(''), 'php artisan migrate');
         $roleModel = (config('byte.model.role', \BytePlatform\Models\Role::class));
         $userModel = (config('byte.model.user', \BytePlatform\Models\User::class));
-        $roleAdmin = new $roleModel;
-        $roleAdmin->name = $roleModel::SupperAdmin();
-        $roleAdmin->slug = $roleModel::SupperAdmin();
-        $roleAdmin->status = true;
-        $roleAdmin->save();
-        $userAdmin = new $userModel;
+        $roleAdmin = $roleModel::where('slug', $roleModel::SupperAdmin())->first();
+        if (!$roleAdmin) {
+            $roleAdmin = new $roleModel;
+            $roleAdmin->name = $roleModel::SupperAdmin();
+            $roleAdmin->slug = $roleModel::SupperAdmin();
+            $roleAdmin->status = true;
+            $roleAdmin->save();
+        }
+        $userAdmin = $userModel::where('email', $this->acc_email)->first();
+        if (!$userAdmin)
+            $userAdmin = new $userModel;
         $userAdmin->name = $this->acc_name;
         $userAdmin->email = $this->acc_email;
         $userAdmin->password = $this->acc_pass;
         $userAdmin->status = 1;
         $userAdmin->save();
         $userAdmin->roles()->sync([$roleAdmin->id]);
+    }
+    public function AcitveExtentions()
+    {
+        foreach ($this->active_modules as $key => $value) {
+            if ($value) {
+                Module::find($key)?->Active();
+            }
+        }
+        foreach ($this->active_plugins as $key => $value) {
+            if ($value) {
+                Plugin::find($key)?->Active();
+            }
+        }
+        if ($this->active_theme) {
+            Theme::find($this->active_theme)?->Active();
+        }
     }
     public function mount()
     {
@@ -177,7 +211,8 @@ class Setup extends Component
             'byte::setup',
             [
                 'modules' => Module::getAll(),
-                'plugins' => Plugin::getAll()
+                'plugins' => Plugin::getAll(),
+                'themes' => Theme::getAll()
             ]
         );
     }

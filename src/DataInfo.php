@@ -96,22 +96,7 @@ class DataInfo extends JsonData
         //TODO: connect To Store
         return $this['version'];
     }
-    public function getOptionHook(): OptionHook
-    {
-        if ($this['optionHook']) return $this['optionHook'];
-        if (File::exists($this->getPath('OptionHook.php')) && ($optionHook = include_once $this->getPath('OptionHook.php')))
-            return $this['optionHook'] = $optionHook;
-        $this['optionHook'] = OptionHook::Create()->Options(function () {
-            return FormCollection::Create()->Register(function (\BytePlatform\ItemManager $form) {
-                return $form;
-            });
-        });
-        return $this['optionHook'];
-    }
-    public function getOptions(): FormCollection
-    {
-        return $this->getOptionHook()->getOptions($this);
-    }
+   
     protected function getKeyOption($key)
     {
         return trim(Str::lower("option_datainfo_" . $this['base_type'] . '_' . $this->getId() . '_' . $key . '_value'));

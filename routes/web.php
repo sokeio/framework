@@ -80,7 +80,7 @@ Route::get('/', route_theme(function () {
     }
     return view_scope($view, $params);
 }))->name('homepage');
-// if (!Platform::CheckConnectDB())
+if (!Platform::CheckConnectDB())
     Route::get('/setup', Setup::class)->name('byte.setup');
 
 Route::get('test', function () {

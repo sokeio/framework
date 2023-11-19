@@ -48,8 +48,10 @@
         <div class="list-group list-group-flush p-3">
 
             <select wire:model='active_theme' class="form-select mb-0">
-                @foreach ($plugins as $item)
-                    <option value="{{ $item->getName() }}">{{ $item->getTitle() }}</option>
+                @foreach ($themes as $item)
+                    @if ($item->getName() == 'none')
+                        <option value="{{ $item->getName() }}">{{ $item->getTitle() }}</option>
+                    @endif
                 @endforeach
             </select>
         </div>
