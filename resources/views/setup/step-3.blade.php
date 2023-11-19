@@ -1,4 +1,4 @@
-<div class="card card-md card-bo">
+<div class="card card-md card-bo" wire:key='step-3'>
     <div class="card-body text-center py-2 p-sm-2">
         <h1 class="mt-2">@lang('System infomation')</h1>
     </div>

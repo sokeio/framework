@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class PlatformManager
 {
@@ -268,7 +269,7 @@ class PlatformManager
     {
         try {
             DB::connection()->getPdo();
-            if (DB::connection()->getDatabaseName()) {
+            if (DB::connection()->getDatabaseName() && Schema::hasTable('permissions')) {
                 return true;
             } else {
                 return false;
@@ -327,12 +328,10 @@ class PlatformManager
 
         if (File::exists($path)) {
 
-        
-            $envContent = file_get_contents($path);
+            $envContent = file_get_contents($path, true);
             foreach ($arrs as $key => $value)
                 $envContent = preg_replace('/^' . $key . '=.*$/m', $key . '=\'' . $value . '\'', $envContent);
-            Log::info($envContent);
-            file_put_contents($path, $envContent);
+            file_put_contents($path, $envContent, LOCK_EX);
         }
     }
 }
