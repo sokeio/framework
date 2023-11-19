@@ -194,6 +194,7 @@ class Setup extends Component
         Cache::clear();
         TranslationFinder::updateToJson();
         Theme::setTitle('System Setup');
+        Theme::Layout('none');
         Assets::Theme('tabler');
         Assets::AddCss('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css');
         $this->lang = Locale::CurrentLocale();
