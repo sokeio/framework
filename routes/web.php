@@ -84,7 +84,8 @@ Route::get('/', route_theme(function () {
 if (!Platform::CheckConnectDB() || env('BYTE_SETUP', true))
     Route::get('/setup', Setup::class)->name('byte.setup');
 
-// Route::get('test', function () {
-//     Locale::TableToFileJson();
-//     // TranslationFinder::updateToJson();
-// });
+Route::get('test', function () {
+    // Locale::TableToFileJson();
+    Locale::FileJsonToTable();
+    // TranslationFinder::updateToJson();
+});

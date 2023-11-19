@@ -77,8 +77,8 @@ class LocaleManager
             }
         }
         foreach (Language::all() as $item) {
-            
-            $this->TranslationToTable('app', '', base_path('resources/lang/' . $item->code . '.json'), $item);
+
+            $this->TranslationToTable('app', '', base_path('lang/' . $item->code . '.json'), $item);
             foreach (['theme', 'plugin', 'module'] as $type) {
                 foreach (platform_by($type)->getAll() as $data) {
                     $this->TranslationToTable($type, $data->getName(), $data->getPath('resources/lang/' . $item->code . '.json'), $item);
@@ -90,7 +90,7 @@ class LocaleManager
     {
         $data = Translation::query()->where('type', $type)->where('lang_id', $item->id)->select(['name', 'key', 'value'])->get()->groupBy('name');
         foreach ($data as $key => $arr) {
-            $pathFile = $type == 'app' ? base_path('resources/lang/' . $item->code . '.json') :   platform_by($type)->find($key)?->getPath('resources/lang/' . $item->code . '.json');
+            $pathFile = $type == 'app' ? base_path('lang/' . $item->code . '.json') :   platform_by($type)->find($key)?->getPath('resources/lang/' . $item->code . '.json');
             $jsonData =  JsonData::getJsonFromFile($pathFile) ?? [];
             foreach ($arr as $itemArr) {
                 $jsonData[$itemArr->key] = $itemArr->value;
