@@ -15,7 +15,6 @@
     "postcss": "^8.1.14"
   },
   "dependencies": {
-    "@tabler/core": "1.0.0-beta17",
     "lodash": "^4.17.19",
     "axios": "^1.3.5"
   }
