@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix' => '__byte__'], function () {
+Route::group(['prefix' => '__sokeio__'], function () {
     if (env('SOKEIO_DEPLOYMENT_AUTO', false)) { //deployment
         Route::get('git-pull/{key}', function ($key) {
             if (env('SOKEIO_DEPLOYMENT_KEY') == $key) {
