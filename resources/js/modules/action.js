@@ -2,7 +2,7 @@ import { SokeioPlugin } from "../core/plugin";
 
 export class ActionModule extends SokeioPlugin {
   getKey() {
-    return "BYTE_ACTION_MODULE";
+    return "SOKEIO_ACTION_MODULE";
   }
   booting() {
     let self = this;

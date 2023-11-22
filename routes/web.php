@@ -20,14 +20,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => '__byte__'], function () {
-    if (env('BYTE_DEPLOYMENT_AUTO', false)) { //deployment
+    if (env('SOKEIO_DEPLOYMENT_AUTO', false)) { //deployment
         Route::get('git-pull/{key}', function ($key) {
-            if (env('BYTE_DEPLOYMENT_KEY') == $key) {
+            if (env('SOKEIO_DEPLOYMENT_KEY') == $key) {
                 run_cmd(base_path(''), 'git reset --hard HEAD');
                 run_cmd(base_path(''), 'git pull');
                 run_cmd(base_path(''), 'rm -rf bootstrap/cache/*.php');
                 run_cmd(base_path(''), 'composer dump-autoload');
-                if (env('BYTE_DEPLOYMENT_MIGRATE', false)) {
+                if (env('SOKEIO_DEPLOYMENT_MIGRATE', false)) {
                     run_cmd(base_path(''), 'php artisan migrate');
                 }
                 Artisan::call('cache:clear');
@@ -65,12 +65,12 @@ Route::group(['prefix' => '__byte__'], function () {
     Route::post('webhook', [Sokeio\Http\Controllers\PlatformController::class, 'doWebhooks']);
     Route::get('/', function () {
         return 'hello, now is ' . now();
-    })->name('__byte__');
+    })->name('__sokeio__');
     Route::group(['prefix' => 'filemanager', 'middleware' => ['web', 'auth']], function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();
     });
 });
-if (!Platform::CheckConnectDB() || env('BYTE_SETUP', true))
+if (!Platform::CheckConnectDB() || env('SOKEIO_SETUP', true))
     Route::get('/setup', Setup::class)->name('byte.setup');
 
 Route::get('test', function () {

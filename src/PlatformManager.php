@@ -208,7 +208,7 @@ class PlatformManager
                     if (is_link($target)) {
                         app('files')->delete($target);
                     }
-                    if (env('BYTE_PUBLIC_COPY')) {
+                    if (env('SOKEIO_PUBLIC_COPY')) {
                         File::copyDirectory($link, $target);
                     } else {
                         if ($relative) {

@@ -2,7 +2,7 @@ import { SokeioPlugin } from "../core/plugin";
 
 export class LiveWireGetValueParentModule extends SokeioPlugin {
   getKey() {
-    return "BYTE_LIVEWIRE_GET_VALUE_MODULE";
+    return "SOKEIO_LIVEWIRE_GET_VALUE_MODULE";
   }
   booting() {
     const self = this;

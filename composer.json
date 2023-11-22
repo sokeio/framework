@@ -1,9 +1,9 @@
 {
-  "name": "sokeio/sokeio",
+  "name": "sokeio/framework",
   "description": "a Laravel-based web application development package that provides support for developing modules, plugins, themes, livewire, and shortcodes.",
   "license": "MIT",
   "keywords": [],
-  "homepage": "https://github.com/sokeio/sokeio",
+  "homepage": "https://github.com/sokeio/framework",
   "authors": [
     {
       "name": "Nguyen Van Hau",

@@ -23,9 +23,9 @@ class Init extends Seeder
         $roleAdmin->status = true;
         $roleAdmin->save();
         $userAdmin = new $userModel;
-        $userAdmin->name = env('BYTE_PlATFORM_FULLNAME', "NGUYEN VAN HAU");
-        $userAdmin->email = env('BYTE_PlATFORM_EMAIL', "admin@hau.xyz");
-        $userAdmin->password = env('BYTE_PlATFORM_PASSWORD', "AdMin@123");
+        $userAdmin->name = env('SOKEIO_PlATFORM_FULLNAME', "NGUYEN VAN HAU");
+        $userAdmin->email = env('SOKEIO_PlATFORM_EMAIL', "admin@hau.xyz");
+        $userAdmin->password = env('SOKEIO_PlATFORM_PASSWORD', "AdMin@123");
         $userAdmin->status = 1;
         $userAdmin->save();
         $userAdmin->roles()->sync([$roleAdmin->id]);

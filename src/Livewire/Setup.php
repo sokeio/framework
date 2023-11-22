@@ -89,7 +89,7 @@ class Setup extends Component
         $this->AcitveExtentions();
         Locale::FileJsonToTable();
         Platform::setEnv([
-            'BYTE_SETUP' => false,
+            'SOKEIO_SETUP' => false,
         ]);
         return redirect('/');
     }

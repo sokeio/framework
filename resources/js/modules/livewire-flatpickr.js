@@ -2,7 +2,7 @@ import { SokeioPlugin } from "../core/plugin";
 
 export class LiveWireFlatpickrModule extends SokeioPlugin {
   getKey() {
-    return "BYTE_LIVEWIRE_FLATPICK_MODULE";
+    return "SOKEIO_LIVEWIRE_FLATPICK_MODULE";
   }
   booting() {
     if (window.Livewire) {

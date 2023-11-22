@@ -2,7 +2,7 @@ import { SokeioPlugin } from "../core/plugin";
 
 export class LiveWireTinymceModule extends SokeioPlugin {
   getKey() {
-    return "BYTE_LIVEWIRE_TINYMCE_MODULE";
+    return "SOKEIO_LIVEWIRE_TINYMCE_MODULE";
   }
   booting() {
     const self = this;

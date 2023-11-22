@@ -2,7 +2,7 @@ import { SokeioPlugin } from "../core/plugin";
 
 export class ToastsModule  extends SokeioPlugin{
   getKey(){
-    return 'BYTE_TOASTS_MODULE';
+    return 'SOKEIO_TOASTS_MODULE';
   }
   booting() {
     let self = this;

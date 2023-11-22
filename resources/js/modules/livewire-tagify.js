@@ -2,7 +2,7 @@ import { SokeioPlugin } from "../core/plugin";
 
 export class LiveWireTagifyModule extends SokeioPlugin {
   getKey() {
-    return "BYTE_LIVEWIRE_TAGIFY_MODULE";
+    return "SOKEIO_LIVEWIRE_TAGIFY_MODULE";
   }
   booting() {
     if (window.Livewire) {

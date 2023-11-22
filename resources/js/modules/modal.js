@@ -2,7 +2,7 @@ import { SokeioPlugin } from "../core/plugin";
 
 export class ModalModule extends SokeioPlugin {
   getKey() {
-    return "BYTE_MODAL_MODULE";
+    return "SOKEIO_MODAL_MODULE";
   }
 
   booting() {

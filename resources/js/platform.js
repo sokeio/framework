@@ -46,7 +46,7 @@ export class Sokeio extends ByteManager {
     return this.$config["url"] + "/" + $url;
   }
   getUrl($url) {
-    return this.$config["byte_url"] + "/" + $url;
+    return this.$config["sokeio_url"] + "/" + $url;
   }
   init() {
     super.init();
@@ -79,7 +79,7 @@ export class Sokeio extends ByteManager {
     }
   }
   openModal($option, dataModal = undefined) {
-    return this.find("BYTE_MODAL_MODULE").openModal($option, dataModal);
+    return this.find("SOKEIO_MODAL_MODULE").openModal($option, dataModal);
   }
   openShortcodeSetting(
     $editorContainer,

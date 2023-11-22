@@ -2,7 +2,7 @@ import { SokeioPlugin } from "../core/plugin";
 
 export class LiveWireClipboardModule extends SokeioPlugin {
   getKey() {
-    return "BYTE_LIVEWIRE_CLIPBOARD_MODULE";
+    return "SOKEIO_LIVEWIRE_CLIPBOARD_MODULE";
   }
   booting() {
     if (window.Livewire) {

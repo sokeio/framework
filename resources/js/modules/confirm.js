@@ -2,7 +2,7 @@ import { SokeioPlugin } from "../core/plugin";
 
 export class ConfirmModule extends SokeioPlugin {
   getKey() {
-    return "BYTE_CONFIRM_MODULE";
+    return "SOKEIO_CONFIRM_MODULE";
   }
   booting() {
     const self = this;

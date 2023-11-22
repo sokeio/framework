@@ -2,7 +2,7 @@ import { SokeioPlugin } from "../core/plugin";
 
 export class LiveWireModule extends SokeioPlugin {
   getKey() {
-    return "BYTE_LIVEWIRE_MODULE";
+    return "SOKEIO_LIVEWIRE_MODULE";
   }
   CacheRejs = undefined;
   CacheLivewire = undefined;

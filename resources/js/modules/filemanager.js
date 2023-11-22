@@ -2,7 +2,7 @@ import { SokeioPlugin } from "../core/plugin";
 
 export class FileManagerModule extends SokeioPlugin {
   getKey() {
-    return "BYTE_FILEMANAGER_MODULE";
+    return "SOKEIO_FILEMANAGER_MODULE";
   }
   booting() {
     const self = this;

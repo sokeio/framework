@@ -2,7 +2,7 @@ import { SokeioPlugin } from "../core/plugin";
 
 export class LiveWireSortablejsModule extends SokeioPlugin {
   getKey() {
-    return "BYTE_LIVEWIRE_SORTABLEJS_MODULE";
+    return "SOKEIO_LIVEWIRE_SORTABLEJS_MODULE";
   }
   booting() {
     if (window.Livewire) {

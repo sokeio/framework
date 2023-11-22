@@ -41,7 +41,7 @@ class SokeioServiceProvider extends ServiceProvider
          *
          */
         $package
-            ->name('byte')
+            ->name('sokeio')
             ->hasConfigFile()
             ->hasViews()
             ->hasHelpers()
@@ -112,10 +112,10 @@ class SokeioServiceProvider extends ServiceProvider
 
             echo  \Livewire\Mechanisms\FrontendAssets\FrontendAssets::scriptConfig();
             echo  \Livewire\Mechanisms\FrontendAssets\FrontendAssets::scripts();
-            $scriptSokeio = file_get_contents(__DIR__ . '/../byte.js');
+            $scriptSokeio = file_get_contents(__DIR__ . '/../sokeio.js');
             $arrConfigjs = [
                 'url' => url(''),
-                'byte_url' => route('__byte__'),
+                'sokeio_url' => route('__sokeio__'),
                 'csrf_token' => csrf_token(),
                 'byte_filemanager' => route('unisharp.lfm.show'),
 
@@ -143,7 +143,7 @@ class SokeioServiceProvider extends ServiceProvider
             
             window.addEventListener('sokeio::init',function(){
                 if(window.ByteManager){
-                    window.ByteManager.\$debug=" . (env('BYTE_MODE_DEBUG', false) ? 'true' : 'false') . ";
+                    window.ByteManager.\$debug=" . (env('SOKEIO_MODE_DEBUG', false) ? 'true' : 'false') . ";
                     window.ByteManager.\$config=" . json_encode(apply_filters(PLATFORM_CONFIG_JS,  $arrConfigjs)) . ";
                 }
             });

@@ -72,7 +72,7 @@ class RouteEx
         if (self::checkPath($path)) return;
         self::$cacheRouteLoaded[$path] = true;
 
-        if ($subdomain = env('BYTE_SUB_DOMAIN')) {
+        if ($subdomain = env('SOKEIO_SUB_DOMAIN')) {
             Route::domain($subdomain)->group(function () use ($path) {
                 self::LoadRoute($path);
             });

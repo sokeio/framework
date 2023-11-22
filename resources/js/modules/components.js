@@ -2,7 +2,7 @@ import { SokeioPlugin } from "../core/plugin";
 
 export class ComponentModule extends SokeioPlugin {
   getKey() {
-    return "BYTE_COMPONENT_MODULE";
+    return "SOKEIO_COMPONENT_MODULE";
   }
   booting() {
     const self = this;

@@ -64,7 +64,7 @@ if (!function_exists('byte_action')) {
 if (!function_exists('byte_mode_dev')) {
     function byte_mode_dev()
     {
-        return env('BYTE_MODE_DEV', false);
+        return env('SOKEIO_MODE_DEV', false);
     }
 }
 
@@ -301,7 +301,7 @@ if (!function_exists('checkRole')) {
 if (!function_exists('adminUrl')) {
     function adminUrl()
     {
-        return apply_filters(BYTE_URL_ADMIN, env('BYTE_URL_ADMIN', ''));
+        return apply_filters(SOKEIO_URL_ADMIN, env('SOKEIO_URL_ADMIN', ''));
     }
 }
 if (!function_exists('page_title')) {

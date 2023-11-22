@@ -2,7 +2,7 @@ import { SokeioPlugin } from "../core/plugin";
 
 export class LiveWireCountUpModule extends SokeioPlugin {
   getKey(){
-    return 'BYTE_LIVEWIRE_COUNTUP_MODULE';
+    return 'SOKEIO_LIVEWIRE_COUNTUP_MODULE';
   }
   booting() {
     if (window.Livewire) {
