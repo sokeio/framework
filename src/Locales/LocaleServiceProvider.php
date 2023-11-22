@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform\Locales;
+namespace Sokeio\Locales;
 
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 use Illuminate\Routing\UrlGenerator as LaravelUrlGenerator;

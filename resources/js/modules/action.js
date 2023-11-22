@@ -1,6 +1,6 @@
-import { BytePlugin } from "../core/plugin";
+import { SokeioPlugin } from "../core/plugin";
 
-export class ActionModule extends BytePlugin {
+export class ActionModule extends SokeioPlugin {
   getKey() {
     return "BYTE_ACTION_MODULE";
   }

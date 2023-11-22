@@ -36,7 +36,7 @@ ean-128        itf
 
 \****************************************************************************/
 
-namespace BytePlatform\Support\BarCode;
+namespace Sokeio\Support\BarCode;
 
 class BarCodeManager
 {

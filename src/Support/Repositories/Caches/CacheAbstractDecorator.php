@@ -1,11 +1,11 @@
 <?php
 
-namespace BytePlatform\Support\Repositories\Caches;
+namespace Sokeio\Support\Repositories\Caches;
 
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Psr\SimpleCache\InvalidArgumentException;
-use BytePlatform\Support\Repositories\Interfaces\RepositoryInterface;
+use Sokeio\Support\Repositories\Interfaces\RepositoryInterface;
 use Illuminate\Support\Facades\Cache;
 
 abstract class CacheAbstractDecorator implements RepositoryInterface

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BytePlatform\Support\Svg;
+namespace Sokeio\Support\Svg;
 
 
 

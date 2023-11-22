@@ -1,10 +1,10 @@
 <?php
 
-namespace ByteTheme\Tabler;
+namespace SokeioTheme\Tabler;
 
 use Illuminate\Support\ServiceProvider;
-use BytePlatform\Laravel\ServicePackage;
-use BytePlatform\Concerns\WithServiceProvider;
+use Sokeio\Laravel\ServicePackage;
+use Sokeio\Concerns\WithServiceProvider;
 
 class TablerServiceProvider extends ServiceProvider
 {

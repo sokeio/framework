@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform\Commands;
+namespace Sokeio\Commands;
 
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -37,16 +37,16 @@ class BActiveCommand extends Command
         $type = $this->option('type');
         $active = $this->option('active');
         $names = $this->argument('name');
-        $byteplatform = platform_by($type);
+        $sokeio = platform_by($type);
         $this->components->info('byte:' . $type);
         foreach ($names as $name) {
-            $rs_byteplatform = $byteplatform->find($name);
-            if ($rs_byteplatform) {
+            $rs_sokeio = $sokeio->find($name);
+            if ($rs_sokeio) {
                 if ($active === true) {
-                    $rs_byteplatform->Active();
+                    $rs_sokeio->Active();
                     $this->components->info('module ' . $name . ' is Actived');
                 } else {
-                    $rs_byteplatform->UnActive();
+                    $rs_sokeio->UnActive();
                     $this->components->info('module ' . $name . ' is UnActived');
                 }
             }

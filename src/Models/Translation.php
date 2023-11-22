@@ -1,9 +1,9 @@
 <?php
 
-namespace BytePlatform\Models;
+namespace Sokeio\Models;
 
 
-class Translation extends \BytePlatform\Model
+class Translation extends \Sokeio\Model
 {
 
     /**

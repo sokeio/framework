@@ -1,10 +1,10 @@
 <?php
 
-use BytePlatform\Facades\Locale;
-use BytePlatform\Facades\Platform;
-use BytePlatform\Livewire\Setup;
-use BytePlatform\Locales\Extractor\TranslationFinder;
-use BytePlatform\Support\Svg\EasySVG;
+use Sokeio\Facades\Locale;
+use Sokeio\Facades\Platform;
+use Sokeio\Livewire\Setup;
+use Sokeio\Locales\Extractor\TranslationFinder;
+use Sokeio\Support\Svg\EasySVG;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
@@ -36,7 +36,7 @@ Route::group(['prefix' => '__byte__'], function () {
                 Artisan::call('event:clear');
                 Artisan::call('route:clear');
                 //composer dump-autoload
-                \BytePlatform\Facades\Platform::makeLink();
+                \Sokeio\Facades\Platform::makeLink();
             }
             return $key;
         })->name('byte.git-pull');
@@ -49,8 +49,8 @@ Route::group(['prefix' => '__byte__'], function () {
         $svg->addAttribute("width", "1280");
         $svg->addAttribute("height", "653");
         $svg->addAttribute("style", "background:#0054a6");
-        $byteplatform = platform_by($types);
-        if ($byteplatform && ($item = $byteplatform->find($id))) {
+        $sokeio = platform_by($types);
+        if ($sokeio && ($item = $sokeio->find($id))) {
             if (File::exists($item->getPath('screenshot.png')))
                 return response(file_get_contents($item->getPath('screenshot.png')))->header('Content-Type', 'image/png');
             $svg->addText(str($item->getTitle())->upper(), 'center', 200, ['fill' => '#fff']);
@@ -60,9 +60,9 @@ Route::group(['prefix' => '__byte__'], function () {
         }
         return response($svg->asXML())->header('Content-Type', 'image/svg+xml');
     })->name('byte.screenshot');
-    Route::post('component', [BytePlatform\Http\Controllers\PlatformController::class, 'getComponent']);
-    Route::post('events', [BytePlatform\Http\Controllers\PlatformController::class, 'doEvents']);
-    Route::post('webhook', [BytePlatform\Http\Controllers\PlatformController::class, 'doWebhooks']);
+    Route::post('component', [Sokeio\Http\Controllers\PlatformController::class, 'getComponent']);
+    Route::post('events', [Sokeio\Http\Controllers\PlatformController::class, 'doEvents']);
+    Route::post('webhook', [Sokeio\Http\Controllers\PlatformController::class, 'doWebhooks']);
     Route::get('/', function () {
         return 'hello, now is ' . now();
     })->name('__byte__');

@@ -1,10 +1,10 @@
 <?php
 
-namespace BytePlatform\Middleware;
+namespace Sokeio\Middleware;
 
 
 use Closure;
-use BytePlatform\Facades\Platform;
+use Sokeio\Facades\Platform;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 

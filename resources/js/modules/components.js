@@ -1,6 +1,6 @@
-import { BytePlugin } from "../core/plugin";
+import { SokeioPlugin } from "../core/plugin";
 
-export class ComponentModule extends BytePlugin {
+export class ComponentModule extends SokeioPlugin {
   getKey() {
     return "BYTE_COMPONENT_MODULE";
   }
@@ -30,7 +30,7 @@ export class ComponentModule extends BytePlugin {
             toEl.appendChild(el);
             self.getManager().doTrigger(el);
           } else {
-            self.getManager().addError(data.error, "byte::component", {
+            self.getManager().addError(data.error, "sokeio::component", {
               toEl,
               key,
               data,
@@ -41,7 +41,7 @@ export class ComponentModule extends BytePlugin {
             self.getManager().$config["csrf_token"] = data.csrf_token;
         } else {
           let data = await response.data;
-          self.getManager().addError(data.error, "byte::component", {
+          self.getManager().addError(data.error, "sokeio::component", {
             toEl,
             key,
             data,

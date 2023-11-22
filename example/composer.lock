@@ -62,7 +62,7 @@
             "time": "2023-01-15T23:15:59+00:00"
         },
         {
-            "name": "byteplatform/byteplatform",
+            "name": "sokeio/sokeio",
             "version": "dev-main",
             "dist": {
                 "type": "path",
@@ -70,7 +70,7 @@
                 "reference": "6659b34058eccb017e01ff9d1dfd4abb1c7b80d6"
             },
             "require": {
-                "byteplatform/laravel": "^1.0.1",
+                "sokeio/laravel": "^1.0.1",
                 "livewire/livewire": "^3.0.5",
                 "staudenmeir/eloquent-eager-limit": "^1.8.3",
                 "symfony/filesystem": "^6.3.1",
@@ -80,7 +80,7 @@
             "extra": {
                 "laravel": {
                     "providers": [
-                        "BytePlatform\\ByteServiceProvider"
+                        "Sokeio\\ByteServiceProvider"
                     ],
                     "aliases": []
                 }
@@ -91,8 +91,8 @@
                     "helpers/function.php"
                 ],
                 "psr-4": {
-                    "BytePlatform\\": "src/",
-                    "BytePlatform\\Seeders\\": "database/seeders/"
+                    "Sokeio\\": "src/",
+                    "Sokeio\\Seeders\\": "database/seeders/"
                 }
             },
             "autoload-dev": {
@@ -124,23 +124,23 @@
                 }
             ],
             "description": "a Laravel-based web application development package that provides support for developing modules, plugins, themes, livewire, and shortcodes.",
-            "homepage": "https://github.com/byteplatform/byteplatform",
+            "homepage": "https://github.com/sokeio/sokeio",
             "transport-options": {
                 "symlink": true,
                 "relative": true
             }
         },
         {
-            "name": "byteplatform/laravel",
+            "name": "sokeio/laravel",
             "version": "v1.0.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/BytePlatform/Laravel.git",
+                "url": "https://github.com/Sokeio/Laravel.git",
                 "reference": "1575d057177b75116869b4f02d640329a49d94a7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BytePlatform/Laravel/zipball/1575d057177b75116869b4f02d640329a49d94a7",
+                "url": "https://api.github.com/repos/Sokeio/Laravel/zipball/1575d057177b75116869b4f02d640329a49d94a7",
                 "reference": "1575d057177b75116869b4f02d640329a49d94a7",
                 "shasum": ""
             },
@@ -157,7 +157,7 @@
                 "branch-alias": {
                     "dev-master": "2.x-dev"
                 },
-                "class": "BytePlatform\\Laravel\\Plugin\\MergePlugin"
+                "class": "Sokeio\\Laravel\\Plugin\\MergePlugin"
             },
             "autoload": {
                 "files": [
@@ -165,7 +165,7 @@
                     "helpers/function.php"
                 ],
                 "psr-4": {
-                    "BytePlatform\\Laravel\\": "src/"
+                    "Sokeio\\Laravel\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -182,8 +182,8 @@
             ],
             "description": "Laravel package, merge plugin, hook filter action",
             "support": {
-                "issues": "https://github.com/BytePlatform/Laravel/issues",
-                "source": "https://github.com/BytePlatform/Laravel/tree/v1.0.1"
+                "issues": "https://github.com/Sokeio/Laravel/issues",
+                "source": "https://github.com/Sokeio/Laravel/tree/v1.0.1"
             },
             "time": "2023-10-27T06:17:39+00:00"
         },

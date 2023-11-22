@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform;
+namespace Sokeio;
 
 use Illuminate\Support\Traits\Macroable;
 

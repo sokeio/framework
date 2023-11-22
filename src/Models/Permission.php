@@ -1,9 +1,9 @@
 <?php
 
-namespace BytePlatform\Models;
+namespace Sokeio\Models;
 
 
-class Permission extends \BytePlatform\Model
+class Permission extends \Sokeio\Model
 {
 
     protected $fillable = ['name', 'group', 'slug'];

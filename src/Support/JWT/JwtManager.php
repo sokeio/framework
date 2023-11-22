@@ -1,8 +1,8 @@
 <?php
 
-namespace BytePlatform\Support\JWT;
+namespace Sokeio\Support\JWT;
 
-use BytePlatform\Exceptions\JWTException;
+use Sokeio\Exceptions\JWTException;
 
 class JwtManager
 {

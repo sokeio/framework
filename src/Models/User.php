@@ -1,11 +1,11 @@
 <?php
 
-namespace BytePlatform\Models;
+namespace Sokeio\Models;
 
-use BytePlatform\Concerns\WithModelHook;
+use Sokeio\Concerns\WithModelHook;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use BytePlatform\Concerns\WithPermission;
-use BytePlatform\Concerns\WithSlug;
+use Sokeio\Concerns\WithPermission;
+use Sokeio\Concerns\WithSlug;
 use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable

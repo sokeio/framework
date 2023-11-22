@@ -1,6 +1,6 @@
-import { BytePlugin } from "../core/plugin";
+import { SokeioPlugin } from "../core/plugin";
 
-export class ModalModule extends BytePlugin {
+export class ModalModule extends SokeioPlugin {
   getKey() {
     return "BYTE_MODAL_MODULE";
   }
@@ -43,7 +43,7 @@ export class ModalModule extends BytePlugin {
   getModalHtml($title, $size, $modalId) {
     let self = this;
     return self.getManager()
-      .htmlToElement(`<div class="modal modal-blur modal-byteplatform fade" id="${$modalId}" tabindex="-1" aria-hidden="true" style="display: none;">
+      .htmlToElement(`<div class="modal modal-blur modal-sokeio fade" id="${$modalId}" tabindex="-1" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-dialog-centered ${$size}" role="document">
       <div class="modal-content">
         <div class="modal-header">

@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform\Support\Repositories\Eloquent;
+namespace Sokeio\Support\Repositories\Eloquent;
 
 use Closure;
 use Eloquent;
@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
-use BytePlatform\Support\Repositories\Interfaces\RepositoryInterface;
+use Sokeio\Support\Repositories\Interfaces\RepositoryInterface;
 
 abstract class RepositoriesAbstract implements RepositoryInterface
 {

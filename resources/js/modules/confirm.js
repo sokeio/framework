@@ -1,6 +1,6 @@
-import { BytePlugin } from "../core/plugin";
+import { SokeioPlugin } from "../core/plugin";
 
-export class ConfirmModule extends BytePlugin {
+export class ConfirmModule extends SokeioPlugin {
   getKey() {
     return "BYTE_CONFIRM_MODULE";
   }

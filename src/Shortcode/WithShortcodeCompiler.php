@@ -1,8 +1,8 @@
 <?php
 
-namespace BytePlatform\Shortcode;
+namespace Sokeio\Shortcode;
 
-use BytePlatform\Concerns\WithHelpers;
+use Sokeio\Concerns\WithHelpers;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
@@ -211,7 +211,7 @@ trait WithShortcodeCompiler
      *
      * @param $matches
      *
-     * @return \BytePlatform\Shortcode\ShortcodeInfo
+     * @return \Sokeio\Shortcode\ShortcodeInfo
      */
     protected function compileShortcode($matches)
     {

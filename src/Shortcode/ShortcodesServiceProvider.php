@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform\Shortcode;
+namespace Sokeio\Shortcode;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -22,7 +22,7 @@ class ShortcodesServiceProvider extends ServiceProvider
     public function enableCompiler()
     {
         // Check if the compiler is auto enabled
-        $state = $this->app['config']->get('byte::shortcodes-enabled', false);
+        $state = $this->app['config']->get('sokeio::shortcodes-enabled', false);
         
         // Enable when needed
         if ($state) {

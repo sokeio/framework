@@ -1,10 +1,10 @@
 <?php
 
-namespace BytePlatform\Models;
+namespace Sokeio\Models;
 
-use BytePlatform\Concerns\WithSlug;
+use Sokeio\Concerns\WithSlug;
 
-class Role extends \BytePlatform\Model
+class Role extends \Sokeio\Model
 {
     use WithSlug;
     public $FieldSlug = "name";

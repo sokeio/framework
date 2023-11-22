@@ -3,7 +3,7 @@ import axios from "axios";
 axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 import _ from "lodash";
 window._ = _;
-export class BytePlatform extends ByteManager {
+export class Sokeio extends ByteManager {
   $config = {};
   $loaded = false;
   $debug = false;
@@ -23,19 +23,19 @@ export class BytePlatform extends ByteManager {
   }
   doTrigger(el) {
     if (el && !el.__deleting) {
-      this.dispatch("byte::trigger_before", el);
-      this.dispatch("byte::trigger", el);
-      this.dispatch("byte::trigger_after", el);
+      this.dispatch("sokeio::trigger_before", el);
+      this.dispatch("sokeio::trigger", el);
+      this.dispatch("sokeio::trigger_after", el);
     }
   }
-  addError(error, component = "byteplatform", meta = {}) {
+  addError(error, component = "sokeio", meta = {}) {
     this.addMessage(error, "error", component, meta);
   }
-  addInfo(message, component = "byteplatform", meta = {}) {
+  addInfo(message, component = "sokeio", meta = {}) {
     this.addMessage(message, "info", component, meta);
   }
-  addMessage(message, type, component = "byteplatform", meta = {}) {
-    this.dispatch("byte::message", {
+  addMessage(message, type, component = "sokeio", meta = {}) {
+    this.dispatch("sokeio::message", {
       message,
       type,
       component,
@@ -57,14 +57,14 @@ export class BytePlatform extends ByteManager {
       headers: {
         "Content-Type": "application/json",
         Accept: "text/html, application/xhtml+xml",
-        "x-byteplatform": true,
+        "x-sokeio": true,
         ...(csrfToken && { "X-CSRF-TOKEN": csrfToken }),
       },
     });
   }
   start() {
     super.start();
-    this.dispatch("byte::loaded", document);
+    this.dispatch("sokeio::loaded", document);
   }
   showFileManager(callback, type = "file") {
     if (this.$config["byte_filemanager"]) {

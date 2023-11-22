@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform;
+namespace Sokeio;
 
 class Api
 {

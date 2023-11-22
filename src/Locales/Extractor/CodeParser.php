@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform\Locales\Extractor;
+namespace Sokeio\Locales\Extractor;
 
 use SplFileInfo;
 

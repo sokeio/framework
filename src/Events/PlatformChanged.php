@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform\Events;
+namespace Sokeio\Events;
 
 use Illuminate\Foundation\Events\Dispatchable;
 

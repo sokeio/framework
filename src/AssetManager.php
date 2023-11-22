@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform;
+namespace Sokeio;
 
 use Illuminate\Support\Facades\File;
 
@@ -88,22 +88,22 @@ class AssetManager
             if ($type == self::SCRIPT || $type == self::STYLE)
                 $dataLoader[$location][$type][] = $content;
             else if ($base && $name) {
-                $byteplatform = platform_by($base);
-                $byteplatformItem = $byteplatform->find($name);
-                if ($byteplatformItem) {
-                    $manifestData = $byteplatformItem->getManifestData();
+                $sokeio = platform_by($base);
+                $sokeioItem = $sokeio->find($name);
+                if ($sokeioItem) {
+                    $manifestData = $sokeioItem->getManifestData();
                     if (isset($manifestData[$content]['imports'])) {
                         foreach ($manifestData[$content]['imports'] as $item) {
                             if (isset($manifestData[$item]['file'])) {
-                                $dataLoader[$location][$type][] = $byteplatformItem->url('build/' . $manifestData[$item]['file']);
+                                $dataLoader[$location][$type][] = $sokeioItem->url('build/' . $manifestData[$item]['file']);
                             }
                         }
                     }
                     if (isset($manifestData[$content]['file'])) {
-                        $dataLoader[$location][$type][] = $byteplatformItem->url('build/' . $manifestData[$content]['file']);
+                        $dataLoader[$location][$type][] = $sokeioItem->url('build/' . $manifestData[$content]['file']);
                     } else {
-                        if (File::exists($byteplatformItem->getPathPublic($content))) {
-                            $dataLoader[$location][$type][] = $byteplatformItem->url($content);
+                        if (File::exists($sokeioItem->getPathPublic($content))) {
+                            $dataLoader[$location][$type][] = $sokeioItem->url($content);
                         } else if (str($content)->startsWith('http')) {
                             $dataLoader[$location][$type][] = $content;
                         }

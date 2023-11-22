@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform\Shortcode;
+namespace Sokeio\Shortcode;
 
 use ArrayAccess;
 use Illuminate\Contracts\Support\Renderable;

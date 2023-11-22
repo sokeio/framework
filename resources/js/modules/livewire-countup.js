@@ -1,6 +1,6 @@
-import { BytePlugin } from "../core/plugin";
+import { SokeioPlugin } from "../core/plugin";
 
-export class LiveWireCountUpModule extends BytePlugin {
+export class LiveWireCountUpModule extends SokeioPlugin {
   getKey(){
     return 'BYTE_LIVEWIRE_COUNTUP_MODULE';
   }

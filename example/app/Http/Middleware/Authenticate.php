@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use BytePlatform\Middleware\Authenticate as Middleware;
+use Sokeio\Middleware\Authenticate as Middleware;
 
 class Authenticate extends Middleware
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform\Facades;
+namespace Sokeio\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
@@ -13,12 +13,12 @@ use Illuminate\Support\Facades\Facade;
  * @method static bool verify(string $token)
  * 
  *
- * @see \BytePlatform\Facades\Jwt
+ * @see \Sokeio\Facades\Jwt
  */
 class Jwt extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \BytePlatform\Support\JWT\JwtManager::class;
+        return \Sokeio\Support\JWT\JwtManager::class;
     }
 }

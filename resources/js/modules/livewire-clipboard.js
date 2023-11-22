@@ -1,6 +1,6 @@
-import { BytePlugin } from "../core/plugin";
+import { SokeioPlugin } from "../core/plugin";
 
-export class LiveWireClipboardModule extends BytePlugin {
+export class LiveWireClipboardModule extends SokeioPlugin {
   getKey() {
     return "BYTE_LIVEWIRE_CLIPBOARD_MODULE";
   }

@@ -1,6 +1,6 @@
-import { BytePlugin } from "../core/plugin";
+import { SokeioPlugin } from "../core/plugin";
 
-export class LiveWireGetValueParentModule extends BytePlugin {
+export class LiveWireGetValueParentModule extends SokeioPlugin {
   getKey() {
     return "BYTE_LIVEWIRE_GET_VALUE_MODULE";
   }

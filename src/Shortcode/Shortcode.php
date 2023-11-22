@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform\Shortcode;
+namespace Sokeio\Shortcode;
 
 
 class Shortcode
@@ -29,7 +29,7 @@ class Shortcode
      * @param  callable|string $callback
      * @param  boot $force
      *
-     * @return \BytePlatform\Shortcode\Shortcode
+     * @return \Sokeio\Shortcode\Shortcode
      */
     public function register($shortcodes, $namespace, $force = false)
     {
@@ -45,7 +45,7 @@ class Shortcode
      * @param  string          $namespace
      * @param  boot $force
      *
-     * @return \BytePlatform\Shortcode\Shortcode
+     * @return \Sokeio\Shortcode\Shortcode
      */
     public function registerItem($key, $itemOrCallback, $namespace, $force = false)
     {
@@ -57,7 +57,7 @@ class Shortcode
     /**
      * Enable the laravel-shortcodes
      *
-     * @return \BytePlatform\Shortcode\Shortcode
+     * @return \Sokeio\Shortcode\Shortcode
      */
     public function enable()
     {
@@ -69,7 +69,7 @@ class Shortcode
     /**
      * Disable the laravel-shortcodes
      *
-     * @return \BytePlatform\Shortcode\Shortcode
+     * @return \Sokeio\Shortcode\Shortcode
      */
     public function disable()
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform\Facades;
+namespace Sokeio\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
@@ -21,12 +21,12 @@ use Illuminate\Support\Facades\Facade;
  * 
  * 
  *
- * @see \BytePlatform\Facades\Assets
+ * @see \Sokeio\Facades\Assets
  */
 class Assets extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \BytePlatform\AssetManager::class;
+        return \Sokeio\AssetManager::class;
     }
 }

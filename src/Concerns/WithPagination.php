@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform\Concerns;
+namespace Sokeio\Concerns;
 
 use Livewire\WithPagination as WithPaginationBase;
 

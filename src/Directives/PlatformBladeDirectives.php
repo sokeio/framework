@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform\Directives;
+namespace Sokeio\Directives;
 
 use Illuminate\Support\Str;
 

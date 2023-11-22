@@ -1,6 +1,6 @@
-import { BytePlugin } from "../core/plugin";
+import { SokeioPlugin } from "../core/plugin";
 
-export class LiveWireTinymceModule extends BytePlugin {
+export class LiveWireTinymceModule extends SokeioPlugin {
   getKey() {
     return "BYTE_LIVEWIRE_TINYMCE_MODULE";
   }

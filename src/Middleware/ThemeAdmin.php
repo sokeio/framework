@@ -1,8 +1,8 @@
 <?php
 
-namespace BytePlatform\Middleware;
+namespace Sokeio\Middleware;
 
-use BytePlatform\Facades\Theme;
+use Sokeio\Facades\Theme;
 
 class ThemeAdmin
 {

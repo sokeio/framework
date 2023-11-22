@@ -6,7 +6,7 @@
   "description": "",
   "keywords": [],
   "priority": 100,
-  "namespace":"ByteTheme\\None",
+  "namespace":"SokeioTheme\\None",
   "aliases": {},
   "files": [],
   "requires": []

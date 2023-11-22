@@ -1,9 +1,9 @@
 {
-  "name": "byteplatform/byteplatform",
+  "name": "sokeio/sokeio",
   "description": "a Laravel-based web application development package that provides support for developing modules, plugins, themes, livewire, and shortcodes.",
   "license": "MIT",
   "keywords": [],
-  "homepage": "https://github.com/byteplatform/byteplatform",
+  "homepage": "https://github.com/sokeio/sokeio",
   "authors": [
     {
       "name": "Nguyen Van Hau",
@@ -13,7 +13,7 @@
     }
   ],
   "require": {
-    "byteplatform/laravel": "^1.0.2",
+    "sokeio/laravel": "^1.0.2",
     "symfony/filesystem": "^6.3.1",
     "staudenmeir/eloquent-eager-limit": "^1.8.3",
     "livewire/livewire": "^3.1.0",
@@ -26,8 +26,8 @@
       "helpers/function.php"
     ],
     "psr-4": {
-      "BytePlatform\\": "src/",
-      "BytePlatform\\Seeders\\": "database/seeders/"
+      "Sokeio\\": "src/",
+      "Sokeio\\Seeders\\": "database/seeders/"
     }
   },
   "autoload-dev": {
@@ -42,7 +42,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "BytePlatform\\ByteServiceProvider"
+        "Sokeio\\ByteServiceProvider"
       ],
       "aliases": {}
     }

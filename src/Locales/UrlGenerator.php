@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform\Locales;
+namespace Sokeio\Locales;
 
 use Illuminate\Support\Str;
 use \Illuminate\Routing\UrlGenerator as LaravelUrlGenerator;

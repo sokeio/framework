@@ -7,7 +7,7 @@
   "keywords": [],
   "priority": 200,
   "aliases": {},
-  "namespace": "ByteTheme\\Tabler",
+  "namespace": "SokeioTheme\\Tabler",
   "layout": "default",
   "requires": []
 }

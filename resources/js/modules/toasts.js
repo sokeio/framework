@@ -1,13 +1,13 @@
-import { BytePlugin } from "../core/plugin";
+import { SokeioPlugin } from "../core/plugin";
 
-export class ToastsModule  extends BytePlugin{
+export class ToastsModule  extends SokeioPlugin{
   getKey(){
     return 'BYTE_TOASTS_MODULE';
   }
   booting() {
     let self = this;
-    self.getManager().removeListenerAll("byte::message");
-    self.getManager().onSafe("byte::message", self.showMessageEvent.bind(this));
+    self.getManager().removeListenerAll("sokeio::message");
+    self.getManager().onSafe("sokeio::message", self.showMessageEvent.bind(this));
     Object.keys(self.postion).forEach((key) => {
       self.postion_el[key] = self.getManager().appendHtmlToBody(
         `<div style='position: fixed;' class="toast-container p-3 ${self.postion[key]}" id="toast-${key}">`

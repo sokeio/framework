@@ -1,11 +1,11 @@
 <?php
 
-namespace BytePlatform\Middleware;
+namespace Sokeio\Middleware;
 
 
 use Closure;
 use Illuminate\Http\Request;
-use BytePlatform\Facades\Jwt;
+use Sokeio\Facades\Jwt;
 
 class JwtUser
 {

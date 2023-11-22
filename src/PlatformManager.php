@@ -1,15 +1,15 @@
 <?php
 
-namespace BytePlatform;
+namespace Sokeio;
 
-use BytePlatform\DataInfo;
-use BytePlatform\Events\NotificationAdd;
+use Sokeio\DataInfo;
+use Sokeio\Events\NotificationAdd;
 use Illuminate\Support\Facades\File;
-use BytePlatform\Laravel\JsonData;
-use BytePlatform\Facades\Module;
-use BytePlatform\Facades\Plugin;
-use BytePlatform\Facades\Theme;
-use BytePlatform\Models\Notification;
+use Sokeio\Laravel\JsonData;
+use Sokeio\Facades\Module;
+use Sokeio\Facades\Plugin;
+use Sokeio\Facades\Theme;
+use Sokeio\Models\Notification;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -36,10 +36,10 @@ class PlatformManager
     {
         return config('byte.extends', ['theme', 'plugin', 'module']);
     }
-    private $byteplatformFileVersion;
+    private $sokeioFileVersion;
     public function FileVersion()
     {
-        return $this->byteplatformFileVersion ?? ($this->byteplatformFileVersion = json_decode(file_get_contents(config('byte.updator.url')), true));
+        return $this->sokeioFileVersion ?? ($this->sokeioFileVersion = json_decode(file_get_contents(config('byte.updator.url')), true));
     }
     public function unzip($file, $extTo)
     {
@@ -297,7 +297,7 @@ class PlatformManager
                 return true;
             }
         });
-        app(config('byte.model.permission', \BytePlatform\Models\Permission::class))->get()->map(function ($permission) {
+        app(config('byte.model.permission', \Sokeio\Models\Permission::class))->get()->map(function ($permission) {
             Gate::define($permission->slug, function ($user = null) use ($permission) {
                 if (!$user) $user = auth()->user();
                 if (!$user) return false;

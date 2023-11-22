@@ -1,6 +1,6 @@
-import { BytePlugin } from "../core/plugin";
+import { SokeioPlugin } from "../core/plugin";
 
-export class LiveWireChartModule extends BytePlugin{
+export class LiveWireChartModule extends SokeioPlugin{
   getKey(){
     return 'BYTE_LIVEWIRE_CHART_MODULE';
   }

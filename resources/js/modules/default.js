@@ -1,6 +1,6 @@
-import { BytePlugin } from "../core/plugin";
+import { SokeioPlugin } from "../core/plugin";
 
-export class DefaultModule extends BytePlugin {
+export class DefaultModule extends SokeioPlugin {
   getKey() {
     return "BYTE_FILEMANAGER_MODULE";
   }

@@ -1,11 +1,11 @@
 <?php
 
-namespace BytePlatform;
+namespace Sokeio;
 
 
 class PluginManager
 {
-    use \BytePlatform\Concerns\WithSystemExtend;
+    use \Sokeio\Concerns\WithSystemExtend;
     public function getName()
     {
         return "plugin";

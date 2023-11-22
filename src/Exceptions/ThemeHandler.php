@@ -1,8 +1,8 @@
 <?php
 
-namespace BytePlatform\Exceptions;
+namespace Sokeio\Exceptions;
 
-use BytePlatform\Facades\Theme;
+use Sokeio\Facades\Theme;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;

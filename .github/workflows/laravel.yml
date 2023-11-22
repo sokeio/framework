@@ -13,10 +13,10 @@ jobs:
       run:
         working-directory: ./example
     steps:
-    - uses: byteplatform/setup-php@master
+    - uses: sokeio/setup-php@master
       with:
         php-version: '8.2'
-    - uses: byteplatform/checkout@main
+    - uses: sokeio/checkout@main
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
     - name: Install Dependencies

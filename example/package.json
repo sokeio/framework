@@ -4,7 +4,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "reinstall": "node ./vendor/byteplatform/byteplatform/reinstall.js"
+    "reinstall": "node ./vendor/sokeio/sokeio/reinstall.js"
   },
   "devDependencies": {
     "vite": "^4.3.9",

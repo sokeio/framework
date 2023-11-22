@@ -1,8 +1,8 @@
 <?php
 
-namespace BytePlatform\Actions;
+namespace Sokeio\Actions;
 
-use BytePlatform\Concerns\WithAction;
+use Sokeio\Concerns\WithAction;
 
 class CountModel
 {

@@ -1,11 +1,11 @@
-# BytePlatform
+# Sokeio
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/byteplatform/byteplatform.svg?style=flat-square)](https://packagist.org/packages/byteplatform/byteplatform)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/byteplatform/byteplatform/run-tests?label=Laravel)](https://github.com/byteplatform/byteplatform/actions?query=workflow%3ALaravel+)
-[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/byteplatform/byteplatform/Fix%20PHP%20code%20style%20issues?label=code%20style)](https://github.com/byteplatform/byteplatform/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/byteplatform/byteplatform.svg?style=flat-square)](https://packagist.org/packages/byteplatform/byteplatform)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/sokeio/sokeio.svg?style=flat-square)](https://packagist.org/packages/sokeio/sokeio)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/sokeio/sokeio/run-tests?label=Laravel)](https://github.com/sokeio/sokeio/actions?query=workflow%3ALaravel+)
+[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/sokeio/sokeio/Fix%20PHP%20code%20style%20issues?label=code%20style)](https://github.com/sokeio/sokeio/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/sokeio/sokeio.svg?style=flat-square)](https://packagist.org/packages/sokeio/sokeio)
 
-**BytePlatform** là một gói phát triển ứng dụng web dựa trên Laravel, cung cấp hỗ trợ cho việc phát triển các Module, Plugin, Theme, Livewire và shortcode. Với BytePlatform, người dùng có thể phát triển ứng dụng web nhanh hơn và dễ dàng hơn bao giờ hết. Gói phát triển cung cấp các tính năng linh hoạt và tiện ích giúp người dùng tối ưu quy trình phát triển và tăng tốc độ phát triển của ứng dụng web của họ.
+**Sokeio** là một gói phát triển ứng dụng web dựa trên Laravel, cung cấp hỗ trợ cho việc phát triển các Module, Plugin, Theme, Livewire và shortcode. Với Sokeio, người dùng có thể phát triển ứng dụng web nhanh hơn và dễ dàng hơn bao giờ hết. Gói phát triển cung cấp các tính năng linh hoạt và tiện ích giúp người dùng tối ưu quy trình phát triển và tăng tốc độ phát triển của ứng dụng web của họ.
 
 ## Yêu cầu
 
@@ -16,7 +16,7 @@ PHP 8.2+
 Bạn có thể cài đặt gói bằng Composer bằng cách thực hiện các bước sau:
 
 ```bash
-$ composer require byteplatform/byteplatform
+$ composer require sokeio/sokeio
 $ php artisan migrate
 $ php artisan b:setup
 $ php artisan vendor:publish --tag=lfm_config

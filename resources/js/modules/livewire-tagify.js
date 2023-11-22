@@ -1,6 +1,6 @@
-import { BytePlugin } from "../core/plugin";
+import { SokeioPlugin } from "../core/plugin";
 
-export class LiveWireTagifyModule extends BytePlugin {
+export class LiveWireTagifyModule extends SokeioPlugin {
   getKey() {
     return "BYTE_LIVEWIRE_TAGIFY_MODULE";
   }

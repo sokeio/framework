@@ -1,6 +1,6 @@
 <div class="page page-center">
     <div class="container container-tight py-2">
-        @includeIf('byte::setup.step-' . $step_index)
+        @includeIf('sokeio::setup.step-' . $step_index)
         @if ($errors->any())
             <div class="alert alert-danger mt-3">
                 <ul>

@@ -1,6 +1,6 @@
-import { BytePlugin } from "../core/plugin";
+import { SokeioPlugin } from "../core/plugin";
 
-export class LiveWireFlatpickrModule extends BytePlugin {
+export class LiveWireFlatpickrModule extends SokeioPlugin {
   getKey() {
     return "BYTE_LIVEWIRE_FLATPICK_MODULE";
   }

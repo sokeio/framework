@@ -117,14 +117,14 @@ window.PlatformLoadScript = function (
   return window
     .ByteLoadScript(source, beforeEl, async, defer)
     .then(function () {
-      dispatchDocument("byte::ready");
+      dispatchDocument("sokeio::ready");
       if (window.ByteManager) {
         window.ByteManager.start();
         window.PlatformLoadScript = undefined;
       }
     })
     .catch(function () {
-      dispatchDocument("byte::ready");
+      dispatchDocument("sokeio::ready");
       if (window.ByteManager) {
         window.ByteManager.start();
         window.PlatformLoadScript = undefined;

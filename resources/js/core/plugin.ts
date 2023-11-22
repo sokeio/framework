@@ -1,6 +1,6 @@
 import { ByteManager } from "./manager";
 
-export class BytePlugin {
+export class SokeioPlugin {
   private _manager: any;
   public getKey(): string {
     return "";

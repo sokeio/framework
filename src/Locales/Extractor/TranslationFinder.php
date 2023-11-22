@@ -1,11 +1,11 @@
 <?php
 
-namespace BytePlatform\Locales\Extractor;
+namespace Sokeio\Locales\Extractor;
 
-use BytePlatform\Facades\Module;
-use BytePlatform\Facades\Plugin;
-use BytePlatform\Facades\Theme;
-use BytePlatform\Laravel\JsonData;
+use Sokeio\Facades\Module;
+use Sokeio\Facades\Plugin;
+use Sokeio\Facades\Theme;
+use Sokeio\Laravel\JsonData;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\Finder\Finder;
 

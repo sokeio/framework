@@ -1,8 +1,8 @@
 <?php
 
-namespace BytePlatform;
+namespace Sokeio;
 
-use BytePlatform\Concerns\WithModelHook;
+use Sokeio\Concerns\WithModelHook;
 
 class Model extends \Illuminate\Database\Eloquent\Model
 {

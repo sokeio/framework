@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform\Commands;
+namespace Sokeio\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;

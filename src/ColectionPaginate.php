@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform;
+namespace Sokeio;
 
 use Illuminate\Container\Container;
 use Illuminate\Pagination\LengthAwarePaginator;

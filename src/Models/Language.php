@@ -1,9 +1,9 @@
 <?php
 
-namespace BytePlatform\Models;
+namespace Sokeio\Models;
 
 
-class Language extends \BytePlatform\Model
+class Language extends \Sokeio\Model
 {
     /**
      * The attributes that are mass assignable.

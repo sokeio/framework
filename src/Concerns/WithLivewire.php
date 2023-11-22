@@ -1,8 +1,8 @@
 <?php
 
-namespace BytePlatform\Concerns;
+namespace Sokeio\Concerns;
 
-use BytePlatform\LivewireLoader;
+use Sokeio\LivewireLoader;
 use Livewire\Features\SupportPageComponents\LayoutConfig;
 use Livewire\Features\SupportPageComponents\SupportPageComponents;
 
@@ -34,7 +34,7 @@ trait WithLivewire
     public function refreshData($option = [])
     {
         // if (!isset($option['id']) && !count($option)) $option['id'] = $this->getId();
-        $this->dispatch('byte::refresh', option: $option);
+        $this->dispatch('sokeio::refresh', option: $option);
     }
     public function refreshRefComponent()
     {
@@ -60,15 +60,15 @@ trait WithLivewire
     }
     public function showMessage($option)
     {
-        $this->dispatch('byte::message', option: $option);
+        $this->dispatch('sokeio::message', option: $option);
     }
     public function closeComponent($component = null)
     {
         if ($component) {
-            $this->dispatch('byte::close',  option: ['component' => $component]);
+            $this->dispatch('sokeio::close',  option: ['component' => $component]);
         } else {
 
-            $this->dispatch('byte::close',  option: ['id' => $this->getId()]);
+            $this->dispatch('sokeio::close',  option: ['id' => $this->getId()]);
         }
     }
     public function booted()

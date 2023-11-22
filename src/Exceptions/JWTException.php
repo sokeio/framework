@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform\Exceptions;
+namespace Sokeio\Exceptions;
 
 class JWTException extends \InvalidArgumentException
 {

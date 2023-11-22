@@ -1,8 +1,8 @@
 <?php
 
-namespace BytePlatform;
+namespace Sokeio;
 
-use BytePlatform\Form as FormBase;
+use Sokeio\Form as FormBase;
 
 class DataForm extends FormBase
 {

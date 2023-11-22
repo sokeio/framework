@@ -1,9 +1,9 @@
 <?php
 
-namespace BytePlatform\Facades;
+namespace Sokeio\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use BytePlatform\ThemeManager;
+use Sokeio\ThemeManager;
 
 /**
  * 
@@ -16,8 +16,8 @@ use BytePlatform\ThemeManager;
  * @method static void LoadApp()
  * @method static void RegisterApp()
  * @method static void BootApp()
- * @method static \Illuminate\Support\Collection<string, \BytePlatform\DataInfo> getAll()
- * @method static \BytePlatform\DataInfo find(string $name)
+ * @method static \Illuminate\Support\Collection<string, \Sokeio\DataInfo> getAll()
+ * @method static \Sokeio\DataInfo find(string $name)
  * @method static bool has(string $name)
  * @method static void delete(string $name)
  * @method static void Load(string $path)
@@ -45,10 +45,10 @@ use BytePlatform\ThemeManager;
  * @method static array getLayouts()
  * @method static array getModels()
  * @method static array getLocations()
- * @method static \BytePlatform\DataInfo SiteDataInfo()
- * @method static \BytePlatform\DataInfo AdminDataInfo()
+ * @method static \Sokeio\DataInfo SiteDataInfo()
+ * @method static \Sokeio\DataInfo AdminDataInfo()
  * 
- * @see \BytePlatform\Facades\Theme
+ * @see \Sokeio\Facades\Theme
  */
 class Theme extends Facade
 {

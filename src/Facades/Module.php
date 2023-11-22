@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform\Facades;
+namespace Sokeio\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
@@ -15,8 +15,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static void LoadApp()
  * @method static void RegisterApp()
  * @method static void BootApp()
- * @method static \Illuminate\Support\Collection<string, \BytePlatform\DataInfo> getAll()
- * @method static \BytePlatform\DataInfo find(string $name)
+ * @method static \Illuminate\Support\Collection<string, \Sokeio\DataInfo> getAll()
+ * @method static \Sokeio\DataInfo find(string $name)
  * @method static bool has(string $name)
  * @method static void delete(string $name)
  * @method static void Load(string $path)
@@ -28,12 +28,12 @@ use Illuminate\Support\Facades\Facade;
  * @method static array getModels()
  * 
  *
- * @see \BytePlatform\Facades\Module
+ * @see \Sokeio\Facades\Module
  */
 class Module extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \BytePlatform\ModuleManager::class;
+        return \Sokeio\ModuleManager::class;
     }
 }

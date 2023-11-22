@@ -8,13 +8,13 @@ use Symfony\Component\Finder\SplFileInfo;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route as FacadesRoute;
-use BytePlatform\Facades\Module;
-use BytePlatform\Facades\Platform;
-use BytePlatform\Facades\Plugin;
-use BytePlatform\Facades\Shortcode;
-use BytePlatform\Facades\Theme;
-use BytePlatform\Item;
-use BytePlatform\Models\Setting;
+use Sokeio\Facades\Module;
+use Sokeio\Facades\Platform;
+use Sokeio\Facades\Plugin;
+use Sokeio\Facades\Shortcode;
+use Sokeio\Facades\Theme;
+use Sokeio\Item;
+use Sokeio\Models\Setting;
 
 if (!function_exists('byte_encode')) {
     function byte_encode($data)
@@ -95,7 +95,7 @@ if (!function_exists('byte_is_admin')) {
         $arrMiddleware = [];
         if (Request()->route()?->gatherMiddleware()) {
             $arrMiddleware = Request()->route()->gatherMiddleware();
-            $is_admin = in_array(\BytePlatform\Middleware\ThemeAdmin::class,  $arrMiddleware);
+            $is_admin = in_array(\Sokeio\Middleware\ThemeAdmin::class,  $arrMiddleware);
         }
         $url_admin = adminUrl();
         if (request()->segment(1) === $url_admin || $url_admin === '') {
@@ -158,7 +158,7 @@ if (!function_exists('theme_class')) {
     /**
      * @param  string 
      */
-    function theme_class($default = 'byte::page')
+    function theme_class($default = 'sokeio::page')
     {
         return apply_filters(PLATFORM_THEME_CLASS, $default);
     }
@@ -197,7 +197,7 @@ if (!function_exists('callAfterResolving')) {
 }
 
 if (!function_exists('loadViewsFrom')) {
-    function loadViewsFrom($path, $namespace = 'byteplatform', $app = null)
+    function loadViewsFrom($path, $namespace = 'sokeio', $app = null)
     {
         callAfterResolving('view', function ($view, $app) use ($path, $namespace) {
             if (
@@ -290,7 +290,7 @@ if (!function_exists('checkRole')) {
         $flg = true;
         if ($per) {
             /**
-             * @var \BytePlatform\Models\User $user The class instance.
+             * @var \Sokeio\Models\User $user The class instance.
              */
             $user =  auth()->user();
             if (!$user->isSuperAdmin() && $user->hasRole($per)) $flg = false;
@@ -420,7 +420,7 @@ if (!function_exists('character_limiter')) {
 if (!function_exists('byte_path')) {
     function byte_path($type = '', $path = '')
     {
-        $pathRoot = config('byte.appdir.root', 'byteplatform');
+        $pathRoot = config('byte.appdir.root', 'sokeio');
         $pathType = config('byte.appdir.' . $type, $type . 's');
         return ($pathRoot . '/' . $pathType . ($path ? ('/' . $path) : ''));
     }

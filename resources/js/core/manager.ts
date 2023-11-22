@@ -1,5 +1,5 @@
 import { ByteEvent } from "./event";
-import { BytePlugin } from "./plugin";
+import { SokeioPlugin } from "./plugin";
 
 export class ByteManager extends ByteEvent {
   plugins: any = {};
@@ -8,7 +8,7 @@ export class ByteManager extends ByteEvent {
   }
   registerPlugin(plugin: any) {
     const self = this;
-    let _plugin: BytePlugin = new plugin();
+    let _plugin: SokeioPlugin = new plugin();
     _plugin.manager(self);
     self.plugins[_plugin.getKey()] = _plugin;
   }
@@ -36,19 +36,19 @@ export class ByteManager extends ByteEvent {
   }
   public init() {
     const self = this;
-    self.dispatch("byte::init", {
+    self.dispatch("sokeio::init", {
       manager: self,
     });
-    self.dispatchDocument("byte::init", {
+    self.dispatchDocument("sokeio::init", {
       manager: self,
     });
   }
   public register() {
     const self = this;
-    self.dispatch("byte::register", {
+    self.dispatch("sokeio::register", {
       manager: self,
     });
-    self.dispatchDocument("byte::register", {
+    self.dispatchDocument("sokeio::register", {
       manager: self,
     });
     Object.keys(self.plugins).forEach((name) => {
@@ -63,10 +63,10 @@ export class ByteManager extends ByteEvent {
   }
   public booting() {
     const self = this;
-    self.dispatch("byte::booting", {
+    self.dispatch("sokeio::booting", {
       manager: self,
     });
-    self.dispatchDocument("byte::booting", {
+    self.dispatchDocument("sokeio::booting", {
       manager: self,
     });
     Object.keys(self.plugins).forEach((name) => {
@@ -81,10 +81,10 @@ export class ByteManager extends ByteEvent {
   }
   public booted() {
     const self = this;
-    self.dispatch("byte::booted", {
+    self.dispatch("sokeio::booted", {
       manager: self,
     });
-    self.dispatchDocument("byte::booted", {
+    self.dispatchDocument("sokeio::booted", {
       manager: self,
     });
     Object.keys(self.plugins).forEach((name) => {
@@ -99,10 +99,10 @@ export class ByteManager extends ByteEvent {
   }
   public dispose() {
     const self = this;
-    self.dispatch("byte::dispose", {
+    self.dispatch("sokeio::dispose", {
       manager: self,
     });
-    self.dispatchDocument("byte::dispose", {
+    self.dispatchDocument("sokeio::dispose", {
       manager: self,
     });
     Object.keys(self.plugins).forEach((name) => {

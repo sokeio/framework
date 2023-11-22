@@ -1,12 +1,12 @@
 <?php
 
-namespace BytePlatform;
+namespace Sokeio;
 
 use Illuminate\Support\Facades\File;
-use BytePlatform\Laravel\JsonData;
-use BytePlatform\Events\PlatformChanged;
+use Sokeio\Laravel\JsonData;
+use Sokeio\Events\PlatformChanged;
 use Illuminate\Support\Str;
-use BytePlatform\Facades\Platform;
+use Sokeio\Facades\Platform;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Traits\Macroable;
 

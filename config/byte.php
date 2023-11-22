@@ -1,25 +1,25 @@
 <?php
 
-use BytePlatform\Action;
-use BytePlatform\Actions\CountModel;
-use BytePlatform\Actions\TimeNowAction;
-use BytePlatform\FieldView;
-use BytePlatform\Commands\MakeByTypeCommand;
-use BytePlatform\Commands\MakeModuleCommand;
-use BytePlatform\Commands\MakePluginCommand;
-use BytePlatform\Commands\MakeThemeCommand;
-use BytePlatform\Commands\MakeFileCommand;
-use BytePlatform\Commands\BActiveCommand;
-use BytePlatform\Commands\BInstallCommand;
-use BytePlatform\Commands\BLinkCommand;
-use BytePlatform\Commands\BListCommand;
-use BytePlatform\Commands\BSetupCommand;
-use BytePlatform\Facades\Shortcode;
-use BytePlatform\Item;
+use Sokeio\Action;
+use Sokeio\Actions\CountModel;
+use Sokeio\Actions\TimeNowAction;
+use Sokeio\FieldView;
+use Sokeio\Commands\MakeByTypeCommand;
+use Sokeio\Commands\MakeModuleCommand;
+use Sokeio\Commands\MakePluginCommand;
+use Sokeio\Commands\MakeThemeCommand;
+use Sokeio\Commands\MakeFileCommand;
+use Sokeio\Commands\BActiveCommand;
+use Sokeio\Commands\BInstallCommand;
+use Sokeio\Commands\BLinkCommand;
+use Sokeio\Commands\BListCommand;
+use Sokeio\Commands\BSetupCommand;
+use Sokeio\Facades\Shortcode;
+use Sokeio\Item;
 
 return [
     'updator' => [
-        'url' =>  env('PLATFORM_UPDATOR_URL', 'https://byteplatform.github.io/files/version.json'),
+        'url' =>  env('PLATFORM_UPDATOR_URL', 'https://sokeio.github.io/files/version.json'),
         'temps' => env('PLATFORM_UPDATOR_TEMP', 'temps')
     ],
     'extends' => ['theme', 'plugin', 'module'],
@@ -30,9 +30,9 @@ return [
         'module' => env('PLATFORM_MODULE', 'modules'),
     ],
     'model' => [
-        'user' => BytePlatform\Models\User::class,
-        'role' => BytePlatform\Models\Role::class,
-        'permission' => BytePlatform\Models\Permission::class,
+        'user' => Sokeio\Models\User::class,
+        'role' => Sokeio\Models\Role::class,
+        'permission' => Sokeio\Models\Permission::class,
     ],
     'locale' => [
         /**
@@ -138,7 +138,7 @@ return [
     */
 
     'composer' => [
-        'vendor' => env('PLATFORM_VENDOR', 'byteplatform'),
+        'vendor' => env('PLATFORM_VENDOR', 'sokeio'),
         'author' => [
             'name' => env('PLATFORM_AUTHOR_NAME', 'Nguyen Van Hau'),
             'email' => env('PLATFORM_AUTHOR_EMAIL', 'nguyenvanhaudev@gmail.com'),
@@ -156,7 +156,7 @@ return [
     */
     'cache' => [
         'enabled' => false,
-        'key' => 'platform_byteplatform',
+        'key' => 'platform_sokeio',
         'lifetime' => 60,
     ],
     /*
@@ -170,7 +170,7 @@ return [
 
     'stubs' => [
         'enabled' => false,
-        'path' => base_path('vendor/byteplatform/byteplatform/stubs'),
+        'path' => base_path('vendor/sokeio/sokeio/stubs'),
 
         'list-files' => [
             'common' => [

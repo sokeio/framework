@@ -1,10 +1,10 @@
 <?php
 
-namespace ByteTheme\None;
+namespace SokeioTheme\None;
 
 use Illuminate\Support\ServiceProvider;
-use BytePlatform\Laravel\ServicePackage;
-use BytePlatform\Concerns\WithServiceProvider;
+use Sokeio\Laravel\ServicePackage;
+use Sokeio\Concerns\WithServiceProvider;
 
 class NoneServiceProvider extends ServiceProvider
 {

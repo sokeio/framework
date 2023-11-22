@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform\Support\Repositories\Interfaces;
+namespace Sokeio\Support\Repositories\Interfaces;
 
 use Eloquent;
 use Exception;

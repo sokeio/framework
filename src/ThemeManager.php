@@ -1,22 +1,22 @@
 <?php
 
-namespace BytePlatform;
+namespace Sokeio;
 
-use BytePlatform\Action;
-use BytePlatform\Laravel\Hook\ActionHook;
-use BytePlatform\ArrayStatus;
-use BytePlatform\DataInfo;
-use BytePlatform\Events\PlatformChanged;
-use BytePlatform\Facades\Assets;
-use BytePlatform\Facades\Platform;
-use BytePlatform\Facades\Shortcode;
-use BytePlatform\RouteEx;
+use Sokeio\Action;
+use Sokeio\Laravel\Hook\ActionHook;
+use Sokeio\ArrayStatus;
+use Sokeio\DataInfo;
+use Sokeio\Events\PlatformChanged;
+use Sokeio\Facades\Assets;
+use Sokeio\Facades\Platform;
+use Sokeio\Facades\Shortcode;
+use Sokeio\RouteEx;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Request;
 
 class ThemeManager extends ActionHook
 {
-    use \BytePlatform\Concerns\WithSystemExtend;
+    use \Sokeio\Concerns\WithSystemExtend;
     private $isHtmlAjax = true;
     public function DisableHtmlAjax(): self
     {
@@ -230,7 +230,7 @@ class ThemeManager extends ActionHook
         }
         $theme = $this->ThemeCurrent();
         if ($this->isHtml()) {
-            return 'byte::html';
+            return 'sokeio::html';
         }
         if ($theme) {
             if ($this->layout == '') {

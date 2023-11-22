@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform\Middleware;
+namespace Sokeio\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Closure;

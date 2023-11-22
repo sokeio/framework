@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform\Facades;
+namespace Sokeio\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
@@ -13,12 +13,12 @@ use Illuminate\Support\Facades\Facade;
  * @method static void FileJsonToTable();
  * @method static void TableToFileJson();
  *
- * @see \BytePlatform\Facades\Locale
+ * @see \Sokeio\Facades\Locale
  */
 class Locale extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \BytePlatform\Locales\LocaleManager::class;
+        return \Sokeio\Locales\LocaleManager::class;
     }
 }

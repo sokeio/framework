@@ -30,8 +30,8 @@ let filePackage = {
     dev: "vite",
     build: "vite build",
     preview: "vite preview",
-    reinstall: "node ./vendor/byteplatform/byteplatform/reinstall.js",
-    rebuild: "node ./vendor/byteplatform/byteplatform/rebuild.js",
+    reinstall: "node ./vendor/sokeio/sokeio/reinstall.js",
+    rebuild: "node ./vendor/sokeio/sokeio/rebuild.js",
   },
   devDependencies: {
     vite: "^4.3.9",

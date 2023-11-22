@@ -1,9 +1,9 @@
 <?php
 
-namespace BytePlatform\Livewire;
+namespace Sokeio\Livewire;
 
-use BytePlatform\Component;
-use BytePlatform\Facades\Shortcode as FacadesShortcode;
+use Sokeio\Component;
+use Sokeio\Facades\Shortcode as FacadesShortcode;
 use Livewire\Attributes\Reactive;
 
 class Shortcode extends Component
@@ -30,7 +30,7 @@ class Shortcode extends Component
     }
     public function render()
     {
-        return view('byte::shortcode', [
+        return view('sokeio::shortcode', [
             'shortcode' => $this->shortcode,
             'attrs' => $this->attrs,
             'content' => $this->content,

@@ -1,4 +1,4 @@
-import { BytePlatform } from "./platform";
+import { Sokeio } from "./platform";
 import { ComponentModule } from "./modules/components";
 import { ActionModule } from "./modules/action";
 import { LiveWireModule } from "./modules/livewire";
@@ -14,8 +14,8 @@ import { getShortcodeObjectFromText, onEventListenerFromDom } from "./utils";
 import { LiveWireCountUpModule } from "./modules/livewire-countup";
 import { LiveWireTagifyModule } from "./modules/livewire-tagify";
 import { LiveWireFlatpickrModule } from "./modules/livewire-flatpickr";
-let ByteManager = new BytePlatform();
-window.addEventListener("byte::register", function () {
+let ByteManager = new Sokeio();
+window.addEventListener("sokeio::register", function () {
   ByteManager.registerPlugin(ConfirmModule);
   ByteManager.registerPlugin(FileManagerModule);
   ByteManager.registerPlugin(ActionModule);

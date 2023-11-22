@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform\Facades;
+namespace Sokeio\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
@@ -15,10 +15,10 @@ use Illuminate\Support\Facades\Facade;
  * @method static string strip(string $content)
  * @method static void disable()
  * @method static void enable()
- * @method static \BytePlatform\Shortcode\ShortcodeItem create($name)
+ * @method static \Sokeio\Shortcode\ShortcodeItem create($name)
  * 
  *
- * @see \BytePlatform\Facades\Shortcode
+ * @see \Sokeio\Facades\Shortcode
  */
 class Shortcode extends Facade
 {

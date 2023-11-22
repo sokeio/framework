@@ -1,9 +1,9 @@
 <?php
 
-namespace BytePlatform;
+namespace Sokeio;
 
-use BytePlatform\Concerns\WithDoAction;
-use BytePlatform\Concerns\WithLivewire;
+use Sokeio\Concerns\WithDoAction;
+use Sokeio\Concerns\WithLivewire;
 use Livewire\Component as ComponentBase;
 
 class Component extends ComponentBase

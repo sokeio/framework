@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform\Shortcode;
+namespace Sokeio\Shortcode;
 
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\View\ViewFinderInterface;

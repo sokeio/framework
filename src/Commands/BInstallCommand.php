@@ -1,9 +1,9 @@
 <?php
 
-namespace BytePlatform\Commands;
+namespace Sokeio\Commands;
 
 use Illuminate\Console\Command;
-use BytePlatform\Facades\Platform;
+use Sokeio\Facades\Platform;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace BytePlatform;
+namespace Sokeio;
 
-use BytePlatform\Concerns\WithHelpers;
-use BytePlatform\Laravel\BaseCallback;
+use Sokeio\Concerns\WithHelpers;
+use Sokeio\Laravel\BaseCallback;
 
 class ItemCallback extends BaseCallback
 {

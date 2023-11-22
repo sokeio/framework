@@ -3,8 +3,8 @@
 namespace $NAMESPACE$;
 
 use Illuminate\Support\ServiceProvider;
-use BytePlatform\Laravel\ServicePackage;
-use BytePlatform\Concerns\WithServiceProvider;
+use Sokeio\Laravel\ServicePackage;
+use Sokeio\Concerns\WithServiceProvider;
 
 class $STUDLY_NAME$ServiceProvider extends ServiceProvider
 {

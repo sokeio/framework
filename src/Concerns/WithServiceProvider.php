@@ -1,16 +1,16 @@
 <?php
 
-namespace BytePlatform\Concerns;
+namespace Sokeio\Concerns;
 
-use BytePlatform\Action;
-use BytePlatform\Laravel\WithServiceProvider as WithServiceProviderBase;
-use BytePlatform\Facades\Assets;
-use BytePlatform\Facades\Platform;
-use BytePlatform\Facades\Plugin;
-use BytePlatform\Facades\Shortcode;
-use BytePlatform\Facades\Theme;
-use BytePlatform\LivewireLoader;
-use BytePlatform\RouteEx;
+use Sokeio\Action;
+use Sokeio\Laravel\WithServiceProvider as WithServiceProviderBase;
+use Sokeio\Facades\Assets;
+use Sokeio\Facades\Platform;
+use Sokeio\Facades\Plugin;
+use Sokeio\Facades\Shortcode;
+use Sokeio\Facades\Theme;
+use Sokeio\LivewireLoader;
+use Sokeio\RouteEx;
 
 trait WithServiceProvider
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform\Seeders;
+namespace Sokeio\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
@@ -15,8 +15,8 @@ class Init extends Seeder
     public function run()
     {
         Model::unguard();
-        $roleModel = (config('byte.model.role', \BytePlatform\Models\Role::class));
-        $userModel = (config('byte.model.user', \BytePlatform\Models\User::class));
+        $roleModel = (config('byte.model.role', \Sokeio\Models\Role::class));
+        $userModel = (config('byte.model.user', \Sokeio\Models\User::class));
         $roleAdmin = new $roleModel;
         $roleAdmin->name = $roleModel::SupperAdmin();
         $roleAdmin->slug = $roleModel::SupperAdmin();

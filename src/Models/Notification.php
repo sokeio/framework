@@ -1,9 +1,9 @@
 <?php
 
-namespace BytePlatform\Models;
+namespace Sokeio\Models;
 
 
-class Notification extends \BytePlatform\Model
+class Notification extends \Sokeio\Model
 {
     /**
      * The attributes that should be cast.

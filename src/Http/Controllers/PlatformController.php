@@ -1,11 +1,11 @@
 <?php
 
-namespace BytePlatform\Http\Controllers;
+namespace Sokeio\Http\Controllers;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
-use BytePlatform\Facades\Theme;
+use Sokeio\Facades\Theme;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
 

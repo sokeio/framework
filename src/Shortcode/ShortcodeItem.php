@@ -1,10 +1,10 @@
 <?php
 
-namespace BytePlatform\Shortcode;
+namespace Sokeio\Shortcode;
 
-use BytePlatform\Action;
-use BytePlatform\Item;
-use BytePlatform\ItemCallback;
+use Sokeio\Action;
+use Sokeio\Item;
+use Sokeio\ItemCallback;
 use Livewire\Livewire;
 
 class ShortcodeItem extends ItemCallback
@@ -24,7 +24,7 @@ class ShortcodeItem extends ItemCallback
             return $shortcode->namespace  . $shortcode->getKey();
         });
     }
-    private $namespace = 'byte::shortcodes.';
+    private $namespace = 'sokeio::shortcodes.';
     private $callbackBeforeSetup = null;
     public function beforeRender($selfThis = null)
     {
@@ -175,7 +175,7 @@ class ShortcodeItem extends ItemCallback
     }
     public function renderHtml(ShortcodeInfo $shortcode, $content, ShortcodeManager $manager, $name, $viewData)
     {
-        return Livewire::mount('byte::shortcode', [
+        return Livewire::mount('sokeio::shortcode', [
             'shortcode' => $name,
             'content' => $content,
             'attrs' => $shortcode->toArray(),

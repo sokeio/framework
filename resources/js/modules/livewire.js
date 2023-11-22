@@ -1,6 +1,6 @@
-import { BytePlugin } from "../core/plugin";
+import { SokeioPlugin } from "../core/plugin";
 
-export class LiveWireModule extends BytePlugin {
+export class LiveWireModule extends SokeioPlugin {
   getKey() {
     return "BYTE_LIVEWIRE_MODULE";
   }
@@ -8,7 +8,7 @@ export class LiveWireModule extends BytePlugin {
   CacheLivewire = undefined;
   booted() {
     let self = this;
-    self.getManager().on("byte::trigger_after", (el) => {
+    self.getManager().on("sokeio::trigger_after", (el) => {
       if (self.CacheRejs != undefined) {
         clearTimeout(self.CacheRejs);
       }
@@ -23,10 +23,10 @@ export class LiveWireModule extends BytePlugin {
         self.CacheLivewire = true;
       }, 80);
     });
-    self.getManager().on("byte::loaded", (el) => {
+    self.getManager().on("sokeio::loaded", (el) => {
       if (!window.Livewire) return;
       window.ByteManager.doTrigger(el);
-      window.addEventListener("byte::close", ({ detail: { option } }) => {
+      window.addEventListener("sokeio::close", ({ detail: { option } }) => {
         let { id, component } = option;
         if (id) {
           let liveCom = window.Livewire.find(id)?.__instance;
@@ -68,7 +68,7 @@ export class LiveWireModule extends BytePlugin {
           window.Livewire.dispatch("refreshData" + id);
         } catch (ex) {}
       };
-      window.addEventListener("byte::refresh", ({ detail: { option } }) => {
+      window.addEventListener("sokeio::refresh", ({ detail: { option } }) => {
         let { module, id, component } = option;
         if (module) {
           LivewireRefreshData(module);
@@ -85,16 +85,16 @@ export class LiveWireModule extends BytePlugin {
           LivewireRefreshData(id);
         }
       });
-      window.addEventListener("byte::message", ({ detail: { option } }) => {
-        console.log('byte::message')
+      window.addEventListener("sokeio::message", ({ detail: { option } }) => {
+        console.log('sokeio::message')
         if (typeof option === "string") {
-          window.ByteManager.addInfo(option, "byte::message");
+          window.ByteManager.addInfo(option, "sokeio::message");
         } else {
           const { error, message, type, meta, ...data } = option;
           window.ByteManager.addMessage(
             message ?? error,
             type,
-            "byte::message",
+            "sokeio::message",
             { ...data, ...meta }
           );
         }

@@ -1,15 +1,15 @@
 <?php return array (
-  'byteplatform/byteplatform' => 
+  'sokeio/sokeio' => 
   array (
     'providers' => 
     array (
-      0 => 'BytePlatform\\ByteServiceProvider',
+      0 => 'Sokeio\\ByteServiceProvider',
     ),
     'aliases' => 
     array (
     ),
   ),
-  'byteplatform/laravel' => 
+  'sokeio/laravel' => 
   array (
     'providers' => 
     array (

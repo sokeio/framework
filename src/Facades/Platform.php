@@ -1,6 +1,6 @@
 <?php
 
-namespace BytePlatform\Facades;
+namespace Sokeio\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
@@ -33,12 +33,12 @@ use Illuminate\Support\Facades\Facade;
  * @method static void setEnv($arrs)
  * 
  * 
- * @see \BytePlatform\Facades\Platform
+ * @see \Sokeio\Facades\Platform
  */
 class Platform extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \BytePlatform\PlatformManager::class;
+        return \Sokeio\PlatformManager::class;
     }
 }

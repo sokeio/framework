@@ -1,27 +1,28 @@
 <?php
 
-namespace BytePlatform;
+namespace Sokeio;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
-use BytePlatform\Laravel\ServicePackage;
-use BytePlatform\Directives\PlatformBladeDirectives;
-use BytePlatform\Exceptions\ThemeHandler;
-use BytePlatform\Facades\Assets;
-use BytePlatform\Facades\Module;
-use BytePlatform\Facades\Platform;
-use BytePlatform\Facades\Plugin;
-use BytePlatform\Facades\Theme;
-use BytePlatform\Locales\LocaleServiceProvider;
-use BytePlatform\Middleware\ThemeLayout;
-use BytePlatform\Shortcode\ShortcodesServiceProvider;
-use BytePlatform\Concerns\WithServiceProvider;
+use Sokeio\Laravel\ServicePackage;
+use Sokeio\Directives\PlatformBladeDirectives;
+use Sokeio\Exceptions\ThemeHandler;
+use Sokeio\Facades\Assets;
+use Sokeio\Facades\Module;
+use Sokeio\Facades\Platform;
+use Sokeio\Facades\Plugin;
+use Sokeio\Facades\Theme;
+use Sokeio\Locales\LocaleServiceProvider;
+use Sokeio\Middleware\ThemeLayout;
+use Sokeio\Shortcode\ShortcodesServiceProvider;
+use Sokeio\Concerns\WithServiceProvider;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Request;
 
-class ByteServiceProvider extends ServiceProvider
+class SokeioServiceProvider extends ServiceProvider
 {
     use WithServiceProvider;
     public function configurePackage(ServicePackage $package): void
@@ -87,7 +88,7 @@ class ByteServiceProvider extends ServiceProvider
             return ColectionPaginate::paginate($this, $pageSize);
         });
         $this->registerMiddlewares();
-      
+
         config(['auth.providers.users.model' => config('byte.model.user')]);
         $this->registerBladeDirectives();
         add_action(PLATFORM_HEAD_BEFORE, function () {
@@ -111,7 +112,7 @@ class ByteServiceProvider extends ServiceProvider
 
             echo  \Livewire\Mechanisms\FrontendAssets\FrontendAssets::scriptConfig();
             echo  \Livewire\Mechanisms\FrontendAssets\FrontendAssets::scripts();
-            $scriptBytePlatform = file_get_contents(__DIR__ . '/../byte.js');
+            $scriptSokeio = file_get_contents(__DIR__ . '/../byte.js');
             $arrConfigjs = [
                 'url' => url(''),
                 'byte_url' => route('__byte__'),
@@ -138,9 +139,9 @@ class ByteServiceProvider extends ServiceProvider
             ];
             echo "
             <script data-navigate-once type='text/javascript' id='ByteManagerjs____12345678901234567'>
-            " . $scriptBytePlatform . "
+            " . $scriptSokeio . "
             
-            window.addEventListener('byte::init',function(){
+            window.addEventListener('sokeio::init',function(){
                 if(window.ByteManager){
                     window.ByteManager.\$debug=" . (env('BYTE_MODE_DEBUG', false) ? 'true' : 'false') . ";
                     window.ByteManager.\$config=" . json_encode(apply_filters(PLATFORM_CONFIG_JS,  $arrConfigjs)) . ";
@@ -161,7 +162,7 @@ class ByteServiceProvider extends ServiceProvider
             Theme::RegisterRoute();
             if (adminUrl() != '') {
                 Route::get('/', route_theme(function () {
-                    $homepage = apply_filters(PLATFORM_HOMEPAGE, 'byte::homepage');
+                    $homepage = apply_filters(PLATFORM_HOMEPAGE, 'sokeio::homepage');
                     $view = '';
                     $params = [];
                     if (is_array($homepage)) {
@@ -174,8 +175,11 @@ class ByteServiceProvider extends ServiceProvider
             }
         });
         Platform::Ready(function () {
-            if (!Platform::checkFolderPlatform()) {
-                Platform::makeLink();
+
+            if (Request::isMethod('get')) {
+                if (!Platform::checkFolderPlatform()) {
+                    Platform::makeLink();
+                }
             }
         });
         Route::matched(function () {

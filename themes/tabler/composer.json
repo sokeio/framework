@@ -1,5 +1,5 @@
 {
-    "name": "byteplatform/theme-tabler",
+    "name": "sokeio/theme-tabler",
     "description": "",
     "authors": [
         {
@@ -9,15 +9,15 @@
     ],
     "extra": {
         "laravel": {
-            "providers": ["ByteTheme\\Tabler\\TablerServiceProvider"],
+            "providers": ["SokeioTheme\\Tabler\\TablerServiceProvider"],
             "aliases": {}
         }
     },
     "autoload": {
         "psr-4": {
-            "ByteTheme\\Tabler\\": "src",
-            "ByteTheme\\Tabler\\Database\\Factories\\": "database/factories",
-            "ByteTheme\\Tabler\\Database\\Seeders\\": "database/seeders"
+            "SokeioTheme\\Tabler\\": "src",
+            "SokeioTheme\\Tabler\\Database\\Factories\\": "database/factories",
+            "SokeioTheme\\Tabler\\Database\\Seeders\\": "database/seeders"
         }
     }
 }

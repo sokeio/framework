@@ -1,16 +1,16 @@
 <?php
 
-namespace BytePlatform\Livewire;
+namespace Sokeio\Livewire;
 
-use BytePlatform\Component;
-use BytePlatform\Facades\Assets;
-use BytePlatform\Facades\Locale;
-use BytePlatform\Facades\Module;
-use BytePlatform\Facades\Platform;
-use BytePlatform\Facades\Plugin;
-use BytePlatform\Facades\Theme;
-use BytePlatform\Laravel\JsonData;
-use BytePlatform\Locales\Extractor\TranslationFinder;
+use Sokeio\Component;
+use Sokeio\Facades\Assets;
+use Sokeio\Facades\Locale;
+use Sokeio\Facades\Module;
+use Sokeio\Facades\Platform;
+use Sokeio\Facades\Plugin;
+use Sokeio\Facades\Theme;
+use Sokeio\Laravel\JsonData;
+use Sokeio\Locales\Extractor\TranslationFinder;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
@@ -153,8 +153,8 @@ class Setup extends Component
 
     public function createDataInDB()
     {
-        $roleModel = (config('byte.model.role', \BytePlatform\Models\Role::class));
-        $userModel = (config('byte.model.user', \BytePlatform\Models\User::class));
+        $roleModel = (config('byte.model.role', \Sokeio\Models\Role::class));
+        $userModel = (config('byte.model.user', \Sokeio\Models\User::class));
         $roleAdmin = $roleModel::where('slug', $roleModel::SupperAdmin())->first();
         if (!$roleAdmin) {
             $roleAdmin = new $roleModel;
@@ -210,7 +210,7 @@ class Setup extends Component
     public function render()
     {
         return view(
-            'byte::setup',
+            'sokeio::setup',
             [
                 'modules' => Module::getAll(),
                 'plugins' => Plugin::getAll(),

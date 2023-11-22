@@ -1,14 +1,14 @@
 <?php
 
-namespace BytePlatform\Locales;
+namespace Sokeio\Locales;
 
-use BytePlatform\Facades\Module;
-use BytePlatform\Facades\Platform;
-use BytePlatform\Facades\Plugin;
-use BytePlatform\Facades\Theme;
-use BytePlatform\Laravel\JsonData;
-use BytePlatform\Models\Language;
-use BytePlatform\Models\Translation;
+use Sokeio\Facades\Module;
+use Sokeio\Facades\Platform;
+use Sokeio\Facades\Plugin;
+use Sokeio\Facades\Theme;
+use Sokeio\Laravel\JsonData;
+use Sokeio\Models\Language;
+use Sokeio\Models\Translation;
 
 class LocaleManager
 {

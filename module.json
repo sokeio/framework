@@ -1,13 +1,13 @@
 {
-  "id": "module-byteplatform-640e7d39-165b-47c5-a895-5e996e375f9b2832469",
+  "id": "module-sokeio-640e7d39-165b-47c5-a895-5e996e375f9b2832469",
   "name": "byte",
   "version":"v1.0.5",
-  "title": "BytePlatform",
+  "title": "Sokeio",
   "alias": "byte",
-  "description": "<b>BytePlatform</b> is a Laravel-based web application development package that provides support for developing modules, plugins, themes,actions, livewire, and shortcodes. ",
+  "description": "<b>Sokeio</b> is a Laravel-based web application development package that provides support for developing modules, plugins, themes,actions, livewire, and shortcodes. ",
   "keywords": [],
   "priority": 100,
-  "namespace": "BytePlatform",
+  "namespace": "Sokeio",
   "aliases": {},
   "files": [],
   "requires": []

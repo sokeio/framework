@@ -1,8 +1,8 @@
 <?php
 
-namespace BytePlatform\Commands;
+namespace Sokeio\Commands;
 
-use BytePlatform\Seeders\Init;
+use Sokeio\Seeders\Init;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace BytePlatform\Concerns;
+namespace Sokeio\Concerns;
 
 use Illuminate\Support\Facades\Cache;
-use BytePlatform\DataInfo;
-use BytePlatform\Facades\Theme;
+use Sokeio\DataInfo;
+use Sokeio\Facades\Theme;
 
 trait WithSystemExtend
 {
@@ -85,7 +85,7 @@ trait WithSystemExtend
     /**
      * Get the data.
      *
-     * @return \Illuminate\Support\Collection<string, \BytePlatform\DataInfo>
+     * @return \Illuminate\Support\Collection<string, \Sokeio\DataInfo>
      */
     public function getAll()
     {

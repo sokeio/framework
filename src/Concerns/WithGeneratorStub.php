@@ -1,13 +1,13 @@
 <?php
 
-namespace BytePlatform\Concerns;
+namespace Sokeio\Concerns;
 
 use Carbon\Carbon;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-use BytePlatform\Laravel\JsonData;
+use Sokeio\Laravel\JsonData;
 
 trait WithGeneratorStub
 {
@@ -309,7 +309,7 @@ trait WithGeneratorStub
             if ($dataInfo) {
                 $this->_namespace =  $dataInfo->getValue('namespace');
             } else {
-                $this->_namespace = config('byte.namespace.root', config('byte.appdir.root', 'byteplatform')) . config('byte.namespace.' . $this->getBaseTypeName(), config('byte.appdir.' . $this->getBaseTypeName())) . "\\" . $this->getStudlyNameReplacement();
+                $this->_namespace = config('byte.namespace.root', config('byte.appdir.root', 'sokeio')) . config('byte.namespace.' . $this->getBaseTypeName(), config('byte.appdir.' . $this->getBaseTypeName())) . "\\" . $this->getStudlyNameReplacement();
             }
         }
         return $this->_namespace;
