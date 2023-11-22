@@ -189,6 +189,7 @@ class SokeioServiceProvider extends ServiceProvider
                     return true;
                 }, 0);
             }
+            $route_name = Route::currentRouteName();
             if ($route_name && $route_name != 'sokeio.setup' && !Platform::CheckConnectDB() && request()->isMethod('get')) {
                 app(Redirector::class)->to(route('sokeio.setup'))->send();
                 return;
@@ -196,6 +197,13 @@ class SokeioServiceProvider extends ServiceProvider
             Theme::reTheme();
             Platform::BootGate();
             Platform::DoReady();
+        });
+
+        Route::fallback(function () {
+            if (!Platform::CheckConnectDB() && request()->isMethod('get')) {
+                app(Redirector::class)->to(route('sokeio.setup'))->send();
+                return;
+            }
         });
     }
 }
