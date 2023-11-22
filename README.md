@@ -15,7 +15,7 @@ $ composer require sokeio/admin
 ```
 
 
-**Template boilerplate**: https://github.com/ByTechAsia/laravel-boilerplate
+**Template boilerplate**: https://github.com/ByteAsia/laravel-boilerplate
 ## Feature(New):
 - Modules
 - Themes
