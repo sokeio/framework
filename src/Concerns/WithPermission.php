@@ -58,11 +58,11 @@ trait WithPermission
 
     public function roles()
     {
-        return $this->belongsToMany(config('byte.model.role'), 'users_roles');
+        return $this->belongsToMany(config('sokeio.model.role'), 'users_roles');
     }
     public function permissions()
     {
-        return $this->belongsToMany(config('byte.model.permission'), 'users_permissions');
+        return $this->belongsToMany(config('sokeio.model.permission'), 'users_permissions');
     }
     public function hasPermission($permission)
     {
@@ -74,6 +74,6 @@ trait WithPermission
 
     protected function getAllPermissions(array $permissions)
     {
-        return app(config('byte.model.permission'))->whereIn('slug', $permissions)->get();
+        return app(config('sokeio.model.permission'))->whereIn('slug', $permissions)->get();
     }
 }

@@ -40,7 +40,7 @@ class TranslationFinder
     public function __construct()
     {
         $this->directories = config(
-            'byte.locale.exporter.directories',
+            'sokeio.locale.exporter.directories',
             [
                 'app',
                 'resources',
@@ -48,13 +48,13 @@ class TranslationFinder
             ]
         );
         $this->excludedDirectories = config(
-            'byte.locale.exporter.excluded-directories',
+            'sokeio.locale.exporter.excluded-directories',
             [
                 'node_modules'
             ]
         );
         $this->patterns = config(
-            'byte.locale.exporter.patterns',
+            'sokeio.locale.exporter.patterns',
             [
                 '*.php',
                 '*.js',

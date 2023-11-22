@@ -34,12 +34,12 @@ class PlatformManager
     }
     public function listExtend()
     {
-        return config('byte.extends', ['theme', 'plugin', 'module']);
+        return config('sokeio.extends', ['theme', 'plugin', 'module']);
     }
     private $sokeioFileVersion;
     public function FileVersion()
     {
-        return $this->sokeioFileVersion ?? ($this->sokeioFileVersion = json_decode(file_get_contents(config('byte.updator.url')), true));
+        return $this->sokeioFileVersion ?? ($this->sokeioFileVersion = json_decode(file_get_contents(config('sokeio.updator.url')), true));
     }
     public function unzip($file, $extTo)
     {
@@ -80,7 +80,7 @@ class PlatformManager
     {
         $json = $this->findFile($id_or_name);
         if ($json && isset($json['download'])) {
-            $path = base_path(config('byte.appdir.root') . '/' . config('byte.updator.temps') . '/');
+            $path = base_path(config('sokeio.appdir.root') . '/' . config('sokeio.updator.temps') . '/');
             File::ensureDirectoryExists($path);
             $path = $path . $id_or_name . '-' . time() . '.zip';
             if ($this->download($json['download'], $path)) return $path;
@@ -297,7 +297,7 @@ class PlatformManager
                 return true;
             }
         });
-        app(config('byte.model.permission', \Sokeio\Models\Permission::class))->get()->map(function ($permission) {
+        app(config('sokeio.model.permission', \Sokeio\Models\Permission::class))->get()->map(function ($permission) {
             Gate::define($permission->slug, function ($user = null) use ($permission) {
                 if (!$user) $user = auth()->user();
                 if (!$user) return false;

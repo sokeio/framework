@@ -89,7 +89,7 @@ class SokeioServiceProvider extends ServiceProvider
         });
         $this->registerMiddlewares();
 
-        config(['auth.providers.users.model' => config('byte.model.user')]);
+        config(['auth.providers.users.model' => config('sokeio.model.user')]);
         $this->registerBladeDirectives();
         add_action(PLATFORM_HEAD_BEFORE, function () {
             echo '<meta charset="utf-8">';
@@ -189,8 +189,8 @@ class SokeioServiceProvider extends ServiceProvider
                     return true;
                 }, 0);
             }
-            if ($route_name && $route_name != 'byte.setup' && !Platform::CheckConnectDB() && request()->isMethod('get')) {
-                app(Redirector::class)->to(route('byte.setup'))->send();
+            if ($route_name && $route_name != 'sokeio.setup' && !Platform::CheckConnectDB() && request()->isMethod('get')) {
+                app(Redirector::class)->to(route('sokeio.setup'))->send();
                 return;
             }
             Theme::reTheme();

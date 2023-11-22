@@ -153,8 +153,8 @@ class Setup extends Component
 
     public function createDataInDB()
     {
-        $roleModel = (config('byte.model.role', \Sokeio\Models\Role::class));
-        $userModel = (config('byte.model.user', \Sokeio\Models\User::class));
+        $roleModel = (config('sokeio.model.role', \Sokeio\Models\Role::class));
+        $userModel = (config('sokeio.model.user', \Sokeio\Models\User::class));
         $roleAdmin = $roleModel::where('slug', $roleModel::SupperAdmin())->first();
         if (!$roleAdmin) {
             $roleAdmin = new $roleModel;

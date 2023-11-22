@@ -18,9 +18,9 @@ class LocaleManager
     private $supportedLocales = [];
     public function __construct()
     {
-        $this->hideDefaultLocale = config('byte.locale.hideDefaultLocale');
-        $this->defaultLocale = config('byte.locale.defaultLocale');
-        $this->supportedLocales = config('byte.locale.supportedLocales');
+        $this->hideDefaultLocale = config('sokeio.locale.hideDefaultLocale');
+        $this->defaultLocale = config('sokeio.locale.defaultLocale');
+        $this->supportedLocales = config('sokeio.locale.supportedLocales');
     }
     public function CurrentLocale()
     {

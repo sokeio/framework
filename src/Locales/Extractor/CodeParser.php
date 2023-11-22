@@ -40,7 +40,7 @@ class CodeParser
     public function __construct()
     {
         $this->functions = config(
-            'byte.locale.exporter.functions',
+            'sokeio.locale.exporter.functions',
             [
                 '__',
                 '_t',

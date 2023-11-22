@@ -10,11 +10,11 @@ class Permission extends \Sokeio\Model
 
     public function roles()
     {
-        return $this->belongsToMany(config('byte.model.role'), 'roles_permissions');
+        return $this->belongsToMany(config('sokeio.model.role'), 'roles_permissions');
     }
 
     public function users()
     {
-        return $this->belongsToMany(config('byte.model.user'), 'users_permissions');
+        return $this->belongsToMany(config('sokeio.model.user'), 'users_permissions');
     }
 }

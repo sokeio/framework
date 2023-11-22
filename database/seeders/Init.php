@@ -15,8 +15,8 @@ class Init extends Seeder
     public function run()
     {
         Model::unguard();
-        $roleModel = (config('byte.model.role', \Sokeio\Models\Role::class));
-        $userModel = (config('byte.model.user', \Sokeio\Models\User::class));
+        $roleModel = (config('sokeio.model.role', \Sokeio\Models\Role::class));
+        $userModel = (config('sokeio.model.user', \Sokeio\Models\User::class));
         $roleAdmin = new $roleModel;
         $roleAdmin->name = $roleModel::SupperAdmin();
         $roleAdmin->slug = $roleModel::SupperAdmin();

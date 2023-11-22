@@ -152,8 +152,8 @@ class UrlGenerator extends LaravelUrlGenerator
     protected function hideDefaultLocale($locale)
     {
         if (
-            (config('byte.locale.hideDefaultLocale') == true and
-                $locale == config('byte.locale.defaultLocale')) or byte_is_admin()
+            (config('sokeio.locale.hideDefaultLocale') == true and
+                $locale == config('sokeio.locale.defaultLocale')) or byte_is_admin()
         ) {
             return true;
         }

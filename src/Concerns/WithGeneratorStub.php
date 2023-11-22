@@ -309,7 +309,7 @@ trait WithGeneratorStub
             if ($dataInfo) {
                 $this->_namespace =  $dataInfo->getValue('namespace');
             } else {
-                $this->_namespace = config('byte.namespace.root', config('byte.appdir.root', 'sokeio')) . config('byte.namespace.' . $this->getBaseTypeName(), config('byte.appdir.' . $this->getBaseTypeName())) . "\\" . $this->getStudlyNameReplacement();
+                $this->_namespace = config('sokeio.namespace.root', config('sokeio.appdir.root', 'sokeio')) . config('sokeio.namespace.' . $this->getBaseTypeName(), config('sokeio.appdir.' . $this->getBaseTypeName())) . "\\" . $this->getStudlyNameReplacement();
             }
         }
         return $this->_namespace;
@@ -339,7 +339,7 @@ trait WithGeneratorStub
      */
     protected function getVendorReplacement()
     {
-        return config('byte.composer.vendor');
+        return config('sokeio.composer.vendor');
     }
     /**
      * Get replacement for $AUTHOR_NAME$.
@@ -348,7 +348,7 @@ trait WithGeneratorStub
      */
     protected function getAuthorNameReplacement()
     {
-        return config('byte.composer.author.name');
+        return config('sokeio.composer.author.name');
     }
     /**
      * Get replacement for $AUTHOR_EMAIL$.
@@ -357,7 +357,7 @@ trait WithGeneratorStub
      */
     protected function getAuthorEmailReplacement()
     {
-        return config('byte.composer.author.email');
+        return config('sokeio.composer.author.email');
     }
     /**
      * Get replacement for $CLASS$.

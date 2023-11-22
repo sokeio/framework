@@ -20,7 +20,7 @@ class User extends Authenticatable
     }
     public function isSuperAdmin(): bool
     {
-        return $this->hasRole(config('byte.model.role')::SupperAdmin());
+        return $this->hasRole(config('sokeio.model.role')::SupperAdmin());
     }
     public function isBlock()
     {

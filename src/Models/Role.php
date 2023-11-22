@@ -28,7 +28,7 @@ class Role extends \Sokeio\Model
     }
     public function permissions()
     {
-        return $this->belongsToMany(config('byte.model.permission'), 'roles_permissions');
+        return $this->belongsToMany(config('sokeio.model.permission'), 'roles_permissions');
     }
     public function getPermissionIdsAttribute()
     {
@@ -38,6 +38,6 @@ class Role extends \Sokeio\Model
     }
     public function users()
     {
-        return $this->belongsToMany(config('byte.model.user'), 'users_roles');
+        return $this->belongsToMany(config('sokeio.model.user'), 'users_roles');
     }
 }

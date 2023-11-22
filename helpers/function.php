@@ -169,7 +169,7 @@ if (!function_exists('path_by')) {
      */
     function path_by($name, $path = '')
     {
-        return base_path(config('byte.appdir.root') . '/' . config('byte.appdir.' . $name) . '/' . $path);
+        return base_path(config('sokeio.appdir.root') . '/' . config('sokeio.appdir.' . $name) . '/' . $path);
     }
 }
 
@@ -420,8 +420,8 @@ if (!function_exists('character_limiter')) {
 if (!function_exists('byte_path')) {
     function byte_path($type = '', $path = '')
     {
-        $pathRoot = config('byte.appdir.root', 'sokeio');
-        $pathType = config('byte.appdir.' . $type, $type . 's');
+        $pathRoot = config('sokeio.appdir.root', 'sokeio');
+        $pathType = config('sokeio.appdir.' . $type, $type . 's');
         return ($pathRoot . '/' . $pathType . ($path ? ('/' . $path) : ''));
     }
 }

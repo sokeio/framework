@@ -37,8 +37,8 @@ class BLinkCommand extends Command
     public function handle(): int
     {
         $this->components->info('Generating optimized symbolic targets.');
-        $arr = [config('byte.appdir.theme', 'themes'), config('byte.appdir.module', 'modules'), config('byte.appdir.plugin', 'plugins')];
-        $root_path = public_path(config('byte.appdir.root', 'platform'));
+        $arr = [config('sokeio.appdir.theme', 'themes'), config('sokeio.appdir.module', 'modules'), config('sokeio.appdir.plugin', 'plugins')];
+        $root_path = public_path(config('sokeio.appdir.root', 'platform'));
         if (File::exists($root_path)) {
             File::deleteDirectory($root_path);
         }

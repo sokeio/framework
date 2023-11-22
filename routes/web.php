@@ -1,9 +1,7 @@
 <?php
 
-use Sokeio\Facades\Locale;
 use Sokeio\Facades\Platform;
 use Sokeio\Livewire\Setup;
-use Sokeio\Locales\Extractor\TranslationFinder;
 use Sokeio\Support\Svg\EasySVG;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
@@ -39,7 +37,7 @@ Route::group(['prefix' => '__byte__'], function () {
                 \Sokeio\Facades\Platform::makeLink();
             }
             return $key;
-        })->name('byte.git-pull');
+        })->name('sokeio.git-pull');
     }
 
     Route::get('{types}/screenshot/{id}', function ($types, $id) {
@@ -59,7 +57,7 @@ Route::group(['prefix' => '__byte__'], function () {
             $svg->addText('Not found', 'center', 'center');
         }
         return response($svg->asXML())->header('Content-Type', 'image/svg+xml');
-    })->name('byte.screenshot');
+    })->name('sokeio.screenshot');
     Route::post('component', [Sokeio\Http\Controllers\PlatformController::class, 'getComponent']);
     Route::post('events', [Sokeio\Http\Controllers\PlatformController::class, 'doEvents']);
     Route::post('webhook', [Sokeio\Http\Controllers\PlatformController::class, 'doWebhooks']);
@@ -71,10 +69,4 @@ Route::group(['prefix' => '__byte__'], function () {
     });
 });
 if (!Platform::CheckConnectDB() || env('SOKEIO_SETUP', true))
-    Route::get('/setup', Setup::class)->name('byte.setup');
-
-Route::get('test', function () {
-    // Locale::TableToFileJson();
-    Locale::FileJsonToTable();
-    // TranslationFinder::updateToJson();
-});
+    Route::get('/setup', Setup::class)->name('sokeio.setup');
