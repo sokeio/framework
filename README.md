@@ -1,9 +1,9 @@
 # Sokeio
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/sokeio/sokeio.svg?style=flat-square)](https://packagist.org/packages/sokeio/sokeio)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/sokeio/sokeio/run-tests?label=Laravel)](https://github.com/sokeio/sokeio/actions?query=workflow%3ALaravel+)
-[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/sokeio/sokeio/Fix%20PHP%20code%20style%20issues?label=code%20style)](https://github.com/sokeio/sokeio/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/sokeio/sokeio.svg?style=flat-square)](https://packagist.org/packages/sokeio/sokeio)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/sokeio/framework.svg?style=flat-square)](https://packagist.org/packages/sokeio/framework)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/sokeio/framework/run-tests?label=Laravel)](https://github.com/sokeio/framework/actions?query=workflow%3ALaravel+)
+[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/sokeio/framework/Fix%20PHP%20code%20style%20issues?label=code%20style)](https://github.com/sokeio/frameworkframework/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/sokeio/framework.svg?style=flat-square)](https://packagist.org/packages/sokeio/framework)
 
 
 **Sokeio** is a Laravel-based web application development package that provides support for developing modules, plugins, themes, livewire, and shortcodes. With Sokeio, users can develop web applications faster and easier than ever before. The package provides flexible features and utilities to help users optimize the development process and accelerate the development speed of their web applications.
@@ -44,7 +44,7 @@ PHP 8.2+
 You can install package via composer
 
 ```bash
-$ composer require sokeio/sokeio
+$ composer require sokeio/framework
 $ php artisan migrate
 $ php artisan b:setup
 $ php artisan vendor:publish --tag=lfm_config
