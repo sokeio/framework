@@ -2,6 +2,7 @@
 
 namespace Sokeio\Livewire;
 
+use Illuminate\Support\Facades\Artisan;
 use Sokeio\Component;
 use Sokeio\Facades\Assets;
 use Sokeio\Facades\Locale;
@@ -54,8 +55,9 @@ class Setup extends Component
                 'db_username' => ['required'],
                 'db_pass' => ['required'],
             ]);
-            if (!$this->updateEnvDB()) {
-                return;
+            if (!$this->checkDatabaseConnection($this->db_host, $this->db_port, $this->db_name, $this->db_username, $this->db_pass, $this->db_connection)) {
+                $this->showMessage('Connection to database fail!');
+                return false;
             }
         }
         if ($this->step_index == 2) {
@@ -64,9 +66,6 @@ class Setup extends Component
                 'acc_email' => ['required'],
                 'acc_pass' => ['required'],
             ]);
-            ob_start();
-            run_cmd(base_path(''), 'php artisan migrate');
-            ob_get_clean();
         }
         if ($this->step_index == 3) {
             $this->validate([
@@ -85,10 +84,19 @@ class Setup extends Component
     }
     public function stepFinish()
     {
+
         $this->createDataInDB();
         $this->AcitveExtentions();
         Locale::FileJsonToTable();
         Platform::setEnv([
+            'DB_CONNECTION' => $this->db_connection,
+            'DB_HOST' => $this->db_host,
+            'DB_PORT' => $this->db_port,
+            'DB_DATABASE' => $this->db_name,
+            'DB_USERNAME' => $this->db_username,
+            'DB_PASSWORD' => $this->db_pass,
+            'APP_NAME' => $this->site_name,
+            'APP_URL' => url(''),
             'SOKEIO_SETUP' => false,
         ]);
         return redirect('/');
@@ -115,6 +123,7 @@ class Setup extends Component
                         'password' => $database_password,
                     ]),
                 ],
+                'migrations'=>'migrations'
             ],
         ]);
 
@@ -131,28 +140,14 @@ class Setup extends Component
         }
     }
 
-    public function updateEnvDB()
+    public function createDataInDB()
     {
         if (!$this->checkDatabaseConnection($this->db_host, $this->db_port, $this->db_name, $this->db_username, $this->db_pass, $this->db_connection)) {
             $this->showMessage('Connection to database fail!');
             return false;
         }
+        Artisan::call('migrate', array( '--force' => true));
 
-        Platform::setEnv([
-            'DB_CONNECTION' => $this->db_connection,
-            'DB_HOST' => $this->db_host,
-            'DB_PORT' => $this->db_port,
-            'DB_DATABASE' => $this->db_name,
-            'DB_USERNAME' => $this->db_username,
-            'DB_PASSWORD' => $this->db_pass,
-            'APP_NAME' => $this->site_name,
-            'APP_URL' => url('')
-        ]);
-        return true;
-    }
-
-    public function createDataInDB()
-    {
         $roleModel = (config('sokeio.model.role', \Sokeio\Models\Role::class));
         $userModel = (config('sokeio.model.user', \Sokeio\Models\User::class));
         $roleAdmin = $roleModel::where('slug', $roleModel::SupperAdmin())->first();
@@ -172,6 +167,9 @@ class Setup extends Component
         $userAdmin->status = 1;
         $userAdmin->save();
         $userAdmin->roles()->sync([$roleAdmin->id]);
+
+        set_setting(PLATFORM_SITE_DESCRIPTION,$this->site_description);
+        set_setting(PLATFORM_SITE_NAME,$this->site_name);
     }
     public function AcitveExtentions()
     {

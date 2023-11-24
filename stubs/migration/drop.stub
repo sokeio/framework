@@ -23,7 +23,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::create('$TABLE$', function (Blueprint $table) {
+        Schema::dropIfExists('$TABLE$', function (Blueprint $table) {
             $table->bigIncrements('id');
 $FIELDS$
             $table->timestamps();
