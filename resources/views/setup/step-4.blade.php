@@ -13,7 +13,7 @@
                     <label class="form-check">
                         <input class="form-check-input" type="checkbox"
                             @if ($item->isVendor()) checked="" disabled @else  wire:model='active_modules.{{ $item->getName() }}' value="1" @endif>
-                        <span class="form-check-label"> {{ $item->getTitle() }} @if ($item->isVendor())
+                        <span class="form-check-label"> {{ $item->getTitle() }} {{ $item->getVersionn() }} @if ($item->isVendor())
                                 (Vendor)
                             @endif
                         </span>
@@ -32,7 +32,7 @@
                     <label class="form-check">
                         <input class="form-check-input" type="checkbox"
                             @if ($item->isVendor()) checked="" disabled @else  wire:model='active_plugins.{{ $item->getName() }}' value="1" @endif>
-                        <span class="form-check-label"> {{ $item->getTitle() }} @if ($item->isVendor())
+                        <span class="form-check-label"> {{ $item->getTitle() }} {{ $item->getVersionn() }} @if ($item->isVendor())
                                 (Vendor)
                             @endif
                         </span>
@@ -50,7 +50,7 @@
             <select wire:model='active_theme' class="form-select mb-0">
                 @foreach ($themes as $item)
                     @if ($item->getName() == 'none' || !($item->hide == true))
-                        <option value="{{ $item->getName() }}">{{ $item->getTitle() }}</option>
+                        <option value="{{ $item->getName() }}">{{ $item->getTitle() }} {{ $item->getVersionn() }} </option>
                     @endif
                 @endforeach
             </select>

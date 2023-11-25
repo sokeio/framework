@@ -148,13 +148,13 @@ trait WithSystemExtend
         foreach ($this->getAll() as $item) {
             if ($item->isActive() || (isset($item->vendor) && $item->vendor === true) || ($isTheme && (in_array($item->getName(), $themes)))) {
                 $links[] = [
-                    $item->getPath('public') => public_path(byte_path($this->getName(), $item->name))
+                    $item->getPath('public') => public_path(platform_path($this->getName(), $item->name))
                 ];
                 if (isset($item->parent) && $perent = $item->parent) {
                     do {
                         $perent = $this->find($perent);
                         $links[] = [
-                            $perent->getPath('public') => public_path(byte_path($this->getName(), $perent->name))
+                            $perent->getPath('public') => public_path(platform_path($this->getName(), $perent->name))
                         ];
                     } while ($perent && isset($perent->parent) && $perent = $perent->parent);
                 }

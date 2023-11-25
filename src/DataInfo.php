@@ -17,7 +17,7 @@ class DataInfo extends JsonData
     const UnActive = 0;
     public static function checkPathVendor($path, $base_type)
     {
-        return !Str::contains($path, byte_path($base_type), true) && !Str::contains($path, '/themes/', true) && !Str::contains($path, '/plugins/', true);;
+        return !Str::contains($path, platform_path($base_type), true) && !Str::contains($path, '/themes/', true) && !Str::contains($path, '/plugins/', true);;
     }
     public function __construct($path, $parent)
     {
@@ -61,7 +61,7 @@ class DataInfo extends JsonData
     }
     public function url($_path = '')
     {
-        return url(byte_path($this->base_type, $this->getName() . ($_path ? ('/' . $_path) : '')));
+        return url(platform_path($this->base_type, $this->getName() . ($_path ? ('/' . $_path) : '')));
     }
     public function getFiles()
     {

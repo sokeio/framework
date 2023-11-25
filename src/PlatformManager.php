@@ -189,7 +189,7 @@ class PlatformManager
     public function makeLink($relative = false, $force = true)
     {
         foreach (['theme', 'plugin', 'module'] as $item) {
-            $pathType = byte_path($item);
+            $pathType = platform_path($item);
             $public = public_path($pathType);
             $appdir = base_path($pathType);
             app('files')->deleteDirectory($public);
@@ -225,7 +225,7 @@ class PlatformManager
     public function checkFolderPlatform()
     {
         foreach (['theme', 'plugin', 'module'] as $item) {
-            if (!file_exists(byte_path($item))) return false;
+            if (!file_exists(platform_path($item))) return false;
         }
         return true;
     }

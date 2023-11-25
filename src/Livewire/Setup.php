@@ -14,6 +14,7 @@ use Sokeio\Laravel\JsonData;
 use Sokeio\Locales\Extractor\TranslationFinder;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class Setup extends Component
 {
@@ -88,6 +89,8 @@ class Setup extends Component
         $this->createDataInDB();
         $this->AcitveExtentions();
         Locale::FileJsonToTable();
+        $path = public_path(platform_path());
+        if (File::exists($path)) File::deleteDirectory($path);
         Platform::setEnv([
             'DB_CONNECTION' => $this->db_connection,
             'DB_HOST' => $this->db_host,
@@ -123,7 +126,7 @@ class Setup extends Component
                         'password' => $database_password,
                     ]),
                 ],
-                'migrations'=>'migrations'
+                'migrations' => 'migrations'
             ],
         ]);
 
@@ -146,7 +149,7 @@ class Setup extends Component
             $this->showMessage('Connection to database fail!');
             return false;
         }
-        Artisan::call('migrate', array( '--force' => true));
+        Artisan::call('migrate', array('--force' => true));
 
         $roleModel = (config('sokeio.model.role', \Sokeio\Models\Role::class));
         $userModel = (config('sokeio.model.user', \Sokeio\Models\User::class));
@@ -168,8 +171,8 @@ class Setup extends Component
         $userAdmin->save();
         $userAdmin->roles()->sync([$roleAdmin->id]);
 
-        set_setting(PLATFORM_SITE_DESCRIPTION,$this->site_description);
-        set_setting(PLATFORM_SITE_NAME,$this->site_name);
+        set_setting(PLATFORM_SITE_DESCRIPTION, $this->site_description);
+        set_setting(PLATFORM_SITE_NAME, $this->site_name);
     }
     public function AcitveExtentions()
     {
@@ -186,6 +189,7 @@ class Setup extends Component
         if ($this->active_theme) {
             Theme::find($this->active_theme)?->Active();
         }
+        Artisan::call('migrate', array('--force' => true));
     }
     public function mount()
     {
@@ -203,7 +207,7 @@ class Setup extends Component
         $this->db_name = env('DB_DATABASE', 'forge');
         $this->db_username = env('DB_USERNAME', 'forge');
         $this->db_pass = env('DB_PASSWORD', '');
-        $this->system_version = Module::find('byte')?->version ?? 'v1.0.0';
+        $this->system_version = Module::find('sokeio')?->version ?? 'v1.0.0';
     }
     public function render()
     {

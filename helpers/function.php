@@ -417,10 +417,10 @@ if (!function_exists('character_limiter')) {
 
 
 
-if (!function_exists('byte_path')) {
-    function byte_path($type = '', $path = '')
+if (!function_exists('platform_path')) {
+    function platform_path($type = '', $path = '')
     {
-        $pathRoot = config('sokeio.appdir.root', 'sokeio');
+        $pathRoot = config('sokeio.appdir.root', 'platform');
         $pathType = config('sokeio.appdir.' . $type, $type . 's');
         return ($pathRoot . '/' . $pathType . ($path ? ('/' . $path) : ''));
     }
