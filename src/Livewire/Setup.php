@@ -174,20 +174,28 @@ class Setup extends Component
         set_setting(PLATFORM_SITE_DESCRIPTION, $this->site_description);
         set_setting(PLATFORM_SITE_NAME, $this->site_name);
     }
+    private function ActiveItem($item)
+    {
+        if ($item) {
+            $item->Active();
+            $item->DoRegister();
+            $item->DoBoot();
+        }
+    }
     public function AcitveExtentions()
     {
         foreach ($this->active_modules as $key => $value) {
             if ($value) {
-                Module::find($key)?->Active();
+                $this->ActiveItem(Module::find($key));
             }
         }
         foreach ($this->active_plugins as $key => $value) {
             if ($value) {
-                Plugin::find($key)?->Active();
+                $this->ActiveItem(Plugin::find($key));
             }
         }
         if ($this->active_theme) {
-            Theme::find($this->active_theme)?->Active();
+            $this->ActiveItem(Theme::find($this->active_theme));
         }
         Artisan::call('migrate', array('--force' => true));
     }
