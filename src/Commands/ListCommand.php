@@ -5,9 +5,9 @@ namespace Sokeio\Commands;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 
-class BListCommand extends Command
+class ListCommand extends Command
 {
-    protected $name = 'b:list';
+    protected $name = 'so:list';
 
 
     /**

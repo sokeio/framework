@@ -6,7 +6,7 @@ use Symfony\Component\Console\Input\InputOption;
 
 class MakePluginCommand extends MakeByTypeCommand
 {
-    protected $name = 'mb:plugin';
+    protected $name = 'so:make-plugin';
 
     /**
      * Get the console command options.

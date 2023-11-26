@@ -6,7 +6,7 @@ use Symfony\Component\Console\Input\InputOption;
 
 class MakeModuleCommand extends MakeByTypeCommand
 {
-    protected $name = 'mb:module';
+    protected $name = 'so:make-module';
     /**
      * Get the console command options.
      *

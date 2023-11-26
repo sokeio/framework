@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputOption;
 class MakeFileCommand extends Command
 {
     use WithGeneratorStub;
-    protected $name = 'mb:make-file';
+    protected $name = 'so:make-file';
 
     /**
      * Get the console command options.

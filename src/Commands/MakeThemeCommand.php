@@ -6,7 +6,7 @@ use Symfony\Component\Console\Input\InputOption;
 
 class MakeThemeCommand extends MakeByTypeCommand
 {
-    protected $name = 'mb:theme';
+    protected $name = 'so:make-theme';
 
     /**
      * Get the console command options.

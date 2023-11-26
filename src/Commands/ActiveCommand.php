@@ -6,9 +6,9 @@ use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
-class BActiveCommand extends Command
+class ActiveCommand extends Command
 {
-    protected $name = 'b:active';
+    protected $name = 'so:active';
 
 
     /**

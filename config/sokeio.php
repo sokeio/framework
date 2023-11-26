@@ -1,19 +1,14 @@
 <?php
 
-use Sokeio\Action;
 use Sokeio\Actions\CountModel;
 use Sokeio\Actions\TimeNowAction;
-use Sokeio\FieldView;
-use Sokeio\Commands\MakeByTypeCommand;
+use Sokeio\Commands\ActiveCommand;
 use Sokeio\Commands\MakeModuleCommand;
 use Sokeio\Commands\MakePluginCommand;
 use Sokeio\Commands\MakeThemeCommand;
 use Sokeio\Commands\MakeFileCommand;
-use Sokeio\Commands\BActiveCommand;
-use Sokeio\Commands\BInstallCommand;
-use Sokeio\Commands\BLinkCommand;
-use Sokeio\Commands\BListCommand;
-use Sokeio\Commands\BSetupCommand;
+use Sokeio\Commands\ListCommand;
+use Sokeio\Commands\MakeCommand;
 use Sokeio\Facades\Shortcode;
 use Sokeio\Item;
 
@@ -95,13 +90,10 @@ return [
         MakeThemeCommand::class,
         MakeModuleCommand::class,
         MakePluginCommand::class,
-        MakeByTypeCommand::class,
+        MakeCommand::class,
         MakeFileCommand::class,
-        BSetupCommand::class,
-        BLinkCommand::class,
-        BListCommand::class,
-        BInstallCommand::class,
-        BActiveCommand::class
+        ListCommand::class,
+        ActiveCommand::class
     ],
     'fields' => [],
     'shortcodes' => [

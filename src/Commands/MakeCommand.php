@@ -7,10 +7,10 @@ use Sokeio\Concerns\WithGeneratorStub;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
-class MakeByTypeCommand extends Command
+class MakeCommand extends Command
 {
     use WithGeneratorStub;
-    protected $name = 'mb:type';
+    protected $name = 'so:make';
 
 
     /**
