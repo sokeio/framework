@@ -8,13 +8,13 @@ export class ActionModule extends SokeioPlugin {
     let self = this;
     self.getManager().onDocument("click", "[byte\\:action]", function (e) {
       let elCurrentTarget = e.target;
-      elCurrentTarget.setAttribute("byte:action-loading", "");
-      let action = elCurrentTarget.getAttribute("byte:action");
-      let url = elCurrentTarget.getAttribute("byte:action-url");
-      let method = elCurrentTarget.getAttribute("byte:action-method");
-      let body = elCurrentTarget.getAttribute("byte:action-body");
-      let success = elCurrentTarget.getAttribute("byte:action-success");
-      let error = elCurrentTarget.getAttribute("byte:action-error");
+      elCurrentTarget.setAttribute("sokeio:action-loading", "");
+      let action = elCurrentTarget.getAttribute("sokeio:action");
+      let url = elCurrentTarget.getAttribute("sokeio:action-url");
+      let method = elCurrentTarget.getAttribute("sokeio:action-method");
+      let body = elCurrentTarget.getAttribute("sokeio:action-body");
+      let success = elCurrentTarget.getAttribute("sokeio:action-success");
+      let error = elCurrentTarget.getAttribute("sokeio:action-error");
       if (action && action != "") {
         //TODO: CALL TO ACTION
         self
@@ -25,11 +25,11 @@ export class ActionModule extends SokeioPlugin {
           })
           .then(() => {
             console.log({ success });
-            elCurrentTarget.removeAttribute("byte:action-loading");
+            elCurrentTarget.removeAttribute("sokeio:action-loading");
           })
           .catch(() => {
             console.log({ error });
-            elCurrentTarget.removeAttribute("byte:action-loading");
+            elCurrentTarget.removeAttribute("sokeio:action-loading");
           });
       } else if (url && url != "") {
         self
@@ -41,11 +41,11 @@ export class ActionModule extends SokeioPlugin {
           })
           .then(() => {
             console.log({ success });
-            elCurrentTarget.removeAttribute("byte:action-loading");
+            elCurrentTarget.removeAttribute("sokeio:action-loading");
           })
           .catch(() => {
             console.log({ error });
-            elCurrentTarget.removeAttribute("byte:action-loading");
+            elCurrentTarget.removeAttribute("sokeio:action-loading");
           });
       }
     });

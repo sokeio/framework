@@ -9,14 +9,14 @@ export class ModalModule extends SokeioPlugin {
     let self = this;
     self.getManager().onDocument("click", "[byte\\:modal]", function (e) {
       let elCurrentTarget = e.target;
-      let $url = elCurrentTarget.getAttribute("byte:modal");
-      let $modelField = elCurrentTarget.getAttribute("byte:model");
+      let $url = elCurrentTarget.getAttribute("sokeio:modal");
+      let $modelField = elCurrentTarget.getAttribute("sokeio:model");
       if (!$url) return;
-      let $title = elCurrentTarget.getAttribute("byte:modal-title") ?? "";
-      let $size = elCurrentTarget.getAttribute("byte:modal-size") ?? "";
+      let $title = elCurrentTarget.getAttribute("sokeio:modal-title") ?? "";
+      let $size = elCurrentTarget.getAttribute("sokeio:modal-size") ?? "";
       let $btnChoose = "";
-      if (elCurrentTarget.hasAttribute("byte:modal-choose")) {
-        $btnChoose = elCurrentTarget.getAttribute("byte:modal-choose");
+      if (elCurrentTarget.hasAttribute("sokeio:modal-choose")) {
+        $btnChoose = elCurrentTarget.getAttribute("sokeio:modal-choose");
         if ($btnChoose == "") $btnChoose = "Choose";
       }
       let parentEl = elCurrentTarget.closest("[wire\\:id]");

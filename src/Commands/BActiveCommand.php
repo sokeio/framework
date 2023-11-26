@@ -38,7 +38,7 @@ class BActiveCommand extends Command
         $active = $this->option('active');
         $names = $this->argument('name');
         $sokeio = platform_by($type);
-        $this->components->info('byte:' . $type);
+        $this->components->info('sokeio:' . $type);
         foreach ($names as $name) {
             $rs_sokeio = $sokeio->find($name);
             if ($rs_sokeio) {

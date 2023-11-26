@@ -38,14 +38,14 @@ class BInstallCommand extends Command
         $type = $this->option('type');
         $active = $this->option('active');
         $names = $this->argument('name');
-        $this->components->info('byte:' . $type);
+        $this->components->info('sokeio:' . $type);
         if (count($names)) {
             foreach ($names as $name) {
                 $json =  Platform::install($name);
                 if ($json) {
                     $this->components->info(json_encode($json));
                     if ($active == true)
-                        run_cmd(base_path(), 'php artisan byte:active ' . $json['info']['id'] . ' -t ' . $json['type']);
+                        run_cmd(base_path(), 'php artisan sokeio:active ' . $json['info']['id'] . ' -t ' . $json['type']);
                 }
             }
         }

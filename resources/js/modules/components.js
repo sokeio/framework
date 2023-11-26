@@ -52,8 +52,8 @@ export class ComponentModule extends SokeioPlugin {
   clickEventComponent(e) {
     const self = this;
     let elCurrentTarget = e.target;
-    let strComponent = elCurrentTarget.getAttribute("byte:component");
-    let targetTo = elCurrentTarget.getAttribute("byte:component-target");
+    let strComponent = elCurrentTarget.getAttribute("sokeio:component");
+    let targetTo = elCurrentTarget.getAttribute("sokeio:component-target");
     if (targetTo) {
       try {
         targetTo = document.querySelector(targetTo);

@@ -19,13 +19,13 @@ export class FileManagerModule extends SokeioPlugin {
     let elCurrentTarget = e.target;
     let parentEl = elCurrentTarget.closest("[wire\\:id]");
     let componentId = parentEl?.getAttribute("wire:id");
-    let filemanagerModel = elCurrentTarget?.getAttribute("byte:filemanager");
+    let filemanagerModel = elCurrentTarget?.getAttribute("sokeio:filemanager");
     let filemanagerType =
-      elCurrentTarget?.getAttribute("byte:filemanager-type") || "image";
+      elCurrentTarget?.getAttribute("sokeio:filemanager-type") || "image";
     let component = window.Livewire.find(componentId)?.__instance;
     let self = this;
     self.getManager().showFileManager(function (items) {
-      if (elCurrentTarget?.hasAttribute("byte:filemanager-mutil")) {
+      if (elCurrentTarget?.hasAttribute("sokeio:filemanager-mutil")) {
         self.getManager().dataSet(
           component.$wire,
           filemanagerModel,

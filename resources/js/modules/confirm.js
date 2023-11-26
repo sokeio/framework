@@ -18,10 +18,10 @@ export class ConfirmModule extends SokeioPlugin {
     e.stopPropagation();
     e.stopImmediatePropagation();
     let elCurrentTarget = e.target;
-    let message = elCurrentTarget.getAttribute("byte:confirm");
-    let title = elCurrentTarget.getAttribute("byte:confirm-title");
-    let btnYes = elCurrentTarget.getAttribute("byte:confirm-yes");
-    let btnNo = elCurrentTarget.getAttribute("byte:confirm-no");
+    let message = elCurrentTarget.getAttribute("sokeio:confirm");
+    let title = elCurrentTarget.getAttribute("sokeio:confirm-title");
+    let btnYes = elCurrentTarget.getAttribute("sokeio:confirm-yes");
+    let btnNo = elCurrentTarget.getAttribute("sokeio:confirm-no");
     self.showConfirm(message, title, {
       btnYes,
       btnNo,
