@@ -4,7 +4,7 @@ namespace Sokeio\Commands;
 
 use Symfony\Component\Console\Input\InputOption;
 
-class MakeThemeCommand extends MakeByTypeCommand
+class MakeThemeCommand extends MakeCommand
 {
     protected $name = 'so:make-theme';
 

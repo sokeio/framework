@@ -4,7 +4,7 @@ namespace Sokeio\Commands;
 
 use Symfony\Component\Console\Input\InputOption;
 
-class MakePluginCommand extends MakeByTypeCommand
+class MakePluginCommand extends MakeCommand
 {
     protected $name = 'so:make-plugin';
 

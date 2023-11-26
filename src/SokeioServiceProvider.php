@@ -35,6 +35,9 @@ class SokeioServiceProvider extends ServiceProvider
         if (!File::exists(base_path('.env'))) {
             File::copy(base_path('.env.example'), base_path('.env'));
             run_cmd(base_path(''), 'php artisan key:generate');
+
+            $path = public_path(platform_path());
+            if (File::exists($path)) File::deleteDirectory($path);
         }
         /*
          * This class is a Package Service Provider

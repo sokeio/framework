@@ -88,7 +88,6 @@ class Setup extends Component
 
         $this->createDataInDB();
         $this->AcitveExtentions();
-        Locale::FileJsonToTable();
         $path = public_path(platform_path());
         if (File::exists($path)) File::deleteDirectory($path);
         Platform::setEnv([
