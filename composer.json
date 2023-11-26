@@ -15,7 +15,7 @@
   "require": {
     "symfony/filesystem": "^6.3.1",
     "staudenmeir/eloquent-eager-limit": "^1.8.3",
-    "livewire/livewire": "^3.1.0",
+    "livewire/livewire": "^3.2.1",
     "unisharp/laravel-filemanager": "^2.6.0"
   },
   "require-dev": {},
