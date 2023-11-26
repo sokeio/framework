@@ -49,7 +49,7 @@ export class LiveWireTinymceModule extends SokeioPlugin {
                 });
               },
               file_picker_callback: function (callback, value, meta) {
-                if (!self.getManager().$config["byte_filemanager"]) return;
+                if (!self.getManager().$config["sokeio_filemanager"]) return;
                 var x =
                   window.innerWidth ||
                   document.documentElement.clientWidth ||
@@ -60,7 +60,7 @@ export class LiveWireTinymceModule extends SokeioPlugin {
                   document.getElementsByTagName("body")[0].clientHeight;
 
                 var cmsURL =
-                  self.getManager().$config["byte_filemanager"] +
+                  self.getManager().$config["sokeio_filemanager"] +
                   "?editor=" +
                   meta.fieldname;
                 if (meta.filetype == "image") {

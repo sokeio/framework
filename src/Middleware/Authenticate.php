@@ -32,7 +32,7 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         if (!$request->expectsJson()) {
-            if (byte_is_admin()) {
+            if (sokeio_is_admin()) {
                 return (apply_filters(PLATFORM_URL_LOGIN, route('admin.login')));
             } else {
 

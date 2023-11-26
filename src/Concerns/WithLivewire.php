@@ -73,8 +73,8 @@ trait WithLivewire
     }
     public function booted()
     {
-        if (function_exists('byte_is_admin')) {
-            $this->___theme___admin = byte_is_admin();
+        if (function_exists('sokeio_is_admin')) {
+            $this->___theme___admin = sokeio_is_admin();
         }
         if (!$this->_refComponentId) {
             $this->_refComponentId = request('refComponent');

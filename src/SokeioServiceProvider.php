@@ -96,7 +96,7 @@ class SokeioServiceProvider extends ServiceProvider
             echo '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">';
             echo '<meta http-equiv="X-UA-Compatible" content="ie=edge">';
             echo '<meta name="csrf_token" value="' . csrf_token() . '"/>';
-            if (!byte_is_admin() && function_exists('seo_header_render')) {
+            if (!sokeio_is_admin() && function_exists('seo_header_render')) {
                 echo '<!---SEO:BEGIN--!>';
                 echo call_user_func('seo_header_render');
                 echo '<!---SEO:END--!>';
@@ -117,7 +117,7 @@ class SokeioServiceProvider extends ServiceProvider
                 'url' => url(''),
                 'sokeio_url' => route('__sokeio__'),
                 'csrf_token' => csrf_token(),
-                'byte_filemanager' => route('unisharp.lfm.show'),
+                'sokeio_filemanager' => route('unisharp.lfm.show'),
 
                 'tinyecm_option' => [
                     "relative_urls" => false,

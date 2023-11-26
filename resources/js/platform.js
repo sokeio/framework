@@ -67,9 +67,9 @@ export class Sokeio extends ByteManager {
     this.dispatch("sokeio::loaded", document);
   }
   showFileManager(callback, type = "file") {
-    if (this.$config["byte_filemanager"]) {
+    if (this.$config["sokeio_filemanager"]) {
       window.open(
-        this.$config["byte_filemanager"] + "?type=" + (type || "file"),
+        this.$config["sokeio_filemanager"] + "?type=" + (type || "file"),
         "FileManager",
         "width=900,height=600"
       );
@@ -97,7 +97,7 @@ export class Sokeio extends ByteManager {
     let refComponent = parentEl?.getAttribute("wire:id");
     this.openModal(
       {
-        $url: this.$config["byte_shortcode_setting"],
+        $url: this.$config["sokeio_shortcode_setting"],
         $title: "Shortcode Setting",
         $callbackClosed: callbackClosed,
         $size: "modal-fullscreen-md-down modal-xl",

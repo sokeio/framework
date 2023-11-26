@@ -16,53 +16,53 @@ use Sokeio\Facades\Theme;
 use Sokeio\Item;
 use Sokeio\Models\Setting;
 
-if (!function_exists('byte_encode')) {
-    function byte_encode($data)
+if (!function_exists('sokeio_encode')) {
+    function sokeio_encode($data)
     {
         return base64_encode(urlencode(json_encode($data ?? [])));
     }
 }
-if (!function_exists('byte_decode')) {
-    function byte_decode($data)
+if (!function_exists('sokeio_decode')) {
+    function sokeio_decode($data)
     {
         return json_decode(urldecode(base64_decode($data)), true);
     }
 }
-if (!function_exists('byte_component')) {
-    function byte_component($component, $params = [], $type = '')
+if (!function_exists('sokeio_component')) {
+    function sokeio_component($component, $params = [], $type = '')
     {
-        return byte_encode([
+        return sokeio_encode([
             'component' => $component,
             'params' => $params,
             'type' => $type,
-            'is_admin' => byte_is_admin()
+            'is_admin' => sokeio_is_admin()
         ]);
     }
 }
-if (!function_exists('byte_view')) {
-    function byte_view($view, $params = [], $type = '')
+if (!function_exists('sokeio_view')) {
+    function sokeio_view($view, $params = [], $type = '')
     {
-        return byte_encode([
+        return sokeio_encode([
             'view' => $view,
             'params' => $params,
             'type' => $type,
-            'is_admin' => byte_is_admin()
+            'is_admin' => sokeio_is_admin()
         ]);
     }
 }
-if (!function_exists('byte_action')) {
-    function byte_action($action, $params = [], $type = '')
+if (!function_exists('sokeio_action')) {
+    function sokeio_action($action, $params = [], $type = '')
     {
-        return byte_encode([
+        return sokeio_encode([
             'action' => $action,
             'params' => $params,
             'type' => $type,
-            'is_admin' => byte_is_admin()
+            'is_admin' => sokeio_is_admin()
         ]);
     }
 }
-if (!function_exists('byte_mode_dev')) {
-    function byte_mode_dev()
+if (!function_exists('sokeio_mode_dev')) {
+    function sokeio_mode_dev()
     {
         return env('SOKEIO_MODE_DEV', false);
     }
@@ -80,16 +80,16 @@ if (!function_exists('platform_by')) {
     }
 }
 
-if (!function_exists('byte_flags')) {
-    function byte_flags($flg, $size = '4x3')
+if (!function_exists('sokeio_flags')) {
+    function sokeio_flags($flg, $size = '4x3')
     {
         $fileFlag = __DIR__ . '/../resources/flags/' . $size . '/' . $flg . '.svg';
         if (File::exists($fileFlag)) return file_get_contents($fileFlag);
         return '';
     }
 }
-if (!function_exists('byte_is_admin')) {
-    function byte_is_admin()
+if (!function_exists('sokeio_is_admin')) {
+    function sokeio_is_admin()
     {
         $is_admin = false;
         $arrMiddleware = [];
