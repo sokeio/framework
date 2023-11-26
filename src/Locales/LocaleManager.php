@@ -2,10 +2,7 @@
 
 namespace Sokeio\Locales;
 
-use Sokeio\Facades\Module;
 use Sokeio\Facades\Platform;
-use Sokeio\Facades\Plugin;
-use Sokeio\Facades\Theme;
 use Sokeio\Laravel\JsonData;
 use Sokeio\Models\Language;
 use Sokeio\Models\Translation;
@@ -14,11 +11,13 @@ class LocaleManager
 {
     private const KEY = 'SOKEIO_LOCALE_CURRENT';
     private $hideDefaultLocale;
+    private $separator = '-';
     private $defaultLocale;
     private $supportedLocales = [];
     public function __construct()
     {
         $this->hideDefaultLocale = config('sokeio.locale.hideDefaultLocale');
+        $this->separator = config('sokeio.locale.separator');
         $this->defaultLocale = config('sokeio.locale.defaultLocale');
         $this->supportedLocales = config('sokeio.locale.supportedLocales');
     }
@@ -43,9 +42,30 @@ class LocaleManager
         app()->setLocale($locale);
         app('session')->put(self::KEY, $locale);
     }
+    public function DefaultLocale()
+    {
+        return $this->defaultLocale;
+    }
+    public function getLocaleSeparator(): string
+    {
+        return $this->separator ?: '-';
+    }
+    public function isLocaleCountryBased(string $locale): bool
+    {
+        return strpos($locale, $this->getLocaleSeparator()) !== false;
+    }
+
+    public function getLanguageFromCountryBasedLocale(string $locale): string
+    {
+        return explode($this->getLocaleSeparator(), $locale)[0];
+    }
     public function SetLocaleApp()
     {
         app()->setLocale($this->CurrentLocale());
+    }
+    public function has($key)
+    {
+        return true;
     }
     private function TranslationToTable($type, $name, $path, $lang)
     {

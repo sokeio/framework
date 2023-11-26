@@ -90,6 +90,7 @@ class Setup extends Component
         $this->AcitveExtentions();
         $path = public_path(platform_path());
         if (File::exists($path)) File::deleteDirectory($path);
+        Locale::TableToFileJson();
         Platform::setEnv([
             'DB_CONNECTION' => $this->db_connection,
             'DB_HOST' => $this->db_host,

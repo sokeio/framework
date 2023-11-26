@@ -14,7 +14,7 @@ use Sokeio\Item;
 
 return [
     'updator' => [
-        'url' =>  env('PLATFORM_UPDATOR_URL', 'https://sokeio.github.io/files/version.json'),
+        'url' =>  env('PLATFORM_UPDATOR_URL', 'https://updator.sokeio.com/'), //https://updator.sokeio.com/themes.json https://updator.sokeio.com/theme/theme-sokeio-640e7d39-165b-47c5-a895-5e996e375f9b2832469.json
         'temps' => env('PLATFORM_UPDATOR_TEMP', 'temps')
     ],
     'extends' => ['theme', 'plugin', 'module'],
@@ -29,7 +29,91 @@ return [
         'role' => Sokeio\Models\Role::class,
         'permission' => Sokeio\Models\Permission::class,
     ],
+
+    'translatable' => [
+        /*
+        |--------------------------------------------------------------------------
+        | Use fallback
+        |--------------------------------------------------------------------------
+        |
+        | Determine if fallback locales are returned by default or not. To add
+        | more flexibility and configure this option per "translatable"
+        | instance, this value will be overridden by the property
+        | $useTranslationFallback when defined
+        |
+        */
+        'use_fallback' => false,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Use fallback per property
+        |--------------------------------------------------------------------------
+        |
+        | The property fallback feature will return the translated value of
+        | the fallback locale if the property is empty for the selected
+        | locale. Note that 'use_fallback' must be enabled.
+        |
+        */
+        'use_property_fallback' => true,
+        /*
+        |--------------------------------------------------------------------------
+        | Translation Model Namespace
+        |--------------------------------------------------------------------------
+        |
+        | Defines the default 'Translation' class namespace. For example, if
+        | you want to use App\Translations\CountryTranslation instead of App\CountryTranslation
+        | set this to 'App\Translations'.
+        |
+        */
+        'translation_model_namespace' => null,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Translation Suffix
+        |--------------------------------------------------------------------------
+        |
+        | Defines the default 'Translation' class suffix. For example, if
+        | you want to use CountryTrans instead of CountryTranslation
+        | application, set this to 'Trans'.
+        |
+        */
+        'translation_suffix' => 'Translation',
+
+        /*
+        |--------------------------------------------------------------------------
+        | Locale key
+        |--------------------------------------------------------------------------
+        |
+        | Defines the 'locale' field name, which is used by the
+        | translation model.
+        |
+        */
+        'locale_key' => 'locale',
+
+        /*
+        |--------------------------------------------------------------------------
+        | Always load translations when converting to array
+        |--------------------------------------------------------------------------
+        | Setting this to false will have a performance improvement but will
+        | not return the translations when using toArray(), unless the
+        | translations relationship is already loaded.
+        |
+        */
+        'to_array_always_loads_translations' => true,
+
+    ],
     'locale' => [
+        /*
+        |--------------------------------------------------------------------------
+        | Locale separator
+        |--------------------------------------------------------------------------
+        |
+        | This is a string used to glue the language and the country when defining
+        | the available locales. Example: if set to '-', then the locale for
+        | colombian spanish will be saved as 'es-CO' into the database.
+        |
+        */
+        'separator' => '-',
         /**
          * Locale names (codes) can be
          * whatever you want.
@@ -76,10 +160,10 @@ return [
                 '*.php',
                 '*.js',
             ],
-            'excluded-directories'=>[
+            'excluded-directories' => [
                 'node_modules'
             ],
-            'directories'=> [
+            'directories' => [
                 'app',
                 'resources',
                 'src'
