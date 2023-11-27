@@ -62,19 +62,19 @@ password: AdMin@123
 Make module:
 
 ```bash
-$ php artisan mb:module Demo3 -a true -f true
+$ php artisan so:make-module Demo3 -a true -f true
 ```
 
 Make plugin:
 
 ```bash
-$ php artisan mb:plugin Demo3 -a true -f true
+$ php artisan so:make-plugin Demo3 -a true -f true
 ```
 
 Make theme:
 
 ```bash
-$ php artisan mb:theme Demo3 -a true -t theme -f true
+$ php artisan so:make-theme Demo3 -a true -t theme -f true
 ```
 
 ## Contributing
