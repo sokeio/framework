@@ -10,7 +10,7 @@ export class ComponentModule extends SokeioPlugin {
       .getManager()
       .onDocument(
         "click",
-        "[byte\\:component]",
+        "[sokeio\\:component]",
         self.clickEventComponent.bind(this)
       );
   }

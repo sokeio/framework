@@ -8,7 +8,7 @@ export class FileManagerModule extends SokeioPlugin {
     const self = this;
     self.getManager().onDocument(
       "click",
-      "[byte\\:filemanager]",
+      "[sokeio\\:filemanager]",
       self.clickEvent.bind(self)
     );
   }

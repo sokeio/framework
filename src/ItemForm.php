@@ -27,9 +27,9 @@ class ItemForm extends DataForm
     {
         return $this->__dataModel;
     }
-    public function addValidationRulesToComponent()
+    public function InitForm()
     {
-        parent::addValidationRulesToComponent();
+        parent::InitForm();
         if (method_exists($this->getComponent(), 'getDataId')) {
             $this->setDataId($this->getComponent()->getDataId());
         } else if (isset($this->getComponent()->dataId))

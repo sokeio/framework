@@ -7,7 +7,7 @@ export class ModalModule extends SokeioPlugin {
 
   booting() {
     let self = this;
-    self.getManager().onDocument("click", "[byte\\:modal]", function (e) {
+    self.getManager().onDocument("click", "[sokeio\\:modal]", function (e) {
       let elCurrentTarget = e.target;
       let $url = elCurrentTarget.getAttribute("sokeio:modal");
       let $modelField = elCurrentTarget.getAttribute("sokeio:model");

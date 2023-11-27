@@ -8,7 +8,7 @@ export class ConfirmModule extends SokeioPlugin {
     const self = this;
     self
       .getManager()
-      .onDocument("mousedown", "[byte\\:confirm]", self.clickEvent.bind(self));
+      .onDocument("mousedown", "[sokeio\\:confirm]", self.clickEvent.bind(self));
     window.showConfirm = (content, title, option = undefined) => {
       self.showConfirm(content, title, option);
     };

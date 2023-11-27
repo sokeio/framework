@@ -2,10 +2,18 @@
 
 namespace Sokeio;
 
+use Livewire\Component;
 use Sokeio\Form as FormBase;
 
 class DataForm extends FormBase
 {
+    function __construct(
+         Component $component,
+         $propertyName
+    ) {
+        parent::__construct( $component,$propertyName);
+        $this->InitForm();
+    }
     protected $itemManager;
     public function setItemManager($itemManager)
     {
@@ -18,7 +26,7 @@ class DataForm extends FormBase
     }
     protected $___enableBindData = true;
     public $___checkProperty =  false;
-    public function addValidationRulesToComponent()
+    public function InitForm()
     {
         if (method_exists($this->component, 'getItemManager')) {
             $this->itemManager = $this->component->getItemManager();
@@ -35,8 +43,6 @@ class DataForm extends FormBase
                 }
             }
         }
-
-        parent::addValidationRulesToComponent();
     }
     public function FillData($data)
     {
