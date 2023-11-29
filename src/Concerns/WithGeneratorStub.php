@@ -43,7 +43,7 @@ trait WithGeneratorStub
         return $this;
     }
 
-    protected $ConfigStubName = 'byte';
+    protected $ConfigStubName = 'sokeio';
     protected $GeneratorConfig;
     private $_base_name;
     private $_system_base;

@@ -227,7 +227,7 @@ return [
 
     'stubs' => [
         'enabled' => false,
-        'path' => base_path('vendor/sokeio/sokeio/stubs'),
+        'path' => base_path('vendor/sokeio/framework/stubs'),
 
         'list-files' => [
             'common' => [
