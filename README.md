@@ -1,8 +1,6 @@
-# Sokeio
+# Sokeio framework
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/sokeio/framework.svg?style=flat-square)](https://packagist.org/packages/sokeio/framework)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/sokeio/framework/run-tests?label=Laravel)](https://github.com/sokeio/framework/actions?query=workflow%3ALaravel+)
-[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/sokeio/framework/Fix%20PHP%20code%20style%20issues?label=code%20style)](https://github.com/sokeio/frameworkframework/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/sokeio/framework.svg?style=flat-square)](https://packagist.org/packages/sokeio/framework)
 
 
