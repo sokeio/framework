@@ -3,7 +3,7 @@
 namespace Sokeio\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use Sokeio\ThemeManager;
+use Sokeio\Platform\ThemeManager;
 
 /**
  * 

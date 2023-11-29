@@ -141,7 +141,7 @@ class SokeioServiceProvider extends ServiceProvider
                 ]
             ];
             echo "
-            <script data-navigate-once type='text/javascript' id='ByteManagerjs____12345678901234567'>
+            <script data-navigate-once type='text/javascript' id='sokeioManagerjs____12345678901234567'>
             " . $scriptSokeio . "
             
             window.addEventListener('sokeio::init',function(){
@@ -151,7 +151,7 @@ class SokeioServiceProvider extends ServiceProvider
                 }
             });
             setTimeout(function(){
-                document.getElementById('ByteManagerjs____12345678901234567')?.remove();
+                document.getElementById('sokeioManagerjs____12345678901234567')?.remove();
             },400)
             </script>";
             Assets::Render(PLATFORM_BODY_AFTER);

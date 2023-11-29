@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio;
+namespace Sokeio\Platform;
 
 use Sokeio\DataInfo;
 use Sokeio\Events\NotificationAdd;

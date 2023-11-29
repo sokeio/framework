@@ -35,6 +35,6 @@ class Plugin extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \Sokeio\PluginManager::class;
+        return \Sokeio\Platform\PluginManager::class;
     }
 }

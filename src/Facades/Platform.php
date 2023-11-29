@@ -39,6 +39,6 @@ class Platform extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \Sokeio\PlatformManager::class;
+        return \Sokeio\Platform\PlatformManager::class;
     }
 }

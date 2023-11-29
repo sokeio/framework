@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio;
+namespace Sokeio\Platform;
 
 use Sokeio\Action;
 use Sokeio\Laravel\Hook\ActionHook;

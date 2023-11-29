@@ -34,6 +34,6 @@ class Module extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \Sokeio\ModuleManager::class;
+        return \Sokeio\Platform\ModuleManager::class;
     }
 }
