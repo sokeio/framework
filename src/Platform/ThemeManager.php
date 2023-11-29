@@ -61,11 +61,11 @@ class ThemeManager extends ActionHook
     }
     public function AdminId()
     {
-        return ArrayStatus::Key(PLATFORM_THEME_ADMIN)->getFirstOrDefault('admin');
+        return PlatformStatus::Key(PLATFORM_THEME_ADMIN)->getFirstOrDefault('admin');
     }
     public function SiteId()
     {
-        return ArrayStatus::Key(PLATFORM_THEME_WEB)->getFirstOrDefault('none');
+        return PlatformStatus::Key(PLATFORM_THEME_WEB)->getFirstOrDefault('none');
     }
     public function AdminDataInfo()
     {
@@ -90,16 +90,16 @@ class ThemeManager extends ActionHook
             $site = $this->AdminDataInfo();
             $site?->getOptionHook()?->changeStatus($site, 0);
             $theme?->getOptionHook()?->changeStatus($theme, $value);
-            ArrayStatus::Key(PLATFORM_THEME_ADMIN)->Active($theme->getId(), true);
+            PlatformStatus::Key(PLATFORM_THEME_ADMIN)->Active($theme->getId(), true);
         } else {
             $site = $this->SiteDataInfo();
 
             if ($site == $theme) {
-                ArrayStatus::Key(PLATFORM_THEME_WEB)->Active($site->getId(), $site->status ? false : true);
+                PlatformStatus::Key(PLATFORM_THEME_WEB)->Active($site->getId(), $site->status ? false : true);
             } else {
                 $site?->getOptionHook()?->changeStatus($site, 0);
                 $theme?->getOptionHook()?->changeStatus($theme, $value);
-                ArrayStatus::Key(PLATFORM_THEME_WEB)->Active($theme->getId(), true);
+                PlatformStatus::Key(PLATFORM_THEME_WEB)->Active($theme->getId(), true);
             }
         }
         PlatformChanged::dispatch($theme);

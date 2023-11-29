@@ -1,10 +1,10 @@
 <?php
 
-namespace Sokeio;
+namespace Sokeio\Platform;
 
-class ArrayStatus
+class PlatformStatus
 {
-    private const __KEY__ = 'ARRAY_STATUS_';
+    private const __KEY__ = 'PLATFORM_STATUS_';
     private function __construct(private $key)
     {
     }
@@ -22,7 +22,7 @@ class ArrayStatus
     }
     public function Update($arr)
     {
-        set_setting(self::__KEY__ . $this->key, $arr);
+        $this->setStore(self::__KEY__ . $this->key, $arr);
     }
     public function Check($id)
     {
@@ -31,17 +31,20 @@ class ArrayStatus
     public function Active($id, $onlyOne = false)
     {
         if ($onlyOne) {
-            set_setting(self::__KEY__ . $this->key, [$id]);
+            $this->setStore(self::__KEY__ . $this->key, [$id]);
         } else {
             if ($this->Check($id)) return;
-            set_setting(self::__KEY__ . $this->key, array_unique([$id, ...$this->getArr()]));
+            $this->setStore(self::__KEY__ . $this->key, array_unique([$id, ...$this->getArr()]));
         }
     }
     public function UnActive($id)
     {
-        set_setting(self::__KEY__ . $this->key, array_filter($this->getArr(), function ($item) use ($id) {
+        $this->setStore(self::__KEY__ . $this->key, array_filter($this->getArr(), function ($item) use ($id) {
             return $id !== $item;
         }));
+    }
+    private function setStore($key,$data){
+        set_setting($key,$data);
     }
     private static $arr = [];
     public static function Key($key): self

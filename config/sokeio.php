@@ -199,7 +199,7 @@ return [
     ],
     'widgets' => [],
     'namespace' => [
-        'root' => 'Byte',
+        'root' => 'Sokeio',
         'theme' => 'Theme',
         'module' => 'Module',
         'plugin' => 'Plugin',

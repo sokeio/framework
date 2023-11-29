@@ -30,11 +30,11 @@ class Shortcode extends Component
     }
     public function render()
     {
-        return view('sokeio::shortcode', [
+        return view('sokeio::shortcode', add_filter(PLATFORM_SHORTCODE_MANAGER,[
             'shortcode' => $this->shortcode,
             'attrs' => $this->attrs,
             'content' => $this->content,
-            'manager' => $this->getItemManager()?->ClearCache()->Data(['attrs' => $this->attrs, 'content' => $this->content, 'component' => $this])->beforeRender($this)
-        ]);
+            'component' => $this
+        ]));
     }
 }

@@ -111,7 +111,7 @@ class DataInfo extends JsonData
     }
     public function getStatusData()
     {
-        return ArrayStatus::Key($this['base_type'])->Check($this->getId()) || $this['active'];
+        return Platform\PlatformStatus::Key($this['base_type'])->Check($this->getId()) || $this['active'];
     }
     private $manifestData = null;
     public function getManifestData()
@@ -129,9 +129,9 @@ class DataInfo extends JsonData
     public function setStatusData($value)
     {
         if ($value === self::Active) {
-            ArrayStatus::Key($this['base_type'])->Active($this->getId());
+            Platform\PlatformStatus::Key($this['base_type'])->Active($this->getId());
         } else {
-            ArrayStatus::Key($this['base_type'])->UnActive($this->getId());
+            Platform\PlatformStatus::Key($this['base_type'])->UnActive($this->getId());
         }
         $this->getOptionHook()?->changeStatus($this, $value);
         ob_start();
