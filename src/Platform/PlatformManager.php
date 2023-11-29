@@ -2,7 +2,7 @@
 
 namespace Sokeio\Platform;
 
-use Sokeio\DataInfo;
+use Sokeio\Platform\DataInfo;
 use Sokeio\Events\NotificationAdd;
 use Illuminate\Support\Facades\File;
 use Sokeio\Laravel\JsonData;

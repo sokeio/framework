@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio;
+namespace Sokeio\Platform;
 
 use Illuminate\Support\Facades\File;
 use Sokeio\Laravel\JsonData;
@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Sokeio\Facades\Platform;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Traits\Macroable;
+use Sokeio\RouteEx;
 
 class DataInfo extends JsonData
 {
@@ -111,7 +112,7 @@ class DataInfo extends JsonData
     }
     public function getStatusData()
     {
-        return Platform\PlatformStatus::Key($this['base_type'])->Check($this->getId()) || $this['active'];
+        return PlatformStatus::Key($this['base_type'])->Check($this->getId()) || $this['active'];
     }
     private $manifestData = null;
     public function getManifestData()
@@ -129,9 +130,9 @@ class DataInfo extends JsonData
     public function setStatusData($value)
     {
         if ($value === self::Active) {
-            Platform\PlatformStatus::Key($this['base_type'])->Active($this->getId());
+            PlatformStatus::Key($this['base_type'])->Active($this->getId());
         } else {
-            Platform\PlatformStatus::Key($this['base_type'])->UnActive($this->getId());
+            PlatformStatus::Key($this['base_type'])->UnActive($this->getId());
         }
         $this->getOptionHook()?->changeStatus($this, $value);
         ob_start();

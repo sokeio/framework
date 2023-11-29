@@ -5,7 +5,7 @@ namespace Sokeio\Platform;
 use Sokeio\Facades\Action;
 use Sokeio\Laravel\Hook\ActionHook;
 use Sokeio\ArrayStatus;
-use Sokeio\DataInfo;
+use Sokeio\Platform\DataInfo;
 use Sokeio\Events\PlatformChanged;
 use Sokeio\Facades\Assets;
 use Sokeio\Facades\Platform;

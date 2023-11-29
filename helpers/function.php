@@ -427,16 +427,44 @@ if (!function_exists('platform_path')) {
 }
 
 
-if (!function_exists('column_size')) {
-    function column_size($size = 'col')
-    {
-        return Item::getSize($size);
-    }
-}
 
 if (!function_exists('shortcode_render')) {
     function shortcode_render($text)
     {
         return Shortcode::compileOnly($text);
+    }
+}
+
+if (!function_exists('column_size')) {
+    function column_size($size = 'col')
+    {
+        switch ($size) {
+            case "col1":
+                return "col-xs-12 col-sm-12 col-md-1 col-lg-1";
+            case "col2":
+                return "col-xs-12 col-sm-12 col-md-1 col-lg-2";
+            case "col3":
+                return "col-xs-12 col-sm-12 col-md-4 col-lg-3";
+            case "col4":
+                return "col-xs-12 col-sm-12 col-md-4 col-lg-4";
+            case "col5":
+                return "col-xs-12 col-sm-12 col-md-4 col-lg-5";
+            case "col6":
+                return "col-xs-12 col-sm-12 col-md-4 col-lg-6";
+            case "col7":
+                return "col-xs-12 col-sm-12 col-md-8 col-lg-7";
+            case "col8":
+                return "col-xs-12 col-sm-12 col-md-8 col-lg-8";
+            case "col9":
+                return "col-xs-12 col-sm-12 col-md-8 col-lg-9";
+            case "col10":
+                return "col-xs-12 col-sm-12 col-md-12 col-lg-10";
+            case "col11":
+                return "col-xs-12 col-sm-12 col-md-12 col-lg-11";
+            case "col12":
+                return "col-xs-12 col-sm-12 col-md-12 col-lg-12";
+            default:
+                return "col";
+        }
     }
 }
