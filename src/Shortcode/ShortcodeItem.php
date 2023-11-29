@@ -2,7 +2,7 @@
 
 namespace Sokeio\Shortcode;
 
-use Sokeio\Action;
+use Sokeio\Facades\Action;
 use Sokeio\Item;
 use Sokeio\ItemCallback;
 use Livewire\Livewire;

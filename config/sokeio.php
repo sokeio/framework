@@ -184,15 +184,7 @@ return [
         Shortcode::Create('time')->Title('Time Now')->Parameters([
             Item::Add('format')->Title('Format')->ValueDefault('Y-m-d H:i:s'),
         ])->ActionData(TimeNowAction::class),
-        // Shortcode::Create('col')->Parameters([
-        //     Item::Add('column')->Title('Column')->Column(Item::Col3)->Type('select')->DataOption(function () {
-        //         return Item::getColumnValue();
-        //     }),
-        // ])->Column(function ($item) {
-        //     if (isset($item->getData()['attrs']['column'])) {
-        //         return $item->getData()['attrs']['column'];
-        //     }
-        // }),
+       
     ],
     'actions' => [
         'countModel' => CountModel::class,

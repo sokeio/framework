@@ -2,7 +2,7 @@
 
 namespace Sokeio\Platform;
 
-use Sokeio\Action;
+use Sokeio\Facades\Action;
 use Sokeio\Laravel\Hook\ActionHook;
 use Sokeio\ArrayStatus;
 use Sokeio\DataInfo;
