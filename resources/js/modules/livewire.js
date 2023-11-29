@@ -25,7 +25,7 @@ export class LiveWireModule extends SokeioPlugin {
     });
     self.getManager().on("sokeio::loaded", (el) => {
       if (!window.Livewire) return;
-      window.ByteManager.doTrigger(el);
+      window.SokeioManager.doTrigger(el);
       window.addEventListener("sokeio::close", ({ detail: { option } }) => {
         let { id, component } = option;
         if (id) {
@@ -88,10 +88,10 @@ export class LiveWireModule extends SokeioPlugin {
       window.addEventListener("sokeio::message", ({ detail: { option } }) => {
         console.log('sokeio::message')
         if (typeof option === "string") {
-          window.ByteManager.addInfo(option, "sokeio::message");
+          window.SokeioManager.addInfo(option, "sokeio::message");
         } else {
           const { error, message, type, meta, ...data } = option;
-          window.ByteManager.addMessage(
+          window.SokeioManager.addMessage(
             message ?? error,
             type,
             "sokeio::message",

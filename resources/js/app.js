@@ -14,24 +14,24 @@ import { getShortcodeObjectFromText, onEventListenerFromDom } from "./utils";
 import { LiveWireCountUpModule } from "./modules/livewire-countup";
 import { LiveWireTagifyModule } from "./modules/livewire-tagify";
 import { LiveWireFlatpickrModule } from "./modules/livewire-flatpickr";
-let ByteManager = new Sokeio();
+let SokeioManager = new Sokeio();
 window.addEventListener("sokeio::register", function () {
-  ByteManager.registerPlugin(ConfirmModule);
-  ByteManager.registerPlugin(FileManagerModule);
-  ByteManager.registerPlugin(ActionModule);
-  ByteManager.registerPlugin(LiveWireModule);
-  ByteManager.registerPlugin(LiveWireChartModule);
-  ByteManager.registerPlugin(LiveWireFlatpickrModule);
-  ByteManager.registerPlugin(LiveWireTagifyModule);
-  ByteManager.registerPlugin(LiveWireSortablejsModule);
-  ByteManager.registerPlugin(LiveWireCountUpModule);
-  ByteManager.registerPlugin(ComponentModule);
-  ByteManager.registerPlugin(ModalModule);
-  ByteManager.registerPlugin(ToastsModule);
-  ByteManager.registerPlugin(LiveWireGetValueParentModule);
-  ByteManager.registerPlugin(LiveWireTinymceModule);
+  SokeioManager.registerPlugin(ConfirmModule);
+  SokeioManager.registerPlugin(FileManagerModule);
+  SokeioManager.registerPlugin(ActionModule);
+  SokeioManager.registerPlugin(LiveWireModule);
+  SokeioManager.registerPlugin(LiveWireChartModule);
+  SokeioManager.registerPlugin(LiveWireFlatpickrModule);
+  SokeioManager.registerPlugin(LiveWireTagifyModule);
+  SokeioManager.registerPlugin(LiveWireSortablejsModule);
+  SokeioManager.registerPlugin(LiveWireCountUpModule);
+  SokeioManager.registerPlugin(ComponentModule);
+  SokeioManager.registerPlugin(ModalModule);
+  SokeioManager.registerPlugin(ToastsModule);
+  SokeioManager.registerPlugin(LiveWireGetValueParentModule);
+  SokeioManager.registerPlugin(LiveWireTinymceModule);
 });
-window.ByteManager = ByteManager;
+window.SokeioManager = SokeioManager;
 window.showToast = function (
   message,
   title = undefined,
@@ -39,7 +39,7 @@ window.showToast = function (
   type = undefined,
   messageType = "info"
 ) {
-  window.ByteManager.addMessage(message, messageType, "showToast", {
+  window.SokeioManager.addMessage(message, messageType, "showToast", {
     title,
     postion,
     type,
@@ -48,7 +48,7 @@ window.showToast = function (
 window.onEventListenerFromDom = onEventListenerFromDom;
 window.getShortcodeObjectFromText = getShortcodeObjectFromText;
 window.showFileManager = function (callback, type = "file") {
-  window.ByteManager.showFileManager(callback, type);
+  window.SokeioManager.showFileManager(callback, type);
 };
 window.openShortcodeSetting = function (
   $editorContainer,
@@ -57,7 +57,7 @@ window.openShortcodeSetting = function (
   $child,
   callback = undefined
 ) {
-  window.ByteManager.openShortcodeSetting(
+  window.SokeioManager.openShortcodeSetting(
     $editorContainer,
     $shortcode,
     $attrs,

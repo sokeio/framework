@@ -145,9 +145,9 @@ class SokeioServiceProvider extends ServiceProvider
             " . $scriptSokeio . "
             
             window.addEventListener('sokeio::init',function(){
-                if(window.ByteManager){
-                    window.ByteManager.\$debug=" . (env('SOKEIO_MODE_DEBUG', false) ? 'true' : 'false') . ";
-                    window.ByteManager.\$config=" . json_encode(apply_filters(PLATFORM_CONFIG_JS,  $arrConfigjs)) . ";
+                if(window.SokeioManager){
+                    window.SokeioManager.\$debug=" . (env('SOKEIO_MODE_DEBUG', false) ? 'true' : 'false') . ";
+                    window.SokeioManager.\$config=" . json_encode(apply_filters(PLATFORM_CONFIG_JS,  $arrConfigjs)) . ";
                 }
             });
             setTimeout(function(){

@@ -1,7 +1,7 @@
 import { ByteEvent } from "./event";
 import { SokeioPlugin } from "./plugin";
 
-export class ByteManager extends ByteEvent {
+export class SokeioManager extends ByteEvent {
   plugins: any = {};
   constructor() {
     super();

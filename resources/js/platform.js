@@ -1,9 +1,9 @@
-import { ByteManager } from "./core/manager";
+import { SokeioManager } from "./core/manager";
 import axios from "axios";
 axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 import _ from "lodash";
 window._ = _;
-export class Sokeio extends ByteManager {
+export class Sokeio extends SokeioManager {
   $config = {};
   $loaded = false;
   $debug = false;

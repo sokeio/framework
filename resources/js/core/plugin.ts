@@ -1,4 +1,4 @@
-import { ByteManager } from "./manager";
+import { SokeioManager } from "./manager";
 
 export class SokeioPlugin {
   private _manager: any;
@@ -8,7 +8,7 @@ export class SokeioPlugin {
   public manager(manager: any) {
     this._manager = manager;
   }
-  public getManager(): ByteManager {
+  public getManager(): SokeioManager {
     return this._manager;
   }
   public register() {}

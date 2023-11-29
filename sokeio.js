@@ -118,15 +118,15 @@ window.PlatformLoadScript = function (
     .ByteLoadScript(source, beforeEl, async, defer)
     .then(function () {
       dispatchDocument("sokeio::ready");
-      if (window.ByteManager) {
-        window.ByteManager.start();
+      if (window.SokeioManager) {
+        window.SokeioManager.start();
         window.PlatformLoadScript = undefined;
       }
     })
     .catch(function () {
       dispatchDocument("sokeio::ready");
-      if (window.ByteManager) {
-        window.ByteManager.start();
+      if (window.SokeioManager) {
+        window.SokeioManager.start();
         window.PlatformLoadScript = undefined;
       }
     });
