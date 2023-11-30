@@ -184,7 +184,7 @@ class SokeioServiceProvider extends ServiceProvider
         Route::matched(function () {
             $route_name = Route::currentRouteName();
             if ($route_name == 'homepage' && adminUrl() == '') {
-                add_filter(PLATFORM_IS_ADMIN, function () {
+                add_filter(SOKEIO_IS_ADMIN, function () {
                     return true;
                 }, 0);
             }

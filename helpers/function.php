@@ -13,7 +13,6 @@ use Sokeio\Facades\Platform;
 use Sokeio\Facades\Plugin;
 use Sokeio\Facades\Shortcode;
 use Sokeio\Facades\Theme;
-use Sokeio\Item;
 use Sokeio\Models\Setting;
 
 if (!function_exists('sokeio_encode')) {
@@ -112,7 +111,7 @@ if (!function_exists('sokeio_is_admin')) {
         if (request('___theme___admin') == true) {
             $is_admin = true;
         }
-        return apply_filters(PLATFORM_IS_ADMIN, $is_admin);
+        return apply_filters(SOKEIO_IS_ADMIN, $is_admin);
     }
 }
 
@@ -304,17 +303,6 @@ if (!function_exists('adminUrl')) {
         return apply_filters(SOKEIO_URL_ADMIN, env('SOKEIO_URL_ADMIN', ''));
     }
 }
-if (!function_exists('page_title')) {
-    function page_title($title = '', $lock = false)
-    {
-        if ($title) {
-            Theme::setTitle($title, $lock = false);
-            return;
-        }
-        return  apply_filters(PLATFORM_PAGE_TITLE, Theme::getTitle());
-    }
-}
-
 
 if (!function_exists('set_setting')) {
     function set_setting($key, $value = null, $locked = null)

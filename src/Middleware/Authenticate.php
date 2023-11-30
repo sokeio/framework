@@ -33,10 +33,10 @@ class Authenticate extends Middleware
     {
         if (!$request->expectsJson()) {
             if (sokeio_is_admin()) {
-                return (apply_filters(PLATFORM_URL_LOGIN, route('admin.login')));
+                return (apply_filters(SOKEIO_URL_LOGIN, route('admin.login')));
             } else {
 
-                return (apply_filters(PLATFORM_URL_LOGIN, route('auth.login')));
+                return (apply_filters(SOKEIO_URL_LOGIN, route('auth.login')));
             }
         }
     }
