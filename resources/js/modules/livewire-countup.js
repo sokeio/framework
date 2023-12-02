@@ -40,7 +40,7 @@ export class LiveWireCountUpModule extends SokeioPlugin {
         } else {
           window.addScriptToWindow(
             self.getManager().getUrlPublic(
-              "platform/modules/byte/count-up/dist/count-up.min.js"
+              "platform/modules/sokeio/count-up/dist/count-up.min.js"
             ),
             function () {
               countupCreate();

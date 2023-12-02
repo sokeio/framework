@@ -30,7 +30,7 @@ export class LiveWireFlatpickrModule extends SokeioPlugin {
             self
               .getManager()
               .getUrlPublic(
-                "platform/modules/byte/flatpickr/dist/flatpickr.min.css"
+                "platform/modules/sokeio/flatpickr/dist/flatpickr.min.css"
               ),
             function () {}
           );
@@ -38,7 +38,7 @@ export class LiveWireFlatpickrModule extends SokeioPlugin {
             self
               .getManager()
               .getUrlPublic(
-                "platform/modules/byte/flatpickr/dist/flatpickr.min.js"
+                "platform/modules/sokeio/flatpickr/dist/flatpickr.min.js"
               ),
             function () {
               flatpickrCreate();

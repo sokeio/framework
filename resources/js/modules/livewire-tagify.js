@@ -71,7 +71,7 @@ export class LiveWireTagifyModule extends SokeioPlugin {
             self
               .getManager()
               .getUrlPublic(
-                "platform/modules/byte/tagify/dist/tagify.css"
+                "platform/modules/sokeio/tagify/dist/tagify.css"
               ),
             function () {}
           );
@@ -79,7 +79,7 @@ export class LiveWireTagifyModule extends SokeioPlugin {
             self
               .getManager()
               .getUrlPublic(
-                "platform/modules/byte/tagify/dist/tagify.min.js"
+                "platform/modules/sokeio/tagify/dist/tagify.min.js"
               ),
             function () {
               tagifyCreate();

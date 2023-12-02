@@ -90,7 +90,7 @@ export class LiveWireTinymceModule extends SokeioPlugin {
               self
                 .getManager()
                 .getUrlPublic(
-                  "platform/modules/byte/tinymce/tinymce.min.js"
+                  "platform/modules/sokeio/tinymce/tinymce.min.js"
                 ),
               function () {
                 setTimeout(() => {

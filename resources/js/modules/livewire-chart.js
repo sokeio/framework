@@ -34,13 +34,13 @@ export class LiveWireChartModule extends SokeioPlugin{
           } else {
             window.addStyleToWindow(
               self.getManager().getUrlPublic(
-                "platform/modules/byte/apexcharts/dist/apexcharts.css"
+                "platform/modules/sokeio/apexcharts/dist/apexcharts.css"
               ),
               function () {}
             );
             window.addScriptToWindow(
               self.getManager().getUrlPublic(
-                "platform/modules/byte/apexcharts/dist/apexcharts.min.js"
+                "platform/modules/sokeio/apexcharts/dist/apexcharts.min.js"
               ),
               function () {
                 apexchartsInit();

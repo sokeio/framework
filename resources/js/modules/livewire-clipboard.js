@@ -30,7 +30,7 @@ export class LiveWireClipboardModule extends SokeioPlugin {
             self
               .getManager()
               .getUrlPublic(
-                "platform/modules/byte/clipboard/dist/clipboard.min.js"
+                "platform/modules/sokeio/clipboard/dist/clipboard.min.js"
               ),
             function () {
               clipboardCreate();
