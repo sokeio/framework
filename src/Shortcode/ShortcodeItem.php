@@ -2,8 +2,7 @@
 
 namespace Sokeio\Shortcode;
 
-use Sokeio\Action;
-use Sokeio\Item;
+use Sokeio\Facades\Action;
 use Sokeio\ItemCallback;
 use Livewire\Livewire;
 
@@ -16,11 +15,7 @@ class ShortcodeItem extends ItemCallback
     private function __construct($name)
     {
         // parent::__construct();
-        $this->Key($name)->Name(str($name)->replace('-', ' ')->ucfirst())->Parameters([
-            Item::Add('poll')->Title('Polling')->Column(Item::Col3)->Type('select')->DataOption(function () {
-                return Item::getPolls();
-            }),
-        ])->View(function ($shortcode) {
+        $this->Key($name)->Name(str($name)->replace('-', ' ')->ucfirst())->Parameters([])->View(function ($shortcode) {
             return $shortcode->namespace  . $shortcode->getKey();
         });
     }
@@ -66,7 +61,7 @@ class ShortcodeItem extends ItemCallback
         if (is_string($parameters)) {
             $parameters = app($parameters);
         }
-        $this->__parameters[] = $parameters->Manager($this)->Column(Item::Col12);
+        $this->__parameters[] = $parameters->Manager($this);
         return $this;
     }
     public function getItems()
@@ -137,7 +132,7 @@ class ShortcodeItem extends ItemCallback
 
     public function getColumnSize()
     {
-        return Item::getSize($this->getColumn());
+        return column_size($this->getColumn());
     }
     public function getClassContent()
     {

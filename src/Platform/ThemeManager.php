@@ -2,10 +2,9 @@
 
 namespace Sokeio\Platform;
 
-use Sokeio\Action;
+use Sokeio\Facades\Action;
 use Sokeio\Laravel\Hook\ActionHook;
-use Sokeio\ArrayStatus;
-use Sokeio\DataInfo;
+use Sokeio\Platform\DataInfo;
 use Sokeio\Events\PlatformChanged;
 use Sokeio\Facades\Assets;
 use Sokeio\Facades\Platform;
@@ -42,17 +41,14 @@ class ThemeManager extends ActionHook
         return "theme";
     }
     private $layout;
-    private $title_lock = false;
     private ?DataInfo $data_active;
     public function setTitle($title, $lock = false)
     {
-        if ($this->title_lock) return;
         Assets::SetData('page_title', $title);
-        $this->title_lock = $lock;
     }
     public function getTitle()
     {
-        return apply_filters(PLATFORM_PAGE_TITLE, Assets::GetData('page_title'));
+        return Assets::GetData('page_title');
     }
 
     public function setLayout($layout)

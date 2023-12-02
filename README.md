@@ -20,9 +20,6 @@ $ composer require sokeio/admin
 - Plugins
 - Actions
 - ShortCodes
-- CURD Base
-- Auth(User,Role,Permission)
-- Setting
 
 ## Technology used:
 - Laravel 10x
@@ -43,8 +40,6 @@ You can install package via composer
 
 ```bash
 $ composer require sokeio/framework
-$ php artisan migrate
-$ php artisan b:setup
 $ php artisan vendor:publish --tag=lfm_config
 $ php artisan vendor:publish --tag=lfm_public
 ```

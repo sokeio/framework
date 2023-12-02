@@ -3,7 +3,7 @@
 namespace Sokeio\Concerns;
 
 use Illuminate\Support\Facades\Cache;
-use Sokeio\DataInfo;
+use Sokeio\Platform\DataInfo;
 use Sokeio\Facades\Theme;
 
 trait WithSystemExtend
@@ -85,7 +85,7 @@ trait WithSystemExtend
     /**
      * Get the data.
      *
-     * @return \Illuminate\Support\Collection<string, \Sokeio\DataInfo>
+     * @return \Illuminate\Support\Collection<string, \Sokeio\Platform\DataInfo>
      */
     public function getAll()
     {

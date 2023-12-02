@@ -15,7 +15,7 @@ class PlatformController extends BaseController
     {
         $data = sokeio_decode($request->get('key'));
         if (isset($data['is_admin']) && $data['is_admin']) {
-            add_filter(PLATFORM_IS_ADMIN, function () {
+            add_filter(SOKEIO_IS_ADMIN, function () {
                 return true;
             });
             Theme::reTheme();

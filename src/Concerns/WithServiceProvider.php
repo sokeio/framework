@@ -2,7 +2,7 @@
 
 namespace Sokeio\Concerns;
 
-use Sokeio\Action;
+use Sokeio\Facades\Action;
 use Sokeio\Laravel\WithServiceProvider as WithServiceProviderBase;
 use Sokeio\Facades\Assets;
 use Sokeio\Facades\Platform;

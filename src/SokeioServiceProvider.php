@@ -156,16 +156,12 @@ class SokeioServiceProvider extends ServiceProvider
             </script>";
             Assets::Render(PLATFORM_BODY_AFTER);
         });
-        add_filter(PLATFORM_HOMEPAGE, function ($view) {
-            return $view;
-        }, 0);
-
-
         $this->app->booted(function () {
             Theme::RegisterRoute();
             if (adminUrl() != '') {
                 Route::get('/', route_theme(function () {
                     $homepage = apply_filters(PLATFORM_HOMEPAGE, 'sokeio::homepage');
+                    if (is_object($homepage)) return $homepage;
                     $view = '';
                     $params = [];
                     if (is_array($homepage)) {
@@ -188,7 +184,7 @@ class SokeioServiceProvider extends ServiceProvider
         Route::matched(function () {
             $route_name = Route::currentRouteName();
             if ($route_name == 'homepage' && adminUrl() == '') {
-                add_filter(PLATFORM_IS_ADMIN, function () {
+                add_filter(SOKEIO_IS_ADMIN, function () {
                     return true;
                 }, 0);
             }

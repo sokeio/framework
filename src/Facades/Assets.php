@@ -27,6 +27,6 @@ class Assets extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \Sokeio\AssetManager::class;
+        return \Sokeio\Platform\AssetManager::class;
     }
 }

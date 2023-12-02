@@ -1,7 +1,5 @@
 <?php
 
-use Sokeio\Actions\CountModel;
-use Sokeio\Actions\TimeNowAction;
 use Sokeio\Commands\ActiveCommand;
 use Sokeio\Commands\MakeModuleCommand;
 use Sokeio\Commands\MakePluginCommand;
@@ -9,8 +7,6 @@ use Sokeio\Commands\MakeThemeCommand;
 use Sokeio\Commands\MakeFileCommand;
 use Sokeio\Commands\ListCommand;
 use Sokeio\Commands\MakeCommand;
-use Sokeio\Facades\Shortcode;
-use Sokeio\Item;
 
 return [
     'updator' => [
@@ -180,23 +176,8 @@ return [
         ActiveCommand::class
     ],
     'fields' => [],
-    'shortcodes' => [
-        Shortcode::Create('time')->Title('Time Now')->Parameters([
-            Item::Add('format')->Title('Format')->ValueDefault('Y-m-d H:i:s'),
-        ])->ActionData(TimeNowAction::class),
-        // Shortcode::Create('col')->Parameters([
-        //     Item::Add('column')->Title('Column')->Column(Item::Col3)->Type('select')->DataOption(function () {
-        //         return Item::getColumnValue();
-        //     }),
-        // ])->Column(function ($item) {
-        //     if (isset($item->getData()['attrs']['column'])) {
-        //         return $item->getData()['attrs']['column'];
-        //     }
-        // }),
-    ],
-    'actions' => [
-        'countModel' => CountModel::class,
-    ],
+    'shortcodes' => [],
+    'actions' => [],
     'widgets' => [],
     'namespace' => [
         'root' => 'Sokeio',
@@ -246,7 +227,7 @@ return [
 
     'stubs' => [
         'enabled' => false,
-        'path' => base_path('vendor/sokeio/sokeio/stubs'),
+        'path' => base_path('vendor/sokeio/framework/stubs'),
 
         'list-files' => [
             'common' => [
