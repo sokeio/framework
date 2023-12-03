@@ -88,7 +88,7 @@ class DataInfo extends JsonData
     {
         return $this['description'];
     }
-    public function getVersionn()
+    public function getVersion()
     {
         return $this['version'];
     }

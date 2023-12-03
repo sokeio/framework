@@ -27,6 +27,12 @@ if (!function_exists('sokeio_decode')) {
         return json_decode(urldecode(base64_decode($data)), true);
     }
 }
+if (!function_exists('sokeio_version')) {
+    function sokeio_version()
+    {
+        return Module::find('sokeio')?->getVersion();
+    }
+}
 if (!function_exists('sokeio_component')) {
     function sokeio_component($component, $params = [], $type = '')
     {

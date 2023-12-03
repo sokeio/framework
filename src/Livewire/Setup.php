@@ -215,7 +215,7 @@ class Setup extends Component
         $this->db_name = env('DB_DATABASE', 'forge');
         $this->db_username = env('DB_USERNAME', 'forge');
         $this->db_pass = env('DB_PASSWORD', '');
-        $this->system_version = Module::find('sokeio')?->version ?? 'v1.0.0';
+        $this->system_version = sokeio_version() ?? 'v1.0.0';
     }
     public function render()
     {
