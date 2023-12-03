@@ -22,7 +22,7 @@ trait WithModelTranslatable
     public static function bootWithModelTranslatable(): void
     {
         static::saved(function (Model $model) {
-            /* @var Translatable $model */
+            /* @var WithModelTranslatable $model */
             return $model->saveTranslations();
         });
     }
