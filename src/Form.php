@@ -95,7 +95,9 @@ class Form extends FormBase implements \JsonSerializable
     }
     public function getPropertyValue($name)
     {
-        return $this->___templateData[$name];
+        if ($this->hasProperty($name))
+            return $this->___templateData[$name];
+        return null;
     }
     public function jsonSerialize()
     {

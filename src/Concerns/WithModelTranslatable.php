@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Query\Builder as QueryBuilder;
+use Illuminate\Support\Facades\Log;
 use Sokeio\Facades\Locale;
 
 trait WithModelTranslatable
@@ -18,7 +19,7 @@ trait WithModelTranslatable
 
     protected $defaultLocale;
 
-    public static function bootTranslatable(): void
+    public static function bootWithModelTranslatable(): void
     {
         static::saved(function (Model $model) {
             /* @var Translatable $model */
@@ -38,6 +39,7 @@ trait WithModelTranslatable
 
     public function translateOrNew(?string $locale = null): Model
     {
+        Log::info(['translateOrNew', $locale]);
         return $this->getTranslationOrNew($locale);
     }
 
