@@ -39,7 +39,6 @@ trait WithModelTranslatable
 
     public function translateOrNew(?string $locale = null): Model
     {
-        Log::info(['translateOrNew', $locale]);
         return $this->getTranslationOrNew($locale);
     }
 

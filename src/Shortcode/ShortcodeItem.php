@@ -3,10 +3,10 @@
 namespace Sokeio\Shortcode;
 
 use Sokeio\Facades\Action;
-use Sokeio\ItemCallback;
 use Livewire\Livewire;
+use Sokeio\Laravel\BaseCallback;
 
-class ShortcodeItem extends ItemCallback
+class ShortcodeItem extends BaseCallback
 {
     public static function Create($name)
     {

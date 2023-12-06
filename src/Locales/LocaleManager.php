@@ -30,8 +30,10 @@ class LocaleManager
             $route = request()->route();
             $locale = $route->getPrefix();
         }
-
-        return $locale || $this->defaultLocale;
+        if ($locale && $locale != '') {
+            return $locale;
+        }
+        return  $this->defaultLocale;
     }
     public function SupportedLocales()
     {
