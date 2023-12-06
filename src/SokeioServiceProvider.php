@@ -16,7 +16,6 @@ use Sokeio\Facades\Plugin;
 use Sokeio\Facades\Theme;
 use Sokeio\Locales\LocaleServiceProvider;
 use Sokeio\Middleware\ThemeLayout;
-use Sokeio\Shortcode\ShortcodesServiceProvider;
 use Sokeio\Concerns\WithServiceProvider;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\File;
@@ -30,7 +29,6 @@ class SokeioServiceProvider extends ServiceProvider
 
         $this->app->singleton(\Illuminate\Contracts\Debug\ExceptionHandler::class, ThemeHandler::class);
         $this->app->register(LocaleServiceProvider::class);
-        $this->app->register(ShortcodesServiceProvider::class);
 
         if (!File::exists(base_path('.env'))) {
             File::copy(base_path('.env.example'), base_path('.env'));
