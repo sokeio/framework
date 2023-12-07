@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Facade;
  * @method static void RegisterItem($key, $item, $namespace, $force = false)
  * @method static mix getActions()
  * @method static bool hasAction($key)
- * @method static mix CallActionWithParams($key, $params)
- * @method static mix CallAction($key, ...$params)
- * @method static mix CallFromRoute($key, $params = [])
+ * @method static mix ActionWithParams($key, $params)
+ * @method static mix Action($key, ...$params)
+ * @method static mix ActionFromRoute($key, $params = [])
  * 
  *
  * @see \Sokeio\Facades\Action

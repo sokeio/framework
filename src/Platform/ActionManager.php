@@ -37,21 +37,21 @@ class ActionManager
     {
         return isset($this->_actions[$key]);
     }
-    public function CallActionWithParams($key, $params)
+    public function ActionWithParams($key, $params)
     {
         if (isset($this->_actions[$key])) {
             return app($this->_actions[$key])->handleWithParams($params);
         }
         return null;
     }
-    public function CallAction($key, ...$params)
+    public function Action($key, ...$params)
     {
         if (isset($this->_actions[$key])) {
             return  app($this->_actions[$key])(...$params);
         }
         return null;
     }
-    public function CallFromRoute($key, $params = [])
+    public function ActionFromRoute($key, $params = [])
     {
         return function () use ($key, $params) {
             if (isset($this->_actions[$key])) {
