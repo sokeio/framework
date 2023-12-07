@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Route as FacadesRoute;
 use Sokeio\Facades\Module;
 use Sokeio\Facades\Platform;
 use Sokeio\Facades\Plugin;
-use Sokeio\Facades\Shortcode;
 use Sokeio\Facades\Theme;
 use Sokeio\Models\Setting;
 
@@ -422,12 +421,6 @@ if (!function_exists('platform_path')) {
 
 
 
-if (!function_exists('shortcode_render')) {
-    function shortcode_render($text)
-    {
-        return Shortcode::compileOnly($text);
-    }
-}
 
 if (!function_exists('column_size')) {
     function column_size($size = 'col')
