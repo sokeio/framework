@@ -18,7 +18,6 @@ use Sokeio\Locales\LocaleServiceProvider;
 use Sokeio\Middleware\ThemeLayout;
 use Sokeio\Concerns\WithServiceProvider;
 use Illuminate\Routing\Redirector;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Request;
 
 class SokeioServiceProvider extends ServiceProvider
@@ -26,17 +25,11 @@ class SokeioServiceProvider extends ServiceProvider
     use WithServiceProvider;
     public function configurePackage(ServicePackage $package): void
     {
-
+        Platform::Start();
         $this->app->singleton(\Illuminate\Contracts\Debug\ExceptionHandler::class, ThemeHandler::class);
         $this->app->register(LocaleServiceProvider::class);
 
-        if (!File::exists(base_path('.env'))) {
-            File::copy(base_path('.env.example'), base_path('.env'));
-            run_cmd(base_path(''), 'php artisan key:generate');
 
-            $path = public_path(platform_path());
-            if (File::exists($path)) File::deleteDirectory($path);
-        }
         /*
          * This class is a Package Service Provider
          *
@@ -67,7 +60,7 @@ class SokeioServiceProvider extends ServiceProvider
     }
     protected function registerMiddlewares()
     {
-        /** @var Router $router */
+        /** @var \Illuminate\Routing\Router $router */
         $router = $this->app['router'];
 
         $router->aliasMiddleware('themelayout', ThemeLayout::class);
@@ -85,10 +78,10 @@ class SokeioServiceProvider extends ServiceProvider
 
     public function packageRegistered()
     {
+        $this->registerMiddlewares();
         Collection::macro('paginate', function ($pageSize) {
             return ColectionPaginate::paginate($this, $pageSize);
         });
-        $this->registerMiddlewares();
 
         config(['auth.providers.users.model' => config('sokeio.model.user')]);
         $this->registerBladeDirectives();
@@ -172,7 +165,6 @@ class SokeioServiceProvider extends ServiceProvider
             }
         });
         Platform::Ready(function () {
-
             if (Request::isMethod('get')) {
                 if (!Platform::checkFolderPlatform()) {
                     Platform::makeLink();
@@ -194,6 +186,7 @@ class SokeioServiceProvider extends ServiceProvider
             Theme::reTheme();
             Platform::BootGate();
             Platform::DoReady();
+            Platform::DoReadyAfter();
         });
 
         Route::fallback(function () {

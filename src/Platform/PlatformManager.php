@@ -19,6 +19,23 @@ use Illuminate\Support\Facades\Schema;
 
 class PlatformManager
 {
+    private $startTime = 0;
+    public function Start()
+    {
+        $this->startTime = microtime(true);
+
+        if (!File::exists(base_path('.env'))) {
+            File::copy(base_path('.env.example'), base_path('.env'));
+            run_cmd(base_path(''), 'php artisan key:generate');
+            $path = public_path(platform_path());
+            if (File::exists($path)) File::deleteDirectory($path);
+        }
+    }
+    public function ExecutionTime()
+    {
+        $endTime = microtime(true);
+        return round($endTime - $this->startTime, 4);
+    }
     private $cachePage = false;
     public function enableCachePage()
     {
@@ -36,7 +53,7 @@ class PlatformManager
     {
         return config('sokeio.extends', ['theme', 'plugin', 'module']);
     }
-    
+
     public function registerComposer($path, $resgister = false)
     {
         if (!file_exists($path . '/composer.json')) return [];
@@ -213,6 +230,18 @@ class PlatformManager
     public function DoReady()
     {
         foreach ($this->readyCallback as  $callback) {
+            $callback();
+        }
+    }
+    private $readyAfterCallback = [];
+    public function ReadyAfter($callback = null)
+    {
+        if ($callback && is_callable($callback))
+            $this->readyAfterCallback[] = $callback;
+    }
+    public function DoReadyAfter()
+    {
+        foreach ($this->readyAfterCallback as  $callback) {
             $callback();
         }
     }

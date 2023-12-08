@@ -21,9 +21,13 @@ use Illuminate\Support\Facades\Facade;
  * @method static void BootGate()
  * @method static void Ready($callback = null)
  * @method static void DoReady()
+ * @method static void ReadyAfter($callback = null)
+ * @method static void DoReadyAfter()
  * @method static bool CheckGate();
  * @method static bool CheckConnectDB();
  * @method static void setEnv($arrs)
+ * @method static void Start();
+ * @method static long ExecutionTime();
  * 
  * 
  * @see \Sokeio\Facades\Platform

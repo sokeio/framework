@@ -4,6 +4,8 @@ namespace Sokeio;
 
 use Illuminate\Support\Facades\Route;
 
+use Sokeio\Middleware\Platform as MiddlewarePlatform;
+
 class RouteEx
 {
     private static $cacheRouteLoaded = [];
@@ -13,18 +15,19 @@ class RouteEx
     }
     public static function Api($callback)
     {
-        Route::middleware(apply_filters(PLATFORM_MIDDLEWARE_API, ['api', \Sokeio\Middleware\Platform::class]))
+
+        Route::middleware(apply_filters(PLATFORM_MIDDLEWARE_API, ['api', MiddlewarePlatform::class]))
             ->prefix('api')
             ->group($callback);
     }
     public static function Web($callback)
     {
-        Route::middleware(apply_filters(PLATFORM_MIDDLEWARE_WEB, ['web', \Sokeio\Middleware\Platform::class]))
+        Route::middleware(apply_filters(PLATFORM_MIDDLEWARE_WEB, [MiddlewarePlatform::class,'web']))
             ->group($callback);
     }
     public static function Admin($callback)
     {
-        Route::middleware(apply_filters(PLATFORM_MIDDLEWARE_ADMIN, ['web', \Sokeio\Middleware\Authenticate::class, \Sokeio\Middleware\ThemeAdmin::class, \Sokeio\Middleware\Platform::class]))
+        Route::middleware(apply_filters(PLATFORM_MIDDLEWARE_ADMIN, ['web', \Sokeio\Middleware\Authenticate::class, \Sokeio\Middleware\ThemeAdmin::class, MiddlewarePlatform::class]))
             ->prefix(adminUrl())
             ->group($callback);
     }

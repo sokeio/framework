@@ -26,6 +26,13 @@ if (!function_exists('sokeio_decode')) {
         return json_decode(urldecode(base64_decode($data)), true);
     }
 }
+if (!function_exists('sokeio_time')) {
+    function sokeio_time()
+    {
+        return Platform::ExecutionTime();
+    }
+}
+
 if (!function_exists('sokeio_version')) {
     function sokeio_version()
     {

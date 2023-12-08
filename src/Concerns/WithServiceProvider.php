@@ -7,7 +7,6 @@ use Sokeio\Laravel\WithServiceProvider as WithServiceProviderBase;
 use Sokeio\Facades\Assets;
 use Sokeio\Facades\Platform;
 use Sokeio\Facades\Plugin;
-use Sokeio\Facades\Shortcode;
 use Sokeio\Facades\Theme;
 use Sokeio\LivewireLoader;
 use Sokeio\RouteEx;
@@ -33,11 +32,6 @@ trait WithServiceProvider
 
  
         if ($this->base_type != 'theme') {
-            if ($shortcodes = config($this->package->shortName() . '.shortcodes')) {
-                if (is_array($shortcodes) && count($shortcodes) > 0) {
-                    Shortcode::Register($shortcodes, $this->package->shortName());
-                }
-            }
             if ($actionTypes = config($this->package->shortName() . '.actions')) {
                 if (is_array($actionTypes) && count($actionTypes) > 0) {
                     Action::Register($actionTypes, $this->package->shortName());
