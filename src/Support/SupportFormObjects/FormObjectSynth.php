@@ -1,11 +1,10 @@
 <?php
 
-namespace Livewire\Features\SupportFormObjects;
+namespace Sokeio\Support\SupportFormObjects;
 
 use Livewire\Drawer\Utils;
 use Livewire\Mechanisms\HandleComponents\Synthesizers\Synth;
 use Livewire\Features\SupportAttributes\AttributeCollection;
-use Sokeio\Form;
 
 use function Livewire\wrap;
 
@@ -35,7 +34,8 @@ class FormObjectSynth extends Synth {
         $callBootMethod = static::bootFormObject($this->context->component, $form, $this->path);
 
         foreach ($data as $key => $child) {
-            if ($child === null && Utils::propertyIsTypedAndUninitialized($form, $key)) {
+            //&& Utils::propertyIsTypedAndUninitialized($form, $key)
+            if ($child === null ) {
                 continue;
             }
 

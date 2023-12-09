@@ -1,9 +1,8 @@
 <?php
 
-namespace Livewire\Features\SupportFormObjects;
+namespace Sokeio\Support\SupportFormObjects;
 
 use Livewire\Drawer\Utils;
-use Sokeio\Form;
 
 trait HandlesFormObjects
 {

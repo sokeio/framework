@@ -1,11 +1,10 @@
 <?php
 
-namespace Livewire\Features\SupportFormObjects;
+namespace Sokeio\Support\SupportFormObjects;
 
 use ReflectionClass;
 use Livewire\ComponentHook;
 use ReflectionNamedType;
-use Sokeio\Form;
 
 use function Livewire\on;
 

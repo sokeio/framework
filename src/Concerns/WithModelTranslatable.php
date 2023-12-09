@@ -16,14 +16,43 @@ use Sokeio\Facades\Locale;
 trait WithModelTranslatable
 {
     protected static $autoloadTranslations = null;
-
+    protected static $deleteTranslationsCascade = false;
     protected $defaultLocale;
+    public static function disableDeleteTranslationsCascade(): void
+    {
+        self::$deleteTranslationsCascade = false;
+    }
 
+    public static function enableDeleteTranslationsCascade(): void
+    {
+        self::$deleteTranslationsCascade = true;
+    }
+
+    public static function enableAutoloadTranslations(): void
+    {
+        self::$autoloadTranslations = true;
+    }
+
+    public static function defaultAutoloadTranslations(): void
+    {
+        self::$autoloadTranslations = null;
+    }
+
+    public static function disableAutoloadTranslations(): void
+    {
+        self::$autoloadTranslations = false;
+    }
     public static function bootWithModelTranslatable(): void
     {
         static::saved(function (Model $model) {
             /* @var WithModelTranslatable $model */
             return $model->saveTranslations();
+        });
+        static::deleting(function (Model $model) {
+            /* @var Translatable $model */
+            if (self::$deleteTranslationsCascade === true) {
+                return $model->deleteTranslations();
+            }
         });
     }
 
@@ -216,13 +245,15 @@ trait WithModelTranslatable
 
     private function getTranslationByLocaleKey(string $key): ?Model
     {
-        foreach ($this->translations as $translation) {
-            if ($translation->getAttribute($this->getLocaleKey()) == $key) {
-                return $translation;
-            }
+        if (
+            $this->relationLoaded('translation')
+            && $this->translation
+            && $this->translation->getAttribute($this->getLocaleKey()) == $key
+        ) {
+            return $this->translation;
         }
 
-        return null;
+        return $this->translations->firstWhere($this->getLocaleKey(), $key);
     }
 
     private function getFallbackLocale(?string $locale = null): ?string
@@ -544,20 +575,5 @@ trait WithModelTranslatable
     private function toArrayAlwaysLoadsTranslations(): bool
     {
         return config('sokeio.translatable.to_array_always_loads_translations', true);
-    }
-
-    public static function enableAutoloadTranslations(): void
-    {
-        self::$autoloadTranslations = true;
-    }
-
-    public static function defaultAutoloadTranslations(): void
-    {
-        self::$autoloadTranslations = null;
-    }
-
-    public static function disableAutoloadTranslations(): void
-    {
-        self::$autoloadTranslations = false;
     }
 }

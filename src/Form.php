@@ -3,9 +3,9 @@
 namespace Sokeio;
 
 use Illuminate\Support\Traits\Macroable;
-use Livewire\Form as FormBase;
+use Sokeio\Support\SupportFormObjects\Form as SupportFormObjectsForm;
 
-class Form extends FormBase implements \JsonSerializable
+class Form extends SupportFormObjectsForm implements \JsonSerializable
 {
     use Macroable;
     protected $___templateData = [];
