@@ -8,6 +8,7 @@ use Symfony\Component\Finder\SplFileInfo;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route as FacadesRoute;
+use Sokeio\Breadcrumb;
 use Sokeio\Facades\Module;
 use Sokeio\Facades\Platform;
 use Sokeio\Facades\Plugin;
@@ -108,7 +109,7 @@ if (!function_exists('sokeio_is_admin')) {
             $arrMiddleware = Request()->route()->gatherMiddleware();
             $is_admin = in_array(\Sokeio\Middleware\ThemeAdmin::class,  $arrMiddleware);
         }
-        $url_admin = adminUrl();
+        $url_admin = admin_url();
         if (request()->segment(1) === $url_admin || $url_admin === '') {
             $is_admin = true;
         }
@@ -309,10 +310,16 @@ if (!function_exists('checkRole')) {
         return apply_filters(PLATFORM_CHECK_ROLE, $flg, $per);
     }
 }
-if (!function_exists('adminUrl')) {
-    function adminUrl()
+if (!function_exists('admin_url')) {
+    function admin_url()
     {
         return apply_filters(SOKEIO_URL_ADMIN, env('SOKEIO_URL_ADMIN', ''));
+    }
+}
+if (!function_exists('breadcrumb')) {
+    function breadcrumb($key = ''): Breadcrumb
+    {
+        return apply_filters(SOKEIO_BREADCRUMD, Breadcrumb::Make($key));
     }
 }
 

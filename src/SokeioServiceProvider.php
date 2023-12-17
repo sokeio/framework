@@ -19,6 +19,7 @@ use Sokeio\Middleware\ThemeLayout;
 use Sokeio\Concerns\WithServiceProvider;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Request;
+use Sokeio\CmsTheme\Livewire\About;
 use Sokeio\Support\SupportFormObjects\SupportFormObjects;
 
 class SokeioServiceProvider extends ServiceProvider
@@ -153,7 +154,7 @@ class SokeioServiceProvider extends ServiceProvider
         });
         $this->app->booted(function () {
             Theme::RegisterRoute();
-            if (adminUrl() != '') {
+            if (admin_url() != '') {
                 Route::get('/', route_theme(function () {
                     $homepage = apply_filters(PLATFORM_HOMEPAGE, 'sokeio::homepage');
                     if (is_object($homepage)) return $homepage;
@@ -177,7 +178,7 @@ class SokeioServiceProvider extends ServiceProvider
         });
         Route::matched(function () {
             $route_name = Route::currentRouteName();
-            if ($route_name == 'homepage' && adminUrl() == '') {
+            if ($route_name == 'homepage' && admin_url() == '') {
                 add_filter(SOKEIO_IS_ADMIN, function () {
                     return true;
                 }, 0);
@@ -196,8 +197,8 @@ class SokeioServiceProvider extends ServiceProvider
         Route::fallback(function () {
             if (!Platform::CheckConnectDB() && request()->isMethod('get')) {
                 app(Redirector::class)->to(route('sokeio.setup'))->send();
-                return;
             }
+            return abort(404);
         });
     }
 }

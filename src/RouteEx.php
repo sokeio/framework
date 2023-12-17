@@ -28,7 +28,7 @@ class RouteEx
     public static function Admin($callback)
     {
         Route::middleware(apply_filters(PLATFORM_MIDDLEWARE_ADMIN, ['web', \Sokeio\Middleware\Authenticate::class, \Sokeio\Middleware\ThemeAdmin::class, MiddlewarePlatform::class]))
-            ->prefix(adminUrl())
+            ->prefix(admin_url())
             ->group($callback);
     }
     private static function LoadRoute($path)
