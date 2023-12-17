@@ -14,6 +14,18 @@ class Form extends SupportFormObjectsForm implements \JsonSerializable
     {
         $this->___templateData = [];
     }
+    public function fill($values)
+    {
+        if (!$values) return;
+        
+        if (method_exists($values, 'toArray')) {
+            $values = $values->toArray();
+        }
+
+        foreach ($values as $key => $value) {
+            data_set($this->___templateData, $key, $value);
+        }
+    }
     public function __isset($name)
     {
         return isset($this->___templateData[$name]);
