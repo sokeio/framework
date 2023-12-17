@@ -80,14 +80,7 @@ trait WithLivewire
             $this->_refComponentId = request('refComponent');
         }
     }
-    // protected function ensureViewHasValidLivewireLayout($view)
-    // {
-    //     if ($view == null) {
-    //         return;
-    //     }
-    //     parent::ensureViewHasValidLivewireLayout($view);
-    //     $view->extends(theme_layout())->section('content');
-    // }
+   
     public function __invoke()
     {
         // Here's we're hooking into the "__invoke" method being called on a component.
