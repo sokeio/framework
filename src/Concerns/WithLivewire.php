@@ -3,7 +3,7 @@
 namespace Sokeio\Concerns;
 
 use Sokeio\LivewireLoader;
-use Livewire\Features\SupportPageComponents\LayoutConfig;
+use Livewire\Features\SupportPageComponents\PageComponentConfig;
 use Livewire\Features\SupportPageComponents\SupportPageComponents;
 
 trait WithLivewire
@@ -90,11 +90,10 @@ trait WithLivewire
 
         $layoutConfig = SupportPageComponents::interceptTheRenderOfTheComponentAndRetreiveTheLayoutConfiguration(function () use (&$html) {
             $params = SupportPageComponents::gatherMountMethodParamsFromRouteParameters($this);
-
             $html = app('livewire')->mount($this::class, [...$params, '___isPage' => true]);
         });
 
-        $layoutConfig = $layoutConfig ?: new LayoutConfig();
+        $layoutConfig = $layoutConfig ?: new PageComponentConfig();
 
         $layoutConfig->normalizeViewNameAndParamsForBladeComponents();
 

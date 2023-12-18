@@ -36,7 +36,7 @@ class Form extends SupportFormObjectsForm implements \JsonSerializable
     }
     public function __set($name, $value)
     {
-        $this->___templateData[$name] = $value;
+        data_set($this->___templateData, $name, $value);
     }
     /**
      * Unsets an data by key
@@ -59,7 +59,7 @@ class Form extends SupportFormObjectsForm implements \JsonSerializable
      */
     public function offsetSet($offset,  $value)
     {
-        $this->___templateData[$offset] = $value;
+        data_set($this->___templateData, $offset, $value);
     }
 
     /**
