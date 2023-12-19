@@ -12,7 +12,6 @@ trait WithLivewire
     public $_dataTemps = [];
     public $_refComponentId;
     public $___isPage = false;
-    public $___method_get_first = false;
     public $___theme___admin = false;
     public $___number_loading = 0;
     public function CurrentIsPage()
