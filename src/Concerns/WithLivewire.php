@@ -2,6 +2,7 @@
 
 namespace Sokeio\Concerns;
 
+use Illuminate\Routing\Route;
 use Sokeio\LivewireLoader;
 use Livewire\Features\SupportPageComponents\PageComponentConfig;
 use Livewire\Features\SupportPageComponents\SupportPageComponents;
@@ -79,7 +80,7 @@ trait WithLivewire
             $this->_refComponentId = request('refComponent');
         }
     }
-   
+
     public function __invoke()
     {
         // Here's we're hooking into the "__invoke" method being called on a component.
@@ -89,7 +90,7 @@ trait WithLivewire
 
         $layoutConfig = SupportPageComponents::interceptTheRenderOfTheComponentAndRetreiveTheLayoutConfiguration(function () use (&$html) {
             $params = SupportPageComponents::gatherMountMethodParamsFromRouteParameters($this);
-            $html = app('livewire')->mount($this::class, [...$params, '___isPage' => true]);
+            $html = app('livewire')->mount($this::class, [...$params, '___isPage' => request()->isMethod('get')]);
         });
 
         $layoutConfig = $layoutConfig ?: new PageComponentConfig();
