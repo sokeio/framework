@@ -15,10 +15,13 @@ class LivewireLoader
     {
         return self::$arrComponent;
     }
-    private static function pushComponent($component)
+    private static function pushComponent($component,$class)
     {
         if (!self::$arrComponent) self::$arrComponent = collect([]);
         self::$arrComponent->push($component);
+        if($class){
+              Livewire::component($component, $class);
+        }
     }
     public static function getNameByClass($class)
     {
@@ -47,15 +50,11 @@ class LivewireLoader
                 // fix class namespace
                 $alias_class = self::getNameByClass($class);
                 if (Str::endsWith($class, ['\Index', '\index'])) {
-                    LivewireLoader::pushComponent(Str::beforeLast($alias, '.index'));
-                    LivewireLoader::pushComponent(Str::beforeLast($alias_class, '.index'));
-                    Livewire::component(Str::beforeLast($alias, '.index'), $class);
-                    Livewire::component(Str::beforeLast($alias_class, '.index'), $class);
+                    self::pushComponent(Str::beforeLast($alias, '.index'), $class);
+                    self::pushComponent(Str::beforeLast($alias_class, '.index'), $class);
                 }
-                LivewireLoader::pushComponent($alias);
-                LivewireLoader::pushComponent($alias_class);
-                Livewire::component($alias_class, $class);
-                Livewire::component($alias, $class);
+                self::pushComponent($alias,$class);
+                self::pushComponent($alias_class,$class);
             },
             function ($class) {
                 if (!class_exists($class)) return false;
