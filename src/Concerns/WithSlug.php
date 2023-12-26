@@ -15,11 +15,14 @@ trait WithSlug
     {
         return 'slug';
     }
+    protected function getSlugText(){
+        return $this->name;
+    }
     public function ReSlug()
     {
         if (($this->slug == null || $this->slug == "")) {
             // produce a slug based on the activity title
-            $slug = isset($this->FieldSlug) ? Str::slug($this->{$this->FieldSlug}) : Str::slug($this->name);
+            $slug =  Str::slug($this->getSlugText()??'');
             if (!$slug) return;
             // check to see if any other slugs exist that are the same & count them
             $slugMax =  static::whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->orderByDesc('slug')->first();
