@@ -1,17 +1,29 @@
 import { SokeioPlugin } from "../core/plugin";
 
-export class ToastsModule  extends SokeioPlugin{
-  getKey(){
-    return 'SOKEIO_TOASTS_MODULE';
+export class ToastsModule extends SokeioPlugin {
+  getKey() {
+    return "SOKEIO_TOASTS_MODULE";
+  }
+  initPosition() {
+    let self = this;
+    self.getManager().rem;
+    Object.keys(self.postion).forEach((key) => {
+      self.postion_el[key] = self
+        .getManager()
+        .appendHtmlToBody(
+          `<div style='position: fixed;' class="toast-container p-3 ${self.postion[key]}" id="toast-${key}">`
+        );
+    });
   }
   booting() {
     let self = this;
     self.getManager().removeListenerAll("sokeio::message");
-    self.getManager().onSafe("sokeio::message", self.showMessageEvent.bind(this));
-    Object.keys(self.postion).forEach((key) => {
-      self.postion_el[key] = self.getManager().appendHtmlToBody(
-        `<div style='position: fixed;' class="toast-container p-3 ${self.postion[key]}" id="toast-${key}">`
-      );
+    self
+      .getManager()
+      .onSafe("sokeio::message", self.showMessageEvent.bind(this));
+
+    document.addEventListener("livewire:navigated", () => {
+      self.initPosition();
     });
   }
   postion = {
@@ -91,5 +103,4 @@ export class ToastsModule  extends SokeioPlugin{
       onCallback
     );
   };
-  
 }
