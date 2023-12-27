@@ -45,14 +45,10 @@ export class LiveWireTagifyModule extends SokeioPlugin {
         const onInput = (e) => {
           var value = e.detail.value;
           el.livewire____tagify.loading(true);
-          component.$wire
-            .callDoAction(options.whitelistAction, {
-              text: value,
-            })
-            .then(function (rs) {
-              el.livewire____tagify.whitelist = rs;
-              el.livewire____tagify.loading(false).dropdown.show(value);
-            });
+          component.$wire[options.whitelistAction](value).then(function (rs) {
+            el.livewire____tagify.whitelist = rs;
+            el.livewire____tagify.loading(false).dropdown.show(value);
+          });
         };
         const onChange = (e) => {
           self.getManager().dataSet(component.$wire, modelKey, e.detail.value);
@@ -60,7 +56,9 @@ export class LiveWireTagifyModule extends SokeioPlugin {
         const tagifyCreate = () => {
           if (!el.livewire____tagify) {
             el.livewire____tagify = new window.Tagify(el, options);
-            el.livewire____tagify.on("input", onInput);
+            if (options.whitelistAction) {
+              el.livewire____tagify.on("input", onInput);
+            }
             el.livewire____tagify.on("change", onChange);
           }
         };
@@ -70,9 +68,7 @@ export class LiveWireTagifyModule extends SokeioPlugin {
           window.addStyleToWindow(
             self
               .getManager()
-              .getUrlPublic(
-                "platform/modules/sokeio/tagify/dist/tagify.css"
-              ),
+              .getUrlPublic("platform/modules/sokeio/tagify/dist/tagify.css"),
             function () {}
           );
           window.addScriptToWindow(
