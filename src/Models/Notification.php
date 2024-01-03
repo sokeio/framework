@@ -12,5 +12,7 @@ class Notification extends \Sokeio\Model
      */
     protected $casts = [
         'meta_data' => 'array',
+        'to_user' => 'array',
+        'to_role' => 'array',
     ];
 }

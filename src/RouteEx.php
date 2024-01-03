@@ -22,7 +22,7 @@ class RouteEx
     }
     public static function Web($callback)
     {
-        Route::middleware(apply_filters(PLATFORM_MIDDLEWARE_WEB, [MiddlewarePlatform::class,'web']))
+        Route::middleware(apply_filters(PLATFORM_MIDDLEWARE_WEB, [MiddlewarePlatform::class, 'web']))
             ->group($callback);
     }
     public static function Admin($callback)
