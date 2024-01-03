@@ -3,13 +3,11 @@
 namespace Sokeio\Platform;
 
 use Sokeio\Platform\DataInfo;
-use Sokeio\Events\NotificationAdd;
 use Illuminate\Support\Facades\File;
 use Sokeio\Laravel\JsonData;
 use Sokeio\Facades\Module;
 use Sokeio\Facades\Plugin;
 use Sokeio\Facades\Theme;
-use Sokeio\Models\Notification;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -49,7 +47,7 @@ class PlatformManager
     {
         return $this->cachePage && !env('APP_DEBUG', false) && !Auth::check();
     }
-    public function listExtend()
+    public function getExtends()
     {
         return config('sokeio.extends', ['theme', 'plugin', 'module']);
     }
@@ -91,14 +89,14 @@ class PlatformManager
     public function getLinks()
     {
         $links = $this->arrLink;
-        foreach ($this->listExtend() as $base_type) {
+        foreach ($this->getExtends() as $base_type) {
             $links = array_merge($links, platform_by($base_type)->getLinks());
         }
         return $links;
     }
     public function makeLink($relative = false, $force = true)
     {
-        foreach (['theme', 'plugin', 'module'] as $item) {
+        foreach ($this->getExtends() as $item) {
             $pathType = platform_path($item);
             $public = public_path($pathType);
             $appdir = base_path($pathType);
@@ -134,14 +132,14 @@ class PlatformManager
     }
     public function checkFolderPlatform()
     {
-        foreach (['theme', 'plugin', 'module'] as $item) {
+        foreach ($this->getExtends() as $item) {
             if (!file_exists(platform_path($item))) return false;
         }
         return true;
     }
     public function getDataInfo($path, $register = true)
     {
-        foreach ($this->listExtend() as $baseType) {
+        foreach ($this->getExtends() as $baseType) {
             if (file_exists(($path . '/' . $baseType . '.json'))) {
                 $data_info = JsonData::getJsonFromFile($path . '/' . $baseType . '.json');
                 if ($register && isset($data_info['id']) && !(platform_by($baseType)->has($data_info['id']))) {
@@ -163,22 +161,7 @@ class PlatformManager
         $arr = [...$arr, ...Plugin::getModels()];
         return apply_filters(PLATFORM_MODEL_LIST, $arr);
     }
-    public function NotificationAdd($title, $description, $meta_data = [], $to_role = null, $to_user = null, $type = null, $view = null)
-    {
-        $noti = new Notification();
-        $noti->title = $title;
-        $noti->description = $description;
-        $noti->meta_data = $meta_data;
-        $noti->to_role = $to_role;
-        $noti->to_user = $to_user;
-        $noti->to_role = $to_role;
-        $noti->view = $view;
-        $noti->type = $type;
-        $noti->from_user = auth()->check() ? auth()->user()->id : -1;
-        $noti->save();
-        NotificationAdd::dispatch($noti);
-        NotificationAdd::broadcast($noti);
-    }
+  
     public function CheckConnectDB()
     {
         try {
@@ -251,9 +234,7 @@ class PlatformManager
     }
     public function setEnv($arrs)
     {
-
         $path = base_path('.env');
-
         if (File::exists($path)) {
 
             $envContent = file_get_contents($path, true);
