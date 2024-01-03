@@ -1,6 +1,7 @@
 <?php
 
 namespace Sokeio;
+
 use Sokeio\Events\NotificationAdd;
 use Sokeio\Models\Notification as NotificationModel;
 

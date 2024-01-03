@@ -14,7 +14,7 @@ use Sokeio\Facades\Platform;
 use Sokeio\Facades\Plugin;
 use Sokeio\Facades\Theme;
 use Sokeio\Models\Setting;
-
+use Sokeio\Notification;
 if (!function_exists('sokeio_encode')) {
     function sokeio_encode($data)
     {
@@ -323,6 +323,12 @@ if (!function_exists('breadcrumb')) {
     }
 }
 
+if (!function_exists('notification')) {
+    function notification(): Notification
+    {
+        return Notification::make();
+    }
+}
 if (!function_exists('set_setting')) {
     function set_setting($key, $value = null, $locked = null)
     {
