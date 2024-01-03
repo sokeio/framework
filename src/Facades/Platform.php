@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static void addLink(string $source,string $target, bool $relative = false)
  * @method static mix getLinks()
  * @method static void makeLink()
- * @method static mix listExtend()
+ * @method static mix getExtends()
  * @method static void checkFolderPlatform()
  * @method static mix getDataInfo($path,$register)
  * @method static array getModels()
