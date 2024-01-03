@@ -163,7 +163,7 @@ class PlatformManager
         $arr = [...$arr, ...Plugin::getModels()];
         return apply_filters(PLATFORM_MODEL_LIST, $arr);
     }
-    public function NotificationAdd($title, $description, $meta_data = [], $to_role = null, $to_user = null)
+    public function NotificationAdd($title, $description, $meta_data = [], $to_role = null, $to_user = null, $type = null, $view = null)
     {
         $noti = new Notification();
         $noti->title = $title;
@@ -171,6 +171,10 @@ class PlatformManager
         $noti->meta_data = $meta_data;
         $noti->to_role = $to_role;
         $noti->to_user = $to_user;
+        $noti->to_role = $to_role;
+        $noti->view = $view;
+        $noti->type = $type;
+        $noti->from_user = auth()->check() ? auth()->user()->id : -1;
         $noti->save();
         NotificationAdd::dispatch($noti);
         NotificationAdd::broadcast($noti);
