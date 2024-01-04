@@ -2,6 +2,8 @@
 
 namespace Sokeio;
 
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Sokeio\Events\NotificationAdd;
 use Sokeio\Models\Notification as NotificationModel;
 
@@ -78,14 +80,49 @@ class Notification
     {
         return $this->from_user ?? (auth()->check() ? auth()->user()->id : -1);
     }
-    public function getNoticationAll($userId = -1, $page = 0, $pageSize = 5)
+    public function tickReadAll()
     {
-        return NotificationModel::with(['UserRead' => function ($query) use ($userId) {
-            $query->where('user_id', $userId);
-        }])->paginate($pageSize, ['*'], 'page', $page);
+        $userId = $this->getUserId();
+        DB::statement("
+            INSERT INTO notification_users (user_id, notification_id, read_at)
+            SELECT ?, notifications.id, NOW()
+            FROM notifications
+            WHERE NOT EXISTS (
+                SELECT 1
+                FROM notification_users
+                WHERE notification_users.notification_id = notifications.id
+                AND notification_users.user_id = ?
+            )
+        ", [$userId, $userId]);
     }
-    public function Render($page)
+    public function tickRead($id)
     {
-        return view('sokeio::notifications', ['notifications' => $this->getNoticationAll($this->getUserId(), $page)])->render();
+        $user_id = $this->getUserId();
+        $noti = NotificationModel::find($id);
+        if ($noti) {
+            $noti->UserRead()->firstOrCreate([
+                'user_id' => $user_id,
+            ], [
+                'read_at' => Carbon::now()
+            ]);
+        }
+    }
+
+    public function getNoticationAll($userId = -1, $page = 0, $pageSize = 5, $status = 0)
+    {
+        $query = NotificationModel::with(['UserRead' => function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        }]);
+        if ($status == -1) {
+            $query =  $query->WhereDoesntHave('UserRead');
+        }
+        if ($status == 1) {
+            $query =  $query->whereHas('UserRead');
+        }
+        return $query->latest()->paginate($pageSize, ['*'], 'page', $page);
+    }
+    public function Render($page, $type)
+    {
+        return view('sokeio::notifications.body', ['notifications' => $this->getNoticationAll($this->getUserId(), $page, 15, $type)])->render();
     }
 }

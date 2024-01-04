@@ -5,6 +5,7 @@ namespace Sokeio\Models;
 
 class NotificationUser extends \Sokeio\Model
 {
+    public $timestamps = false;
     /**
      * The attributes that are mass assignable.
      *
