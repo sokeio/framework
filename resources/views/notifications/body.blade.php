@@ -5,7 +5,7 @@
             this.isRead = true;
             $wire.TickRead('{{ $item->id }}');
         }
-    }">
+    }" @click="TickRead()">
     @if($item->view)
         @includeif($item->view,['item'=>$item])
     @elseif($item->type)
