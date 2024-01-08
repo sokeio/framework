@@ -133,21 +133,9 @@ class ThemeManager extends ActionHook
         if ($parent = $theme_data['parent']) {
             $this->findAndRegisterRoute($parent, $parentId);
         }
-
-        $filenames = glob($theme_data->getPath('src/Crud/*.php'));
-        if ($filenames) {
-            foreach ($filenames as $filename) {
-                require_once $filename;
-            }
-        }
         RouteEx::Load($theme_data->getPath('routes/'));
         if (isset($theme_data['alias']) && $theme_data['alias'] != '' && File::exists($theme_data->getPath('config/' . $theme_data['alias'] . '.php'))) {
             $config = include $theme_data->getPath('config/' . $theme_data['alias'] . '.php');
-            if (isset($config['shortcodes']) && $shortcodes = $config['shortcodes']) {
-                if (is_array($shortcodes) && count($shortcodes) > 0) {
-                    Shortcode::Register($shortcodes, 'theme');
-                }
-            }
             if (isset($config['actions']) && $actionTypes = $config['actions']) {
                 if (is_array($actionTypes) && count($actionTypes) > 0) {
                     Action::Register($actionTypes, 'theme');
