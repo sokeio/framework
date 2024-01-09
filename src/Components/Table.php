@@ -1,8 +1,8 @@
 <?php
 
-namespace Sokeio\Admin\Components;
+namespace Sokeio\Components;
 
-use Sokeio\Admin\Components\Concerns\WithTable;
+use Sokeio\Components\Concerns\WithTable;
 use Sokeio\Component;
 
 class Table extends Component

@@ -1,10 +1,10 @@
 <?php
 
-namespace Sokeio\Admin\Components\Concerns;
+namespace Sokeio\Components\Concerns;
 
 use Livewire\Attributes\Reactive;
-use Sokeio\Admin\Components\Field\BaseField;
-use Sokeio\Admin\Components\UI;
+use Sokeio\Components\Field\BaseField;
+use Sokeio\Components\UI;
 use Sokeio\Facades\Theme;
 // use Livewire\Attributes\Url;
 use Sokeio\Form;

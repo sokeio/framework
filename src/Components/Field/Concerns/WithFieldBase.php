@@ -1,8 +1,8 @@
 <?php
 
-namespace Sokeio\Admin\Components\Field\Concerns;
+namespace Sokeio\Components\Field\Concerns;
 
-use Sokeio\Admin\Components\UI;
+use Sokeio\Components\UI;
 
 trait WithFieldBase
 {

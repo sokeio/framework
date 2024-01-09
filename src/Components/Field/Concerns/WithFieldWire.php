@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Admin\Components\Field\Concerns;
+namespace Sokeio\Components\Field\Concerns;
 
 trait WithFieldWire
 {

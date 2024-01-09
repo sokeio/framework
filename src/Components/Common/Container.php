@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Admin\Components\Common;
+namespace Sokeio\Components\Common;
 
 
 class Container extends BaseCommon

@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Admin\Components\Field;
+namespace Sokeio\Components\Field;
 
 
 class PasswordField extends BaseField

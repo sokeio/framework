@@ -1,14 +1,14 @@
 <?php
 
-namespace Sokeio\Admin\Components\Concerns;
+namespace Sokeio\Components\Concerns;
 
-use Sokeio\Admin\Components\Common\Button;
-use Sokeio\Admin\Components\Common\ButtonGroup;
-use Sokeio\Admin\Components\Common\ButtonList;
-use Sokeio\Admin\Components\Common\Card;
-use Sokeio\Admin\Components\Common\Container;
-use Sokeio\Admin\Components\Common\Div;
-use Sokeio\Admin\Components\Common\Tab;
+use Sokeio\Components\Common\Button;
+use Sokeio\Components\Common\ButtonGroup;
+use Sokeio\Components\Common\ButtonList;
+use Sokeio\Components\Common\Card;
+use Sokeio\Components\Common\Container;
+use Sokeio\Components\Common\Div;
+use Sokeio\Components\Common\Tab;
 
 trait WithCommon
 {

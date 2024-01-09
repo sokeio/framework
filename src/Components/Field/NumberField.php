@@ -1,8 +1,8 @@
 <?php
 
-namespace Sokeio\Admin\Components\Field;
+namespace Sokeio\Components\Field;
 
-use Sokeio\Admin\Components\Field\Concerns\WithFieldRange;
+use Sokeio\Components\Field\Concerns\WithFieldRange;
 
 class NumberField extends BaseField
 {

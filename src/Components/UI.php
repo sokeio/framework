@@ -1,11 +1,11 @@
 <?php
 
-namespace Sokeio\Admin\Components;
+namespace Sokeio\Components;
 
 use Illuminate\Support\Traits\Macroable;
-use Sokeio\Admin\Components\Concerns\WithCommon;
-use Sokeio\Admin\Components\Concerns\WithGrid;
-use Sokeio\Admin\Components\Concerns\WithField;
+use Sokeio\Components\Concerns\WithCommon;
+use Sokeio\Components\Concerns\WithGrid;
+use Sokeio\Components\Concerns\WithField;
 
 class UI
 {

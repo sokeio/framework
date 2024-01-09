@@ -1,12 +1,12 @@
 <?php
 
-namespace Sokeio\Admin\Components\Common;
+namespace Sokeio\Components\Common;
 
-use Sokeio\Admin\Components\Common\Concerns\WithButtonBasic;
-use Sokeio\Admin\Components\Common\Concerns\WithButtonColor;
-use Sokeio\Admin\Components\Common\Concerns\WithButtonSoke;
-use Sokeio\Admin\Components\Common\Concerns\WithButtonWire;
-use Sokeio\Admin\Components\Concerns\WithColumn;
+use Sokeio\Components\Common\Concerns\WithButtonBasic;
+use Sokeio\Components\Common\Concerns\WithButtonColor;
+use Sokeio\Components\Common\Concerns\WithButtonSoke;
+use Sokeio\Components\Common\Concerns\WithButtonWire;
+use Sokeio\Components\Concerns\WithColumn;
 
 class Button extends BaseCommon
 {

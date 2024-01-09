@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Admin\Components\Concerns;
+namespace Sokeio\Components\Concerns;
 
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Str;

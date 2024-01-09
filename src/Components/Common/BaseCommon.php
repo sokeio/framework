@@ -1,8 +1,8 @@
 <?php
 
-namespace Sokeio\Admin\Components\Common;
+namespace Sokeio\Components\Common;
 
-use Sokeio\Admin\Components\Base;
+use Sokeio\Components\Base;
 
 class BaseCommon extends Base
 {

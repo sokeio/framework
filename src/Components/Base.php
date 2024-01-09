@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Admin\Components;
+namespace Sokeio\Components;
 
 use Sokeio\Laravel\BaseCallback;
 

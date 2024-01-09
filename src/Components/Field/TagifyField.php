@@ -1,8 +1,8 @@
 <?php
 
-namespace Sokeio\Admin\Components\Field;
+namespace Sokeio\Components\Field;
 
-use Sokeio\Admin\Components\Field\Concerns\WithFieldOption;
+use Sokeio\Components\Field\Concerns\WithFieldOption;
 
 class TagifyField extends BaseField
 {

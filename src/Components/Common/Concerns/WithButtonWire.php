@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Admin\Components\Common\Concerns;
+namespace Sokeio\Components\Common\Concerns;
 
 trait WithButtonWire
 {

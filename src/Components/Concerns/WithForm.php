@@ -1,10 +1,10 @@
 <?php
 
-namespace Sokeio\Admin\Components\Concerns;
+namespace Sokeio\Components\Concerns;
 
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Url;
-use Sokeio\Admin\Components\UI;
+use Sokeio\Components\UI;
 use Sokeio\Facades\Theme;
 use Sokeio\Form;
 

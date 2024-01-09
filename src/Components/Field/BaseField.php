@@ -1,13 +1,13 @@
 <?php
 
-namespace Sokeio\Admin\Components\Field;
+namespace Sokeio\Components\Field;
 
-use Sokeio\Admin\Components\Base;
-use Sokeio\Admin\Components\Concerns\WithColumn;
-use Sokeio\Admin\Components\Field\Concerns\WithFieldBase;
-use Sokeio\Admin\Components\Field\Concerns\withFieldOperator;
-use Sokeio\Admin\Components\Field\Concerns\WithFieldRule;
-use Sokeio\Admin\Components\Field\Concerns\WithFieldWire;
+use Sokeio\Components\Base;
+use Sokeio\Components\Concerns\WithColumn;
+use Sokeio\Components\Field\Concerns\WithFieldBase;
+use Sokeio\Components\Field\Concerns\withFieldOperator;
+use Sokeio\Components\Field\Concerns\WithFieldRule;
+use Sokeio\Components\Field\Concerns\WithFieldWire;
 
 class BaseField extends Base
 {

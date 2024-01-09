@@ -1,8 +1,8 @@
 <?php
 
-namespace Sokeio\Admin\Components\Field;
+namespace Sokeio\Components\Field;
 
-use Sokeio\Admin\Components\Field\Concerns\WithDatasource;
+use Sokeio\Components\Field\Concerns\WithDatasource;
 
 class RadioMutilField extends BaseField
 {

@@ -1,24 +1,24 @@
 <?php
 
-namespace Sokeio\Admin\Components\Concerns;
+namespace Sokeio\Components\Concerns;
 
-use Sokeio\Admin\Components\Field\CheckboxField;
-use Sokeio\Admin\Components\Field\CheckboxMutilField;
-use Sokeio\Admin\Components\Field\DatePickerField;
-use Sokeio\Admin\Components\Field\ImageField;
-use Sokeio\Admin\Components\Field\ModalField;
-use Sokeio\Admin\Components\Field\NumberField;
-use Sokeio\Admin\Components\Field\ToggleField;
-use Sokeio\Admin\Components\Field\ToggleMutilField;
-use Sokeio\Admin\Components\Field\RadioField;
-use Sokeio\Admin\Components\Field\RadioMutilField;
-use Sokeio\Admin\Components\Field\PasswordField;
-use Sokeio\Admin\Components\Field\RangeField;
-use Sokeio\Admin\Components\Field\SelectField;
-use Sokeio\Admin\Components\Field\TagifyField;
-use Sokeio\Admin\Components\Field\TextareaField;
-use Sokeio\Admin\Components\Field\TextField;
-use Sokeio\Admin\Components\Field\TinymceField;
+use Sokeio\Components\Field\CheckboxField;
+use Sokeio\Components\Field\CheckboxMutilField;
+use Sokeio\Components\Field\DatePickerField;
+use Sokeio\Components\Field\ImageField;
+use Sokeio\Components\Field\ModalField;
+use Sokeio\Components\Field\NumberField;
+use Sokeio\Components\Field\ToggleField;
+use Sokeio\Components\Field\ToggleMutilField;
+use Sokeio\Components\Field\RadioField;
+use Sokeio\Components\Field\RadioMutilField;
+use Sokeio\Components\Field\PasswordField;
+use Sokeio\Components\Field\RangeField;
+use Sokeio\Components\Field\SelectField;
+use Sokeio\Components\Field\TagifyField;
+use Sokeio\Components\Field\TextareaField;
+use Sokeio\Components\Field\TextField;
+use Sokeio\Components\Field\TinymceField;
 
 trait WithField
 {

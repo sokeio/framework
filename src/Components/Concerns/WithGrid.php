@@ -1,9 +1,9 @@
 <?php
 
-namespace Sokeio\Admin\Components\Concerns;
+namespace Sokeio\Components\Concerns;
 
-use Sokeio\Admin\Components\Common\Column;
-use Sokeio\Admin\Components\Common\Row;
+use Sokeio\Components\Common\Column;
+use Sokeio\Components\Common\Row;
 
 trait WithGrid
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Admin\Components\Concerns;
+namespace Sokeio\Components\Concerns;
 
 use Sokeio\Breadcrumb;
 
@@ -25,7 +25,7 @@ trait WithLayoutUI
      * Get a new query builder for the model's table.
      *
      *
-     * @return \Sokeio\Admin\Components\Field\BaseField[]
+     * @return \Sokeio\Components\Field\BaseField[]
      */
     protected function getColumns()
     {

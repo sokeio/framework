@@ -1,8 +1,8 @@
 <?php
 
-namespace Sokeio\Admin\Components;
+namespace Sokeio\Components;
 
-use Sokeio\Admin\Components\Concerns\WithForm;
+use Sokeio\Components\Concerns\WithForm;
 use Sokeio\Component;
 
 class Form extends Component

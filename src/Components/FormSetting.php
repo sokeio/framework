@@ -1,9 +1,9 @@
 <?php
 
-namespace Sokeio\Admin\Components;
+namespace Sokeio\Components;
 
 use Illuminate\Support\Facades\DB;
-use Sokeio\Admin\Components\Concerns\WithForm;
+use Sokeio\Components\Concerns\WithForm;
 use Sokeio\Component;
 
 class FormSetting extends Component
