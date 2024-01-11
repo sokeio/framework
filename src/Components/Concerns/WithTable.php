@@ -108,13 +108,10 @@ trait WithTable
     {
         return false;
     }
-    public function booted()
+    public function boot()
     {
         if (!$this->pageSize)
             $this->pageSize = $this->getDefaultPageSize() ?? 10;
-    }
-    public function boot()
-    {
         if (!$this->searchlayout && ($_search = $this->searchUI())) {
             $this->searchlayout = $this->reLayout(UI::Prex('search', $_search));
         }
