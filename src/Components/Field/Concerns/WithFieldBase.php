@@ -91,4 +91,12 @@ trait WithFieldBase
     {
         return $this->getValue('Disable');
     }
+     public function InfoText($InfoText): static
+    {
+        return $this->setKeyValue('InfoText', $InfoText);
+    }
+    public function getInfoText()
+    {
+        return $this->getValue('InfoText');
+    }
 }
