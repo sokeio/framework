@@ -4,7 +4,7 @@ namespace Sokeio\Components\Common\Concerns;
 
 trait WithButtonSoke
 {
-    public function ModalRoute($name, $paramOrcallback = []):static
+    public function ModalRoute($name, $paramOrcallback = []): static
     {
         return $this->ModalUrl(function ($item, $manager) use ($name, $paramOrcallback) {
             if ($paramOrcallback && is_callable($paramOrcallback)) {
@@ -13,7 +13,7 @@ trait WithButtonSoke
             return route($name, $paramOrcallback);
         });
     }
-    public function ModalUrl($ModalUrl):static
+    public function ModalUrl($ModalUrl): static
     {
         return $this->setKeyValue('ModalUrl', $ModalUrl);
     }
@@ -21,7 +21,7 @@ trait WithButtonSoke
     {
         return $this->getValue('ModalUrl');
     }
-    public function ModalSize($ModalSize):static
+    public function ModalSize($ModalSize): static
     {
         return $this->setKeyValue('ModalSize', $ModalSize);
     }
@@ -29,7 +29,45 @@ trait WithButtonSoke
     {
         return $this->getValue('ModalSize');
     }
-    public function ModalTitle($ModalTitle):static
+    public function ModalSmall()
+    {
+        return $this->ModalSize('modal-sm');
+    }
+    public function ModalLarge()
+    {
+        return $this->ModalSize('modal-lg');
+    }
+    public function ModalExtraLarge()
+    {
+        return $this->ModalSize('modal-xl');
+    }
+    public function ModalFullscreen()
+    {
+        return $this->ModalSize('modal-fullscreen');
+    }
+    public function ModalFullscreenSM()
+    {
+        return $this->ModalSize('modal-fullscreen-sm-down');
+    }
+    public function ModalFullscreenMD()
+    {
+        return $this->ModalSize('modal-fullscreen-md-down');
+    }
+    public function ModalFullscreenLG()
+    {
+        return $this->ModalSize('modal-fullscreen-lg-down');
+    }
+    public function ModalFullscreenXL()
+    {
+        return $this->ModalSize('modal-fullscreen-xl-down');
+    }
+
+    public function ModalFullscreenXXL()
+    {
+        return $this->ModalSize('modal-fullscreen-xxl-down');
+    }
+
+    public function ModalTitle($ModalTitle): static
     {
         return $this->setKeyValue('ModalTitle', $ModalTitle);
     }
@@ -38,7 +76,7 @@ trait WithButtonSoke
         return $this->getValue('ModalTitle');
     }
     private $wireConfirm;
-    public function Confirm($message, $title, $yes = 'Yes', $no = 'No'):static
+    public function Confirm($message, $title, $yes = 'Yes', $no = 'No'): static
     {
         $this->wireConfirm = [
             'message' => $message,

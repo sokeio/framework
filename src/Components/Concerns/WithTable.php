@@ -84,7 +84,7 @@ trait WithTable
     }
 
     //The record has been deleted successfully.
-    public function getTableActions()
+    protected function getTableActions()
     {
         return [
             UI::ButtonEdit(__('Edit'))->ModalRoute($this->getRoute() . '.edit', function ($row) {
