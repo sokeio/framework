@@ -12,11 +12,29 @@ class BaseCommon extends Base
     }
     public function DataItem($value)
     {
+        $this->ClearCache();
         parent::DataItem($value);
         if (($content = $this->getContent())) {
-            foreach ($content as $item) {
-                if ($item) {
-                    $item->DataItem($this->getDataItem());
+            if (is_array($content)) {
+                foreach ($content as $item) {
+                    if ($item && is_a($item, Base::class)) {
+                        $item->DataItem($this->getDataItem());
+                    }
+                }
+            }
+        }
+        return $this;
+    }
+    public function LevelDataUI($value)
+    {
+        $this->ClearCache();
+        parent::LevelDataUI($value);
+        if (($content = $this->getContent())) {
+            if (is_array($content)) {
+                foreach ($content as $item) {
+                    if ($item && is_a($item, Base::class)) {
+                        $item->LevelDataUI($this->getLevelDataUI());
+                    }
                 }
             }
         }
@@ -25,11 +43,13 @@ class BaseCommon extends Base
     public function boot()
     {
         if (($content = $this->getContent())) {
-            foreach ($content as $item) {
-                if ($item) {
-                    $item->Prex($this->getPrex());
-                    $item->Manager($this->getManager());
-                    $item->boot();
+            if (is_array($content)) {
+                foreach ($content as $item) {
+                    if ($item && is_a($item, Base::class)) {
+                        $item->Prex($this->getPrex());
+                        $item->Manager($this->getManager());
+                        $item->boot();
+                    }
                 }
             }
         }
@@ -37,7 +57,9 @@ class BaseCommon extends Base
     }
     public function Content($Content)
     {
-        if (is_object($Content)) $Content = [$Content];
+        if ($Content && is_a($Content, Base::class)) {
+            $Content = [$Content];
+        }
         return $this->setKeyValue('Content', $Content);
     }
     public function getContent()

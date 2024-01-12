@@ -8,6 +8,7 @@ use Sokeio\Components\Common\ButtonList;
 use Sokeio\Components\Common\Card;
 use Sokeio\Components\Common\Container;
 use Sokeio\Components\Common\Div;
+use Sokeio\Components\Common\Each;
 use Sokeio\Components\Common\Tab;
 
 trait WithCommon
@@ -23,6 +24,10 @@ trait WithCommon
     public static function Div($value)
     {
         return Div::make($value);
+    }
+    public static function ForEach($arrayData, $value)
+    {
+        return Each::make($value)->ArrayData($arrayData);
     }
     public static function Container($value)
     {

@@ -53,7 +53,48 @@ class Base extends BaseCallback
     }
     public function getDataItem()
     {
-        return  $this->dataItem;
+        return $this->dataItem;
+    }
+    private $levelIndex = 0;
+    public function LevelIndex($value = 0)
+    {
+        $this->levelIndex = $value > 0 ? $value : $this->levelIndex + 1;
+        return $this;
+    }
+    public function getLevelIndex()
+    {
+        return $this->levelIndex;
+    }
+    private $levelData = [];
+    public function LevelDataUI($value)
+    {
+        $this->levelData = $value ?? [];
+        return $this;
+    }
+    public function getLevelDataUI()
+    {
+        return  $this->levelData;
+    }
+    public function LevelData($value, $group_data = 'common', $_levelIndex = -1)
+    {
+        if ($_levelIndex < 0) $_levelIndex = $this->levelIndex;
+        if (!isset($this->levelData[$_levelIndex])) $this->levelData[$_levelIndex] = [];
+        $this->levelData[$_levelIndex][$group_data] = $value;
+        return $this->LevelDataUI($this->levelData);
+    }
+    public function getLevelData($group_data = 'common', $_levelIndex = -1)
+    {
+        if ($_levelIndex < 0) $_levelIndex = $this->levelIndex;
+        if (!isset($this->levelData[$_levelIndex])) $this->levelData[$_levelIndex] = [];
+        return isset($this->levelData[$_levelIndex][$group_data]) ? $this->levelData[$_levelIndex][$group_data] : null;
+    }
+    public function getEachData()
+    {
+        return $this->getLevelData('EachData');
+    }
+    public function getEachIndex()
+    {
+        return $this->getLevelData('EachIndex');
     }
     public function Prex($Prex)
     {

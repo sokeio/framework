@@ -12,6 +12,7 @@ class Tab extends Base
     }
     public function DataItem($value)
     {
+        $this->ClearCache();
         parent::DataItem($value);
         if (($tabs = $this->getTabs())) {
             foreach ($tabs as $item) {
@@ -22,6 +23,25 @@ class Tab extends Base
                         }
                     } else {
                         $item['content']->DataItem($this->getDataItem());
+                    }
+                }
+            }
+        }
+        return $this;
+    }
+    public function LevelDataUI($value)
+    {
+        $this->ClearCache();
+        parent::LevelDataUI($value);
+        if (($tabs = $this->getTabs())) {
+            foreach ($tabs as $item) {
+                if (isset($item['content'])) {
+                    if (is_array($item['content'])) {
+                        foreach ($item['content'] as $column) {
+                            $column->LevelDataUI($this->getLevelDataUI());
+                        }
+                    } else {
+                        $item['content']->LevelDataUI($this->getLevelDataUI());
                     }
                 }
             }
