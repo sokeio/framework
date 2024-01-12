@@ -1,6 +1,6 @@
-@php
+{{-- @php
     $column->LevelIndex();
-@endphp
+@endphp --}}
 @foreach ($column->getArrayData() as $item)
     @php
         $column->LevelData($item, 'EachData');
