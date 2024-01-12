@@ -42,6 +42,8 @@ class FormSetting extends Component
         if (!$this->CurrentIsPage()) {
             $this->refreshRefComponent();
             $this->closeComponent();
+        } else {
+            return   $this->redirectCurrent();
         }
     }
 }
