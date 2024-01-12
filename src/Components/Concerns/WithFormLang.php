@@ -24,4 +24,10 @@ trait WithFormLang
             $this->lang = request('lang');
         }
     }
+    public function changeLangeuage($lang)
+    {
+        $this->lang = $lang;
+        $this->loadData();
+        $this->refreshMe();
+    }
 }
