@@ -6,5 +6,5 @@
 @endphp
 <div wire:ignore>
     <textarea class="form-control" name="field-{{ $modelField }}" placeholder="{{ $modelPlaceholder }}"
-        wire:tinymce='@json($column->getFieldOption())' wire:tinymce-model="{{ $modelField }}" {!! $column->getWireAttribute() !!}></textarea>
+        wire:tinymce='@json($column->getFieldOption())' wire:tinymce-model="{{ $formField }}" {!! $column->getWireAttribute() !!}></textarea>
 </div>

@@ -2,8 +2,17 @@
 
 namespace Sokeio\Components\Common\Concerns;
 
+
 trait WithButtonBasic
 {
+    public function ButtonLink($ButtonLink = true): static
+    {
+        return $this->setKeyValue('ButtonLink', $ButtonLink);
+    }
+    public function getButtonLink()
+    {
+        return $this->getValue('ButtonLink', false);
+    }
     public function Title($Title)
     {
         return $this->setKeyValue('Title', $Title);
@@ -12,7 +21,7 @@ trait WithButtonBasic
     {
         return $this->getValue('Title');
     }
-    public function Name($Name)
+    public function Name($Name): static
     {
         return $this->setKeyValue('Name', $Name);
     }
@@ -20,7 +29,7 @@ trait WithButtonBasic
     {
         return $this->getValue('Name');
     }
-    public function Link($Link)
+    public function Link($Link): static
     {
         return $this->setKeyValue('Link', $Link);
     }
@@ -28,7 +37,7 @@ trait WithButtonBasic
     {
         return $this->getValue('Link');
     }
-    public function ButtonSize($ButtonSize)
+    public function ButtonSize($ButtonSize): static
     {
         return $this->setKeyValue('ButtonSize', $ButtonSize);
     }
@@ -36,11 +45,11 @@ trait WithButtonBasic
     {
         return $this->getValue('ButtonSize');
     }
-    public function Large()
+    public function Large(): static
     {
         return $this->ButtonSize('large');
     }
-    public function Small()
+    public function Small(): static
     {
         return $this->ButtonSize('sm');
     }
@@ -53,5 +62,19 @@ trait WithButtonBasic
             }
             return route($name, $paramOrcallback);
         });
+    }
+    public function getClassButton()
+    {
+        if ($this->getButtonLink()) return '';
+        $classButton = 'btn';
+        if ($buttonColor = $this->getButtonColor()) {
+            $classButton = $classButton . ' btn' . $buttonColor;
+        } else {
+            $classButton = $classButton . ' btn-primary';
+        }
+        if ($buttonSize = $this->getButtonSize()) {
+            $classButton = $classButton . ' btn-' . $buttonSize;
+        }
+        return $classButton;
     }
 }

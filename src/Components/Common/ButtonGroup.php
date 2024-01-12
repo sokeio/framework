@@ -2,9 +2,11 @@
 
 namespace Sokeio\Components\Common;
 
+use Sokeio\Components\Concerns\WithColumn;
 
 class ButtonGroup extends BaseCommon
 {
+    use WithColumn;
     protected function __construct($value)
     {
         parent::__construct($value);
@@ -28,5 +30,23 @@ class ButtonGroup extends BaseCommon
     public function getClassButtonGroup()
     {
         return $this->getValue('ClassButtonGroup');
+    }
+    public function Name($Name)
+    {
+        return $this->setKeyValue('Name', $Name);
+    }
+    public function getName()
+    {
+        return $this->getValue('Name');
+    }
+    public function getFieldValue($row)
+    {
+        $this->ClearCache();
+        $this->DataItem($row);
+        // if ($this->fieldValueCallback) return call_user_func($this->fieldValueCallback, $row, $this, $this->getManager());
+        $this->Title(data_get($row, $this->getName()));
+        return view($this->getView(), [
+            'column' => $this
+        ])->render();
     }
 }

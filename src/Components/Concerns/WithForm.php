@@ -34,6 +34,9 @@ trait WithForm
             $query =  $query->where('id', $this->dataId);
             $data = $query->first();
             if (!$data) return abort(404);
+            if (method_exists($this, 'loadDataBefore')) {
+                call_user_func([$this, 'loadDataBefore'], $data);
+            }
             $this->data->fill($data);
             if (method_exists($this, 'loadDataAfter')) {
                 call_user_func([$this, 'loadDataAfter'], $data);
@@ -41,6 +44,9 @@ trait WithForm
         } else if ($this->copyId) {
             $query =  $query->where('id', $this->copyId);
             $data = $query->first();
+            if (method_exists($this, 'loadDataBefore')) {
+                call_user_func([$this, 'loadDataBefore'], $data);
+            }
             $this->data->fill($data);
             if (method_exists($this, 'loadDataAfter')) {
                 call_user_func([$this, 'loadDataAfter'], $data);
@@ -96,20 +102,28 @@ trait WithForm
             $this->validate($rules, $messages, $attributes);
         }
     }
-    public function doSave()
+    protected function getDataObject()
     {
-        $this->doValidate();
         $objData = new ($this->getModel());
-        $isNew = true;
         if ($this->dataId) {
-            $isNew = false;
             $query = $this->getQuery();
             $query =  $query->where('id', $this->dataId);
             $objData = $query->first();
             if (!$objData) $objData = new ($this->getModel());
         }
+        return $objData;
+    }
+    public function doSave()
+    {
+        $this->doValidate();
+        $objData = $this->getDataObject();
+        $isNew =  !$this->dataId;
+
         foreach ($this->getColumns() as $column) {
             data_set($objData, $column->getNameEncode(), data_get($this, $column->getFormFieldEncode()));
+        }
+        if (method_exists($this, 'loadDataBefore')) {
+            call_user_func([$this, 'loadDataBefore'], $objData);
         }
         DB::transaction(function () use ($objData) {
             if (method_exists($this, 'saveBefore')) {

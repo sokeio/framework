@@ -17,6 +17,7 @@ class CreateLanguagesTable extends Migration
             $table->id();
             $table->text('name')->nullable();
             $table->text('code')->nullable();
+            $table->text('flag')->nullable();
             $table->boolean('default')->default(false);
             $table->boolean('status')->default(true);
             $table->timestamps();
