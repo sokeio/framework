@@ -118,14 +118,14 @@ trait WithForm
         $this->doValidate();
         $objData = $this->getDataObject();
         $isNew =  !$this->dataId;
-
-        foreach ($this->getColumns() as $column) {
-            data_set($objData, $column->getNameEncode(), data_get($this, $column->getFormFieldEncode()));
-        }
-        if (method_exists($this, 'loadDataBefore')) {
-            call_user_func([$this, 'loadDataBefore'], $objData);
-        }
         DB::transaction(function () use ($objData) {
+
+            if (method_exists($this, 'loadDataBefore')) {
+                call_user_func([$this, 'loadDataBefore'], $objData);
+            }
+            foreach ($this->getColumns() as $column) {
+                data_set($objData, $column->getNameEncode(), data_get($this, $column->getFormFieldEncode()));
+            }
             if (method_exists($this, 'saveBefore')) {
                 call_user_func([$this, 'saveBefore'], $objData);
             }
