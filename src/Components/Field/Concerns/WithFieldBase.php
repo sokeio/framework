@@ -30,6 +30,14 @@ trait WithFieldBase
     {
         return $this->getValue('Placeholder');
     }
+    public function ValueDefault($ValueDefault): static
+    {
+        return $this->setKeyValue('ValueDefault', $ValueDefault);
+    }
+    public function getValueDefault()
+    {
+        return $this->getValue('ValueDefault');
+    }
     public function NoSave(): static
     {
         return $this->setKeyValue('NoSave', true);
@@ -91,7 +99,7 @@ trait WithFieldBase
     {
         return $this->getValue('Disable');
     }
-     public function InfoText($InfoText): static
+    public function InfoText($InfoText): static
     {
         return $this->setKeyValue('InfoText', $InfoText);
     }

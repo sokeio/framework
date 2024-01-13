@@ -21,6 +21,12 @@ trait WithFieldWire
         if ($this->getDisable()) {
             $attr .= ' disabled ';
         }
+        if ($this->wireGetValueByKey) {
+            $attr .= ' wire:get-value="' . $this->wireGetValueByKey . '" ';
+            if ($this->wireGetValueByParent) {
+                $attr .= ' wire:get-value-parent="' . $this->wireGetValueByParent .  '" ';
+            }
+        }
         return $attr;
     }
     /*
@@ -34,6 +40,8 @@ trait WithFieldWire
     private $wireModelType = 0;
     private $wireModelDebounce = '150ms';
     private $wireModelThrottle = '150ms';
+    private $wireGetValueByKey;
+    private $wireGetValueByParent = null;
     public function WireLive(): static
     {
         $this->wireModelType = 1;
@@ -54,6 +62,12 @@ trait WithFieldWire
     {
         $this->wireModelType = 4;
         $this->wireModelThrottle = $value;
+        return $this;
+    }
+    public function WireGetValue($key, $parentId = null): static
+    {
+        $this->wireGetValueByKey    = $key;
+        $this->wireGetValueByParent = $parentId;
         return $this;
     }
 }

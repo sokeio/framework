@@ -52,6 +52,12 @@ trait WithForm
                 call_user_func([$this, 'loadDataAfter'], $data);
             }
         }
+        //set default value
+        foreach ($this->getColumns() as $column) {
+            if (data_get($this, $column->getFormFieldEncode()) == null && $column->getValueDefault() != null) {
+                data_set($this, $column->getFormFieldEncode(), $column->getValueDefault());
+            }
+        }
     }
     protected function FormRules()
     {
@@ -124,7 +130,7 @@ trait WithForm
                 call_user_func([$this, 'loadDataBefore'], $objData);
             }
             foreach ($this->getColumns() as $column) {
-                data_set($objData, $column->getNameEncode(), data_get($this, $column->getFormFieldEncode()));
+                data_set($objData, $column->getNameEncode(), data_get($this, $column->getFormFieldEncode(), $column->getValueDefault()));
             }
             if (method_exists($this, 'saveBefore')) {
                 call_user_func([$this, 'saveBefore'], $objData);

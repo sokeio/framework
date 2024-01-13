@@ -9,14 +9,13 @@ class CheckboxField extends BaseField
     {
         $attr = parent::getWireAttribute();
 
-
         if (data_get($this->getManager(), $this->getFormField())) {
             $attr .= ' checked ';
         }
         $attr .= ' value="' . $this->getCheckboxValue() . '" ';
         return $attr;
     }
-    public function Title($Title)
+    public function Title($Title): static
     {
         return $this->setKeyValue('Title', $Title);
     }
@@ -24,7 +23,7 @@ class CheckboxField extends BaseField
     {
         return $this->getValue('Title');
     }
-    public function CheckboxValue($CheckboxValue)
+    public function CheckboxValue($CheckboxValue): static
     {
         return $this->setKeyValue('CheckboxValue', $CheckboxValue);
     }

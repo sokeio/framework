@@ -5,6 +5,7 @@ namespace Sokeio\Components\Concerns;
 use Sokeio\Components\Field\CheckboxField;
 use Sokeio\Components\Field\CheckboxMutilField;
 use Sokeio\Components\Field\DatePickerField;
+use Sokeio\Components\Field\HiddenField;
 use Sokeio\Components\Field\ImageField;
 use Sokeio\Components\Field\ModalField;
 use Sokeio\Components\Field\NumberField;
@@ -89,5 +90,9 @@ trait WithField
     public static function ChooseModal($value)
     {
         return ModalField::make($value);
+    }
+    public static function Hidden($value)
+    {
+        return HiddenField::make($value);
     }
 }

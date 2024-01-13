@@ -43,7 +43,7 @@ class Base extends BaseCallback
     }
     public function checkPrex()
     {
-        return $this->checkKey('Prex');
+        return $this->checkKey('Prex') && $this->getPrex() != '';
     }
     private $dataItem = null;
     public function DataItem($value)

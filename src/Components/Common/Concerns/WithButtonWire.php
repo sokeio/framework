@@ -4,7 +4,7 @@ namespace Sokeio\Components\Common\Concerns;
 
 trait WithButtonWire
 {
-    public function WireClick($WireClick)
+    public function WireClick($WireClick):static
     {
         return $this->setKeyValue('WireClick', $WireClick);
     }
