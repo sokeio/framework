@@ -126,8 +126,8 @@ trait WithForm
         $isNew =  !$this->dataId;
         DB::transaction(function () use ($objData) {
 
-            if (method_exists($this, 'loadDataBefore')) {
-                call_user_func([$this, 'loadDataBefore'], $objData);
+            if (method_exists($this, 'fillDataBefore')) {
+                call_user_func([$this, 'fillDataBefore'], $objData);
             }
             foreach ($this->getColumns() as $column) {
                 data_set($objData, $column->getNameEncode(), data_get($this, $column->getFormFieldEncode(), $column->getValueDefault()));
