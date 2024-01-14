@@ -6,5 +6,5 @@
 @endphp
 <div wire:ignore>
     <input class="form-control" name="field-{{ $modelField }}" placeholder="{{ $modelPlaceholder }}" wire:tagify
-        wire:tagify.options='@json($column->getFieldOption())' {!! $column->getWireAttribute() !!} />
+        wire:tagify-options='@json($column->getFieldOption())' {!! $column->getWireAttribute() !!} />
 </div>

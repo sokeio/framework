@@ -11,7 +11,7 @@
             <span class="error">{{ $message }}</span>
         </div>
     @enderror
-    @if($infoText)
-    <small class="info-text">{{$infoText}}</small>
+    @if ($infoText)
+        <small class="info-text">{{ $infoText }}</small>
     @endif
 </div>
