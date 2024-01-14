@@ -11,7 +11,7 @@
 </button>
 <div x-show="$wire.{{ $formField }}" class="border border-1 text-end">
     <button x-show="$wire.{{ $formField }}" @click="$wire.{{ $formField }} = ''"
-    class="btn btn-warning btn-sm m-1">{{ __('Clear') }}</button>
+        class="btn btn-warning btn-sm m-1">{{ __('Clear') }}</button>
     @if ($mutil)
         <template x-for="item in $wire.{{ $formField }}">
             <img :src="item" />
