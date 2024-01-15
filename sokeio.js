@@ -67,7 +67,7 @@ window.addStyleToWindow = function (
   } catch (ex) {}
 };
 
-window.ByteLoadStyle = function (
+window.SokeioLoadStyle = function (
   source,
   beforeEl = null,
   async = true,
@@ -75,7 +75,7 @@ window.ByteLoadStyle = function (
 ) {
   if (Array.isArray(source)) {
     var arrSource = source.map(function (item) {
-      return window.ByteLoadStyle(item);
+      return window.SokeioLoadStyle(item);
     });
     return Promise.all(arrSource);
   }
@@ -83,7 +83,7 @@ window.ByteLoadStyle = function (
     window.addStyleToWindow(source, resolve, reject, beforeEl, async, defer);
   });
 };
-window.ByteLoadScript = function (
+window.SokeioLoadScript = function (
   source,
   beforeEl = null,
   async = true,
@@ -91,7 +91,7 @@ window.ByteLoadScript = function (
 ) {
   if (Array.isArray(source)) {
     var arrSource = source.map(function (item) {
-      return window.ByteLoadScript(item);
+      return window.SokeioLoadScript(item);
     });
     return Promise.all(arrSource);
   }
@@ -115,7 +115,7 @@ window.PlatformLoadScript = function (
     );
   };
   return window
-    .ByteLoadScript(source, beforeEl, async, defer)
+    .SokeioLoadScript(source, beforeEl, async, defer)
     .then(function () {
       dispatchDocument("sokeio::ready");
       if (window.SokeioManager) {
