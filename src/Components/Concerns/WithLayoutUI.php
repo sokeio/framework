@@ -6,10 +6,10 @@ use Sokeio\Breadcrumb;
 
 trait WithLayoutUI
 {
-    public function getTitle()
+    protected function getTitle()
     {
     }
-    public function getBreadcrumb()
+    protected function getBreadcrumb()
     {
         return [
             Breadcrumb::Item(__('Home'), route('admin.dashboard'))
