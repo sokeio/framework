@@ -16,8 +16,8 @@ trait WithForm
     #[Url]
     public $copyId;
     public Form $data;
-    private $layout;
-    private $footer;
+    protected $layout;
+    protected $footer;
     protected function isEdit()
     {
         return $this->dataId != null;
