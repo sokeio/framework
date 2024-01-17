@@ -30,7 +30,7 @@ trait WithTable
     }
     protected function getDefaultPageSize()
     {
-        return 10;
+        return setting("SOKEIO_TABLE_PAGE_SIZE",10);
     }
     protected function getPageSize()
     {
