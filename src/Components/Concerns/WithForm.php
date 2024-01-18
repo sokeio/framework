@@ -53,7 +53,7 @@ trait WithForm
             }
         }
         //set default value
-        foreach ($this->getColumns() as $column) {
+        foreach ($this->getAllInputUI() as $column) {
             if (data_get($this, $column->getFormFieldEncode()) == null && $column->getValueDefault() != null) {
                 data_set($this, $column->getFormFieldEncode(), $column->getValueDefault());
             }
@@ -64,7 +64,7 @@ trait WithForm
         $rules = [];
         $messages = [];
         $attributes = [];
-        foreach ($this->getColumns() as $column) {
+        foreach ($this->getAllInputUI() as $column) {
             if ($column->checkRule()) {
                 $rules[$column->getFormField()] = $column->getRules();
                 $attributes[$column->getFormField()] = $column->getLabel();
@@ -129,7 +129,7 @@ trait WithForm
             if (method_exists($this, 'fillDataBefore')) {
                 call_user_func([$this, 'fillDataBefore'], $objData);
             }
-            foreach ($this->getColumns() as $column) {
+            foreach ($this->getAllInputUI() as $column) {
                 data_set($objData, $column->getNameEncode(), data_get($this, $column->getFormFieldEncode(), $column->getValueDefault()));
             }
             if (method_exists($this, 'saveBefore')) {

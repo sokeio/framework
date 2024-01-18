@@ -18,8 +18,8 @@ class BaseField extends Base
     }
     public function boot()
     {
-        if (!$this->getNoSave()){
-            $this->getManager()?->addColumn($this);
+        if (!$this->getNoSave()) {
+            $this->getManager()?->addInputUI($this, $this->getPrex() ?? 'data');
         }
         parent::boot();
     }

@@ -26,7 +26,7 @@ class FormSetting extends Component
         if (method_exists($this, 'loadDataAfter')) {
             call_user_func([$this, 'loadDataAfter']);
         }
-        foreach ($this->getColumns() as $column) {
+        foreach ($this->getAllInputUI() as $column) {
             data_set($this, $column->getFormFieldEncode(), setting($column->getNameEncode()));
         }
     }
@@ -34,7 +34,7 @@ class FormSetting extends Component
     {
         $this->doValidate();
         DB::transaction(function () {
-            foreach ($this->getColumns() as $column) {
+            foreach ($this->getAllInputUI() as $column) {
                 set_setting($column->getNameEncode(), data_get($this, $column->getFormFieldEncode()));
             }
         });

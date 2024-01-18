@@ -15,10 +15,14 @@ trait WithLayoutUI
             Breadcrumb::Item(__('Home'), route('admin.dashboard'))
         ];
     }
-    private $columns = [];
-    public function addColumn($column)
+    private $inputUI = [];
+    public function addInputUI($inputUI, $key = 'data')
     {
-        $this->columns[] = $column;
+        if (isset($this->inputUI[$key])) {
+            $this->inputUI[$key][] = $inputUI;
+        } else {
+            $this->inputUI[$key] = [$inputUI];
+        }
         return $this;
     }
     /**
@@ -27,9 +31,17 @@ trait WithLayoutUI
      *
      * @return \Sokeio\Components\Field\BaseField[]
      */
-    protected function getColumns()
+    protected function getInputUI($key = 'data')
     {
-        return $this->columns;
+        return $this->inputUI[$key] ?? [];
+    }
+    protected function getAllInputUI()
+    {
+        $arr = [];
+        foreach ($this->inputUI as $key => $value) {
+            $arr = array_merge($arr, $value);
+        }
+        return $arr;
     }
     protected function reLayout($layout)
     {
