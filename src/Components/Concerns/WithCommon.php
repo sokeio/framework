@@ -9,6 +9,7 @@ use Sokeio\Components\Common\Card;
 use Sokeio\Components\Common\Container;
 use Sokeio\Components\Common\Div;
 use Sokeio\Components\Common\Each;
+use Sokeio\Components\Common\Error;
 use Sokeio\Components\Common\Tab;
 
 trait WithCommon
@@ -60,5 +61,9 @@ trait WithCommon
     public static function ButtonGroup($value)
     {
         return ButtonGroup::Make($value);
+    }
+    public static function Error($value)
+    {
+        return Error::Make($value);
     }
 }

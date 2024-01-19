@@ -2,6 +2,8 @@
 
 namespace Sokeio\Components\Field\Concerns;
 
+use Sokeio\Components\UI;
+
 trait withFieldOperator
 {
     public static function  getOperatorType($operator)
@@ -44,25 +46,35 @@ trait withFieldOperator
     {
         foreach ($search as $key => $value) {
             $keyOperator = self::getOperatorType($key);
-            if ($keyOperator) {
-                foreach ($value as $fieldName => $fieldValue) {
-                    $query->where(self::getFieldName($fieldName), $keyOperator, $fieldValue);
+            $formatValue = '{{VALUE}}';
+            $items = $value;
+            if (!$keyOperator) {
+                if ($key == '$like') {
+                    $keyOperator = 'like';
+                    $formatValue = '%{{VALUE}}%';
+                } else if ($key == '$nlike') {
+                    $keyOperator = 'not like';
+                    $formatValue = '%{{VALUE}}%';
+                } else if ($key == '$withStart') {
+                    $keyOperator = 'like';
+                    $formatValue = '{{VALUE}}%';
+                } else if ($key == '$withEnd') {
+                    $keyOperator = 'like';
+                    $formatValue = '%{{VALUE}}';
+                } else {
+                    $keyOperator = '=';
+                    $items = [$key => $value];
                 }
-            } else if ($key == '$like') {
-                foreach ($value as $fieldName => $fieldValue) {
-                    $query->where(self::getFieldName($fieldName), 'like', '%' . $fieldValue . '%');
-                }
-            } else if ($key == '$nlike') {
-                foreach ($value as $fieldName => $fieldValue) {
-                    $query->where(self::getFieldName($fieldName), 'not like', '%' . $fieldValue . '%');
-                }
-            } else if ($key == '$withStart') {
-                foreach ($value as $fieldName => $fieldValue) {
-                    $query->where(self::getFieldName($fieldName), 'like', $fieldValue . '%');
-                }
-            } else if ($key == '$withEnd') {
-                foreach ($value as $fieldName => $fieldValue) {
-                    $query->where(self::getFieldName($fieldName), 'like',  '%' . $fieldValue);
+            }
+            foreach ($items  as $fieldName => $fieldValue) {
+                if (!$fieldValue) continue;
+                $arrFields = explode('.', self::getFieldName($fieldName));
+                if (count($arrFields) == 1) {
+                    $query->where(self::getFieldName($fieldName), $keyOperator, str_replace('{{VALUE}}', $formatValue, $fieldValue));
+                } else {
+                    $query->whereHas($arrFields[0], function ($query) use ($keyOperator, $formatValue, $arrFields, $fieldValue) {
+                        $query->where($arrFields[0] . '.' . $arrFields[1], $keyOperator, str_replace('{{VALUE}}', $formatValue, $fieldValue));
+                    });
                 }
             }
         }

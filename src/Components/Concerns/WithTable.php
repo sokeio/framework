@@ -30,7 +30,7 @@ trait WithTable
     }
     protected function getDefaultPageSize()
     {
-        return setting("SOKEIO_TABLE_PAGE_SIZE",10);
+        return setting("SOKEIO_TABLE_PAGE_SIZE", 10);
     }
     protected function getPageSize()
     {
@@ -157,7 +157,14 @@ trait WithTable
         if ($textSearch = $this->search->textSearch) {
             $query->orWhere(function ($subquery) use ($textSearch) {
                 foreach ($this->searchFields() as $field) {
-                    $subquery->where($field, 'like', '%' . $textSearch . '%');
+                    $arrFields = explode('.', $field);
+                    if (count($arrFields) == 1) {
+                        $subquery->orWhere($field, 'like', '%' . $textSearch . '%');
+                    } else {
+                        $subquery->orWhereHas($arrFields[0], function ($subquery) use ($textSearch, $arrFields) {
+                            $subquery->where($arrFields[0] . '.' . $arrFields[1], 'like', '%' . $textSearch . '%');
+                        });
+                    }
                 }
             });
         }

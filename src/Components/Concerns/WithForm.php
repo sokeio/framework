@@ -3,6 +3,7 @@
 namespace Sokeio\Components\Concerns;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Livewire\Attributes\Url;
 use Sokeio\Components\UI;
 use Sokeio\Facades\Theme;
@@ -18,6 +19,7 @@ trait WithForm
     public Form $data;
     protected $layout;
     protected $footer;
+
     protected function isEdit()
     {
         return $this->dataId != null;
@@ -105,8 +107,15 @@ trait WithForm
         // $this->showMessage(json_encode(['rules' => $rules, 'messages' => $messages, 'attributes' => $attributes]));
         // return;
         if ($rules && count($rules)) {
-            $this->validate($rules, $messages, $attributes);
+            $this->withValidator(function ($validator) use ($rules, $messages, $attributes) {
+                if ($validator->fails()) {
+                    if (method_exists($this, 'validateFail')) {
+                        call_user_func([$this, 'validateFail']);
+                    }
+                }
+            })->validate($rules, $messages, $attributes);
         }
+        return true;
     }
     protected function getDataObject()
     {
@@ -121,7 +130,12 @@ trait WithForm
     }
     public function doSave()
     {
-        $this->doValidate();
+        if (!$this->doValidate()) {
+            if (method_exists($this, 'validateFail')) {
+                call_user_func([$this, 'validateFail']);
+            }
+            return;
+        }
         $objData = $this->getDataObject();
         $isNew =  !$this->dataId;
         DB::transaction(function () use ($objData) {
