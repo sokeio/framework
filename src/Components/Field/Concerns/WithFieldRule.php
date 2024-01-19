@@ -31,9 +31,14 @@ trait WithFieldRule
         }
         return $this;
     }
+
     public function required($messages = null): static
     {
         return $this->rule('required', $messages);
+    }
+    public function array($messages = null): static
+    {
+        return $this->rule('array', $messages);
     }
     public function date($messages = null): static
     {
@@ -64,5 +69,9 @@ trait WithFieldRule
     public function max($max, $messages = null): static
     {
         return $this->rule('max:' . $max, $messages);
+    }
+    public function regex($regex, $messages = null): static
+    {
+        return $this->rule('regex:' . $regex, $messages);
     }
 }
