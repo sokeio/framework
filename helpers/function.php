@@ -4,10 +4,11 @@ use Illuminate\Routing\RouteAction;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
-use Symfony\Component\Finder\SplFileInfo;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Route as FacadesRoute;
+use Illuminate\Support\Facades\Route;
+use Symfony\Component\Finder\SplFileInfo;
+
 use Sokeio\Breadcrumb;
 use Sokeio\Facades\Module;
 use Sokeio\Facades\Platform;
@@ -93,6 +94,19 @@ if (!function_exists('platform_by')) {
     }
 }
 
+if (!function_exists('route_crud')) {
+    function route_crud($name, $table, $form, $isGet = false)
+    {
+        Route::get($name, $table)->name($name);
+        if ($isGet) {
+            Route::get($name . '/new', $form)->name($name . '.add');
+            Route::get($name . '/edit/{dataId}', $form)->name($name . '.edit');
+        } else {
+            Route::post($name . '/new', $form)->name($name . '.add');
+            Route::post($name . '/edit/{dataId}', $form)->name($name . '.edit');
+        }
+    }
+}
 if (!function_exists('sokeio_flags')) {
     function sokeio_flags($flg, $size = '4x3')
     {
