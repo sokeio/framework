@@ -394,7 +394,7 @@ if (!function_exists('route_theme')) {
     function route_theme($_action, $params = [])
     {
         return function () use ($_action, $params) {
-            $route = FacadesRoute::current();
+            $route = Route::current();
             foreach ($params as $key => $value) {
                 $route->setParameter($key, $value);
             }
