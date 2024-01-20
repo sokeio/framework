@@ -63,23 +63,6 @@ trait WithServiceProvider
             $this->package->name('theme');
         }
         $this->bootBase();
-        if ($this->app->runningInConsole()) {
-            if ($this->package->runsMigrations) {
-                AllFile($this->package->basePath("/../database/migrations/"), function ($file) {
-                    $this->loadMigrationsFrom($file->getRealPath());
-                }, function ($file) {
-                    return $file->getExtension() == "php";
-                });
-            }
-
-            if ($this->package->runsSeeds) {
-                AllFile($this->package->basePath("/../database/seeders/"), function ($file) {
-                    include_once($file->getRealPath());
-                }, function ($file) {
-                    return $file->getExtension() == "php";
-                });
-            }
-        }
         LivewireLoader::Register($this->package->basePath('/Livewire'), $this->getNamespaceName() . '\\Livewire', $this->package->shortName() . '::');
 
         $this->packageBooted();
