@@ -96,8 +96,13 @@ class SokeioServiceProvider extends ServiceProvider
                 echo '<!---SEO:BEGIN--!>';
                 echo call_user_func('seo_header_render');
                 echo '<!---SEO:END--!>';
-            } else  if ($title = Theme::getTitle()) {
-                echo "<title>" . $title . "</title>";
+            } else {
+                if ($title = Theme::getTitle()) {
+                    echo "<title>" . $title . "</title>";
+                }
+                if ($descripiton = Theme::getDescription()) {
+                    echo "<meta name='description' content='" . $descripiton . "'/>";
+                }
             }
         }, 0);
         add_action(PLATFORM_HEAD_AFTER, function () {
@@ -155,18 +160,10 @@ class SokeioServiceProvider extends ServiceProvider
         $this->app->booted(function () {
             Theme::RegisterRoute();
             if (admin_url() != '') {
-                Route::get('/', route_theme(function () {
-                    $homepage = apply_filters(PLATFORM_HOMEPAGE, 'sokeio::homepage');
-                    if (is_object($homepage)) return $homepage;
-                    $view = '';
-                    $params = [];
-                    if (is_array($homepage)) {
-                        ['view' => $view, 'params' => $params] = $homepage;
-                    } else {
-                        $view = $homepage;
-                    }
-                    return view_scope($view, $params);
-                }))->name('homepage');
+                Route::get('/', route_filter(
+                    PLATFORM_HOMEPAGE,
+                    'sokeio::homepage'
+                ))->name('homepage');
             }
         });
         Platform::Ready(function () {

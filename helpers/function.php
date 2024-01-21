@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 use Symfony\Component\Finder\SplFileInfo;
 
 use Sokeio\Breadcrumb;
+use Sokeio\Component;
 use Sokeio\Facades\Module;
 use Sokeio\Facades\Platform;
 use Sokeio\Facades\Plugin;
@@ -389,6 +390,37 @@ if (!function_exists('setting')) {
     }
 }
 
+if (!function_exists('route_filter')) {
+    function route_filter($_key, $default = [])
+    {
+        return function () use ($_key, $default) {
+            $route = Route::current();
+            $_params = [];
+            $_action =  apply_filters($_key, $default);
+            if ($_action == null)
+                return $route->run();
+            if (is_array($_action)) {
+                ['uses' => $action, 'params' => $_params] = $_action;
+                if ($action) {
+                    $_action = $action;
+                }
+            }
+
+            if ($_params) {
+                foreach ($_params as $key => $value) {
+                    $route->setParameter($key, $value);
+                }
+            }
+            if (is_string($_action) && !class_exists($_action)) {
+                $_action = function () use ($_action) {
+                    return view_scope($_action);
+                };
+            }
+            $route->setAction(array_merge($route->getAction(), RouteAction::parse($route->uri(), ['uses' => $_action])));
+            return $route->run();
+        };
+    }
+}
 
 if (!function_exists('route_theme')) {
     function route_theme($_action, $params = [])

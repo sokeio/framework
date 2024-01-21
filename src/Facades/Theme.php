@@ -28,6 +28,8 @@ use Sokeio\Platform\ThemeManager;
  * @method static void update(string $name)
  * @method static string getTitle()
  * @method static void setTitle($title, $lock = false)
+ * @method static string getDescription()
+ * @method static void setDescription($value, $lock = false)
  * @method static string Layout($default='')
  * @method static mix ThemeCurrent()
  * @method static void RegisterTheme()

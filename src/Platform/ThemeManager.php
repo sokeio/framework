@@ -50,6 +50,14 @@ class ThemeManager extends ActionHook
     {
         return Assets::GetData('page_title');
     }
+    public function setDescription($value, $lock = false)
+    {
+        Assets::SetData('page_description', $value);
+    }
+    public function getDescription()
+    {
+        return Assets::GetData('page_description');
+    }
 
     public function setLayout($layout)
     {
