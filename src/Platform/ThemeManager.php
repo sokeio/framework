@@ -26,6 +26,11 @@ class ThemeManager extends ActionHook
         $this->isHtmlAjax = true;
         return $this;
     }
+    private $isAdmin = true;
+    public function currentAdmin()
+    {
+        return $this->isAdmin;
+    }
     public function LayoutDefault()
     {
         return 'default';

@@ -42,7 +42,7 @@ trait WithServiceProvider
             }
         } else {
             if ($this->base_type == 'theme') {
-                if (isset($this->data_info['admin']) && $this->data_info['admin'] == 1) {
+                if ((isset($this->data_info['admin']) && $this->data_info['admin'] == 1) || Theme::currentAdmin()) {
                     $this->package->name('tadmin');
                 } else {
                     $this->package->name('tsite');
