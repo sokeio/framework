@@ -8,7 +8,6 @@ use Sokeio\Platform\DataInfo;
 use Sokeio\Events\PlatformChanged;
 use Sokeio\Facades\Assets;
 use Sokeio\Facades\Platform;
-use Sokeio\Facades\Shortcode;
 use Sokeio\RouteEx;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Request;
