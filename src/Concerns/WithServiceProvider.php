@@ -29,12 +29,23 @@ trait WithServiceProvider
         $this->registerBase();
 
         $this->packageRegistered();
+        if ($info = Platform::getDataInfo($this->package->basePath('/../'))) {
+            $this->base_type = $info['base_type'];
+            $this->data_info = $info['data_info'];
+        }
 
- 
         if ($this->base_type != 'theme') {
             if ($actionTypes = config($this->package->shortName() . '.actions')) {
                 if (is_array($actionTypes) && count($actionTypes) > 0) {
                     Action::Register($actionTypes, $this->package->shortName());
+                }
+            }
+        } else {
+            if ($this->base_type == 'theme') {
+                if (isset($this->data_info['admin']) && $this->data_info['admin'] == 1) {
+                    $this->package->name('theme-admin');
+                } else {
+                    $this->package->name('theme');
                 }
             }
         }
@@ -45,10 +56,7 @@ trait WithServiceProvider
 
     public function boot()
     {
-        if ($info = Platform::getDataInfo($this->package->basePath('/../'))) {
-            $this->base_type = $info['base_type'];
-            $this->data_info = $info['data_info'];
-        }
+
         if ($this->base_type == 'module') {
             Theme::Load($this->package->basePath('/../themes/'));
             Plugin::Load($this->package->basePath('/../plugins/'));

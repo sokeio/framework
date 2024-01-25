@@ -114,6 +114,13 @@ class DataInfo extends JsonData
     {
         return PlatformStatus::Key($this['base_type'])->Check($this->getId()) || $this['active'];
     }
+    public function CallOperation($func)
+    {
+        $classOptionOperation = '\\' . $this->getNamespaceInfo() . '\\Option';
+        if (class_exists($classOptionOperation) && method_exists($classOptionOperation, $func)) {
+            call_user_func([$classOptionOperation, $func], $this);
+        }
+    }
     private $manifestData = null;
     public function getManifestData()
     {
@@ -121,20 +128,17 @@ class DataInfo extends JsonData
             return $this->manifestData ?? ($this->manifestData = self::getJsonFromFile($this->getPath('public/build/manifest.json')));
         return null;
     }
-    public function getOptionHook()
-    {
-        if (File::exists($this->getPath('OptionHook.php')))
-            return include_once $this->getPath('OptionHook.php');
-        return null;
-    }
     public function setStatusData($value)
     {
         if ($value === self::Active) {
+            $this->CallOperation('activate');
             PlatformStatus::Key($this['base_type'])->Active($this->getId());
+            $this->CallOperation('activated');
         } else {
+            $this->CallOperation('deactivate');
             PlatformStatus::Key($this['base_type'])->UnActive($this->getId());
+            $this->CallOperation('deactivated');
         }
-        $this->getOptionHook()?->changeStatus($this, $value);
         ob_start();
         PlatformChanged::dispatch($this);
         Platform::makeLink();

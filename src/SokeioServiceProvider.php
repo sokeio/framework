@@ -19,7 +19,6 @@ use Sokeio\Middleware\ThemeLayout;
 use Sokeio\Concerns\WithServiceProvider;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Request;
-use Sokeio\CmsTheme\Livewire\About;
 use Sokeio\Support\SupportFormObjects\SupportFormObjects;
 
 class SokeioServiceProvider extends ServiceProvider
@@ -180,7 +179,6 @@ class SokeioServiceProvider extends ServiceProvider
                     return true;
                 }, 0);
             }
-            $route_name = Route::currentRouteName();
             if ($route_name && $route_name != 'sokeio.setup' && !Platform::CheckConnectDB() && request()->isMethod('get')) {
                 app(Redirector::class)->to(route('sokeio.setup'))->send();
                 return;
