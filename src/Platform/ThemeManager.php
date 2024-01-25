@@ -212,6 +212,6 @@ class ThemeManager extends ActionHook
         }
         if ($this->layout != '') $layout = $this->layout;
         if ($layout == '') $layout = $this->LayoutDefault();
-        return sokeio_is_admin() ? 'tadmin::layouts.' . $layout : 'tsite::layouts.' . $layout;
+        return 'theme::layouts.' . $layout;
     }
 }
