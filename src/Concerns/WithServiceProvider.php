@@ -43,9 +43,9 @@ trait WithServiceProvider
         } else {
             if ($this->base_type == 'theme') {
                 if (isset($this->data_info['admin']) && $this->data_info['admin'] == 1) {
-                    $this->package->name('theme-admin');
+                    $this->package->name('tadmin');
                 } else {
-                    $this->package->name('theme');
+                    $this->package->name('tsite');
                 }
             }
         }
@@ -66,9 +66,6 @@ trait WithServiceProvider
 
         if ($this->base_type && $this->data_info) {
             Assets::AssetType($this->data_info['name'], $this->base_type);
-        }
-        if ($this->base_type == 'theme') {
-            $this->package->name('theme');
         }
         $this->bootBase();
         LivewireLoader::Register($this->package->basePath('/Livewire'), $this->getNamespaceName() . '\\Livewire', $this->package->shortName() . '::');

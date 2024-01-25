@@ -3,10 +3,9 @@
 namespace Sokeio\Components\Concerns;
 
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 use Livewire\Attributes\Url;
 use Sokeio\Components\UI;
-use Sokeio\Facades\Theme;
+use Sokeio\Facades\Assets;
 use Sokeio\Form;
 
 trait WithForm
@@ -79,7 +78,7 @@ trait WithForm
     protected function getView()
     {
         if ($this->currentIsPage()) {
-            Theme::setTitle($this->getTitle());
+            Assets::setTitle($this->getTitle());
             breadcrumb()->Title($this->getTitle())->Breadcrumb($this->getBreadcrumb());
             return 'sokeio::components.form.page';
         }

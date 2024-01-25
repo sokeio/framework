@@ -14,6 +14,23 @@ class AssetManager
     private $assets = [];
     private $loaded = false;
     private $dataLoader = [];
+    public function setTitle($title)
+    {
+        $this->data['title'] = $title;
+    }
+    public function setDescription($description)
+    {
+        $this->data['description'] = $description;
+    }
+    public function getTitle()
+    {
+        return $this->data['title'] ?? '';
+    }
+    public function getDescription()
+    {
+        return $this->data['description'] ?? '';
+    }
+
     public function AssetType($name, $baseType = 'theme')
     {
         $this->AddJs('resources/js/app.js', $baseType, $name);

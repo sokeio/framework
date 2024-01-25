@@ -96,10 +96,10 @@ class SokeioServiceProvider extends ServiceProvider
                 echo call_user_func('seo_header_render');
                 echo '<!---SEO:END--!>';
             } else {
-                if ($title = Theme::getTitle()) {
+                if ($title = Assets::getTitle()) {
                     echo "<title>" . $title . "</title>";
                 }
-                if ($descripiton = Theme::getDescription()) {
+                if ($descripiton = Assets::getDescription()) {
                     echo "<meta name='description' content='" . $descripiton . "'/>";
                 }
             }

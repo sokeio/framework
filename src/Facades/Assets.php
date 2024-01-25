@@ -18,6 +18,10 @@ use Illuminate\Support\Facades\Facade;
  * @method static void Render($location)
  * @method static mix GetData($key,$default=null)
  * @method static void SetData($key,$value)
+ * @method static string getTitle()
+ * @method static void setTitle($title, $lock = false)
+ * @method static string getDescription()
+ * @method static void setDescription($value, $lock = false)
  * 
  * 
  *

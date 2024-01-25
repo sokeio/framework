@@ -40,27 +40,9 @@ class ThemeManager extends ActionHook
         return "theme";
     }
     private $layout;
-    private ?DataInfo $data_active;
-    public function setTitle($title, $lock = false)
-    {
-        Assets::SetData('page_title', $title);
-    }
-    public function getTitle()
-    {
-        return Assets::GetData('page_title');
-    }
-    public function setDescription($value, $lock = false)
-    {
-        Assets::SetData('page_description', $value);
-    }
-    public function getDescription()
-    {
-        return Assets::GetData('page_description');
-    }
-
     public function setLayout($layout)
     {
-        $this->layout = $layout != '' ? ('theme::layouts.' . $layout) : '';
+        $this->layout = $layout;
     }
     public function AdminId()
     {
@@ -220,18 +202,11 @@ class ThemeManager extends ActionHook
         if ($layout != '') {
             $this->setLayout($layout);
         }
-        $theme = $this->ThemeCurrent();
         if ($this->isHtml()) {
             return 'sokeio::html';
         }
-        if ($theme) {
-            if ($this->layout == '') {
-                $this->setLayout($theme['layout'] ?? $this->LayoutDefault());
-            }
-        }
-        if ($this->layout == '') {
-            $this->setLayout($this->LayoutDefault());
-        }
-        return $this->layout;
+        if ($this->layout != '') $layout = $this->layout;
+        if ($layout == '') $layout = $this->LayoutDefault();
+        return sokeio_is_admin() ? 'tadmin::layouts.' . $layout : 'tsite::layouts.' . $layout;
     }
 }

@@ -2,11 +2,9 @@
 
 namespace Sokeio\Components\Concerns;
 
-use Livewire\Attributes\Reactive;
 use Sokeio\Components\Field\BaseField;
 use Sokeio\Components\UI;
-use Sokeio\Facades\Theme;
-// use Livewire\Attributes\Url;
+use Sokeio\Facades\Assets;
 use Sokeio\Form;
 
 trait WithTable
@@ -125,7 +123,7 @@ trait WithTable
     protected function getView()
     {
         if ($this->currentIsPage()) {
-            Theme::setTitle($this->getTitle());
+            Assets::setTitle($this->getTitle());
             breadcrumb()->Title($this->getTitle())->Breadcrumb($this->getBreadcrumb());
             return 'sokeio::components.table.page';
         }
