@@ -45,7 +45,7 @@ use Sokeio\Platform\ThemeManager;
  * @method static array getLocations()
  * @method static \Sokeio\Platform\DataInfo SiteDataInfo()
  * @method static \Sokeio\Platform\DataInfo AdminDataInfo()
- * @method static bool currentAdmin()
+ * @method static void SetupOption()
  * 
  * @see \Sokeio\Facades\Theme
  */
