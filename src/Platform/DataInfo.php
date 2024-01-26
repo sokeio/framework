@@ -117,6 +117,9 @@ class DataInfo extends JsonData
     public function CallOperation($func)
     {
         $classOptionOperation = '\\' . $this->getNamespaceInfo() . '\\Option';
+        if(!class_exists($classOptionOperation) && File::exists($this->getPath('src/Option.php'))){
+            include_once $this->getPath('src/Option.php');
+        }
         if (class_exists($classOptionOperation) && method_exists($classOptionOperation, $func)) {
             call_user_func([$classOptionOperation, $func], $this);
         }
