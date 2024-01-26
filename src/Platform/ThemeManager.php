@@ -44,6 +44,10 @@ class ThemeManager extends ActionHook
     {
         return "theme";
     }
+    public function SetupOption(){
+        $site = $this->SiteDataInfo();
+        $site?->CallOperation('SetupOption');
+    }
     private $layout;
     public function setLayout($layout)
     {
