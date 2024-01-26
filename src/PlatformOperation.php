@@ -4,6 +4,11 @@ namespace Sokeio;
 
 class PlatformOperation
 {
+    // Only Theme Site
+    public static function SetupOption()
+    {
+        // Run when activating
+    }
     public static function activate()
     {
         // Run when activating
