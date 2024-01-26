@@ -300,10 +300,10 @@ return [
                     'STUDLY_NAME'
                 ]
             ],
-            'option-hook' => [
-                'stub' => 'option-hook',
-                'path' => 'base',
-                'name' => 'OptionHook.php'
+            'option' => [
+                'stub' => 'option',
+                'path' => 'src',
+                'name' => 'Option.php'
             ],
             'view' => [
                 'stub' => 'views/index',
@@ -776,7 +776,8 @@ return [
                 'package',
                 'gitignore',
                 'helpers-constraint',
-                'helpers-function'
+                'helpers-function',
+                'option'
             ],
             'module' => [
                 'route',
@@ -794,8 +795,7 @@ return [
                 'share-footer',
                 'composer',
                 'provider-base',
-                'json-theme',
-                'option-hook'
+                'json-theme'
             ],
             'plugin' => [
                 'composer',
@@ -825,7 +825,6 @@ return [
         'action' => ['path' => 'src/Actions', 'namespace' => 'Actions', 'generate' => true, 'only' => ['module']],
         'request' => ['path' => 'src/Http/Requests', 'namespace' => 'Http\\Requests', 'generate' => true, 'only' => ['module']],
         'livewire' => ['path' => 'src/Livewire', 'namespace' => 'Livewire', 'generate' => true, 'only' => ['module']],
-        'crud' => ['path' => 'src/Crud', 'namespace' => 'Crud', 'generate' => true],
         'provider' => ['path' => 'src/Providers', 'namespace' => 'Providers', 'generate' => true, 'only' => ['module']],
         'helpers' => ['path' => 'helpers', 'generate' => true],
         'assets' => ['path' => 'resources', 'generate' => true],

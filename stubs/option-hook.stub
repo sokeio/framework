@@ -1,6 +1,0 @@
-<?php
-
-use Sokeio\OptionHook;
-
-return OptionHook::Create()->Options(function () {
-});

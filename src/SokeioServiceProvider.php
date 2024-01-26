@@ -19,6 +19,7 @@ use Sokeio\Middleware\ThemeLayout;
 use Sokeio\Concerns\WithServiceProvider;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Request;
+use Sokeio\Facades\Menu;
 use Sokeio\Support\SupportFormObjects\SupportFormObjects;
 
 class SokeioServiceProvider extends ServiceProvider
@@ -156,6 +157,7 @@ class SokeioServiceProvider extends ServiceProvider
         $this->app->booting(function () {
             app('livewire')->componentHook(SupportFormObjects::class);
         });
+       
         $this->app->booted(function () {
             Theme::RegisterRoute();
             if (admin_url() != '') {
@@ -184,6 +186,7 @@ class SokeioServiceProvider extends ServiceProvider
                 return;
             }
             Theme::reTheme();
+            Theme::SetupOption();
             Platform::BootGate();
             Platform::DoReady();
             Platform::DoReadyAfter();

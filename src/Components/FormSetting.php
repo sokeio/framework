@@ -23,27 +23,48 @@ class FormSetting extends Component
     }
     public function loadData()
     {
+        if (method_exists($this, 'loadDataBefore')) {
+            call_user_func([$this, 'loadDataBefore']);
+        }
+        foreach ($this->getAllInputUI() as $column) {
+            $this->LoadSetting($column->getFormFieldEncode(), $column->getNameEncode(), $column);
+        }
         if (method_exists($this, 'loadDataAfter')) {
             call_user_func([$this, 'loadDataAfter']);
         }
-        foreach ($this->getAllInputUI() as $column) {
-            data_set($this, $column->getFormFieldEncode(), setting($column->getNameEncode()));
-        }
+    }
+    protected function LoadSetting($keyForm, $keyValue, $column)
+    {
+        data_set($this, $keyForm, setting($keyValue));
+        return $this;
+    }
+    protected function SaveSetting($keyForm, $keyValue, $column)
+    {
+        set_setting($keyValue, data_get($this, $keyForm));
+        return $this;
     }
     public function doSave()
     {
         $this->doValidate();
+
         DB::transaction(function () {
+            if (method_exists($this, 'saveDataBefore')) {
+                call_user_func([$this, 'saveDataBefore']);
+            }
             foreach ($this->getAllInputUI() as $column) {
-                set_setting($column->getNameEncode(), data_get($this, $column->getFormFieldEncode()));
+                $this->SaveSetting($column->getFormFieldEncode(), $column->getNameEncode(), $column);
+            }
+            if (method_exists($this, 'saveDataAfter')) {
+                call_user_func([$this, 'saveDataAfter']);
             }
         });
+
         $this->showMessage($this->formMessage(false));
         if (!$this->CurrentIsPage()) {
             $this->refreshRefComponent();
             $this->closeComponent();
         } else {
-            return   $this->redirectCurrent();
+            return  $this->redirectCurrent();
         }
     }
 }

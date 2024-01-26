@@ -10,13 +10,16 @@ use Illuminate\Support\Facades\Route;
 use Symfony\Component\Finder\SplFileInfo;
 
 use Sokeio\Breadcrumb;
-use Sokeio\Component;
+use Sokeio\Facades\Menu;
 use Sokeio\Facades\Module;
 use Sokeio\Facades\Platform;
 use Sokeio\Facades\Plugin;
 use Sokeio\Facades\Theme;
+use Sokeio\Facades\ThemeOption;
+use Sokeio\Menu\MenuBuilder;
 use Sokeio\Models\Setting;
 use Sokeio\Notification;
+use Sokeio\Platform\ThemeOptionManager;
 
 if (!function_exists('sokeio_encode')) {
     function sokeio_encode($data)
@@ -160,6 +163,17 @@ if (!function_exists('theme_layout')) {
         return Theme::Layout(apply_filters(PLATFORM_THEME_LAYOUT, ''));
     }
 }
+
+if (!function_exists('theme_option')) {
+    /**
+     * @return  string | ThemeOptionManager
+     */
+    function theme_option($key = '', $default = null): string | ThemeOptionManager
+    {
+        return $key ? ThemeOption::getValue($key, $default) : ThemeOption::getFacadeRoot();
+    }
+}
+
 
 if (!function_exists('theme_position')) {
     /**
@@ -487,6 +501,13 @@ if (!function_exists('platform_path')) {
 
 
 
+if (!function_exists('menu_admin')) {
+    function menu_admin($render = false): MenuBuilder| string
+    {
+        if ($render) Menu::render('menu_admin_sidebar');
+        return  Menu::position('menu_admin_sidebar');
+    }
+}
 
 if (!function_exists('column_size')) {
     function column_size($size = 'col')
