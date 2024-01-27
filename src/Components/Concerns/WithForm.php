@@ -155,6 +155,10 @@ trait WithForm
         });
         $this->dataId = $objData->id;
         $this->showMessage($this->formMessage($isNew));
+        $this->doRefreshRef();
+    }
+    protected function doRefreshRef()
+    {
         if (!$this->CurrentIsPage()) {
             $this->refreshRefComponent();
             $this->closeComponent();

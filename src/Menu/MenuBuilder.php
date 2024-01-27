@@ -169,6 +169,28 @@ class MenuBuilder extends HtmlBuilder
         $this->warps[] = ['class' => $class, 'id' => $id, MenuItemBuilder::KEY_ATTRIBUTE => $attributes];
         return $this;
     }
+    private function addItemWithDatabase($data, MenuBuilder $menu, $parentId = 0)
+    {
+        foreach ($data as $item) {
+            if ($item['parent_id'] == $parentId) {
+                $isSub = $data->where('parent_id', $item['id'])->count() > 0;
+                if ($isSub) {
+                    $menu->subMenu($item['name'], $item['icon'], function ($menuSub) use ($data, $item) {
+                        $this->addItemWithDatabase($data, $menuSub, $item['id']);
+                    }, $item['sort']);
+                } else {
+                    $menu->link($item['link'], $item['name'], $item['icon'], $item['attribute'], $item['permission'], $item['order']); // = new MenuItemBuilder($item, $menu);
+                }
+
+                $this->addItemWithDatabase($data, $menu, $item['id']);
+            }
+        }
+    }
+    public function withDatabase($data)
+    {
+        $this->addItemWithDatabase($data, $this, 0);
+        return $this;
+    }
     public function checkActive()
     {
         foreach ($this->items as $item) {

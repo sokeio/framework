@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class MenuLocation extends Model
 {
     public $timestamps = false;
+    protected $fillable = [
+        'name',
+        'locations'
+    ];
     /**
      * The attributes that should be cast.
      *
@@ -15,4 +19,7 @@ class MenuLocation extends Model
     protected $casts = [
         'locations' => 'array',
     ];
+    public function menus(){
+        return $this->hasMany(Menu::class);
+    }
 }

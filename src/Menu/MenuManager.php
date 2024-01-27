@@ -90,6 +90,10 @@ class MenuManager
     {
         return $this->position($_position)->wrapDiv($class, $id, $attributes);
     }
+    public function withDatabase($data, $_position = '')
+    {
+        return $this->position($_position)->withDatabase($data);
+    }
     public function renderCallback($callback)
     {
         $this->positiosCallback = $callback;

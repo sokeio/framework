@@ -44,7 +44,8 @@ class ThemeManager extends ActionHook
     {
         return "theme";
     }
-    public function SetupOption(){
+    public function SetupOption()
+    {
         $site = $this->SiteDataInfo();
         $site?->CallOperation('SetupOption');
     }
@@ -166,7 +167,7 @@ class ThemeManager extends ActionHook
     public function getLocations()
     {
         if ($this->locations) return $this->locations;
-        $temps = $this->findLocations([], apply_filters(PLATFORM_THEME_FILTER_LAYOUT, $this->SiteId(), 0));
+        $temps = $this->findLocations(['menu_main' => 'menu_main'], apply_filters(PLATFORM_THEME_FILTER_LAYOUT, $this->SiteId(), 0));
         $this->locations = array_keys($temps);
         return $this->locations;
     }

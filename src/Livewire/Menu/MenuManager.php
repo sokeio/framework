@@ -2,43 +2,57 @@
 
 namespace Sokeio\Livewire\Menu;
 
+use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\Url;
 use Sokeio\Models\Menu;
 use Sokeio\Models\MenuLocation;
 use Sokeio\Component;
+use Sokeio\Facades\Assets;
 use Sokeio\Facades\Theme;
 
 class MenuManager extends Component
 {
-    public $menu_name;
     public $menu_locations = [];
     public $menu_lists = [];
-    public $locationId;
-    public function doSave()
+    #[Url]
+    public $locationId = 0;
+    public function updated($propertyName, $newValue)
     {
-        if ($this->locationId) {
-            $location = MenuLocation::find($this->locationId);
-        } else {
-            $location = new  MenuLocation();
+        if ($propertyName === 'locationId') {
+            $this->loadMenu($newValue);
         }
-        if (!$this->menu_name) $this->menu_name = "menu none";
-        $location->name = $this->menu_name;
-        $location->locations = json_encode($this->menu_locations ?? []);
-        $location->save();
-        $this->locationId = $location->id;
+        if (str_starts_with($propertyName, 'menu_locations.')) {
+            $location = MenuLocation::find($this->locationId);
+            $location->locations = array_keys(array_filter($this->menu_locations, function ($item) {
+                return $item;
+            }));
+            $location->save();
+        }
+    }
+    public function loadMenu($locationId)
+    {
+        $this->locationId = $locationId;
+        $location = MenuLocation::find($locationId);
+        $this->menu_locations = [];
+        $this->menu_lists = [];
+        if ($location) {
+            $temp_locations = $location->locations;
+            if ($temp_locations) {
+                foreach ($temp_locations  as $item) {
+                    $this->menu_locations[$item] = true;
+                }
+            }
+            $this->menu_lists = Menu::where('menu_location_id', $this->locationId)->get()->toArray();
+        }
     }
     public function mount()
     {
-        $location = MenuLocation::find($this->locationId);
-        if ($location) {
-            $this->menu_name = $location->name;
-            $this->menu_locations = json_decode($location->localtions);
-            $this->menu_lists = Menu::where('menu_location_id', $this->locationId)->get()->toArray();
-        }
+        Assets::setTitle('Menu Manager');
+        $this->loadMenu($this->locationId);
     }
     private function updateSortMenu($data_list, $items, $parent_id)
     {
         foreach ($items as $item) {
-
             $value = $item['value'];
             $order = $item['order'];
             if (!isset($data_list[$value]))
@@ -84,6 +98,15 @@ class MenuManager extends Component
         $this->menu_lists = collect($this->menu_lists)->where(function ($item) use ($id) {
             return $item['id'] != $id;
         })->toArray();
+    }
+    public function doDeleteMenu()
+    {
+        $this->menu_lists = [];
+        DB::transaction(function () {
+            Menu::where('menu_location_id', $this->locationId)->delete();
+            MenuLocation::where('id', $this->locationId)->delete();
+        });
+        $this->loadMenu(0);
     }
     public function doAddMenu($data)
     {

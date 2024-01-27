@@ -8,7 +8,11 @@ export class ConfirmModule extends SokeioPlugin {
     const self = this;
     self
       .getManager()
-      .onDocument("mousedown", "[sokeio\\:confirm]", self.clickEvent.bind(self));
+      .onDocument(
+        "mousedown",
+        "[sokeio\\:confirm]",
+        self.clickEvent.bind(self)
+      );
     window.showConfirm = (content, title, option = undefined) => {
       self.showConfirm(content, title, option);
     };
@@ -19,9 +23,9 @@ export class ConfirmModule extends SokeioPlugin {
     e.stopImmediatePropagation();
     let elCurrentTarget = e.target;
     let message = elCurrentTarget.getAttribute("sokeio:confirm");
-    let title = elCurrentTarget.getAttribute("sokeio:confirm-title");
-    let btnYes = elCurrentTarget.getAttribute("sokeio:confirm-yes");
-    let btnNo = elCurrentTarget.getAttribute("sokeio:confirm-no");
+    let title = elCurrentTarget.getAttribute("sokeio:confirm-title") ?? "";
+    let btnYes = elCurrentTarget.getAttribute("sokeio:confirm-yes") ?? "Yes";
+    let btnNo = elCurrentTarget.getAttribute("sokeio:confirm-no") ?? "No";
     self.showConfirm(message, title, {
       btnYes,
       btnNo,

@@ -36,6 +36,31 @@ trait WithLivewire
         // if (!isset($option['id']) && !count($option)) $option['id'] = $this->getId();
         $this->dispatch('sokeio::refresh', option: $option);
     }
+
+    public function callFunc($option = [])
+    {
+        $this->dispatch('sokeio::call', option: $option);
+    }
+    public function callFuncByName($name, $func, $params = [])
+    {
+        $this->callFunc([
+            'component' => $name,
+            'func' => $func,
+            'params' => $params
+        ]);
+    }
+    public function callFuncById($id, $func, $params = [])
+    {
+        $this->callFunc([
+            'id' => $id,
+            'func' => $func,
+            'params' => $params
+        ]);
+    }
+    public function callFuncByRef($func, $params = [])
+    {
+        return $this->callFuncById($this->_refComponentId, $func, $params);
+    }
     public function refreshRefComponent()
     {
         $this->refreshData([

@@ -18,7 +18,14 @@ class MenuForm extends Form
             UI::Text('name')->Label(__('Menu Name'))->required(),
         ])->ClassName('p-3');
     }
-    protected function saveBefore($menu){
-        $menu->locations=[];
+    protected function saveBefore($menu)
+    {
+        if (!$menu->locations) {
+            $menu->locations = [];
+        }
+    }
+    protected function saveAfter($menu)
+    {
+        $this->callFuncByRef('loadMenu', $menu->id);
     }
 }

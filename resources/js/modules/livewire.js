@@ -68,6 +68,9 @@ export class LiveWireModule extends SokeioPlugin {
           window.Livewire.dispatch("refreshData" + id);
         } catch (ex) {}
       };
+      const livewireCallFunction = (component, func, params) => {
+        component.call(func, params);
+      };
       window.addEventListener("sokeio::refresh", ({ detail: { option } }) => {
         let { module, id, component } = option;
         if (module) {
@@ -85,8 +88,26 @@ export class LiveWireModule extends SokeioPlugin {
           LivewireRefreshData(id);
         }
       });
+      window.addEventListener("sokeio::call", ({ detail: { option } }) => {
+        let { params, id, component, func } = option;
+        if (component) {
+          if (!Array.isArray(component)) {
+            component = [component];
+          }
+          component.forEach((element) => {
+            let arr = window.Livewire.getByName(element);
+            if (arr) {
+              arr.forEach((item) => {
+                livewireCallFunction(item, func, params);
+              });
+            }
+          });
+        }
+        if (id) {
+          livewireCallFunction(window.Livewire.find(id), func, params);
+        }
+      });
       window.addEventListener("sokeio::message", ({ detail: { option } }) => {
-        console.log('sokeio::message')
         if (typeof option === "string") {
           window.SokeioManager.addInfo(option, "sokeio::message");
         } else {

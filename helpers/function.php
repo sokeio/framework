@@ -17,6 +17,7 @@ use Sokeio\Facades\Plugin;
 use Sokeio\Facades\Theme;
 use Sokeio\Facades\ThemeOption;
 use Sokeio\Menu\MenuBuilder;
+use Sokeio\Models\MenuLocation;
 use Sokeio\Models\Setting;
 use Sokeio\Notification;
 use Sokeio\Platform\ThemeOptionManager;
@@ -504,11 +505,18 @@ if (!function_exists('platform_path')) {
 if (!function_exists('menu_admin')) {
     function menu_admin($render = false): MenuBuilder| string
     {
-        if ($render) Menu::render('menu_admin_sidebar');
+        if ($render) return Menu::render('menu_admin_sidebar');
         return  Menu::position('menu_admin_sidebar');
     }
 }
-
+if (!function_exists('theme_menu')) {
+    function theme_menu($name)
+    {
+        $location =  MenuLocation::whereJsonContains('locations', $name)->with('menus')->first();;
+        $menuSorted = $location->menus->sortByDesc('order');
+        return Menu::position($name)->withDatabase($menuSorted)->toHtml();
+    }
+}
 if (!function_exists('column_size')) {
     function column_size($size = 'col')
     {
