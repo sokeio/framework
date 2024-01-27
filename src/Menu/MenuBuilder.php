@@ -181,8 +181,6 @@ class MenuBuilder extends HtmlBuilder
                 } else {
                     $menu->link($item['link'], $item['name'], $item['icon'], $item['attribute'], $item['permission'], $item['order']); // = new MenuItemBuilder($item, $menu);
                 }
-
-                $this->addItemWithDatabase($data, $menu, $item['id']);
             }
         }
     }

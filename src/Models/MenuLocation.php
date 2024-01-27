@@ -19,7 +19,8 @@ class MenuLocation extends Model
     protected $casts = [
         'locations' => 'array',
     ];
-    public function menus(){
-        return $this->hasMany(Menu::class);
+    public function menus()
+    {
+        return $this->hasMany(Menu::class)->orderBy('parent_id')->orderBy('order');
     }
 }

@@ -4,6 +4,7 @@ namespace Sokeio\Livewire\Menu;
 
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Url;
+use Sokeio\Breadcrumb;
 use Sokeio\Models\Menu;
 use Sokeio\Models\MenuLocation;
 use Sokeio\Component;
@@ -45,9 +46,20 @@ class MenuManager extends Component
             $this->menu_lists = Menu::where('menu_location_id', $this->locationId)->get()->toArray();
         }
     }
+    protected function getBreadcrumb()
+    {
+        return [
+            Breadcrumb::Item(__('Home'), route('admin.dashboard'))
+        ];
+    }
+    protected function getTitle()
+    {
+        return 'Menu Manager';
+    }
     public function mount()
     {
-        Assets::setTitle('Menu Manager');
+        Assets::setTitle($this->getTitle());
+        breadcrumb()->Title($this->getTitle())->Breadcrumb($this->getBreadcrumb());
         $this->loadMenu($this->locationId);
     }
     private function updateSortMenu($data_list, $items, $parent_id)
