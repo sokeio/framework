@@ -74,4 +74,8 @@ trait WithFieldRule
     {
         return $this->rule('regex:' . $regex, $messages);
     }
+    public function regexArray($messages = null): static
+    {
+        return $this->regex('/^\[.*\]$/s', $messages);
+    }
 }

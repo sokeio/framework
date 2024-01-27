@@ -157,7 +157,7 @@ class SokeioServiceProvider extends ServiceProvider
         $this->app->booting(function () {
             app('livewire')->componentHook(SupportFormObjects::class);
         });
-       
+
         $this->app->booted(function () {
             Theme::RegisterRoute();
             if (admin_url() != '') {

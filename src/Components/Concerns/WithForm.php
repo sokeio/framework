@@ -55,7 +55,7 @@ trait WithForm
         }
         //set default value
         foreach ($this->getAllInputUI() as $column) {
-            if (data_get($this, $column->getFormFieldEncode()) == null && $column->getValueDefault() != null) {
+            if (data_get($this, $column->getFormFieldEncode()) === null && $column->getValueDefault() != null) {
                 data_set($this, $column->getFormFieldEncode(), $column->getValueDefault());
             }
         }
