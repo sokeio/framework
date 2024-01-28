@@ -521,6 +521,7 @@ if (!function_exists('theme_menu')) {
     function theme_menu($name)
     {
         $location =  MenuLocation::whereJsonContains('locations', $name)->with('menus')->first();;
+        if ($location == null || $location->menus == null) return '';
         $menuSorted = $location->menus;
         return Menu::position($name)->withDatabase($menuSorted)->toHtml();
     }
