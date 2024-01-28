@@ -96,7 +96,7 @@ class SokeioServiceProvider extends ServiceProvider
             echo '<meta name="csrf_token" value="' . csrf_token() . '"/>';
             if (!sokeio_is_admin() && function_exists('seo_header_render')) {
                 echo '<!---SEO:BEGIN--!>';
-                echo call_user_func('seo_header_render');
+                echo seo_header_render();
                 echo '<!---SEO:END--!>';
             } else {
                 if ($title = Assets::getTitle()) {
