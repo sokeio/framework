@@ -142,6 +142,7 @@ class MenuManager extends Component
             'order' => 0,
             ...$data
         ];
+        $this->__loadData();
         return true;
     }
     public function render()

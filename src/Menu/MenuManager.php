@@ -8,8 +8,6 @@ class MenuManager
 {
     private $registers = [];
     private $positions = [];
-    private $positiosCallback = [];
-    private $positiosItemCallback = [];
     private $default = 'sidebar';
     public function getDefault()
     {
@@ -24,25 +22,6 @@ class MenuManager
         if (!$_position) $_position = $this->default;
         if (!isset($this->positions[$_position]) || !$this->positions[$_position]) {
             $this->positions[$_position] = new MenuBuilder($_position);
-            if (!isset($this->positiosCallback) || !$this->positiosCallback) {
-                $this->renderCallback(function (MenuBuilder $item) {
-                    echo '<ul>';
-                    foreach ($item->getItems() as $_item) {
-                        echo $_item->toHtml();
-                    }
-                    echo '</ul>';
-                }, $_position);
-            }
-            if (!isset($this->positiosItemCallback) || !$this->positiosItemCallback) {
-                $this->renderItemCallback(function (MenuItemBuilder $item) {
-                    echo '<li>';
-                    echo $item->getValueText();
-                    if ($item->checkSubMenu()) {
-                        echo $item->getSubMenu()->toHtml();
-                    }
-                    echo '</li>';
-                }, $_position);
-            }
         }
         return $this->positions[$_position];
     }
@@ -94,30 +73,7 @@ class MenuManager
     {
         return $this->position($_position)->withDatabase($data);
     }
-    public function renderCallback($callback)
-    {
-        $this->positiosCallback = $callback;
-    }
-    public function renderItemCallback($callback)
-    {
-        $this->positiosItemCallback = $callback;
-    }
-    public function doRender($item, $_position = '')
-    {
-        if (!$_position) $_position = $this->default;
-        if ($callback = $this->positiosCallback) {
-            if (is_callable($callback))
-                $callback($item, $_position);
-        }
-    }
-    public function doRenderItem($item, $_position = '')
-    {
-        if (!$_position) $_position = $this->default;
-        if ($callback = $this->positiosItemCallback) {
-            if (is_callable($callback))
-                $callback($item, $_position);
-        }
-    }
+
     public function register($callback)
     {
         if ($callback && is_callable($callback)) {

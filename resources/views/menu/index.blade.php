@@ -1,19 +1,22 @@
 <div class="p-3">
-    <div class="row" wire:key='locationId-{{ $locationId }}' x-data="{
-        async addMenuItem(data) {
-            return await this.$wire.doAddMenu(data);
-        }
-    }">
+    <div wire:key='locationId-{{ $locationId }}-{{ $___number_loading }}' class="row menu-parent-manager"
+        x-data="{
+            async addMenuItem(data) {
+                    return await this.$wire.doAddMenu(data);
+                },
+        
+        }">
         <div class="{{ column_size('col4') }}">
             <div class="accordion bg-white" id="accordion-menu">
-                <div class="accordion-item">
+                <div class="accordion-item" wire:ignore>
                     <h2 class="accordion-header" id="menu-header-link">
                         <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#menu-link" aria-expanded="true" aria-controls="menu-link">
+                            data-bs-target="#menu-link" aria-expanded="true" aria-controls="menu-link" wire:ignore>
                             Links
                         </button>
                     </h2>
-                    <div id="menu-link" class="accordion-collapse collapse show" data-bs-parent="#accordion-menu">
+                    <div id="menu-link" class="accordion-collapse collapse show" data-bs-parent="#accordion-menu"
+                        wire:ignore>
                         <div class="accordion-body pt-0" x-data="{
                             custom_url: '',
                             custom_name: '',
@@ -52,13 +55,13 @@
                     <div class="accordion-item" wire:ignore>
                         <h2 class="accordion-header" id="menu-header-{{ $item['key'] }}">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#menu-{{ $item['key'] }}" aria-expanded="false">
+                                data-bs-target="#menu-{{ $item['key'] }}" aria-expanded="false" wire:ignore>
                                 {!! $item['title'] !!}
                             </button>
                         </h2>
                         <div id="menu-{{ $item['key'] }}" class="accordion-collapse collapse"
-                            data-bs-parent="#accordion-menu">
-                            <div class="accordion-body pt-0">
+                            data-bs-parent="#accordion-menu" wire:ignore>
+                            <div class="accordion-body pt-0" wire:key='menu-{{ $item['key'] }}-{{ $locationId }}'>
                                 {!! $item['body'] !!}
                             </div>
                         </div>

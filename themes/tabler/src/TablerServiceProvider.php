@@ -5,7 +5,7 @@ namespace SokeioTheme\Tabler;
 use Illuminate\Support\ServiceProvider;
 use Sokeio\Laravel\ServicePackage;
 use Sokeio\Concerns\WithServiceProvider;
-use Sokeio\Facades\Menu;
+use Sokeio\Facades\MenuRender;
 use Sokeio\Menu\MenuBuilder;
 use Sokeio\Menu\MenuItemBuilder;
 
@@ -44,12 +44,11 @@ class TablerServiceProvider extends ServiceProvider
                 ];
             });
         }
-       
     }
     public function packageBooted()
     {
         $this->bootGate();
-        Menu::renderCallback(function (MenuBuilder $menu) {
+        MenuRender::renderCallback(function (MenuBuilder $menu) {
             $classActive = $menu->checkActive() ? 'show' : '';
             if ($menu->checkSub()) {
                 echo '<div id="' . $menu->getId() . '" class="dropdown-menu ' . $classActive . '" data-bs-popper="static">';
@@ -65,7 +64,7 @@ class TablerServiceProvider extends ServiceProvider
                 echo '</ul>';
             }
         });
-        Menu::renderItemCallback(function (MenuItemBuilder $item) {
+        MenuRender::renderItemCallback(function (MenuItemBuilder $item) {
             $itemActiveClass = ' bg-azure text-azure-fg ';
             $classActive = $item->checkActive() ? 'show' : '';
             if (!$item->checkView()) return;

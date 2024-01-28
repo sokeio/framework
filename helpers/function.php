@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+use Livewire\Livewire;
 use Symfony\Component\Finder\SplFileInfo;
 
 use Sokeio\Breadcrumb;
@@ -152,6 +153,13 @@ if (!function_exists('is_livewire_reuqest')) {
     function is_livewire_reuqest()
     {
         return class_exists('Livewire\\LivewireManager') && app('Livewire\\LivewireManager')->isLivewireRequest();
+    }
+}
+
+if (!function_exists('livewire_render')) {
+    function livewire_render($name, $params = [])
+    {
+        return Livewire::mount($name, $params);
     }
 }
 

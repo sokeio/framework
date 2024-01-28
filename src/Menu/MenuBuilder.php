@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Request;
 use Sokeio\HtmlBuilder;
 use Illuminate\Support\Str;
 use Sokeio\Facades\Menu;
+use Sokeio\Facades\MenuRender;
 
 class MenuBuilder extends HtmlBuilder
 {
@@ -242,7 +243,7 @@ class MenuBuilder extends HtmlBuilder
             echo "<div class='" . $item['class'] . "' id='" . $item['id'] . "' " . $attribute . " >";
         }
 
-        Menu::DoRender($this, $this->position);
+        MenuRender::DoRender($this, $this->position);
 
         foreach ($this->warps as $item) {
             echo "</div>";

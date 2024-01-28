@@ -21,11 +21,7 @@ use Sokeio\Menu\MenuBuilder;
  * @method static MenuBuilder subMenu($text, $icon = '', $callback, $sort  = -1, $_position = '')
  * @method static MenuBuilder attachMenu($targetId, $callback, $_position = '')
  * @method static MenuBuilder wrapDiv($class, $id, $attributes = [], $_position = '')
- * @method static void renderCallback($callback, $_position = '')
- * @method static void renderItemCallback($callback, $_position = '')
- * @method static void DoRender($item, $_position = '')
- * @method static void DoRenderItem($item, $_position = '')
- * @method static void Register($callback)
+ * @method static MenuBuilder withDatabase($data, $_position = '')
  * @method static void DoRegister()
  *
  * @see \Sokeio\Menu\MenuManager

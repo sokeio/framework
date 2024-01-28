@@ -20,6 +20,8 @@ use Sokeio\Concerns\WithServiceProvider;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Request;
 use Sokeio\Facades\Menu;
+use Sokeio\Facades\MenuRender;
+use Sokeio\Livewire\Test;
 use Sokeio\Support\SupportFormObjects\SupportFormObjects;
 
 class SokeioServiceProvider extends ServiceProvider
@@ -173,7 +175,25 @@ class SokeioServiceProvider extends ServiceProvider
                     Platform::makeLink();
                 }
             }
+            if (sokeio_is_admin()) {
+                add_filter('SOKEIO_MENU_ITEM_MANAGER', function ($prev) {
+                    return [
+                        ...$prev,
+                        ...MenuRender::getMenuType()->map(function ($item) {
+                            return [
+                                'title' => $item['title'],
+                                'key' => $item['type'],
+                                'body' => livewire_render($item['setting']),
+                            ];
+                        })
+                    ];
+                }, 0);
+            }
+            MenuRender::RegisterType('menu', 'Menu', Test::class, function () {
+                return '1234';
+            });
         });
+
         Route::matched(function () {
             $route_name = Route::currentRouteName();
             if ($route_name == 'homepage' && admin_url() == '') {

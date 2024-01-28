@@ -3,6 +3,7 @@
 namespace Sokeio\Menu;
 
 use Sokeio\Facades\Menu;
+use Sokeio\Facades\MenuRender;
 use Sokeio\HtmlBuilder;
 
 class MenuItemBuilder extends HtmlBuilder
@@ -16,6 +17,7 @@ class MenuItemBuilder extends HtmlBuilder
     public const ITEM_BUTTON = 'ITEM_BUTTON';
     public const ITEM_SUB = 'ITEM_SUB';
 
+    public const KEY_CONTENT_TYPE = 'KEY_CONTENT_TYPE';
     public const KEY_TYPE = 'KEY_TYPE';
     public const KEY_TEXT = 'KEY_TEXT';
     public const KEY_ICON = 'KEY_ICON';
@@ -41,6 +43,10 @@ class MenuItemBuilder extends HtmlBuilder
     {
         if (isset($this->dataItem[$key]) && $this->dataItem[$key]) return $this->dataItem[$key];
         return $default;
+    }
+    public function getValueContentType()
+    {
+        return $this->getValue(self::KEY_CONTENT_TYPE);
     }
     public function getValueType()
     {
@@ -155,6 +161,6 @@ class MenuItemBuilder extends HtmlBuilder
     }
     protected function render()
     {
-        Menu::DoRenderItem($this, $this->parent->getPosition());
+        MenuRender::DoRenderItem($this, $this->parent->getPosition());
     }
 }
