@@ -526,6 +526,25 @@ if (!function_exists('theme_menu')) {
         return Menu::position($name)->withDatabase($menuSorted)->toHtml();
     }
 }
+
+if (!function_exists('permalink_route')) {
+    function permalink_route($key,$permalink,$route_class,$route_name)
+    {
+        $permalinks=\Sokeio\Models\Permalink::getPermalinkCache();
+        if(isset($permalinks[$key])&&count($permalinks[$key])>0){
+            foreach ($permalinks[$key] as $key => $value) {
+                if(isset($value['lang'])&&$value['lang']!=''&&$value['lang']!='null'){
+                    Route::get(str_replace('{lang}',$value['lang'],$value['value']),$route_class)->name($route_name.'.'.$value['lang']);
+                }else{
+                    Route::get($value['value'],$route_class)->name($route_name);
+                }
+            }
+            return;
+        }
+        Route::get($permalink,$route_class)->name($route_name);
+    }
+}
+
 if (!function_exists('column_size')) {
     function column_size($size = 'col')
     {
