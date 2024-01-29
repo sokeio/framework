@@ -40,7 +40,7 @@
         <div class="row g-2 align-items-center">
             <div class="col-auto">
                 <div class="input-icon">
-                    <input type="text" wire:model='search.textSearch' wire:keydown.enter="doSearch()"
+                    <input type="text" wire:model='textSearch' wire:keydown.enter="doSearch()"
                         wire:blur="doSearch()" class="form-control" placeholder="Search…">
                     <span class="input-icon-addon">
                         <!-- Download SVG icon from http://tabler-icons.io/i/search -->

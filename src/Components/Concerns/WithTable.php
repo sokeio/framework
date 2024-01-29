@@ -18,6 +18,7 @@ trait WithTable
     private $tableActions;
     // #[Url]
     public $selectIds = [];
+    public $textSearch='';
     public Form $search;
     public Form $orderBy;
     public $pageSize;
@@ -152,15 +153,15 @@ trait WithTable
     {
         if ($this->lazyloadingTable) return null;
         $query = $this->getQuery();
-        if ($textSearch = $this->search->textSearch) {
+        if ($textSearch = $this->textSearch) {
             $query->orWhere(function ($subquery) use ($textSearch) {
                 foreach ($this->searchFields() as $field) {
                     $arrFields = explode('.', $field);
                     if (count($arrFields) == 1) {
-                        $subquery->orWhere($field, 'like', '%' . $textSearch . '%');
+                        $subquery->orWhere($field, 'like', '\'%' . $textSearch . '%\'');
                     } else {
                         $subquery->orWhereHas($arrFields[0], function ($subquery) use ($textSearch, $arrFields) {
-                            $subquery->where($arrFields[0] . '.' . $arrFields[1], 'like', '%' . $textSearch . '%');
+                            $subquery->where($arrFields[0] . '.' . $arrFields[1], 'like', '\'%' . $textSearch . '%\'');
                         });
                     }
                 }
