@@ -3,8 +3,8 @@
     $formField = $column->getFormField();
     $infoText = $column->getInfoText();
 @endphp
-<div class=" {{ $column->getClassName() ?? 'mb-3' }}">
-    <label class="form-label">{{ $modelLabel }}</label>
+<div class=" {{ $column->getClassName() ?? 'mb-3' }}" {!! $column->getAttribute() ?? '' !!}>
+    <label class="form-label" {!! $column->getAttributeLabel() ?? '' !!}>{{ $modelLabel }}</label>
     @include($column->getFieldView(), ['column' => $column])
     @error($formField)
         <div>
