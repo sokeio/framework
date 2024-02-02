@@ -24,7 +24,7 @@ class IconSetting extends FormSettingCallback
             UI::Div([
                 UI::Div('<template x-if="$wire.data.SettingValueField">
                 <div >
-                    <span style="font-size: 5rem" :class="$wire.data.SettingValueField"></span>
+                    <span style="font-size: 5rem"  :class="$wire.data.SettingValueField"></span>
                     <p class="fs-2 bg-warning text-warning-fg" x-text="$wire.data.SettingValueField"></p>
                      <button @click="$wire.data.SettingValueField = \'\'" class="btn btn-sm btn-danger">Remove Icon</button>
                 </div>
@@ -51,16 +51,19 @@ class IconSetting extends FormSettingCallback
                     </template>
                 ')->ClassName('d-flex flex-wrap')
                 ])->Attribute(' style="max-height: 300px; overflow-y: auto;" '),
-
+                UI::Div('<div x-text="len"></div>')->ClassName('text-center'),
             ])->Attribute('
+            x-intersect.half="len=len+100"
                     x-data="{
                         items: ' . sokeio_js(IconManager::getInstance()->getListBase()) . ',
                         itemActive: false,
                         iconActive: false,
                         icons: [],
+                        len:200,
                         async initIcon() {
                             $watch(\'itemActive\',async ($value)=>{
                                 this.icons=[];
+                                this.len = 200;
                                 this.icons = await $wire.getIcons($value)
                             });
                             if(!this.itemActive) {
@@ -68,7 +71,7 @@ class IconSetting extends FormSettingCallback
                             }
                         },
                         searchIcons(){
-                            return this.icons.filter(item => item.name.includes( $wire.SearchText)||!$wire.SearchText);
+                            return this.icons.filter(item => item.name.includes( $wire.SearchText)||!$wire.SearchText);//.slice(0,this.len);
                         }
                     }"
 
