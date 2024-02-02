@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Js;
 use Livewire\Livewire;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -17,6 +18,7 @@ use Sokeio\Facades\Platform;
 use Sokeio\Facades\Plugin;
 use Sokeio\Facades\Theme;
 use Sokeio\Facades\ThemeOption;
+use Sokeio\Icon\IconManager;
 use Sokeio\Menu\MenuBuilder;
 use Sokeio\Models\MenuLocation;
 use Sokeio\Models\Setting;
@@ -81,6 +83,19 @@ if (!function_exists('sokeio_action')) {
         ]);
     }
 }
+if (!function_exists('sokeio_icons')) {
+    function sokeio_icons()
+    {
+        return IconManager::getInstance()->toArray();
+    }
+}
+if (!function_exists('sokeio_js')) {
+    function sokeio_js($data)
+    {
+        return Js::from($data);
+    }
+}
+
 if (!function_exists('sokeio_mode_dev')) {
     function sokeio_mode_dev()
     {
@@ -528,20 +543,20 @@ if (!function_exists('theme_menu')) {
 }
 
 if (!function_exists('permalink_route')) {
-    function permalink_route($key,$permalink,$route_class,$route_name)
+    function permalink_route($key, $permalink, $route_class, $route_name)
     {
-        $permalinks=\Sokeio\Models\Permalink::getPermalinkCache();
-        if(isset($permalinks[$key])&&count($permalinks[$key])>0){
+        $permalinks = \Sokeio\Models\Permalink::getPermalinkCache();
+        if (isset($permalinks[$key]) && count($permalinks[$key]) > 0) {
             foreach ($permalinks[$key] as $key => $value) {
-                if(isset($value['lang'])&&$value['lang']!=''&&$value['lang']!='null'){
-                    Route::get(str_replace('{lang}',$value['lang'],$value['value']),$route_class)->name($route_name.'.'.$value['lang']);
-                }else{
-                    Route::get($value['value'],$route_class)->name($route_name);
+                if (isset($value['lang']) && $value['lang'] != '' && $value['lang'] != 'null') {
+                    Route::get(str_replace('{lang}', $value['lang'], $value['value']), $route_class)->name($route_name . '.' . $value['lang']);
+                } else {
+                    Route::get($value['value'], $route_class)->name($route_name);
                 }
             }
             return;
         }
-        Route::get($permalink,$route_class)->name($route_name);
+        Route::get($permalink, $route_class)->name($route_name);
     }
 }
 

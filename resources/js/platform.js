@@ -81,6 +81,33 @@ export class Sokeio extends SokeioManager {
   openModal($option, dataModal = undefined) {
     return this.find("SOKEIO_MODAL_MODULE").openModal($option, dataModal);
   }
+  openModalSetting(
+    $key,
+    $editorContainer,
+    $data = {},
+    callback = undefined,
+    callbackClosed = undefined
+  ) {
+    let EventCallBack = $key + "EventCallBack" + new Date().getTime();
+    window[EventCallBack] = callback;
+    let parentEl = $editorContainer.closest("[wire\\:id]");
+    let refComponent = parentEl?.getAttribute("wire:id");
+    let $config = this.$config[$key] ?? [];
+    this.openModal(
+      {
+        $url: $config["url"],
+        $title: $config["title"] ?? "Setting",
+        $size: $config["size"] ?? "modal-fullscreen-md-down modal-xl",
+        $callbackClosed: callbackClosed,
+      },
+      {
+        refComponent,
+        ___theme___admin: Livewire.find(refComponent)?.___theme___admin,
+        ___setting_data: $data,
+        ___setting_callback_event: EventCallBack,
+      }
+    );
+  }
   openShortcodeSetting(
     $editorContainer,
     $shortcode,
@@ -89,27 +116,32 @@ export class Sokeio extends SokeioManager {
     callback = undefined,
     callbackClosed = undefined
   ) {
-    let ShortcodeEventCallBack =
-      "ShortcodeEventCallBack" + new Date().getTime();
-    window[ShortcodeEventCallBack] = callback;
-
-    let parentEl = $editorContainer.closest("[wire\\:id]");
-    let refComponent = parentEl?.getAttribute("wire:id");
-    this.openModal(
+    this.openModalSetting(
+      "sokeio_shortcode_setting",
+      $editorContainer,
       {
-        $url: this.$config["sokeio_shortcode_setting"],
-        $title: "Shortcode Setting",
-        $callbackClosed: callbackClosed,
-        $size: "modal-fullscreen-md-down modal-xl",
-      },
-      {
-        refComponent,
-        ___theme___admin: Livewire.find(refComponent)?.___theme___admin,
         shortcode: $shortcode,
         attrs: $attrs,
         children: $child,
-        callbackEvent: ShortcodeEventCallBack,
-      }
+      },
+      callback,
+      callbackClosed
+    );
+  }
+  openIconSetting(
+    $editorContainer,
+    $icon,
+    callback = undefined,
+    callbackClosed = undefined
+  ) {
+    this.openModalSetting(
+      "sokeio_icon_setting",
+      $editorContainer,
+      {
+        icon: $icon,
+      },
+      callback,
+      callbackClosed
     );
   }
 }

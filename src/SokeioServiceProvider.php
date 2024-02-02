@@ -20,6 +20,7 @@ use Sokeio\Concerns\WithServiceProvider;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Request;
 use Sokeio\Facades\MenuRender;
+use Sokeio\Icon\IconManager;
 use Sokeio\Livewire\MenuItemLink;
 use Sokeio\Support\SupportFormObjects\SupportFormObjects;
 
@@ -120,7 +121,11 @@ class SokeioServiceProvider extends ServiceProvider
                 'sokeio_url' => route('__sokeio__'),
                 'csrf_token' => csrf_token(),
                 'sokeio_filemanager' => route('unisharp.lfm.show'),
-
+                'sokeio_icon_setting' => [
+                    'url' => route('admin.icon-setting'),
+                    'title' => __('Icon Setting'),
+                    'size' => 'modal-fullscreen-md-down modal-xl'
+                ],
                 'tinyecm_option' => [
                     "relative_urls" => false,
                     "content_style" => "
@@ -173,6 +178,7 @@ class SokeioServiceProvider extends ServiceProvider
                 if (!Platform::checkFolderPlatform()) {
                     Platform::makeLink();
                 }
+                IconManager::getInstance()->Assets();
             }
             if (sokeio_is_admin()) {
                 add_filter('SOKEIO_MENU_ITEM_MANAGER', function ($prev) {

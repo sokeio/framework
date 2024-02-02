@@ -6,6 +6,10 @@ use Sokeio\Support\Svg\EasySVG;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
+use Sokeio\Icon\BootstrapIcon;
+use Sokeio\Icon\IconManager;
+use Sokeio\Icon\TablerIcon;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -70,3 +74,7 @@ Route::group(['prefix' => '__sokeio__'], function () {
 });
 if (!Platform::CheckConnectDB() || env('SOKEIO_SETUP', true))
     Route::get('/setup', Setup::class)->name('sokeio.setup');
+
+Route::get('/test-icon', function () {
+    return IconManager::getInstance()->toArray();
+});

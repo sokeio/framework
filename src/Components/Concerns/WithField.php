@@ -6,6 +6,7 @@ use Sokeio\Components\Field\CheckboxField;
 use Sokeio\Components\Field\CheckboxMutilField;
 use Sokeio\Components\Field\DatePickerField;
 use Sokeio\Components\Field\HiddenField;
+use Sokeio\Components\Field\IconField;
 use Sokeio\Components\Field\ImageField;
 use Sokeio\Components\Field\ModalField;
 use Sokeio\Components\Field\NumberField;
@@ -16,6 +17,7 @@ use Sokeio\Components\Field\RadioMutilField;
 use Sokeio\Components\Field\PasswordField;
 use Sokeio\Components\Field\RangeField;
 use Sokeio\Components\Field\SelectField;
+use Sokeio\Components\Field\SelectWithSearchField;
 use Sokeio\Components\Field\TagifyField;
 use Sokeio\Components\Field\TextareaField;
 use Sokeio\Components\Field\TextField;
@@ -94,5 +96,13 @@ trait WithField
     public static function Hidden($value)
     {
         return HiddenField::make($value);
+    }
+    public static function Icon($value)
+    {
+        return IconField::make($value);
+    }
+    public static function SelectWithSearch($value)
+    {
+        return SelectWithSearchField::make($value);
     }
 }

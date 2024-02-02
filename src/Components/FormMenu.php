@@ -14,7 +14,8 @@ class FormMenu extends Form
     {
         return [
             UI::Text('name')->Label(__('Name'))->required(),
-            UI::Text('icon')->Label(__('Icon')),
+            UI::Icon('icon')->Label(__('Icon'))->ValueDefault('bi bi-house'),
+            UI::SelectWithSearch('icon2')->Label(__('Icon2')),
         ];
     }
     protected function MenuUI()
