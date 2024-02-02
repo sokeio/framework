@@ -19,9 +19,8 @@ use Sokeio\Middleware\ThemeLayout;
 use Sokeio\Concerns\WithServiceProvider;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Request;
-use Sokeio\Facades\Menu;
 use Sokeio\Facades\MenuRender;
-use Sokeio\Livewire\Test;
+use Sokeio\Livewire\MenuItemLink;
 use Sokeio\Support\SupportFormObjects\SupportFormObjects;
 
 class SokeioServiceProvider extends ServiceProvider
@@ -189,7 +188,7 @@ class SokeioServiceProvider extends ServiceProvider
                     ];
                 }, 0);
             }
-            MenuRender::RegisterType('menu', 'Menu', Test::class, function () {
+            MenuRender::RegisterType('menu_item_links', __('Links'), MenuItemLink::class, function ($item) {
                 return '1234';
             });
         });

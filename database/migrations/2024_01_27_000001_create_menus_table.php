@@ -29,6 +29,7 @@ return new class  extends Migration
             $table->string('link', 500)->nullable();
             $table->string('attr_name', 500)->nullable();
             $table->string('class_name', 500)->nullable();
+            $table->string('data_type', 500)->nullable();
             $table->longText('data')->nullable();
             $table->integer('order')->default(0);
         });

@@ -1,67 +1,25 @@
 <div class="p-3">
-    <div wire:key='locationId-{{ $locationId }}-{{ $___number_loading }}' class="row menu-parent-manager"
-        x-data="{
-            async addMenuItem(data) {
-                    return await this.$wire.doAddMenu(data);
-                },
-        
-        }">
+    <div class="row menu-parent-manager" x-data="{
+        async addMenuItem(data) {
+                return await this.$wire.doAddMenu(data);
+            },
+    
+    }">
         <div class="{{ column_size('col4') }}">
-            <div class="accordion bg-white" id="accordion-menu">
-                <div class="accordion-item" wire:ignore>
-                    <h2 class="accordion-header" id="menu-header-link">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#menu-link" aria-expanded="true" aria-controls="menu-link" wire:ignore>
-                            Links
-                        </button>
-                    </h2>
-                    <div id="menu-link" class="accordion-collapse collapse show" data-bs-parent="#accordion-menu"
-                        wire:ignore>
-                        <div class="accordion-body pt-0" x-data="{
-                            custom_url: '',
-                            custom_name: '',
-                            custom_class: '',
-                            resetData() {
-                                this.custom_url = '';
-                                this.custom_name = '';
-                                this.custom_class = '';
-                            },
-                            async doAddMenu() {
-                                if (await addMenuItem({ link: this.custom_url, name: this.custom_name, class: this.custom_class })) {
-                                    this.resetData();
-                                }
-                            }
-                        }">
-                            <div class="mb-3">
-                                <label class="form-label">Url</label>
-                                <input x-model='custom_url' type="text" class="form-control" placeholder="Url">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Name</label>
-                                <input x-model='custom_name' type="text" class="form-control" placeholder="Name">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Class</label>
-                                <input x-model='custom_class' type="text" class="form-control" placeholder="class">
-                            </div>
-                            <div class="d-flex">
-                                <button type="submit" class="btn btn-primary ms-auto" @click="doAddMenu()">Add
-                                    To Menu</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="accordion bg-white" id="accordion-menu" >
                 @foreach (apply_filters('SOKEIO_MENU_ITEM_MANAGER', []) as $item)
-                    <div class="accordion-item" wire:ignore>
+                    <div class="accordion-item">
                         <h2 class="accordion-header" id="menu-header-{{ $item['key'] }}">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#menu-{{ $item['key'] }}" aria-expanded="false" wire:ignore>
+                            <button class="accordion-button @if ($loop->index > 0) collapsed @endif"
+                                type="button" data-bs-toggle="collapse" data-bs-target="#menu-{{ $item['key'] }}"
+                                aria-expanded="@if ($loop->index == 0) true @else false @endif " wire:ignore.self>
                                 {!! $item['title'] !!}
                             </button>
                         </h2>
-                        <div id="menu-{{ $item['key'] }}" class="accordion-collapse collapse"
-                            data-bs-parent="#accordion-menu" wire:ignore>
-                            <div class="accordion-body pt-0" wire:key='menu-{{ $item['key'] }}-{{ $locationId }}'>
+                        <div id="menu-{{ $item['key'] }}"
+                            class="accordion-collapse collapse @if ($loop->index == 0) show @endif"
+                            data-bs-parent="#accordion-menu" wire:ignore.self>
+                            <div class="accordion-body pt-0">
                                 {!! $item['body'] !!}
                             </div>
                         </div>
@@ -70,7 +28,7 @@
             </div>
         </div>
         <div class="{{ column_size('col8') }}">
-            <div class="card">
+            <div class="card" wire:key='locationId-{{ $locationId }}-{{ $___number_loading }}'>
                 <div class="card-header">
                     <h3 class="card-title ">
                         <div class="row">

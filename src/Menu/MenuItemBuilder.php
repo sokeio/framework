@@ -2,7 +2,6 @@
 
 namespace Sokeio\Menu;
 
-use Sokeio\Facades\Menu;
 use Sokeio\Facades\MenuRender;
 use Sokeio\HtmlBuilder;
 
@@ -18,6 +17,7 @@ class MenuItemBuilder extends HtmlBuilder
     public const ITEM_SUB = 'ITEM_SUB';
 
     public const KEY_CONTENT_TYPE = 'KEY_CONTENT_TYPE';
+    public const KEY_CONTENT_DATA = 'KEY_CONTENT_DATA';
     public const KEY_TYPE = 'KEY_TYPE';
     public const KEY_TEXT = 'KEY_TEXT';
     public const KEY_ICON = 'KEY_ICON';
@@ -41,12 +41,28 @@ class MenuItemBuilder extends HtmlBuilder
     protected $subMenu = null;
     protected function getValue($key, $default = null)
     {
-        if (isset($this->dataItem[$key]) && $this->dataItem[$key]) return $this->dataItem[$key];
-        return $default;
+        return data_get($this->dataItem, $key, $default);
+    }
+    protected function setValue($key, $value, $default = null)
+    {
+        data_set($this->dataItem, $key, $value, $default);
+        return $this;
+    }
+    public function getValueContentData()
+    {
+        return $this->getValue(self::KEY_CONTENT_DATA);
     }
     public function getValueContentType()
     {
         return $this->getValue(self::KEY_CONTENT_TYPE);
+    }
+    public function setValueContentData($value, $default = null)
+    {
+        return $this->setValue(self::KEY_CONTENT_DATA, $value, $default);
+    }
+    public function setValueContentType($value, $default = null)
+    {
+        return $this->setValue(self::KEY_CONTENT_TYPE, $value, $default);
     }
     public function getValueType()
     {

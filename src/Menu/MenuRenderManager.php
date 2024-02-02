@@ -53,7 +53,6 @@ class MenuRenderManager
     }
     public function doRender($item, $_position = '')
     {
-
         if ($callback = $this->Callback) {
             if (is_callable($callback))
                 $callback($item, $_position);
@@ -70,6 +69,7 @@ class MenuRenderManager
                 } else {
                     echo Livewire::mount($render, ['item' => $item, 'position' => $_position]);
                 }
+                return $this;
             }
         }
 

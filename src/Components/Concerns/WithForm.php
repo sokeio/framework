@@ -60,21 +60,7 @@ trait WithForm
             }
         }
     }
-    protected function FormRules()
-    {
-        $rules = [];
-        $messages = [];
-        $attributes = [];
-        foreach ($this->getAllInputUI() as $column) {
-            if ($column->checkRule()) {
-                $rules[$column->getFormField()] = $column->getRules();
-                $attributes[$column->getFormField()] = $column->getLabel();
 
-                // $messages[$column->getFormField()] = $column->getMessages();
-            }
-        }
-        return  ['rules' => $rules, 'messages' => $messages, 'attributes' => $attributes];
-    }
     protected function getView()
     {
         if ($this->currentIsPage()) {
@@ -91,7 +77,10 @@ trait WithForm
     {
         return null;
     }
-
+    protected function getFormAttribute()
+    {
+        return null;
+    }
     protected function FooterUI()
     {
         return [
@@ -99,6 +88,21 @@ trait WithForm
                 UI::Button(__('Save'))->WireClick('doSave()')
             ])->ClassName('p-2 text-center')
         ];
+    }
+    protected function FormRules()
+    {
+        $rules = [];
+        $messages = [];
+        $attributes = [];
+        foreach ($this->getAllInputUI() as $column) {
+            if ($column->checkRule()) {
+                $rules[$column->getFormField()] = $column->getRules();
+                $attributes[$column->getFormField()] = $column->getLabel();
+
+                // $messages[$column->getFormField()] = $column->getMessages();
+            }
+        }
+        return  ['rules' => $rules, 'messages' => $messages, 'attributes' => $attributes];
     }
     protected function doValidate()
     {
@@ -183,7 +187,8 @@ trait WithForm
             'title' => $this->getTitle(),
             'layout' => $this->layout,
             'footer' => $this->footer,
-            'formUIClass' => $this->getFormClass()
+            'formUIClass' => $this->getFormClass(),
+            'formUIAttribute' => $this->getFormAttribute(),
         ]);
     }
 }
