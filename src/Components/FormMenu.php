@@ -6,13 +6,16 @@ use Sokeio\Models\Menu;
 
 class FormMenu extends Form
 {
+    public static function getMenuType()
+    {
+        return '';
+    }
+    public static function RenderItem(Menu $item)
+    {
+    }
     protected function getModel()
     {
         return Menu::class;
-    }
-    protected function getMenuType()
-    {
-        return '';
     }
     protected function DefaultUI()
     {
@@ -25,7 +28,7 @@ class FormMenu extends Form
             UI::Text('attr_name')->Label(__('Attribute')),
             UI::Text('class_name')->Label(__('Class name')),
             UI::Hidden('data_type')->ValueDefault(function () {
-                return $this->getMenuType();
+                return static::getMenuType();
             })
         ];
     }

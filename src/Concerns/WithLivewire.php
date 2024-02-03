@@ -2,7 +2,6 @@
 
 namespace Sokeio\Concerns;
 
-use Illuminate\Routing\Route;
 use Sokeio\LivewireLoader;
 use Livewire\Features\SupportPageComponents\PageComponentConfig;
 use Livewire\Features\SupportPageComponents\SupportPageComponents;

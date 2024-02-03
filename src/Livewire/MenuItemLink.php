@@ -7,7 +7,7 @@ use Sokeio\Components\UI;
 
 class MenuItemLink extends FormMenu
 {
-    protected function getMenuType()
+    public static function getMenuType()
     {
         return 'MenuItemLink';
     }
