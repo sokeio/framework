@@ -4,6 +4,14 @@ namespace Sokeio\Components\Field\Concerns;
 
 trait WithDatasource
 {
+    public function TextNoData($TextNoData): static
+    {
+        return $this->setKeyValue('TextNoData', $TextNoData);
+    }
+    public function getTextNoData()
+    {
+        return $this->getValue('TextNoData', __('No results found'));
+    }
     public function DataSource($DataSource): static
     {
         return $this->setKeyValue('DataSource', $DataSource);
@@ -11,6 +19,15 @@ trait WithDatasource
     public function getDataSource()
     {
         return $this->getValue('DataSource');
+    }
+
+    public function ViewTemplate($ViewTemplate): static
+    {
+        return $this->setKeyValue('ViewTemplate', $ViewTemplate);
+    }
+    public function getViewTemplate()
+    {
+        return $this->getValue('ViewTemplate');
     }
     public function FieldKey($FieldKey): static
     {

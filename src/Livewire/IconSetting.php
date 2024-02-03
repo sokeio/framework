@@ -37,7 +37,7 @@ class IconSetting extends FormSettingCallback
                 </template>
                 ')->ClassName('d-flex flex-row'),
                 UI::Row([
-                    UI::ColumnAuto(UI::Text('SearchText')->Prex('')->Label(__('Search Icon'))),
+                    UI::ColumnAuto(UI::Text('SearchText')->Prex('')->Label(__('Search Icon (<span x-text="icons?.length"></span>)'))->Placeholder(__('Search Icon'))),
                 ]),
                 UI::Div('Loading...')->Attribute('wire:loading wire:target="getIcons"')->className('text-center fs-2 text-azure'),
                 UI::Div([
@@ -51,15 +51,13 @@ class IconSetting extends FormSettingCallback
                     </template>
                 ')->ClassName('d-flex flex-wrap')
                 ])->Attribute(' style="max-height: 300px; overflow-y: auto;" '),
-                UI::Div('<div x-text="len"></div>')->ClassName('text-center'),
             ])->Attribute('
-            x-intersect.half="len=len+100"
                     x-data="{
                         items: ' . sokeio_js(IconManager::getInstance()->getListBase()) . ',
                         itemActive: false,
                         iconActive: false,
                         icons: [],
-                        len:200,
+        
                         async initIcon() {
                             $watch(\'itemActive\',async ($value)=>{
                                 this.icons=[];
@@ -71,7 +69,7 @@ class IconSetting extends FormSettingCallback
                             }
                         },
                         searchIcons(){
-                            return this.icons.filter(item => item.name.includes( $wire.SearchText)||!$wire.SearchText);//.slice(0,this.len);
+                            return this.icons.filter(item => item.name.includes( $wire.SearchText)||!$wire.SearchText);
                         }
                     }"
 

@@ -15,6 +15,7 @@ class SelectWithSearchField extends BaseField
     {
         return $this->getValue('SearchDataSource');
     }
+    
     public function getFieldView()
     {
         return 'sokeio::components.field.select-with-search';
