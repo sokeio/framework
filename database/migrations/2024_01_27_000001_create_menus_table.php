@@ -25,6 +25,7 @@ return new class  extends Migration
             $table->integer('parent_id')->default(0);
             $table->integer('menu_location_id');
             $table->string('icon', 500)->nullable();
+            $table->string('color', 500)->nullable();
             $table->string('name', 255);
             $table->string('link', 500)->nullable();
             $table->string('attr_name', 500)->nullable();
