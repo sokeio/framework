@@ -4,6 +4,7 @@ namespace Sokeio\Components\Concerns;
 
 use Sokeio\Components\Field\CheckboxField;
 use Sokeio\Components\Field\CheckboxMutilField;
+use Sokeio\Components\Field\ColorField;
 use Sokeio\Components\Field\DatePickerField;
 use Sokeio\Components\Field\HiddenField;
 use Sokeio\Components\Field\IconField;
@@ -100,6 +101,10 @@ trait WithField
     public static function Icon($value)
     {
         return IconField::make($value);
+    }
+    public static function Color($value)
+    {
+        return ColorField::make($value);
     }
     public static function SelectWithSearch($value)
     {

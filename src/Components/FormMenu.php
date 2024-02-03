@@ -13,7 +13,10 @@ class FormMenu extends Form
     protected function DefaultUI()
     {
         return [
-            UI::Icon('icon')->Label(__('Icon')),
+            UI::Row([
+                UI::Column(UI::Icon('icon')->Label(__('Icon'))),
+                UI::Column(UI::Color('class_name')->Label(__('Color'))),
+            ]),
             UI::Text('name')->Label(__('Name'))->required(),
             UI::Text('attr_name')->Label(__('Attribute')),
             UI::Text('class_name')->Label(__('Class name')),

@@ -57,7 +57,6 @@ class IconSetting extends FormSettingCallback
                         itemActive: false,
                         iconActive: false,
                         icons: [],
-        
                         async initIcon() {
                             $watch(\'itemActive\',async ($value)=>{
                                 this.icons=[];

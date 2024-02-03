@@ -126,6 +126,11 @@ class SokeioServiceProvider extends ServiceProvider
                     'title' => __('Icon Setting'),
                     'size' => 'modal-fullscreen-md-down modal-xl'
                 ],
+                'sokeio_color_setting' => [
+                    'url' => route('admin.color-setting'),
+                    'title' => __('Color Setting'),
+                    'size' => ''
+                ],
                 'tinyecm_option' => [
                     "relative_urls" => false,
                     "content_style" => "
