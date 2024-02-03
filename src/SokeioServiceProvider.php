@@ -199,7 +199,7 @@ class SokeioServiceProvider extends ServiceProvider
                     ];
                 }, 0);
             }
-            MenuRender::RegisterType('menu_item_links', __('Links'), MenuItemLink::class, function ($item) {
+            MenuRender::RegisterType('MenuItemLink', __('Links'), MenuItemLink::class, function ($item) {
                 return '1234';
             });
         });

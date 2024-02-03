@@ -10,6 +10,10 @@ class FormMenu extends Form
     {
         return Menu::class;
     }
+    protected function getMenuType()
+    {
+        return '';
+    }
     protected function DefaultUI()
     {
         return [
@@ -20,6 +24,9 @@ class FormMenu extends Form
             UI::Text('name')->Label(__('Name'))->required(),
             UI::Text('attr_name')->Label(__('Attribute')),
             UI::Text('class_name')->Label(__('Class name')),
+            UI::Hidden('data_type')->ValueDefault(function () {
+                return $this->getMenuType();
+            })
         ];
     }
     protected function MenuUI()
