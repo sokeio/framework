@@ -129,7 +129,7 @@ class MenuManager extends Component
         $menuItem = new Menu();
         $menuItem->menu_location_id = $this->locationId;
         $menuItem->parent_id = 0;
-        foreach (['icon', 'name', 'link', 'attr_name', 'class_name', 'data'] as $key) {
+        foreach (['icon', 'name', 'color', 'link', 'attr_name', 'class_name', 'data_type', 'data'] as $key) {
             if (isset($data[$key])) {
                 $menuItem->$key = $data[$key];
             }
