@@ -11,6 +11,7 @@ class MenuItemLink extends FormMenu
 
     public static function RenderItem(MenuItemBuilder $item)
     {
+        echo  view_scope('sokeio::menu.item.link', ['item' => $item])->render();
     }
     public static function getMenuName()
     {

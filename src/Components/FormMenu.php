@@ -27,7 +27,7 @@ class FormMenu extends Form
         return [
             UI::Row([
                 UI::Column(UI::Icon('icon')->Label(__('Icon'))),
-                UI::Column(UI::Color('class_name')->Label(__('Color'))),
+                UI::Column(UI::Color('color')->Label(__('Color'))),
             ]),
             UI::Text('name')->Label(__('Name'))->required(),
             UI::Text('attr_name')->Label(__('Attribute')),

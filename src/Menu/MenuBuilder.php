@@ -179,11 +179,15 @@ class MenuBuilder extends HtmlBuilder
                     $menu->subMenu($item['name'], $item['icon'], function ($menuSub) use ($data, $item) {
                         $this->addItemWithDatabase($data, $menuSub, $item['id']);
                     }, $item['sort'], function (MenuItemBuilder $menuItem) use ($item) {
+                        $menuItem->setValueContentType($item['data_type']);
                         $menuItem->setValueContentData($item['data']);
+                        $menuItem->setValueContentColor($item['color']);
                     });
                 } else {
                     $menu->link($item['link'], $item['name'], $item['icon'], $item['attribute'], $item['permission'], $item['order'], function (MenuItemBuilder $menuItem) use ($item) {
+                        $menuItem->setValueContentType($item['data_type']);
                         $menuItem->setValueContentData($item['data']);
+                        $menuItem->setValueContentColor($item['color']);
                     }); // = new MenuItemBuilder($item, $menu);
                 }
             }

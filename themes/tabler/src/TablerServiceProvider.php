@@ -65,9 +65,9 @@ class TablerServiceProvider extends ServiceProvider
             }
         });
         MenuRender::renderItemCallback(function (MenuItemBuilder $item) {
+            if (!$item->checkView()) return;
             $itemActiveClass = ' bg-azure text-azure-fg ';
             $classActive = $item->checkActive() ? 'show' : '';
-            if (!$item->checkView()) return;
             if ($item->getParent()->checkSub()) {
                 if ($item->checkSubMenu()) {
                     echo '<div id="' . $item->getId() . '" class="dropend ' . $classActive . '" data-sort="' . $item->getValueSort() . '">';
