@@ -26,8 +26,8 @@ class MenuItemForm extends Form
     {
         return [
             UI::Div([
-                UI::Button(__('Remove'))->WireClick('doRemove()'),
-                UI::Button(__('Save'))->WireClick('doSave()')
+                UI::Button(__('Remove'))->Danger()->WireClick('doRemove()')->ClassName('m-2'),
+                UI::Button(__('Save'))->WireClick('doSave()')->ClassName('m-2')
             ])->ClassName('p-2 text-center')
         ];
     }

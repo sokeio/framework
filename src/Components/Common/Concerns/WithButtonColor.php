@@ -5,7 +5,7 @@ namespace Sokeio\Components\Common\Concerns;
 trait WithButtonColor
 {
 
-    public function ButtonColor($ButtonColor)
+    public function ButtonColor($ButtonColor):static
     {
         return $this->setKeyValue('ButtonColor', $ButtonColor);
     }

@@ -185,6 +185,8 @@ class SokeioServiceProvider extends ServiceProvider
                 }
                 IconManager::getInstance()->Assets();
             }
+            MenuRender::RegisterType(MenuItemLink::class);
+            
             if (sokeio_is_admin()) {
                 add_filter('SOKEIO_MENU_ITEM_MANAGER', function ($prev) {
                     return [
@@ -199,9 +201,6 @@ class SokeioServiceProvider extends ServiceProvider
                     ];
                 }, 0);
             }
-            MenuRender::RegisterType('MenuItemLink', __('Links'), MenuItemLink::class, function ($item) {
-                return '1234';
-            });
         });
 
         Route::matched(function () {

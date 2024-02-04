@@ -28,13 +28,14 @@ class MenuRenderManager
     private $Callback = [];
     private $ItemCallback = [];
     private $menuTypes = [];
-    public function RegisterType($type, $title, $setting, $renderComponentOrCallback)
+    public function RegisterType($menuType)
     {
+        $type = ($menuType)::getMenuType();
+        $title = ($menuType)::getMenuName();
         $this->menuTypes[$type] = [
             'type' => $type,
             'title' => $title,
-            'setting' => $setting,
-            'render' => $renderComponentOrCallback
+            'setting' => $menuType
         ];
     }
     public function getMenuType()
@@ -63,12 +64,8 @@ class MenuRenderManager
     {
         if ($type = $item->getValueContentType()) {
             if (isset($this->menuTypes[$type])) {
-                $render = $this->menuTypes[$type]['render'];
-                if (is_callable($render)) {
-                    $render($item, $_position);
-                } else {
-                    echo Livewire::mount($render, ['item' => $item, 'position' => $_position]);
-                }
+                ($this->menuTypes[$type]['setting'])::RenderItem($item, $_position);
+
                 return $this;
             }
         }

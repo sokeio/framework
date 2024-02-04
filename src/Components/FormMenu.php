@@ -2,6 +2,7 @@
 
 namespace Sokeio\Components;
 
+use Sokeio\Menu\MenuItemBuilder;
 use Sokeio\Models\Menu;
 
 class FormMenu extends Form
@@ -10,7 +11,11 @@ class FormMenu extends Form
     {
         return '';
     }
-    public static function RenderItem(Menu $item)
+    public static function getMenuName()
+    {
+        return '';
+    }
+    public static function RenderItem(MenuItemBuilder $item)
     {
     }
     protected function getModel()

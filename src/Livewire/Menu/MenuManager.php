@@ -23,12 +23,20 @@ class MenuManager extends Component
             $this->loadMenu($newValue);
         }
         if (str_starts_with($propertyName, 'menu_locations.')) {
+            if (!$this->locationId) {
+                $this->showMessage('Please select menu');
+                return false;
+            }
             $location = MenuLocation::find($this->locationId);
             $location->locations = array_keys(array_filter($this->menu_locations, function ($item) {
                 return $item;
             }));
             $location->save();
         }
+    }
+    public function __loadData()
+    {
+        $this->loadMenu($this->locationId);
     }
     public function loadMenu($locationId)
     {
