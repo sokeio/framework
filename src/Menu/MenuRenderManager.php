@@ -42,6 +42,14 @@ class MenuRenderManager
     {
         return collect($this->menuTypes);
     }
+    public function renderMenuSetting($menu)
+    {
+        if (isset($this->menuTypes[$menu['data_type']]['setting'])) {
+
+            return '<div class="p-4">' . Livewire::mount($this->menuTypes[$menu['data_type']]['setting'], ['dataId' => $menu->id]) . '</div>';
+        }
+        return '<div class="p-4">Not found</div>';
+    }
     public function renderCallback($callback)
     {
         $this->Callback = $callback;

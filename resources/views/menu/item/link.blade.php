@@ -6,13 +6,13 @@
             aria-expanded="true">
 
             @if ($icon = $item->getValueIcon())
-                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                <span class="nav-link-icon d-flex align-items-center">
                     <i class="{{ $icon }} fs-2"></i>
                 </span>
-                <span class="nav-link-title">
-                    {{ $item->getValueText() }}
-                </span>
             @endif
+            <span class="nav-link-title">
+                {{ $item->getValueText() }}
+            </span>
         </a>
     </li>
 @endif

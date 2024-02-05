@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static void DoRender($item, $_position = '')
  * @method static void DoRenderItem($item, $_position = '')
  * @method static void RegisterType($type, $title, $setting, $renderComponentOrCallback)
+ * @method static mixed renderMenuSetting($item)
  * @method static mixed getMenuType()
  *
  * @see \Sokeio\Menu\MenuRenderManager

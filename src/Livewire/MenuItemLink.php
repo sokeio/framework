@@ -24,7 +24,9 @@ class MenuItemLink extends FormMenu
     protected function MenuUI()
     {
         return [
-            UI::Text('url')->Label(__('URL'))->required(),
+            UI::Text('link')->Label(__('URL'))->required()->ValueDefault(function () {
+                return '#';
+            }),
         ];
     }
 }
