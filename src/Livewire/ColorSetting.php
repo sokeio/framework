@@ -60,15 +60,15 @@ class ColorSetting extends FormSettingCallback
     protected function SettingUI()
     {
         return UI::Div(
-            UI::Div('
-                <div x-text="$wire.data.SettingValueField"></div>
-            ')->Attribute('x-show="$wire.data.SettingValueField" class="" :class="$wire.data.SettingValueField"')->ClassName('p-1 m-1 border rounded cursor-pointer'),
+            // UI::Div('
+            //     <div x-text="$wire.data.SettingValueField"></div>
+            // ')->Attribute('x-show="$wire.data.SettingValueField" class="" :class="$wire.data.SettingValueField"')->ClassName('p-1 m-1 border rounded cursor-pointer'),
             UI::Div('
             <template x-for="item in items">
                 <div class="p-1 m-1 border rounded cursor-pointer"  x-data="{ hover: false }"
                 @mouseenter="hover = true"
                 @mouseleave="hover = false"  @click="$wire.data.SettingValueField  = item"  :class="hover || $wire.data.SettingValueField  === item? \'bg-azure\' : \'\'" >
-                <div class="p-3" :class="item" :title="item">Sokeio</div>
+                    <div class="p-3" :class="item" :title="item">Sokeio</div>
                 </div>
             </template>
         ')->ClassName('d-flex flex-wrap')

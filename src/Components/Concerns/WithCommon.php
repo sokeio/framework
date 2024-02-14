@@ -10,6 +10,7 @@ use Sokeio\Components\Common\Container;
 use Sokeio\Components\Common\Div;
 use Sokeio\Components\Common\Each;
 use Sokeio\Components\Common\Error;
+use Sokeio\Components\Common\Livewire;
 use Sokeio\Components\Common\Tab;
 
 trait WithCommon
@@ -62,6 +63,11 @@ trait WithCommon
     {
         return ButtonGroup::Make($value);
     }
+    public static function Livewire($value, $params = null)
+    {
+        return Livewire::Make($value)->Params($params);
+    }
+
     public static function Error($value)
     {
         return Error::Make($value);

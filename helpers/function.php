@@ -206,6 +206,7 @@ if (!function_exists('theme_position')) {
     function theme_position($position, array  $args = [])
     {
         ob_start();
+        echo theme_menu($position);
         Theme::fire($position, $args);
         return ob_get_clean();
     }

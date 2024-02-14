@@ -30,11 +30,13 @@
     placeholder="{{ $modelPlaceholder }}" {!! $column->getWireAttribute() !!}>
     <a class="nav-link dropdown-toggle w-100" href="#field-{{ $modelField }}" data-bs-toggle="dropdown" role="button"
         aria-expanded="false">
-        <span class="nav-link-title" x-text="getValueText()"></span>
+        <template x-data="{ valueText: getValueText() }" x-if="valueText">
+            <span class="nav-link-title" x-text="valueText"></span>
+        </template>
     </a>
     <div class="dropdown-menu">
         <div class="p-2">
-            <input class="form-control" type="text" placeholder="Search..." x-model="searchText" />
+            <input class="form-control" type="text" placeholder="@lang('Search...')" x-model="searchText" />
         </div>
         <div class="p-2" style="max-height: 300px; overflow-y: auto;">
             <div x-text="Datasources.length === 0 ? '{{ $textNoData }}': ''"></div>
