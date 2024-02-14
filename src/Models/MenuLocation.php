@@ -21,6 +21,6 @@ class MenuLocation extends Model
     ];
     public function menus()
     {
-        return $this->hasMany(Menu::class)->orderBy('parent_id')->orderBy('order');
+        return $this->hasMany(Menu::class);
     }
 }

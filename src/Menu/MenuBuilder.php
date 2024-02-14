@@ -178,7 +178,7 @@ class MenuBuilder extends HtmlBuilder
                 if ($isSub) {
                     $menu->subMenu($item['name'], $item['icon'], function ($menuSub) use ($data, $item) {
                         $this->addItemWithDatabase($data, $menuSub, $item['id']);
-                    }, $item['sort'], function (MenuItemBuilder $menuItem) use ($item) {
+                    }, $item['order'], function (MenuItemBuilder $menuItem) use ($item) {
                         $menuItem->setValueContentType($item['data_type']);
                         $menuItem->setValueContentData($item['data']);
                         $menuItem->setValueContentColor($item['color']);
@@ -223,7 +223,7 @@ class MenuBuilder extends HtmlBuilder
         // fix sort by key
         $inventory = $this->items;
         if (usort($inventory, function (MenuItemBuilder $item1, MenuItemBuilder $item2) {
-            if ($item1->getValueSort() == $item2->getValueSort()) return 0;
+            if ($item1->getValueSort() === $item2->getValueSort()) return 0;
             return $item1->getValueSort() < $item2->getValueSort() ? -1 : 1;
         })) {
             $this->items = $inventory;
