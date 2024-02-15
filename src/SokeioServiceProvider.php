@@ -72,6 +72,7 @@ class SokeioServiceProvider extends ServiceProvider
 
     public function packageBooted()
     {
+        config(['auth.providers.users.model' => config('sokeio.model.user')]);
     }
     public function bootingPackage()
     {
@@ -87,7 +88,6 @@ class SokeioServiceProvider extends ServiceProvider
             return ColectionPaginate::paginate($this, $pageSize);
         });
 
-        config(['auth.providers.users.model' => config('sokeio.model.user')]);
         $this->registerBladeDirectives();
         add_action(PLATFORM_HEAD_BEFORE, function () {
             echo '<meta charset="utf-8">';
@@ -186,7 +186,7 @@ class SokeioServiceProvider extends ServiceProvider
                 IconManager::getInstance()->Assets();
             }
             MenuRender::RegisterType(MenuItemLink::class);
-            
+
             if (sokeio_is_admin()) {
                 add_filter('SOKEIO_MENU_ITEM_MANAGER', function ($prev) {
                     return [

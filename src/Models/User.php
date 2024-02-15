@@ -2,6 +2,7 @@
 
 namespace Sokeio\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Sokeio\Concerns\WithModelHook;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Sokeio\Concerns\WithPermission;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
+    use SoftDeletes;
     use WithPermission, WithSlug;
     use WithModelHook;
     public $FieldSlug = "name";

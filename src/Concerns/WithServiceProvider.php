@@ -2,6 +2,7 @@
 
 namespace Sokeio\Concerns;
 
+use Illuminate\Support\Str;
 use Sokeio\Facades\Action;
 use Sokeio\Laravel\WithServiceProvider as WithServiceProviderBase;
 use Sokeio\Facades\Assets;
@@ -22,7 +23,14 @@ trait WithServiceProvider
     public function configurePackaged()
     {
     }
-
+    protected function registerModels(array $models): void
+    {
+        foreach ($models as $service => $class) {
+            $this->app->singletonIf($service, $model = $this->app['config'][Str::replaceLast('.', '.models.', $service)]);
+            $model === $class || $this->app->alias($service, $class);
+            $this->app->singletonIf($model, $model);
+        }
+    }
     public function register()
     {
         $this->ExtendPackage();
