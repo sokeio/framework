@@ -99,7 +99,6 @@ trait WithTable
     }
     public function doSearch()
     {
-        $this->showMessage($this->textSearch);
     }
     protected function searchUI()
     {
@@ -159,7 +158,6 @@ trait WithTable
             $query->orWhere(function ($subquery) use ($textSearch) {
                 foreach ($this->searchFields() as $field) {
                     $arrFields = explode('.', $field);
-                    $this->showMessage($field);
                     if (count($arrFields) == 1) {
                         $subquery->orWhere($field, 'like', '\'%' . $textSearch . '%\'');
                     } else {

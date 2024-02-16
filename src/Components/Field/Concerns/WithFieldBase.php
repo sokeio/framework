@@ -107,20 +107,20 @@ trait WithFieldBase
     {
         return $this->getValue('InfoText');
     }
-    public function ElementBefore($ElementBefore): static
+    public function UIBefore($UIBefore): static
     {
-        return $this->setKeyValue('ElementBefore', $ElementBefore);
+        return $this->setKeyValue('UIBefore', $UIBefore);
     }
-    public function getElementBefore()
+    public function getUIBefore()
     {
-        return $this->getValue('ElementBefore');
+        return $this->getValue('UIBefore');
     }
-    public function ElementAfter($ElementAfter): static
+    public function UIAfter($UIAfter): static
     {
-        return $this->setKeyValue('ElementAfter', $ElementAfter);
+        return $this->setKeyValue('UIAfter', $UIAfter);
     }
-    public function getElementAfter()
+    public function getUIAfter()
     {
-        return $this->getValue('ElementAfter');
+        return $this->getValue('UIAfter');
     }
 }
