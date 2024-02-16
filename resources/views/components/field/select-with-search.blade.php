@@ -15,22 +15,26 @@
     Datasources: @js($datasources ?? []),
     FieldKey: '{{ $FieldKey }}',
     FieldText: '{{ $FieldText }}',
+    valueText: '',
     getValueText() {
         let text = this.Datasources?.find((item) => item[this.FieldKey] === $wire.{{ $formField }});
-        if (text && text[this.FieldText] != '') {
-            return text[this.FieldText];
-        }
-        return '{{ $modelLabel }}';
+        this.valueText = text && text[this.FieldText] != '' ? text[this.FieldText] : '{{ $modelLabel }}';
     },
     async doSearch() {
         this.Datasources = (await $wire.{{ $searchDatasource ?? 'searchData' . $modelField }}(this.searchText, $wire.{{ $formField }})) ?? [];
+        this.getValueText();
+    },
+    changeValue(value) {
+        this.$wire.{{ $formField }} = value;
+        this.getValueText();
     }
 
-}" x-init="$watch('searchText', async () => await doSearch())" class="form-control dropdown" name="field-{{ $modelField }}"
+}" x-init="$watch('searchText', async () => await doSearch());
+getValueText();" class="form-control dropdown" name="field-{{ $modelField }}"
     placeholder="{{ $modelPlaceholder }}" {!! $column->getWireAttribute() !!}>
     <a class="nav-link dropdown-toggle w-100" href="#field-{{ $modelField }}" data-bs-toggle="dropdown" role="button"
         aria-expanded="false">
-        <template x-data="{ valueText: getValueText() }" x-if="valueText">
+        <template x-if="valueText">
             <span class="nav-link-title" x-text="valueText"></span>
         </template>
     </a>
@@ -41,7 +45,7 @@
         <div class="p-2" style="max-height: 300px; overflow-y: auto;">
             <div x-text="Datasources.length === 0 ? '{{ $textNoData }}': ''"></div>
             <template x-for="item in Datasources">
-                <div class="dropdown-item p-0" x-on:click="$wire.{{ $formField }} = item.{{ $FieldKey }} ">
+                <div class="dropdown-item p-0" x-on:click="changeValue(item.{{ $FieldKey }})">
                     @if ($viewTemplate)
                         {!! $viewTemplate !!}
                     @else

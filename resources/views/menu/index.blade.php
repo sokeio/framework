@@ -6,13 +6,14 @@
     
     }">
         <div class="{{ column_size('col4') }}">
-            <div class="accordion bg-white" id="accordion-menu" >
+            <div class="accordion bg-white" id="accordion-menu">
                 @foreach (apply_filters('SOKEIO_MENU_ITEM_MANAGER', []) as $item)
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="menu-header-{{ $item['key'] }}">
                             <button class="accordion-button @if ($loop->index > 0) collapsed @endif"
                                 type="button" data-bs-toggle="collapse" data-bs-target="#menu-{{ $item['key'] }}"
-                                aria-expanded="@if ($loop->index == 0) true @else false @endif " wire:ignore.self>
+                                aria-expanded="@if ($loop->index == 0) true @else false @endif "
+                                wire:ignore.self>
                                 {!! $item['title'] !!}
                             </button>
                         </h2>
@@ -59,47 +60,58 @@
 
                     </div>
                 </div>
-                <div class="sortable-fallback"></div>
-                <div class="card-body p-0 position-md-relative">
-                    <div wire:sortable-group='doUpdateSortMenu'
-                        wire:sortable-group.options='{
+
+                <template x-if="$wire.locationId>0">
+                    <div>
+                        <div wire:loading wire:target="locationId" class="p-2">
+                            Loading...
+                        </div>
+                        <div class="sortable-fallback"></div>
+                        <div class="card-body p-0 position-md-relative">
+                            <div wire:sortable-group='doUpdateSortMenu'
+                                wire:sortable-group.options='{
                         animation: 150,
                         fallbackOnBody: true,
                         swapThreshold: 0.65,
                         filter: ".ellock",
                         preventOnFilter: false,
                 }'
-                        wire:sortable-group.item-group="0" class="menu-editor-manager">
-                        @includeIf('sokeio::menu.menu-item', [
-                            'menu_lists' => $menu_lists,
-                            'parent_id' => 0,
-                            'level' => 0,
-                        ])
-                    </div>
-
-                </div>
-                <div class="card-footer p-2">
-                    <label class="form-label">Location:</label>
-                    <div class="" wire:ignore>
-                        @foreach ($locations as $item)
-                            <label class="form-check">
-                                <input wire:model.live='menu_locations.{{ $item }}' class="form-check-input"
-                                    value="false" type="checkbox" />
-                                <span class="form-check-label">{{ $item }}</span>
-                            </label>
-                        @endforeach
-                    </div>
-                </div>
-                <div class="card-footer p-2">
-                    <div class="row">
-                        <div class="col-auto"><button class="btn btn-danger" wire:click='doDeleteMenu()'
-                                sokeio:confirm="Are you deleting this menu sure?">Delete</button></div>
-                        <div class="col"></div>
-                        <div class="col-auto"><button class="btn btn-blue" sokeio:modal-title="Edit Menu"
-                                sokeio:modal="{{ route('admin.menu-form', ['dataId' => $locationId]) }}">Edit</button>
+                                wire:sortable-group.item-group="0" class="menu-editor-manager">
+                                @includeIf('sokeio::menu.menu-item', [
+                                    'menu_lists' => $menu_lists,
+                                    'parent_id' => 0,
+                                    'level' => 0,
+                                ])
+                            </div>
+                        </div>
+                        <div class="card-footer p-2">
+                            <label class="form-label">Location:</label>
+                            <div class="" wire:ignore>
+                                @foreach ($locations as $item)
+                                    <label class="form-check">
+                                        <input wire:model.live='menu_locations.{{ $item }}'
+                                            wire:loading.attr="disabled" class="form-check-input" value="false"
+                                            type="checkbox" />
+                                        <span class="form-check-label">{{ $item }}</span>
+                                    </label>
+                                @endforeach
+                            </div>
+                        </div>
+                        <div class="card-footer p-2">
+                            <div class="row">
+                                <div class="col-auto"><button class="btn btn-danger" wire:click='doDeleteMenu()'
+                                        sokeio:confirm="Are you deleting this menu sure?"
+                                        wire:loading.attr="disabled">Delete</button></div>
+                                <div class="col"></div>
+                                <div class="col-auto"><button class="btn btn-blue" sokeio:modal-title="Edit Menu"
+                                        sokeio:modal="{{ route('admin.menu-form', ['dataId' => $locationId]) }}"
+                                        wire:loading.attr="disabled">Edit</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </template>
+
             </div>
         </div>
     </div>
