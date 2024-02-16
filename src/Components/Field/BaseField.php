@@ -12,16 +12,24 @@ use Sokeio\Components\Field\Concerns\WithFieldWire;
 class BaseField extends Base
 {
     use WithFieldWire, WithFieldRule, WithFieldBase, withFieldOperator, WithColumn;
+    protected function ChildComponents()
+    {
+        return [
+            $this->getElementBefore(),
+            $this->getElementAfter()
+        ];
+    }
     public function getView()
     {
         return 'sokeio::components.layout-field';
     }
     public function boot()
     {
-        if (!$this->getNoSave()) {
-            $this->getManager()?->addInputUI($this, $this->getPrex() ?? 'data');
-        }
         parent::boot();
+        if (!$this->getNoSave()) {
+            if (method_exists($this->getManager(), 'addInputUI'))
+                $this->getManager()?->addInputUI($this, $this->getPrex() ?? 'data');
+        }
     }
     protected function __construct($value)
     {

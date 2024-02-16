@@ -10,50 +10,9 @@ class BaseCommon extends Base
     {
         $this->Content($value);
     }
-    public function DataItem($value)
+    protected function ChildComponents()
     {
-        $this->ClearCache();
-        parent::DataItem($value);
-        if (($content = $this->getContent())) {
-            if (is_array($content)) {
-                foreach ($content as $item) {
-                    if ($item && is_a($item, Base::class)) {
-                        $item->DataItem($this->getDataItem());
-                    }
-                }
-            }
-        }
-        return $this;
-    }
-    public function LevelDataUI($value)
-    {
-        $this->ClearCache();
-        parent::LevelDataUI($value);
-        if (($content = $this->getContent())) {
-            if (is_array($content)) {
-                foreach ($content as $item) {
-                    if ($item && is_a($item, Base::class)) {
-                        $item->LevelDataUI($this->getLevelDataUI());
-                    }
-                }
-            }
-        }
-        return $this;
-    }
-    public function boot()
-    {
-        if (($content = $this->getContent())) {
-            if (is_array($content)) {
-                foreach ($content as $item) {
-                    if ($item && is_a($item, Base::class)) {
-                        $item->Prex($this->getPrex());
-                        $item->Manager($this->getManager());
-                        $item->boot();
-                    }
-                }
-            }
-        }
-        parent::boot();
+        return $this->getContent();
     }
     public function Content($Content)
     {

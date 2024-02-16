@@ -6,8 +6,39 @@ use Sokeio\Laravel\BaseCallback;
 
 class Base extends BaseCallback
 {
+    protected function ChildComponents()
+    {
+        return [];
+    }
+    private $cacheComponents;
+    private function ClearComponents($arr)
+    {
+        $result = [];
+        if (!$arr || !is_array($arr)) return $result;
+        foreach ($arr as $value) {
+            if (is_array($value)) {
+                $result = [...$result, ...$this->ClearComponents($value)];
+            } else if (is_a($value, Base::class)) {
+                $result[] = $value;
+            }
+        }
+        return $result;
+    }
+    private function getChildComponents()
+    {
+        if (!isset($this->cacheComponents)) {
+            $this->cacheComponents = $this->ClearComponents($this->ChildComponents());
+        }
+        return $this->cacheComponents;
+    }
     public function boot()
     {
+        $this->ClearCache();
+        foreach ($this->getChildComponents() as $component) {
+            $component->Manager($this->getManager());
+            $component->Prex($this->getPrex());
+            $component->boot();
+        }
     }
     protected function __construct($value)
     {
@@ -49,6 +80,10 @@ class Base extends BaseCallback
     public function DataItem($value)
     {
         $this->dataItem = $value;
+        $this->ClearCache();
+        foreach ($this->getChildComponents() as $component) {
+            $component->DataItem($value);
+        }
         return $this;
     }
     public function getDataItem()
@@ -59,6 +94,10 @@ class Base extends BaseCallback
     public function LevelIndex($value = 0)
     {
         $this->levelIndex = $value > 0 ? $value : $this->levelIndex + 1;
+        $this->ClearCache();
+        foreach ($this->getChildComponents() as $component) {
+            $component->LevelIndex($this->levelIndex);
+        }
         return $this;
     }
     public function getLevelIndex()
@@ -69,6 +108,10 @@ class Base extends BaseCallback
     public function LevelDataUI($value)
     {
         $this->levelData = $value ?? [];
+        $this->ClearCache();
+        foreach ($this->getChildComponents() as $component) {
+            $component->LevelDataUI($this->levelData);
+        }
         return $this;
     }
     public function getLevelDataUI()
