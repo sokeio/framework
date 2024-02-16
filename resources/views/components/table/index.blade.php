@@ -40,8 +40,29 @@
         <div class="row g-2 align-items-center">
             <div class="col-auto">
                 <div class="input-icon">
-                    <input type="text" wire:model='textSearch' wire:keydown.enter="doSearch()"
-                        wire:blur="doSearch()" class="form-control" placeholder="Search…">
+                    <div class="input-group">
+                        @if ($searchWithColumns && count($searchWithColumns) > 0)
+                            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside"
+                                aria-haspopup="true" aria-expanded="false">
+                                Search
+                            </button>
+                            <div class="dropdown-menu" style="">
+                                @foreach ($searchWithColumns as $field)
+                                    @if (!$field->getWithoutSearch())
+                                        <div class="dropdown-item p-0 m-0">
+                                            <label class="form-check  p-2 ps-6 m-0">
+                                                <input class="form-check-input" type="checkbox"
+                                                    wire:model='searchWithFields' value="{{ $field->getName() }}">
+                                                <span class="form-check-label"> {{ $field->getLabel() }}</span>
+                                            </label>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            </div>
+                        @endif
+                        <input type="text" wire:model='textSearch' wire:keydown.enter="doSearch()"
+                            wire:blur="doSearch()" class="form-control" placeholder="Search…">
+                    </div>
                     <span class="input-icon-addon">
                         <!-- Download SVG icon from http://tabler-icons.io/i/search -->
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"

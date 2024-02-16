@@ -10,7 +10,7 @@
     $MaxValue = $column->getMaxValue();
 @endphp
 <input wire:ignore wire:flatpickr wire:flatpickr.options='@json($item->getFieldOption())' {!! $item->getAttribute() ?? '' !!}
-    class="form-control" wire:model='{{ $modelField }}' name="{{ $modelField }}"
+    class="form-control" wire:model='{{ $formField }}' name="{{ $modelField }}"
     placeholder="{{ $item->getPlaceholder() }}" x-init="@if ($toField) $watch('$wire.{{ $item->getModelField($toField) }}',
     function() {
         $el.livewire____flatpickr.set('maxDate', $wire.{{ $item->getModelField($toField) }});

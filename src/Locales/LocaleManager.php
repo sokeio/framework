@@ -18,7 +18,7 @@ class LocaleManager
     {
         $this->hideDefaultLocale = config('sokeio.locale.hideDefaultLocale');
         $this->separator = config('sokeio.locale.separator');
-        $this->defaultLocale = setting('PLATFORM_SYSTEM_LOCALE_DEFAULT', config('sokeio.locale.defaultLocale'));
+        $this->defaultLocale = setting('PLATFORM_SYSTEM_LOCALE_DEFAULT', config('sokeio.locale.defaultLocale')) ?? 'us';
         $this->supportedLocales = config('sokeio.locale.supportedLocales');
     }
     public function CurrentLocale()
@@ -63,7 +63,10 @@ class LocaleManager
     }
     public function SetLocaleApp()
     {
-        app()->setLocale($this->CurrentLocale());
+        try {
+            app()->setLocale($this->CurrentLocale());
+        } catch (\Exception $ex) {
+        }
     }
     public function has($key)
     {

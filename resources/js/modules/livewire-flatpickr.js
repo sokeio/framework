@@ -19,9 +19,22 @@ export class LiveWireFlatpickrModule extends SokeioPlugin {
             `return ${el.getAttribute("wire:flatpickr.options")};`
           )();
         }
-        const flatpickrCreate = () => {
+        let modelKey = el.getAttribute("wire:model");
+        const flatpickrCreate = async () => {
           if (el.livewire____flatpickr) return;
-          el.livewire____flatpickr = new window.flatpickr(el, options);
+          el.livewire____flatpickr = new window.flatpickr(el, {
+            ...options,
+            onChange: (selectedDates, dateStr, instance) => {
+              self
+                .getManager()
+                .dataSet(component.$wire, modelKey, selectedDates);
+            },
+          });
+          // setTimeout(async () => {
+          //   el.livewire____flatpickr.setDate(
+          //     await self.getManager().dataGet(component.$wire, modelKey)
+          //   );
+          // }, 500);
         };
         if (window.flatpickr) {
           flatpickrCreate();

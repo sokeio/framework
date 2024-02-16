@@ -13,12 +13,13 @@ trait WithTable
     use WithLayoutUI;
 
     public $lazyloadingTable = true;
+    public $searchWithFields = ['name'];
     private $searchlayout;
     private $tablecolumns;
     private $tableActions;
     // #[Url]
     public $selectIds = [];
-    public $textSearch='';
+    public $textSearch = '';
     public Form $search;
     public Form $orderBy;
     public $pageSize;
@@ -38,7 +39,7 @@ trait WithTable
 
     protected function searchFields()
     {
-        return ['name'];
+        return $this->searchWithFields;
     }
     public function doSort($name)
     {
@@ -98,6 +99,7 @@ trait WithTable
     }
     public function doSearch()
     {
+        $this->showMessage($this->textSearch);
     }
     protected function searchUI()
     {
@@ -157,6 +159,7 @@ trait WithTable
             $query->orWhere(function ($subquery) use ($textSearch) {
                 foreach ($this->searchFields() as $field) {
                     $arrFields = explode('.', $field);
+                    $this->showMessage($field);
                     if (count($arrFields) == 1) {
                         $subquery->orWhere($field, 'like', '\'%' . $textSearch . '%\'');
                     } else {
@@ -181,7 +184,8 @@ trait WithTable
             'datatable' => $this->getData(),
             'tablecolumns' => $this->tablecolumns,
             'pageSizes' => $this->getPageSize(),
-            'tableActions' => $this->tableActions ?? []
+            'tableActions' => $this->tableActions ?? [],
+            'searchWithColumns' => $this->getInputUI(),
         ]);
     }
 }

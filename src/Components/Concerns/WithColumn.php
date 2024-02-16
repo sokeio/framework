@@ -22,6 +22,14 @@ trait WithColumn
     {
         return $this->getValue('NoSort');
     }
+    public function WithoutSearch(): static
+    {
+        return $this->setKeyValue('WithoutSearch', true);
+    }
+    public function getWithoutSearch()
+    {
+        return $this->getValue('WithoutSearch');
+    }
     public function Label($Label): static
     {
         return $this->setKeyValue('Label', $Label);

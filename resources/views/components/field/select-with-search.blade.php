@@ -22,7 +22,6 @@
     },
     async doSearch() {
         this.Datasources = (await $wire.{{ $searchDatasource ?? 'searchData' . $modelField }}(this.searchText, $wire.{{ $formField }})) ?? [];
-        this.getValueText();
     },
     changeValue(value) {
         this.$wire.{{ $formField }} = value;
@@ -32,7 +31,7 @@
 }" x-init="$watch('searchText', async () => await doSearch());
 getValueText();" class="form-control dropdown" name="field-{{ $modelField }}"
     placeholder="{{ $modelPlaceholder }}" {!! $column->getWireAttribute() !!}>
-    <a class="nav-link dropdown-toggle w-100" href="#field-{{ $modelField }}" data-bs-toggle="dropdown" role="button"
+    <a class="nav-link dropdown-toggle w-100" href="#field-{{ $modelField }}" data-bs-toggle="dropdown" role="button"  data-bs-auto-close="outside"
         aria-expanded="false">
         <template x-if="valueText">
             <span class="nav-link-title" x-text="valueText"></span>
