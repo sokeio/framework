@@ -190,9 +190,9 @@ if (!function_exists('theme_layout')) {
 
 if (!function_exists('theme_option')) {
     /**
-     * @return  string | ThemeOptionManager
+     * @return  string | ThemeOptionManager| null
      */
-    function theme_option($key = '', $default = null): string | ThemeOptionManager
+    function theme_option($key = '', $default = null): string | ThemeOptionManager| null
     {
         return $key ? ThemeOption::getValue($key, $default) : ThemeOption::getFacadeRoot();
     }
