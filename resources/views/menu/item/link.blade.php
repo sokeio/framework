@@ -1,8 +1,10 @@
+@php
+    $link = $link ?? '#';
+@endphp
 @if ($item->getParent()->checkSub())
     @if ($item->checkSubMenu())
         <div id="{{ $item->getId() }}" class="dropend" data-sort="{{ $item->getValueSort() }}">
-            <a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown" data-bs-auto-close="outside"
-                role="button" aria-expanded="false">
+            <a class="dropdown-item dropdown-toggle" href="{{ $link }}" role="button">
                 @if ($icon = $item->getValueIcon())
                     <span class="nav-link-icon d-flex align-items-center">
                         <i class="{{ $icon }} fs-2"></i>
@@ -27,8 +29,7 @@
     @if ($item->checkSubMenu())
         <li id="{{ $item->getId() }}" class="nav-item dropdown {{ $item->getValueContentColor() }}"
             data-sort="{{ $item->getValueSort() }}">
-            <a class="nav-link dropdown-toggle " href="{{ $link }}" data-bs-toggle="dropdown"
-                data-bs-auto-close="false" role="button" aria-expanded="true">
+            <a class="nav-link dropdown-toggle " href="{{ $link }}" role="button">
 
                 @if ($icon = $item->getValueIcon())
                     <span class="nav-link-icon d-flex align-items-center">

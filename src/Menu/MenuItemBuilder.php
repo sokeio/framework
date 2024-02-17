@@ -106,6 +106,10 @@ class MenuItemBuilder extends HtmlBuilder
     {
         return $this->getValue(self::KEY_LINK);
     }
+    public function setValueLink($value, $default = null)
+    {
+        return $this->setValue(self::KEY_LINK, $value, $default);
+    }
     public function getValueData()
     {
         return $this->getValue(self::KEY_DATA);

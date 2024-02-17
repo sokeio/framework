@@ -182,6 +182,7 @@ class MenuBuilder extends HtmlBuilder
                         $menuItem->setValueContentType($item['data_type']);
                         $menuItem->setValueContentData($item['data']);
                         $menuItem->setValueContentColor($item['color']);
+                        $menuItem->setValueLink($item['link']);
                     });
                 } else {
                     $menu->link($item['link'], $item['name'], $item['icon'], $item['attribute'], $item['permission'], $item['order'], function (MenuItemBuilder $menuItem) use ($item) {
