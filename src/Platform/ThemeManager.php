@@ -4,9 +4,7 @@ namespace Sokeio\Platform;
 
 use Sokeio\Facades\Action;
 use Sokeio\Laravel\Hook\ActionHook;
-use Sokeio\Platform\DataInfo;
 use Sokeio\Events\PlatformChanged;
-use Sokeio\Facades\Assets;
 use Sokeio\Facades\Platform;
 use Sokeio\RouteEx;
 use Illuminate\Support\Facades\File;

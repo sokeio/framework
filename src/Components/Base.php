@@ -11,17 +11,24 @@ class Base extends BaseCallback
         return [];
     }
     private $cacheComponents;
-    private function ClearComponents($arr)
+    protected function ClearComponents($arr)
     {
         $result = [];
-        if (!$arr || !is_array($arr)) return $result;
-        foreach ($arr as $value) {
-            if (is_array($value)) {
-                $result = [...$result, ...$this->ClearComponents($value)];
-            } else if (is_a($value, Base::class)) {
-                $result[] = $value;
+        if (!$arr) return $result;
+        if (is_array($arr)) {
+            foreach ($arr as $value) {
+                if (is_array($value)) {
+                    $result = [...$result, ...$this->ClearComponents($value)];
+                } else if (is_a($value, Base::class)) {
+                    $result[] = $value;
+                }
+            }
+        } else {
+            if (is_a($arr, Base::class)) {
+                $result[] = $arr;
             }
         }
+
         return $result;
     }
     private function getChildComponents()
@@ -134,6 +141,10 @@ class Base extends BaseCallback
     public function getEachData()
     {
         return $this->getLevelData('EachData');
+    }
+    public function getEachKey()
+    {
+        return $this->getLevelData('EachKey');
     }
     public function getEachIndex()
     {

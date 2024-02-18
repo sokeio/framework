@@ -7,6 +7,7 @@ use Sokeio\Livewire\Menu\MenuForm;
 use Sokeio\Livewire\Menu\MenuItemForm;
 use Sokeio\Livewire\ThemeOptionSetting;
 use Sokeio\Livewire\Menu\MenuManager;
+use Sokeio\Livewire\PermalinkSetting;
 
 Route::group(['as' => 'admin.'], function () {
     Route::get('settings/theme-options', ThemeOptionSetting::class)->name('theme-options');
@@ -16,4 +17,5 @@ Route::group(['as' => 'admin.'], function () {
 
     Route::post('icon-manager', IconSetting::class)->name('icon-setting');
     Route::post('color-manager', ColorSetting::class)->name('color-setting');
+    Route::get('settings/permalink', PermalinkSetting::class)->name('permalink-setting');
 });

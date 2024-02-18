@@ -35,7 +35,7 @@ class FormSetting extends Component
     }
     protected function LoadSetting($keyForm, $keyValue, $column)
     {
-        data_set($this, $keyForm, setting($keyValue));
+        data_set($this, $keyForm, setting($keyValue, $column->getValueDefault()));
         return $this;
     }
     protected function SaveSetting($keyForm, $keyValue, $column)
