@@ -94,3 +94,22 @@
         pointer-events: none;
     }
 }
+
+.dropdown-tree {
+    .dropdown-menu {
+        display: inline;
+        background: unset;
+        border: none;
+        box-shadow: none;
+        margin-left: 5px;
+        color: unset;
+    }
+    .dropdown-toggle:after,
+    .dropend .dropdown-toggle:after {
+        display: none;
+    }
+
+    .dropend {
+        margin-left: 5px;
+    }
+}

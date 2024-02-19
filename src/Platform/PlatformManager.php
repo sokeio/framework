@@ -161,7 +161,7 @@ class PlatformManager
         $arr = [...$arr, ...Plugin::getModels()];
         return apply_filters(PLATFORM_MODEL_LIST, $arr);
     }
-  
+
     public function CheckConnectDB()
     {
         try {
@@ -208,29 +208,59 @@ class PlatformManager
             });
         }
     }
-    private $readyCallback = [];
+    private $readyCallbackByKey = [];
+    private function ReadyByKey($key, $callback = null)
+    {
+        if (!isset($this->readyCallbackByKey[$key])) $this->readyCallbackByKey[$key] = [];
+        if ($callback && is_callable($callback))
+            $this->readyCallbackByKey[$key][] = $callback;
+    }
+    private function DoReadyByKey($key)
+    {
+        if (!isset($this->readyCallbackByKey[$key]) || count($this->readyCallbackByKey[$key]) < 1) return;
+        foreach ($this->readyCallbackByKey[$key] as  $callback) {
+            $callback();
+        }
+    }
+    public function RouteAdminBeforeReady($callback = null)
+    {
+        $this->ReadyByKey('route_admin', $callback);
+    }
+    public function DoRouteAdminBeforeReady()
+    {
+        $this->DoReadyByKey('route_admin');
+    }
+    public function RouteSiteBeforeReady($callback = null)
+    {
+        $this->ReadyByKey('route_site', $callback);
+    }
+    public function DoRouteSiteBeforeReady()
+    {
+        $this->DoReadyByKey('route_site');
+    }
+    public function RouteApiBeforeReady($callback = null)
+    {
+        $this->ReadyByKey('route_api', $callback);
+    }
+    public function DoRouteApiBeforeReady()
+    {
+        $this->DoReadyByKey('route_api');
+    }
     public function Ready($callback = null)
     {
-        if ($callback && is_callable($callback))
-            $this->readyCallback[] = $callback;
+        $this->ReadyByKey('platform', $callback);
     }
     public function DoReady()
     {
-        foreach ($this->readyCallback as  $callback) {
-            $callback();
-        }
+        $this->DoReadyByKey('platform');
     }
-    private $readyAfterCallback = [];
     public function ReadyAfter($callback = null)
     {
-        if ($callback && is_callable($callback))
-            $this->readyAfterCallback[] = $callback;
+        $this->ReadyByKey('platform_after', $callback);
     }
     public function DoReadyAfter()
     {
-        foreach ($this->readyAfterCallback as  $callback) {
-            $callback();
-        }
+        $this->DoReadyByKey('platform_after');
     }
     public function setEnv($arrs)
     {

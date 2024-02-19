@@ -168,15 +168,25 @@ class SokeioServiceProvider extends ServiceProvider
         $this->app->booting(function () {
             app('livewire')->componentHook(SupportFormObjects::class);
         });
-
-        $this->app->booted(function () {
-            Theme::RegisterRoute();
-            if (admin_url() != '') {
+        if (admin_url() != '') {
+            Platform::RouteSiteBeforeReady(function () {
                 Route::get('/', route_filter(
                     PLATFORM_HOMEPAGE,
                     'sokeio::homepage'
                 ))->name('homepage');
-            }
+            });
+        }
+        $this->app->booted(function () {
+            Theme::RegisterRoute();
+            RouteEx::Admin(function () {
+                Platform::DoRouteAdminBeforeReady();
+            });
+            RouteEx::Web(function () {
+                Platform::DoRouteSiteBeforeReady();
+            });
+            RouteEx::Api(function () {
+                Platform::DoRouteApiBeforeReady();
+            });
         });
         Platform::Ready(function () {
             if (Request::isMethod('get')) {
