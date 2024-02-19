@@ -9,6 +9,10 @@ use Sokeio\Component;
 class FormSetting extends Component
 {
     use  WithForm;
+    protected function RedirectSave()
+    {
+        return true;
+    }
     protected function getFormClass()
     {
         return 'card p-3';
@@ -64,7 +68,11 @@ class FormSetting extends Component
             $this->refreshRefComponent();
             $this->closeComponent();
         } else {
-            return  $this->redirectCurrent();
+            if ($this->RedirectSave()) {
+                return  $this->redirectCurrent();
+            } else {
+                $this->refreshRefComponent();
+            }
         }
     }
 }

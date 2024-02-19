@@ -11,7 +11,7 @@
     <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs" role="tablist">
             @foreach ($column->getTabs() as $key => $item)
-                <li class="nav-item" role="presentation">
+                <li class="nav-item" role="presentation" wire:ignore>
                     <a href="#tabs-{{ $key }}" class="nav-link @if ($tabActive == $key) active @endif"
                         data-bs-toggle="tab" aria-selected="true" role="tab">
                         {!! $item['icon'] ?? '' !!}
@@ -24,7 +24,7 @@
     <div class="card-body">
         <div class="tab-content">
             @foreach ($column->getTabs() as $key => $item)
-                <div class="tab-pane @if ($tabActive == $key) active show @endif" id="tabs-{{ $key }}"
+                <div class="tab-pane @if ($tabActive == $key) active show @endif" id="tabs-{{ $key }}" wire:ignore
                     role="tabpanel">
                     @isset($item['content'])
                         @includeIf('sokeio::components.layout', [

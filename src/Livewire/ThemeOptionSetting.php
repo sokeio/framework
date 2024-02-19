@@ -7,6 +7,10 @@ use Sokeio\Facades\Theme;
 
 class ThemeOptionSetting extends FormSetting
 {
+    protected function RedirectSave()
+    {
+        return false;
+    }
     public function boot()
     {
         // Theme::SetupOption();
