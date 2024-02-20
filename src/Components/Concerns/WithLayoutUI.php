@@ -58,4 +58,20 @@ trait WithLayoutUI
         }
         return $layout;
     }
+    public $testLayout;
+    public function booted()
+    {
+        if (!is_livewire_reuqest_updated())
+            $this->initLayout();
+        parent::booted();
+    }
+    public function updated()
+    {
+        $this->initLayout();
+    }
+
+
+    protected function initLayout()
+    {
+    }
 }

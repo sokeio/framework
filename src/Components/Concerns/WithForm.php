@@ -168,7 +168,7 @@ trait WithForm
             $this->closeComponent();
         }
     }
-    public function boot()
+    protected function initLayout()
     {
         if (!$this->layout) {
             $this->layout = $this->reLayout($this->FormUI());

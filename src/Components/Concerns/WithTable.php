@@ -108,7 +108,7 @@ trait WithTable
     {
         return false;
     }
-    public function boot()
+    protected function initLayout()
     {
         if (!$this->pageSize)
             $this->pageSize = $this->getDefaultPageSize() ?? 10;

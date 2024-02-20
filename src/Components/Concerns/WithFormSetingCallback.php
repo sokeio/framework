@@ -6,16 +6,9 @@ use Sokeio\Form;
 
 trait WithFormSetingCallback
 {
-    use  WithForm {
-        boot as bootWithForm;
-    }
+    use  WithForm;
 
     public $eventCallback = '';
-    public function boot()
-    {
-        $this->bootWithFormSetingCallback();
-        $this->bootWithForm();
-    }
     protected function KeyBase64Settings()
     {
         return [];

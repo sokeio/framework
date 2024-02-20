@@ -171,6 +171,12 @@ if (!function_exists('is_livewire_reuqest')) {
         return class_exists('Livewire\\LivewireManager') && app('Livewire\\LivewireManager')->isLivewireRequest();
     }
 }
+if (!function_exists('is_livewire_reuqest_updated')) {
+    function is_livewire_reuqest_updated()
+    {
+        return is_livewire_reuqest() && count(request('components.0.updates'));
+    }
+}
 
 if (!function_exists('livewire_render')) {
     function livewire_render($name, $params = [])

@@ -11,11 +11,7 @@ class ThemeOptionSetting extends FormSetting
     {
         return false;
     }
-    public function boot()
-    {
-        // Theme::SetupOption();
-        parent::boot();
-    }
+  
     public function mount()
     {
         if (!theme_option()->checkOptionUI()) {

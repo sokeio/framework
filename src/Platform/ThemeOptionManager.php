@@ -13,7 +13,7 @@ class ThemeOptionManager
   }
   public function reload()
   {
-    $this->option = setting('theme_option_' . Theme::SiteDataInfo()->id);
+    $this->option = setting('theme_option_' . Theme::SiteDataInfo()->id, []);
   }
   public function saveOption()
   {
