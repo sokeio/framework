@@ -59,11 +59,12 @@ class ColorSetting extends FormSettingCallback
     }
     protected function SettingUI()
     {
-        return UI::Div(
-            // UI::Div('
-            //     <div x-text="$wire.data.SettingValueField"></div>
-            // ')->Attribute('x-show="$wire.data.SettingValueField" class="" :class="$wire.data.SettingValueField"')->ClassName('p-1 m-1 border rounded cursor-pointer'),
-            UI::Div('
+        return UI::Div([
+            UI::Div(
+                // UI::Div('
+                //     <div x-text="$wire.data.SettingValueField"></div>
+                // ')->Attribute('x-show="$wire.data.SettingValueField" class="" :class="$wire.data.SettingValueField"')->ClassName('p-1 m-1 border rounded cursor-pointer'),
+                UI::Div('
             <template x-for="item in items">
                 <div class="p-1 m-1 border rounded cursor-pointer"  x-data="{ hover: false }"
                 @mouseenter="hover = true"
@@ -72,11 +73,13 @@ class ColorSetting extends FormSettingCallback
                 </div>
             </template>
         ')->ClassName('d-flex flex-wrap')
-                ->Attribute('
+                    ->Attribute('
         x-data="{
             items: ' . sokeio_js($this->getColorList())  . ',   
         }"
         ')
-        )->Attribute(' style="height: 500px; overflow-y: scroll;" ');
+            )->Attribute(' style="height: 500px; overflow-y: scroll;" '),
+            UI::Div('')->Attribute('x-text="$wire.data.SettingValueField" :class="$wire.data.SettingValueField"')->ClassName('p-2 m-1 mt-4 border rounded'),
+        ]);
     }
 }
