@@ -43,18 +43,22 @@ class PermalinkManager
     public static function getPermalinkCache()
     {
         return Cache::rememberForever(Permalink::KEY_CACHE, function () {
-            $all = Permalink::query()->where('status', true)->get();
-            $values = [];
-            foreach ($all as $item) {
-                if (!isset($values[$item->key])) $values[$item->key] = [];
-                $values[$item->key][] = [
-                    'key' => $item->key,
-                    'lang' => $item->lang,
-                    'value' => $item->value,
-                    'status' => $item->status,
-                ];
+            try {
+                $all = Permalink::query()->where('status', true)->get();
+                $values = [];
+                foreach ($all as $item) {
+                    if (!isset($values[$item->key])) $values[$item->key] = [];
+                    $values[$item->key][] = [
+                        'key' => $item->key,
+                        'lang' => $item->lang,
+                        'value' => $item->value,
+                        'status' => $item->status,
+                    ];
+                }
+                return $values;
+            } catch (\Exception $e) {
+                return [];
             }
-            return $values;
         });
     }
 }

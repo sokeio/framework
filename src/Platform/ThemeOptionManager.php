@@ -43,6 +43,7 @@ class ThemeOptionManager
 
   public function setValue($key, $value, $saveNow = true)
   {
+    if (!is_array($this->option)) $this->option = [];
     $this->option[$key] = $value;
     if ($saveNow) {
       $this->saveOption();

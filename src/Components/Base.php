@@ -68,7 +68,14 @@ class Base extends BaseCallback
     }
     public function getAttribute()
     {
-        return $this->getValue('Attribute');
+        $attr = $this->getValue('Attribute');
+        if ($xInit = $this->getXInit()) {
+            $attr = ' x-init="' . $xInit . '" ' . $attr;
+        }
+        if ($xData = $this->getXData()) {
+            $attr = ' x-data="' . $xData . '" ' . $attr;
+        }
+        return $attr;
     }
 
     public function ClassName($ClassName)
@@ -160,5 +167,21 @@ class Base extends BaseCallback
     }
     public function getView()
     {
+    }
+    public function XData($XData)
+    {
+        return $this->setKeyValue('XData', $XData);
+    }
+    public function getXData()
+    {
+        return $this->getValue('XData');
+    }
+    public function XInit($XInit)
+    {
+        return $this->setKeyValue('XInit', $XInit);
+    }
+    public function getXInit()
+    {
+        return $this->getValue('XInit');
     }
 }

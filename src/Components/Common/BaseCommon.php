@@ -33,4 +33,5 @@ class BaseCommon extends Base
     {
         return $this->getValue('AttributeBox');
     }
+    
 }

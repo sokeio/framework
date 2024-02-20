@@ -17,11 +17,12 @@ export function onEventListenerFromDom(
 }
 export function getShortcodeObjectFromText(shortcode) {
   if (!shortcode) return null;
-  const pattern = /\[([\w-:]+)((?:\s+\w+\s*=\s*"[^"]*")*)\](.*?)\[\/\1\]/s;
+  const pattern =
+    /\[([\w-:]+)((?:\s+\w+\s*=\s*"[^"]*")*)(\](.*?)\[\/\1\]|\s*\/\])/s;
 
   // Extract the root shortcode match
   const match = shortcode.match(pattern);
-
+  console.log(match);
   if (match) {
     const shortcodeName = match[1];
     const attributesString = match[2];
@@ -42,7 +43,11 @@ export function getShortcodeObjectFromText(shortcode) {
       attributes[attribute] = value;
     }
     // Access the extracted shortcode name, attributes, and content
-    return { shortcode: shortcodeName, attributes, content: shortcodeContent };
+    return {
+      shortcode: shortcodeName,
+      attributes,
+      content: shortcodeContent.trim() == "/]" ? "" : shortcodeContent,
+    };
   }
   return null;
 }

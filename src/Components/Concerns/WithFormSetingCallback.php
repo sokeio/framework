@@ -6,7 +6,9 @@ use Sokeio\Form;
 
 trait WithFormSetingCallback
 {
-    use  WithForm;
+    use  WithForm {
+        boot as parentBoot;
+    }
 
     public $eventCallback = '';
     protected function KeyBase64Settings()
@@ -17,7 +19,7 @@ trait WithFormSetingCallback
     {
         return [];
     }
-    public function bootWithFormSetingCallback()
+    public function boot()
     {
         $form = request('___setting_data');
         if ($form) {
@@ -31,5 +33,6 @@ trait WithFormSetingCallback
         }
         $this->eventCallback = request('___setting_callback_event') ?? $this->eventCallback;
         if (!$this->eventCallback)  $this->eventCallback = 'testCallback';
+        $this->parentBoot();
     }
 }
