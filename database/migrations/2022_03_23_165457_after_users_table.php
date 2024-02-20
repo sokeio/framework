@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('avatar')->nullable();
             $table->boolean('status')->nullable();
             $table->text('info')->nullable();
-            $table->softDeletes();
         });
     }
 
@@ -33,7 +32,6 @@ return new class extends Migration
             $table->removeColumn('slug');
             $table->removeColumn('status');
             $table->removeColumn('info');
-            $table->dropSoftDeletes();
         });
     }
 };
