@@ -59,11 +59,11 @@ trait WithLayoutUI
         return $layout;
     }
     public $testLayout;
-    public function booted()
+    public function boot()
     {
         if (!is_livewire_reuqest_updated())
             $this->initLayout();
-        parent::booted();
+        // parent::boot();
     }
     public function updated()
     {

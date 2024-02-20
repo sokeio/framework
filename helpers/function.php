@@ -174,7 +174,8 @@ if (!function_exists('is_livewire_reuqest')) {
 if (!function_exists('is_livewire_reuqest_updated')) {
     function is_livewire_reuqest_updated()
     {
-        return is_livewire_reuqest() && count(request('components.0.updates'));
+        $updated = request('components.0.updates');
+        return is_livewire_reuqest() && isset($updated) && is_array($updated) && count($updated) > 0;
     }
 }
 
