@@ -79,7 +79,7 @@ class ColorSetting extends FormSettingCallback
         }"
         ')
             )->Attribute(' style="height: 500px; overflow-y: scroll;" '),
-            UI::Div('')->Attribute('x-text="$wire.data.SettingValueField" :class="$wire.data.SettingValueField"')->ClassName('p-2 m-1 mt-4 border rounded'),
+            UI::Div('')->Attribute('x-text="$wire.data.SettingValueField" x-show="$wire.data.SettingValueField"  :class="$wire.data.SettingValueField"')->ClassName('p-2 m-1 mt-4 border rounded'),
         ]);
     }
 }
