@@ -15,6 +15,7 @@ import { LiveWireCountUpModule } from "./modules/livewire-countup";
 import { LiveWireTagifyModule } from "./modules/livewire-tagify";
 import { LiveWireFlatpickrModule } from "./modules/livewire-flatpickr";
 import { FormSettingModule } from "./modules/form-setting";
+import { LiveWireCarouselModule } from "./modules/livewire-carousel";
 let SokeioManager = new Sokeio();
 window.addEventListener("sokeio::register", function () {
   SokeioManager.registerPlugin(ConfirmModule);
@@ -31,6 +32,7 @@ window.addEventListener("sokeio::register", function () {
   SokeioManager.registerPlugin(ToastsModule);
   SokeioManager.registerPlugin(LiveWireGetValueParentModule);
   SokeioManager.registerPlugin(LiveWireTinymceModule);
+  SokeioManager.registerPlugin(LiveWireCarouselModule);
   SokeioManager.registerPlugin(FormSettingModule);
 });
 window.SokeioManager = SokeioManager;
