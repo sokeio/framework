@@ -16,6 +16,7 @@ class DataInfo extends JsonData
     use Macroable;
     const Active = 1;
     const UnActive = 0;
+    private $updater = null;
     public static function checkPathVendor($path, $base_type)
     {
         return !Str::contains($path, platform_path($base_type), true) && !Str::contains($path, '/themes/', true) && !Str::contains($path, '/plugins/', true);;
@@ -28,6 +29,7 @@ class DataInfo extends JsonData
         $this['public'] =  $parent->PublicFolder();
         $this['base_type'] = $parent->getName();
         $this->ReLoad();
+        $this->updater = new PlatformUpdater($this);
     }
     public function ReLoad()
     {
@@ -84,17 +86,16 @@ class DataInfo extends JsonData
     {
         return $this['title'] ?? $this['name'];
     }
+    public function getBaseType()
+    {
+        return $this['base_type'];
+    }
     public function getDescription()
     {
         return $this['description'];
     }
     public function getVersion()
     {
-        return $this['version'];
-    }
-    public function getLatestVersion()
-    {
-        //TODO: connect To Store
         return $this['version'];
     }
 
@@ -112,12 +113,12 @@ class DataInfo extends JsonData
     }
     public function getStatusData()
     {
-        return PlatformStatus::Key($this['base_type'])->Check($this->getId()) || $this['active'];
+        return $this->getBase()->Check($this->getId()) || $this['active'];
     }
     public function CallOperation($func)
     {
         $classOptionOperation = '\\' . $this->getNamespaceInfo() . '\\Option';
-        if(!class_exists($classOptionOperation) && File::exists($this->getPath('src/Option.php'))){
+        if (!class_exists($classOptionOperation) && File::exists($this->getPath('src/Option.php'))) {
             include_once $this->getPath('src/Option.php');
         }
         if (class_exists($classOptionOperation) && method_exists($classOptionOperation, $func)) {
@@ -131,15 +132,19 @@ class DataInfo extends JsonData
             return $this->manifestData ?? ($this->manifestData = self::getJsonFromFile($this->getPath('public/build/manifest.json')));
         return null;
     }
+    public function getBase()
+    {
+        return  PlatformStatus::Key($this->getBaseType());
+    }
     public function setStatusData($value)
     {
         if ($value === self::Active) {
             $this->CallOperation('activate');
-            PlatformStatus::Key($this['base_type'])->Active($this->getId());
+            $this->getBase()->Active($this->getId());
             $this->CallOperation('activated');
         } else {
             $this->CallOperation('deactivate');
-            PlatformStatus::Key($this['base_type'])->UnActive($this->getId());
+            $this->getBase()->UnActive($this->getId());
             $this->CallOperation('deactivated');
         }
         ob_start();
@@ -202,10 +207,6 @@ class DataInfo extends JsonData
     {
         run_cmd($this->getPath(), 'composer dump -o -n -q');
     }
-    public function update()
-    {
-        //TODO: connect To Store
-    }
     public function CheckName($name)
     {
         return Str::lower($this->getId())  ==  Str::lower($name) || Str::lower($this->name) == Str::lower($name);
@@ -239,5 +240,10 @@ class DataInfo extends JsonData
         foreach ($this->providers as $item) {
             $item->boot();
         }
+    }
+
+    public function getUpdater(): PlatformUpdater
+    {
+        return $this->updater;
     }
 }
