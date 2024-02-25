@@ -16,7 +16,7 @@ export class LiveWireModule extends SokeioPlugin {
         self.CacheRejs = undefined;
         clearTimeout(self.CacheRejs);
         if (self.CacheLivewire == true) {
-          window.Livewire?.rescan();
+          // window.Livewire?.rescan();
         } else {
           window.Livewire?.start();
         }

@@ -84,7 +84,7 @@ export class ModalModule extends SokeioPlugin {
     elModal.addEventListener("hidden.bs.modal", function (event) {
       elModal.__deleting = true;
       elModal.remove();
-      window.Livewire?.rescan();
+      // window.Livewire?.rescan();
       $callbackClosed && $callbackClosed();
     });
     self
@@ -111,7 +111,7 @@ export class ModalModule extends SokeioPlugin {
         elModal
           .querySelector(".modal-header")
           .insertAdjacentHTML("afterend", htmlContent);
-        window.Livewire?.rescan();
+        // window.Livewire?.rescan();
         let modalWireComponent = elModal.querySelector("[wire\\:id]");
         if ($btnChoose && $btnChoose != "" && modalWireComponent) {
           let modalWireId = modalWireComponent.getAttribute("wire:id");
