@@ -9,36 +9,37 @@
     $arrayTree = [];
     foreach ($datasources as $item) {
         $valueKey = data_get($item, $FieldText);
-        $keyTree = '';
-        $arrKeys = explode('.', $valueKey);
-        $levelIndex = 0;
-        foreach ($arrKeys as $value) {
-            $keyTree .= $keyTree ? '.' . $value : $value;
+        data_set($arrayTree, $valueKey . '._treeview_items', [
+            'label' => data_get($item, $FieldText),
+            'id' => data_get($item, $FieldKey),
+        ]);
+        // $keyTree = '';
+        // $arrKeys = explode('.', $valueKey);
+        // $levelIndex = 0;
+        // foreach ($arrKeys as $value) {
+        //     $keyTree .= $keyTree ? '.' . $value : $value;
 
-            $arrayTree[$keyTree] = $levelIndex;
-            // if (!isset($arrayTree['level' . $levelIndex])) {
-            //     $arrayTree['level' . $levelIndex] = [];
-            // }
-            // $arrayTree['level' . $levelIndex][] = $keyTree;
-            $levelIndex++;
-        }
+        //     if ($valueKey == $keyTree) {
+        //         $arrayTree[$keyTree] = [
+        //             'label' => data_get($item, $FieldText),
+        //             'id' => data_get($item, $FieldKey),
+        //         ];
+        //     } else {
+        //         $arrayTree[$keyTree] = false;
+        //     }
+        // if (!isset($arrayTree['level' . $levelIndex])) {
+        //     $arrayTree['level' . $levelIndex] = [];
+        // }
+        // $arrayTree['level' . $levelIndex][] = $keyTree;
+        //     $levelIndex++;
+        // }
     }
 @endphp
-@if ($datasources)
-    <div>
-        <pre>
-        @php
-            print_r($arrayTree);
-        @endphp
-      </pre>
-        {{-- @foreach ($datasources as $item)
-            <div class="col-6">
-                <label class="form-check">
-                    <input wire:model='{{ $formField }}' name="{{ $formField }}" class="form-check-input"
-                        type="checkbox" value="{{ data_get($item, $FieldKey) }}">
-                    <span class="form-check-label">{{ data_get($item, $FieldText) }}</span>
-                </label>
-            </div>
-        @endforeach --}}
-    </div>
-@endif
+<div>
+    @if ($datasources)
+        @include('sokeio::components.field.tree-view-item', [
+            'arrayTree' => $arrayTree,
+            'formField' => $formField,
+        ])
+    @endif
+</div>
