@@ -23,6 +23,7 @@ use Sokeio\Components\Field\TagifyField;
 use Sokeio\Components\Field\TextareaField;
 use Sokeio\Components\Field\TextField;
 use Sokeio\Components\Field\TinymceField;
+use Sokeio\Components\Field\TreeViewField;
 
 trait WithField
 {
@@ -109,5 +110,9 @@ trait WithField
     public static function SelectWithSearch($value)
     {
         return SelectWithSearchField::make($value);
+    }
+    public static function TreeView($value)
+    {
+        return TreeViewField::make($value);
     }
 }
