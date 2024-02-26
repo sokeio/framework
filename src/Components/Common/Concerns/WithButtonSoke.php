@@ -95,14 +95,13 @@ trait WithButtonSoke
         $buttonAtrr = '';
         if ($url = $this->getModalUrl()) {
             $buttonAtrr .= ' sokeio:modal="' . $url . '" ';
-            if ($size = $this->getModalSize()) {
-                $buttonAtrr .= ' sokeio:modal-size="' . $size . '" ';
-            }
-            if ($title = $this->getModalTitle()) {
-                $buttonAtrr .= ' sokeio:modal-title="' . $title . '" ';
-            }
         }
-
+        if ($size = $this->getModalSize()) {
+            $buttonAtrr .= ' sokeio:modal-size="' . $size . '" ';
+        }
+        if ($title = $this->getModalTitle()) {
+            $buttonAtrr .= ' sokeio:modal-title="' . $title . '" ';
+        }
         if ([
             'message' => $message,
             'title' => $title,

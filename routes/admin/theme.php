@@ -2,7 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use Sokeio\Livewire\ColorSetting;
+use Sokeio\Livewire\CookiesSetting;
 use Sokeio\Livewire\IconSetting;
+use Sokeio\Livewire\Item\GroupItemForm;
+use Sokeio\Livewire\Item\ItemForm;
+use Sokeio\Livewire\Item\ItemTable;
 use Sokeio\Livewire\Menu\MenuForm;
 use Sokeio\Livewire\Menu\MenuItemForm;
 use Sokeio\Livewire\ThemeOptionSetting;
@@ -18,4 +22,7 @@ Route::group(['as' => 'admin.'], function () {
     Route::post('icon-manager', IconSetting::class)->name('icon-setting');
     Route::post('color-manager', ColorSetting::class)->name('color-setting');
     Route::get('settings/permalink', PermalinkSetting::class)->name('permalink-setting');
+    Route::get('settings/cookies', CookiesSetting::class)->name('cookies-setting');
+    route_crud('item', ItemTable::class, ItemForm::class);
+    Route::post('group-item/{dataId?}', GroupItemForm::class)->name('group-item.create');
 });

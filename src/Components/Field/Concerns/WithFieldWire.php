@@ -27,6 +27,9 @@ trait WithFieldWire
                 $attr .= ' wire:get-value-parent="' . $this->wireGetValueByParent .  '" ';
             }
         }
+        if ($attrInput = $this->getAttributeInput()) {
+            $attr .= $attrInput;
+        }
         return $attr;
     }
     /*

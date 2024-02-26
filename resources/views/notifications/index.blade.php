@@ -2,12 +2,14 @@
     <div wire:ignore class="offcanvas offcanvas-end" tabindex="-1" id="noticationUserManager"
         aria-labelledby="offcanvasEndLabel" aria-modal="true" role="dialog" x-data="{
             pageHtml: [],
+            scrollPositionCache: 0,
             type: 0,
             getPageHtml() {
                 return this.pageHtml.join('');
             },
             flgLoadMore: false,
-            async loadMore() {
+            async loadMoreJs() {
+                if (this.flgLoadMore) return;
                 this.flgLoadMore = true;
                 let html = await $wire.loadMore();
                 if (html) {
@@ -22,11 +24,17 @@
                     const scrollPosition = divElement.scrollTop + divElement.clientHeight + 300;
                     const totalHeight = divElement.scrollHeight;
         
-                    if (scrollPosition >= totalHeight) {
-                        self.loadMore();
+                    if (scrollPosition >= totalHeight && (this.scrollPositionCache != scrollPosition)) {
+                        this.scrollPositionCache = scrollPosition;
+                        setTimeout(async function() {
+                            await self.loadMoreJs();
+                        }, 0);
+        
                     }
                 });
-                this.loadMore();
+                setTimeout(async function() {
+                    await self.loadMoreJs();
+                }, 0);
             },
             async changeType() {
                 this.flgLoadMore = true;
@@ -67,7 +75,7 @@
                     </a>
                 </div>
             </div>
-            <div x-show="loadMore" x-text="loadMore ? 'Loading...' : ''" x-cloak></div>
+            <div x-show="flgLoadMore" x-text="flgLoadMore ? 'Loading...' : ''" x-cloak></div>
         </div>
         <div class="offcanvas-body p-2" x-ref="notificationBody">
             <div class="divide-y" x-html="getPageHtml()">

@@ -9,11 +9,11 @@ class Notifications extends Component
 {
     public $page = 1;
     public $type = 0;
-    #[On('echo:notifications,NotificationAdd')]
-    public function notifyNew()
-    {
-        $this->dispatch('notifyNew');
-    }
+    // #[On('echo:notifications,NotificationAdd')]
+    // public function notifyNew()
+    // {
+    //     // $this->dispatch('notifyNew');
+    // }
     public function changeType($type)
     {
         $this->page = 0;

@@ -19,9 +19,13 @@ use Sokeio\Middleware\ThemeLayout;
 use Sokeio\Concerns\WithServiceProvider;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Request;
+use Livewire\Livewire;
+use PhpParser\Node\Expr\FuncCall;
+use Sokeio\Facades\Menu;
 use Sokeio\Facades\MenuRender;
 use Sokeio\Icon\IconManager;
 use Sokeio\Livewire\MenuItemLink;
+use Sokeio\Menu\MenuBuilder;
 use Sokeio\Support\SupportFormObjects\SupportFormObjects;
 
 class SokeioServiceProvider extends ServiceProvider
@@ -164,6 +168,9 @@ class SokeioServiceProvider extends ServiceProvider
             },400)
             </script>";
             Assets::Render(PLATFORM_BODY_AFTER);
+            if (!sokeio_is_admin() && setting('COOKIE_BANNER_ENABLE', 1) && Request::isMethod('get') && !request()->cookie('cookie-consent')) {
+                echo Livewire::mount('sokeio::gdpr-modal');
+            }
         });
         $this->app->booting(function () {
             app('livewire')->componentHook(SupportFormObjects::class);
@@ -194,6 +201,14 @@ class SokeioServiceProvider extends ServiceProvider
                     Platform::makeLink();
                 }
                 IconManager::getInstance()->Assets();
+                Menu::Register(function () {
+                    if (!sokeio_is_admin()) return;
+                    menu_admin()->attachMenu('system_setting_menu', function (MenuBuilder $menu) {
+                        $menu->route('admin.cookies-setting', 'Cookie Banner', '', [], 'admin.cookies-setting');
+                        $menu->route('admin.permalink-setting', 'Permalink', '', [], 'admin.permalink-setting');
+                        $menu->route('admin.item', 'Items', '', [], 'admin.item');
+                    });
+                });
             }
             MenuRender::RegisterType(MenuItemLink::class);
 
