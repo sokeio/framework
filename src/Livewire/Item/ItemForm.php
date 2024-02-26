@@ -32,7 +32,6 @@ class ItemForm extends Form
     {
 
         $this->data->group_item_id = $group_item_id;
-        $this->data->name = "test";
         $this->refreshMe();
     }
 
