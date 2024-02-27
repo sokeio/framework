@@ -20,12 +20,12 @@ use Sokeio\Concerns\WithServiceProvider;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Request;
 use Livewire\Livewire;
-use PhpParser\Node\Expr\FuncCall;
 use Sokeio\Facades\Menu;
 use Sokeio\Facades\MenuRender;
 use Sokeio\Icon\IconManager;
 use Sokeio\Livewire\MenuItemLink;
 use Sokeio\Menu\MenuBuilder;
+use Sokeio\Shortcode\ShortcodeserviceProvider;
 use Sokeio\Support\SupportFormObjects\SupportFormObjects;
 
 class SokeioServiceProvider extends ServiceProvider
@@ -77,6 +77,7 @@ class SokeioServiceProvider extends ServiceProvider
     public function packageBooted()
     {
         config(['auth.providers.users.model' => config('sokeio.model.user')]);
+        $this->app->register(ShortcodeserviceProvider::class);
     }
     public function bootingPackage()
     {

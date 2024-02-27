@@ -18,6 +18,7 @@ use Sokeio\Facades\Platform;
 use Sokeio\Facades\Plugin;
 use Sokeio\Facades\Theme;
 use Sokeio\Facades\ThemeOption;
+use Sokeio\Facades\Shortcode;
 use Sokeio\Icon\IconManager;
 use Sokeio\Menu\MenuBuilder;
 use Sokeio\Models\MenuLocation;
@@ -589,5 +590,14 @@ if (!function_exists('column_size')) {
             default:
                 return "col";
         }
+    }
+}
+
+
+
+if (!function_exists('shortcode_render')) {
+    function shortcode_render($text)
+    {
+        return Shortcode::compile($text);
     }
 }

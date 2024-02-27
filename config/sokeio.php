@@ -14,6 +14,7 @@ return [
         'temps' => env('PLATFORM_UPDATOR_TEMP', 'temps')
     ],
     'extends' => ['theme', 'plugin', 'module'],
+    'shortcodes-enabled' => false,
     'appdir' => [
         'root' =>  env('PLATFORM_ROOT', 'platform'),
         'theme' => env('PLATFORM_THEME', 'themes'),
