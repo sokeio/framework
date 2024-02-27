@@ -2,7 +2,7 @@
 
 namespace Sokeio\Livewire\Item;
 
-use Sokeio\Models\Item ;
+use Sokeio\Models\Item;
 use Sokeio\Components\Table;
 use Sokeio\Components\UI;
 
@@ -20,17 +20,22 @@ class ItemTable extends Table
     {
         return 'admin.item';
     }
-    // $table->integer('group_item_id')->nullable();
-    // $table->string('name', 255)->nullable();
-    // $table->string('icon', 255)->nullable();
-    // $table->string('description', 400)->nullable()->default('');
-    // $table->longText('content')->nullable();
-    // $table->string('image', 255)->nullable();
+
+    protected function getQuery()
+    {
+        return parent::getQuery()->with(['group']);
+    }
     public function getColumns()
     {
         return [
             UI::Text('name')->Label(__('Name')),
-            UI::Text('group_item_id')->Label(__('Group Item')),
+            UI::Text('group_item_id')->Label(__('Group Item'))->FieldValue(function ($item) {
+
+                if ($item->group) {
+                    return $item->group->name;
+                }
+                return __('None');
+            }),
             UI::Text('icon')->Label(__('Icon'))->NoSort(),
             UI::Text('description')->Label(__('Description'))->NoSort(),
             UI::Text('image')->Label(__('Image'))->NoSort(),

@@ -12,6 +12,7 @@ use Sokeio\Livewire\Menu\MenuItemForm;
 use Sokeio\Livewire\ThemeOptionSetting;
 use Sokeio\Livewire\Menu\MenuManager;
 use Sokeio\Livewire\PermalinkSetting;
+use Sokeio\Livewire\ShortcodeSetting;
 
 Route::group(['as' => 'admin.'], function () {
     Route::get('settings/theme-options', ThemeOptionSetting::class)->name('theme-options');
@@ -25,4 +26,5 @@ Route::group(['as' => 'admin.'], function () {
     Route::get('settings/cookies', CookiesSetting::class)->name('cookies-setting');
     route_crud('item', ItemTable::class, ItemForm::class);
     Route::post('group-item/{dataId?}', GroupItemForm::class)->name('group-item.create');
+    Route::post('/setting/shortcode', ShortcodeSetting::class)->name('shortcode-setting');
 });

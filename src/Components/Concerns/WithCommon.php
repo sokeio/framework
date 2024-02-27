@@ -12,6 +12,7 @@ use Sokeio\Components\Common\Each;
 use Sokeio\Components\Common\Error;
 use Sokeio\Components\Common\Livewire;
 use Sokeio\Components\Common\Tab;
+use Sokeio\Components\Common\Template;
 
 trait WithCommon
 {
@@ -71,5 +72,9 @@ trait WithCommon
     public static function Error($value)
     {
         return Error::Make($value);
+    }
+    public static function Template($value)
+    {
+        return Template::Make($value);
     }
 }

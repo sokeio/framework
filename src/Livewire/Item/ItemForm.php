@@ -30,11 +30,8 @@ class ItemForm extends Form
     }
     public function SelectGroupItem($group_item_id)
     {
-
         $this->data->group_item_id = $group_item_id;
-        $this->refreshMe();
     }
-
     public function FormUI()
     {
         return UI::Container([
@@ -57,12 +54,17 @@ class ItemForm extends Form
                                         ];
                                     })
                                 ];
-                            })->UIAfter([
-                                UI::Button(__('Add Group'))->Attribute(' x-show="$wire.data.group_item_id==0" ')->ModalRoute('admin.group-item.create')->ModalTitle(__('Add Group Item')),
-                                UI::Button(__('Edit Group'))->ModalTitle(__('Edit Group Item'))->Attribute(' x-show="$wire.data.group_item_id>0" x-bind:sokeio:modal="\'' . route('admin.group-item.create') . '/\'+$wire.data.group_item_id"')->ModalTitle(__('Edit Group Item')),
-                            ])->ValueDefault('0'),
+                            })
+                                ->UIBefore([
+                                    UI::Button(__('Add Group'))->ModalRoute('admin.group-item.create')->ModalTitle(__('Add Group Item')),
+                                ])
+                                ->UIAfter([
+                                    UI::Template([
+                                        UI::Button(__('Edit Group'))->ModalTitle(__('Edit Group Item'))->Attribute(' x-bind:sokeio:modal="\'' . route('admin.group-item.create') . '/\'+$wire.data.group_item_id"')->ModalTitle(__('Edit Group Item')),
+                                    ])->Attribute(' x-if="$wire.data.group_item_id>0" ')
+                                ])->ValueDefault(0),
                             UI::Icon('icon')->Label(__('Icon')),
-                            UI::Icon('color')->Label(__('Color')),
+                            UI::Color('color')->Label(__('Color')),
                             UI::Textarea('description')->Label(__('Description')),
                             UI::Image('image')->Label(__('Image'))
                         ])

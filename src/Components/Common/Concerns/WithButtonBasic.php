@@ -5,6 +5,14 @@ namespace Sokeio\Components\Common\Concerns;
 
 trait WithButtonBasic
 {
+    public function Icon($Icon = true): static
+    {
+        return $this->setKeyValue('Icon', $Icon);
+    }
+    public function getIcon()
+    {
+        return $this->getValue('Icon');
+    }
     public function ButtonLink($ButtonLink = true): static
     {
         return $this->setKeyValue('ButtonLink', $ButtonLink);
