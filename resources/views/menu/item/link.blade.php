@@ -8,7 +8,7 @@
                 role="button">
                 @if ($icon = $item->getValueIcon())
                     <span class="nav-link-icon d-flex align-items-center">
-                        <i class="{{ $icon }} fs-2"></i>
+                        <i class="{{ $icon }} fs-2 {{ $item->getValueContentColor() }}"></i>
                     </span>
                 @endif
                 {{ $item->getValueText() }}
@@ -20,7 +20,7 @@
             href="{{ $link }}" data-sort="{{ $item->getValueSort() }}">
             @if ($icon = $item->getValueIcon())
                 <span class="nav-link-icon d-flex align-items-center">
-                    <i class="{{ $icon }} fs-2"></i>
+                    <i class="{{ $icon }} fs-2 {{ $item->getValueContentColor() }}"></i>
                 </span>
             @endif
             {{ $item->getValueText() }}
@@ -34,7 +34,7 @@
 
                 @if ($icon = $item->getValueIcon())
                     <span class="nav-link-icon d-flex align-items-center">
-                        <i class="{{ $icon }} fs-2"></i>
+                        <i class="{{ $icon }} fs-2 {{ $item->getValueContentColor() }}"></i>
                     </span>
                 @endif
                 <span class="nav-link-title">
@@ -48,7 +48,7 @@
             <a wire:navigate class="nav-link {{ $item->getValueContentColor() }}" href="{{ $link }}">
                 @if ($icon = $item->getValueIcon())
                     <span class="nav-link-icon d-flex align-items-center">
-                        <i class="{{ $icon }} fs-2"></i>
+                        <i class="{{ $icon }} fs-2 {{ $item->getValueContentColor() }}"></i>
                     </span>
                 @endif
                 {{ $item->getValueText() }}
