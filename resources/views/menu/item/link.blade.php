@@ -4,7 +4,8 @@
 @if ($item->getParent()->checkSub())
     @if ($item->checkSubMenu())
         <div id="{{ $item->getId() }}" class="dropend" data-sort="{{ $item->getValueSort() }}">
-            <a class="dropdown-item dropdown-toggle" href="{{ $link }}" role="button">
+            <a class="dropdown-item dropdown-toggle {{ $item->getValueContentColor() }}" href="{{ $link }}"
+                role="button">
                 @if ($icon = $item->getValueIcon())
                     <span class="nav-link-icon d-flex align-items-center">
                         <i class="{{ $icon }} fs-2"></i>
@@ -15,8 +16,8 @@
             {!! $item->getSubMenu()->toHtml() !!}
         </div>
     @else
-        <a wire:navigate id="{{ $item->getId() }}" class="dropdown-item " href="{{ $link }}"
-            data-sort="{{ $item->getValueSort() }}">
+        <a wire:navigate id="{{ $item->getId() }}" class="dropdown-item {{ $item->getValueContentColor() }}"
+            href="{{ $link }}" data-sort="{{ $item->getValueSort() }}">
             @if ($icon = $item->getValueIcon())
                 <span class="nav-link-icon d-flex align-items-center">
                     <i class="{{ $icon }} fs-2"></i>
@@ -27,9 +28,9 @@
     @endif
 @else
     @if ($item->checkSubMenu())
-        <li id="{{ $item->getId() }}" class="nav-item dropdown {{ $item->getValueContentColor() }}"
-            data-sort="{{ $item->getValueSort() }}">
-            <a class="nav-link dropdown-toggle " href="{{ $link }}" role="button">
+        <li id="{{ $item->getId() }}" class="nav-item dropdown" data-sort="{{ $item->getValueSort() }}">
+            <a class="nav-link dropdown-toggle  {{ $item->getValueContentColor() }}" href="{{ $link }}"
+                role="button">
 
                 @if ($icon = $item->getValueIcon())
                     <span class="nav-link-icon d-flex align-items-center">
@@ -43,9 +44,8 @@
             {!! $item->getSubMenu()->toHtml() !!}
         </li>
     @else
-        <li id="{{ $item->getId() }}" class="nav-item {{ $item->getValueContentColor() }}"
-            data-sort="{{ $item->getValueSort() }}">
-            <a wire:navigate class="nav-link " href="{{ $link }}">
+        <li id="{{ $item->getId() }}" class="nav-item " data-sort="{{ $item->getValueSort() }}">
+            <a wire:navigate class="nav-link {{ $item->getValueContentColor() }}" href="{{ $link }}">
                 @if ($icon = $item->getValueIcon())
                     <span class="nav-link-icon d-flex align-items-center">
                         <i class="{{ $icon }} fs-2"></i>
