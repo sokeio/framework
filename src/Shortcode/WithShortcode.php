@@ -2,11 +2,16 @@
 
 namespace Sokeio\Shortcode;
 
+use Sokeio\Facades\Shortcode;
 use Sokeio\Laravel\WithCallback;
 
 trait WithShortcode
 {
     use WithCallback;
+    public static function RegisterShortcode()
+    {
+        Shortcode::register(static::class);
+    }
     public static function getShortcodeName()
     {
     }
@@ -21,6 +26,7 @@ trait WithShortcode
     {
         return true;
     }
+
 
     public $shortcodeName;
     public $shortcodeAttrs;
