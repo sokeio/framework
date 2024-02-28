@@ -128,7 +128,7 @@ class Shortcode implements Arrayable
     public function render()
     {
         if (isset($this->callbacks) && is_string($this->callbacks) && is_a($this->callbacks, Component::class, true)) {
-            return Livewire::mount('shortcode::' . $this->getName(), []);
+            return Livewire::mount('shortcode::' . $this->getName(), $this->attributes ?? []);
         }
         // Render the shortcode through the callback
         return call_user_func_array($this->callbacks, [
