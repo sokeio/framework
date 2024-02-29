@@ -148,6 +148,11 @@ class SokeioServiceProvider extends ServiceProvider
                     'title' => __('Color Setting'),
                     'size' => ''
                 ],
+                'sokeio_shortcode_setting' => [
+                    'title' => __('Shortcode Setting'),
+                    'url' => route('admin.shortcode-setting'),
+                    'size' => 'modal-fullscreen-md-down modal-xl',
+                ],
                 'tinyecm_option' => [
                     "relative_urls" => false,
                     "content_style" => "
