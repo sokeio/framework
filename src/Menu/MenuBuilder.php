@@ -183,12 +183,15 @@ class MenuBuilder extends HtmlBuilder
                         $menuItem->setValueContentData($item['data']);
                         $menuItem->setValueContentColor($item['color']);
                         $menuItem->setValueLink($item['link']);
+                        $menuItem->setValueInfo($item['info']);
+
                     });
                 } else {
                     $menu->link($item['link'], $item['name'], $item['icon'], $item['attribute'], $item['permission'], $item['order'], function (MenuItemBuilder $menuItem) use ($item) {
                         $menuItem->setValueContentType($item['data_type']);
                         $menuItem->setValueContentData($item['data']);
                         $menuItem->setValueContentColor($item['color']);
+                        $menuItem->setValueInfo($item['info']);
                     }); // = new MenuItemBuilder($item, $menu);
                 }
             }

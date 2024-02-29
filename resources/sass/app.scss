@@ -104,6 +104,7 @@
         margin-left: 5px;
         color: unset;
     }
+
     .dropdown-toggle:after,
     .dropend .dropdown-toggle:after {
         display: none;
@@ -113,10 +114,11 @@
         margin-left: 5px;
     }
 }
+
 .scrollable-nowrap {
     text-wrap: nowrap;
     word-wrap: break-word;
-    white-space:nowrap;
+    white-space: nowrap;
     overflow-wrap: break-word;
     overflow-x: hidden;
     /* More presentational CSS */
@@ -126,4 +128,12 @@
 .scrollable-nowrap:active,
 .scrollable-nowrap:focus {
     overflow-x: scroll;
+}
+@media screen and (max-width: 768px) {
+    .row-sm-column-reverse {
+        flex-direction: column-reverse;
+    }
+    .row-sm-row-reverse {
+        flex-direction: row-reverse;
+    }
 }

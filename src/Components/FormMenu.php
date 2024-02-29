@@ -30,6 +30,7 @@ class FormMenu extends Form
                 UI::Column(UI::Color('color')->Label(__('Color'))),
             ]),
             UI::Text('name')->Label(__('Name'))->required(),
+            UI::Textarea('info')->Label(__('Info')),
             UI::Text('attr_name')->Label(__('Attribute')),
             UI::Text('class_name')->Label(__('Class name')),
             UI::Hidden('data_type')->ValueDefault(function () {

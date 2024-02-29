@@ -21,6 +21,7 @@ class MenuItemBuilder extends HtmlBuilder
     public const KEY_CONTENT_DATA = 'KEY_CONTENT_DATA';
     public const KEY_TYPE = 'KEY_TYPE';
     public const KEY_TEXT = 'KEY_TEXT';
+    public const KEY_INFO = 'KEY_INFO';
     public const KEY_ICON = 'KEY_ICON';
     public const KEY_ATTRIBUTE = 'KEY_ATTRIBUTE';
     public const KEY_SORT = 'KEY_SORT';
@@ -65,6 +66,14 @@ class MenuItemBuilder extends HtmlBuilder
     public function setValueContentType($value, $default = null)
     {
         return $this->setValue(self::KEY_CONTENT_TYPE, $value, $default);
+    }
+    public function getValueInfo()
+    {
+        return $this->getValue(self::KEY_INFO);
+    }
+    public function setValueInfo($value, $default = null)
+    {
+        return $this->setValue(self::KEY_INFO, $value, $default);
     }
     public function getValueContentColor()
     {

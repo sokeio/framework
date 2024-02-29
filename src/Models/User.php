@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Sokeio\Concerns\WithPermission;
 use Sokeio\Concerns\WithSlug;
 use Illuminate\Support\Facades\Hash;
+use Sokeio\Database\Factories\UserFactory;
 
 class User extends Authenticatable
 {
@@ -55,5 +56,12 @@ class User extends Authenticatable
                 $model->password = Hash::make($model->password);
             }
         });
+    }
+    /**
+     * @return UserFactory
+     */
+    protected static function newFactory(): UserFactory
+    {
+        return UserFactory::new();
     }
 }

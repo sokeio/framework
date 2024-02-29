@@ -8,6 +8,10 @@ use Illuminate\Support\Str;
 trait WithTablePagination
 {
     public $paginators = [];
+    protected function getPageName()
+    {
+        return 'page';
+    }
 
     public function getPage($pageName = 'page')
     {
