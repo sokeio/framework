@@ -11,9 +11,18 @@ trait WithLayoutUI
     }
     protected function getBreadcrumb()
     {
+        if (sokeio_is_admin()) {
+            return [
+                Breadcrumb::Item(__('Home'), route('admin.dashboard'))
+            ];
+        }
         return [
-            Breadcrumb::Item(__('Home'), route('admin.dashboard'))
+            Breadcrumb::Item(__('Home'), url(''))
         ];
+    }
+    protected function doBreadcrumb()
+    {
+        breadcrumb()->Title($this->getTitle())->Breadcrumb($this->getBreadcrumb());
     }
     private $inputUI = [];
     public function addInputUI($inputUI, $key = 'data')

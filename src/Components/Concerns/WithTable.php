@@ -122,11 +122,12 @@ trait WithTable
             $this->tablecolumns = $this->reLayout($this->getColumns());
         }
     }
+   
     protected function getView()
     {
         if ($this->currentIsPage()) {
             Assets::setTitle($this->getTitle());
-            breadcrumb()->Title($this->getTitle())->Breadcrumb($this->getBreadcrumb());
+            $this->doBreadcrumb();
             return 'sokeio::components.table.page';
         }
         return 'sokeio::components.table.index';

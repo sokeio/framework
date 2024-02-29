@@ -65,7 +65,7 @@ trait WithForm
     {
         if ($this->currentIsPage()) {
             Assets::setTitle($this->getTitle());
-            breadcrumb()->Title($this->getTitle())->Breadcrumb($this->getBreadcrumb());
+            $this->doBreadcrumb();
             return 'sokeio::components.form.page';
         }
         return 'sokeio::components.form.index';
