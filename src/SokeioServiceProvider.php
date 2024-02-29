@@ -94,9 +94,9 @@ class SokeioServiceProvider extends ServiceProvider
             }
             return [
                 ...$prev,
-                'title' => $prev['title'] ?? Assets::getTitle(),
-                'description' => $prev['description'] ?? Assets::getDescription(),
-                'favicon' => $prev['favicon'] ?? Assets::getFavicon()
+                'title' => Assets::getTitle() ?? $prev['title'],
+                'description' => Assets::getDescription() ?? $prev['description'],
+                'favicon' => Assets::getFavicon() ?? $prev['favicon']
             ];
         });
         $this->registerMiddlewares();
