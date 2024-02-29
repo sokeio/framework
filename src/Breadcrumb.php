@@ -23,6 +23,7 @@ class Breadcrumb extends BaseCallback
     }
     private $breadcrumb = [];
     private $title = '';
+    private $classBox = '';
     public function Breadcrumb($breadcrumb)
     {
         $this->breadcrumb = $breadcrumb ?? [];
@@ -32,6 +33,15 @@ class Breadcrumb extends BaseCallback
     {
         $this->breadcrumb[] = ['text' => $text, 'link' => $link, 'class' => $class];
         return $this;
+    }
+    public function ClassBox($classBox)
+    {
+        $this->classBox = $classBox;
+        return $this;
+    }
+    public function getClassBox()
+    {
+        return $this->classBox ?? '';
     }
     public function Title($title)
     {
@@ -50,6 +60,7 @@ class Breadcrumb extends BaseCallback
     {
         return view('sokeio::breadcrumb', [
             'title' => $this->getTitle(),
+            'classBox' => $this->getClassBox(),
             'breadcrumb' => $this->getBreadcrumb()
         ])->render();
     }
