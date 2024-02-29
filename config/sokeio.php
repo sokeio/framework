@@ -303,7 +303,8 @@ return [
             'option' => [
                 'stub' => 'option',
                 'path' => 'src',
-                'name' => 'Option.php'
+                'name' => 'Option.php',
+                'replacements' => ['NAMESPACE']
             ],
             'view' => [
                 'stub' => 'views/index',
