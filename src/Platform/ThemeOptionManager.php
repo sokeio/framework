@@ -13,11 +13,15 @@ class ThemeOptionManager
   }
   public function reload()
   {
-    $this->option = setting('theme_option_' . Theme::SiteDataInfo()->id, []);
+    if ($site = Theme::SiteDataInfo()) {
+      $this->option = setting('theme_option_' . $site->id, []);
+    }
   }
   public function saveOption()
   {
-    set_setting('theme_option_' . Theme::SiteDataInfo()->id, $this->option ?? []);
+    if ($site = Theme::SiteDataInfo()) {
+      set_setting('theme_option_' . $site->id, $this->option ?? []);
+    }
   }
   private $optionUI = [];
   public function optionUI($option)
