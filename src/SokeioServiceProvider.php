@@ -88,8 +88,20 @@ class SokeioServiceProvider extends ServiceProvider
 
     public function packageRegistered()
     {
+        add_filter('SEO_DATA_DEFAULT', function ($prev) {
+            if (sokeio_is_admin()) {
+                return $prev;
+            }
+            return [
+                ...$prev,
+                'title' => $prev['title'] ?? Assets::getTitle(),
+                'description' => $prev['description'] ?? Assets::getDescription(),
+                'favicon' => $prev['favicon'] ?? Assets::getFavicon()
+            ];
+        });
         $this->registerMiddlewares();
         Collection::macro('paginate', function ($pageSize) {
+            // @var Collection $this
             return ColectionPaginate::paginate($this, $pageSize);
         });
 

@@ -14,6 +14,11 @@ class AssetManager
     private $assets = [];
     private $loaded = false;
     private $dataLoader = [];
+
+    public function setFavicon($favicon)
+    {
+        $this->data['favicon'] = $favicon;
+    }
     public function setTitle($title)
     {
         $this->data['title'] = $title;
@@ -22,6 +27,11 @@ class AssetManager
     {
         $this->data['description'] = $description;
     }
+    public function getFavicon()
+    {
+        return $this->data['favicon'] ?? '';
+    }
+
     public function getTitle()
     {
         return $this->data['title'] ?? '';

@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static void SetData($key,$value)
  * @method static string getTitle()
  * @method static void setTitle($title, $lock = false)
+ * @method static string getFavicon()
+ * @method static void setFavicon($favicon, $lock = false)
  * @method static string getDescription()
  * @method static void setDescription($value, $lock = false)
  * 
