@@ -601,3 +601,29 @@ if (!function_exists('shortcode_render')) {
         return Shortcode::compile($text);
     }
 }
+if (function_exists('module_active')) {
+    if (!function_exists('module_active')) {
+        function module_active($name)
+        {
+            return Module::find($name)->isActive();
+        }
+    }
+}
+
+if (function_exists('plugin_active')) {
+    if (!function_exists('plugin_active')) {
+        function plugin_active($name)
+        {
+            return Plugin::find($name)->isActive();
+        }
+    }
+}
+
+if (function_exists('theme_active')) {
+    if (!function_exists('theme_active')) {
+        function theme_active($name)
+        {
+            return Theme::find($name)->isActive();
+        }
+    }
+}
