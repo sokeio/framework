@@ -1,8 +1,11 @@
-import { SokeioManager } from "./core/manager";
 import axios from "axios";
 axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 import _ from "lodash";
 window._ = _;
+import "lazysizes";
+// import a plugin
+import "lazysizes/plugins/parent-fit/ls.parent-fit";
+import { SokeioManager } from "./core/manager";
 export class Sokeio extends SokeioManager {
   $config = {};
   $loaded = false;

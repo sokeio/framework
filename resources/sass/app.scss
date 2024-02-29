@@ -113,3 +113,17 @@
         margin-left: 5px;
     }
 }
+.scrollable-nowrap {
+    text-wrap: nowrap;
+    word-wrap: break-word;
+    white-space:nowrap;
+    overflow-wrap: break-word;
+    overflow-x: hidden;
+    /* More presentational CSS */
+}
+
+.scrollable-nowrap:hover,
+.scrollable-nowrap:active,
+.scrollable-nowrap:focus {
+    overflow-x: scroll;
+}
