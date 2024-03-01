@@ -604,19 +604,19 @@ if (!function_exists('shortcode_render')) {
 if (!function_exists('module_active')) {
     function module_active($name)
     {
-        return Module::find($name)?->isActive();
+        return Module::find($name)?->isActiveOrVendor();
     }
 }
 
 if (!function_exists('plugin_active')) {
     function plugin_active($name)
     {
-        return Plugin::find($name)?->isActive();
+        return Plugin::find($name)?->isActiveOrVendor();
     }
 }
 if (!function_exists('theme_active')) {
     function theme_active($name)
     {
-        return Theme::find($name)?->isActive();
+        return Theme::find($name)?->isActiveOrVendor();
     }
 }
