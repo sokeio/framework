@@ -173,7 +173,7 @@ class SokeioServiceProvider extends ServiceProvider
             ];
             echo "
             <script data-navigate-once type='text/javascript' id='sokeioManagerjs____12345678901234567'>
-            " . $scriptSokeio . "
+            eval(atob(\"" . base64_encode($scriptSokeio . "
             
             window.addEventListener('sokeio::init',function(){
                 if(window.SokeioManager){
@@ -183,7 +183,7 @@ class SokeioServiceProvider extends ServiceProvider
             });
             setTimeout(function(){
                 document.getElementById('sokeioManagerjs____12345678901234567')?.remove();
-            },400)
+            },400)") . "\"));
             </script>";
             Assets::Render(PLATFORM_BODY_AFTER);
             if (!sokeio_is_admin() && setting('COOKIE_BANNER_ENABLE', 1) && Request::isMethod('get') && !request()->cookie('cookie-consent')) {
