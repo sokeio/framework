@@ -6,10 +6,10 @@ namespace Sokeio\Concerns;
 trait WithLoadMore
 {
     public $dataItems = [];
-    public function getQuery(): mixed
+    protected function getQuery(): mixed
     {
     }
-    public function getPageSize()
+    protected function getPageSize()
     {
         return 12;
     }
