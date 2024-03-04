@@ -194,6 +194,11 @@ class SokeioServiceProvider extends ServiceProvider
         $this->app->booting(function () {
             app('livewire')->componentHook(SupportFormObjects::class);
         });
+        add_filter(PLATFORM_HOMEPAGE, function ($prev) {
+            Assets::setTitle(setting('PLATFORM_HOMEPAGE_TITLE'));
+            Assets::setDescription(setting('PLATFORM_HOMEPAGE_DESCRIPTION'));
+            return $prev;
+        });
         if (admin_url() != '') {
             Platform::RouteSiteBeforeReady(function () {
                 Route::get('/', route_filter(
