@@ -117,7 +117,7 @@ class ThemeManager extends ActionHook
         }
         $theme_data->DoRegister();
         foreach ($theme_data->getLayouts() as $layout) {
-            $this->data_layouts[] = 'theme::' . $layout;
+            $this->data_layouts[] =  $layout;
         }
         return $theme_data;
     }
@@ -180,6 +180,7 @@ class ThemeManager extends ActionHook
         $this->findAndRegister(apply_filters(PLATFORM_THEME_FILTER_LAYOUT, $this->AdminId(), 1));
         $this->findAndRegister(apply_filters(PLATFORM_THEME_FILTER_LAYOUT, $this->SiteId(), 0));
     }
+    protected $data_active;
     public function ThemeCurrent()
     {
         if (!isset($this->data_active) || !$this->data_active) {
