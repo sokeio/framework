@@ -195,6 +195,14 @@ class SokeioServiceProvider extends ServiceProvider
             app('livewire')->componentHook(SupportFormObjects::class);
         });
         add_filter(PLATFORM_HOMEPAGE, function ($prev) {
+            if (function_exists('SeoHelper')) {
+                SeoHelper()->SEODataTransformer(function ($data) {
+                    $data['title'] = setting('PLATFORM_HOMEPAGE_TITLE');
+                    $data['description'] = setting('PLATFORM_HOMEPAGE_DESCRIPTION');
+                    return $data;
+                });
+            }
+
             Assets::setTitle(setting('PLATFORM_HOMEPAGE_TITLE'));
             Assets::setDescription(setting('PLATFORM_HOMEPAGE_DESCRIPTION'));
             return $prev;
