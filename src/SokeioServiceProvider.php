@@ -77,7 +77,6 @@ class SokeioServiceProvider extends ServiceProvider
     public function packageBooted()
     {
         config(['auth.providers.users.model' => config('sokeio.model.user')]);
-        $this->app->register(ShortcodeserviceProvider::class);
     }
     public function bootingPackage()
     {
@@ -214,6 +213,7 @@ class SokeioServiceProvider extends ServiceProvider
             });
         });
         Platform::Ready(function () {
+            $this->app->register(ShortcodeserviceProvider::class);
             if (Request::isMethod('get')) {
                 if (!Platform::checkFolderPlatform()) {
                     Platform::makeLink();
