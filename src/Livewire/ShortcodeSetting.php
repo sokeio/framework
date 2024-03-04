@@ -40,13 +40,12 @@ class ShortcodeSetting extends FormSettingCallback
             ]),
             UI::Column7([
                 UI::Div(function () {
-                    return $this->getShortCodeHtml();
-                })->ClassName('p-2 border rounded bg-blue text-blue-fg'),
+                    return;
+                })->ClassName('p-2 border rounded bg-blue text-blue-fg')->Attribute('x-html="shortcode"'),
                 UI::Div([
                     UI::Button('Preview')->XClick('doPreview()')->ClassName('mb-2'),
                     UI::Div('')->Attribute('x-html="shortcodeHtml" style="min-height: 200px;max-height: 400px;overflow: auto"'),
                 ])->XData("{
-                    shortcode: '',
                     shortcodeHtml: '',
                     shortcodeWireId: '',
                     async doPreview() {
@@ -59,9 +58,12 @@ class ShortcodeSetting extends FormSettingCallback
                         this.shortcodeWireId = rs['wireId'];
                     }
                 }")->XInit('doPreview()')->ClassName('mt-2 p-2 border rounded bg-dark-lt'),
-            ])->When(function () {
-                return $this->data->shortcode != '';
-            })
+            ])->XData("{
+                shortcode: '" . $this->getShortCodeHtml() . "',
+            }")
+                ->When(function () {
+                    return $this->data->shortcode != '';
+                })
         ]);
     }
     private function getShortCodeHtml()
