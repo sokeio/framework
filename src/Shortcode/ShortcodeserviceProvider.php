@@ -2,6 +2,7 @@
 
 namespace Sokeio\Shortcode;
 
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\ServiceProvider;
 
 class ShortcodeserviceProvider extends ServiceProvider
@@ -22,9 +23,10 @@ class ShortcodeserviceProvider extends ServiceProvider
     public function enableCompiler()
     {
         // Check if the compiler is auto enabled
-        $state = $this->app['config']->get('cms::shortcodes-enabled', true);
+        $state = $this->app['config']->get('sokeio::shortcodes-enabled', true);
         // Enable when needed
-        if ($state && !sokeio_is_admin() && !request()->is('*.xml')) {
+
+        if ($state&&sokeio_is_admin()) {
             $this->app['shortcode']->enable();
         }
     }

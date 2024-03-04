@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Request;
 use Livewire\Livewire;
 use Sokeio\Facades\Menu;
 use Sokeio\Facades\MenuRender;
+use Sokeio\Facades\Shortcode;
 use Sokeio\Icon\IconManager;
 use Sokeio\Livewire\MenuItemLink;
 use Sokeio\Menu\MenuBuilder;
@@ -77,6 +78,7 @@ class SokeioServiceProvider extends ServiceProvider
     public function packageBooted()
     {
         config(['auth.providers.users.model' => config('sokeio.model.user')]);
+        $this->app->register(ShortcodeserviceProvider::class);
     }
     public function bootingPackage()
     {
@@ -212,8 +214,10 @@ class SokeioServiceProvider extends ServiceProvider
                 Platform::DoRouteApiBeforeReady();
             });
         });
+        add_action('SEO_SITEMAP', function () {
+            Shortcode::disable();
+        });
         Platform::Ready(function () {
-            $this->app->register(ShortcodeserviceProvider::class);
             if (Request::isMethod('get')) {
                 if (!Platform::checkFolderPlatform()) {
                     Platform::makeLink();
