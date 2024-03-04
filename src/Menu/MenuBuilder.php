@@ -184,6 +184,7 @@ class MenuBuilder extends HtmlBuilder
                         $menuItem->setValueContentColor($item['color']);
                         $menuItem->setValueLink($item['link']);
                         $menuItem->setValueInfo($item['info']);
+                        $menuItem->setValueClassName($item['class_name']);
 
                     });
                 } else {
@@ -192,6 +193,7 @@ class MenuBuilder extends HtmlBuilder
                         $menuItem->setValueContentData($item['data']);
                         $menuItem->setValueContentColor($item['color']);
                         $menuItem->setValueInfo($item['info']);
+                        $menuItem->setValueClassName($item['class_name']);
                     }); // = new MenuItemBuilder($item, $menu);
                 }
             }

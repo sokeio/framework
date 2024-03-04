@@ -19,6 +19,7 @@ class MenuItemBuilder extends HtmlBuilder
     public const KEY_CONTENT_TYPE = 'KEY_CONTENT_TYPE';
     public const KEY_CONTENT_COLOR = 'KEY_CONTENT_COLOR';
     public const KEY_CONTENT_DATA = 'KEY_CONTENT_DATA';
+    public const KEY_CLASS_NAME = 'KEY_CLASS_NAME';
     public const KEY_TYPE = 'KEY_TYPE';
     public const KEY_TEXT = 'KEY_TEXT';
     public const KEY_INFO = 'KEY_INFO';
@@ -31,7 +32,6 @@ class MenuItemBuilder extends HtmlBuilder
     public const KEY_CALLBACK = 'KEY_CALLBACK';
     public const KEY_BADGE = 'KEY_BADGE';
     public const KEY_PERMISSION = 'KEY_PERMISSION';
-
     protected MenuBuilder $parent;
 
     public function __construct($data = [], MenuBuilder $parent)
@@ -49,6 +49,15 @@ class MenuItemBuilder extends HtmlBuilder
     {
         data_set($this->dataItem, $key, $value, $default);
         return $this;
+    }
+    public function getValueClassName()
+    {
+        return $this->getValue(self::KEY_CLASS_NAME);
+    }
+
+    public function setValueClassName($value, $default = null)
+    {
+        return $this->setValue(self::KEY_CLASS_NAME, $value, $default);
     }
     public function getValueContentData()
     {
