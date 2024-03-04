@@ -44,7 +44,7 @@ class ShortcodeSetting extends FormSettingCallback
                 })->ClassName('p-2 border rounded bg-blue text-blue-fg'),
                 UI::Div([
                     UI::Button('Preview')->XClick('doPreview()')->ClassName('mb-2'),
-                    UI::Div('')->Attribute('x-html="shortcodeHtml"'),
+                    UI::Div('')->Attribute('x-html="shortcodeHtml" style="min-height: 200px;max-height: 400px;overflow: auto"'),
                 ])->XData("{
                     shortcode: '',
                     shortcodeHtml: '',
