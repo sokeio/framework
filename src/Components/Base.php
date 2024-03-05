@@ -38,6 +38,13 @@ class Base extends BaseCallback
         }
         return $this->cacheComponents;
     }
+    private $callbackReady = [];
+    public function Ready($callback)
+    {
+        if (!is_callable($callback)) return $this;
+        $this->callbackReady[] = $callback;
+        return $this;
+    }
     public function boot()
     {
         $this->ClearCache();
@@ -46,6 +53,12 @@ class Base extends BaseCallback
             $component->Prex($this->getPrex());
             $component->boot();
         }
+        foreach ($this->callbackReady as $callback) {
+            if (!is_callable($callback)) continue;
+            $callback($this);
+        }
+        // Reset Callback
+        $this->callbackReady = [];
     }
     protected function __construct($value)
     {
@@ -54,11 +67,12 @@ class Base extends BaseCallback
     {
         return (new static($value));
     }
-    public function actionUI($key, ...$arg)
+    public function actionUI($key, $callbackUI, $over = false): static
     {
-        if (method_exists($this->getManager(), 'addActionUI')) {
-            return $this->getManager()->addActionUI($key, ...$arg);
-        }
+        $this->Ready(function ($component) use ($key, $callbackUI, $over) {
+            $component->getManager()->addActionUI($key, $callbackUI, $over);
+        });
+        return $this;
     }
     public function When($When)
     {

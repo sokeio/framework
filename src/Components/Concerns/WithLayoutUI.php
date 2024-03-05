@@ -27,21 +27,15 @@ trait WithLayoutUI
     private $actionUI = [];
     public function addActionUI($actonKey, $actonFn, $over = false)
     {
-        if (isset($this->actionUI[$actonKey])) {
+        if (!isset($this->actionUI[$actonKey])) {
             $this->actionUI[$actonKey] = $actonFn;
         }
         return $this;
     }
-    /**
-     * Get a new query builder for the model's table.
-     *
-     *
-     * @return \Sokeio\Components\Field\BaseField[]
-     */
-    protected function callActionUI($actonKey, ...$arg)
+    public function callActionUI($actonKey, ...$arg)
     {
         if (isset($this->actionUI[$actonKey])) {
-            return call_user_func($this->actionUI[$actonKey], ...$arg);
+            return call_user_func($this->actionUI[$actonKey], $this, ...$arg);
         }
     }
     private $inputUI = [];
