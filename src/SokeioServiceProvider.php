@@ -102,7 +102,6 @@ class SokeioServiceProvider extends ServiceProvider
         });
         $this->registerMiddlewares();
         Collection::macro('paginate', function ($pageSize) {
-            // @var Collection $this
             return ColectionPaginate::paginate($this, $pageSize);
         });
 

@@ -9,4 +9,12 @@ class PasswordField extends BaseField
     {
         return 'sokeio::components.field.password';
     }
+    public function HideIconShowPassword($HideIconShowPassword = true): static
+    {
+        return $this->setKeyValue('HideIconShowPassword', $HideIconShowPassword);
+    }
+    public function getHideIconShowPassword()
+    {
+        return $this->getValue('HideIconShowPassword', false);
+    }
 }
