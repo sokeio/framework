@@ -24,6 +24,26 @@ trait WithLayoutUI
     {
         breadcrumb()->Title($this->getTitle())->Breadcrumb($this->getBreadcrumb());
     }
+    private $actionUI = [];
+    public function addActionUI($actonKey, $actonFn, $over = false)
+    {
+        if (isset($this->actionUI[$actonKey])) {
+            $this->actionUI[$actonKey] = $actonFn;
+        }
+        return $this;
+    }
+    /**
+     * Get a new query builder for the model's table.
+     *
+     *
+     * @return \Sokeio\Components\Field\BaseField[]
+     */
+    protected function callActionUI($actonKey, ...$arg)
+    {
+        if (isset($this->actionUI[$actonKey])) {
+            return call_user_func($this->actionUI[$actonKey], ...$arg);
+        }
+    }
     private $inputUI = [];
     public function addInputUI($inputUI, $key = 'data')
     {

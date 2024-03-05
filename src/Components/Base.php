@@ -54,6 +54,12 @@ class Base extends BaseCallback
     {
         return (new static($value));
     }
+    public function actionUI($key, ...$arg)
+    {
+        if (method_exists($this->getManager(), 'addActionUI')) {
+            return $this->getManager()->addActionUI($key, ...$arg);
+        }
+    }
     public function When($When)
     {
         return $this->setKeyValue('When', $When);
