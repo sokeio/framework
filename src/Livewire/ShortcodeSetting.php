@@ -2,6 +2,7 @@
 
 namespace Sokeio\Livewire;
 
+use PhpParser\Node\Expr\FuncCall;
 use Sokeio\Facades\Shortcode;
 use Sokeio\Components\FormSettingCallback;
 use Sokeio\Components\UI;
@@ -35,7 +36,9 @@ class ShortcodeSetting extends FormSettingCallback
                     return !!($shortcode);
                 }),
                 UI::Tinymce('children')->Label(__('Content'))->When(function () use ($shortcode) {
-                    return $this->data->shortcode != '' && ($shortcode)::EnableChild();
+                    return !!($shortcode) && ($shortcode)::EnableChild();
+                })->When(function () use ($shortcode) {
+                    return !!($shortcode) && ($shortcode)::EnableChild();
                 }),
             ]),
             UI::Column7([
