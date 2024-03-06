@@ -89,17 +89,7 @@ class SokeioServiceProvider extends ServiceProvider
 
     public function packageRegistered()
     {
-        add_filter('SEO_DATA_DEFAULT', function ($prev) {
-            if (sokeio_is_admin()) {
-                return $prev;
-            }
-            return [
-                ...$prev,
-                'title' => Assets::getTitle() ?? $prev['title'],
-                'description' => Assets::getDescription() ?? $prev['description'],
-                'favicon' => Assets::getFavicon() ?? $prev['favicon']
-            ];
-        });
+
         $this->registerMiddlewares();
         Collection::macro('paginate', function ($pageSize) {
             return ColectionPaginate::paginate($this, $pageSize);
@@ -112,6 +102,14 @@ class SokeioServiceProvider extends ServiceProvider
             echo '<meta http-equiv="X-UA-Compatible" content="ie=edge">';
             echo '<meta name="csrf_token" value="' . csrf_token() . '"/>';
             if (!sokeio_is_admin() && function_exists('seo_header_render')) {
+                add_filter('SEO_DATA_DEFAULT', function ($prev) {
+                    return [
+                        ...$prev,
+                        'title' => Assets::getTitle() ?? $prev['title'],
+                        'description' => Assets::getDescription() ?? $prev['description'],
+                        'favicon' => Assets::getFavicon() ?? $prev['favicon']
+                    ];
+                });
                 echo '<!---SEO:BEGIN--!>';
                 echo seo_header_render();
                 echo '<!---SEO:END--!>';

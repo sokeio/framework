@@ -108,10 +108,10 @@ class PlatformManager
             foreach ($item as $link => $target) {
                 if ($temp = realpath($link))
                     $link = $temp;
-                Log::info("------------------start----------------");
-                Log::info($link);
-                Log::info($target);
-                Log::info("----------------------------------");
+                // Log::info("------------------start----------------");
+                // Log::info($link);
+                // Log::info($target);
+                // Log::info("----------------------------------");
                 if (file_exists($link)) {
                     if (is_link($target)) {
                         app('files')->delete($target);

@@ -15,8 +15,8 @@ use Sokeio\Livewire\PermalinkSetting;
 use Sokeio\Livewire\ShortcodeSetting;
 
 Route::group(['as' => 'admin.'], function () {
-    Route::get('settings/theme-options', ThemeOptionSetting::class)->name('theme-options');
-    Route::get('settings/menu', MenuManager::class)->name('menu');
+    Route::get('settings/theme-options', ThemeOptionSetting::class)->name('extension.theme.option');
+    Route::get('settings/menu', MenuManager::class)->name('extension.theme.menu');
     Route::post('settings/menu-form/{dataId?}', MenuForm::class)->name('menu-form');
     Route::post('settings/menu-item-form/{dataId?}', MenuItemForm::class)->name('menu-item-form');
 

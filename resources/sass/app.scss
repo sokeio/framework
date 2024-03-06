@@ -129,11 +129,19 @@
 .scrollable-nowrap:focus {
     overflow-x: scroll;
 }
+
 @media screen and (max-width: 768px) {
     .row-sm-column-reverse {
         flex-direction: column-reverse;
     }
+
     .row-sm-row-reverse {
         flex-direction: row-reverse;
     }
+}
+
+.hightline-hover:hover {
+    background-color: #ECECFF;
+    border: 1px solid #d8d8fa;
+    box-shadow: 5px 5px 5px #ECECFF;
 }

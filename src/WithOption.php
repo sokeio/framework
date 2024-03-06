@@ -2,7 +2,7 @@
 
 namespace Sokeio;
 
-class PlatformOperation
+trait WithOption
 {
     // Only Theme Site
     public static function SetupOption()
