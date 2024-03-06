@@ -12,7 +12,7 @@ trait WithShortcode
     {
         Shortcode::register(static::class);
     }
-    public static function getName()
+    public static function getTitle()
     {
     }
     public static function getKey()
@@ -24,7 +24,7 @@ trait WithShortcode
     }
     public static function EnableChild()
     {
-        return true;
+        return false;
     }
 
 

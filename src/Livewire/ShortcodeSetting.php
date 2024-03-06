@@ -24,7 +24,7 @@ class ShortcodeSetting extends FormSettingCallback
                         ...collect(Shortcode::getRegistered())->map(function ($item, $key) {
                             return [
                                 'id' => $key,
-                                'name' => ($item)::getName()
+                                'name' => ($item)::getTitle()
                             ];
                         })->toArray()
                     ];
