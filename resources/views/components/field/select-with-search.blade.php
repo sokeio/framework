@@ -34,10 +34,10 @@ getValueText();" class="form-control dropdown" name="field-{{ $modelField }}"
     <a class="nav-link dropdown-toggle w-100" href="#field-{{ $modelField }}" data-bs-toggle="dropdown" role="button"  data-bs-auto-close="outside"
         aria-expanded="false">
         <template x-if="valueText">
-            <span class="nav-link-title" x-text="valueText"></span>
+            <span class="nav-link-title d-inline-block w-100" x-text="valueText"></span>
         </template>
     </a>
-    <div class="dropdown-menu">
+    <div class="dropdown-menu mt-1">
         <div class="p-2">
             <input class="form-control" type="text" placeholder="@lang('Search...')" x-model="searchText" />
         </div>
