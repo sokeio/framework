@@ -2,7 +2,6 @@
 
 namespace Sokeio\Components\Concerns;
 
-use Sokeio\Form;
 
 trait WithFormSetingCallback
 {
@@ -34,5 +33,6 @@ trait WithFormSetingCallback
         $this->eventCallback = request('___setting_callback_event') ?? $this->eventCallback;
         if (!$this->eventCallback)  $this->eventCallback = 'testCallback';
         $this->parentBoot();
+        
     }
 }

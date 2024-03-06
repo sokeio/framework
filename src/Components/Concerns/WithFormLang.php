@@ -2,8 +2,6 @@
 
 namespace Sokeio\Components\Concerns;
 
-use Illuminate\Support\Facades\Log;
-use Livewire\Attributes\Url;
 
 trait WithFormLang
 {

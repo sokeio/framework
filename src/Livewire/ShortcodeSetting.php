@@ -2,7 +2,6 @@
 
 namespace Sokeio\Livewire;
 
-use PhpParser\Node\Expr\FuncCall;
 use Sokeio\Facades\Shortcode;
 use Sokeio\Components\FormSettingCallback;
 use Sokeio\Components\UI;
@@ -12,8 +11,6 @@ class ShortcodeSetting extends FormSettingCallback
     public function SettingUI()
     {
         $shortcode = Shortcode::getItemByKey($this->data->shortcode);
-        // if (!$shortcode) return UI::Div($shortcode . ' shortcode not found');
-        // if (!class_exists($shortcode)) return UI::Div($shortcode);
         return UI::Row([
             UI::Column([
                 UI::Select('shortcode')->Label(__('Shortcode'))->DataSource(function () {
@@ -30,11 +27,14 @@ class ShortcodeSetting extends FormSettingCallback
                         })->toArray()
                     ];
                 })->WireLive(),
-                UI::Prex('data.attrs', function () use ($shortcode) {
-                    return (!!$shortcode) ? ($shortcode)::getParamUI() : [];
-                })->When(function () use ($shortcode) {
-                    return !!($shortcode);
-                }),
+                UI::Div([
+                    UI::Prex('data.attrs', function () use ($shortcode) {
+                        return (!!$shortcode) ? ($shortcode)::getParamUI() : [];
+                    })->When(function () use ($shortcode) {
+                        return !!($shortcode);
+                    }),
+                ])->Attribute(' wire:key="shortcode-' . $this->data->shortcode . '" '),
+
                 UI::Tinymce('children')->Label(__('Content'))->When(function () use ($shortcode) {
                     return !!($shortcode) && ($shortcode)::EnableChild();
                 })->When(function () use ($shortcode) {
@@ -50,24 +50,23 @@ class ShortcodeSetting extends FormSettingCallback
                 ])->ClassName('d-flex'),
                 UI::Div([
                     UI::Div('')->Attribute('x-html="shortcodeHtml" style="min-height: 200px;max-height: 400px;overflow: auto"'),
-                ])->XData("{
-                    shortcodeHtml: '',
-                    shortcodeWireId: '',
-                    async doPreview() {
-                        let rs = await this.\$wire.doPreview();
-                        if (this.shortcodeWireId != '') {
-                            Livewire.find(this.shortcodeWireId)?.__instance?.cleanup();
-                        }
-                        this.shortcode = rs['shortcode'];
-                        this.shortcodeHtml = rs['shortcodeHtml'];
-                        this.shortcodeWireId = rs['wireId'];
-                    }
-                }")->XInit('doPreview()')->ClassName('mt-2 p-2 border rounded bg-dark-lt position-relative'),
+                ])->ClassName('mt-2 p-2 border rounded bg-dark-lt position-relative'),
             ])->XData("{
                 shortcode: '" . $this->getShortCodeHtml() . "',
-            }")
-                ->When(function () {
-                    return $this->data->shortcode != '';
+                shortcodeHtml: '',
+                shortcodeWireId: '',
+                async doPreview() {
+                    let rs = await this.\$wire.doPreview();
+                    if (this.shortcodeWireId != '') {
+                        Livewire.find(this.shortcodeWireId)?.__instance?.cleanup();
+                    }
+                    this.shortcode = rs['shortcode'];
+                    this.shortcodeHtml = rs['shortcodeHtml'];
+                    this.shortcodeWireId = rs['wireId'];
+                }
+            }")->XInit('doPreview()')
+                ->When(function () use ($shortcode) {
+                    return !!($shortcode);
                 })
         ]);
     }
@@ -123,4 +122,15 @@ class ShortcodeSetting extends FormSettingCallback
         $this->closeComponent();
         return $this->getShortCodeHtml();
     }
+    // protected function initLayout()
+    // {
+    //     parent::initLayout();
+    //     $this->loadDefault();
+    // }
+
+    // public function rendering()
+    // {
+    //     $this->loadDefault();
+    //     parent::rendering();
+    // }
 }

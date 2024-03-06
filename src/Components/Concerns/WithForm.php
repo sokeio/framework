@@ -53,6 +53,10 @@ trait WithForm
                 call_user_func([$this, 'loadDataAfter'], $data);
             }
         }
+        $this->loadDefault();
+    }
+    protected function loadDefault()
+    {
         //set default value
         foreach ($this->getAllInputUI() as $column) {
             if (data_get($this, $column->getFormFieldEncode()) === null && $column->getValueDefault() != null) {

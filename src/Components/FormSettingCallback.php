@@ -23,6 +23,7 @@ class FormSettingCallback extends Component
     }
     public function loadData()
     {
+        $this->loadDefault();
     }
     public function doSave()
     {
