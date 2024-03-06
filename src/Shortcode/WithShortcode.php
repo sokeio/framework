@@ -8,21 +8,21 @@ use Sokeio\Laravel\WithCallback;
 trait WithShortcode
 {
     use WithCallback;
-    public static function RegisterShortcode()
+    public static function Register()
     {
         Shortcode::register(static::class);
     }
-    public static function getShortcodeName()
+    public static function getName()
     {
     }
-    public static function getShortcodeKey()
+    public static function getKey()
     {
     }
-    public static function getShortcodeParamUI()
+    public static function getParamUI()
     {
         return [];
     }
-    public static function EnableContent()
+    public static function EnableChild()
     {
         return true;
     }

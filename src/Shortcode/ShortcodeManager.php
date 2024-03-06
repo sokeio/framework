@@ -360,7 +360,7 @@ class ShortcodeManager
      *
      * @return string
      */
-    protected function getShortcodeNames()
+    protected function getNames()
     {
         return join('|', array_map('preg_quote', array_keys($this->registered)));
     }
@@ -373,7 +373,7 @@ class ShortcodeManager
      */
     protected function getRegex()
     {
-        $shortcodeNames = $this->getShortcodeNames();
+        $shortcodeNames = $this->getNames();
 
         return "\\[(\\[?)($shortcodeNames)(?![\\w-])([^\\]\\/]*(?:\\/(?!\\])[^\\]\\/]*)*?)(?:(\\/)\\]|\\](?:([^\\[]*+(?:\\[(?!\\/\\2\\])[^\\[]*+)*+)\\[\\/\\2\\])?)(\\]?)";
     }
@@ -443,9 +443,9 @@ class ShortcodeManager
     }
     public function register($shortocde)
     {
-        $this->registered[($shortocde)::getShortcodeKey()] = $shortocde;
+        $this->registered[($shortocde)::getKey()] = $shortocde;
         if (is_a($shortocde, Component::class, true)) {
-            Livewire::component('shortcode::' . ($shortocde)::getShortcodeKey(), $shortocde);
+            Livewire::component('shortcode::' . ($shortocde)::getKey(), $shortocde);
         }
     }
 }
