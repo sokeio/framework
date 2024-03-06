@@ -39,11 +39,13 @@ class ShortcodeSetting extends FormSettingCallback
                 }),
             ]),
             UI::Column7([
-                UI::Div(function () {
-                    return;
-                })->ClassName('p-2 border rounded bg-blue text-blue-fg')->Attribute('x-html="shortcode"'),
                 UI::Div([
-                    UI::Button('Preview')->XClick('doPreview()')->ClassName('mb-2'),
+                    UI::Div(function () {
+                        return;
+                    })->ClassName('p-2 border rounded bg-blue text-blue-fg align-self-stretch me-2 w-100')->Attribute('x-html="shortcode"'),
+                    UI::Button('Preview')->Warning()->XClick('doPreview()')
+                ])->ClassName('d-flex'),
+                UI::Div([
                     UI::Div('')->Attribute('x-html="shortcodeHtml" style="min-height: 200px;max-height: 400px;overflow: auto"'),
                 ])->XData("{
                     shortcodeHtml: '',
@@ -57,7 +59,7 @@ class ShortcodeSetting extends FormSettingCallback
                         this.shortcodeHtml = rs['shortcodeHtml'];
                         this.shortcodeWireId = rs['wireId'];
                     }
-                }")->XInit('doPreview()')->ClassName('mt-2 p-2 border rounded bg-dark-lt'),
+                }")->XInit('doPreview()')->ClassName('mt-2 p-2 border rounded bg-dark-lt position-relative'),
             ])->XData("{
                 shortcode: '" . $this->getShortCodeHtml() . "',
             }")

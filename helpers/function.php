@@ -587,6 +587,8 @@ if (!function_exists('column_size')) {
                 return "col-xs-12 col-sm-12 col-md-12 col-lg-11";
             case "col12":
                 return "col-xs-12 col-sm-12 col-md-12 col-lg-12";
+            case "auto":
+                return "col-auto";
             default:
                 return "col";
         }
