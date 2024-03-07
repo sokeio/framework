@@ -13,8 +13,8 @@ use Sokeio\Facades\Theme;
 
 class MenuManager extends Component
 {
-    public $menu_locations = [];
-    public $menu_lists = [];
+    public $menuLocations = [];
+    public $menuLists = [];
     #[Url]
     public $locationId = 0;
     public function updated($propertyName, $newValue)
@@ -22,13 +22,13 @@ class MenuManager extends Component
         if ($propertyName === 'locationId') {
             $this->loadMenu($newValue);
         }
-        if (str_starts_with($propertyName, 'menu_locations.')) {
+        if (str_starts_with($propertyName, 'menuLocations.')) {
             if (!$this->locationId) {
                 $this->showMessage('Please select menu');
                 return false;
             }
             $location = MenuLocation::find($this->locationId);
-            $location->locations = array_keys(array_filter($this->menu_locations, function ($item) {
+            $location->locations = array_keys(array_filter($this->menuLocations, function ($item) {
                 return $item;
             }));
             $location->save();
@@ -42,16 +42,16 @@ class MenuManager extends Component
     {
         $this->locationId = $locationId;
         $location = MenuLocation::find($locationId);
-        $this->menu_locations = [];
-        $this->menu_lists = [];
+        $this->menuLocations = [];
+        $this->menuLists = [];
         if ($location) {
             $temp_locations = $location->locations;
             if ($temp_locations) {
                 foreach ($temp_locations  as $item) {
-                    $this->menu_locations[$item] = true;
+                    $this->menuLocations[$item] = true;
                 }
             }
-            $this->menu_lists = Menu::where('menu_location_id', $this->locationId)->get()->toArray();
+            $this->menuLists = Menu::where('menu_location_id', $this->locationId)->get()->toArray();
         }
     }
     protected function getBreadcrumb()
@@ -75,11 +75,13 @@ class MenuManager extends Component
         foreach ($items as $item) {
             $value = $item['value'];
             $order = $item['order'];
-            if (!isset($data_list[$value]))
+            if (!isset($data_list[$value])) {
                 $data_list[$value] = [
                     'order' => $order,
                     'parent_id' => $parent_id
                 ];
+            }
+
             if (isset($item['items']) && count($item['items']) > 0) {
                 $_items = $item['items'];
                 $data_list = $this->updateSortMenu($data_list, $_items, $value);
@@ -89,13 +91,13 @@ class MenuManager extends Component
     }
     public function doUpdateSortMenu($items)
     {
-        $menu_lists2 = $this->updateSortMenu([], $items, 0);
+        $menuLists2 = $this->updateSortMenu([], $items, 0);
         $data_list = [];
-        foreach ($this->menu_lists as $item) {
-            if (isset($menu_lists2[$item['id']])) {
+        foreach ($this->menuLists as $item) {
+            if (isset($menuLists2[$item['id']])) {
                 $data_list[] = [
                     ...$item,
-                    ...$menu_lists2[$item['id']]
+                    ...$menuLists2[$item['id']]
                 ];
             } else {
                 $data_list[] = [
@@ -103,25 +105,23 @@ class MenuManager extends Component
                 ];
             }
         }
-        $this->menu_lists = $data_list;
-        foreach ($this->menu_lists as $item) {
+        $this->menuLists = $data_list;
+        foreach ($this->menuLists as $item) {
             Menu::where('id', $item['id'])->update([
                 'parent_id' => $item['parent_id'],
                 'order' => $item['order']
             ]);
         }
-        // $this->showMessage(json_encode($this->menu_lists));
-        // $this->skipRender();
     }
     public function removeMenu($id)
     {
-        $this->menu_lists = collect($this->menu_lists)->where(function ($item) use ($id) {
+        $this->menuLists = collect($this->menuLists)->where(function ($item) use ($id) {
             return $item['id'] != $id;
         })->toArray();
     }
     public function doDeleteMenu()
     {
-        $this->menu_lists = [];
+        $this->menuLists = [];
         DB::transaction(function () {
             Menu::where('menu_location_id', $this->locationId)->delete();
             MenuLocation::where('id', $this->locationId)->delete();
@@ -144,7 +144,7 @@ class MenuManager extends Component
         }
         $menuItem->order = 0;
         $menuItem->save();
-        $this->menu_lists[] = [
+        $this->menuLists[] = [
             'id' => $menuItem->id,
             'parent_id' => 0,
             'order' => 0,

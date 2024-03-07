@@ -11,9 +11,10 @@ class ShortcodeSetting extends FormSettingCallback
     public function SettingUI()
     {
         $shortcode = Shortcode::getItemByKey($this->data->shortcode);
-        return UI::Row([
-            UI::Column([
-                UI::Select('shortcode')->Label(__('Shortcode'))->DataSource(function () {
+        $checkShort = $shortcode != null;
+        return UI::row([
+            UI::column([
+                UI::select('shortcode')->label(__('Shortcode'))->dataSource(function () {
                     return [
                         [
                             'id' => '',
@@ -26,32 +27,35 @@ class ShortcodeSetting extends FormSettingCallback
                             ];
                         })->toArray()
                     ];
-                })->WireLive(),
+                })->wireLive(),
                 UI::Div([
-                    UI::Prex('data.attrs', function () use ($shortcode) {
-                        return (!!$shortcode) ? ($shortcode)::getParamUI() : [];
-                    })->When(function () use ($shortcode) {
-                        return !!($shortcode);
+                    UI::prex('data.attrs', function () use ($checkShort, $shortcode) {
+                        return  $checkShort ? ($shortcode)::getParamUI() : [];
+                    })->When(function () use ($checkShort) {
+                        return  $checkShort;
                     }),
-                ])->Attribute(' wire:key="shortcode-' . $this->data->shortcode . '" '),
+                ])->attribute(' wire:key="shortcode-' . $this->data->shortcode . '" '),
 
-                UI::Tinymce('children')->Label(__('Content'))->When(function () use ($shortcode) {
-                    return !!($shortcode) && ($shortcode)::EnableChild();
-                })->When(function () use ($shortcode) {
-                    return !!($shortcode) && ($shortcode)::EnableChild();
+                UI::tinymce('children')->label(__('Content'))->When(function () use ($shortcode, $checkShort) {
+                    return  $checkShort && ($shortcode)::EnableChild();
+                })->When(function () use ($shortcode, $checkShort) {
+                    return  $checkShort && ($shortcode)::EnableChild();
                 }),
             ]),
-            UI::Column7([
+            UI::column7([
                 UI::Div([
-                    UI::Div(function () {
-                        return;
-                    })->ClassName('p-2 border rounded bg-blue text-blue-fg align-self-stretch me-2 w-100')->Attribute('x-html="shortcode"'),
-                    UI::Button('Preview')->Warning()->XClick('doPreview()')
-                ])->ClassName('d-flex'),
+                    UI::Div("")
+                        ->className('p-2 border rounded bg-blue text-blue-fg align-self-stretch me-2 w-100')
+                        ->attribute('x-html="shortcode"'),
+                    UI::button('Preview')->warning()->xClick('doPreview()')
+                ])->className('d-flex'),
                 UI::Div([
-                    UI::Div('')->Attribute('x-html="shortcodeHtml" style="min-height: 200px;max-height: 400px;overflow: auto"'),
-                ])->ClassName('mt-2 p-2 border rounded bg-dark-lt position-relative'),
-            ])->XData("{
+                    UI::Div('')->attribute('
+                    x-html="shortcodeHtml"
+                     style="min-height: 200px;max-height: 400px;overflow: auto"
+                     '),
+                ])->className('mt-2 p-2 border rounded bg-dark-lt position-relative'),
+            ])->xData("{
                 shortcode: '" . $this->getShortCodeHtml() . "',
                 shortcodeHtml: '',
                 shortcodeWireId: '',
@@ -64,19 +68,23 @@ class ShortcodeSetting extends FormSettingCallback
                     this.shortcodeHtml = rs['shortcodeHtml'];
                     this.shortcodeWireId = rs['wireId'];
                 }
-            }")->XInit('doPreview()')
-                ->When(function () use ($shortcode) {
-                    return !!($shortcode);
+            }")->xInit('doPreview()')
+                ->When(function () use ($checkShort) {
+                    return $checkShort;
                 })
         ]);
     }
     private function getShortCodeHtml()
     {
-        if ($this->data->shortcode == '') return '';
+        if ($this->data->shortcode == '') {
+            return '';
+        }
         $html = '[' . $this->data->shortcode;
         if ($items = $this->getAllInputUI()) {
             foreach ($items as $item) {
-                if (in_array($item->getName(), ['shortcode', 'children'])) continue;
+                if (in_array($item->getName(), ['shortcode', 'children'])) {
+                    continue;
+                }
                 $value = data_get($this, $item->getFormFieldEncode(), $item->getValueDefault());
                 if ($value) {
                     $html .= ' ' . $item->getName() . '="' . $value . '"';
@@ -84,7 +92,7 @@ class ShortcodeSetting extends FormSettingCallback
             }
         }
         if ($this->data->children) {
-            $html .= ']' . $this->Base64Encode($this->data->children) . '[/' . $this->data->shortcode . ']';
+            $html .= ']' . $this->base64Encode($this->data->children) . '[/' . $this->data->shortcode . ']';
         } else {
 
             $html .= '/]';
@@ -103,7 +111,7 @@ class ShortcodeSetting extends FormSettingCallback
         $shortcode = $this->getShortCodeHtml();
 
         Shortcode::enable();
-        $shortcodeHtml = shortcode_render($shortcode);
+        $shortcodeHtml = shortcodeRender($shortcode);
         $pattern = '/wire:id="([^"]+)"/';
         $wireId = '';
         if (preg_match($pattern, $shortcodeHtml, $matches)) {
@@ -117,20 +125,10 @@ class ShortcodeSetting extends FormSettingCallback
     }
     public function doSave()
     {
-        if ($this->doValidate())
+        if ($this->doValidate()) {
             $this->skipRender();
+        }
         $this->closeComponent();
         return $this->getShortCodeHtml();
     }
-    // protected function initLayout()
-    // {
-    //     parent::initLayout();
-    //     $this->loadDefault();
-    // }
-
-    // public function rendering()
-    // {
-    //     $this->loadDefault();
-    //     parent::rendering();
-    // }
 }

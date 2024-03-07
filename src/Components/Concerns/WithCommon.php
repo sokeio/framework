@@ -16,65 +16,65 @@ use Sokeio\Components\Common\Template;
 
 trait WithCommon
 {
-    public static function Tab()
+    public static function tab()
     {
         return Tab::make('');
     }
-    public static function Card($value)
+    public static function card($value)
     {
         return Card::make($value);
     }
-    public static function Div($value)
+    public static function div($value)
     {
         return Div::make($value);
     }
-    public static function ForEach($arrayData, $value)
+    public static function forEach($arrayData, $value)
     {
-        return Each::make($value)->ArrayData($arrayData);
+        return Each::make($value)->arrayData($arrayData);
     }
-    public static function Container($value)
+    public static function container($value)
     {
         return Container::make($value);
     }
-    public static function Prex($prex, $value)
+    public static function prex($prex, $value)
     {
-        return Container::make($value)->Prex($prex);
+        return Container::make($value)->prex($prex);
     }
-    public static function Button($value)
+    public static function button($value)
     {
-        return Button::Make($value);
+        return Button::make($value);
     }
-    public static function ButtonCreate($value)
+    public static function buttonCreate($value)
     {
-        return Button::Make($value)->Green();
+        return Button::make($value)->green();
     }
-    public static function ButtonEdit($value)
+    public static function buttonEdit($value)
     {
-        return Button::Make($value)->Secondary();
+        return Button::make($value)->secondary();
     }
-    public static function ButtonRemove($value)
+    public static function buttonRemove($value)
     {
-        return Button::Make($value)->Warning();
+        return Button::make($value)->warning();
     }
-    public static function ButtonList($value)
+    public static function buttonList($value)
     {
-        return ButtonList::Make($value);
+        return ButtonList::make($value);
     }
-    public static function ButtonGroup($value)
+    public static function buttonGroup($value)
     {
-        return ButtonGroup::Make($value);
+        return ButtonGroup::make($value);
     }
-    public static function Livewire($value, $params = null)
+    public static function livewire($value, $params = null)
     {
-        return Livewire::Make($value)->Params($params);
+        return Livewire::make($value)->params($params);
     }
 
-    public static function Error($value)
+    public static function error($value)
     {
-        return Error::Make($value);
+        return Error::make($value);
     }
-    public static function Template($value)
+    public static function template($value)
     {
-        return Template::Make($value);
+        return Template::make($value);
     }
 }

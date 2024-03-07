@@ -3,7 +3,6 @@
 namespace Sokeio\Concerns;
 
 use Illuminate\Support\Str;
-use Sokeio\Facades\Action;
 use Sokeio\Laravel\WithServiceProvider as WithServiceProviderBase;
 use Sokeio\Facades\Assets;
 use Sokeio\Facades\Platform;
@@ -18,15 +17,13 @@ trait WithServiceProvider
         register as protected registerBase;
         boot as protected bootBase;
     }
-    public $base_type = '';
-    public  $data_info;
-    public function configurePackaged()
-    {
-    }
+    public $baseType = '';
+    public  $dataInfo;
     protected function registerModels(array $models): void
     {
         foreach ($models as $service => $class) {
-            $this->app->singletonIf($service, $model = $this->app['config'][Str::replaceLast('.', '.models.', $service)]);
+            $model = $this->app['config'][Str::replaceLast('.', '.models.', $service)];
+            $this->app->singletonIf($service, $model);
             $model === $class || $this->app->alias($service, $class);
             $this->app->singletonIf($model, $model);
         }
@@ -38,20 +35,12 @@ trait WithServiceProvider
 
         $this->packageRegistered();
         if ($info = Platform::getDataInfo($this->package->basePath('/../'))) {
-            $this->base_type = $info['base_type'];
-            $this->data_info = $info['data_info'];
+            $this->baseType = $info['baseType'];
+            $this->dataInfo = $info['dataInfo'];
         }
 
-        if ($this->base_type != 'theme') {
-            if ($actionTypes = config($this->package->shortName() . '.actions')) {
-                if (is_array($actionTypes) && count($actionTypes) > 0) {
-                    Action::Register($actionTypes, $this->package->shortName());
-                }
-            }
-        } else {
-            if ($this->base_type == 'theme') {
-                $this->package->name('theme');
-            }
+        if ($this->baseType == 'theme') {
+            $this->package->name('theme');
         }
 
         return $this;
@@ -61,18 +50,21 @@ trait WithServiceProvider
     public function boot()
     {
 
-        if ($this->base_type == 'module') {
+        if ($this->baseType == 'module') {
             Theme::Load($this->package->basePath('/../themes/'));
             Plugin::Load($this->package->basePath('/../plugins/'));
         }
-        if ($this->base_type != 'theme')
+        if ($this->baseType != 'theme') {
             RouteEx::Load($this->package->basePath('/../routes/'));
+        }
 
-        if ($this->base_type && $this->data_info) {
-            Assets::AssetType($this->data_info['name'], $this->base_type);
+        if ($this->baseType && $this->dataInfo) {
+            Assets::AssetType($this->dataInfo['name'], $this->baseType);
         }
         $this->bootBase();
-        LivewireLoader::Register($this->package->basePath('/Livewire'), $this->getNamespaceName() . '\\Livewire', $this->package->shortName() . '::');
+        $namespace = $this->getNamespaceName() . '\\Livewire';
+        $shortname = $this->package->shortName() . '::';
+        LivewireLoader::Register($this->package->basePath('/Livewire'), $namespace, $shortname);
 
         $this->packageBooted();
 

@@ -10,7 +10,7 @@ trait WithFormSetingCallback
     }
 
     public $eventCallback = '';
-    protected function KeyBase64Settings()
+    protected function keyBase64Settings()
     {
         return [];
     }
@@ -23,16 +23,17 @@ trait WithFormSetingCallback
         $form = request('___setting_data');
         if ($form) {
             foreach ($form as $key => $value) {
-                if (in_array($key, $this->KeyBase64Settings())) {
-                    $this->data->{$key} = $this->Base64Decode($value);
+                if (in_array($key, $this->keyBase64Settings())) {
+                    $this->data->{$key} = $this->base64Decode($value);
                 } else {
                     $this->data->{$key} = $value;
                 }
             }
         }
         $this->eventCallback = request('___setting_callback_event') ?? $this->eventCallback;
-        if (!$this->eventCallback)  $this->eventCallback = 'testCallback';
+        if (!$this->eventCallback) {
+            $this->eventCallback = 'testCallback';
+        }
         $this->parentBoot();
-        
     }
 }

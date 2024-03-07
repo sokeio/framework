@@ -13,12 +13,9 @@ class Authenticate extends Middleware
         $response = parent::handle($request, $next, ...$guards);
         // Like: users.index
         $route = $request->route()->getName();
-        //skip with prexfix '_'
-        if (!Str::startsWith($route, '_')) {
-            // Hasn't permission
-            if (!checkPermission($route)) {
-                return abort(403);
-            }
+        //skip with prexfix '_' and  Hasn't permission
+        if (!Str::startsWith($route, '_') && !checkPermission($route)) {
+            return abort(403);
         }
 
         return $response;
@@ -32,10 +29,14 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         if (!$request->expectsJson()) {
-            if (sokeio_is_admin()) {
-                return (apply_filters(SOKEIO_URL_LOGIN, route('admin.login', ['ref' => urlencode($request->url())])));
+            if (sokeioIsAdmin()) {
+                return apply_filters(SOKEIO_URL_LOGIN, route('admin.login', [
+                    'ref' => urlencode($request->url())
+                ]));
             } else {
-                return (apply_filters(SOKEIO_URL_LOGIN, route('auth.login', ['ref' => urlencode($request->url())])));
+                return apply_filters(SOKEIO_URL_LOGIN, route('site.login', [
+                    'ref' => urlencode($request->url())
+                ]));
             }
         }
     }

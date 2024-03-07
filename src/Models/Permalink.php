@@ -48,7 +48,9 @@ class Permalink extends \Sokeio\Model
     public function saveCache()
     {
         $values = Cache::get(self::KEY_CACHE, []);
-        if (!isset($values[$this->key])) $values[$this->key] = [];
+        if (!isset($values[$this->key])) {
+            $values[$this->key] = [];
+        }
         $values[$this->key] = [
             ...collect($values[$this->key])->where(function ($item) {
                 return $item['key'] != $this->key;

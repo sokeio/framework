@@ -8,30 +8,29 @@ class BaseCommon extends Base
 {
     protected function __construct($value)
     {
-        $this->Content($value);
+        $this->content($value);
     }
     protected function ChildComponents()
     {
         return $this->getContent();
     }
-    public function Content($Content)
+    public function content($content)
     {
-        if ($Content && is_a($Content, Base::class)) {
-            $Content = [$Content];
+        if ($content && is_a($content, Base::class)) {
+            $content = [$content];
         }
-        return $this->setKeyValue('Content', $Content);
+        return $this->setKeyValue('content', $content);
     }
     public function getContent()
     {
-        return $this->getValue('Content');
+        return $this->getValue('content');
     }
-    public function AttributeBox($AttributeBox)
+    public function attributeBox($attributeBox)
     {
-        return $this->setKeyValue('AttributeBox', $AttributeBox);
+        return $this->setKeyValue('attributeBox', $attributeBox);
     }
     public function getAttributeBox()
     {
-        return $this->getValue('AttributeBox');
+        return $this->getValue('attributeBox');
     }
-    
 }

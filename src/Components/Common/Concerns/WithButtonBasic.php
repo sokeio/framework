@@ -5,66 +5,51 @@ namespace Sokeio\Components\Common\Concerns;
 
 trait WithButtonBasic
 {
-    public function Icon($Icon = true): static
+    use WithTitle, WithName;
+    public function icon($icon = true): static
     {
-        return $this->setKeyValue('Icon', $Icon);
+        return $this->setKeyValue('icon', $icon);
     }
     public function getIcon()
     {
-        return $this->getValue('Icon');
+        return $this->getValue('icon');
     }
-    public function ButtonLink($ButtonLink = true): static
+    public function buttonLink($buttonLink = true): static
     {
-        return $this->setKeyValue('ButtonLink', $ButtonLink);
+        return $this->setKeyValue('buttonLink', $buttonLink);
     }
     public function getButtonLink()
     {
-        return $this->getValue('ButtonLink', false);
+        return $this->getValue('buttonLink', false);
     }
-    public function Title($Title)
+    public function link($link): static
     {
-        return $this->setKeyValue('Title', $Title);
-    }
-    public function getTitle()
-    {
-        return $this->getValue('Title');
-    }
-    public function Name($Name): static
-    {
-        return $this->setKeyValue('Name', $Name);
-    }
-    public function getName()
-    {
-        return $this->getValue('Name');
-    }
-    public function Link($Link): static
-    {
-        return $this->setKeyValue('Link', $Link);
+        return $this->setKeyValue('link', $link);
     }
     public function getLink()
     {
-        return $this->getValue('Link');
+        return $this->getValue('link');
     }
-    public function ButtonSize($ButtonSize): static
+    public function buttonSize($buttonSize): static
     {
-        return $this->setKeyValue('ButtonSize', $ButtonSize);
+        return $this->setKeyValue('buttonSize', $buttonSize);
     }
     public function getButtonSize()
     {
-        return $this->getValue('ButtonSize');
+        return $this->getValue('buttonSize');
     }
-    public function Large(): static
+    public function large(): static
     {
-        return $this->ButtonSize('large');
+        return $this->buttonSize('large');
     }
-    public function Small(): static
+    public function small(): static
     {
-        return $this->ButtonSize('sm');
+        return $this->buttonSize('sm');
     }
 
-    public function Route($name, $paramOrcallback = [])
+    public function route($name, $paramOrcallback = [])
     {
-        return $this->Link(function ($item, $manager) use ($name, $paramOrcallback) {
+        return $this->link(function ($item, $manager) use ($name, $paramOrcallback) {
             if ($paramOrcallback && is_callable($paramOrcallback)) {
                 $paramOrcallback = call_user_func($paramOrcallback, $item->getDataItem(), $item, $manager);
             }
@@ -73,7 +58,9 @@ trait WithButtonBasic
     }
     public function getClassButton()
     {
-        if ($this->getButtonLink()) return '';
+        if ($this->getButtonLink()) {
+            return '';
+        }
         $classButton = 'btn';
         if ($buttonColor = $this->getButtonColor()) {
             $classButton = $classButton . ' btn' . $buttonColor;

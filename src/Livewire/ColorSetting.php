@@ -61,25 +61,29 @@ class ColorSetting extends FormSettingCallback
     {
         return UI::Div([
             UI::Div(
-                // UI::Div('
-                //     <div x-text="$wire.data.SettingValueField"></div>
-                // ')->Attribute('x-show="$wire.data.SettingValueField" class="" :class="$wire.data.SettingValueField"')->ClassName('p-1 m-1 border rounded cursor-pointer'),
                 UI::Div('
             <template x-for="item in items">
                 <div class="p-1 m-1 border rounded cursor-pointer"  x-data="{ hover: false }"
                 @mouseenter="hover = true"
-                @mouseleave="hover = false"  @click="$wire.data.SettingValueField  = item"  :class="hover || $wire.data.SettingValueField  === item? \'bg-azure\' : \'\'" >
+                @mouseleave="hover = false"
+                @click="$wire.data.SettingValueField  = item"
+                :class="hover || $wire.data.SettingValueField  === item? \'bg-azure\' : \'\'" >
                     <div class="p-3" :class="item" :title="item">Sokeio</div>
                 </div>
             </template>
-        ')->ClassName('d-flex flex-wrap')
-                    ->Attribute('
+        ')->className('d-flex flex-wrap')
+                    ->attribute('
         x-data="{
-            items: ' . sokeio_js($this->getColorList())  . ',   
+            items: ' . sokeioJS($this->getColorList())  . ',
         }"
         ')
-            )->Attribute(' style="height: 500px; overflow-y: scroll;" '),
-            UI::Div('')->Attribute('x-text="$wire.data.SettingValueField" x-show="$wire.data.SettingValueField"  :class="$wire.data.SettingValueField"')->ClassName('p-2 m-1 mt-4 border rounded'),
+            )->attribute(' style="height: 500px; overflow-y: scroll;" '),
+            UI::Div('')->attribute('
+                    x-text="$wire.data.SettingValueField"
+                    x-show="$wire.data.SettingValueField"
+                    :class="$wire.data.SettingValueField"
+              ')
+                ->className('p-2 m-1 mt-4 border rounded'),
         ]);
     }
 }

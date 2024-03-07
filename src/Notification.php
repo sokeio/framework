@@ -11,54 +11,54 @@ class Notification
 {
     private $title;
     private $description;
-    private $to_role;
-    private $to_user;
+    private $toRole;
+    private $toUser;
     private $type;
     private $view;
-    private $meta_data;
-    private $from_user;
-    public static function Make()
+    private $metaData;
+    private $fromUser;
+    public static function make()
     {
         return new static();
     }
-    public function Title($title)
+    public function title($title)
     {
         $this->title = $title;
         return $this;
     }
-    public function Description($description)
+    public function description($description)
     {
         $this->description = $description;
         return $this;
     }
-    public function ToRole($to_role)
+    public function toRole($toRole)
     {
-        $this->to_role = $to_role;
+        $this->toRole = $toRole;
         return $this;
     }
-    public function ToUser($to_user)
+    public function toUser($toUser)
     {
-        $this->to_user = $to_user;
+        $this->toUser = $toUser;
         return $this;
     }
-    public function Type($type)
+    public function type($type)
     {
         $this->type = $type;
         return $this;
     }
-    public function View($view)
+    public function view($view)
     {
         $this->view = $view;
         return $this;
     }
-    public function FromUser($from_user)
+    public function fromUser($fromUser)
     {
-        $this->from_user = $from_user;
+        $this->fromUser = $fromUser;
         return $this;
     }
-    public function MetaData($meta_data)
+    public function metaData($metaData)
     {
-        $this->meta_data = $meta_data;
+        $this->metaData = $metaData;
         return $this;
     }
     public function send()
@@ -66,9 +66,9 @@ class Notification
         $noti = new NotificationModel();
         $noti->title = $this->title;
         $noti->description = $this->description;
-        $noti->meta_data = $this->meta_data;
-        $noti->to_user = $this->to_user;
-        $noti->to_role = $this->to_role;
+        $noti->meta_data = $this->metaData;
+        $noti->to_user = $this->toUser;
+        $noti->to_role = $this->toRole;
         $noti->view = $this->view;
         $noti->type = $this->type;
         $noti->from_user = $this->getUserId();
@@ -78,7 +78,7 @@ class Notification
     }
     public function getUserId()
     {
-        return $this->from_user ?? (auth()->check() ? auth()->user()->id : -1);
+        return $this->fromUser ?? (auth()->check() ? auth()->user()->id : -1);
     }
     public function tickReadAll()
     {
@@ -121,8 +121,9 @@ class Notification
         }
         return $query->latest()->paginate($pageSize, ['*'], 'page', $page);
     }
-    public function Render($page, $type)
+    public function render($page, $type)
     {
-        return view('sokeio::notifications.body', ['notifications' => $this->getNoticationAll($this->getUserId(), $page, 15, $type)])->render();
+        $notifications = $this->getNoticationAll($this->getUserId(), $page, 15, $type);
+        return view('sokeio::notifications.body', ['notifications' =>  $notifications])->render();
     }
 }

@@ -4,12 +4,12 @@ namespace Sokeio\Components\Field\Concerns;
 
 trait WithFieldOption
 {
-    public function FieldOption($FieldOption): static
+    public function fieldOption($fieldOption): static
     {
-        return $this->setKeyValue('FieldOption', $FieldOption);
+        return $this->setKeyValue('fieldOption', $fieldOption);
     }
     public function getFieldOption()
     {
-        return $this->getValue('FieldOption', []);
+        return $this->getValue('fieldOption', []);
     }
 }

@@ -9,7 +9,7 @@ use Sokeio\Component;
 class FormSetting extends Component
 {
     use  WithForm;
-    protected function RedirectSave()
+    protected function redirectSave()
     {
         return true;
     }
@@ -17,9 +17,9 @@ class FormSetting extends Component
     {
         return 'card p-3';
     }
-    protected function FormUI()
+    protected function formUI()
     {
-        return UI::Prex('data', $this->SettingUI());
+        return UI::prex('data', $this->SettingUI());
     }
     protected function SettingUI()
     {
@@ -44,7 +44,7 @@ class FormSetting extends Component
     }
     protected function SaveSetting($keyForm, $keyValue, $column)
     {
-        set_setting($keyValue, data_get($this, $keyForm));
+        setSetting($keyValue, data_get($this, $keyForm));
         return $this;
     }
     public function doSave()
@@ -64,11 +64,11 @@ class FormSetting extends Component
         });
 
         $this->showMessage($this->formMessage(false));
-        if (!$this->CurrentIsPage()) {
+        if (!$this->currentIsPage()) {
             $this->refreshRefComponent();
             $this->closeComponent();
         } else {
-            if ($this->RedirectSave()) {
+            if ($this->redirectSave()) {
                 return  $this->redirectCurrent();
             } else {
                 $this->refreshRefComponent();

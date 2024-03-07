@@ -8,10 +8,10 @@ use Sokeio\Icon\IconManager;
 
 class IconSetting extends FormSettingCallback
 {
-    public $SearchText;
+    public $searchText;
     public function getIcons($key)
     {
-        foreach (sokeio_icons() as $item) {
+        foreach (sokeioIcons() as $item) {
             if ($item['key'] == $key) {
                 return $item['items'];
             }
@@ -26,34 +26,54 @@ class IconSetting extends FormSettingCallback
                 <div >
                     <span style="font-size: 5rem"  :class="$wire.data.SettingValueField"></span>
                     <p class="fs-2 bg-warning text-warning-fg" x-text="$wire.data.SettingValueField"></p>
-                     <button @click="$wire.data.SettingValueField = \'\'" class="btn btn-sm btn-danger">Remove Icon</button>
+                     <button @click="$wire.data.SettingValueField = \'\'"
+                      class="btn btn-sm btn-danger">Remove Icon</button>
                 </div>
-            </template>')->ClassName('p-2 text-center bg-indigo text-indigo-fg')->Attribute('x-show="$wire.data.SettingValueField"'),
+            </template>')
+                    ->className('p-2 text-center bg-indigo text-indigo-fg')
+                    ->attribute('x-show="$wire.data.SettingValueField"'),
                 UI::Div('
                 <template x-for="item in items">
                     <div class="p-2 m-2 border rounded cursor-pointer"  x-data="{ hover: false }"
                     @mouseenter="hover = true"
-                    @mouseleave="hover = false"  @click="itemActive = item.key"  :class="hover || itemActive === item.key? \'bg-azure text-azure-fg\' : \'\'"     x-text="item.base"></div>
+                    @mouseleave="hover = false"
+                    @click="itemActive = item.key"
+                    :class="hover || itemActive === item.key? \'bg-azure text-azure-fg\' : \'\'"
+                    x-text="item.base"></div>
                 </template>
-                ')->ClassName('d-flex flex-row'),
-                UI::Row([
-                    UI::ColumnAuto(UI::Text('SearchText')->Prex('')->Label(__('Search Icon (<span x-text="icons?.length"></span>)'))->Placeholder(__('Search Icon'))),
+                ')->className('d-flex flex-row'),
+                UI::row([
+                    UI::columnAuto(UI::text('searchText')->prex('')
+                        ->label(__('Search Icon (<span x-text="icons?.length"></span>)'))
+                        ->placeholder(__('Search Icon'))),
                 ]),
-                UI::Div('Loading...')->Attribute('wire:loading wire:target="getIcons"')->className('text-center fs-2 text-azure'),
+                UI::Div('Loading...')
+                    ->attribute('wire:loading wire:target="getIcons"')
+                    ->className('text-center fs-2 text-azure'),
                 UI::Div([
                     UI::Div('
                     <template x-for="icon in searchIcons()">
-                        <div :title="icon.name" class="p-2 m-1 border rounded cursor-pointer text-center"  x-data="{ hover: false }"
+                        <div :title="icon.name"
+                        class="p-2 m-1 border rounded cursor-pointer text-center"
+                        x-data="{
+                            hover: false,
+                            checkHover() {
+                                return hover || $wire.data.SettingValueField  === icon.icon;
+                            }
+                         }"
                         @mouseenter="hover = true"
-                        @mouseleave="hover = false"  @click="$wire.data.SettingValueField = icon.icon"  :class="hover || $wire.data.SettingValueField  === icon.icon? \'bg-azure text-azure-fg\' : \'\'"     >
+                        @mouseleave="hover = false"
+                        @click="$wire.data.SettingValueField = icon.icon"
+                        :class="checkHover()? \'bg-azure text-azure-fg\' : \'\'"
+                        >
                         <span class="fs-2" :class="icon.icon"></span>
                         </div>
                     </template>
-                ')->ClassName('d-flex flex-wrap')
-                ])->Attribute(' style="max-height: 300px; overflow-y: auto;" '),
-            ])->Attribute('
+                ')->className('d-flex flex-wrap')
+                ])->attribute(' style="max-height: 300px; overflow-y: auto;" '),
+            ])->attribute('
                     x-data="{
-                        items: ' . sokeio_js(IconManager::getInstance()->getListBase()) . ',
+                        items: ' . sokeioJS(IconManager::getInstance()->getListBase()) . ',
                         itemActive: false,
                         iconActive: false,
                         icons: [],
@@ -68,7 +88,7 @@ class IconSetting extends FormSettingCallback
                             }
                         },
                         searchIcons(){
-                            return this.icons.filter(item => item.name.includes( $wire.SearchText)||!$wire.SearchText);
+                            return this.icons.filter(item => item.name.includes( $wire.searchText)||!$wire.searchText);
                         }
                     }"
 

@@ -24,7 +24,7 @@ class ItemForm extends Form
     {
         return [];
     }
-    public function getModel()
+    public function getModel(): string
     {
         return Item::class;
     }
@@ -32,16 +32,16 @@ class ItemForm extends Form
     {
         $this->data->group_item_id = $group_item_id;
     }
-    public function FormUI()
+    public function formUI()
     {
-        return UI::Container([
-            UI::Prex(
+        return UI::container([
+            UI::prex(
                 'data',
                 [
-                    UI::Row([
-                        UI::Column12([
-                            UI::Text('name')->Label(__('Name')),
-                            UI::Select('group_item_id')->Label(__('Group Item'))->DataSource(function () {
+                    UI::row([
+                        UI::column12([
+                            UI::text('name')->label(__('Name')),
+                            UI::select('group_item_id')->label(__('Group Item'))->dataSource(function () {
                                 return [
                                     [
                                         'id' => 0,
@@ -55,23 +55,33 @@ class ItemForm extends Form
                                     })
                                 ];
                             })
-                                ->UIBefore([
-                                    UI::Button(__('Add Group'))->ModalRoute('admin.group-item.create')->ModalTitle(__('Add Group Item')),
+                                ->beforeUI([
+                                    UI::button(__('Add Group'))
+                                        ->modalRoute('admin.group-item.create')
+                                        ->modalTitle(__('Add Group Item')),
                                 ])
-                                ->UIAfter([
-                                    UI::Template([
-                                        UI::Button(__('Edit Group'))->ModalTitle(__('Edit Group Item'))->Attribute(' x-bind:sokeio:modal="\'' . route('admin.group-item.create') . '/\'+$wire.data.group_item_id"')->ModalTitle(__('Edit Group Item')),
-                                    ])->Attribute(' x-if="$wire.data.group_item_id>0" ')
-                                ])->ValueDefault(0),
-                            UI::Icon('icon')->Label(__('Icon')),
-                            UI::Color('color')->Label(__('Color')),
-                            UI::Textarea('description')->Label(__('Description')),
-                            UI::Image('image')->Label(__('Image'))
+                                ->afterUI([
+                                    UI::template([
+                                        UI::button(__('Edit Group'))
+                                            ->modalTitle(__('Edit Group Item'))
+                                            ->attribute(function () {
+                                                $url = route('admin.group-item.create');
+                                                return '
+                                                x-bind:sokeio:modal="\'' . $url . '/\'+$wire.data.group_item_id"
+                                                ';
+                                            })
+                                            ->modalTitle(__('Edit Group Item')),
+                                    ])->attribute(' x-if="$wire.data.group_item_id>0" ')
+                                ])->valueDefault(0),
+                            UI::icon('icon')->label(__('Icon')),
+                            UI::color('color')->label(__('Color')),
+                            UI::textarea('description')->label(__('Description')),
+                            UI::image('image')->label(__('Image'))
                         ])
                     ]),
                 ]
             )
         ])
-            ->ClassName('p-3');
+            ->className('p-3');
     }
 }

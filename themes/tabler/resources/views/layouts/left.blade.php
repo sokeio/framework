@@ -7,7 +7,7 @@
     @stack('styles')
 </head>
 
-<body class="{{ theme_class() }}">
+<body class="{{ themeClass() }}">
     @ThemeBody(before)
     <div class="page">
         @include('theme::share.header')
@@ -20,7 +20,7 @@
                             @yield('content')
                         </div>
                         <div class="col-12 col-md-auto">
-                            {!!theme_position("THEME_RIGHT")!!}
+                            {!!themePosition("THEME_RIGHT")!!}
                         </div>
                     </div>
                 </div>

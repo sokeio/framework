@@ -6,9 +6,9 @@ use Sokeio\Breadcrumb;
 
 trait WithModelQuery
 {
-    protected function getModel()
-    {
-    }
+
+    abstract protected function getModel(): string;
+
     /**
      * Get a new query builder for the model's table.
      *

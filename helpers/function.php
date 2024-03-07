@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Js;
 use Livewire\Livewire;
 use Symfony\Component\Finder\SplFileInfo;
-
 use Sokeio\Breadcrumb;
 use Sokeio\Facades\Menu;
 use Sokeio\Facades\Module;
@@ -27,98 +26,101 @@ use Sokeio\Notification;
 use Sokeio\Platform\PermalinkManager;
 use Sokeio\Platform\ThemeOptionManager;
 
-if (!function_exists('sokeio_encode')) {
-    function sokeio_encode($data)
+if (!function_exists('sokeioEncode')) {
+    function sokeioEncode($data)
     {
         return base64_encode(urlencode(json_encode($data ?? [])));
     }
 }
-if (!function_exists('sokeio_decode')) {
-    function sokeio_decode($data)
+if (!function_exists('sokeioDecode')) {
+    function sokeioDecode($data)
     {
         return json_decode(urldecode(base64_decode($data)), true);
     }
 }
-if (!function_exists('sokeio_time')) {
-    function sokeio_time()
+if (!function_exists('sokeioTime')) {
+    function sokeioTime()
     {
         return Platform::ExecutionTime();
     }
 }
 
-if (!function_exists('sokeio_version')) {
-    function sokeio_version()
+if (!function_exists('sokeioVersion')) {
+    function sokeioVersion()
     {
         return Module::find('sokeio')?->getVersion();
     }
 }
-if (!function_exists('sokeio_component')) {
-    function sokeio_component($component, $params = [], $type = '')
+if (!function_exists('sokeioComponent')) {
+    function sokeioComponent($component, $params = [], $type = '')
     {
-        return sokeio_encode([
+        return sokeioEncode([
             'component' => $component,
             'params' => $params,
             'type' => $type,
-            'is_admin' => sokeio_is_admin()
+            'is_admin' => sokeioIsAdmin()
         ]);
     }
 }
-if (!function_exists('sokeio_view')) {
-    function sokeio_view($view, $params = [], $type = '')
+if (!function_exists('sokeioView')) {
+    function sokeioView($view, $params = [], $type = '')
     {
-        return sokeio_encode([
+        return sokeioEncode([
             'view' => $view,
             'params' => $params,
             'type' => $type,
-            'is_admin' => sokeio_is_admin()
+            'is_admin' => sokeioIsAdmin()
         ]);
     }
 }
-if (!function_exists('sokeio_action')) {
-    function sokeio_action($action, $params = [], $type = '')
+if (!function_exists('sokeioAction')) {
+    function sokeioAction($action, $params = [], $type = '')
     {
-        return sokeio_encode([
+        return sokeioEncode([
             'action' => $action,
             'params' => $params,
             'type' => $type,
-            'is_admin' => sokeio_is_admin()
+            'is_admin' => sokeioIsAdmin()
         ]);
     }
 }
-if (!function_exists('sokeio_icons')) {
-    function sokeio_icons()
+if (!function_exists('sokeioIcons')) {
+    function sokeioIcons()
     {
         return IconManager::getInstance()->toArray();
     }
 }
-if (!function_exists('sokeio_js')) {
-    function sokeio_js($data)
+if (!function_exists('sokeioJS')) {
+    function sokeioJS($data)
     {
         return Js::from($data);
     }
 }
 
-if (!function_exists('sokeio_mode_dev')) {
-    function sokeio_mode_dev()
+if (!function_exists('sokeioModeDev')) {
+    function sokeioModeDev()
     {
         return env('SOKEIO_MODE_DEV', false);
     }
 }
 
-if (!function_exists('platform_by')) {
-    function platform_by($type)
+if (!function_exists('platformBy')) {
+    function platformBy($type)
     {
-        if ($type == 'module')
+        if ($type == 'module') {
             return Module::getFacadeRoot();
-        if ($type == 'plugin')
+        }
+        if ($type == 'plugin') {
             return Plugin::getFacadeRoot();
-        if ($type == 'theme')
+        }
+        if ($type == 'theme') {
             return Theme::getFacadeRoot();
+        }
     }
 }
 
-if (!function_exists('route_crud')) {
-    function route_crud($name, $table, $form, $isGet = false)
+if (!function_exists('routeCrud')) {
+    function routeCrud($name, $table, $form, $isGet = false)
     {
         Route::get($name, $table)->name($name);
         if ($isGet) {
@@ -130,16 +132,18 @@ if (!function_exists('route_crud')) {
         }
     }
 }
-if (!function_exists('sokeio_flags')) {
-    function sokeio_flags($flg, $size = '4x3')
+if (!function_exists('sokeioFlags')) {
+    function sokeioFlags($flg, $size = '4x3')
     {
         $fileFlag = __DIR__ . '/../resources/flags/' . $size . '/' . $flg . '.svg';
-        if (File::exists($fileFlag)) return file_get_contents($fileFlag);
+        if (File::exists($fileFlag)) {
+            return file_get_contents($fileFlag);
+        }
         return '';
     }
 }
-if (!function_exists('sokeio_is_admin')) {
-    function sokeio_is_admin()
+if (!function_exists('sokeioIsAdmin')) {
+    function sokeioIsAdmin()
     {
         $is_admin = false;
         $arrMiddleware = [];
@@ -147,112 +151,117 @@ if (!function_exists('sokeio_is_admin')) {
             $arrMiddleware = Request()->route()->gatherMiddleware();
             $is_admin = in_array(\Sokeio\Middleware\ThemeAdmin::class,  $arrMiddleware);
         }
-        $url_admin = admin_url();
+        $url_admin = adminUrl();
         if (request()->segment(1) === $url_admin || $url_admin === '') {
             $is_admin = true;
         }
-        if (is_livewire_reuqest() && isset(request()->get('components')[0]['snapshot'])) {
+        if (isLivewireRequest() && isset(request()->get('components')[0]['snapshot'])) {
             $snapshot = request()->get('components')[0]['snapshot'];
-            if ($snapshot && $snapshot = json_decode($snapshot, true)) {
-                if (isset($snapshot['data']['___theme___admin']) && $snapshot['data']['___theme___admin'] == true) {
-                    $is_admin = true;
-                }
+            if (
+                $snapshot && $snapshot = json_decode($snapshot, true)
+                && isset($snapshot['data']['___theme___admin'])
+            ) {
+                $is_admin = ($snapshot['data']['___theme___admin'] === true);
             }
         }
-        if (request('___theme___admin') == true) {
+        if (request('___theme___admin') === true) {
             $is_admin = true;
         }
         return apply_filters(SOKEIO_IS_ADMIN, $is_admin);
     }
 }
 
-if (!function_exists('is_livewire_reuqest')) {
-    function is_livewire_reuqest()
+if (!function_exists('isLivewireRequest')) {
+    function isLivewireRequest()
     {
         return class_exists('Livewire\\LivewireManager') && app('Livewire\\LivewireManager')->isLivewireRequest();
     }
 }
-if (!function_exists('is_livewire_reuqest_updated')) {
-    function is_livewire_reuqest_updated()
+if (!function_exists('isLivewireRequestUpdated')) {
+    function isLivewireRequestUpdated()
     {
         $updated = request('components.0.updates');
-        return is_livewire_reuqest() && isset($updated) && is_array($updated) && count($updated) > 0;
+        return isLivewireRequest() && isset($updated) && is_array($updated) && count($updated) > 0;
     }
 }
 
-if (!function_exists('livewire_render')) {
-    function livewire_render($name, $params = [])
+if (!function_exists('livewireRender')) {
+    function livewireRender($name, $params = [])
     {
         return Livewire::mount($name, $params);
     }
 }
 
-if (!function_exists('theme_layout')) {
+if (!function_exists('themeLayout')) {
     /**
-     * @param  string 
+     * @return  string | null
      */
-    function theme_layout()
+    function themeLayout()
     {
         return Theme::Layout(apply_filters(PLATFORM_THEME_LAYOUT, ''));
     }
 }
 
-if (!function_exists('theme_option')) {
+if (!function_exists('themeOption')) {
     /**
      * @return  string | ThemeOptionManager| null
      */
-    function theme_option($key = '', $default = null): string | ThemeOptionManager| null
+    function themeOption($key = '', $default = null): string | ThemeOptionManager| null
     {
         return $key ? ThemeOption::getValue($key, $default) : ThemeOption::getFacadeRoot();
     }
 }
 
 
-if (!function_exists('theme_position')) {
+if (!function_exists('themePosition')) {
     /**
-     * @param  string 
+     * @return  string | null
      */
-    function theme_position($position, array  $args = [])
+    function themePosition($position, array  $args = [])
     {
         ob_start();
-        echo theme_menu($position);
+        echo themeMenu($position);
         Theme::fire($position, $args);
         return ob_get_clean();
     }
 }
-if (!function_exists('theme_position_add')) {
+if (!function_exists('themePositionAdd')) {
     /**
-     * @param  string 
+     * @param  string $position
+     * @param  mixed $callback
      */
-    function theme_position_add($position, $callback)
+    function themePositionAdd($position, $callback)
     {
         Theme::addListener($position, $callback);
     }
 }
-if (!function_exists('theme_class')) {
+if (!function_exists('themeClass')) {
     /**
-     * @param  string 
+     * @param  string $default
+     * @return  string | null
      */
-    function theme_class($default = 'sokeio::page')
+    function themeClass($default = 'sokeio::page')
     {
         return apply_filters(PLATFORM_THEME_CLASS, $default);
     }
 }
-if (!function_exists('path_by')) {
+if (!function_exists('pathBy')) {
     /**
-     * @param  string 
+     * @param  string $name
+     * @param  string $path
      */
-    function path_by($name, $path = '')
+    function pathBy($name, $path = '')
     {
         return base_path(config('sokeio.appdir.root') . '/' . config('sokeio.appdir.' . $name) . '/' . $path);
     }
 }
 
-if (!function_exists('run_cmd')) {
+if (!function_exists('runCmd')) {
     /**
-     * @param  string 
+     * @param  string $path
+     * @param  string $cmd
      */
-    function run_cmd($path, $cmd)
+    function runCmd($path, $cmd)
     {
         chdir($path);
         passthru($cmd);
@@ -262,7 +271,9 @@ if (!function_exists('run_cmd')) {
 if (!function_exists('callAfterResolving')) {
     function callAfterResolving($name, $callback, $app = null)
     {
-        if (!$app) $app = app();
+        if (!$app) {
+            $app = app();
+        }
         $app->afterResolving($name, $callback);
 
         if ($app->resolved($name)) {
@@ -275,64 +286,73 @@ if (!function_exists('loadViewsFrom')) {
     function loadViewsFrom($path, $namespace = 'sokeio', $app = null)
     {
         callAfterResolving('view', function ($view, $app) use ($path, $namespace) {
-            if (
-                isset($app->config['view']['paths']) &&
-                is_array($app->config['view']['paths'])
-            ) {
+            $view->addNamespace($namespace, $path);
+            if (isset($app->config['view']['paths'])) {
                 foreach ($app->config['view']['paths'] as $viewPath) {
-                    if (is_dir($appPath = $viewPath . '/vendor/' . $namespace)) {
-                        $view->addNamespace($namespace, $appPath);
+                    if (is_dir($vendorPath = $viewPath . '/vendor')) {
+                        $view->addNamespace($namespace, $vendorPath);
                     }
                 }
             }
-            $view->addNamespace($namespace, $path);
         }, $app);
     }
+
 }
 
-if (!function_exists('AllFile')) {
-    function AllFile($directory, $callback = null, $filter = null)
+if (!function_exists('getAllFile')) {
+    function getAllFile($directory, callable $callback = null, callable $filter = null)
     {
-        if (!File::isDirectory($directory)) {
+        if (!is_dir($directory)) {
             return [];
         }
-        if ($callback) {
-            if ($filter) {
-                collect(File::allFiles($directory))->filter($filter)->each($callback);
-            } else {
-                collect(File::allFiles($directory))->each($callback);
-            }
-        } else {
-            return File::allFiles($directory);
+
+        $files = collect(File::allFiles($directory));
+
+        if ($filter) {
+            $files = $files->filter($filter);
         }
+
+        if ($callback) {
+            $files->each($callback);
+        }
+
+        return $files->all();
     }
+
 }
 
 
-if (!function_exists('AllClass')) {
-    function AllClass($directory, $namespace, $callback = null, $filter = null)
+if (!function_exists('getAllClass')) {
+    function getAllClass($directory, $namespace, callable $callback = null, callable $filter = null)
     {
-        $files = AllFile($directory);
-        if (!$files || !is_array($files)) return [];
+        $files = getAllFile($directory);
+        if (!$files || !is_array($files)) {
+            return [];
+        }
 
-        $classList = collect($files)->map(function (SplFileInfo $file) use ($namespace) {
-            return (string) Str::of($namespace)
-                ->append('\\', $file->getRelativePathname())
-                ->replace(['/', '.php'], ['\\', '']);
-        });
+        $classList = collect($files)
+            ->map(function (SplFileInfo $file) use ($namespace) {
+                return $namespace . '\\' . str_replace('/', '\\', $file->getRelativePathname())
+                    ->replace('.php', '');
+            })
+            ->filter(function (string $class) {
+                return class_exists($class);
+            });
+
         if ($callback) {
             if ($filter) {
                 $classList = $classList->filter($filter);
             }
             $classList->each($callback);
         } else {
-            return $classList;
+            return $classList->all();
         }
     }
+
 }
 
-if (!function_exists('AllDirectory')) {
-    function AllDirectory($directory, $callback = null, $filter = null)
+if (!function_exists('getAllDirectory')) {
+    function getAllDirectory($directory, $callback = null, $filter = null)
     {
         if (!File::isDirectory($directory)) {
             return [];
@@ -353,7 +373,7 @@ if (!function_exists('checkPermission')) {
     {
         $flg = true;
         if ($per) {
-            if (!Platform::CheckGate($per)) $flg = false;
+            $flg = Platform::CheckGate($per);
         }
         return apply_filters(PLATFORM_CHECK_PERMISSION,  $flg, $per);
     }
@@ -368,13 +388,13 @@ if (!function_exists('checkRole')) {
              * @var \Sokeio\Models\User $user The class instance.
              */
             $user =  auth()->user();
-            if (!$user->isSuperAdmin() && $user->hasRole($per)) $flg = false;
+            $flg = $user->isSuperAdmin() || $user->hasRole($per);
         }
         return apply_filters(PLATFORM_CHECK_ROLE, $flg, $per);
     }
 }
-if (!function_exists('admin_url')) {
-    function admin_url()
+if (!function_exists('adminUrl')) {
+    function adminUrl()
     {
         return apply_filters(SOKEIO_URL_ADMIN, env('SOKEIO_URL_ADMIN', ''));
     }
@@ -382,18 +402,18 @@ if (!function_exists('admin_url')) {
 if (!function_exists('breadcrumb')) {
     function breadcrumb($key = ''): Breadcrumb
     {
-        return apply_filters(SOKEIO_BREADCRUMD, Breadcrumb::Make($key));
+        return apply_filters(SOKEIO_BREADCRUMD, Breadcrumb::make($key));
     }
 }
 
 if (!function_exists('notification')) {
     function notification(): Notification
     {
-        return Notification::Make();
+        return Notification::make();
     }
 }
-if (!function_exists('set_setting')) {
-    function set_setting($key, $value = null, $locked = null)
+if (!function_exists('setSetting')) {
+    function setSetting($key, $value = null, $locked = null)
     {
         try {
             Cache::forget($key);
@@ -404,7 +424,7 @@ if (!function_exists('set_setting')) {
                 $setting->locked = $locked === true;
                 $setting->save();
                 Cache::forever($key, $setting->value);
-            } else if ($setting != null) {
+            } elseif ($setting != null) {
                 $setting->delete();
             }
         } catch (\Exception $e) {
@@ -414,38 +434,40 @@ if (!function_exists('set_setting')) {
 }
 if (!function_exists('setting')) {
     /**
-     * Get Value: setting("seo_key")
-     * Get Value Or Default: setting("seo_key","value_default")
+     * @param  string $key
+     * @param  string|null $default
+     * @return mixed
      */
     function setting($key, $default = null)
     {
+        $result = $default;
         try {
-            if (Cache::has($key) && Cache::get($key) != '') return Cache::get($key);
-            $setting = Setting::where('key', trim($key))->first();
-            if ($setting == null) {
-                return $default;
+            if (Cache::has($key) && Cache::get($key) != '') {
+                $result = Cache::get($key);
+            } else {
+                $setting = Setting::where('key', trim($key))->first();
+                if ($setting) {
+                    $result = $setting->value;
+                    Cache::forever($key, $result);
+                }
             }
-            //Set Cache Forever
-            Cache::forever($key, $setting->value);
-            return $setting->value ?? $default;
         } catch (\Exception $e) {
-            if ($default)
-                Cache::forever($key, $default);
-
-            return $default;
+            Log::error($e);
         }
+        return $result;
     }
 }
 
-if (!function_exists('route_filter')) {
-    function route_filter($_key, $default = [])
+if (!function_exists('routeFilter')) {
+    function routeFilter($_key, $default = [])
     {
         return function () use ($_key, $default) {
             $route = Route::current();
             $_params = [];
             $_action =  apply_filters($_key, $default);
-            if ($_action == null)
+            if ($_action == null) {
                 return $route->run();
+            }
             if (is_array($_action)) {
                 ['uses' => $action, 'params' => $_params] = $_action;
                 if ($action) {
@@ -463,32 +485,33 @@ if (!function_exists('route_filter')) {
                     return view_scope($_action);
                 };
             }
-            $route->setAction(array_merge($route->getAction(), RouteAction::parse($route->uri(), ['uses' => $_action])));
+            $action = RouteAction::parse($route->uri(), ['uses' => $_action]);
+            $route->setAction($action);
             return $route->run();
         };
     }
 }
 
-if (!function_exists('route_theme')) {
-    function route_theme($_action, $params = [])
+if (!function_exists('routeTheme')) {
+    function routeTheme($_action, $params = [])
     {
         return function () use ($_action, $params) {
             $route = Route::current();
             foreach ($params as $key => $value) {
                 $route->setParameter($key, $value);
             }
-            $route->setAction(array_merge($route->getAction(), RouteAction::parse($route->uri(), ['uses' => $_action])));
+            $route->setAction(RouteAction::parse($route->uri(), ['uses' => $_action]));
             return $route->run();
         };
     }
 }
-if (!function_exists('BladeToHtml')) {
-    function BladeToHtml($content = '')
+if (!function_exists('bladeRender')) {
+    function bladeRender($content = '')
     {
         return Blade::render($content);
     }
 }
-if (!function_exists('character_limiter')) {
+if (!function_exists('characterLimiter')) {
     /*
     *
     * @access   public
@@ -498,126 +521,108 @@ if (!function_exists('character_limiter')) {
     * @return   string
     */
 
-    function character_limiter($str, $n = 500, $end_char = '&#8230;')
+    function characterLimiter($str, int $limit = 500, string $endChar = '…'): string
     {
-        if (strlen($str) < $n) {
+        if (mb_strwidth($str) <= $limit) {
             return $str;
         }
 
-        $str = preg_replace("/\s+/", ' ', str_replace(array("\r\n", "\r", "\n"), ' ', $str));
-
-        if (strlen($str) <= $n) {
-            return $str;
-        }
-
-        $out = "";
-        foreach (explode(' ', trim($str)) as $val) {
-            $out .= $val . ' ';
-
-            if (strlen($out) >= $n) {
-                $out = trim($out);
-                return (strlen($out) == strlen($str)) ? $out : $out . $end_char;
-            }
-        }
+        return rtrim(mb_strimwidth($str, 0, $limit, '', 'UTF-8')) . $endChar;
     }
 }
 
 
 
-if (!function_exists('platform_path')) {
-    function platform_path($type = '', $path = '')
+if (!function_exists('platformPath')) {
+    function platformPath($type = '', $path = '')
     {
         $pathRoot = config('sokeio.appdir.root', 'platform');
         $pathType = config('sokeio.appdir.' . $type, $type . 's');
-        return ($pathRoot . '/' . $pathType . ($path ? ('/' . $path) : ''));
+        return $pathRoot . '/' . $pathType . ($path ? ('/' . $path) : '');
     }
 }
 
 
 
-if (!function_exists('menu_admin')) {
-    function menu_admin($render = false): MenuBuilder| string
+if (!function_exists('menuAdmin')) {
+    function menuAdmin($render = false): MenuBuilder| string
     {
-        if ($render) return Menu::render('menu_admin_sidebar');
-        return  Menu::position('menu_admin_sidebar');
+        if ($render) {
+            return Menu::render('menuAdmin_sidebar');
+        }
+        return  Menu::position('menuAdmin_sidebar');
     }
 }
-if (!function_exists('theme_menu')) {
-    function theme_menu($name)
+if (!function_exists('themeMenu')) {
+    function themeMenu($name)
     {
-        $location =  MenuLocation::whereJsonContains('locations', $name)->with('menus')->first();;
-        if ($location == null || $location->menus == null) return '';
+        $location =  MenuLocation::whereJsonContains('locations', $name)->with('menus')->first();
+        if ($location == null || $location->menus == null) {
+            return '';
+        }
         $menuSorted = $location->menus;
         return Menu::position($name)->withDatabase($menuSorted)->toHtml();
     }
 }
 
-if (!function_exists('permalink_route')) {
-    function permalink_route($key, $permalink, $route_class, $route_name)
+if (!function_exists('permalinkRoute')) {
+    function permalinkRoute($key, $permalink, $route_class, $route_name)
     {
         PermalinkManager::Route($key, $permalink, $route_class, $route_name);
     }
 }
 
-if (!function_exists('column_size')) {
-    function column_size($size = 'col')
+if (!function_exists('columnSize')) {
+    /**
+     * Returns the appropriate column size class based on the input size.
+     *
+     * @param string $size (Optional) The size of the column. Defaults to 'col'.
+     * @return string The corresponding column size class.
+     */
+    function columnSize($size = 'col')
     {
-        switch ($size) {
-            case "col1":
-                return "col-xs-12 col-sm-12 col-md-1 col-lg-1";
-            case "col2":
-                return "col-xs-12 col-sm-12 col-md-1 col-lg-2";
-            case "col3":
-                return "col-xs-12 col-sm-12 col-md-4 col-lg-3";
-            case "col4":
-                return "col-xs-12 col-sm-12 col-md-4 col-lg-4";
-            case "col5":
-                return "col-xs-12 col-sm-12 col-md-4 col-lg-5";
-            case "col6":
-                return "col-xs-12 col-sm-12 col-md-4 col-lg-6";
-            case "col7":
-                return "col-xs-12 col-sm-12 col-md-8 col-lg-7";
-            case "col8":
-                return "col-xs-12 col-sm-12 col-md-8 col-lg-8";
-            case "col9":
-                return "col-xs-12 col-sm-12 col-md-8 col-lg-9";
-            case "col10":
-                return "col-xs-12 col-sm-12 col-md-12 col-lg-10";
-            case "col11":
-                return "col-xs-12 col-sm-12 col-md-12 col-lg-11";
-            case "col12":
-                return "col-xs-12 col-sm-12 col-md-12 col-lg-12";
-            case "auto":
-                return "col-auto";
-            default:
-                return "col";
-        }
+        $columnSizes = [
+            "col1" => "col-xs-12 col-sm-12 col-md-1 col-lg-1",
+            "col2" => "col-xs-12 col-sm-12 col-md-1 col-lg-2",
+            "col3" => "col-xs-12 col-sm-12 col-md-4 col-lg-3",
+            "col4" => "col-xs-12 col-sm-12 col-md-4 col-lg-4",
+            "col5" => "col-xs-12 col-sm-12 col-md-4 col-lg-5",
+            "col6" => "col-xs-12 col-sm-12 col-md-4 col-lg-6",
+            "col7" => "col-xs-12 col-sm-12 col-md-8 col-lg-7",
+            "col8" => "col-xs-12 col-sm-12 col-md-8 col-lg-8",
+            "col9" => "col-xs-12 col-sm-12 col-md-8 col-lg-9",
+            "col10" => "col-xs-12 col-sm-12 col-md-12 col-lg-10",
+            "col11" => "col-xs-12 col-sm-12 col-md-12 col-lg-11",
+            "col12" => "col-xs-12 col-sm-12 col-md-12 col-lg-12",
+            "auto" => "col-auto"
+        ];
+        return $columnSizes[$size] ?? "col";
     }
 }
 
 
 
-if (!function_exists('shortcode_render')) {
-    function shortcode_render($text)
+if (!function_exists('shortcodeRender')) {
+    function shortcodeRender($text)
     {
         return Shortcode::compile($text);
     }
 }
-if (!function_exists('module_active')) {
-    function module_active($name)
+if (!function_exists('moduleIsActive')) {
+    function moduleIsActive($name)
     {
         return Module::find($name)?->isActiveOrVendor();
     }
 }
 
-if (!function_exists('plugin_active')) {
-    function plugin_active($name)
+if (!function_exists('pluginIsActive')) {
+    function pluginIsActive($name)
     {
         return Plugin::find($name)?->isActiveOrVendor();
     }
 }
-if (!function_exists('theme_active')) {
-    function theme_active($name)
+if (!function_exists('themeIsActive')) {
+    function themeIsActive($name)
     {
         return Theme::find($name)?->isActiveOrVendor();
     }

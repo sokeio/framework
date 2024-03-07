@@ -26,7 +26,7 @@ class ShortcodeserviceProvider extends ServiceProvider
         $state = $this->app['config']->get('sokeio::shortcodes-enabled', true);
         // Enable when needed
 
-        if ($state && !sokeio_is_admin()) {
+        if ($state && !sokeioIsAdmin()) {
             $this->app['shortcode']->enable();
         }
     }

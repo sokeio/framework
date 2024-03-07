@@ -7,30 +7,31 @@ trait WithFieldWire
 
     public function getWireAttribute()
     {
-        $attr = 'wire:model';
-        $attr .= ($this->wireModelArr[$this->wireModelType]);
-        switch ($this->wireModelType) {
-            case 3: //debounce
-                $attr .= '.' . $this->wireModelDebounce;
-                break;
-            case 4: //throttle
-                $attr .= '.' . $this->wireModelThrottle;
-                break;
+        $attribute = 'wire:model' . $this->wireModelArr[$this->wireModelType];
+        if ($this->wireModelType === 3) { //debounce
+            $attribute .= '.' . $this->wireModelDebounce;
+        } elseif ($this->wireModelType === 4) { //throttle
+            $attribute .= '.' . $this->wireModelThrottle;
         }
-        $attr .= '="' .  $this->getFormField() . '" ';
+        $attribute .= '="' .  $this->getFormField() . '" ';
+
         if ($this->getDisable()) {
-            $attr .= ' disabled ';
+            $attribute .= ' disabled ';
         }
+
         if ($this->wireGetValueByKey) {
-            $attr .= ' wire:get-value="' . $this->wireGetValueByKey . '" ';
+            $attribute .= ' wire:get-value="' . $this->wireGetValueByKey . '" ';
+
             if ($this->wireGetValueByParent) {
-                $attr .= ' wire:get-value-parent="' . $this->wireGetValueByParent .  '" ';
+                $attribute .= ' wire:get-value-parent="' . $this->wireGetValueByParent .  '" ';
             }
         }
-        if ($attrInput = $this->getAttributeInput()) {
-            $attr .= $attrInput;
+
+        if ($additionalInput = $this->getAttributeInput()) {
+            $attribute .= $additionalInput;
         }
-        return $attr;
+
+        return $attribute;
     }
     /*
     0-default
@@ -41,33 +42,33 @@ trait WithFieldWire
     */
     private $wireModelArr = ['', '.live', '.blur', '.live.debounce', '.live.throttle'];
     private $wireModelType = 0;
-    private $wireModelDebounce = '150ms';
-    private $wireModelThrottle = '150ms';
+    private $wireModelDebounce = '151ms';
+    private $wireModelThrottle = '152ms';
     private $wireGetValueByKey;
     private $wireGetValueByParent = null;
-    public function WireLive(): static
+    public function wireLive(): static
     {
         $this->wireModelType = 1;
         return $this;
     }
-    public function WireBlur(): static
+    public function wireBlur(): static
     {
         $this->wireModelType = 2;
         return $this;
     }
-    public function WireLiveDebounce($value = '150ms'): static
+    public function wireLiveDebounce($value = '150ms'): static
     {
         $this->wireModelType = 3;
         $this->wireModelDebounce = $value;
         return $this;
     }
-    public function WireLiveThrottle($value = '150ms'): static
+    public function wireLiveThrottle($value = '150ms'): static
     {
         $this->wireModelType = 4;
         $this->wireModelThrottle = $value;
         return $this;
     }
-    public function WireGetValue($key, $parentId = null): static
+    public function wireGetValue($key, $parentId = null): static
     {
         $this->wireGetValueByKey    = $key;
         $this->wireGetValueByParent = $parentId;

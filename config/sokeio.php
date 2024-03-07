@@ -10,7 +10,7 @@ use Sokeio\Commands\MakeCommand;
 
 return [
     'updator' => [
-        'url' =>  env('PLATFORM_UPDATOR_URL', 'https://updator.sokeio.com/'), //https://updator.sokeio.com/themes.json https://updator.sokeio.com/theme/theme-sokeio-640e7d39-165b-47c5-a895-5e996e375f9b2832469.json
+        'url' =>  env('PLATFORM_UPDATOR_URL', 'https://updator.sokeio.com/'),
         'temps' => env('PLATFORM_UPDATOR_TEMP', 'temps')
     ],
     'extends' => ['theme', 'plugin', 'module'],
@@ -814,17 +814,48 @@ return [
         'module-plugin' => ['path' => 'plugins', 'generate' => true, 'only' => ['module']],
         'config' => ['path' => 'config', 'generate' => true, 'only' => ['module']],
         'command' => ['path' => 'src/Commands', 'namespace' => 'Commands', 'generate' => true, 'only' => ['module']],
-        'migration' => ['path' => 'database/migrations', 'namespace' => 'Database\\Migrations', 'generate' => true, 'only' => ['module']],
-        'seeder' => ['path' => 'database/seeders', 'namespace' => 'Database\\Seeders', 'generate' => true, 'only' => ['module']],
-        'factory' => ['path' => 'database/factories', 'namespace' => 'Database\\Factories', 'generate' => true, 'only' => ['module']],
+        'migration' => [
+            'path' => 'database/migrations',
+            'namespace' => 'Database\\Migrations',
+            'generate' => true,
+            'only' => ['module']
+        ],
+        'seeder' => [
+            'path' => 'database/seeders',
+            'namespace' => 'Database\\Seeders',
+            'generate' => true,
+            'only' => ['module']
+        ],
+        'factory' => [
+            'path' => 'database/factories',
+            'namespace' => 'Database\\Factories',
+            'generate' => true, 'only' => ['module']
+        ],
         'model' => ['path' => 'src/Models', 'namespace' => 'Models', 'generate' => true, 'only' => ['module']],
         'routes' => ['path' => 'routes', 'generate' => true, 'only' => ['module']],
         'routes-admin' => ['path' => 'routes/admin', 'generate' => true],
         'routes-web' => ['path' => 'routes/web', 'generate' => true],
-        'controller' => ['path' => 'src/Http/Controllers', 'namespace' => 'Http\\Controllers', 'generate' => true, 'only' => ['module']],
-        'middleware' => ['path' => 'src/Http/Middleware', 'namespace' => 'Http\\Middleware', 'generate' => true, 'only' => ['module']],
-        'action' => ['path' => 'src/Actions', 'namespace' => 'Actions', 'generate' => true, 'only' => ['module']],
-        'request' => ['path' => 'src/Http/Requests', 'namespace' => 'Http\\Requests', 'generate' => true, 'only' => ['module']],
+        'controller' => [
+            'path' => 'src/Http/Controllers',
+            'namespace' => 'Http\\Controllers',
+            'generate' => true, 'only' => ['module']
+        ],
+        'middleware' => [
+            'path' => 'src/Http/Middleware',
+            'namespace' => 'Http\\Middleware',
+            'generate' => true,
+            'only' => ['module']
+        ],
+        'action' => [
+            'path' => 'src/Actions',
+            'namespace' => 'Actions',
+            'generate' => true, 'only' => ['module']
+        ],
+        'request' => [
+            'path' => 'src/Http/Requests',
+            'namespace' => 'Http\\Requests',
+            'generate' => true, 'only' => ['module']
+        ],
         'livewire' => ['path' => 'src/Livewire', 'namespace' => 'Livewire', 'generate' => true, 'only' => ['module']],
         'provider' => ['path' => 'src/Providers', 'namespace' => 'Providers', 'generate' => true, 'only' => ['module']],
         'helpers' => ['path' => 'helpers', 'generate' => true],
@@ -839,17 +870,46 @@ return [
         'view-share' => ['path' => 'resources/views/share', 'generate' => true, 'only' => ['theme']],
         'public' => ['path' => 'public', 'generate' => true],
         'test' => ['path' => 'Tests/Unit', 'namespace' => 'Tests\\Unit', 'generate' => true, 'only' => ['module']],
-        'test-feature' => ['path' => 'Tests/Feature', 'namespace' => 'Feature', 'generate' => true, 'only' => ['module']],
-        'repository' => ['path' => 'src/Repositories', 'namespace' => 'Repositories', 'generate' => false, 'only' => ['module']],
+        'test-feature' => [
+            'path' => 'Tests/Feature',
+            'namespace' => 'Feature', 'generate' => true,
+            'only' => ['module']
+        ],
+        'repository' => [
+            'path' => 'src/Repositories',
+            'namespace' => 'Repositories',
+            'generate' => false,
+            'only' => ['module']
+        ],
         'event' => ['path' => 'src/Events', 'namespace' => 'Events', 'generate' => false, 'only' => ['module']],
-        'listener' => ['path' => 'src/Listeners', 'namespace' => 'Listeners', 'generate' => false, 'only' => ['module']],
+        'listener' => [
+            'path' => 'src/Listeners',
+            'namespace' => 'Listeners',
+            'generate' => false,
+            'only' => ['module']
+        ],
         'policies' => ['path' => 'src/Policies', 'namespace' => 'Policies', 'generate' => false, 'only' => ['module']],
         'rules' => ['path' => 'src/Rules', 'namespace' => 'Rules', 'generate' => false, 'only' => ['module']],
         'jobs' => ['path' => 'src/Jobs', 'namespace' => 'Jobs', 'generate' => false, 'only' => ['module']],
         'emails' => ['path' => 'src/Emails', 'namespace' => 'Emails', 'generate' => false, 'only' => ['module']],
-        'notifications' => ['path' => 'src/Notifications', 'namespace' => 'Notifications', 'generate' => false, 'only' => ['module']],
-        'resource' => ['path' => 'src/Transformers', 'namespace' => 'Transformers', 'generate' => false, 'only' => ['module']],
-        'component-view' => ['path' => 'resources/views/components', 'generate' => false, 'only' => ['module']],
-        'component-class' => ['path' => 'src/View/Components', 'namespace' => 'View\\Components', 'generate' => false, 'only' => ['module']],
+        'notifications' => [
+            'path' => 'src/Notifications',
+            'namespace' => 'Notifications',
+            'generate' => false,
+            'only' => ['module']
+        ],
+        'resource' => [
+            'path' => 'src/Transformers',
+            'namespace' => 'Transformers', 'generate' => false, 'only' => ['module']
+        ],
+        'component-view' => [
+            'path' => 'resources/views/components',
+            'generate' => false, 'only' => ['module']
+        ],
+        'component-class' => [
+            'path' => 'src/View/Components',
+            'namespace' => 'View\\Components',
+            'generate' => false, 'only' => ['module']
+        ],
     ],
 ];

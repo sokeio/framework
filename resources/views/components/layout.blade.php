@@ -9,7 +9,7 @@
             @isset($dataItem)
                 @php
                     $item->ClearCache();
-                    $item->DataItem($dataItem);
+                    $item->dataItem($dataItem);
                 @endphp
             @endisset
             @includeIf($item->getView(), ['column' => $item])

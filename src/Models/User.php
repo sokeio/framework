@@ -15,7 +15,6 @@ class User extends Authenticatable
     use SoftDeletes;
     use WithPermission, WithSlug;
     use WithModelHook;
-    public $FieldSlug = "name";
     protected $fillable = ["*"];
     public function isActive()
     {

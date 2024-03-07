@@ -2,57 +2,52 @@
 
 namespace Sokeio\Components\Field\Concerns;
 
+use Sokeio\Components\Common\Concerns\WithName;
 use Sokeio\Components\UI;
 
 trait WithFieldBase
 {
+    use WithName;
     public static function getFieldName($fieldEncode)
     {
         return str_replace(UI::KEY_FIELD_NAME, '.', $fieldEncode);
     }
-    public function Name($Name): static
-    {
-        return $this->setKeyValue('Name', $Name);
-    }
-    public function getName()
-    {
-        return $this->getValue('Name');
-    }
+
     public function getNameEncode()
     {
         return self::getFieldName($this->getName());
     }
-    public function Placeholder($Placeholder): static
+    public function placeholder($placeholder): static
     {
-        return $this->setKeyValue('Placeholder', $Placeholder);
+        return $this->setKeyValue('placeholder', $placeholder);
     }
     public function getPlaceholder()
     {
-        return $this->getValue('Placeholder');
+        return $this->getValue('placeholder');
     }
-    public function ValueDefault($ValueDefault): static
+    public function valueDefault($valueDefault): static
     {
-        return $this->setKeyValue('ValueDefault', $ValueDefault);
+        return $this->setKeyValue('valueDefault', $valueDefault);
     }
     public function getValueDefault()
     {
-        return $this->getValue('ValueDefault');
+        return $this->getValue('valueDefault');
     }
-    public function NoSave(): static
+    public function noSave(): static
     {
-        return $this->setKeyValue('NoSave', true);
+        return $this->setKeyValue('noSave', true);
     }
     public function getNoSave()
     {
-        return $this->getValue('NoSave');
+        return $this->getValue('noSave');
     }
-    public function Format($Format): static
+    public function format($format): static
     {
-        return $this->setKeyValue('Format', $Format);
+        return $this->setKeyValue('format', $format);
     }
     public function getFormat()
     {
-        return $this->getValue('Format');
+        return $this->getValue('format');
     }
     public function getFormFieldEncode()
     {
@@ -62,65 +57,68 @@ trait WithFieldBase
     {
         if ($this->checkPrex()) {
             $operator = $this->getOperatorField();
-            return $this->getPrex() . '.' . ($operator != '' ?  $operator . '.' : '') . str_replace('.', UI::KEY_FIELD_NAME, $this->getName());
+            $field = $this->getPrex();
+            $field .= ($operator != '' ?  $operator . '.' : '');
+            $field .= str_replace('.', UI::KEY_FIELD_NAME, $this->getName());
+            return $field;
         }
         return $this->getName();
     }
 
-    public function AttributeInput($AttributeInput): static
+    public function attributeInput($attributeInput): static
     {
-        return $this->setKeyValue('AttributeInput', $AttributeInput);
+        return $this->setKeyValue('attributeInput', $attributeInput);
     }
     public function getAttributeInput()
     {
-        return $this->getValue('AttributeInput');
+        return $this->getValue('attributeInput');
     }
-    public function ClassInput($ClassInput): static
+    public function classInput($classInput): static
     {
-        return $this->setKeyValue('ClassInput', $ClassInput);
+        return $this->setKeyValue('classInput', $classInput);
     }
     public function getClassInput()
     {
-        return $this->getValue('ClassInput');
+        return $this->getValue('classInput');
     }
-    public function AttributeLabel($AttributeLabel): static
+    public function attributeLabel($attributeLabel): static
     {
-        return $this->setKeyValue('AttributeLabel', $AttributeLabel);
+        return $this->setKeyValue('attributeLabel', $attributeLabel);
     }
     public function getAttributeLabel()
     {
-        return $this->getValue('AttributeLabel');
+        return $this->getValue('attributeLabel');
     }
-    public function Disable($Disable = true): static
+    public function disable($disable = true): static
     {
-        return $this->setKeyValue('Disable', $Disable);
+        return $this->setKeyValue('disable', $disable);
     }
     public function getDisable()
     {
-        return $this->getValue('Disable');
+        return $this->getValue('disable');
     }
-    public function InfoText($InfoText): static
+    public function infoText($infoText): static
     {
-        return $this->setKeyValue('InfoText', $InfoText);
+        return $this->setKeyValue('infoText', $infoText);
     }
     public function getInfoText()
     {
         return $this->getValue('InfoText');
     }
-    public function UIBefore($UIBefore): static
+    public function beforeUI($beforeUI): static
     {
-        return $this->setKeyValue('UIBefore', $UIBefore);
+        return $this->setKeyValue('beforeUI', $beforeUI);
     }
     public function getUIBefore()
     {
-        return $this->getValue('UIBefore');
+        return $this->getValue('beforeUI');
     }
-    public function UIAfter($UIAfter): static
+    public function afterUI($afterUI): static
     {
-        return $this->setKeyValue('UIAfter', $UIAfter);
+        return $this->setKeyValue('afterUI', $afterUI);
     }
-    public function getUIAfter()
+    public function getAfterUI()
     {
-        return $this->getValue('UIAfter');
+        return $this->getValue('afterUI');
     }
 }

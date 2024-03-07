@@ -24,7 +24,7 @@ Route::group(['as' => 'admin.'], function () {
     Route::post('color-manager', ColorSetting::class)->name('color-setting');
     Route::get('settings/permalink', PermalinkSetting::class)->name('permalink-setting');
     Route::get('settings/cookies', CookiesSetting::class)->name('cookies-setting');
-    route_crud('item', ItemTable::class, ItemForm::class);
+    routeCrud('item', ItemTable::class, ItemForm::class);
     Route::post('group-item/{dataId?}', GroupItemForm::class)->name('group-item.create');
     Route::post('/setting/shortcode', ShortcodeSetting::class)->name('shortcode-setting');
 });

@@ -19,8 +19,10 @@ class Button extends BaseCommon
     public function getFieldValue($row)
     {
         $this->ClearCache();
-        $this->DataItem($row);
-        if ($this->fieldValueCallback) return call_user_func($this->fieldValueCallback, $row, $this, $this->getManager());
+        $this->dataItem($row);
+        if ($this->fieldValueCallback) {
+            return call_user_func($this->fieldValueCallback, $row, $this, $this->getManager());
+        }
         $this->Title(data_get($row, $this->getName()));
         return view($this->getView(), [
             'column' => $this

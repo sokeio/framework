@@ -115,7 +115,7 @@ class ThemeManager extends ActionHook
         if ($parent = $theme_data['parent']) {
             $this->findAndRegister($parent, $parentId);
         }
-        $theme_data->DoRegister();
+        $theme_data->doRegister();
         foreach ($theme_data->getLayouts() as $layout) {
             $this->data_layouts[] =  $layout;
         }
@@ -184,7 +184,7 @@ class ThemeManager extends ActionHook
     public function ThemeCurrent()
     {
         if (!isset($this->data_active) || !$this->data_active) {
-            if (sokeio_is_admin()) {
+            if (sokeioIsAdmin()) {
                 $this->data_active = $this->findAndRegister(apply_filters(PLATFORM_THEME_FILTER_LAYOUT, $this->AdminId(), 1));
             } else {
                 $this->data_active = $this->findAndRegister(apply_filters(PLATFORM_THEME_FILTER_LAYOUT, $this->SiteId(), 0));

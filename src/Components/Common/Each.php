@@ -12,16 +12,16 @@ class Each extends BaseCommon
     }
     protected function ChildComponents()
     {
-        if (($ArrayData = $this->getArrayData())) {
+        if ($arrayData = $this->getArrayData()) {
             $contents = $this->ClearComponents($this->getContent());
             $childs = [];
             $rowIndex = 0;
-            foreach ($ArrayData as $key => $item) {
+            foreach ($arrayData as $key => $item) {
                 foreach ($contents as $value) {
                     $childContent = clone $value;
-                    $childContent->LevelData($item, 'EachData');
-                    $childContent->LevelData($key, 'EachKey');
-                    $childContent->LevelData($rowIndex, 'EachIndex');
+                    $childContent->levelData($item, 'EachData');
+                    $childContent->levelData($key, 'EachKey');
+                    $childContent->levelData($rowIndex, 'EachIndex');
                     $childs[] = $childContent;
                 }
                 $rowIndex++;
@@ -32,20 +32,16 @@ class Each extends BaseCommon
         }
         return [];
     }
-    protected function __construct($value)
-    {
-        parent::__construct($value);
-    }
     public function getView()
     {
         return 'sokeio::components.common.each';
     }
-    public function ArrayData($ArrayData)
+    public function arrayData($arrayData)
     {
-        return $this->setKeyValue('ArrayData', $ArrayData);
+        return $this->setKeyValue('arrayData', $arrayData);
     }
     public function getArrayData()
     {
-        return $this->getValue('ArrayData');
+        return $this->getValue('arrayData');
     }
 }

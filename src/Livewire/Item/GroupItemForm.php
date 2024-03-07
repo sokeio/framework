@@ -32,16 +32,16 @@ class GroupItemForm extends Form
     {
         $this->callFuncByRef('SelectGroupItem', $this->dataId);
     }
-    public function FormUI()
+    public function formUI()
     {
-        return UI::Container([
-            UI::Prex(
+        return UI::container([
+            UI::prex(
                 'data',
                 [
-                    UI::Text('name')->Label(__('Name')),
+                    UI::text('name')->label(__('Name')),
                 ]
             )
         ])
-            ->ClassName('p-3');
+            ->className('p-3');
     }
 }

@@ -1,4 +1,4 @@
-@extends(theme_layout())
+@extends(themeLayout())
 
 @section('content')
     <h1>Hello World</h1>

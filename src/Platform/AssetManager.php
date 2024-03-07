@@ -41,34 +41,34 @@ class AssetManager
         return $this->data['description'] ?? '';
     }
 
-    public function AssetType($name, $baseType = 'theme')
+    public function assetType($name, $baseType = 'theme')
     {
-        $this->AddJs('resources/js/app.js', $baseType, $name);
-        $this->AddCss('resources/sass/app.scss', $baseType, $name);
+        $this->addJs('resources/js/app.js', $baseType, $name);
+        $this->addCss('resources/sass/app.scss', $baseType, $name);
     }
-    public function Theme($name)
+    public function theme($name)
     {
-        $this->AssetType($name, 'theme');
-    }
-
-    public function Module($name)
-    {
-        $this->AssetType($name, 'module');
+        $this->assetType($name, 'theme');
     }
 
-    public function Plugin($name)
+    public function module($name)
     {
-        $this->AssetType($name, 'plugin');
+        $this->assetType($name, 'module');
     }
-    public function SetData($key, $value)
+
+    public function plugin($name)
+    {
+        $this->assetType($name, 'plugin');
+    }
+    public function setData($key, $value)
     {
         $this->data[$key] = $value;
     }
-    public function GetData($key, $default = null)
+    public function getData($key, $default = null)
     {
         return isset($this->data[$key]) ? $this->data[$key] : $default;
     }
-    public function AddAssetType($location, $base, $name, $content, $type = self::JS, $priority = 10000)
+    public function addAssetType($location, $base, $name, $content, $type = self::JS, $priority = 10000)
     {
         $this->assets[] = [
             'location' => $location,
@@ -80,25 +80,27 @@ class AssetManager
         ];
         $this->loaded = false;
     }
-    public function AddJs($content, $base = null, $name = null, $location = PLATFORM_BODY_AFTER, $priority = 10000)
+    public function addJs($content, $base = null, $name = null, $location = PLATFORM_BODY_AFTER, $priority = 10000)
     {
-        $this->AddAssetType($location, $base, $name, $content, self::JS, $priority);
+        $this->addAssetType($location, $base, $name, $content, self::JS, $priority);
     }
-    public function AddCss($content, $base = null, $name = null, $location = PLATFORM_HEAD_AFTER, $priority = 10000)
+    public function addCss($content, $base = null, $name = null, $location = PLATFORM_HEAD_AFTER, $priority = 10000)
     {
-        $this->AddAssetType($location, $base, $name, $content, self::CSS, $priority);
+        $this->addAssetType($location, $base, $name, $content, self::CSS, $priority);
     }
-    public function AddScript($content, $base = null, $name = null,  $location = PLATFORM_BODY_AFTER, $priority = 10000)
+    public function addScript($content, $base = null, $name = null,  $location = PLATFORM_BODY_AFTER, $priority = 10000)
     {
-        $this->AddAssetType($location, $base, $name, $content, self::SCRIPT, $priority);
+        $this->addAssetType($location, $base, $name, $content, self::SCRIPT, $priority);
     }
-    public function AddStyle($content, $base = null, $name = null, $location = PLATFORM_HEAD_AFTER, $priority = 10000)
+    public function addStyle($content, $base = null, $name = null, $location = PLATFORM_HEAD_AFTER, $priority = 10000)
     {
-        $this->AddAssetType($location, $base, $name, $content, self::STYLE, $priority);
+        $this->addAssetType($location, $base, $name, $content, self::STYLE, $priority);
     }
     private function loadFirst()
     {
-        if ($this->loaded) return;
+        if ($this->loaded) {
+            return;
+        }
         $this->loaded = true;
         $this->assets = collect($this->assets)->sortBy('priority')->reverse()->toArray();
         $dataLoader = [];
@@ -110,19 +112,24 @@ class AssetManager
             'type' => $type,
             // 'priority' => $priority,
         ]) {
-            if (!isset($dataLoader[$location])) $dataLoader[$location] = [];
-            if (!isset($dataLoader[$location][$type])) $dataLoader[$location][$type] = [];
-            if ($type == self::SCRIPT || $type == self::STYLE)
+            if (!isset($dataLoader[$location])) {
+                $dataLoader[$location] = [];
+            }
+            if (!isset($dataLoader[$location][$type])) {
+                $dataLoader[$location][$type] = [];
+            }
+            if ($type == self::SCRIPT || $type == self::STYLE) {
                 $dataLoader[$location][$type][] = $content;
-            else if ($base && $name) {
-                $sokeio = platform_by($base);
+            } elseif ($base && $name) {
+                $sokeio = platformBy($base);
                 $sokeioItem = $sokeio->find($name);
                 if ($sokeioItem) {
                     $manifestData = $sokeioItem->getManifestData();
                     if (isset($manifestData[$content]['imports'])) {
                         foreach ($manifestData[$content]['imports'] as $item) {
                             if (isset($manifestData[$item]['file'])) {
-                                $dataLoader[$location][$type][] = $sokeioItem->url('build/' . $manifestData[$item]['file']);
+                                $value = $sokeioItem->url('build/' . $manifestData[$item]['file']);
+                                $dataLoader[$location][$type][] = $value;
                             }
                         }
                     }
@@ -131,7 +138,7 @@ class AssetManager
                     } else {
                         if (File::exists($sokeioItem->getPathPublic($content))) {
                             $dataLoader[$location][$type][] = $sokeioItem->url($content);
-                        } else if (str($content)->startsWith('http')) {
+                        } elseif (str($content)->startsWith('http')) {
                             $dataLoader[$location][$type][] = $content;
                         }
                     }
@@ -142,7 +149,7 @@ class AssetManager
         }
         $this->dataLoader = $dataLoader;
     }
-    public function Render($location)
+    public function render($location)
     {
         $this->loadFirst();
         if (isset($this->dataLoader[$location][self::CSS])) {

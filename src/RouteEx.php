@@ -28,7 +28,7 @@ class RouteEx
     public static function Admin($callback)
     {
         Route::middleware(apply_filters(PLATFORM_MIDDLEWARE_ADMIN, ['web', \Sokeio\Middleware\Authenticate::class, \Sokeio\Middleware\ThemeAdmin::class, MiddlewarePlatform::class]))
-            ->prefix(admin_url())
+            ->prefix(adminUrl())
             ->group($callback);
     }
     private static function LoadRoute($path)
@@ -39,7 +39,7 @@ class RouteEx
                     require_once($path . 'api.php');
                 }
                 if (file_exists(($path . 'api'))) {
-                    AllFile(($path . 'api'), function ($file) {
+                    getAllFile(($path . 'api'), function ($file) {
                         require_once $file;
                     }, null);
                 }
@@ -51,7 +51,7 @@ class RouteEx
                     require_once($path . 'web.php');
                 }
                 if (file_exists(($path . 'web'))) {
-                    AllFile(($path . 'web'), function ($file) {
+                    getAllFile(($path . 'web'), function ($file) {
                         require_once $file;
                     }, null);
                 }
@@ -63,14 +63,14 @@ class RouteEx
                     require_once($path . 'admin.php');
                 }
                 if (file_exists(($path . 'admin'))) {
-                    AllFile(($path . 'admin'), function ($file) {
+                    getAllFile(($path . 'admin'), function ($file) {
                         require_once $file;
                     }, null);
                 }
             });
         }
     }
-    public static function Load($path)
+    public static function load($path)
     {
         if (self::checkPath($path)) return;
         self::$cacheRouteLoaded[$path] = true;

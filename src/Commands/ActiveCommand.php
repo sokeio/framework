@@ -37,7 +37,7 @@ class ActiveCommand extends Command
         $type = $this->option('type');
         $active = $this->option('active');
         $names = $this->argument('name');
-        $sokeio = platform_by($type);
+        $sokeio = platformBy($type);
         $this->components->info('sokeio:' . $type);
         foreach ($names as $name) {
             $rs_sokeio = $sokeio->find($name);

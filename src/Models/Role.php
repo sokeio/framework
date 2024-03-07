@@ -7,11 +7,13 @@ use Sokeio\Concerns\WithSlug;
 class Role extends \Sokeio\Model
 {
     use WithSlug;
-    public $FieldSlug = "name";
-    private static $role_supper_admin = null;
+    private static $roleSupperAdmin = null;
     public static function SupperAdmin()
     {
-        return self::$role_supper_admin ?? (self::$role_supper_admin = apply_filters(PLATFORM_ROLE_SUPPER_ADMIN, 'supper_admin'));
+        if (!self::$roleSupperAdmin) {
+            self::$roleSupperAdmin = apply_filters(PLATFORM_ROLE_SUPPER_ADMIN, 'supper_admin');
+        }
+        return self::$roleSupperAdmin;
     }
     protected $fillable = ['*'];
     public function isActive()

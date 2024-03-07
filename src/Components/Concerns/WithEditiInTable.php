@@ -8,25 +8,25 @@ trait WithEditiInTable
 {
     public Form $data;
 
-    public function LoadDataRow($id){
+    public function loadDataRow($id)
+    {
         $query = $this->getQuery();
         if ($id) {
-            $query =  $query->where('id',$id);
+            $query =  $query->where('id', $id);
             $data = $query->first();
-            if (!$data) return abort(404);
-            if (method_exists($this, 'loadDataRowBefore')) {
-                call_user_func([$this, 'loadDataRowBefore'], $data,$id);
+            if (!$data) {
+                return abort(404);
             }
-            foreach($data->toArray() as $key=>$value){
-                // data_set($this, $column->getFormFieldEncode(), $column->getValueDefault());
+            if (method_exists($this, 'loadDataRowBefore')) {
+                call_user_func([$this, 'loadDataRowBefore'], $data, $id);
+            }
+            foreach ($data->toArray() as $key => $value) {
                 $this->data->{$key} = $value;
             }
             if (method_exists($this, 'loadDataRowAfter')) {
-                call_user_func([$this, 'loadDataRowAfter'], $data,$id);
+                call_user_func([$this, 'loadDataRowAfter'], $data, $id);
             }
         }
     }
-    public function SaveDataRow($id){
-
-    }
+    abstract public  function saveDataRow($id);
 }

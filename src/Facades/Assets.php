@@ -16,16 +16,14 @@ use Illuminate\Support\Facades\Facade;
  * @method static void AddScript($content,$base=null, $name=null, $location = PLATFORM_BODY_AFTER, $priority = 10000)
  * @method static void AddStyle($content,$base=null, $name=null, $location = PLATFORM_BODY_AFTER, $priority = 10000)
  * @method static void Render($location)
- * @method static mix GetData($key,$default=null)
- * @method static void SetData($key,$value)
+ * @method static mix getData($key,$default=null)
+ * @method static void setData($key,$value)
  * @method static string getTitle()
  * @method static void setTitle($title, $lock = false)
  * @method static string getFavicon()
  * @method static void setFavicon($favicon, $lock = false)
  * @method static string getDescription()
  * @method static void setDescription($value, $lock = false)
- * 
- * 
  *
  * @see \Sokeio\Facades\Assets
  */

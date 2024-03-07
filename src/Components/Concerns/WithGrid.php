@@ -7,64 +7,64 @@ use Sokeio\Components\Common\Row;
 
 trait WithGrid
 {
-    public static function Row($value)
+    public static function row($value)
     {
         return Row::make($value);
     }
-    public static function Column($value)
+    public static function column($value)
     {
         return Column::make($value);
     }
-    public static function Column1($value)
+    public static function column1($value)
     {
-        return Column::make($value)->Col1();
+        return Column::make($value)->col1();
     }
-    public static function Column2($value)
+    public static function column2($value)
     {
-        return Column::make($value)->Col2();
+        return Column::make($value)->col2();
     }
-    public static function Column3($value)
+    public static function column3($value)
     {
-        return Column::make($value)->Col3();
+        return Column::make($value)->col3();
     }
-    public static function Column4($value)
+    public static function column4($value)
     {
-        return Column::make($value)->Col4();
+        return Column::make($value)->col4();
     }
-    public static function Column5($value)
+    public static function column5($value)
     {
-        return Column::make($value)->Col5();
+        return Column::make($value)->col5();
     }
-    public static function Column6($value)
+    public static function column6($value)
     {
-        return Column::make($value)->Col6();
+        return Column::make($value)->col6();
     }
-    public static function Column7($value)
+    public static function column7($value)
     {
-        return Column::make($value)->Col7();
+        return Column::make($value)->col7();
     }
-    public static function Column8($value)
+    public static function column8($value)
     {
-        return Column::make($value)->Col8();
+        return Column::make($value)->col8();
     }
-    public static function Column9($value)
+    public static function column9($value)
     {
-        return Column::make($value)->Col9();
+        return Column::make($value)->col9();
     }
-    public static function Column10($value)
+    public static function column10($value)
     {
-        return Column::make($value)->Col10();
+        return Column::make($value)->col10();
     }
-    public static function Column11($value)
+    public static function column11($value)
     {
-        return Column::make($value)->Col11();
+        return Column::make($value)->col11();
     }
-    public static function Column12($value)
+    public static function column12($value)
     {
-        return Column::make($value)->Col12();
+        return Column::make($value)->col12();
     }
-    public static function ColumnAuto($value)
+    public static function columnAuto($value)
     {
-        return Column::make($value)->ColAuto();
+        return Column::make($value)->colAuto();
     }
 }

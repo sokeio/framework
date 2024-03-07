@@ -5,15 +5,14 @@ namespace Sokeio\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * 
- * @method static void SetLocaleApp()
- * @method static string CurrentLocale()
- * @method static string DefaultLocale()
+ * @method static void setLocaleApp()
+ * @method static string currentLocale()
+ * @method static string defaultLocale()
  * @method static string getLanguageFromCountryBasedLocale(string $locale)
- * @method static array SupportedLocales()
- * @method static void SwitchLocale(string $locale)
- * @method static void FileJsonToTable();
- * @method static void TableToFileJson();
+ * @method static array supportedLocales()
+ * @method static void switchLocale(string $locale)
+ * @method static void fileJsonToTable();
+ * @method static void tableToFileJson();
  * @method static bool has($key)
  * @method static bool isLocaleCountryBased(string $locale)
  * @see \Sokeio\Facades\Locale

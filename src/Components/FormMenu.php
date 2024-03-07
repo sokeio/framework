@@ -7,33 +7,36 @@ use Sokeio\Models\Menu;
 
 class FormMenu extends Form
 {
-    public static function getMenuType()
+    public  static function getMenuType(): string
     {
+        echo 'getMenuType';
         return '';
     }
-    public static function getMenuName()
+    public static function getMenuName(): string
     {
+        echo 'getMenuName';
         return '';
     }
-    public static function RenderItem(MenuItemBuilder $item)
+    public static function renderItem(MenuItemBuilder $item)
     {
+        echo 'renderItem';
     }
-    protected function getModel()
+    protected function getModel(): string
     {
         return Menu::class;
     }
     protected function DefaultUI()
     {
         return [
-            UI::Row([
-                UI::Column(UI::Icon('icon')->Label(__('Icon'))),
-                UI::Column(UI::Color('color')->Label(__('Color'))),
+            UI::row([
+                UI::column(UI::icon('icon')->label(__('Icon'))),
+                UI::column(UI::color('color')->label(__('Color'))),
             ]),
-            UI::Text('name')->Label(__('Name'))->required(),
-            UI::Textarea('info')->Label(__('Info')),
-            UI::Text('attr_name')->Label(__('Attribute')),
-            UI::Text('class_name')->Label(__('Class name')),
-            UI::Hidden('data_type')->ValueDefault(function () {
+            UI::text('name')->label(__('Name'))->required(),
+            UI::textarea('info')->label(__('Info')),
+            UI::text('attr_name')->label(__('Attribute')),
+            UI::text('class_name')->label(__('Class name')),
+            UI::hidden('data_type')->valueDefault(function () {
                 return static::getMenuType();
             })
         ];
@@ -42,23 +45,23 @@ class FormMenu extends Form
     {
         return [];
     }
-    protected function FormUI()
+    protected function formUI()
     {
-        return UI::Prex('data', [...$this->DefaultUI(), ...$this->MenuUI()]);
+        return UI::prex('data', [...$this->DefaultUI(), ...$this->MenuUI()]);
     }
-    protected function FooterUI()
+    protected function footerUI()
     {
         if ($this->isEdit()) {
             return [
                 UI::Div([
-                    UI::Button(__('Save'))->WireClick('doSave()')
-                ])->ClassName('p-2 text-center')
+                    UI::button(__('Save'))->wireClick('doSave()')
+                ])->className('p-2 text-center')
             ];
         } else {
             return [
                 UI::Div([
-                    UI::Button(__('Add to menu'))->Attribute(' @click="doAddMenu()" ')
-                ])->ClassName('p-2 text-end')
+                    UI::button(__('Add to menu'))->attribute(' @click="doAddMenu()" ')
+                ])->className('p-2 text-end')
             ];
         }
     }

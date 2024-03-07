@@ -7,15 +7,15 @@ use Sokeio\Components\Field\Concerns\WithDatasource;
 class SelectWithSearchField extends BaseField
 {
     use WithDatasource;
-    public function SearchDataSource($SearchDataSource): static
+    public function searchFn($searchFn): static
     {
-        return $this->setKeyValue('SearchDataSource', $SearchDataSource);
+        return $this->setKeyValue('searchFn', $searchFn);
     }
-    public function getSearchDataSource()
+    public function getSearchFn()
     {
-        return $this->getValue('SearchDataSource');
+        return $this->getValue('searchFn');
     }
-    
+
     public function getFieldView()
     {
         return 'sokeio::components.field.select-with-search';

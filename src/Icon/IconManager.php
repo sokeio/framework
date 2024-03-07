@@ -9,7 +9,7 @@ class IconManager
     private $cacheIcon = [];
     public function __construct()
     {
-        $this->Register(TablerIcon::class)->Register(BootstrapIcon::class);
+        $this->register(TablerIcon::class)->register(BootstrapIcon::class);
     }
     private static $instance;
     public static function getInstance()
@@ -19,24 +19,30 @@ class IconManager
         }
         return self::$instance;
     }
-    public function Register($iconClass)
+    public function register($iconClass)
     {
         $this->icons[$iconClass] = $iconClass;
         return $this;
     }
-    public function Assets()
+    public function assets()
     {
-        foreach ($this->icons as $icon)
-            if (is_subclass_of($icon, IconBase::class)) (new ($icon))->AddToAsset();
+        foreach ($this->icons as $icon) {
+            if (is_subclass_of($icon, IconBase::class)) {
+                (new ($icon))->addToAsset();
+            }
+        }
     }
     public function toArray()
     {
-        if (!empty($this->cacheIcon))
+        if (!empty($this->cacheIcon)) {
             return $this->cacheIcon;
+        }
         $icons = [];
-        foreach ($this->icons as $icon)
-            if (is_subclass_of($icon, IconBase::class))
+        foreach ($this->icons as $icon) {
+            if (is_subclass_of($icon, IconBase::class)) {
                 $icons[] = (new ($icon))->toArray();
+            }
+        }
         $this->cacheIcon = $icons;
 
         return $icons;
@@ -54,9 +60,11 @@ class IconManager
     public function  getListBase()
     {
         $icons = [];
-        foreach ($this->icons as $icon)
-            if (is_subclass_of($icon, IconBase::class))
+        foreach ($this->icons as $icon) {
+            if (is_subclass_of($icon, IconBase::class)) {
                 $icons[] = (new ($icon))->toArray(false);
+            }
+        }
         return $icons;
     }
 }

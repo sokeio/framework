@@ -2,8 +2,8 @@
     $modelLabel = $column->getLabel() ?? $column->getName();
     $formField = $column->getFormField();
     $infoText = $column->getInfoText();
-    $uiBefore = $column->getUIBefore();
-    $uiAfter = $column->getUIAfter();
+    $uiBefore = $column->getBeforeUI();
+    $uiAfter = $column->getAfterUI();
 @endphp
 <div class=" {{ $column->getClassName() ?? 'mb-3' }}" {!! $column->getAttribute() ?? '' !!}>
     <label class="form-label" {!! $column->getAttributeLabel() ?? '' !!}>{!! $modelLabel !!}</label>

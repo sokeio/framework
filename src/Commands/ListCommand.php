@@ -28,7 +28,7 @@ class ListCommand extends Command
     public function handle(): int
     {
         $type = $this->option('type');
-        $sokeio = platform_by($type);
+        $sokeio = platformBy($type);
         $this->components->info('Platform:' . $type);
         foreach ($sokeio->getAll() as $item) {
             $this->components->info($item->name . ':' . ($item->isActive() ? 'Actived' : 'UnActived'));

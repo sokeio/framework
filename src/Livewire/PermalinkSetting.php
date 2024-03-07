@@ -15,17 +15,18 @@ class PermalinkSetting extends FormSetting
     }
     public function SettingUI()
     {
-        return UI::ForEach(PermalinkManager::getDefault(), UI::Text(function ($item) {
+        return UI::forEach(PermalinkManager::getDefault(), UI::text(function ($item) {
             return $item->getEachKey();
-        })->ValueDefault(function ($item) {
+        })->valueDefault(function ($item) {
             return  $item->getEachData();
-        })->Label(function ($item) {
+        })->label(function ($item) {
             return str_replace(['permalink', '_'], ' ', $item->getEachKey());
         }));
     }
     protected function LoadSetting($keyForm, $keyValue, $column)
     {
-        data_set($this, $keyForm, PermalinkManager::getPermalink($column->getName(), $column->getValueDefault())[0]['value']);
+        $value = PermalinkManager::getPermalink($column->getName(), $column->getValueDefault())[0]['value'];
+        data_set($this, $keyForm, $value);
         return $this;
     }
     protected function SaveSetting($keyForm, $keyValue, $column)

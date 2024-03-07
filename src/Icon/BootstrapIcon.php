@@ -6,7 +6,7 @@ use Sokeio\Facades\Assets;
 
 class BootstrapIcon extends IconBase
 {
-    public function AddToAsset()
+    public function addToAsset()
     {
         Assets::AddCss('bootstrap-icons/bootstrap-icons.css', 'module', 'sokeio');
     }

@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 
 class PlatformBladeDirectives
 {
-    public static function EndRole()
+    public static function endRole()
     {
         return <<<EOT
         <?php
@@ -14,7 +14,7 @@ class PlatformBladeDirectives
         ?>
         EOT;
     }
-    public static function Role($role)
+    public static function role($role)
     {
         return <<<EOT
         <?php
@@ -22,7 +22,7 @@ class PlatformBladeDirectives
         ?>
         EOT;
     }
-    public static function EndPermission()
+    public static function endPermission()
     {
         return <<<EOT
         <?php
@@ -30,7 +30,7 @@ class PlatformBladeDirectives
         ?>
         EOT;
     }
-    public static function Permission($permission)
+    public static function permission($permission)
     {
         return <<<EOT
         <?php
@@ -39,7 +39,7 @@ class PlatformBladeDirectives
         ?>
         EOT;
     }
-    public static function ThemeHead($expression)
+    public static function themeHead($expression)
     {
         $expression = Str::upper($expression);
         return <<<EOT
@@ -49,7 +49,7 @@ class PlatformBladeDirectives
         EOT;
     }
 
-    public static function ThemeBody($expression)
+    public static function themeBody($expression)
     {
         $expression = Str::upper($expression);
         return <<<EOT

@@ -9,7 +9,7 @@ use Sokeio\Menu\MenuItemBuilder;
 class MenuItemLink extends FormMenu
 {
 
-    public static function RenderItem(MenuItemBuilder $item)
+    public static function renderItem(MenuItemBuilder $item)
     {
         echo  view_scope('sokeio::menu.item.link', ['item' => $item, 'link' => $item->getValueLink()])->render();
     }
@@ -24,7 +24,7 @@ class MenuItemLink extends FormMenu
     protected function MenuUI()
     {
         return [
-            UI::Text('link')->Label(__('URL'))->required()->ValueDefault(function () {
+            UI::text('link')->label(__('URL'))->required()->valueDefault(function () {
                 return '#';
             }),
         ];

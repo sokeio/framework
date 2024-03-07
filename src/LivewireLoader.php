@@ -15,12 +15,14 @@ class LivewireLoader
     {
         return self::$arrComponent;
     }
-    private static function pushComponent($component,$class)
+    private static function pushComponent($component, $class)
     {
-        if (!self::$arrComponent) self::$arrComponent = collect([]);
+        if (!self::$arrComponent) {
+            self::$arrComponent = collect([]);
+        }
         self::$arrComponent->push($component);
-        if($class){
-              Livewire::component($component, $class);
+        if ($class) {
+            Livewire::component($component, $class);
         }
     }
     public static function getNameByClass($class)
@@ -33,11 +35,14 @@ class LivewireLoader
     }
     public static function getNameComponent($name)
     {
-        return isset(self::$arrComponent[$name]) ? self::getNameByClass(self::$arrComponent[$name]) : self::getNameByClass($name);
+        if (isset(self::$arrComponent[$name])) {
+            return self::$arrComponent[$name];
+        }
+        return self::getNameByClass($name);
     }
-    public static function Register($path, $namespace, $aliasPrefix = '')
+    public static function register($path, $namespace, $aliasPrefix = '')
     {
-        AllClass(
+        getAllClass(
             $path,
             $namespace,
             function ($class) use ($namespace, $aliasPrefix) {
@@ -53,17 +58,19 @@ class LivewireLoader
                     self::pushComponent(Str::beforeLast($alias, '.index'), $class);
                     self::pushComponent(Str::beforeLast($alias_class, '.index'), $class);
                 }
-                self::pushComponent($alias,$class);
-                self::pushComponent($alias_class,$class);
+                self::pushComponent($alias, $class);
+                self::pushComponent($alias_class, $class);
             },
             function ($class) {
-                if (!class_exists($class)) return false;
+                if (!class_exists($class)) {
+                    return false;
+                }
                 $refClass = new ReflectionClass($class);
                 return  $refClass && !$refClass->isAbstract()  && $refClass->isSubclassOf(Component::class);
             }
         );
     }
-    public static function ViewRoute($class)
+    public static function viewRoute($class)
     {
         return function () use ($class) {
             return (new $class)(app(), Route::current());

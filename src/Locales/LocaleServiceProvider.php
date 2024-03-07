@@ -7,9 +7,6 @@ use Illuminate\Routing\UrlGenerator as LaravelUrlGenerator;
 
 class LocaleServiceProvider extends LaravelServiceProvider
 {
-    public function boot()
-    {
-    }
 
     public function register()
     {

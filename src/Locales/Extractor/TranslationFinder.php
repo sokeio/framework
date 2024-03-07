@@ -93,13 +93,16 @@ class TranslationFinder
         $arr = [];
         $arr[] = PlatformCodeParser::extractTranslation('app', $this->findByPath(base_path()));
         foreach (Module::getAll() as $module) {
-            $arr[] = PlatformCodeParser::extractTranslation('module', $this->findByPath($module->getPath()), $module->getName());
+            $path = $this->findByPath($module->getPath());
+            $arr[] = PlatformCodeParser::extractTranslation('module', $path, $module->getName());
         }
         foreach (Plugin::getAll() as $plugin) {
-            $arr[] = PlatformCodeParser::extractTranslation('plugin', $this->findByPath($plugin->getPath()), $plugin->getName());
+            $path = $this->findByPath($plugin->getPath());
+            $arr[] = PlatformCodeParser::extractTranslation('plugin', $path, $plugin->getName());
         }
         foreach (Theme::getAll() as $theme) {
-            $arr[] = PlatformCodeParser::extractTranslation('theme', $this->findByPath($theme->getPath()), $theme->getName());
+            $path = $this->findByPath($theme->getPath());
+            $arr[] = PlatformCodeParser::extractTranslation('theme', $path, $theme->getName());
         }
         return $arr;
     }
@@ -107,29 +110,28 @@ class TranslationFinder
     {
         return (new self())->find();
     }
-    public static function updateToJson()
+    public static function updateToJson(): void
     {
         foreach (self::toJson() as $item) {
-            [
-                'type' => $type,
-                'name' => $name,
-                'translation' => $translation
-            ] = $item;
-            if ($type == 'app') {
-            } else {
-                $itemBase = platform_by($type)->find($name);
-                $path_local = $itemBase->getPath('resources/lang/en.json');
-                $arr = File::exists($path_local) ? JsonData::getJsonFromFile($path_local) : [];
-                foreach ($translation as $key => $value) {
-                    if (!isset($arr[$key])) {
-                        $arr[$key] = $value;
-                    }
-                }
-                if (!File::exists($itemBase->getPath('resources/lang')))
-                    File::makeDirectory($itemBase->getPath('resources/lang'), 0775, true);
-                file_put_contents($path_local, json_encode($arr, true));
+            if ($item['type'] === 'app') {
+                continue;
             }
-            // JsonData::getJsonFromFile()
+
+            $itemBase = platformBy($item['type'])->find($item['name']);
+            $path_local = $itemBase->getPath('resources/lang/en.json');
+            $arr = File::exists($path_local) ? JsonData::getJsonFromFile($path_local) : [];
+            $translation = $item['translation'];
+            foreach ($translation as $key => $value) {
+                if (!isset($arr[$key])) {
+                    $arr[$key] = $value;
+                }
+            }
+
+            if (!File::exists($itemBase->getPath('resources/lang'))) {
+                File::makeDirectory($itemBase->getPath('resources/lang'), 0775, true);
+            }
+            $text = json_encode($arr, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_FORCE_OBJECT);
+            file_put_contents($path_local, $text);
         }
     }
 }

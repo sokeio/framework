@@ -19,7 +19,9 @@ class MenuManager
     }
     public function position($_position = ''): MenuBuilder
     {
-        if (!$_position) $_position = $this->default;
+        if (!$_position) {
+            $_position = $this->default;
+        }
         if (!isset($this->positions[$_position]) || !$this->positions[$_position]) {
             $this->positions[$_position] = new MenuBuilder($_position);
         }
@@ -29,43 +31,40 @@ class MenuManager
     {
         return $this->position($_position)->toHtml();
     }
-    public function link($link, $text, $icon = '', $attributes = [], $per = '', $sort = 20, $_position = ''): MenuBuilder
+    public function link($link, $text, $icon = '', $attributes = [], $per = '', $sort = 20, $_position = '')
     {
         return $this->position($_position)->link($link, $text, $icon, $attributes, $per, $sort);
     }
-    public function route($data, $text, $icon = '', $attributes = [], $per = '', $sort = 20, $_position = ''): MenuBuilder
+    public function route($data, $text, $icon = '', $attributes = [], $per = '', $sort = 20, $_position = '')
     {
         return $this->position($_position)->route($data, $text, $icon, $attributes, $per, $sort);
     }
-    public function component($data, $text, $icon = '', $attributes = [], $per = '', $sort = 20, $_position = ''): MenuBuilder
-    {
-        return $this->position($_position)->component($data, $text, $icon, $attributes, $per, $sort);
-    }
-    public function action($data, $text, $icon = '', $attributes = [], $per = '', $sort = 20, $_position = ''): MenuBuilder
+
+    public function action($data, $text, $icon = '', $attributes = [], $per = '', $sort = 20, $_position = '')
     {
         return $this->position($_position)->action($data, $text, $icon, $attributes, $per, $sort);
     }
-    public function div($text = '', $icon = '', $attributes = [], $per = '', $sort  = 20, $_position = ''): MenuBuilder
+    public function div($text = '', $icon = '', $attributes = [], $per = '', $sort  = 20, $_position = '')
     {
         return $this->position($_position)->div($text, $icon, $attributes, $per, $sort);
     }
-    public function tag($tag, $text, $icon = '', $attributes = [], $per = '', $sort  = 20, $_position = ''): MenuBuilder
+    public function tag($tag, $text, $icon = '', $attributes = [], $per = '', $sort  = 20, $_position = '')
     {
         return $this->position($_position)->tag($tag, $text, $icon, $attributes, $per, $sort);
     }
-    public function button($text, $icon = '', $attributes = [], $per = '', $sort  = 20, $_position = ''): MenuBuilder
+    public function button($text, $icon = '', $attributes = [], $per = '', $sort  = 20, $_position = '')
     {
         return $this->position($_position)->button($text, $icon, $attributes, $per, $sort);
     }
-    public function subMenu($text, $icon = '', $callback, $sort  = 20, $_position = ''): MenuBuilder
+    public function subMenu($text, $icon, $callback, $sort  = 20, $_position = '')
     {
         return $this->position($_position)->subMenu($text, $icon, $callback, $sort);
     }
-    public function attachMenu($targetId, $callback, $_position = ''): MenuBuilder
+    public function attachMenu($targetId, $callback, $_position = '')
     {
         return $this->position($_position)->attachMenu($targetId, $callback);
     }
-    public function wrapDiv($class, $id, $attributes = [], $_position = ''): MenuBuilder
+    public function wrapDiv($class, $id, $attributes = [], $_position = '')
     {
         return $this->position($_position)->wrapDiv($class, $id, $attributes);
     }
@@ -82,7 +81,9 @@ class MenuManager
     }
     public function doRegister()
     {
-        if (!Route::current()) return;
+        if (!Route::current()) {
+            return;
+        }
         foreach ($this->registers as $callback) {
             $callback();
         }

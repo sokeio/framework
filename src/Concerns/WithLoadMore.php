@@ -6,9 +6,7 @@ namespace Sokeio\Concerns;
 trait WithLoadMore
 {
     public $dataItems = [];
-    protected function getQuery(): mixed
-    {
-    }
+    abstract protected function getQuery(): mixed;
     protected function getPageSize()
     {
         return 12;
@@ -16,15 +14,15 @@ trait WithLoadMore
     public $page = 0;
     public function loadMore()
     {
-        $this->page++;
         $query = $this->getQuery();
-        $items = $query->paginate($this->getPageSize(), ['*'], 'page', $this->page)->items();
-        if (count($items) == 0) {
-            $this->page--;
+        $items = $query->forPage($this->page + 1, $this->getPageSize())->get()->toArray();
+
+        if (empty($items)) {
             return;
         }
+
         $this->dataItems = array_merge($this->dataItems, $items);
-        return $this->dataItems;
+        $this->page++;
     }
     public function getLoadMoreHtml($text = 'Loading..')
     {

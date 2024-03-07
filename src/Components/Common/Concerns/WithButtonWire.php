@@ -4,31 +4,31 @@ namespace Sokeio\Components\Common\Concerns;
 
 trait WithButtonWire
 {
-    public function WireClick($WireClick): static
+    public function wireClick($wireClick): static
     {
-        return $this->setKeyValue('WireClick', $WireClick);
+        return $this->setKeyValue('wireClick', $wireClick);
     }
     public function getWireClick()
     {
-        return $this->getValue('WireClick', null, true);
+        return $this->getValue('wireClick', null, true);
     }
-    public function XClick($XClick): static
+    public function xClick($xClick): static
     {
-        return $this->setKeyValue('XClick', $XClick);
+        return $this->setKeyValue('xClick', $xClick);
     }
     public function getXClick()
     {
-        return $this->getValue('XClick', null, true);
+        return $this->getValue('xClick', null, true);
     }
 
     public function getWireAttribute()
     {
         $attr = '';
-        if ($WireClick = $this->getWireClick()) {
-            $attr .= ' wire:click="' . $WireClick . '" ';
+        if ($wireClick = $this->getWireClick()) {
+            $attr .= ' wire:click="' . $wireClick . '" ';
         }
-        if ($XClick = $this->getXClick()) {
-            $attr .= ' x-on:click="' . $XClick . '" ';
+        if ($xClick = $this->getXClick()) {
+            $attr .= ' x-on:click="' . $xClick . '" ';
         }
         return  $attr;
     }

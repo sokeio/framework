@@ -15,7 +15,7 @@ class PlatformCodeParser
     {
         $strings = [];
         foreach ($this->files as $file) {
-            $strings = array_merge($strings, CodeParser::Inst()->parse($file));
+            $strings = array_merge($strings, CodeParser::inst()->parse($file));
         }
 
         return [

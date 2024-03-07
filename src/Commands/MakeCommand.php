@@ -50,8 +50,8 @@ class MakeCommand extends Command
         foreach ($names as $name) {
             $code = $this->generate($name);
             $this->components->info('module ' . $name . ' : ' .  ($code == 0 ? 'OK' : 'ERROR'));
-            if ($code == 0 && $active == true) {
-                run_cmd(base_path(''), 'php artisan so:active ' . $name . ' -t ' . $type);
+            if ($code == 0 && $active === true) {
+                runCmd(base_path(''), 'php artisan so:active ' . $name . ' -t ' . $type);
             }
             if ($code === E_ERROR) {
                 $success = false;

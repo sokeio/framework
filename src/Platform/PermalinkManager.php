@@ -18,9 +18,9 @@ class PermalinkManager
         $permalinks = static::getPermalink($key, $permalink);
         foreach ($permalinks as $value) {
             if (isset($value['lang']) && $value['lang'] != '' && $value['lang'] != 'null') {
-                Route::get(str_replace('{lang}', $value['lang'], $value['value']), route_theme($route_class))->name($route_name . '.' . $value['lang']);
+                Route::get(str_replace('{lang}', $value['lang'], $value['value']), routeTheme($route_class))->name($route_name . '.' . $value['lang']);
             } else {
-                Route::get($value['value'], route_theme($route_class))->name($route_name);
+                Route::get($value['value'], routeTheme($route_class))->name($route_name);
             }
         }
     }

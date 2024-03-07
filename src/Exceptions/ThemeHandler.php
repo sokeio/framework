@@ -3,7 +3,6 @@
 namespace Sokeio\Exceptions;
 
 use Sokeio\Facades\Theme;
-use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Throwable;
@@ -38,7 +37,7 @@ class ThemeHandler extends ExceptionHandler
         'password',
         'password_confirmation',
     ];
-
+    private const PREX_THEME = 'theme::';
     /**
      * Get the view used to render HTTP exceptions.
      *
@@ -47,20 +46,18 @@ class ThemeHandler extends ExceptionHandler
      */
     protected function getHttpExceptionView(HttpExceptionInterface $e)
     {
-
         Theme::reTheme();
-        
         $view = apply_filters(PLATFORM_EXCEPTIONS_HANDLER, null);
-        if ($view && view()->exists($view)) return $view;
+        if (!$view || !view()->exists($view)) {
+            $view = self::PREX_THEME . 'errors.' . $e->getStatusCode();
+        }
+        if (!view()->exists($view)) {
+            $view = substr($view, 0, -2) . 'xx';
+        }
 
-        $view = 'errors.' . $e->getStatusCode();
-        if (view()->exists('theme::' . $view))
-            return ('theme::' . $view);
-
-        $view = substr($view, 0, -2) . 'xx';
-
-        if (view()->exists('theme::' . $view))
-            return ('theme::' . $view);
+        if (view()->exists($view)) {
+            return $view;
+        }
 
         return parent::getHttpExceptionView($e);
     }
@@ -71,7 +68,7 @@ class ThemeHandler extends ExceptionHandler
      */
     public function register()
     {
-        $this->reportable(function (Throwable $e) {
+        $this->reportable(function () {
             //
         });
     }

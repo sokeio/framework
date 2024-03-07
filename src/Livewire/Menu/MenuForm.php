@@ -8,15 +8,15 @@ use Sokeio\Models\MenuLocation;
 
 class MenuForm extends Form
 {
-    protected function getModel()
+    protected function getModel(): string
     {
         return MenuLocation::class;
     }
-    protected function FormUI()
+    protected function formUI()
     {
-        return UI::Prex('data', [
-            UI::Text('name')->Label(__('Menu Name'))->required(),
-        ])->ClassName('p-3');
+        return UI::prex('data', [
+            UI::text('name')->label(__('Menu Name'))->required(),
+        ])->className('p-3');
     }
     protected function saveBefore($menu)
     {

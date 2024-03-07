@@ -13,9 +13,9 @@ class FormSettingCallback extends Component
     {
         return 'card p-3';
     }
-    protected function FormUI()
+    protected function formUI()
     {
-        return UI::Prex('data', $this->SettingUI());
+        return UI::prex('data', $this->SettingUI());
     }
     protected function SettingUI()
     {
@@ -27,17 +27,20 @@ class FormSettingCallback extends Component
     }
     public function doSave()
     {
-        if ($this->doValidate())
+        if ($this->doValidate()) {
+
             $this->skipRender();
+        }
         $this->closeComponent();
         return $this->data;
     }
-    protected function FooterUI()
+    protected function footerUI()
     {
         return [
             UI::Div([
-                UI::Button(__('Save'))->Attribute('@click="window[\'' . ($this->eventCallback) . '\'](await $wire.doSave())"')
-            ])->ClassName('p-2 text-center')
+                UI::button(__('Save'))
+                    ->attribute('@click="window[\'' . ($this->eventCallback) . '\'](await $wire.doSave())"')
+            ])->className('p-2 text-center')
         ];
     }
 }

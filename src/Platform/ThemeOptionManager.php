@@ -14,13 +14,13 @@ class ThemeOptionManager
   public function reload()
   {
     if ($site = Theme::SiteDataInfo()) {
-      $this->option = setting('theme_option_' . $site->id, []);
+      $this->option = setting('themeOption_' . $site->id, []);
     }
   }
   public function saveOption()
   {
     if ($site = Theme::SiteDataInfo()) {
-      set_setting('theme_option_' . $site->id, $this->option ?? []);
+      setSetting('themeOption_' . $site->id, $this->option ?? []);
     }
   }
   private $optionUI = [];

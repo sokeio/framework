@@ -15,42 +15,50 @@ trait WithSlug
     {
         return 'slug';
     }
-    protected function getSlugText(){
+    protected function getSlugText()
+    {
         return $this->name;
     }
-    public function ReSlug()
+    private function getSlugCountMax($slug)
     {
-        if (($this->slug == null || $this->slug == "")) {
-            // produce a slug based on the activity title
-            $slug =  Str::slug($this->getSlugText()??'');
-            if (!$slug) return;
-            // check to see if any other slugs exist that are the same & count them
-            $slugMax =  static::whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->orderByDesc('slug')->first();
-            $count = 0;
-            if ($slugMax == null) {
-                $this->slug = $slug;
-            } else {
-                if ($slug != $slugMax->slug)
-                    $count = (str_replace("{$slug}-", "", $slugMax->slug) ?? 0) + 1;
+        $slugMax = static::where('slug', 'like', "{$slug}%")
+            ->orderBy('slug', 'desc')
+            ->first();
+        $count = 0;
+
+        if ($slugMax === null) {
+            $this->slug = $slug;
+        } elseif ($slug !== $slugMax->slug) {
+            $count = (int)str_replace("{$slug}-", "", $slugMax->slug) + 1;
+        }
+        return $count;
+    }
+    public function reSlug()
+    {
+        if (empty($this->slug)) {
+            $slug = Str::slug($this->getSlugText() ?? '');
+            if (empty($slug)) {
+                return;
             }
+            $count = $this->getSlugCountMax($slug);
             do {
-                // if other slugs exist that are the same, append the count to the slug
-                if ($this->slug == null)
-                    $this->slug = $count > 0 ? "{$slug}-{$count}" : $slug;
-                if (static::where('slug',   $this->slug)->exists()) {
+                $this->slug = $count > 0 ? "{$slug}-{$count}" : $slug;
+                
+                if (static::where('slug', $this->slug)->exists()) {
                     $this->slug = null;
                 }
+
                 $count++;
-            } while ($this->slug == null || $count < 100);
+            } while ($this->slug === null || $count < 100);
         }
     }
     public function initializeWithSlug()
     {
         static::creating(function ($model) {
-            $model->ReSlug();
+            $model->reSlug();
         });
         static::saving(function ($model) {
-            $model->ReSlug();
+            $model->reSlug();
         });
     }
 }

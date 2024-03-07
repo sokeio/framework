@@ -2,24 +2,28 @@
 
 namespace Sokeio\Components;
 
+use Sokeio\Components\Concerns\WithBaseBasic;
 use Sokeio\Laravel\BaseCallback;
 
 class Base extends BaseCallback
 {
-    protected function ChildComponents()
+    use WithBaseBasic;
+    protected function childComponents()
     {
         return [];
     }
     private $cacheComponents;
-    protected function ClearComponents($arr)
+    protected function clearComponents($arr)
     {
         $result = [];
-        if (!$arr) return $result;
+        if (!$arr) {
+            return $result;
+        }
         if (is_array($arr)) {
             foreach ($arr as $value) {
                 if (is_array($value)) {
-                    $result = [...$result, ...$this->ClearComponents($value)];
-                } else if (is_a($value, Base::class)) {
+                    $result = [...$result, ...$this->clearComponents($value)];
+                } elseif (is_a($value, Base::class)) {
                     $result[] = $value;
                 }
             }
@@ -34,14 +38,16 @@ class Base extends BaseCallback
     private function getChildComponents()
     {
         if (!isset($this->cacheComponents)) {
-            $this->cacheComponents = $this->ClearComponents($this->ChildComponents());
+            $this->cacheComponents = $this->clearComponents($this->childComponents());
         }
         return $this->cacheComponents;
     }
     private $callbackReady = [];
-    public function Ready($callback)
+    public function ready($callback)
     {
-        if (!is_callable($callback)) return $this;
+        if (!is_callable($callback)) {
+            return $this;
+        }
         $this->callbackReady[] = $callback;
         return $this;
     }
@@ -50,158 +56,28 @@ class Base extends BaseCallback
         $this->ClearCache();
         foreach ($this->getChildComponents() as $component) {
             $component->Manager($this->getManager());
-            $component->Prex($this->getPrex());
+            $component->prex($this->getPrex());
             $component->boot();
         }
         foreach ($this->callbackReady as $callback) {
-            if (!is_callable($callback)) continue;
+            if (!is_callable($callback)) {
+                continue;
+            }
             $callback($this);
         }
         // Reset Callback
         $this->callbackReady = [];
     }
-    protected function __construct($value)
+
+    public static function make($value)
     {
-    }
-    public static function Make($value)
-    {
-        return (new static($value));
+        return new static($value);
     }
     public function actionUI($key, $callbackUI, $over = false): static
     {
-        $this->Ready(function ($component) use ($key, $callbackUI, $over) {
+        $this->ready(function ($component) use ($key, $callbackUI, $over) {
             $component->getManager()->addActionUI($key, $callbackUI, $over);
         });
         return $this;
-    }
-    public function When($When)
-    {
-        return $this->setKeyValue('When', $When);
-    }
-    public function getWhen()
-    {
-        return $this->getValue('When', true);
-    }
-    public function Attribute($Attribute)
-    {
-        return $this->setKeyValue('Attribute', $Attribute);
-    }
-    public function getAttribute()
-    {
-        $attr = $this->getValue('Attribute');
-        if ($xInit = $this->getXInit()) {
-            $attr = ' x-init="' . $xInit . '" ' . $attr;
-        }
-        if ($xData = $this->getXData()) {
-            $attr = ' x-data="' . $xData . '" ' . $attr;
-        }
-        return $attr;
-    }
-
-    public function ClassName($ClassName)
-    {
-        return $this->setKeyValue('ClassName', $ClassName);
-    }
-    public function getClassName()
-    {
-        return $this->getValue('ClassName');
-    }
-    public function checkPrex()
-    {
-        return $this->checkKey('Prex') && $this->getPrex() != '';
-    }
-    private $dataItem = null;
-    public function DataItem($value)
-    {
-        $this->dataItem = $value;
-        $this->ClearCache();
-        foreach ($this->getChildComponents() as $component) {
-            $component->DataItem($value);
-        }
-        return $this;
-    }
-    public function getDataItem()
-    {
-        return $this->dataItem;
-    }
-    private $levelIndex = 0;
-    public function LevelIndex($value = 0)
-    {
-        $this->levelIndex = $value > 0 ? $value : $this->levelIndex + 1;
-        $this->ClearCache();
-        foreach ($this->getChildComponents() as $component) {
-            $component->LevelIndex($this->levelIndex);
-        }
-        return $this;
-    }
-    public function getLevelIndex()
-    {
-        return $this->levelIndex;
-    }
-    private $levelData = [];
-    public function LevelDataUI($value)
-    {
-        $this->levelData = $value ?? [];
-        $this->ClearCache();
-        foreach ($this->getChildComponents() as $component) {
-            $component->LevelDataUI($this->levelData);
-        }
-        return $this;
-    }
-    public function getLevelDataUI()
-    {
-        return  $this->levelData;
-    }
-    public function LevelData($value, $group_data = 'common', $_levelIndex = -1)
-    {
-        if ($_levelIndex < 0) $_levelIndex = $this->levelIndex;
-        if (!isset($this->levelData[$_levelIndex])) $this->levelData[$_levelIndex] = [];
-        $this->levelData[$_levelIndex][$group_data] = $value;
-        return $this->LevelDataUI($this->levelData);
-    }
-    public function getLevelData($group_data = 'common', $_levelIndex = -1)
-    {
-        if ($_levelIndex < 0) $_levelIndex = $this->levelIndex;
-        if (!isset($this->levelData[$_levelIndex])) $this->levelData[$_levelIndex] = [];
-        return isset($this->levelData[$_levelIndex][$group_data]) ? $this->levelData[$_levelIndex][$group_data] : null;
-    }
-    public function getEachData()
-    {
-        return $this->getLevelData('EachData');
-    }
-    public function getEachKey()
-    {
-        return $this->getLevelData('EachKey');
-    }
-    public function getEachIndex()
-    {
-        return $this->getLevelData('EachIndex');
-    }
-    public function Prex($Prex)
-    {
-        return $this->setKeyValue('Prex', $Prex, true);
-    }
-    public function getPrex()
-    {
-        return $this->getValue('Prex');
-    }
-    public function getView()
-    {
-    }
-    public function XData($XData)
-    {
-        return $this->setKeyValue('XData', $XData);
-    }
-    public function getXData()
-    {
-        return $this->getValue('XData');
-    }
-    public function XInit($XInit)
-    {
-        return $this->setKeyValue('XInit', $XInit);
-    }
-    public function getXInit()
-    {
-        return $this->getValue('XInit');
     }
 }

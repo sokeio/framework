@@ -1,11 +1,11 @@
 {{-- @php
-    $column->LevelIndex();
+    $column->levelIndex();
 @endphp --}}
 {{-- @foreach ($column->getArrayData() as $key => $item)
     @php
-        $column->LevelData($item, 'EachData');
-        $column->LevelData($key, 'EachKey');
-        $column->LevelData($loop->index, 'EachIndex');
+        $column->levelData($item, 'EachData');
+        $column->levelData($key, 'EachKey');
+        $column->levelData($loop->index, 'EachIndex');
     @endphp --}}
     @includeIf('sokeio::components.layout', [
         'layout' => $column->getChildContentEach(),

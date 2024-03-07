@@ -8,7 +8,7 @@ use Sokeio\Laravel\WithCallback;
 trait WithShortcode
 {
     use WithCallback;
-    public static function Register()
+    public static function register()
     {
         Shortcode::register(static::class);
     }

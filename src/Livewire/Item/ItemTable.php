@@ -28,19 +28,19 @@ class ItemTable extends Table
     public function getColumns()
     {
         return [
-            UI::Text('name')->Label(__('Name')),
-            UI::Text('group_item_id')->Label(__('Group Item'))->FieldValue(function ($item) {
+            UI::text('name')->label(__('Name')),
+            UI::text('group_item_id')->label(__('Group Item'))->fieldValue(function ($item) {
 
                 if ($item->group) {
                     return $item->group->name;
                 }
                 return __('None');
             }),
-            UI::Text('icon')->Label(__('Icon'))->NoSort(),
-            UI::Text('description')->Label(__('Description'))->NoSort(),
-            UI::Text('image')->Label(__('Image'))->NoSort(),
-            UI::Text('created_at')->Label(__('Created At')),
-            UI::Text('updated_at')->Label(__('Updated At')),
+            UI::text('icon')->label(__('Icon'))->NoSort(),
+            UI::text('description')->label(__('Description'))->NoSort(),
+            UI::text('image')->label(__('Image'))->NoSort(),
+            UI::text('created_at')->label(__('Created At')),
+            UI::text('updated_at')->label(__('Updated At')),
         ];
     }
 }

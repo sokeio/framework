@@ -57,12 +57,12 @@ class SokeioServiceProvider extends ServiceProvider
     protected function registerBladeDirectives()
     {
         //Blade directives
-        Blade::directive('ThemeBody', [PlatformBladeDirectives::class, 'ThemeBody']);
-        Blade::directive('ThemeHead', [PlatformBladeDirectives::class, 'ThemeHead']);
-        Blade::directive('role',  [PlatformBladeDirectives::class, 'Role']);
-        Blade::directive('endrole', [PlatformBladeDirectives::class, 'EndRole']);
-        Blade::directive('permission',  [PlatformBladeDirectives::class, 'Permission']);
-        Blade::directive('endPermission', [PlatformBladeDirectives::class, 'EndPermission']);
+        Blade::directive('ThemeBody', [PlatformBladeDirectives::class, 'themeBody']);
+        Blade::directive('ThemeHead', [PlatformBladeDirectives::class, 'themeHead']);
+        Blade::directive('role',  [PlatformBladeDirectives::class, 'role']);
+        Blade::directive('endrole', [PlatformBladeDirectives::class, 'endRole']);
+        Blade::directive('permission',  [PlatformBladeDirectives::class, 'permission']);
+        Blade::directive('endPermission', [PlatformBladeDirectives::class, 'endPermission']);
     }
     protected function registerProvider()
     {
@@ -82,9 +82,9 @@ class SokeioServiceProvider extends ServiceProvider
     }
     public function bootingPackage()
     {
-        Module::LoadApp();
-        Theme::LoadApp();
-        Plugin::LoadApp();
+        Module::loadApp();
+        Theme::loadApp();
+        Plugin::loadApp();
     }
 
     public function packageRegistered()
@@ -101,7 +101,7 @@ class SokeioServiceProvider extends ServiceProvider
             echo '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">';
             echo '<meta http-equiv="X-UA-Compatible" content="ie=edge">';
             echo '<meta name="csrf_token" value="' . csrf_token() . '"/>';
-            if (!sokeio_is_admin() && function_exists('seo_header_render')) {
+            if (!sokeioIsAdmin() && function_exists('seo_header_render')) {
                 add_filter('SEO_DATA_DEFAULT', function ($prev) {
                     return [
                         ...$prev,
@@ -184,7 +184,7 @@ class SokeioServiceProvider extends ServiceProvider
             },400)") . "\"));
             </script>";
             Assets::Render(PLATFORM_BODY_AFTER);
-            if (!sokeio_is_admin() && setting('COOKIE_BANNER_ENABLE', 1) && Request::isMethod('get') && !request()->cookie('cookie-consent')) {
+            if (!sokeioIsAdmin() && setting('COOKIE_BANNER_ENABLE', 1) && Request::isMethod('get') && !request()->cookie('cookie-consent')) {
                 echo Livewire::mount('sokeio::gdpr-modal');
             }
         });
@@ -204,9 +204,9 @@ class SokeioServiceProvider extends ServiceProvider
             Assets::setDescription(setting('PLATFORM_HOMEPAGE_DESCRIPTION'));
             return $prev;
         });
-        if (admin_url() != '') {
+        if (adminUrl() != '') {
             Platform::RouteSiteBeforeReady(function () {
-                Route::get('/', route_filter(
+                Route::get('/', routeFilter(
                     PLATFORM_HOMEPAGE,
                     'sokeio::homepage'
                 ))->name('homepage');
@@ -232,10 +232,10 @@ class SokeioServiceProvider extends ServiceProvider
                 if (!Platform::checkFolderPlatform()) {
                     Platform::makeLink();
                 }
-                IconManager::getInstance()->Assets();
+                IconManager::getInstance()->assets();
                 Menu::Register(function () {
-                    if (!sokeio_is_admin()) return;
-                    menu_admin()->attachMenu('system_setting_menu', function (MenuBuilder $menu) {
+                    if (!sokeioIsAdmin()) return;
+                    menuAdmin()->attachMenu('system_setting_menu', function (MenuBuilder $menu) {
                         $menu->route('admin.cookies-setting', 'Cookie Banner', '', [], 'admin.cookies-setting');
                         $menu->route('admin.permalink-setting', 'Permalink', '', [], 'admin.permalink-setting');
                         $menu->route('admin.item', 'Items', '', [], 'admin.item');
@@ -244,7 +244,7 @@ class SokeioServiceProvider extends ServiceProvider
             }
             MenuRender::RegisterType(MenuItemLink::class);
 
-            if (sokeio_is_admin()) {
+            if (sokeioIsAdmin()) {
                 add_filter('SOKEIO_MENU_ITEM_MANAGER', function ($prev) {
                     return [
                         ...$prev,
@@ -252,7 +252,7 @@ class SokeioServiceProvider extends ServiceProvider
                             return [
                                 'title' => $item['title'],
                                 'key' => $item['type'],
-                                'body' => livewire_render($item['setting']),
+                                'body' => livewireRender($item['setting']),
                             ];
                         })
                     ];
@@ -262,7 +262,7 @@ class SokeioServiceProvider extends ServiceProvider
 
         Route::matched(function () {
             $route_name = Route::currentRouteName();
-            if ($route_name == 'homepage' && admin_url() == '') {
+            if ($route_name == 'homepage' && adminUrl() == '') {
                 add_filter(SOKEIO_IS_ADMIN, function () {
                     return true;
                 }, 0);

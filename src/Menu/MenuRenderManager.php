@@ -25,10 +25,10 @@ class MenuRenderManager
         });
     }
 
-    private $Callback = [];
-    private $ItemCallback = [];
+    private $callback;
+    private $itemCallback;
     private $menuTypes = [];
-    public function RegisterType($menuType)
+    public function registerType($menuType)
     {
         $type = ($menuType)::getMenuType();
         $title = ($menuType)::getMenuName();
@@ -45,42 +45,39 @@ class MenuRenderManager
     public function renderMenuSetting($menu)
     {
         if (isset($this->menuTypes[$menu['data_type']]['setting'])) {
-
-            return '<div class="p-4">' . Livewire::mount($this->menuTypes[$menu['data_type']]['setting'], ['dataId' => $menu->id]) . '</div>';
+            $html = Livewire::mount($this->menuTypes[$menu['data_type']]['setting'], ['dataId' => $menu->id]);
+            return '<div class="p-4">' .  $html . '</div>';
         }
         return '<div class="p-4">Not found</div>';
     }
     public function renderCallback($callback)
     {
-        $this->Callback = $callback;
+        $this->callback = $callback;
         return $this;
     }
     public function renderItemCallback($callback)
     {
-        $this->ItemCallback = $callback;
+        $this->itemCallback = $callback;
         return $this;
     }
     public function doRender($item, $_position = '')
     {
-        if ($callback = $this->Callback) {
-            if (is_callable($callback))
-                $callback($item, $_position);
+        if ($this->callback && is_callable($this->callback)) {
+            call_user_func($this->callback, $item, $_position);
         }
         return $this;
     }
     public function doRenderItem($item, $_position = '')
     {
-        if ($type = $item->getValueContentType()) {
-            if (isset($this->menuTypes[$type])) {
-                ($this->menuTypes[$type]['setting'])::RenderItem($item, $_position);
+        $type = $item->getValueContentType();
+        if ($type && isset($this->menuTypes[$type])) {
+            ($this->menuTypes[$type]['setting'])::renderItem($item, $_position);
 
-                return $this;
-            }
+            return $this;
         }
 
-        if ($callback = $this->ItemCallback) {
-            if (is_callable($callback))
-                $callback($item, $_position);
+        if ($this->itemCallback && is_callable($this->itemCallback)) {
+            call_user_func($this->itemCallback, $item, $_position);
         }
         return $this;
     }

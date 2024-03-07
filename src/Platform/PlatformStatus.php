@@ -44,7 +44,7 @@ class PlatformStatus
         }));
     }
     private function setStore($key,$data){
-        set_setting($key,$data);
+        setSetting($key,$data);
     }
     private static $arr = [];
     public static function Key($key): self

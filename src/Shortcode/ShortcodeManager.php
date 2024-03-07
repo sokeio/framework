@@ -256,7 +256,7 @@ class ShortcodeManager
     public function getContent($name)
     {
         try {
-            $content = $this->Base64Decode($this->matches[5]);
+            $content = $this->base64Decode($this->matches[5]);
             $short = $this->registered[$name];
             if ($short && is_object($short) && method_exists($short, 'getStripTags')) {
                 if ($short->getStripTags()) {

@@ -6,7 +6,7 @@ use Sokeio\Facades\Assets;
 
 class TablerIcon extends IconBase
 {
-    public function AddToAsset()
+    public function addToAsset()
     {
         Assets::AddCss('tabler-icons/tabler-icons.css', 'module', 'sokeio');
     }

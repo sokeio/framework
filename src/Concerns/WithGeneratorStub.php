@@ -43,29 +43,29 @@ trait WithGeneratorStub
         return $this;
     }
 
-    protected $ConfigStubName = 'sokeio';
-    protected $GeneratorConfig;
-    private $_base_name;
-    private $_system_base;
-    private $_files;
-    private $_data_info;
-    private $_path_stub;
-    private $_namespace;
-    private $_template_files;
+    protected $configStubName = 'sokeio';
+    protected $generatorConfig;
+    private $baseName;
+    private $systemBase;
+    private $files;
+    private $dataInfo;
+    private $pathStub;
+    private $namespace;
+    private $templateFiles;
     public function resetCache()
     {
-        $this->_namespace = '';
-        $this->_data_info = '';
+        $this->namespace = '';
+        $this->dataInfo = '';
     }
     public function getValueConfig($key, $default = '')
     {
-        return JsonData::getValueByKey($this->GeneratorConfig, $key, $default);
+        return JsonData::getValueByKey($this->generatorConfig, $key, $default);
     }
     public function bootWithGeneratorStub(
         Filesystem $filesystem = null
     ) {
         $this->filesystem = $filesystem ?? $this->laravel['files'];
-        $this->GeneratorConfig = config($this->ConfigStubName);
+        $this->generatorConfig = config($this->configStubName);
     }
     public function getBaseTypeName()
     {
@@ -77,7 +77,7 @@ trait WithGeneratorStub
     }
     public function getSystemBase()
     {
-        return $this->_system_base ?? ($this->_system_base = platform_by($this->getBaseTypeName()));
+        return $this->systemBase ?? ($this->systemBase = platformBy($this->getBaseTypeName()));
     }
     /**
      * Get the module name.
@@ -86,26 +86,28 @@ trait WithGeneratorStub
      */
     public function getBaseName()
     {
-        if (!$this->_base_name)
-            $this->_base_name = Str::studly($this->option('base'));
-        if (!$this->_base_name)
-            $this->_base_name = $this->getSystemBase()->getUsed();
-        return $this->_base_name;
+        if (!$this->baseName) {
+            $this->baseName = Str::studly($this->option('base'));
+        }
+        if (!$this->baseName) {
+            $this->baseName = $this->getSystemBase()->getUsed();
+        }
+        return $this->baseName;
     }
     public function getDataInfo()
     {
-        return $this->_data_info ?? ($this->_data_info = $this->getSystemBase()->find($this->getBaseName()));
+        return $this->dataInfo ?? ($this->dataInfo = $this->getSystemBase()->find($this->getBaseName()));
     }
     public function getFiles()
     {
-        return $this->_files ?? ($this->_files = array_merge(
+        return $this->files ?? ($this->files = array_merge(
             $this->getValueConfig('stubs.files.common', []),
             $this->getValueConfig('stubs.files.' . $this->getBaseTypeName(), [])
         ));
     }
     public function getStub()
     {
-        return $this->_path_stub ?? ($this->_path_stub = $this->getValueConfig('stubs.path', ''));
+        return $this->pathStub ?? ($this->pathStub = $this->getValueConfig('stubs.path', ''));
     }
     public function getFolders()
     {
@@ -113,7 +115,7 @@ trait WithGeneratorStub
     }
     public function getTemplates()
     {
-        return $this->_template_files ?? ($this->_template_files = $this->getValueConfig('stubs.templates', []));
+        return $this->templateFiles ?? ($this->templateFiles = $this->getValueConfig('stubs.templates', []));
     }
     protected function getReplacements($keys)
     {
@@ -167,41 +169,41 @@ trait WithGeneratorStub
     public function generate($name = null)
     {
         $this->resetCache();
-        $this->_base_name = Str::studly($name);
-        if ($this->getSystemBase()->has($this->_base_name)) {
+        $this->baseName = Str::studly($name);
+        if ($this->getSystemBase()->has($this->baseName)) {
             if ($this->force) {
-                $this->getSystemBase()->delete($this->_base_name);
+                $this->getSystemBase()->delete($this->baseName);
             } else {
-                $this->console->error("{$this->getBaseType()} [{ $this->_base_name}] already exist!");
+                $this->console->error("{$this->getBaseType()} [{ $this->baseName}] already exist!");
                 return E_ERROR;
             }
         }
-        $this->GeneratorFolder();
-        $this->GeneratorFile();
+        $this->generatorFolder();
+        $this->generatorFile();
         return 0;
     }
-    public function ProcessConvertClass($class)
+    public function processConvertClass($class)
     {
         $class = str_replace('/', '\\', $class);
         $pars = explode('\\', $class);
         $len = count($pars) - 1;
-        $NAMESPACE = '';
+        $namespace = '';
         for ($i = 0; $i < $len; $i++) {
             if ($i == 0) {
-                $NAMESPACE = Str::studly($pars[$i]);
-            } else
-                $NAMESPACE =   $NAMESPACE . '\\' . Str::studly($pars[$i]);
+                $namespace = Str::studly($pars[$i]);
+            } else {
+                $namespace =   $namespace . '\\' . Str::studly($pars[$i]);
+            }
         }
 
-        $CLASS = Str::studly($pars[$len]);
-        return ['CLASS' => $CLASS, 'NAMESPACE' => $NAMESPACE];
+        $class = Str::studly($pars[$len]);
+        return ['CLASS' => $class, 'NAMESPACE' => $namespace];
     }
-    public function GeneratorFileByStub($stub, $name = '')
+    public function generatorFileByStub($stub, $name = '')
     {
 
         $template = $this->getTemplates()[$stub];
-        // return true;
-        if (isset($template) && count($template) > 0) {
+        if (isset($template) && empty($template) === false) {
             $path = $this->getFolders()[isset($template['path']) ? $template['path'] : 'base'];
             $name_file = $name != '' ? $name : $template['name'];
             $replacements = isset($template['replacements']) ? $this->getReplacements($template['replacements']) : [];
@@ -210,11 +212,15 @@ trait WithGeneratorStub
             }
 
             if (isset($replacements['NAMESPACE']) &&  (isset($replacements['CLASS']))) {
-                if (isset($template['file_prex']) && $template['file_prex'] != '' && Str::contains(strtolower($replacements['CLASS']), strtolower($template['file_prex'])) === false) {
+                if (
+                    isset($template['file_prex']) && $template['file_prex'] !== ''
+                    &&
+                    Str::contains(strtolower($replacements['CLASS']), strtolower($template['file_prex'])) === false
+                ) {
                     $replacements['CLASS'] .= $template['file_prex'];
                 }
 
-                $rs = $this->ProcessConvertClass($replacements['CLASS']);
+                $rs = $this->processConvertClass($replacements['CLASS']);
                 $replacements['CLASS'] = $rs['CLASS'];
                 $replacements['CLASS_FILE'] = $replacements['CLASS'];
                 $replacements['LOWER_CLASS_FILE'] = Str::lower($replacements['CLASS']);
@@ -226,40 +232,45 @@ trait WithGeneratorStub
             $name_file = $this->getContentWithReplace($name_file, $replacements);
 
             $dataInfo = $this->getDataInfo();
-            if ($dataInfo)
+            if ($dataInfo) {
                 $path = $dataInfo->getPath($path['path']) . '/' . str_replace('\\', '/', $name_file);
-            else
+            } else {
                 $path = $this->getPath($path['path']) . '/' . str_replace('\\', '/', $name_file);
+            }
             if (isset($template['stub']) && $template['stub']) {
                 $content = $this->getContentWithStub($template['stub'] . '.stub');
             } else {
                 $content = $this->getContentWithStub($stub . '.stub');
             }
-            $content = $this->getContentWithReplace($content, $replacements, isset($template['doblue']) && $template['doblue']);
-            if (isset($this->components) && $this->components)
+            $doblue = isset($template['doblue']) && $template['doblue'];
+            $content = $this->getContentWithReplace($content, $replacements,  $doblue);
+            if (isset($this->components) && $this->components) {
                 $this->components->info($path);
+            }
             if (!$this->filesystem->isDirectory($dir = dirname($path))) {
                 $this->filesystem->makeDirectory($dir, 0775, true);
             }
             $this->saveContentToFile($content, $path);
         }
     }
-    public function GeneratorFile()
+    public function generatorFile()
     {
         foreach ($this->getFiles() as $stub) {
-            $this->GeneratorFileByStub($stub);
+            $this->generatorFileByStub($stub);
         }
     }
-    public function GeneratorFolder()
+    public function generatorFolder()
     {
         foreach ($this->getFolders() as $folder) {
             $only = JsonData::getValueByKey($folder, 'only', []);
-            if ((!JsonData::getValueByKey($folder, 'generate', false) || (count($only) > 0 && !in_array($this->getBaseTypeName(), $only)))) {
+            $checkOnly = !empty($only) && !in_array($this->getBaseTypeName(), $only);
+            if (!JsonData::getValueByKey($folder, 'generate', false) || $checkOnly) {
                 continue;
             }
             $path =  $this->getPath(JsonData::getValueByKey($folder, 'path', ''));
-            if (isset($this->components) && $this->components)
+            if (isset($this->components) && $this->components) {
                 $this->components->info($path);
+            }
             $this->filesystem->makeDirectory($path, 0775, true);
             if ($this->getValueConfig('stubs.gitkeep', false)) {
                 $this->generateGitKeep($path);
@@ -304,15 +315,18 @@ trait WithGeneratorStub
      */
     public function getNamespaceReplacement()
     {
-        if (!$this->_namespace) {
+        if (!$this->namespace) {
             $dataInfo = $this->getDataInfo();
             if ($dataInfo) {
-                $this->_namespace =  $dataInfo->getValue('namespace');
+                $this->namespace =  $dataInfo->getValue('namespace');
             } else {
-                $this->_namespace = config('sokeio.namespace.root', config('sokeio.appdir.root', 'sokeio')) . config('sokeio.namespace.' . $this->getBaseTypeName(), config('sokeio.appdir.' . $this->getBaseTypeName())) . "\\" . $this->getStudlyNameReplacement();
+                $baseTypeName = $this->getBaseTypeName();
+                $namespaceRoot = config('sokeio.namespace.root', config('sokeio.appdir.root', 'sokeio'));
+                $namespace = config('sokeio.namespace.' . $baseTypeName, config('sokeio.appdir.' . $baseTypeName));
+                $this->namespace = $namespaceRoot . $namespace . "\\" . $this->getStudlyNameReplacement();
             }
         }
-        return $this->_namespace;
+        return $this->namespace;
     }
     /**
      * Get replacement for $BASE_TYPE_LOWER_NAME$.

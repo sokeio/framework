@@ -6,19 +6,19 @@ use ReflectionClass;
 
 trait WithHelpers
 {
-    public function JsonParam($param)
+    public function jsonParam($param)
     {
         return json_decode(str_replace("'", '"', urldecode($param)), true);
     }
-    public function JsonParam64($param)
+    public function jsonParam64($param)
     {
-        return $this->JsonParam($this->Base64Decode($param));
+        return $this->jsonParam($this->base64Decode($param));
     }
-    public function Base64Encode($text)
+    public function base64Encode($text)
     {
         return base64_encode(urlencode($text ?? ''));
     }
-    public function Base64Decode($hash)
+    public function base64Decode($hash)
     {
         return urldecode(base64_decode($hash ?? ''));
     }

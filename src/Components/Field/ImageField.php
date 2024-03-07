@@ -5,13 +5,13 @@ namespace Sokeio\Components\Field;
 
 class ImageField extends BaseField
 {
-    public function Mutil($Mutil = true): static
+    public function mutil($mutil = true): static
     {
-        return $this->setKeyValue('Mutil', $Mutil);
+        return $this->setKeyValue('mutil', $mutil);
     }
     public function getMutil()
     {
-        return $this->getValue('Mutil');
+        return $this->getValue('mutil');
     }
     public function getFieldView()
     {

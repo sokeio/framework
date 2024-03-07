@@ -7,7 +7,7 @@ use Sokeio\Concerns\WithAction;
 class $CLASS$ extends ActionBase
 {
     use WithAction;
-    public function DoAction()
+    public function doAction()
     {
     }
 }

@@ -9,30 +9,31 @@ use Livewire\Features\SupportPageComponents\SupportPageComponents;
 trait WithLivewire
 {
     use WithHelpers;
-    public $_dataTemps = [];
-    public $_refComponentId;
-    public $___isPage = false;
-    public $___theme___admin = false;
-    public $___number_loading = 0;
-    public function CurrentIsPage()
+    public $soDataTemp = [];
+    public $soRefId;
+    public $soIsPage = false;
+    public $soIsThemeAdmin = false;
+    public $soNumberLoading = 0;
+    public function currentIsPage()
     {
-        return $this->___isPage;
+        return $this->soIsPage;
     }
     protected function getListeners()
     {
         return [
-            'refreshData' . $this->getId() => '__loadData', 'refreshData' => '__loadData', 'refreshData' . LivewireLoader::getNameByClass(get_called_class()) => '__loadData'
+            'refreshData' => 'soLoadData',
+            'refreshData' . $this->getId() => 'soLoadData',
+            'refreshData' . LivewireLoader::getNameByClass(get_called_class()) => 'soLoadData'
         ];
     }
 
-    public function __loadData()
+    public function soLoadData()
     {
-        $this->___number_loading++;
+        $this->soNumberLoading++;
     }
 
     public function refreshData($option = [])
     {
-        // if (!isset($option['id']) && !count($option)) $option['id'] = $this->getId();
         $this->dispatch('sokeio::refresh', option: $option);
     }
 
@@ -58,12 +59,12 @@ trait WithLivewire
     }
     public function callFuncByRef($func, $params = [])
     {
-        return $this->callFuncById($this->_refComponentId, $func, $params);
+        $this->callFuncById($this->soRefId, $func, $params);
     }
     public function refreshRefComponent()
     {
         $this->refreshData([
-            'id' => $this->_refComponentId,
+            'id' => $this->soRefId,
         ]);
     }
     public function refreshMe()
@@ -80,7 +81,7 @@ trait WithLivewire
     }
     public function redirectCurrent()
     {
-        return redirect(request()->header('Referer'));;
+        return redirect(request()->header('Referer'));
     }
     public function showMessage($option)
     {
@@ -97,11 +98,11 @@ trait WithLivewire
     }
     public function booted()
     {
-        if (function_exists('sokeio_is_admin')) {
-            $this->___theme___admin = sokeio_is_admin();
+        if (function_exists('sokeioIsAdmin')) {
+            $this->soIsThemeAdmin = sokeioIsAdmin();
         }
-        if (!$this->_refComponentId) {
-            $this->_refComponentId = request('refComponent');
+        if (!$this->soRefId) {
+            $this->soRefId = request('refComponent');
         }
     }
 
@@ -110,18 +111,18 @@ trait WithLivewire
         // Here's we're hooking into the "__invoke" method being called on a component.
         // This way, users can pass Livewire components into Routes as if they were
         // simple invokable controllers. Ex: Route::get('...', SomeLivewireComponent::class);
-        $html = null;
-
+        $html = '';
+        //NOSONAR
         $layoutConfig = SupportPageComponents::interceptTheRenderOfTheComponentAndRetreiveTheLayoutConfiguration(function () use (&$html) {
             $params = SupportPageComponents::gatherMountMethodParamsFromRouteParameters($this);
-            $html = app('livewire')->mount($this::class, [...$params, '___isPage' => request()->isMethod('get')]);
+            $html = app('livewire')->mount($this::class, [...$params, 'soIsPage' => request()->isMethod('get')]);
         });
 
         $layoutConfig = $layoutConfig ?: new PageComponentConfig();
 
         $layoutConfig->normalizeViewNameAndParamsForBladeComponents();
 
-        $layoutConfig->view = theme_layout();
+        $layoutConfig->view = themeLayout();
         $layoutConfig->slotOrSection = 'content';
         $layoutConfig->type = 'themeLayout';
 

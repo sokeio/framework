@@ -5,7 +5,7 @@
             },
     
     }">
-        <div class="{{ column_size('col4') }}">
+        <div class="{{ columnSize('col4') }}">
             <div class="accordion bg-white" id="accordion-menu">
                 @foreach (apply_filters('SOKEIO_MENU_ITEM_MANAGER', []) as $item)
                     <div class="accordion-item">
@@ -28,7 +28,7 @@
                 @endforeach
             </div>
         </div>
-        <div class="{{ column_size('col8') }}">
+        <div class="{{ columnSize('col8') }}">
             <div class="card" wire:key='locationId-{{ $locationId }}-{{ $___number_loading }}'>
                 <div class="card-header">
                     <h3 class="card-title ">

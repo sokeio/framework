@@ -6,7 +6,7 @@
     $datasources = $column->getDataSource() ?? [];
     $FieldKey = $column->getFieldKey();
     $FieldText = $column->getFieldText();
-    $searchDatasource = $column->getSearchDataSource();
+    $searchDatasource = $column->getSearchFn();
     $textNoData = $column->getTextNoData();
     $viewTemplate = $column->getViewTemplate();
 @endphp

@@ -6,9 +6,6 @@ use Sokeio\Support\Svg\EasySVG;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
-use Sokeio\Icon\BootstrapIcon;
-use Sokeio\Icon\IconManager;
-use Sokeio\Icon\TablerIcon;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,12 +22,12 @@ Route::group(['prefix' => '__sokeio__'], function () {
     if (env('SOKEIO_DEPLOYMENT_AUTO', false)) { //deployment
         Route::get('git-pull/{key}', function ($key) {
             if (env('SOKEIO_DEPLOYMENT_KEY') == $key) {
-                run_cmd(base_path(''), 'git reset --hard HEAD');
-                run_cmd(base_path(''), 'git pull');
-                run_cmd(base_path(''), 'rm -rf bootstrap/cache/*.php');
-                run_cmd(base_path(''), 'composer dump-autoload');
+                runCmd(base_path(''), 'git reset --hard HEAD');
+                runCmd(base_path(''), 'git pull');
+                runCmd(base_path(''), 'rm -rf bootstrap/cache/*.php');
+                runCmd(base_path(''), 'composer dump-autoload');
                 if (env('SOKEIO_DEPLOYMENT_MIGRATE', false)) {
-                    run_cmd(base_path(''), 'php artisan migrate');
+                    runCmd(base_path(''), 'php artisan migrate');
                 }
                 Artisan::call('cache:clear');
                 Artisan::call('config:clear');
@@ -51,10 +48,12 @@ Route::group(['prefix' => '__sokeio__'], function () {
         $svg->addAttribute("width", "1280");
         $svg->addAttribute("height", "653");
         $svg->addAttribute("style", "background:#0054a6");
-        $sokeio = platform_by($types);
+        $sokeio = platformBy($types);
         if ($sokeio && ($item = $sokeio->find($id))) {
-            if (File::exists($item->getPath('screenshot.png')))
-                return response(file_get_contents($item->getPath('screenshot.png')))->header('Content-Type', 'image/png');
+            if (File::exists($item->getPath('screenshot.png'))) {
+                return response(file_get_contents($item->getPath('screenshot.png')))
+                    ->header('Content-Type', 'image/png');
+            }
             $svg->addText(str($item->getTitle())->upper(), 'center', 200, ['fill' => '#fff']);
             $svg->addText('----- ' . $types . ' -----', 'center', 340, ['fill' => '#f59f00']);
         } else {
@@ -62,7 +61,7 @@ Route::group(['prefix' => '__sokeio__'], function () {
         }
         return response($svg->asXML())->header('Content-Type', 'image/svg+xml');
     })->name('sokeio.screenshot');
-    Route::post('component', [Sokeio\Http\Controllers\PlatformController::class, 'getComponent']);
+
     Route::post('events', [Sokeio\Http\Controllers\PlatformController::class, 'doEvents']);
     Route::post('webhook', [Sokeio\Http\Controllers\PlatformController::class, 'doWebhooks']);
     Route::get('/', function () {
@@ -72,9 +71,6 @@ Route::group(['prefix' => '__sokeio__'], function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();
     });
 });
-if (!Platform::CheckConnectDB() || env('SOKEIO_SETUP', true))
+if (!Platform::CheckConnectDB() || env('SOKEIO_SETUP', true)) {
     Route::get('/setup', Setup::class)->name('sokeio.setup');
-
-Route::get('/test-icon', function () {
-    return IconManager::getInstance()->toArray();
-});
+}

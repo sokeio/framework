@@ -20,8 +20,9 @@ class JwtUser
     {
         $request->setUserResolver((function () use ($request) {
             $token = $request->bearerToken();
-            if (Jwt::verify($token))
+            if (Jwt::verify($token)) {
                 return Jwt::decode($token);
+            }
             return null;
         }));
         return $next($request);

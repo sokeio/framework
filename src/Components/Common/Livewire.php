@@ -5,18 +5,14 @@ namespace Sokeio\Components\Common;
 
 class Livewire extends BaseCommon
 {
-    protected function __construct($value)
-    {
-        parent::__construct($value);
-    }
 
-    public function Params($Params)
+    public function params($params)
     {
-        return $this->setKeyValue('Params', $Params);
+        return $this->setKeyValue('params', $params);
     }
     public function getParams()
     {
-        return $this->getValue('Params');
+        return $this->getValue('params');
     }
     public function getView()
     {

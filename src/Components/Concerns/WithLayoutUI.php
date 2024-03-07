@@ -6,12 +6,10 @@ use Sokeio\Breadcrumb;
 
 trait WithLayoutUI
 {
-    protected function getTitle()
-    {
-    }
+    abstract protected function getTitle();
     protected function getBreadcrumb()
     {
-        if (sokeio_is_admin()) {
+        if (sokeioIsAdmin()) {
             return [
                 Breadcrumb::Item(__('Home'), route('admin.dashboard'))
             ];
@@ -25,7 +23,7 @@ trait WithLayoutUI
         breadcrumb()->Title($this->getTitle())->Breadcrumb($this->getBreadcrumb());
     }
     private $actionUI = [];
-    public function addActionUI($actonKey, $actonFn, $over = false)
+    public function addActionUI($actonKey, $actonFn)
     {
         if (!isset($this->actionUI[$actonKey])) {
             $this->actionUI[$actonKey] = $actonFn;
@@ -61,7 +59,7 @@ trait WithLayoutUI
     protected function getAllInputUI()
     {
         $arr = [];
-        foreach ($this->inputUI as $key => $value) {
+        foreach ($this->inputUI as $value) {
             $arr = array_merge($arr, $value);
         }
         return $arr;
@@ -84,9 +82,9 @@ trait WithLayoutUI
     public $testLayout;
     public function boot()
     {
-        if (!is_livewire_reuqest_updated())
+        if (!isLivewireRequestUpdated()) {
             $this->initLayout();
-        // parent::boot();
+        }
     }
     public function updated()
     {
@@ -94,7 +92,5 @@ trait WithLayoutUI
     }
 
 
-    protected function initLayout()
-    {
-    }
+    abstract protected function initLayout();
 }

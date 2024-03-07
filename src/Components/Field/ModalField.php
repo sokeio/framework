@@ -5,52 +5,47 @@ namespace Sokeio\Components\Field;
 
 class ModalField extends BaseField
 {
-    // $modalChoose = $column->getModalChoose();
-    // $modalTitle = $column->getModalTitle();
-    // $modalSize = $column->getModalSize();
-    // $modal = $column->getModal();
-    // $templateView = $column->getTemplate();
 
-    public function ModalChoose($ModalChoose): static
+    public function modalChoose($modalChoose): static
     {
-        return $this->setKeyValue('ModalChoose', $ModalChoose);
+        return $this->setKeyValue('modalChoose', $modalChoose);
     }
     public function getModalChoose()
     {
-        return $this->getValue('ModalChoose');
+        return $this->getValue('modalChoose');
     }
-    public function ModalTitle($ModalTitle): static
+    public function modalTitle($modalTitle): static
     {
-        return $this->setKeyValue('ModalTitle', $ModalTitle);
+        return $this->setKeyValue('modalTitle', $modalTitle);
     }
     public function getModalTitle()
     {
-        return $this->getValue('ModalTitle');
+        return $this->getValue('modalTitle');
     }
-    public function ModalSize($ModalSize): static
+    public function modalSize($modalSize): static
     {
-        return $this->setKeyValue('ModalSize', $ModalSize);
+        return $this->setKeyValue('modalSize', $modalSize);
     }
     public function getModalSize()
     {
-        return $this->getValue('ModalSize');
+        return $this->getValue('modalSize');
     }
 
-    public function Modal($Modal): static
+    public function modal($modal): static
     {
-        return $this->setKeyValue('Modal', $Modal);
+        return $this->setKeyValue('modal', $modal);
     }
     public function getModal()
     {
-        return $this->getValue('Modal');
+        return $this->getValue('modal');
     }
-    public function Template($Template): static
+    public function template($template): static
     {
-        return $this->setKeyValue('Template', $Template);
+        return $this->setKeyValue('template', $template);
     }
     public function getTemplate()
     {
-        return $this->getValue('Template');
+        return $this->getValue('template');
     }
     public function getFieldView()
     {

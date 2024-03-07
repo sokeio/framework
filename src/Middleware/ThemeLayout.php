@@ -8,8 +8,9 @@ class ThemeLayout
 {
     public function handle($request, \Closure $next, $theme = '')
     {
-        if ($theme != '')
+        if ($theme !== '') {
             Theme::setLayout($theme);
-        return $next($request);;
+        }
+        return $next($request);
     }
 }

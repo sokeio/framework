@@ -24,8 +24,8 @@ class PlatformManager
 
         if (!File::exists(base_path('.env'))) {
             File::copy(base_path('.env.example'), base_path('.env'));
-            run_cmd(base_path(''), 'php artisan key:generate');
-            $path = public_path(platform_path());
+            runCmd(base_path(''), 'php artisan key:generate');
+            $path = public_path(platformPath());
             if (File::exists($path)) File::deleteDirectory($path);
         }
     }
@@ -89,15 +89,15 @@ class PlatformManager
     public function getLinks()
     {
         $links = $this->arrLink;
-        foreach ($this->getExtends() as $base_type) {
-            $links = array_merge($links, platform_by($base_type)->getLinks());
+        foreach ($this->getExtends() as $baseType) {
+            $links = array_merge($links, platformBy($baseType)->getLinks());
         }
         return $links;
     }
     public function makeLink($relative = false, $force = true)
     {
         foreach ($this->getExtends() as $item) {
-            $pathType = platform_path($item);
+            $pathType = platformPath($item);
             $public = public_path($pathType);
             $appdir = base_path($pathType);
             app('files')->deleteDirectory($public);
@@ -133,7 +133,7 @@ class PlatformManager
     public function checkFolderPlatform()
     {
         foreach ($this->getExtends() as $item) {
-            if (!file_exists(platform_path($item))) return false;
+            if (!file_exists(platformPath($item))) return false;
         }
         return true;
     }
@@ -141,13 +141,13 @@ class PlatformManager
     {
         foreach ($this->getExtends() as $baseType) {
             if (file_exists(($path . '/' . $baseType . '.json'))) {
-                $data_info = JsonData::getJsonFromFile($path . '/' . $baseType . '.json');
-                if ($register && isset($data_info['id']) && !(platform_by($baseType)->has($data_info['id']))) {
-                    platform_by($baseType)->AddItem($path, DataInfo::checkPathVendor($path, $baseType));
+                $dataInfo = JsonData::getJsonFromFile($path . '/' . $baseType . '.json');
+                if ($register && isset($dataInfo['id']) && !(platformBy($baseType)->has($dataInfo['id']))) {
+                    platformBy($baseType)->addItem($path, DataInfo::checkPathVendor($path, $baseType));
                 }
                 return [
-                    'base_type' => $baseType,
-                    'data_info' => $data_info,
+                    'baseType' => $baseType,
+                    'dataInfo' => $dataInfo,
                 ];
             }
         }

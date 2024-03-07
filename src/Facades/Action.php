@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Facade;
  * @method static mix ActionWithParams($key, $params)
  * @method static mix Action($key, ...$params)
  * @method static mix ActionFromRoute($key, $params = [])
- * 
  *
  * @see \Sokeio\Facades\Action
  */

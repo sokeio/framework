@@ -5,7 +5,7 @@
     @ThemeHead(after)
     @stack('styles')
 </head>
-<body class="{{theme_class()}}">
+<body class="{{themeClass()}}">
     @ThemeBody(before)
     @yield('content')
     @ThemeBody(after)

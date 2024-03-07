@@ -7,7 +7,7 @@
     @stack('styles')
 </head>
 
-<body class="{{ theme_class() }}">
+<body class="{{ themeClass() }}">
     @ThemeBody(before)
     <div class="page">
         @include('theme::share.header')

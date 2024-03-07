@@ -19,16 +19,18 @@ class Platform
      */
     public function handle($request, \Closure $next)
     {
-        Locale::SetLocaleApp();
+        Locale::setLocaleApp();
         // It does other things here
         $request = apply_filters(PLATFORM_MIDDLEWARE_BEFORE, $request);
-        if (($request instanceof BinaryFileResponse) or
-            ($request instanceof JsonResponse) or
-            ($request instanceof RedirectResponse) or
-            ($request instanceof StreamedResponse) or
+        if (($request instanceof BinaryFileResponse) ||
+            ($request instanceof JsonResponse) ||
+            ($request instanceof RedirectResponse) ||
+            ($request instanceof StreamedResponse) ||
             ($request instanceof Response)
-        )
+        ) {
+
             return $request;
+        }
         $response = $next($request);
         $response = apply_filters(PLATFORM_MIDDLEWARE_AFTER, $response, $request);
         return $response;

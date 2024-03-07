@@ -8,35 +8,37 @@ use Sokeio\Support\SupportFormObjects\Form as SupportFormObjectsForm;
 class Form extends SupportFormObjectsForm implements \JsonSerializable
 {
     use Macroable;
-    protected $___templateData = [];
+    protected $soTemplateData = [];
 
     public function Clear()
     {
-        $this->___templateData = [];
+        $this->soTemplateData = [];
     }
     public function fill($values)
     {
-        if (!$values) return;
-        
+        if (!$values) {
+            return;
+        }
+
         if (method_exists($values, 'toArray')) {
             $values = $values->toArray();
         }
 
         foreach ($values as $key => $value) {
-            data_set($this->___templateData, $key, $value);
+            data_set($this->soTemplateData, $key, $value);
         }
     }
     public function __isset($name)
     {
-        return isset($this->___templateData[$name]);
+        return isset($this->soTemplateData[$name]);
     }
     public function __get($name)
     {
-        return isset($this->___templateData[$name]) ? $this->___templateData[$name] : null;
+        return isset($this->soTemplateData[$name]) ? $this->soTemplateData[$name] : null;
     }
     public function __set($name, $value)
     {
-        data_set($this->___templateData, $name, $value);
+        data_set($this->soTemplateData, $name, $value);
     }
     /**
      * Unsets an data by key
@@ -46,7 +48,7 @@ class Form extends SupportFormObjectsForm implements \JsonSerializable
      */
     public function __unset($key)
     {
-        unset($this->___templateData[$key]);
+        unset($this->soTemplateData[$key]);
     }
 
     /**
@@ -59,7 +61,7 @@ class Form extends SupportFormObjectsForm implements \JsonSerializable
      */
     public function offsetSet($offset,  $value)
     {
-        data_set($this->___templateData, $offset, $value);
+        data_set($this->soTemplateData, $offset, $value);
     }
 
     /**
@@ -71,7 +73,7 @@ class Form extends SupportFormObjectsForm implements \JsonSerializable
      */
     public function offsetExists($offset)
     {
-        return isset($this->___templateData[$offset]);
+        return isset($this->soTemplateData[$offset]);
     }
 
     /**
@@ -83,7 +85,7 @@ class Form extends SupportFormObjectsForm implements \JsonSerializable
     public function offsetUnset($offset)
     {
         if ($this->offsetExists($offset)) {
-            unset($this->___templateData[$offset]);
+            unset($this->soTemplateData[$offset]);
         }
     }
     /**
@@ -95,28 +97,29 @@ class Form extends SupportFormObjectsForm implements \JsonSerializable
      */
     public function offsetGet($offset)
     {
-        return $this->offsetExists($offset) ? $this->___templateData[$offset] : null;
+        return $this->offsetExists($offset) ? $this->soTemplateData[$offset] : null;
     }
     public function __toString()
     {
-        return json_encode($this->___templateData);
+        return json_encode($this->soTemplateData);
     }
     public function hasProperty($prop)
     {
-        return isset($this->___templateData[$prop]);
+        return isset($this->soTemplateData[$prop]);
     }
     public function getPropertyValue($name)
     {
-        if ($this->hasProperty($name))
-            return $this->___templateData[$name];
+        if ($this->hasProperty($name)) {
+            return $this->soTemplateData[$name];
+        }
         return null;
     }
     public function jsonSerialize()
     {
-        return $this->___templateData;
+        return $this->soTemplateData;
     }
     public function toArray()
     {
-        return $this->___templateData;
+        return $this->soTemplateData;
     }
 }

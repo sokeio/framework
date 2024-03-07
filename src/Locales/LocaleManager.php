@@ -21,30 +21,30 @@ class LocaleManager
         $this->defaultLocale = setting('PLATFORM_SYSTEM_LOCALE_DEFAULT', config('sokeio.locale.defaultLocale')) ?? 'us';
         $this->supportedLocales = config('sokeio.locale.supportedLocales');
     }
-    public function CurrentLocale()
+    public function currentLocale()
     {
-        $locale = $this->defaultLocale;
-        if (sokeio_is_admin() || !Platform::CheckConnectDB()) {
+        $locale = '';
+        if (sokeioIsAdmin() || !Platform::CheckConnectDB()) {
             $locale = session(self::KEY);
         } else {
             $route = request()->route();
             $locale = $route->getPrefix();
         }
-        if ($locale && $locale != '') {
+        if ($locale && $locale !== '') {
             return $locale;
         }
         return  $this->defaultLocale;
     }
-    public function SupportedLocales()
+    public function supportedLocales()
     {
         return $this->supportedLocales;
     }
-    public function SwitchLocale($locale)
+    public function switchLocale($locale)
     {
         app()->setLocale($locale);
         app('session')->put(self::KEY, $locale);
     }
-    public function DefaultLocale()
+    public function defaultLocale()
     {
         return $this->defaultLocale;
     }
@@ -61,18 +61,19 @@ class LocaleManager
     {
         return explode($this->getLocaleSeparator(), $locale)[0];
     }
-    public function SetLocaleApp()
+    public function setLocaleApp()
     {
         try {
-            app()->setLocale($this->CurrentLocale());
+            app()->setLocale($this->currentLocale());
         } catch (\Exception $ex) {
+            app()->setLocale($this->defaultLocale());
         }
     }
-    public function has($key)
+    public function has()
     {
         return true;
     }
-    private function TranslationToTable($type, $name, $path, $lang)
+    private function translationToTable($type, $name, $path, $lang)
     {
         if (file_exists($path)) {
             $data =  JsonData::getJsonFromFile($path);
@@ -88,7 +89,8 @@ class LocaleManager
             }
         }
     }
-    public function FileJsonToTable()
+    private const EXT_JSON = '.json';
+    public function fileJsonToTable()
     {
         $languages = JsonData::getJsonFromFile(__DIR__ . '/../../database/contents/languages.json');
         foreach ($languages as $item) {
@@ -103,19 +105,28 @@ class LocaleManager
         }
         foreach (Language::all() as $item) {
 
-            $this->TranslationToTable('app', '', base_path('lang/' . $item->code . '.json'), $item);
+            $this->translationToTable('app', '', base_path('lang/' . $item->code . self::EXT_JSON), $item);
             foreach (['theme', 'plugin', 'module'] as $type) {
-                foreach (platform_by($type)->getAll() as $data) {
-                    $this->TranslationToTable($type, $data->getName(), $data->getPath('resources/lang/' . $item->code . '.json'), $item);
+                foreach (platformBy($type)->getAll() as $data) {
+                    $path = $data->getPath('resources/lang/' . $item->code . self::EXT_JSON);
+                    $this->translationToTable($type, $data->getName(), $path, $item);
                 }
             }
         }
     }
-    private function TranslationToFile($item, $type)
+    private function translationToFile($item, $type)
     {
-        $data = Translation::query()->where('type', $type)->where('lang_id', $item->id)->select(['name', 'key', 'value'])->get()->groupBy('name');
+        $data = Translation::query()->where('type', $type)
+            ->where('lang_id', $item->id)
+            ->select(['name', 'key', 'value'])
+            ->get()->groupBy('name');
+
         foreach ($data as $key => $arr) {
-            $pathFile = $type == 'app' ? base_path('lang/' . $item->code . '.json') :   platform_by($type)->find($key)?->getPath('resources/lang/' . $item->code . '.json');
+            if ($type === 'app') {
+                $pathFile = base_path('lang/' . $item->code . self::EXT_JSON);
+            } else {
+                $pathFile = platformBy($type)->find($key)?->getPath('resources/lang/' . $item->code . self::EXT_JSON);
+            }
             $jsonData =  JsonData::getJsonFromFile($pathFile) ?? [];
             foreach ($arr as $itemArr) {
                 $jsonData[$itemArr->key] = $itemArr->value;
@@ -123,11 +134,11 @@ class LocaleManager
             file_put_contents($pathFile, json_encode($jsonData));
         }
     }
-    public function TableToFileJson()
+    public function tableToFileJson()
     {
         foreach (Language::all() as $item) {
             foreach (['theme', 'plugin', 'module', 'app'] as $type) {
-                $this->TranslationToFile($item, $type);
+                $this->translationToFile($item, $type);
             }
         }
     }

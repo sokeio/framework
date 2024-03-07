@@ -7,59 +7,59 @@ use Illuminate\Support\Facades\Route;
 
 class ActionManager
 {
-    private $_actions = [];
-    public function Register($actions, $namespace, $force = false)
+    private $actions = [];
+    public function register($actions, $namespace, $force = false)
     {
         if (is_array($actions)) {
             foreach ($actions as $key => $item) {
-                $this->RegisterItem($key, $item, $namespace, $force);
+                $this->registerItem($key, $item, $namespace, $force);
             }
-            return;
         }
     }
-    public function RegisterItem($key, $item, $namespace, $force = false)
+    public function registerItem($key, $item, $namespace, $force = false)
     {
         $actionKey = $namespace . '::' . $key;
-        if (!isset($this->_actions[$actionKey])) {
-            $this->_actions[$actionKey] = $item;
+        if (!isset($this->actions[$actionKey])) {
+            $this->actions[$actionKey] = $item;
             return;
         }
-        if (isset($this->_actions[$key]) && $force) {
-            $this->_actions[$actionKey] = $item;
-            return;
+        if (isset($this->actions[$key]) && $force) {
+            $this->actions[$actionKey] = $item;
         }
     }
     public function getActions()
     {
-        return ($this->_actions);
+        return $this->actions;
     }
     public function hasAction($key)
     {
-        return isset($this->_actions[$key]);
+        return isset($this->actions[$key]);
     }
-    public function ActionWithParams($key, $params)
+    public function actionWithParams($key, $params)
     {
-        if (isset($this->_actions[$key])) {
-            return app($this->_actions[$key])->handleWithParams($params);
+        if (isset($this->actions[$key])) {
+            return app($this->actions[$key])->handleWithParams($params);
         }
         return null;
     }
-    public function Action($key, ...$params)
+    public function action($key, ...$params)
     {
-        if (isset($this->_actions[$key])) {
-            return  app($this->_actions[$key])(...$params);
+        if (isset($this->actions[$key])) {
+            return  app($this->actions[$key])(...$params);
         }
         return null;
     }
-    public function ActionFromRoute($key, $params = [])
+    public function actionFromRoute($key, $params = [])
     {
         return function () use ($key, $params) {
-            if (isset($this->_actions[$key])) {
+            if (isset($this->actions[$key])) {
                 $route = Route::current();
                 foreach ($params as $key => $value) {
                     $route->setParameter($key, $value);
                 }
-                $route->setAction(array_merge($route->getAction(), RouteAction::parse($route->uri(), ['uses' => $this->_actions[$key] . '@DoAction'])));
+                $route->setAction(array_merge($route->getAction(), RouteAction::parse($route->uri(), [
+                    'uses' => $this->actions[$key] . '@doAction'
+                ])));
                 return $route->run();
             }
         };

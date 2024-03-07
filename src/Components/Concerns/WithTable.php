@@ -79,7 +79,9 @@ trait WithTable
     protected function getButtons()
     {
         return [
-            UI::ButtonCreate(__('Create'))->ModalRoute($this->getRoute() . '.add')->ModalTitle(__('Create Data'))
+            UI::buttonCreate(__('Create'))
+                ->modalRoute($this->getRoute() . '.add')
+                ->modalTitle(__('Create Data'))
         ];
     }
 
@@ -87,33 +89,34 @@ trait WithTable
     protected function getTableActions()
     {
         return [
-            UI::ButtonEdit(__('Edit'))->ModalRoute($this->getRoute() . '.edit', function ($row) {
+            UI::buttonEdit(__('Edit'))->modalRoute($this->getRoute() . '.edit', function ($row) {
                 return [
                     'dataId' => $row->id
                 ];
-            })->ModalTitle(__('Edit Data')),
-            UI::ButtonRemove(__('Remove'))->Confirm(__('Do you want to delete this record?'), 'Confirm')->WireClick(function ($item) {
-                return 'doRemove(' . $item->getDataItem()->id . ')';
-            })
+            })->modalTitle(__('Edit Data')),
+            UI::buttonRemove(__('Remove'))
+                ->confirm(__('Do you want to delete this record?'), 'Confirm')
+                ->wireClick(function ($item) {
+                    return 'doRemove(' . $item->getDataItem()->id . ')';
+                })
         ];
     }
-    public function doSearch()
-    {
-    }
+    abstract public function doSearch();
     protected function searchUI()
     {
         return null;
     }
-    protected function ShowSearchUI()
+    protected function showSearchUI()
     {
         return false;
     }
     protected function initLayout()
     {
-        if (!$this->pageSize)
+        if (!$this->pageSize) {
             $this->pageSize = $this->getDefaultPageSize() ?? 10;
+        }
         if (!$this->searchlayout && ($_search = $this->searchUI())) {
-            $this->searchlayout = $this->reLayout(UI::Prex('search', $_search));
+            $this->searchlayout = $this->reLayout(UI::prex('search', $_search));
         }
         if (!$this->tableActions) {
             $this->tableActions = $this->reLayout($this->getTableActions());
@@ -122,7 +125,7 @@ trait WithTable
             $this->tablecolumns = $this->reLayout($this->getColumns());
         }
     }
-   
+
     protected function getView()
     {
         if ($this->currentIsPage()) {
@@ -135,7 +138,7 @@ trait WithTable
     protected function queryOperator($query)
     {
         $operator = $this->search->toArray();
-        return BaseField::OperatorQuery($query, $operator);
+        return BaseField::operatorQuery($query, $operator);
     }
     protected function queryOrder($query)
     {
@@ -153,7 +156,9 @@ trait WithTable
     }
     protected function getData()
     {
-        if ($this->lazyloadingTable) return null;
+        if ($this->lazyloadingTable) {
+            return null;
+        }
         $query = $this->getQuery();
         if ($textSearch = $this->textSearch) {
             $query->orWhere(function ($subquery) use ($textSearch) {
@@ -179,7 +184,7 @@ trait WithTable
             'title' => $this->getTitle(),
             'buttons' => $this->getButtons(),
             'searchlayout' => $this->searchlayout,
-            'showSearchlayout' => $this->ShowSearchUI(),
+            'showSearchlayout' => $this->showSearchUI(),
             'datatable' => $this->getData(),
             'tablecolumns' => $this->tablecolumns,
             'pageSizes' => $this->getPageSize(),

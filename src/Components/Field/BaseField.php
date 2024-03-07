@@ -15,8 +15,8 @@ class BaseField extends Base
     protected function ChildComponents()
     {
         return [
-            $this->getUIBefore(),
-            $this->getUIAfter()
+            $this->getBeforeUI(),
+            $this->getAfterUI()
         ];
     }
     public function getView()
@@ -26,9 +26,8 @@ class BaseField extends Base
     public function boot()
     {
         parent::boot();
-        if (!$this->getNoSave()) {
-            if (method_exists($this->getManager(), 'addInputUI'))
-                $this->getManager()?->addInputUI($this, $this->getPrex() ?? 'data');
+        if (!$this->getNoSave() && method_exists($this->getManager(), 'addInputUI')) {
+            $this->getManager()?->addInputUI($this, $this->getPrex() ?? 'data');
         }
     }
     protected function __construct($value)

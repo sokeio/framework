@@ -32,21 +32,16 @@ class MakeFileCommand extends Command
             ['name', InputArgument::IS_ARRAY, 'The names will be created.'],
         ];
     }
-    private $file_name;
+    private $fileName;
     public function getFileName()
     {
-        return $this->file_name;
+        return $this->fileName;
     }
     /**
      * Execute the console command.
      */
     public function handle(): int
     {
-        // foreach (Module::getAll() as $key => $item) {
-        //     $this->components->info($key);
-        //     $this->components->info($item->getPath());
-        // }
-        // return 0;
         $type = $this->option('type');
         $template = $this->option('temp');
         $this->components->info('Platform make by ' . $type . ':' . $template . '    ');
@@ -55,7 +50,7 @@ class MakeFileCommand extends Command
         $success = true;
 
         foreach ($names as $name) {
-            $this->file_name = $name;
+            $this->fileName = $name;
             $code = $this->GeneratorFileByStub($template);
             $this->components->info('module ' . $name . ' : ' .  $code);
             if ($code === E_ERROR) {

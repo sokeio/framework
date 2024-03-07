@@ -22,31 +22,31 @@ trait WithSystemExtend
     {
         return 'info';
     }
-    public function FileInfoJson()
+    public function fileInfoJson()
     {
         return $this->getName() . ".json";
     }
-    public function HookFilterPath()
+    public function hookFilterPath()
     {
         return $this->getName() . '_path';
     }
-    public function PathFolder()
+    public function pathFolder()
     {
         return $this->getPath('');
     }
     public function getPath($path)
     {
-        return path_by($this->getName(), $path);
+        return pathBy($this->getName(), $path);
     }
     public function getPathPublic($path)
     {
         return $this->getPath('public/' . $path);
     }
-    public function PublicFolder()
+    public function publicFolder()
     {
         return public_path($this->getName() . 's');
     }
-    public function ResetData()
+    public function resetData()
     {
         $this->arrData = collect($this->arrData)->where(function ($item) {
             return $item->isVendor();
@@ -62,23 +62,23 @@ trait WithSystemExtend
         }
         return $arr;
     }
-    public function LoadApp()
+    public function loadApp()
     {
-        $this->Load($this->PathFolder());
+        $this->Load($this->pathFolder());
     }
-    public function RegisterApp()
+    public function registerApp()
     {
         foreach ($this->getAll() as $item) {
             if ($item->isActive()) {
-                $item->DoRegister();
+                $item->doRegister();
             }
         }
     }
-    public function BootApp()
+    public function bootApp()
     {
         foreach ($this->getAll() as $item) {
             if ($item->isActive()) {
-                $item->DoBoot();
+                $item->doBoot();
             }
         }
     }
@@ -120,41 +120,52 @@ trait WithSystemExtend
             $base->delete();
         }
     }
-    public function Load($path)
+    public function load($path)
     {
-        $path = apply_filters($this->HookFilterPath(), $path);
+        $path = apply_filters($this->hookFilterPath(), $path);
         if ($files =  glob($path . '/*', GLOB_ONLYDIR)) {
             foreach ($files as $itemFile) {
-                $item = $this->AddItem($itemFile);
-                if ($item && $item->isActive()) {
-                    if ($this->isRegisterBeforeLoad()) {
-                        $item->DoRegister();
-                    }
+                $item = $this->addItem($itemFile);
+                if ($item && $item->isActive() && $this->isRegisterBeforeLoad()) {
+                    $item->doRegister();
                 }
             }
         }
     }
+    public function isTheme()
+    {
+        return $this->getName() === 'theme';
+    }
+    private function checkItemActive($item, $themes)
+    {
+        if ($item->isActive() || (isset($item->vendor) && $item->vendor === true)) {
+            return true;
+        }
+        if ($this->isTheme() && (in_array($item->getName(), $themes))) {
+            return true;
+        }
+        return false;
+    }
     public function getLinks()
     {
         $links = [];
-        $isTheme = $this->getName() === 'theme';
         $themes = [];
-        if ($isTheme) {
+        if ($this->isTheme()) {
             $themes[] = env('PLATFORM_THEME_DEFAULT', 'none');
             $themes[] = Theme::AdminId();
             $themes[] = Theme::SiteId();
             $themes[] = 'tabler';
         }
         foreach ($this->getAll() as $item) {
-            if ($item->isActive() || (isset($item->vendor) && $item->vendor === true) || ($isTheme && (in_array($item->getName(), $themes)))) {
+            if ($this->checkItemActive($item, $themes)) {
                 $links[] = [
-                    $item->getPath('public') => public_path(platform_path($this->getName(), $item->name))
+                    $item->getPath('public') => public_path(platformPath($this->getName(), $item->name))
                 ];
                 if (isset($item->parent) && $perent = $item->parent) {
                     do {
                         $perent = $this->find($perent);
                         $links[] = [
-                            $perent->getPath('public') => public_path(platform_path($this->getName(), $perent->name))
+                            $perent->getPath('public') => public_path(platformPath($this->getName(), $perent->name))
                         ];
                     } while ($perent && isset($perent->parent) && $perent = $perent->parent);
                 }
@@ -162,10 +173,12 @@ trait WithSystemExtend
         }
         return $links;
     }
-    public function AddItem($path, $vendor = false)
+    public function addItem($path, $vendor = false)
     {
         $path = realpath($path);
-        if (isset($this->arrData[$path])) return null;
+        if (isset($this->arrData[$path])) {
+            return null;
+        }
         $this->arrData[$path] = new DataInfo($path, $this);
         $this->arrData[$path]->vendor = $vendor;
         return $this->arrData[$path];

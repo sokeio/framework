@@ -7,15 +7,21 @@ use Sokeio\Laravel\BaseCallback;
 class Breadcrumb extends BaseCallback
 {
     private static $data = [];
-    public static function Make($key = '')
+    public static function make($key = '')
     {
-        if ($key == '') $key = 'base';
+        if ($key === '') {
+            $key = 'base';
+        }
         return isset(self::$data[$key]) ? self::$data[$key] : (self::$data[$key] = new static());
     }
     public static function ClearBreadcrumb($key = '')
     {
-        if ($key == '') $key = 'base';
-        if (isset(self::$data[$key])) unset(self::$data[$key]);
+        if ($key === '') {
+            $key = 'base';
+        }
+        if (isset(self::$data[$key])) {
+            unset(self::$data[$key]);
+        }
     }
     public static function Item($text, $link = '', $class = '')
     {
@@ -56,7 +62,7 @@ class Breadcrumb extends BaseCallback
     {
         return $this->breadcrumb ?? [];
     }
-    public function Render()
+    public function render()
     {
         return view('sokeio::breadcrumb', [
             'title' => $this->getTitle(),
@@ -66,10 +72,10 @@ class Breadcrumb extends BaseCallback
     }
     public function __invoke()
     {
-        return $this->Render();
+        return $this->render();
     }
     public function __toString()
     {
-        return $this->Render();
+        return $this->render();
     }
 }

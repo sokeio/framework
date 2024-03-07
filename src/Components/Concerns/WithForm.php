@@ -25,7 +25,9 @@ trait WithForm
     }
     protected function formMessage($isNew)
     {
-        if ($isNew) return __('New record created successfully');
+        if ($isNew) {
+            return __('New record created successfully');
+        }
         return __('The record updated successfully');
     }
     public function loadData()
@@ -34,7 +36,9 @@ trait WithForm
         if ($this->dataId) {
             $query =  $query->where('id', $this->dataId);
             $data = $query->first();
-            if (!$data) return abort(404);
+            if (!$data) {
+                return abort(404);
+            }
             if (method_exists($this, 'loadDataBefore')) {
                 call_user_func([$this, 'loadDataBefore'], $data);
             }
@@ -42,7 +46,7 @@ trait WithForm
             if (method_exists($this, 'loadDataAfter')) {
                 call_user_func([$this, 'loadDataAfter'], $data);
             }
-        } else if ($this->copyId) {
+        } elseif ($this->copyId) {
             $query =  $query->where('id', $this->copyId);
             $data = $query->first();
             if (method_exists($this, 'loadDataBefore')) {
@@ -74,9 +78,7 @@ trait WithForm
         }
         return 'sokeio::components.form.index';
     }
-    protected function FormUI()
-    {
-    }
+    abstract protected function formUI(): mixed;
     protected function getFormClass()
     {
         return null;
@@ -85,15 +87,15 @@ trait WithForm
     {
         return null;
     }
-    protected function FooterUI()
+    protected function footerUI()
     {
         return [
             UI::Div([
-                UI::Button(__('Save'))->WireClick('doSave()')
-            ])->ClassName('p-2 text-center')
+                UI::button(__('Save'))->wireClick('doSave()')
+            ])->className('p-2 text-center')
         ];
     }
-    protected function FormRules()
+    protected function formRules()
     {
         $rules = [];
         $messages = [];
@@ -102,23 +104,18 @@ trait WithForm
             if ($column->checkRule()) {
                 $rules[$column->getFormField()] = $column->getRules();
                 $attributes[$column->getFormField()] = $column->getLabel();
-
-                // $messages[$column->getFormField()] = $column->getMessages();
             }
         }
         return  ['rules' => $rules, 'messages' => $messages, 'attributes' => $attributes];
     }
     protected function doValidate()
     {
-        ['rules' => $rules, 'messages' => $messages, 'attributes' => $attributes] = $this->FormRules();
-        // $this->showMessage(json_encode(['rules' => $rules, 'messages' => $messages, 'attributes' => $attributes]));
-        // return;
+        ['rules' => $rules, 'messages' => $messages, 'attributes' => $attributes] = $this->formRules();
+
         if ($rules && count($rules)) {
-            $this->withValidator(function ($validator) use ($rules, $messages, $attributes) {
-                if ($validator->fails()) {
-                    if (method_exists($this, 'validateFail')) {
-                        call_user_func([$this, 'validateFail']);
-                    }
+            $this->withValidator(function ($validator) {
+                if ($validator->fails() && method_exists($this, 'validateFail')) {
+                    call_user_func([$this, 'validateFail']);
                 }
             })->validate($rules, $messages, $attributes);
         }
@@ -131,7 +128,9 @@ trait WithForm
             $query = $this->getQuery();
             $query =  $query->where('id', $this->dataId);
             $objData = $query->first();
-            if (!$objData) $objData = new ($this->getModel());
+            if (!$objData) {
+                $objData = new ($this->getModel());
+            }
         }
         return $objData;
     }
@@ -151,7 +150,8 @@ trait WithForm
                 call_user_func([$this, 'fillDataBefore'], $objData);
             }
             foreach ($this->getAllInputUI() as $column) {
-                data_set($objData, $column->getNameEncode(), data_get($this, $column->getFormFieldEncode(), $column->getValueDefault()));
+                $value = data_get($this, $column->getFormFieldEncode(), $column->getValueDefault());
+                data_set($objData, $column->getNameEncode(), $value);
             }
             if (method_exists($this, 'saveBefore')) {
                 call_user_func([$this, 'saveBefore'], $objData);
@@ -167,7 +167,7 @@ trait WithForm
     }
     protected function doRefreshRef()
     {
-        if (!$this->CurrentIsPage()) {
+        if (!$this->currentIsPage()) {
             $this->refreshRefComponent();
             $this->closeComponent();
         }
@@ -175,10 +175,10 @@ trait WithForm
     protected function initLayout()
     {
         if (!$this->layout) {
-            $this->layout = $this->reLayout($this->FormUI());
+            $this->layout = $this->reLayout($this->formUI());
         }
         if (!$this->footer) {
-            $this->footer = $this->reLayout($this->FooterUI());
+            $this->footer = $this->reLayout($this->footerUI());
         }
     }
     public function mount()

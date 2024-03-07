@@ -17,17 +17,17 @@ class DataInfo extends JsonData
     const Active = 1;
     const UnActive = 0;
     private $updater = null;
-    public static function checkPathVendor($path, $base_type)
+    public static function checkPathVendor($path, $baseType)
     {
-        return !Str::contains($path, platform_path($base_type), true) && !Str::contains($path, '/themes/', true) && !Str::contains($path, '/plugins/', true);;
+        return !Str::contains($path, platformPath($baseType), true) && !Str::contains($path, '/themes/', true) && !Str::contains($path, '/plugins/', true);;
     }
     public function __construct($path, $parent)
     {
         parent::__construct([], $parent);
         $this['path'] = $path;
-        $this['fileInfo'] =  $parent->FileInfoJson();
-        $this['public'] =  $parent->PublicFolder();
-        $this['base_type'] = $parent->getName();
+        $this['fileInfo'] =  $parent->fileInfoJson();
+        $this['public'] =  $parent->publicFolder();
+        $this['baseType'] = $parent->getName();
         $this->ReLoad();
         $this->updater = new PlatformUpdater($this);
     }
@@ -38,7 +38,7 @@ class DataInfo extends JsonData
         $this['path'] = $temp['path'];
         $this['fileInfo'] = $temp['fileInfo'];
         $this['public'] = $temp['public'];
-        $this['base_type'] = $temp['base_type'];
+        $this['baseType'] = $temp['baseType'];
         $this['key'] = basename($temp['path'], ".php");
     }
     public function __toString()
@@ -64,7 +64,7 @@ class DataInfo extends JsonData
     }
     public function url($_path = '')
     {
-        return url(platform_path($this->base_type, $this->getName() . ($_path ? ('/' . $_path) : '')));
+        return url(platformPath($this->baseType, $this->getName() . ($_path ? ('/' . $_path) : '')));
     }
     public function getFiles()
     {
@@ -88,7 +88,7 @@ class DataInfo extends JsonData
     }
     public function getBaseType()
     {
-        return $this['base_type'];
+        return $this['baseType'];
     }
     public function getDescription()
     {
@@ -101,7 +101,7 @@ class DataInfo extends JsonData
 
     protected function getKeyOption($key)
     {
-        return trim(Str::lower("option_datainfo_" . $this['base_type'] . '_' . $this->getId() . '_' . $key . '_value'));
+        return trim(Str::lower("option_datainfo_" . $this['baseType'] . '_' . $this->getId() . '_' . $key . '_value'));
     }
     public function getOption($key, $default = null)
     {
@@ -109,7 +109,7 @@ class DataInfo extends JsonData
     }
     public function setOption($key, $value)
     {
-        return set_setting($this->getKeyOption($key), $value);
+        return setSetting($this->getKeyOption($key), $value);
     }
     public function getStatusData()
     {
@@ -150,7 +150,7 @@ class DataInfo extends JsonData
         ob_start();
         PlatformChanged::dispatch($this);
         Platform::makeLink();
-        run_cmd(base_path(''), 'php artisan migrate');
+        runCmd(base_path(''), 'php artisan migrate');
         Log::info(ob_get_clean());
     }
     public function getModels()
@@ -177,7 +177,7 @@ class DataInfo extends JsonData
     }
     public function isVendor()
     {
-        return self::checkPathVendor($this->getPath(), $this['base_type']);
+        return self::checkPathVendor($this->getPath(), $this['baseType']);
     }
     public function isActive()
     {
@@ -205,7 +205,7 @@ class DataInfo extends JsonData
     }
     public function Dump()
     {
-        run_cmd($this->getPath(), 'composer dump -o -n -q');
+        runCmd($this->getPath(), 'composer dump -o -n -q');
     }
     public function CheckName($name)
     {
@@ -231,11 +231,11 @@ class DataInfo extends JsonData
     {
         RouteEx::Load($this->getPath('routes'));
     }
-    public function DoRegister()
+    public function doRegister()
     {
         $this->providers = Platform::registerComposer($this->getPath(), true);
     }
-    public function DoBoot()
+    public function doBoot()
     {
         foreach ($this->providers as $item) {
             $item->boot();

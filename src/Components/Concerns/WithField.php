@@ -27,91 +27,91 @@ use Sokeio\Components\Field\TreeViewField;
 
 trait WithField
 {
-    public static function Text($value)
+    public static function text($value)
     {
         return TextField::make($value);
     }
-    public static function Checkbox($value)
+    public static function checkBox($value)
     {
         return CheckboxField::make($value);
     }
-    public static function CheckboxMutil($value)
+    public static function checkBoxMutil($value)
     {
         return CheckboxMutilField::make($value);
     }
-    public static function Toggle($value)
+    public static function toggle($value)
     {
         return ToggleField::make($value);
     }
-    public static function ToggleMutil($value)
+    public static function toggleMutil($value)
     {
         return ToggleMutilField::make($value);
     }
-    public static function Radio($value)
+    public static function radio($value)
     {
         return RadioField::make($value);
     }
-    public static function RadioMutil($value)
+    public static function radioMutil($value)
     {
         return RadioMutilField::make($value);
     }
-    public static function Password($value)
+    public static function password($value)
     {
         return PasswordField::make($value);
     }
-    public static function Select($value)
+    public static function select($value)
     {
         return SelectField::make($value);
     }
-    public static function Textarea($value)
+    public static function textarea($value)
     {
         return TextareaField::make($value);
     }
-    public static function Range($value)
+    public static function range($value)
     {
         return RangeField::make($value);
     }
-    public static function Tinymce($value)
+    public static function tinymce($value)
     {
         return TinymceField::make($value);
     }
-    public static function Tagify($value)
+    public static function tagify($value)
     {
         return TagifyField::make($value);
     }
-    public static function DatePicker($value)
+    public static function datePicker($value)
     {
         return DatePickerField::make($value);
     }
-    public static function Number($value)
+    public static function number($value)
     {
         return NumberField::make($value);
     }
-    public static function Image($value)
+    public static function image($value)
     {
         return ImageField::make($value);
     }
-    public static function ChooseModal($value)
+    public static function chooseModal($value)
     {
         return ModalField::make($value);
     }
-    public static function Hidden($value)
+    public static function hidden($value)
     {
         return HiddenField::make($value);
     }
-    public static function Icon($value)
+    public static function icon($value)
     {
         return IconField::make($value);
     }
-    public static function Color($value)
+    public static function color($value)
     {
         return ColorField::make($value);
     }
-    public static function SelectWithSearch($value)
+    public static function selectWithSearch($value)
     {
         return SelectWithSearchField::make($value);
     }
-    public static function TreeView($value)
+    public static function treeView($value)
     {
         return TreeViewField::make($value);
     }

@@ -2,7 +2,6 @@
 
 namespace Sokeio\Menu;
 
-use Illuminate\Support\Facades\Request;
 use Sokeio\HtmlBuilder;
 use Illuminate\Support\Str;
 use Sokeio\Facades\MenuRender;
@@ -14,9 +13,8 @@ class MenuBuilder extends HtmlBuilder
     protected $items = [];
     protected $sub = false;
     protected $targetId = '';
-    protected static $url_current = null;
-    protected static $sort_number = 1000;
-    protected $sub_level = 0;
+    protected static $sortNumber = 1000;
+    protected $subLevel = 0;
     protected $position = [];
 
     protected MenuItemBuilder|null $parent;
@@ -26,19 +24,14 @@ class MenuBuilder extends HtmlBuilder
     }
     public function getSubLevel()
     {
-        return $this->sub_level;
+        return $this->subLevel;
     }
     public function __construct($position = '', $sub = false, $level = 0, $parent = null)
     {
         $this->position = $position;
-        if (!self::$url_current) self::$url_current = Request::url();
         $this->sub = $sub;
-        $this->sub_level = $level;
+        $this->subLevel = $level;
         $this->parent = $parent;
-    }
-    public static function checkUrl($url)
-    {
-        return self::$url_current == $url;
     }
     public function setTargetId($targetId): self
     {
@@ -55,104 +48,68 @@ class MenuBuilder extends HtmlBuilder
     }
     public function link($link, $text, $icon = '', $attributes = [], $per = '', $sort = 20, $afterCallback = null): self
     {
-        return $this->AddItem([
+        return $this->addItem([
             MenuItemBuilder::KEY_TYPE => MenuItemBuilder::ITEM_LINK,
             MenuItemBuilder::KEY_LINK => $link,
             MenuItemBuilder::KEY_TEXT => $text,
             MenuItemBuilder::KEY_ICON => $icon,
             MenuItemBuilder::KEY_ATTRIBUTE => $attributes,
             MenuItemBuilder::KEY_PERMISSION => $per,
-            MenuItemBuilder::KEY_SORT => $sort >  -1 ? $sort : (self::$sort_number++)
+            MenuItemBuilder::KEY_SORT => $sort >  -1 ? $sort : (self::$sortNumber++)
         ], $afterCallback);
     }
-    public function route($data, $text, $icon = '', $attributes = [], $per = '', $sort = 20, $afterCallback = null): self
+    public function route($data, $text, $icon = '', $attributes = [], $per = '', $sort = 20, $afterCallback = null)
     {
-        return $this->AddItem([
+        return $this->addItem([
             MenuItemBuilder::KEY_TYPE => MenuItemBuilder::ITEM_ROUTE,
             MenuItemBuilder::KEY_DATA => $data,
             MenuItemBuilder::KEY_TEXT => $text,
             MenuItemBuilder::KEY_ICON => $icon,
             MenuItemBuilder::KEY_ATTRIBUTE => $attributes,
             MenuItemBuilder::KEY_PERMISSION => $per,
-            MenuItemBuilder::KEY_SORT => $sort >  -1 ? $sort : (self::$sort_number++)
+            MenuItemBuilder::KEY_SORT => $sort >  -1 ? $sort : (self::$sortNumber++)
         ], $afterCallback);
     }
-    public function component($data, $text, $icon = '', $attributes = [], $per = '', $sort = 20, $afterCallback = null): self
+    public function action($data, $text, $icon = '', $attributes = [], $per = '', $sort = 20, $afterCallback = null)
     {
-        return $this->AddItem([
-            MenuItemBuilder::KEY_TYPE => MenuItemBuilder::ITEM_COMPONENT,
-            MenuItemBuilder::KEY_DATA => $data,
-            MenuItemBuilder::KEY_TEXT => $text,
-            MenuItemBuilder::KEY_ICON => $icon,
-            MenuItemBuilder::KEY_ATTRIBUTE => $attributes,
-            MenuItemBuilder::KEY_PERMISSION => $per,
-            MenuItemBuilder::KEY_SORT => $sort >  -1 ? $sort : (self::$sort_number++)
-        ], $afterCallback);
-    }
-    public function action($data, $text, $icon = '', $attributes = [], $per = '', $sort = 20, $afterCallback = null): self
-    {
-        return $this->AddItem([
+        return $this->addItem([
             MenuItemBuilder::KEY_TYPE => MenuItemBuilder::ITEM_ACTION,
             MenuItemBuilder::KEY_DATA => $data,
             MenuItemBuilder::KEY_TEXT => $text,
             MenuItemBuilder::KEY_ICON => $icon,
             MenuItemBuilder::KEY_ATTRIBUTE => $attributes,
             MenuItemBuilder::KEY_PERMISSION => $per,
-            MenuItemBuilder::KEY_SORT => $sort >  -1 ? $sort : (self::$sort_number++)
-        ], $afterCallback);
-    }
-    public function div($text = '', $icon = '', $attributes = [], $per = '', $sort  = 20, $afterCallback = null): self
-    {
-        return $this->AddItem([
-            MenuItemBuilder::KEY_TYPE => MenuItemBuilder::ITEM_DIV,
-            MenuItemBuilder::KEY_TEXT => $text,
-            MenuItemBuilder::KEY_ICON => $icon,
-            MenuItemBuilder::KEY_ATTRIBUTE => $attributes,
-            MenuItemBuilder::KEY_PERMISSION => $per,
-            MenuItemBuilder::KEY_SORT => $sort >  -1 ? $sort : (self::$sort_number++)
-        ], $afterCallback);
-    }
-    public function tag($tag, $text, $icon = '', $attributes = [], $per = '', $sort  = 20, $afterCallback = null)
-    {
-        return $this->AddItem([
-            MenuItemBuilder::KEY_TYPE => MenuItemBuilder::ITEM_TAG,
-            MenuItemBuilder::KEY_TAG => $tag,
-            MenuItemBuilder::KEY_TEXT => $text,
-            MenuItemBuilder::KEY_ICON => $icon,
-            MenuItemBuilder::KEY_ATTRIBUTE => $attributes,
-            MenuItemBuilder::KEY_PERMISSION => $per,
-            MenuItemBuilder::KEY_SORT => $sort >  -1 ? $sort : (self::$sort_number++)
-
+            MenuItemBuilder::KEY_SORT => $sort >  -1 ? $sort : (self::$sortNumber++)
         ], $afterCallback);
     }
     public function button($text, $icon = '', $attributes = [], $per = '', $sort  = 20, $afterCallback = null): self
     {
-        return $this->AddItem([
+        return $this->addItem([
             MenuItemBuilder::KEY_TYPE => MenuItemBuilder::ITEM_BUTTON,
             MenuItemBuilder::KEY_TEXT => $text,
             MenuItemBuilder::KEY_ICON => $icon,
             MenuItemBuilder::KEY_ATTRIBUTE => $attributes,
             MenuItemBuilder::KEY_PERMISSION => $per,
-            MenuItemBuilder::KEY_SORT => $sort >  -1 ? $sort : (self::$sort_number++)
+            MenuItemBuilder::KEY_SORT => $sort >  -1 ? $sort : (self::$sortNumber++)
         ], $afterCallback);
     }
-    public function subMenu($text, $icon = '', $itemCallback, $sort  = 20, $afterCallback = null)
+    public function subMenu($text, $icon, $itemCallback, $sort  = 20, $afterCallback = null)
     {
-        return $this->AddItem([
+        return $this->addItem([
             MenuItemBuilder::KEY_TYPE => MenuItemBuilder::ITEM_SUB,
             MenuItemBuilder::KEY_TEXT => $text,
             MenuItemBuilder::KEY_ICON => $icon,
             MenuItemBuilder::KEY_CALLBACK => $itemCallback,
-            MenuItemBuilder::KEY_SORT => $sort >  -1 ? $sort : (self::$sort_number++)
+            MenuItemBuilder::KEY_SORT => $sort >  -1 ? $sort : (self::$sortNumber++)
 
         ], $afterCallback);
     }
-    public function AddItem($data, $callback = null)
+    public function addItem($data, $callback = null)
     {
         $item = new MenuItemBuilder($data, $this);
         $this->items[] = $item;
         if ($callback && is_callable($callback)) {
-            call_user_func($callback, $item, $this);;
+            call_user_func($callback, $item, $this);
         }
         return $this;
     }
@@ -185,16 +142,23 @@ class MenuBuilder extends HtmlBuilder
                         $menuItem->setValueLink($item['link']);
                         $menuItem->setValueInfo($item['info']);
                         $menuItem->setValueClassName($item['class_name']);
-
                     });
                 } else {
-                    $menu->link($item['link'], $item['name'], $item['icon'], $item['attribute'], $item['permission'], $item['order'], function (MenuItemBuilder $menuItem) use ($item) {
-                        $menuItem->setValueContentType($item['data_type']);
-                        $menuItem->setValueContentData($item['data']);
-                        $menuItem->setValueContentColor($item['color']);
-                        $menuItem->setValueInfo($item['info']);
-                        $menuItem->setValueClassName($item['class_name']);
-                    }); // = new MenuItemBuilder($item, $menu);
+                    $menu->link(
+                        $item['link'],
+                        $item['name'],
+                        $item['icon'],
+                        $item['attribute'],
+                        $item['permission'],
+                        $item['order'],
+                        function (MenuItemBuilder $menuItem) use ($item) {
+                            $menuItem->setValueContentType($item['data_type']);
+                            $menuItem->setValueContentData($item['data']);
+                            $menuItem->setValueContentColor($item['color']);
+                            $menuItem->setValueInfo($item['info']);
+                            $menuItem->setValueClassName($item['class_name']);
+                        }
+                    ); // = new MenuItemBuilder($item, $menu);
                 }
             }
         }
@@ -229,7 +193,9 @@ class MenuBuilder extends HtmlBuilder
         // fix sort by key
         $inventory = $this->items;
         if (usort($inventory, function (MenuItemBuilder $item1, MenuItemBuilder $item2) {
-            if ($item1->getValueSort() === $item2->getValueSort()) return 0;
+            if ($item1->getValueSort() === $item2->getValueSort()) {
+                return 0;
+            }
             return $item1->getValueSort() < $item2->getValueSort() ? -1 : 1;
         })) {
             $this->items = $inventory;
@@ -242,10 +208,12 @@ class MenuBuilder extends HtmlBuilder
     }
     protected function render()
     {
-        if (!$this->checkSub())
+        if (!$this->checkSub()) {
             $this->beforeRender();
-        if (!$this->checkView())
+        }
+        if (!$this->checkView()) {
             return;
+        }
 
         foreach ($this->warps as $item) {
             $attribute = '';

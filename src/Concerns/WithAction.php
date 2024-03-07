@@ -19,26 +19,24 @@ trait WithAction
     {
         return $this->callMethodWithParam($params);
     }
-    public function DoAction()
-    {
-    }
+
     private function callMethodWithParam($params)
     {
         $arr = [];
-        $r = new ReflectionMethod($this, 'DoAction');
+        $r = new ReflectionMethod($this, 'doAction');
         $methodParams = $r->getParameters();
         foreach ($methodParams as $param) {
             if (isset($params[$param->getName()])) {
                 $arr[] = $params[$param->getName()];
-            } else if ($varReq = request($param->getName())) {
+            } elseif ($varReq = request($param->getName())) {
                 $arr[] = $varReq;
-            } else if ($param->hasType() && $app = app($param->getType())) {
+            } elseif ($param->hasType() && $app = app($param->getType())) {
                 $arr[] = $app;
             } else {
                 $arr[] = null;
             }
         }
 
-        return $this->DoAction(...$arr);
+        return  call_user_func([$this, 'doAction'], ...$arr);
     }
 }

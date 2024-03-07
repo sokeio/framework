@@ -5,255 +5,257 @@ namespace Sokeio\Components\Common\Concerns;
 trait WithButtonColor
 {
 
-    public function ButtonColor($ButtonColor):static
+    public function buttonColor($buttonColor): static
     {
-        return $this->setKeyValue('ButtonColor', $ButtonColor);
+        return $this->setKeyValue('buttonColor', $buttonColor);
     }
     public function getButtonColor()
     {
-        return $this->getValue('ButtonColor');
+        return $this->getValue('buttonColor');
     }
-    public function Primary($prev = '')
+    public function primary($prev = '')
     {
-        return $this->ButtonColor($prev . '-primary');
+        return $this->buttonColor($prev . '-primary');
     }
-    public function Secondary($prev = '')
+    public function secondary($prev = '')
     {
-        return $this->ButtonColor($prev . '-secondary');
+        return $this->buttonColor($prev . '-secondary');
     }
-    public function Success($prev = '')
+    public function success($prev = '')
     {
-        return $this->ButtonColor($prev . '-success');
+        return $this->buttonColor($prev . '-success');
     }
-    public function Warning($prev = '')
+    public function warning($prev = '')
     {
-        return $this->ButtonColor($prev . '-warning');
+        return $this->buttonColor($prev . '-warning');
     }
-    public function Danger($prev = '')
+    public function danger($prev = '')
     {
-        return $this->ButtonColor($prev . '-danger');
+        return $this->buttonColor($prev . '-danger');
     }
-    public function Info($prev = '')
+    public function info($prev = '')
     {
-        return $this->ButtonColor($prev . '-info');
+        return $this->buttonColor($prev . '-info');
     }
-    public function Dark($prev = '')
+    public function dark($prev = '')
     {
-        return $this->ButtonColor($prev . '-dark');
+        return $this->buttonColor($prev . '-dark');
     }
-    public function Light($prev = '')
+    public function light($prev = '')
     {
-        return $this->ButtonColor($prev . '-light');
+        return $this->buttonColor($prev . '-light');
     }
-    public function Blue($prev = '')
+    public function blue($prev = '')
     {
-        return $this->ButtonColor($prev . '-blue');
+        return $this->buttonColor($prev . '-blue');
     }
-    public function Azure($prev = '')
+    public function azure($prev = '')
     {
-        return $this->ButtonColor($prev . '-azure');
+        return $this->buttonColor($prev . '-azure');
     }
-    public function Indigo($prev = '')
+    public function indigo($prev = '')
     {
-        return $this->ButtonColor($prev . '-indigo');
+        return $this->buttonColor($prev . '-indigo');
     }
-    public function Purple($prev = '')
+    public function purple($prev = '')
     {
-        return $this->ButtonColor($prev . '-purple');
+        return $this->buttonColor($prev . '-purple');
     }
-    public function Pink($prev = '')
+    public function pink($prev = '')
     {
-        return $this->ButtonColor($prev . '-pink');
+        return $this->buttonColor($prev . '-pink');
     }
-    public function Red($prev = '')
+    public function red($prev = '')
     {
-        return $this->ButtonColor($prev . '-red');
+        return $this->buttonColor($prev . '-red');
     }
-    public function Orange($prev = '')
+    public function orange($prev = '')
     {
-        return $this->ButtonColor($prev . '-orange');
+        return $this->buttonColor($prev . '-orange');
     }
-    public function Yellow($prev = '')
+    public function yellow($prev = '')
     {
-        return $this->ButtonColor($prev . '-yellow');
+        return $this->buttonColor($prev . '-yellow');
     }
-    public function Lime($prev = '')
+    public function lime($prev = '')
     {
-        return $this->ButtonColor($prev . '-lime');
+        return $this->buttonColor($prev . '-lime');
     }
-    public function Green($prev = '')
+    public function green($prev = '')
     {
-        return $this->ButtonColor($prev . '-green');
+        return $this->buttonColor($prev . '-green');
     }
-    public function Teal($prev = '')
+    public function teal($prev = '')
     {
-        return $this->ButtonColor($prev . '-teal');
+        return $this->buttonColor($prev . '-teal');
     }
-    public function Cyan($prev = '')
+    public function cyan($prev = '')
     {
-        return $this->ButtonColor($prev . '-cyan');
+        return $this->buttonColor($prev . '-cyan');
     }
 
     //Outline
-    public function OutlinePrimary()
+    private const OUTLINE = '-outline';
+    public function outlinePrimary()
     {
-        return $this->Primary('-outline');
+        return $this->primary(static::OUTLINE);
     }
-    public function OutlineSecondary()
+    public function outlineSecondary()
     {
-        return $this->Secondary('-outline');
+        return $this->secondary(static::OUTLINE);
     }
-    public function OutlineSuccess()
+    public function outlineSuccess()
     {
-        return $this->Success('-outline');
+        return $this->success(static::OUTLINE);
     }
-    public function OutlineWarning()
+    public function outlineWarning()
     {
-        return $this->Warning('-outline');
+        return $this->warning(static::OUTLINE);
     }
-    public function OutlineDanger()
+    public function outlineDanger()
     {
-        return $this->Danger('-outline');
+        return $this->danger(static::OUTLINE);
     }
-    public function OutlineInfo()
+    public function outlineInfo()
     {
-        return $this->Info('-outline');
+        return $this->info(static::OUTLINE);
     }
-    public function OutlineDark()
+    public function outlineDark()
     {
-        return $this->Dark('-outline');
+        return $this->dark(static::OUTLINE);
     }
-    public function OutlineLight()
+    public function outlineLight()
     {
-        return $this->Light('-outline');
+        return $this->light(static::OUTLINE);
     }
-    public function OutlineBlue()
+    public function outlineBlue()
     {
-        return $this->Blue('-outline');
+        return $this->blue(static::OUTLINE);
     }
-    public function OutlineAzure()
+    public function outlineAzure()
     {
-        return $this->Azure('-outline');
+        return $this->azure(static::OUTLINE);
     }
-    public function OutlineIndigo()
+    public function outlineIndigo()
     {
-        return $this->Indigo('-outline');
+        return $this->indigo(static::OUTLINE);
     }
-    public function OutlinePurple()
+    public function outlinePurple()
     {
-        return $this->Purple('-outline');
+        return $this->purple(static::OUTLINE);
     }
-    public function OutlinePink()
+    public function outlinePink()
     {
-        return $this->Pink('-outline');
+        return $this->pink(static::OUTLINE);
     }
-    public function OutlineRed()
+    public function outlineRed()
     {
-        return $this->Red('-outline');
+        return $this->red(static::OUTLINE);
     }
-    public function OutlineOrange()
+    public function outlineOrange()
     {
-        return $this->Orange('-outline');
+        return $this->orange(static::OUTLINE);
     }
-    public function OutlineYellow()
+    public function outlineYellow()
     {
-        return $this->Yellow('-outline');
+        return $this->yellow(static::OUTLINE);
     }
-    public function OutlineLime()
+    public function outlineLime()
     {
-        return $this->Lime('-outline');
+        return $this->lime(static::OUTLINE);
     }
-    public function OutlineGreen()
+    public function outlineGreen()
     {
-        return $this->Green('-outline');
+        return $this->green(static::OUTLINE);
     }
-    public function OutlineTeal()
+    public function outlineTeal()
     {
-        return $this->Teal('-outline');
+        return $this->teal(static::OUTLINE);
     }
-    public function OutlineCyan()
+    public function outlineCyan()
     {
-        return $this->Cyan('-outline');
+        return $this->cyan(static::OUTLINE);
     }
     //Ghost
-    public function GhostPrimary()
+    private const GHOST = '-ghost';
+    public function ghostPrimary()
     {
-        return $this->Primary('-ghost');
+        return $this->primary(static::GHOST);
     }
-    public function GhostSecondary()
+    public function ghostSecondary()
     {
-        return $this->Secondary('-ghost');
+        return $this->secondary(static::GHOST);
     }
-    public function GhostSuccess()
+    public function ghostSuccess()
     {
-        return $this->Success('-ghost');
+        return $this->success(static::GHOST);
     }
-    public function GhostWarning()
+    public function ghostWarning()
     {
-        return $this->Warning('-ghost');
+        return $this->warning(static::GHOST);
     }
-    public function GhostDanger()
+    public function ghostDanger()
     {
-        return $this->Danger('-ghost');
+        return $this->danger(static::GHOST);
     }
-    public function GhostInfo()
+    public function ghostInfo()
     {
-        return $this->Info('-ghost');
+        return $this->info(static::GHOST);
     }
-    public function GhostDark()
+    public function ghostDark()
     {
-        return $this->Dark('-ghost');
+        return $this->dark(static::GHOST);
     }
-    public function GhostLight()
+    public function ghostLight()
     {
-        return $this->Light('-ghost');
+        return $this->light(static::GHOST);
     }
-    public function GhostBlue()
+    public function ghostBlue()
     {
-        return $this->Blue('-ghost');
+        return $this->blue(static::GHOST);
     }
-    public function GhostAzure()
+    public function ghostAzure()
     {
-        return $this->Azure('-ghost');
+        return $this->azure(static::GHOST);
     }
-    public function GhostIndigo()
+    public function ghostIndigo()
     {
-        return $this->Indigo('-ghost');
+        return $this->indigo(static::GHOST);
     }
-    public function GhostPurple()
+    public function ghostPurple()
     {
-        return $this->Purple('-ghost');
+        return $this->purple(static::GHOST);
     }
-    public function GhostPink()
+    public function ghostPink()
     {
-        return $this->Pink('-ghost');
+        return $this->pink(static::GHOST);
     }
-    public function GhostRed()
+    public function ghostRed()
     {
-        return $this->Red('-ghost');
+        return $this->red(static::GHOST);
     }
-    public function GhostOrange()
+    public function ghostOrange()
     {
-        return $this->Orange('-ghost');
+        return $this->orange(static::GHOST);
     }
-    public function GhostYellow()
+    public function ghostYellow()
     {
-        return $this->Yellow('-ghost');
+        return $this->yellow(static::GHOST);
     }
-    public function GhostLime()
+    public function ghostLime()
     {
-        return $this->Lime('-ghost');
+        return $this->lime(static::GHOST);
     }
-    public function GhostGreen()
+    public function ghostGreen()
     {
-        return $this->Green('-ghost');
+        return $this->green(static::GHOST);
     }
-    public function GhostTeal()
+    public function ghostTeal()
     {
-        return $this->Teal('-ghost');
+        return $this->teal(static::GHOST);
     }
-    public function GhostCyan()
+    public function ghostCyan()
     {
-        return $this->Cyan('-ghost');
+        return $this->cyan(static::GHOST);
     }
 }

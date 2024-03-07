@@ -5,8 +5,5 @@ namespace Sokeio\Concerns;
 
 trait WithModelHook
 {
-    protected static function bootWithModelHook()
-    {
-       
-    }
+    abstract protected static function bootWithModelHook();
 }

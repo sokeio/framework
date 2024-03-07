@@ -5,7 +5,6 @@ namespace Sokeio\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * 
  * @method static void enableCachePage()
  * @method static void disableCachePage()
  * @method static bool checkCachePage()
@@ -34,8 +33,6 @@ use Illuminate\Support\Facades\Facade;
  * @method static void setEnv($arrs)
  * @method static void Start();
  * @method static long ExecutionTime();
- * 
- * 
  * @see \Sokeio\Facades\Platform
  */
 class Platform extends Facade

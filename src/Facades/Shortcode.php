@@ -5,7 +5,6 @@ namespace Sokeio\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * 
  * @method static void register($shortocde)
  * @method static mix getRegistered()
  * @method static string getItemByKey($key)
@@ -14,7 +13,6 @@ use Illuminate\Support\Facades\Facade;
  * @method static string strip(string $content)
  * @method static void disable()
  * @method static void enable()
- * 
  *
  * @see \Sokeio\Facades\Shortcode
  */

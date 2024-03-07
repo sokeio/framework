@@ -18,87 +18,91 @@ use Illuminate\Support\Facades\File;
 
 class Setup extends Component
 {
-    public $system_version = '';
+    public $systemVersion = '';
     public $lang = 'en';
     public $timezone;
     // db
-    public $db_connection = 'mysql';
-    public $db_host = '127.0.0.1';
-    public $db_port = '3306';
-    public $db_name;
-    public $db_username;
-    public $db_pass;
+    public $dbConnection = 'mysql';
+    public $dbHost = '127.0.0.1';
+    public $dbPort = '3306';
+    public $dbName;
+    public $dbUsername;
+    public $dbPass;
     // acc
-    public $acc_name;
-    public $acc_email;
-    public $acc_pass;
+    public $accName;
+    public $accEmail;
+    public $accPass;
     //site
-    public $site_name;
-    public $site_description;
+    public $siteName;
+    public $siteDescription;
 
-    public $step_index = 0;
-    public $step_max = 4;
+    public $stepIndex = 0;
+    public $stepMax = 4;
     public $languages = [];
-    public $active_modules = [];
-    public $active_plugins = [];
-    public $active_theme = 'none';
+    public $activeModules = [];
+    public $activePlugins = [];
+    public $activeTheme = 'none';
     public function updatedLang()
     {
-        Locale::SwitchLocale($this->lang);
+        Locale::switchLocale($this->lang);
     }
     public function stepNext()
     {
-        if ($this->step_index == 1) {
+        if ($this->stepIndex == 1) {
             $this->validate([
-                'db_host' => ['required'],
-                'db_port' => ['required'],
-                'db_name' => ['required'],
-                'db_username' => ['required'],
-                'db_pass' => ['required'],
+                'dbHost' => ['required'],
+                'dbPort' => ['required'],
+                'dbName' => ['required'],
+                'dbUsername' => ['required'],
+                'dbPass' => ['required'],
             ]);
-            if (!$this->checkDatabaseConnection($this->db_host, $this->db_port, $this->db_name, $this->db_username, $this->db_pass, $this->db_connection)) {
+            if (!$this->checkDatabaseConnection()) {
                 $this->showMessage('Connection to database fail!');
                 return false;
             }
         }
-        if ($this->step_index == 2) {
+        if ($this->stepIndex == 2) {
             $this->validate([
-                'acc_name' => ['required'],
-                'acc_email' => ['required'],
-                'acc_pass' => ['required'],
+                'accName' => ['required'],
+                'accEmail' => ['required'],
+                'accPass' => ['required'],
             ]);
         }
-        if ($this->step_index == 3) {
+        if ($this->stepIndex == 3) {
             $this->validate([
-                'site_name' => ['required'],
-                'site_description' => ['required'],
+                'siteName' => ['required'],
+                'siteDescription' => ['required'],
             ]);
         }
-        if ($this->step_index >= $this->step_max) return;
-        $this->step_index++;
+        if ($this->stepIndex <= $this->stepMax) {
+            $this->stepIndex++;
+        }
     }
     public function stepBack()
     {
         $this->clearValidation();
-        if ($this->step_index <= 0) return;
-        $this->step_index--;
+        if ($this->stepIndex > 0) {
+            $this->stepIndex--;
+        }
     }
     public function stepFinish()
     {
 
         $this->createDataInDB();
         $this->AcitveExtentions();
-        $path = public_path(platform_path());
-        if (File::exists($path)) File::deleteDirectory($path);
-        Locale::TableToFileJson();
+        $path = public_path(platformPath());
+        if (File::exists($path)) {
+            File::deleteDirectory($path);
+        }
+        Locale::tableToFileJson();
         Platform::setEnv([
-            'DB_CONNECTION' => $this->db_connection,
-            'DB_HOST' => $this->db_host,
-            'DB_PORT' => $this->db_port,
-            'DB_DATABASE' => $this->db_name,
-            'DB_USERNAME' => $this->db_username,
-            'DB_PASSWORD' => $this->db_pass,
-            'APP_NAME' => $this->site_name,
+            'DB_CONNECTION' => $this->dbConnection,
+            'DB_HOST' => $this->dbHost,
+            'DB_PORT' => $this->dbPort,
+            'DB_DATABASE' => $this->dbName,
+            'DB_USERNAME' => $this->dbUsername,
+            'DB_PASSWORD' => $this->dbPass,
+            'APP_NAME' => $this->siteName,
             'APP_URL' => url(''),
             'SOKEIO_SETUP' => false,
         ]);
@@ -109,8 +113,14 @@ class Setup extends Component
      *  checkDatabaseConnection
      * -------------------------------------------------------------------------------
      **/
-    public function checkDatabaseConnection($database_host, $database_port, $database_name, $database_username, $database_password, $connection = 'mysql')
+    public function checkDatabaseConnection()
     {
+        $connection = $this->dbConnection;
+        $database_host = $this->dbHost;
+        $database_port = $this->dbPort;
+        $database_name = $this->dbName;
+        $database_username = $this->dbUsername;
+        $database_password = $this->dbPass;
         $settings = config("database.connections.$connection");
 
         config([
@@ -145,7 +155,7 @@ class Setup extends Component
 
     public function createDataInDB()
     {
-        if (!$this->checkDatabaseConnection($this->db_host, $this->db_port, $this->db_name, $this->db_username, $this->db_pass, $this->db_connection)) {
+        if (!$this->checkDatabaseConnection()) {
             $this->showMessage('Connection to database fail!');
             return false;
         }
@@ -161,41 +171,42 @@ class Setup extends Component
             $roleAdmin->status = true;
             $roleAdmin->save();
         }
-        $userAdmin = $userModel::where('email', $this->acc_email)->first();
-        if (!$userAdmin)
+        $userAdmin = $userModel::where('email', $this->accEmail)->first();
+        if (!$userAdmin) {
             $userAdmin = new $userModel;
-        $userAdmin->name = $this->acc_name;
-        $userAdmin->email = $this->acc_email;
-        $userAdmin->password = $this->acc_pass;
+        }
+        $userAdmin->name = $this->accName;
+        $userAdmin->email = $this->accEmail;
+        $userAdmin->password = $this->accPass;
         $userAdmin->status = 1;
         $userAdmin->save();
         $userAdmin->roles()->sync([$roleAdmin->id]);
 
-        set_setting(PLATFORM_SITE_DESCRIPTION, $this->site_description);
-        set_setting(PLATFORM_SITE_NAME, $this->site_name);
+        setSetting(PLATFORM_SITE_DESCRIPTION, $this->siteDescription);
+        setSetting(PLATFORM_SITE_NAME, $this->siteName);
     }
-    private function ActiveItem($item)
+    private function activeItem($item)
     {
         if ($item) {
             $item->Active();
-            $item->DoRegister();
-            $item->DoBoot();
+            $item->doRegister();
+            $item->doBoot();
         }
     }
     public function AcitveExtentions()
     {
-        foreach ($this->active_modules as $key => $value) {
+        foreach ($this->activeModules as $key => $value) {
             if ($value) {
-                $this->ActiveItem(Module::find($key));
+                $this->activeItem(Module::find($key));
             }
         }
-        foreach ($this->active_plugins as $key => $value) {
+        foreach ($this->activePlugins as $key => $value) {
             if ($value) {
-                $this->ActiveItem(Plugin::find($key));
+                $this->activeItem(Plugin::find($key));
             }
         }
-        if ($this->active_theme) {
-            $this->ActiveItem(Theme::find($this->active_theme));
+        if ($this->activeTheme) {
+            $this->activeItem(Theme::find($this->activeTheme));
         }
         Artisan::call('migrate', array('--force' => true));
     }
@@ -207,15 +218,15 @@ class Setup extends Component
         Theme::Layout('none');
         Assets::Theme('tabler');
         Assets::AddCss('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css');
-        $this->lang = Locale::CurrentLocale();
+        $this->lang = Locale::currentLocale();
         $this->languages = JsonData::getJsonFromFile(__DIR__ . '/../../database/contents/languages.json');
-        $this->db_connection = env('DB_CONNECTION', 'mysql');
-        $this->db_host = env('DB_HOST', '127.0.0.1');
-        $this->db_port = env('DB_PORT', '3306');
-        $this->db_name = env('DB_DATABASE', 'forge');
-        $this->db_username = env('DB_USERNAME', 'forge');
-        $this->db_pass = env('DB_PASSWORD', '');
-        $this->system_version = sokeio_version() ?? 'v1.0.0';
+        $this->dbConnection = env('DB_CONNECTION', 'mysql');
+        $this->dbHost = env('DB_HOST', '127.0.0.1');
+        $this->dbPort = env('DB_PORT', '3306');
+        $this->dbName = env('DB_DATABASE', 'forge');
+        $this->dbUsername = env('DB_USERNAME', 'forge');
+        $this->dbPass = env('DB_PASSWORD', '');
+        $this->systemVersion = sokeioVersion() ?? 'v1.0.0';
     }
     public function render()
     {

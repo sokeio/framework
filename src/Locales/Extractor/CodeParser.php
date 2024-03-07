@@ -7,7 +7,7 @@ use SplFileInfo;
 class CodeParser
 {
     private static $inst = null;
-    public static function Inst()
+    public static function inst()
     {
         return self::$inst ?? (self::$inst = new self());
     }

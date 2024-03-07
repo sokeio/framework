@@ -82,30 +82,30 @@ class BarCodeManager
         switch (strtolower(preg_replace('/[^A-Za-z0-9]/', '', $format))) {
             case self::FORMAT_PNG:
                 header('Content-Type: image/png');
-                $image = $this->RenderImage($symbology, $data, $options);
+                $image = $this->renderImage($symbology, $data, $options);
                 imagepng($image);
                 imagedestroy($image);
                 break;
             case self::FORMAT_GIF:
                 header('Content-Type: image/gif');
-                $image = $this->RenderImage($symbology, $data, $options);
+                $image = $this->renderImage($symbology, $data, $options);
                 imagegif($image);
                 imagedestroy($image);
                 break;
             case self::FORMAT_JPGE:
                 header('Content-Type: image/jpeg');
-                $image = $this->RenderImage($symbology, $data, $options);
+                $image = $this->renderImage($symbology, $data, $options);
                 imagejpeg($image);
                 imagedestroy($image);
                 break;
             case self::FORMAT_SVG:
                 header('Content-Type: image/svg+xml');
-                echo $this->RenderSvg($symbology, $data, $options);
+                echo $this->renderSvg($symbology, $data, $options);
                 break;
         }
     }
 
-    public function RenderImage($symbology, $data, $options)
+    public function renderImage($symbology, $data, $options)
     {
         list($code, $widths, $width, $height, $x, $y, $w, $h) =
             $this->encode_and_calculate_size($symbology, $data, $options);
@@ -143,7 +143,7 @@ class BarCodeManager
         return $image;
     }
 
-    public function RenderSvg($symbology, $data, $options)
+    public function renderSvg($symbology, $data, $options)
     {
         list($code, $widths, $width, $height, $x, $y, $w, $h) =
             $this->encode_and_calculate_size($symbology, $data, $options);

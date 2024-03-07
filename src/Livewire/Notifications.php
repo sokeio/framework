@@ -24,7 +24,7 @@ class Notifications extends Component
     {
         $this->skipRender();
         $this->page = $this->page + 1;
-        return notification()->Render($this->page - 1, $this->type);
+        return notification()->render($this->page - 1, $this->type);
     }
     public function TickReadAll()
     {

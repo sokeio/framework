@@ -10,14 +10,14 @@ abstract class HtmlBuilder implements Htmlable
     use Macroable;
     public function genId($prev, $min = 1000, $max = 100000000)
     {
-        $this->ElId = $prev . rand($min, $max);
+        $this->eId = $prev . rand($min, $max);
     }
-    private $ElId = '';
+    private $eId = '';
     public function getId()
     {
-        return $this->ElId;
+        return $this->eId;
     }
-    protected abstract function render();
+    abstract protected  function render();
     public function toHtml()
     {
         ob_start();

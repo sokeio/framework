@@ -8,67 +8,67 @@ class Column extends BaseCommon
     protected function __construct($value)
     {
         parent::__construct($value);
-        $this->Col('col');
+        $this->col('col');
     }
-    public function Col($Col)
+    public function col($col)
     {
-        return $this->setKeyValue('Col', $Col);
+        return $this->setKeyValue('col', $col);
     }
     public function getCol()
     {
-        return $this->getValue('Col');
+        return $this->getValue('col');
     }
-    public function Col1()
+    public function col1()
     {
-        return $this->Col('col1');
+        return $this->col('col1');
     }
-    public function Col2()
+    public function col2()
     {
-        return $this->Col('col2');
+        return $this->col('col2');
     }
-    public function Col3()
+    public function col3()
     {
-        return $this->Col('col3');
+        return $this->col('col3');
     }
-    public function Col4()
+    public function col4()
     {
-        return $this->Col('col4');
+        return $this->col('col4');
     }
-    public function Col5()
+    public function col5()
     {
-        return $this->Col('col5');
+        return $this->col('col5');
     }
-    public function Col6()
+    public function col6()
     {
-        return $this->Col('col6');
+        return $this->col('col6');
     }
-    public function Col7()
+    public function col7()
     {
-        return $this->Col('col7');
+        return $this->col('col7');
     }
-    public function Col8()
+    public function col8()
     {
-        return $this->Col('col8');
+        return $this->col('col8');
     }
-    public function Col9()
+    public function col9()
     {
-        return $this->Col('col9');
+        return $this->col('col9');
     }
-    public function Col10()
+    public function col10()
     {
-        return $this->Col('col10');
+        return $this->col('col10');
     }
-    public function Col11()
+    public function col11()
     {
-        return $this->Col('col11');
+        return $this->col('col11');
     }
-    public function Col12()
+    public function col12()
     {
-        return $this->Col('col12');
+        return $this->col('col12');
     }
-    public function ColAuto()
+    public function colAuto()
     {
-        return $this->Col('auto');
+        return $this->col('auto');
     }
     public function getView()
     {

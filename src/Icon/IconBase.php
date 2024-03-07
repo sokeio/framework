@@ -3,39 +3,38 @@
 namespace Sokeio\Icon;
 
 
-class IconBase
+abstract class IconBase
 {
-    public function AddToAsset()
-    {
-    }
-    public static function Make()
+    abstract public function addToAsset();
+    public static function make()
     {
         return new static();
     }
-    public function getKey()
+    public function getKey(): string
     {
-        return 'icon base';
+        return 'icon key';
     }
-    public function getName()
+    public function getName(): string
     {
-        return 'icon base';
+        return 'icon name';
     }
-    public function getPre()
+    public function getPre(): string
     {
         return '';
     }
-    public function getRegax()
+    public function getRegax(): string
     {
         return '/\.' . $this->getPre() . '-(.*?):before/';
     }
-    public function getPathIcon()
+    public function getPathIcon(): string
     {
-        return '';
+        return 'path icon';
     }
     public function getFileContentIcon()
     {
-        if (!file_exists($this->getPathIcon()))
+        if (!file_exists($this->getPathIcon())) {
             return '';
+        }
         return file_get_contents($this->getPathIcon());
     }
     public function getIconSize()
@@ -45,8 +44,9 @@ class IconBase
     public function getItems()
     {
         $fileContent = $this->getFileContentIcon();
-        if ($fileContent == '')
+        if ($fileContent == '') {
             return [];
+        }
         $matches = [];
         preg_match_all($this->getRegax(), $fileContent, $matches);
         $rs = [];

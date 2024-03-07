@@ -4,45 +4,44 @@ namespace Sokeio\Components\Field\Concerns;
 
 trait WithDatasource
 {
-    public function TextNoData($TextNoData): static
+    public function textNoData($textNoData): static
     {
-        return $this->setKeyValue('TextNoData', $TextNoData);
+        return $this->setKeyValue('textNoData', $textNoData);
     }
     public function getTextNoData()
     {
-        return $this->getValue('TextNoData', __('No results found'));
+        return $this->getValue('textNoData', __('No results found'));
     }
-    public function DataSource($DataSource): static
+    public function dataSource($dataSource): static
     {
-        return $this->setKeyValue('DataSource', $DataSource);
+        return $this->setKeyValue('dataSource', $dataSource);
     }
     public function getDataSource()
     {
-        return $this->getValue('DataSource');
+        return $this->getValue('dataSource');
     }
-
-    public function ViewTemplate($ViewTemplate): static
+    public function viewTemplate($viewTemplate): static
     {
-        return $this->setKeyValue('ViewTemplate', $ViewTemplate);
+        return $this->setKeyValue('viewTemplate', $viewTemplate);
     }
     public function getViewTemplate()
     {
-        return $this->getValue('ViewTemplate');
+        return $this->getValue('viewTemplate');
     }
-    public function FieldKey($FieldKey): static
+    public function fieldKey($fieldKey): static
     {
-        return $this->setKeyValue('FieldKey', $FieldKey);
+        return $this->setKeyValue('fieldKey', $fieldKey);
     }
     public function getFieldKey()
     {
-        return $this->getValue('FieldKey', 'id');
+        return $this->getValue('fieldKey', 'id');
     }
-    public function FieldText($FieldText): static
+    public function fieldText($fieldText): static
     {
-        return $this->setKeyValue('FieldText', $FieldText);
+        return $this->setKeyValue('fieldText', $fieldText);
     }
     public function getFieldText()
     {
-        return $this->getValue('FieldText', 'name');
+        return $this->getValue('fieldText', 'name');
     }
 }

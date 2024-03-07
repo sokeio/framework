@@ -6,27 +6,9 @@ use Sokeio\Components\Base;
 
 class Tab extends Base
 {
-    protected function __construct($value)
+    protected function childComponents()
     {
-        parent::__construct($value);
-    }
-    protected function ChildComponents()
-    {
-        $result = [];
-        if (($tabs = $this->getTabs())) {
-            foreach ($tabs as $item) {
-                if (isset($item['content'])) {
-                    if (is_array($item['content'])) {
-                        foreach ($item['content'] as $column) {
-                            $result[] = $column;
-                        }
-                    } else {
-                        $result[] = $item['content'];
-                    }
-                }
-            }
-        }
-        return $result;
+        return array_column($this->getTabs(), 'content') ?: [];
     }
     private $tabs;
     public function getTabs()
@@ -38,7 +20,7 @@ class Tab extends Base
         return [
             'title' => $title,
             'icon' => $icon,
-            'active' => $active == true
+            'active' => $active === true
         ];
     }
     public function addTab($tabItem, $content)

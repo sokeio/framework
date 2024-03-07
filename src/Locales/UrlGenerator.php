@@ -13,7 +13,7 @@ use \Illuminate\Routing\UrlGenerator as LaravelUrlGenerator;
  */
 class UrlGenerator extends LaravelUrlGenerator
 {
-    protected $parameter_overrides = [];
+    protected $parameterOverrides = [];
 
     /**
      * This method will set the parameters for given locale, so that
@@ -25,9 +25,9 @@ class UrlGenerator extends LaravelUrlGenerator
     public function overrideParameters($locale, $parameters)
     {
         if (is_array($parameters)) {
-            $this->parameter_overrides[$locale] = $parameters;
+            $this->parameterOverrides[$locale] = $parameters;
         } else {
-            $this->parameter_overrides[$locale] = [$parameters];
+            $this->parameterOverrides[$locale] = [$parameters];
         }
     }
 
@@ -88,7 +88,7 @@ class UrlGenerator extends LaravelUrlGenerator
 
     protected function areParametersOverridden($locale)
     {
-        if (array_key_exists($locale, $this->parameter_overrides)) {
+        if (array_key_exists($locale, $this->parameterOverrides)) {
             return true;
         }
 
@@ -108,9 +108,10 @@ class UrlGenerator extends LaravelUrlGenerator
             $name = $route->getName();
             $prefix = $route->getPrefix();
             // This is a fix for Laravel 6.
-            // TODO: Maybe this is not needed anymore...
-            $parameters = array_key_exists('data', $route->parameters) ? $route->parameters['data'] : $route->parameters;
-
+            $parameters =  $route->parameters;
+            if (array_key_exists('data', $route->parameters)) {
+                $parameters = $route->parameters['data'];
+            }
             if (!is_null($prefix)) {
                 $name = Str::replaceFirst($prefix . '.', '', $name);
             }
@@ -121,7 +122,7 @@ class UrlGenerator extends LaravelUrlGenerator
         }
 
         if ($this->areParametersOverridden($locale)) {
-            $parameters = $this->parameter_overrides[$locale];
+            $parameters = $this->parameterOverrides[$locale];
         }
 
         return parent::route($name, $parameters, $absolute);
@@ -152,8 +153,11 @@ class UrlGenerator extends LaravelUrlGenerator
     protected function hideDefaultLocale($locale)
     {
         if (
-            (config('sokeio.locale.hideDefaultLocale') == true and
-                $locale == config('sokeio.locale.defaultLocale')) or sokeio_is_admin()
+            (
+                config('sokeio.locale.hideDefaultLocale') === true &&
+                config('sokeio.locale.defaultLocale') === $locale
+            ) ||
+            sokeioIsAdmin()
         ) {
             return true;
         }

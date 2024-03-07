@@ -7,14 +7,14 @@ use Sokeio\Facades\Theme;
 
 class ThemeOptionSetting extends FormSetting
 {
-    protected function RedirectSave()
+    protected function redirectSave()
     {
         return false;
     }
   
     public function mount()
     {
-        if (!theme_option()->checkOptionUI()) {
+        if (!themeOption()->checkOptionUI()) {
             return abort(404);
         }
         parent::mount();
@@ -22,17 +22,17 @@ class ThemeOptionSetting extends FormSetting
 
     protected function LoadSetting($keyForm, $keyValue, $column)
     {
-        data_set($this, $keyForm, theme_option()->getValue($keyValue));
+        data_set($this, $keyForm, themeOption()->getValue($keyValue));
         return $this;
     }
     protected function SaveSetting($keyForm, $keyValue, $column)
     {
-        theme_option()->setValue($keyValue, data_get($this, $keyForm), false);
+        themeOption()->setValue($keyValue, data_get($this, $keyForm), false);
         return $this;
     }
     protected function  saveDataAfter()
     {
-        theme_option()->saveOption();
+        themeOption()->saveOption();
     }
     protected function getTitle()
     {
@@ -40,6 +40,6 @@ class ThemeOptionSetting extends FormSetting
     }
     public function SettingUI()
     {
-        return theme_option()->getOptionUI();
+        return themeOption()->getOptionUI();
     }
 }
