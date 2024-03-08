@@ -21,6 +21,7 @@ class CachePage
     public function handle(Request $request, Closure $next)
     {
         Platform::enableCachePage();
+
         if (Platform::checkCachePage() && !sokeioIsAdmin() && $request->isMethod('get')) {
             $key = md5($request->url());
             if ($repos = Cache::get(self::KEY_CACHE_PAGE . $key)) {
@@ -31,6 +32,7 @@ class CachePage
         * @var \Illuminate\Http\Response $response
         */
         $response = $next($request);
+
         if (Platform::checkCachePage() && !sokeioIsAdmin() && $request->isMethod('get')) {
             if (in_array($response->status(), [200, 201, 400]) && trim($response->content()) != '') {
                 $key = md5($request->url());

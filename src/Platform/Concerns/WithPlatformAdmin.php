@@ -3,6 +3,7 @@
 namespace Sokeio\Platform\Concerns;
 
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 trait WithPlatformAdmin
@@ -37,16 +38,16 @@ trait WithPlatformAdmin
         }
         if (isLivewireRequest() && isset(request()->get('components')[0]['snapshot'])) {
             $snapshot = request()->get('components')[0]['snapshot'];
+            $snapshot = json_decode($snapshot, true);
             if (
-                $snapshot && $snapshot = json_decode($snapshot, true)
-                && isset($snapshot['data']['soIsAdmin'])
+                isset($snapshot['data']['soIsAdmin'])
             ) {
                 $admin_id = Crypt::decryptString($snapshot['data']['soIsAdmin']);
                 $is_admin = $admin_id === $this->keyAdmin;
             }
         }
         $is_admin = apply_filters(SOKEIO_IS_ADMIN, $is_admin);
-        $this->isThemeAdmin = $is_admin === true;
+        $this->isThemeAdmin = ($is_admin === true) ? true : false;
         return $this->isThemeAdmin;
     }
     public function keyAdmin()

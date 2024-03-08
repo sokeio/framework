@@ -2,6 +2,8 @@
 
 namespace Sokeio\Shortcode;
 
+use Illuminate\Support\Str;
+use Sokeio\Component;
 
 trait WithShortcodeProcess
 {
@@ -211,5 +213,4 @@ trait WithShortcodeProcess
         // return attributes
         return is_array($attributes) ? $attributes : [$attributes];
     }
-
 }

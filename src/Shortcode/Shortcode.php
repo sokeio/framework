@@ -3,6 +3,7 @@
 namespace Sokeio\Shortcode;
 
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Livewire\Livewire;
 
@@ -130,6 +131,7 @@ class Shortcode implements Arrayable
         if (isset($this->callbacks) && is_string($this->callbacks) && is_a($this->callbacks, Component::class, true)) {
             return Livewire::mount('shortcode::' . $this->getName(), $this->attributes ?? []);
         }
+        Log::info($this->callbacks);
         // Render the shortcode through the callback
         return call_user_func_array($this->callbacks, [
             $this,

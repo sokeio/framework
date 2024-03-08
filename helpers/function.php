@@ -54,39 +54,6 @@ if (!function_exists('sokeioVersion')) {
         return Module::find('sokeio')?->getVersion();
     }
 }
-if (!function_exists('sokeioComponent')) {
-    function sokeioComponent($component, $params = [], $type = '')
-    {
-        return sokeioEncode([
-            'component' => $component,
-            'params' => $params,
-            'type' => $type,
-            'is_admin' => sokeioIsAdmin()
-        ]);
-    }
-}
-if (!function_exists('sokeioView')) {
-    function sokeioView($view, $params = [], $type = '')
-    {
-        return sokeioEncode([
-            'view' => $view,
-            'params' => $params,
-            'type' => $type,
-            'is_admin' => sokeioIsAdmin()
-        ]);
-    }
-}
-if (!function_exists('sokeioAction')) {
-    function sokeioAction($action, $params = [], $type = '')
-    {
-        return sokeioEncode([
-            'action' => $action,
-            'params' => $params,
-            'type' => $type,
-            'is_admin' => sokeioIsAdmin()
-        ]);
-    }
-}
 if (!function_exists('sokeioIcons')) {
     function sokeioIcons()
     {

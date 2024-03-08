@@ -28,7 +28,6 @@ class ShortcodeserviceProvider extends ServiceProvider
         // Check if the compiler is auto enabled
         $state = $this->app['config']->get('sokeio::shortcodes-enabled', true);
         // Enable when needed
-
         if ($state && !sokeioIsAdmin()) {
             $this->app['shortcode']->enable();
         }

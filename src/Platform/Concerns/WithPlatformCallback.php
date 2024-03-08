@@ -3,18 +3,22 @@
 namespace Sokeio\Platform\Concerns;
 
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 
 trait WithPlatformCallback
 {
 
     private $readyCallbackByKey = [];
-    private function readyByKey($key, $callback = null)
+    private function readyByKey($key, $callback = null, $debug = false)
     {
         if (!isset($this->readyCallbackByKey[$key])) {
             $this->readyCallbackByKey[$key] = [];
         }
         if ($callback && is_callable($callback)) {
-            $this->readyCallbackByKey[$key][] = $callback;
+            $this->readyCallbackByKey[$key][] = [
+                'callback' => $callback,
+                'debug' => $debug
+            ];
         }
     }
     private function doReadyByKey($key)
@@ -23,7 +27,19 @@ trait WithPlatformCallback
             return;
         }
         foreach ($this->readyCallbackByKey[$key] as  $callback) {
-            $callback();
+            if ($callback['debug']) {
+                Log::debug(
+                    $key . "::start",
+                    ['file' => $callback['debug']['file'], 'line' => $callback['debug']['line']]
+                );
+            }
+            $callback['callback']();
+            if ($callback['debug']) {
+                Log::debug(
+                    $key . "::end",
+                    ['file' => $callback['debug']['file'], 'line' => $callback['debug']['line']]
+                );
+            }
         }
     }
     public function routeAdminBeforeReady($callback = null)
@@ -52,6 +68,8 @@ trait WithPlatformCallback
     }
     public function ready($callback = null)
     {
+        // $tracking = debug_backtrace()[1];
+        // ['file' => $tracking['file'], 'line' => $tracking['line']]
         $this->readyByKey('platform', $callback);
     }
     public function doReady()

@@ -28,6 +28,8 @@ use Sokeio\Livewire\MenuItemLink;
 use Sokeio\Menu\MenuBuilder;
 use Sokeio\Shortcode\ShortcodeserviceProvider;
 use Sokeio\Support\SupportFormObjects\SupportFormObjects;
+use Sokeio\Middleware\SokeioPlatform;
+use Sokeio\Middleware\SokeioWeb;
 
 class SokeioServiceProvider extends ServiceProvider
 {
@@ -91,6 +93,7 @@ class SokeioServiceProvider extends ServiceProvider
             echo '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">';
             echo '<meta http-equiv="X-UA-Compatible" content="ie=edge">';
             echo '<meta name="csrf_token" value="' . csrf_token() . '"/>';
+
             if (!sokeioIsAdmin() && function_exists('seo_header_render')) {
                 add_filter('SEO_DATA_DEFAULT', function ($prev) {
                     return [
@@ -174,6 +177,7 @@ class SokeioServiceProvider extends ServiceProvider
             },400)") . "\"));
             </script>";
             Assets::Render(PLATFORM_BODY_AFTER);
+
             if (
                 !sokeioIsAdmin() &&
                 setting('COOKIE_BANNER_ENABLE', 1) &&
@@ -231,7 +235,6 @@ class SokeioServiceProvider extends ServiceProvider
         });
 
         Platform::ready(function () {
-            Platform::cleanThemeAdmin();
             MenuRender::RegisterType(MenuItemLink::class);
             if (Request::isMethod('get')) {
                 if (!Platform::checkFolderPlatform()) {
@@ -291,11 +294,9 @@ class SokeioServiceProvider extends ServiceProvider
                 app(Redirector::class)->to(route('sokeio.setup'))->send();
                 return;
             }
-            Theme::reTheme();
-            Theme::setupOption();
-            Platform::bootGate();
-            Platform::doReady();
-            Platform::doReadyAfter();
+            Route::pushMiddlewareToGroup('web', SokeioWeb::class);
+            Route::pushMiddlewareToGroup('web', SokeioPlatform::class);
+            Route::pushMiddlewareToGroup('api', SokeioPlatform::class);
         });
 
         Route::fallback(function () {

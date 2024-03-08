@@ -12,6 +12,7 @@ trait WithLayoutUI
     }
     protected function getBreadcrumb()
     {
+
         if (sokeioIsAdmin()) {
             return [
                 Breadcrumb::Item(__('Home'), route('admin.dashboard'))
