@@ -101,7 +101,10 @@ trait WithTable
                 })
         ];
     }
-    abstract public function doSearch();
+    public function doSearch()
+    {
+        return null;
+    }
     protected function searchUI()
     {
         return null;

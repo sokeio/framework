@@ -56,10 +56,14 @@ trait WithFieldBase
     public function getFormField()
     {
         if ($this->checkPrex()) {
+            $field = $this->getPrex() . '.';
+
             $operator = $this->getOperatorField();
-            $field = $this->getPrex();
-            $field .= ($operator != '' ?  $operator . '.' : '');
+            if ($operator != '') {
+                $field .=  ($operator . '.');
+            }
             $field .= str_replace('.', UI::KEY_FIELD_NAME, $this->getName());
+
             return $field;
         }
         return $this->getName();
@@ -117,7 +121,7 @@ trait WithFieldBase
     {
         return $this->setKeyValue('afterUI', $afterUI);
     }
-    public function getAfterUI()
+    public function getUIAfter()
     {
         return $this->getValue('afterUI');
     }

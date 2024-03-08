@@ -29,7 +29,7 @@
             </div>
         </div>
         <div class="{{ columnSize('col8') }}">
-            <div class="card" wire:key='locationId-{{ $locationId }}-{{ $___number_loading }}'>
+            <div class="card" wire:key='locationId-{{ $locationId }}-{{ $soNumberLoading }}'>
                 <div class="card-header">
                     <h3 class="card-title ">
                         <div class="row">

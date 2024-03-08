@@ -15,8 +15,8 @@ class BaseField extends Base
     protected function ChildComponents()
     {
         return [
-            $this->getBeforeUI(),
-            $this->getAfterUI()
+            $this->getUIBefore(),
+            $this->getUIAfter()
         ];
     }
     public function getView()

@@ -78,7 +78,10 @@ trait WithForm
         }
         return 'sokeio::components.form.index';
     }
-    abstract protected function formUI(): mixed;
+    protected function formUI()
+    {
+        return null;
+    }
     protected function getFormClass()
     {
         return null;

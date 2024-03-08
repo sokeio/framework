@@ -6,7 +6,10 @@ use Sokeio\Breadcrumb;
 
 trait WithLayoutUI
 {
-    abstract protected function getTitle();
+    protected function getTitle()
+    {
+        return null;
+    }
     protected function getBreadcrumb()
     {
         if (sokeioIsAdmin()) {

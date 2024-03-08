@@ -6,7 +6,7 @@ namespace Sokeio\Concerns;
 trait WithLoadMore
 {
     public $dataItems = [];
-    abstract protected function getQuery(): mixed;
+    abstract protected function getQuery();
     protected function getPageSize()
     {
         return 12;

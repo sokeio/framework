@@ -28,5 +28,8 @@ trait WithEditiInTable
             }
         }
     }
-    abstract public  function saveDataRow($id);
+    public  function saveDataRow($id)
+    {
+        return '';
+    }
 }

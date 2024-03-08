@@ -7,7 +7,10 @@ use Sokeio\Breadcrumb;
 trait WithModelQuery
 {
 
-    abstract protected function getModel(): string;
+    protected function getModel()
+    {
+        return null;
+    }
 
     /**
      * Get a new query builder for the model's table.
@@ -18,5 +21,4 @@ trait WithModelQuery
     {
         return ($this->getModel())::query();
     }
-    
 }

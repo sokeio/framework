@@ -18,7 +18,6 @@ class RouteEx
     }
     public static function api($callback)
     {
-
         Route::middleware(apply_filters(PLATFORM_MIDDLEWARE_API, ['api', MiddlewarePlatform::class]))
             ->prefix('api')
             ->group($callback);

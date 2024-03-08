@@ -7,12 +7,12 @@ use Sokeio\Models\Menu;
 
 class FormMenu extends Form
 {
-    public  static function getMenuType(): string
+    public  static function getMenuType()
     {
         echo 'getMenuType';
         return '';
     }
-    public static function getMenuName(): string
+    public static function getMenuName()
     {
         echo 'getMenuName';
         return '';

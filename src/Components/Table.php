@@ -5,7 +5,7 @@ namespace Sokeio\Components;
 use Sokeio\Components\Concerns\WithTable;
 use Sokeio\Component;
 
-class Table extends Component
+abstract class Table extends Component
 {
     use  WithTable;
     public function Booted()

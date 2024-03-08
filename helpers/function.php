@@ -330,8 +330,9 @@ if (!function_exists('getAllClass')) {
 
         $classList = collect($files)
             ->map(function (SplFileInfo $file) use ($namespace) {
-                return $namespace . '\\' . str_replace('/', '\\', $file->getRelativePathname())
-                    ->replace('.php', '');
+                return (string) Str::of($namespace)
+                    ->append('\\', $file->getRelativePathname())
+                    ->replace(['/', '.php'], ['\\', '']);
             })
             ->filter(function (string $class) {
                 return class_exists($class);
@@ -635,8 +636,10 @@ if (!function_exists('checkPathVendor')) {
 if (!function_exists('includeFile')) {
     function includeFile($path)
     {
-        $loader = new \Composer\Autoload\ClassLoader();
-        $loader->add('file', $path, true);
-        $loader->register(true);
+        if (!file_exists($path)) {
+            return;
+        }
+        //NOSONAR
+        include_once $path;
     }
 }

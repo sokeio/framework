@@ -5,28 +5,31 @@ namespace Sokeio\Icon;
 
 abstract class IconBase
 {
-    abstract public function addToAsset();
+    public function addToAsset()
+    {
+        return '';
+    }
     public static function make()
     {
         return new static();
     }
-    public function getKey(): string
+    public function getKey()
     {
         return 'icon key';
     }
-    public function getName(): string
+    public function getName()
     {
         return 'icon name';
     }
-    public function getPre(): string
+    public function getPre()
     {
         return '';
     }
-    public function getRegax(): string
+    public function getRegax()
     {
         return '/\.' . $this->getPre() . '-(.*?):before/';
     }
-    public function getPathIcon(): string
+    public function getPathIcon()
     {
         return 'path icon';
     }
