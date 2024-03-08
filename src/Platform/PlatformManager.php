@@ -13,12 +13,14 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Sokeio\Platform\Concerns\WithPlatformAdmin;
 use Sokeio\Platform\Concerns\WithPlatformCallback;
 use Sokeio\Platform\Concerns\WithPlatformTime;
 
 class PlatformManager
 {
     use WithPlatformTime, WithPlatformCallback;
+    use WithPlatformAdmin;
     private $cachePage = false;
     public function enableCachePage()
     {

@@ -3,14 +3,17 @@
 use Illuminate\Routing\RouteAction;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Js;
 use Livewire\Livewire;
+use Ramsey\Uuid\Guid\Guid;
 use Symfony\Component\Finder\SplFileInfo;
 use Sokeio\Breadcrumb;
+use Sokeio\Components\UI;
 use Sokeio\Facades\Menu;
 use Sokeio\Facades\Module;
 use Sokeio\Facades\Platform;
@@ -145,29 +148,7 @@ if (!function_exists('sokeioFlags')) {
 if (!function_exists('sokeioIsAdmin')) {
     function sokeioIsAdmin()
     {
-        $is_admin = false;
-        $arrMiddleware = [];
-        if (Request()->route()?->gatherMiddleware()) {
-            $arrMiddleware = Request()->route()->gatherMiddleware();
-            $is_admin = in_array(\Sokeio\Middleware\ThemeAdmin::class,  $arrMiddleware);
-        }
-        $url_admin = adminUrl();
-        if (request()->segment(1) === $url_admin || $url_admin === '') {
-            $is_admin = true;
-        }
-        if (isLivewireRequest() && isset(request()->get('components')[0]['snapshot'])) {
-            $snapshot = request()->get('components')[0]['snapshot'];
-            if (
-                $snapshot && $snapshot = json_decode($snapshot, true)
-                && isset($snapshot['data']['___theme___admin'])
-            ) {
-                $is_admin = ($snapshot['data']['___theme___admin'] === true);
-            }
-        }
-        if (request('___theme___admin') === true) {
-            $is_admin = true;
-        }
-        return apply_filters(SOKEIO_IS_ADMIN, $is_admin);
+        return Platform::isThemeAdmin();
     }
 }
 
@@ -414,6 +395,7 @@ if (!function_exists('setSetting')) {
     function setSetting($key, $value = null, $locked = null)
     {
         try {
+            Log::info(['key' => $key, 'value' => $value, 'locked' => $locked]);
             Cache::forget($key);
             $setting = Setting::where('key', $key)->first();
             if ($value !== null) {

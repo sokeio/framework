@@ -156,8 +156,7 @@ class UrlGenerator extends LaravelUrlGenerator
             (
                 config('sokeio.locale.hideDefaultLocale') === true &&
                 config('sokeio.locale.defaultLocale') === $locale
-            ) ||
-            sokeioIsAdmin()
+            )
         ) {
             return true;
         }

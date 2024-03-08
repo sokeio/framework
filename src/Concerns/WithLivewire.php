@@ -2,9 +2,11 @@
 
 namespace Sokeio\Concerns;
 
+use Illuminate\Support\Facades\Crypt;
 use Sokeio\LivewireLoader;
 use Livewire\Features\SupportPageComponents\PageComponentConfig;
 use Livewire\Features\SupportPageComponents\SupportPageComponents;
+use Sokeio\Facades\Platform;
 
 trait WithLivewire
 {
@@ -12,7 +14,7 @@ trait WithLivewire
     public $soDataTemp = [];
     public $soRefId;
     public $soIsPage = false;
-    public $soIsThemeAdmin = false;
+    public $soIsAdmin = false;
     public $soNumberLoading = 0;
     public function currentIsPage()
     {
@@ -98,9 +100,7 @@ trait WithLivewire
     }
     public function booted()
     {
-        if (function_exists('sokeioIsAdmin')) {
-            $this->soIsThemeAdmin = sokeioIsAdmin();
-        }
+        $this->soIsAdmin = Platform::keyAdmin();
         if (!$this->soRefId) {
             $this->soRefId = request('refComponent');
         }

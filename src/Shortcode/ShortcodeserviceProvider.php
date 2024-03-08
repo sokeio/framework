@@ -4,6 +4,7 @@ namespace Sokeio\Shortcode;
 
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\ServiceProvider;
+use Sokeio\Facades\Platform;
 
 class ShortcodeserviceProvider extends ServiceProvider
 {
@@ -14,7 +15,9 @@ class ShortcodeserviceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->enableCompiler();
+        Platform::Ready(function () {
+            $this->enableCompiler();
+        });
     }
 
     /**

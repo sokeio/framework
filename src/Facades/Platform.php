@@ -33,6 +33,9 @@ use Illuminate\Support\Facades\Facade;
  * @method static void setEnv($arrs)
  * @method static void start();
  * @method static long executionTime();
+ * @method static void cleanThemeAdmin
+ * @method static bool isThemeAdmin
+ * @method static string keyAdmin()
  * @see \Sokeio\Facades\Platform
  */
 class Platform extends Facade

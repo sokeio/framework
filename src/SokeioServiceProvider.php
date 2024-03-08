@@ -231,6 +231,7 @@ class SokeioServiceProvider extends ServiceProvider
         });
 
         Platform::ready(function () {
+            Platform::cleanThemeAdmin();
             MenuRender::RegisterType(MenuItemLink::class);
             if (Request::isMethod('get')) {
                 if (!Platform::checkFolderPlatform()) {
@@ -264,7 +265,6 @@ class SokeioServiceProvider extends ServiceProvider
     }
     public function packageRegistered()
     {
-
         $this->triggerApp();
         $this->addTrigger();
         $this->triggerPlatform();
