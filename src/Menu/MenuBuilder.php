@@ -225,7 +225,7 @@ class MenuBuilder extends HtmlBuilder
             echo "<div class='" . $item['class'] . "' id='" . $item['id'] . "' " . $attribute . " >";
         }
 
-        MenuRender::DoRender($this, $this->position);
+        MenuRender::doRender($this, $this->position);
 
         foreach ($this->warps as $item) {
             echo "</div>";

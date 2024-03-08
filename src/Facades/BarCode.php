@@ -5,7 +5,7 @@ namespace Sokeio\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static void OutputImage($format, $symbology, $data, $options)
+ * @method static void outputImage($format, $symbology, $data, $options)
  * @method static mix RenderImage($symbology, $data, $options)
  * @method static mix RenderSvg($symbology, $data, $options)
  *

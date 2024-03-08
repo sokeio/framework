@@ -3,6 +3,7 @@
 namespace Sokeio\Concerns;
 
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 use Sokeio\Platform\DataInfo;
 use Sokeio\Facades\Theme;
 
@@ -13,7 +14,6 @@ trait WithSystemExtend
         $this->arrData = collect([]);
     }
     private $arrData = [];
-
     public function isRegisterBeforeLoad()
     {
         return true;
@@ -106,7 +106,7 @@ trait WithSystemExtend
     public function find($name)
     {
         return $this->getAll()->where(function (DataInfo $item) use ($name) {
-            return $item->CheckName($name);
+            return $item->checkName($name);
         })->first();
     }
     public function has($name)
@@ -152,7 +152,7 @@ trait WithSystemExtend
         $themes = [];
         if ($this->isTheme()) {
             $themes[] = env('PLATFORM_THEME_DEFAULT', 'none');
-            $themes[] = Theme::AdminId();
+            $themes[] = Theme::adminId();
             $themes[] = Theme::SiteId();
             $themes[] = 'tabler';
         }

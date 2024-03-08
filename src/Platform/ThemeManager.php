@@ -2,17 +2,16 @@
 
 namespace Sokeio\Platform;
 
-use Sokeio\Facades\Action;
 use Sokeio\Laravel\Hook\ActionHook;
 use Sokeio\Events\PlatformChanged;
 use Sokeio\Facades\Platform;
-use Sokeio\RouteEx;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Request;
+use Sokeio\Platform\Concerns\WithThemeProcess;
 
 class ThemeManager extends ActionHook
 {
     use \Sokeio\Concerns\WithSystemExtend;
+    use WithThemeProcess;
     private $isHtmlAjax = true;
     public function DisableHtmlAjax(): self
     {
@@ -29,7 +28,7 @@ class ThemeManager extends ActionHook
     {
         return $this->isAdmin;
     }
-    public function LayoutDefault()
+    public function layoutDefault()
     {
         return 'default';
     }
@@ -42,10 +41,10 @@ class ThemeManager extends ActionHook
     {
         return "theme";
     }
-    public function SetupOption()
+    public function setupOption()
     {
         $site = $this->SiteDataInfo();
-        $site?->CallOperation('SetupOption');
+        $site?->TriggerEvent('setupOption');
     }
     private $layout;
     public function setLayout($layout)
@@ -54,11 +53,11 @@ class ThemeManager extends ActionHook
     }
     public function AdminId()
     {
-        return PlatformStatus::Key(PLATFORM_THEME_ADMIN)->getFirstOrDefault('admin');
+        return PlatformStatus::key(PLATFORM_THEME_ADMIN)->getFirstOrDefault('admin');
     }
     public function SiteId()
     {
-        return PlatformStatus::Key(PLATFORM_THEME_WEB)->getFirstOrDefault('none');
+        return PlatformStatus::key(PLATFORM_THEME_WEB)->getFirstOrDefault('none');
     }
     public function AdminDataInfo()
     {
@@ -82,131 +81,32 @@ class ThemeManager extends ActionHook
         if (isset($theme['admin']) && $theme['admin'] === 1) {
             $site = $this->AdminDataInfo();
 
-            $site?->CallOperation('deactivate');
-            $theme?->CallOperation('activate');
-            PlatformStatus::Key(PLATFORM_THEME_ADMIN)->Active($theme->getId(), true);
-            $theme?->CallOperation('activated');
-            $site?->CallOperation('deactivated');
+            $site?->TriggerEvent('deactivate');
+            $theme?->TriggerEvent('activate');
+            PlatformStatus::key(PLATFORM_THEME_ADMIN)->active($theme->getId(), true);
+            $theme?->TriggerEvent('activated');
+            $site?->TriggerEvent('deactivated');
         } else {
             $site = $this->SiteDataInfo();
 
-            $site?->CallOperation('deactivate');
-            $theme?->CallOperation('activate');
-            PlatformStatus::Key(PLATFORM_THEME_WEB)->Active($theme->getId(), true);
-            $theme?->CallOperation('activated');
-            $site?->CallOperation('deactivated');
+            $site?->TriggerEvent('deactivate');
+            $theme?->TriggerEvent('activate');
+            PlatformStatus::key(PLATFORM_THEME_WEB)->active($theme->getId(), true);
+            $theme?->TriggerEvent('activated');
+            $site?->TriggerEvent('deactivated');
         }
         PlatformChanged::dispatch($theme);
         Platform::makeLink();
     }
-    public function getLayouts()
-    {
-        return $this->data_layouts;
-    }
-    private $data_layouts = [];
-    public $data_themes = [];
-    private function findAndRegister($theme, $parentId = null)
-    {
-        if (!$parentId) $parentId = $theme;
-        if (!isset($this->data_themes[$parentId])) $this->data_themes[$parentId] = [];
-        $theme_data = $this->find($theme);
-        if ($theme_data == null) return null;
-        $this->data_themes[$parentId][] = $theme_data;
-        if ($parent = $theme_data['parent']) {
-            $this->findAndRegister($parent, $parentId);
-        }
-        $theme_data->doRegister();
-        foreach ($theme_data->getLayouts() as $layout) {
-            $this->data_layouts[] =  $layout;
-        }
-        return $theme_data;
-    }
-    private function findAndRegisterRoute($theme, $parentId = null)
-    {
-        if (!$parentId) $parentId = $theme;
-        if (!isset($this->data_themes[$parentId])) $this->data_themes[$parentId] = [];
-        $theme_data = $this->find($theme);
-        if ($theme_data == null) return null;
-        $this->data_themes[$parentId][] = $theme_data;
-        if ($parent = $theme_data['parent']) {
-            $this->findAndRegisterRoute($parent, $parentId);
-        }
-        RouteEx::Load($theme_data->getPath('routes/'));
-        if (isset($theme_data['alias']) && $theme_data['alias'] != '' && File::exists($theme_data->getPath('config/' . $theme_data['alias'] . '.php'))) {
-            $config = include $theme_data->getPath('config/' . $theme_data['alias'] . '.php');
-            if (isset($config['actions']) && $actionTypes = $config['actions']) {
-                if (is_array($actionTypes) && count($actionTypes) > 0) {
-                    Action::Register($actionTypes, 'theme');
-                }
-            }
-        }
-
-
-        return $theme_data;
-    }
-    private function findLocations($locations, $theme, $parentId = null)
-    {
-        if (!$parentId) $parentId = $theme;
-        if (!isset($this->data_themes[$parentId])) $this->data_themes[$parentId] = [];
-        $theme_data = $this->find($theme);
-        if ($theme_data == null) return $locations;
-        $this->data_themes[$parentId][] = $theme_data;
-        if ($parent = $theme_data['parent']) {
-            $locations  =  $this->findLocations($locations, $parent, $parentId);
-        }
-        if (isset($theme_data['locations'])) {
-            foreach ($theme_data['locations'] as $item) {
-                $locations[$item] = $item;
-            }
-        }
-        return  $locations;
-    }
-    private $locations = null;
-    public function getLocations()
-    {
-        if ($this->locations) return $this->locations;
-        $temps = $this->findLocations(['menu_main' => 'menu_main'], apply_filters(PLATFORM_THEME_FILTER_LAYOUT, $this->SiteId(), 0));
-        $this->locations = array_keys($temps);
-        return $this->locations;
-    }
-    public function RegisterRoute()
-    {
-        $this->findAndRegisterRoute(apply_filters(PLATFORM_THEME_FILTER_LAYOUT, $this->AdminId(), 1));
-        $this->findAndRegisterRoute(apply_filters(PLATFORM_THEME_FILTER_LAYOUT, $this->SiteId(), 0));
-    }
-    public function RegisterTheme()
-    {
-        $this->findAndRegister(env('PLATFORM_THEME_DEFAULT', 'none'));
-        $this->findAndRegister(apply_filters(PLATFORM_THEME_FILTER_LAYOUT, $this->AdminId(), 1));
-        $this->findAndRegister(apply_filters(PLATFORM_THEME_FILTER_LAYOUT, $this->SiteId(), 0));
-    }
-    protected $data_active;
-    public function ThemeCurrent()
-    {
-        if (!isset($this->data_active) || !$this->data_active) {
-            if (sokeioIsAdmin()) {
-                $this->data_active = $this->findAndRegister(apply_filters(PLATFORM_THEME_FILTER_LAYOUT, $this->AdminId(), 1));
-            } else {
-                $this->data_active = $this->findAndRegister(apply_filters(PLATFORM_THEME_FILTER_LAYOUT, $this->SiteId(), 0));
-            }
-            if ($this->data_active == null) {
-                $this->data_active = $this->findAndRegister(env('PLATFORM_THEME_DEFAULT', 'none'));
-            }
-        }
-        return $this->data_active;
-    }
-    public function reTheme()
-    {
-        $this->data_active = null;
-        $this->ThemeCurrent();
-    }
 
     public function isHtml()
     {
-        if ($this->isHtmlAjax) return Request::ajax();
+        if ($this->isHtmlAjax) {
+            return Request::ajax();
+        }
         return false;
     }
-    public function Layout($layout = '')
+    public function layout($layout = '')
     {
         if ($layout != '') {
             $this->setLayout($layout);
@@ -214,8 +114,34 @@ class ThemeManager extends ActionHook
         if ($this->isHtml()) {
             return 'sokeio::html';
         }
-        if ($this->layout != '') $layout = $this->layout;
-        if ($layout == '') $layout = $this->LayoutDefault();
+        if ($this->layout != '') {
+            $layout = $this->layout;
+        }
+        if ($layout == '') {
+            $layout = $this->layoutDefault();
+        }
         return 'theme::layouts.' . $layout;
+    }
+    protected $dataActive;
+    public function themeCurrent()
+    {
+        if (!isset($this->dataActive) || !$this->dataActive) {
+            $site_name = '';
+            if (sokeioIsAdmin()) {
+                $site_name = apply_filters(PLATFORM_THEME_FILTER_LAYOUT, $this->AdminId(), 1);
+            } else {
+                $site_name = apply_filters(PLATFORM_THEME_FILTER_LAYOUT, $this->SiteId(), 0);
+            }
+            $this->dataActive = $this->findAndRegister($site_name);
+            if ($this->dataActive == null) {
+                $this->dataActive = $this->findAndRegister(env('PLATFORM_THEME_DEFAULT', 'none'));
+            }
+        }
+        return $this->dataActive;
+    }
+    public function reTheme()
+    {
+        $this->dataActive = null;
+        $this->themeCurrent();
     }
 }

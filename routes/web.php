@@ -43,7 +43,7 @@ Route::group(['prefix' => '__sokeio__'], function () {
 
     Route::get('{types}/screenshot/{id}', function ($types, $id) {
 
-        $svg = EasySVG::Create(true);
+        $svg = EasySVG::create(true);
         //1280 × 853 px
         $svg->addAttribute("width", "1280");
         $svg->addAttribute("height", "653");
@@ -71,6 +71,6 @@ Route::group(['prefix' => '__sokeio__'], function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();
     });
 });
-if (!Platform::CheckConnectDB() || env('SOKEIO_SETUP', true)) {
+if (!Platform::checkConnectDB() || env('SOKEIO_SETUP', true)) {
     Route::get('/setup', Setup::class)->name('sokeio.setup');
 }

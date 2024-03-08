@@ -2,7 +2,6 @@
 
 namespace Sokeio\Platform;
 
-use Sokeio\Platform\DataInfo;
 use Illuminate\Support\Facades\File;
 use Sokeio\Laravel\JsonData;
 use Sokeio\Facades\Module;
@@ -14,26 +13,12 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Sokeio\Platform\Concerns\WithPlatformCallback;
+use Sokeio\Platform\Concerns\WithPlatformTime;
 
 class PlatformManager
 {
-    private $startTime = 0;
-    public function Start()
-    {
-        $this->startTime = microtime(true);
-
-        if (!File::exists(base_path('.env'))) {
-            File::copy(base_path('.env.example'), base_path('.env'));
-            runCmd(base_path(''), 'php artisan key:generate');
-            $path = public_path(platformPath());
-            if (File::exists($path)) File::deleteDirectory($path);
-        }
-    }
-    public function ExecutionTime()
-    {
-        $endTime = microtime(true);
-        return round($endTime - $this->startTime, 4);
-    }
+    use WithPlatformTime, WithPlatformCallback;
     private $cachePage = false;
     public function enableCachePage()
     {
@@ -54,22 +39,25 @@ class PlatformManager
 
     public function registerComposer($path, $resgister = false)
     {
-        if (!file_exists($path . '/composer.json')) return [];
+        if (!file_exists($path . '/composer.json')) {
+            return [];
+        }
 
         $composer = JsonData::getJsonFromFile($path . '/composer.json');
         $loader = new \Composer\Autoload\ClassLoader();
         $psr4 = JsonData::getValueByKey($composer, 'autoload.psr-4', []);
         foreach ($psr4 as $key => $value) {
-            if (file_exists($path . '/' . $value))
+            if (file_exists($path . '/' . $value)) {
                 $loader->addPsr4($key, $path . '/' . $value, true);
-        }
-        $files = JsonData::getValueByKey($composer, 'autoload.files', []);
-        foreach ($files as $file) {
-            if (file_exists($path . '/' . $file)) {
-                require_once $path . '/' . $file;
-                // $loader->add($path,  $file, true);
             }
         }
+        $files = collect(JsonData::getValueByKey($composer, 'autoload.files', []))
+            ->map(function ($item) use ($path) {
+                return $path . '/' . $item;
+            })->filter(function ($item) {
+                return file_exists($item);
+            })->toArray();
+        $loader->add('files',  $files, true);
         $loader->register(true);
         $providers = JsonData::getValueByKey($composer, 'extra.laravel.providers', []);
         if ($resgister) {
@@ -94,38 +82,40 @@ class PlatformManager
         }
         return $links;
     }
-    public function makeLink($relative = false, $force = true)
+    private function makeFile($link, $target, $isRelative = false)
     {
-        foreach ($this->getExtends() as $item) {
-            $pathType = platformPath($item);
-            $public = public_path($pathType);
-            $appdir = base_path($pathType);
-            app('files')->deleteDirectory($public);
-            app('files')->ensureDirectoryExists($public);
-            app('files')->ensureDirectoryExists($appdir);
+        $resolvedLink = realpath($link);
+        if ($resolvedLink) {
+            $link = $resolvedLink;
         }
-        foreach ($this->getLinks() as  $item) {
-            foreach ($item as $link => $target) {
-                if ($temp = realpath($link))
-                    $link = $temp;
-                // Log::info("------------------start----------------");
-                // Log::info($link);
-                // Log::info($target);
-                // Log::info("----------------------------------");
-                if (file_exists($link)) {
-                    if (is_link($target)) {
-                        app('files')->delete($target);
-                    }
-                    if (env('SOKEIO_PUBLIC_COPY')) {
-                        File::copyDirectory($link, $target);
-                    } else {
-                        if ($relative) {
-                            app('files')->relativeLink($link, $target);
-                        } else {
-                            app('files')->link($link, $target);
-                        }
-                    }
+        if (file_exists($link)) {
+            if (is_link($target)) {
+                app('files')->delete($target);
+            }
+            if (env('SOKEIO_PUBLIC_COPY')) {
+                File::copyDirectory($link, $target);
+            } else {
+                if ($isRelative) {
+                    app('files')->relativeLink($link, $target);
+                } else {
+                    app('files')->link($link, $target);
                 }
+            }
+        }
+    }
+    public function makeLink($isRelative = false)
+    {
+        foreach ($this->getExtends() as $extend) {
+            $path = platformPath($extend);
+            $publicPath = public_path($path);
+            $appPath = base_path($path);
+            app('files')->deleteDirectory($publicPath);
+            app('files')->ensureDirectoryExists($publicPath);
+            app('files')->ensureDirectoryExists($appPath);
+        }
+        foreach ($this->getLinks() as  $links) {
+            foreach ($links as $link => $target) {
+                $this->makeFile($link, $target, $isRelative);
             }
         }
         Artisan::call('storage:link');
@@ -133,7 +123,9 @@ class PlatformManager
     public function checkFolderPlatform()
     {
         foreach ($this->getExtends() as $item) {
-            if (!file_exists(platformPath($item))) return false;
+            if (!file_exists(platformPath($item))) {
+                return false;
+            }
         }
         return true;
     }
@@ -143,7 +135,7 @@ class PlatformManager
             if (file_exists(($path . '/' . $baseType . '.json'))) {
                 $dataInfo = JsonData::getJsonFromFile($path . '/' . $baseType . '.json');
                 if ($register && isset($dataInfo['id']) && !(platformBy($baseType)->has($dataInfo['id']))) {
-                    platformBy($baseType)->addItem($path, DataInfo::checkPathVendor($path, $baseType));
+                    platformBy($baseType)->addItem($path, checkPathVendor($path, $baseType));
                 }
                 return [
                     'baseType' => $baseType,
@@ -162,105 +154,68 @@ class PlatformManager
         return apply_filters(PLATFORM_MODEL_LIST, $arr);
     }
 
-    public function CheckConnectDB()
+    public function checkConnectDB()
     {
         try {
             DB::connection()->getPdo();
             if (DB::connection()->getDatabaseName() && Schema::hasTable('permissions')) {
                 return true;
-            } else {
-                return false;
             }
         } catch (\Exception $e) {
-            return false;
+            Log::log('error', $e->getMessage());
         }
+        return false;
     }
     private $gateIgnores = [];
-    public function CheckGate()
+    public function checkGate()
     {
         $numArgs = func_get_args();
-        if (count($numArgs) < 1) return false;
+        if (empty($numArgs)) {
+            return false;
+        }
         return auth()->check() && Gate::check($numArgs[0], array_shift($numArgs));
     }
-    public function BootGate()
+    public function bootGate()
     {
-        if (!$this->CheckConnectDB()) return;
-        $this->gateIgnores = apply_filters(PLATFORM_PERMISSION_IGNORE, []);
+        if (!$this->checkConnectDB()) {
+            return;
+        }
+
+        $this->registerGlobalGates();
+        $this->registerPermissionGates();
+    }
+
+    private function registerGlobalGates()
+    {
         Gate::before(function ($user, $ability) {
-            if (!$user) $user = auth()->user();
-            if (!$user) return false;
-            if ($user->isBlock()) return false;
-            if ($user->isSuperAdmin()) {
+            if (!$user) {
+                $user = auth()->user();
+            }
+            if (!$user || $user->isBlock()) {
+                return false;
+            }
+            if (in_array($ability, $this->gateIgnores)) {
                 return true;
             }
+            return $user->isSuperAdmin();
         });
-        app(config('sokeio.model.permission', \Sokeio\Models\Permission::class))->get()->map(function ($permission) {
+    }
+
+    private function registerPermissionGates()
+    {
+        $permissions = app(config('sokeio.model.permission', \Sokeio\Models\Permission::class))->get();
+
+        $permissions->map(function ($permission) {
             Gate::define($permission->slug, function ($user = null) use ($permission) {
-                if (!$user) $user = auth()->user();
-                if (!$user) return false;
-                if (!apply_filters(PLATFORM_CHECK_PERMISSION, true,  $permission, $user)) return false;
+                if (!$user) {
+                    $user = auth()->user();
+                }
+                if (!$user || !apply_filters(PLATFORM_CHECK_PERMISSION, true,  $permission, $user)) {
+                    return false;
+                }
                 return $user->hasPermissionTo($permission);
             });
         });
-        foreach ($this->gateIgnores as $item) {
-            Gate::define($item, function () {
-                return true;
-            });
-        }
-    }
-    private $readyCallbackByKey = [];
-    private function ReadyByKey($key, $callback = null)
-    {
-        if (!isset($this->readyCallbackByKey[$key])) $this->readyCallbackByKey[$key] = [];
-        if ($callback && is_callable($callback))
-            $this->readyCallbackByKey[$key][] = $callback;
-    }
-    private function DoReadyByKey($key)
-    {
-        if (!isset($this->readyCallbackByKey[$key]) || count($this->readyCallbackByKey[$key]) < 1) return;
-        foreach ($this->readyCallbackByKey[$key] as  $callback) {
-            $callback();
-        }
-    }
-    public function RouteAdminBeforeReady($callback = null)
-    {
-        $this->ReadyByKey('route_admin', $callback);
-    }
-    public function DoRouteAdminBeforeReady()
-    {
-        $this->DoReadyByKey('route_admin');
-    }
-    public function RouteSiteBeforeReady($callback = null)
-    {
-        $this->ReadyByKey('route_site', $callback);
-    }
-    public function DoRouteSiteBeforeReady()
-    {
-        $this->DoReadyByKey('route_site');
-    }
-    public function RouteApiBeforeReady($callback = null)
-    {
-        $this->ReadyByKey('route_api', $callback);
-    }
-    public function DoRouteApiBeforeReady()
-    {
-        $this->DoReadyByKey('route_api');
-    }
-    public function Ready($callback = null)
-    {
-        $this->ReadyByKey('platform', $callback);
-    }
-    public function DoReady()
-    {
-        $this->DoReadyByKey('platform');
-    }
-    public function ReadyAfter($callback = null)
-    {
-        $this->ReadyByKey('platform_after', $callback);
-    }
-    public function DoReadyAfter()
-    {
-        $this->DoReadyByKey('platform_after');
     }
     public function setEnv($arrs)
     {
@@ -268,8 +223,9 @@ class PlatformManager
         if (File::exists($path)) {
 
             $envContent = file_get_contents($path, true);
-            foreach ($arrs as $key => $value)
+            foreach ($arrs as $key => $value) {
                 $envContent = preg_replace('/^' . $key . '=.*$/m', $key . '=\'' . $value . '\'', $envContent);
+            }
             file_put_contents($path, $envContent, LOCK_EX);
         }
     }

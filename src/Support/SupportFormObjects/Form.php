@@ -19,13 +19,20 @@ class Form implements Arrayable
         validateOnly as parentValidateOnly;
     }
 
-    function __construct(
+    public function __construct(
         protected Component $component,
         protected $propertyName
-    ) {}
+    ) {
+    }
 
-    public function getComponent() { return $this->component; }
-    public function getPropertyName() { return $this->propertyName; }
+    public function getComponent()
+    {
+        return $this->component;
+    }
+    public function getPropertyName()
+    {
+        return $this->propertyName;
+    }
 
     public function validate($rules = null, $messages = [], $attributes = [])
     {
@@ -59,7 +66,7 @@ class Form implements Arrayable
     {
         $raw = $bag->toArray();
 
-        $raw = Arr::prependKeysWith($raw, $this->getPropertyName().'.');
+        $raw = Arr::prependKeysWith($raw, $this->getPropertyName() . '.');
 
         return new MessageBag($raw);
     }
@@ -140,7 +147,9 @@ class Form implements Arrayable
             ? $properties[0]
             : $properties;
 
-        if (empty($properties)) $properties = array_keys($this->all());
+        if (empty($properties)) {
+            $properties = array_keys($this->all());
+        }
 
         $freshInstance = new static($this->getComponent(), $this->getPropertyName());
 

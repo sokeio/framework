@@ -24,7 +24,7 @@ class LocaleManager
     public function currentLocale()
     {
         $locale = '';
-        if (sokeioIsAdmin() || !Platform::CheckConnectDB()) {
+        if (sokeioIsAdmin() || !Platform::checkConnectDB()) {
             $locale = session(self::KEY);
         } else {
             $route = request()->route();

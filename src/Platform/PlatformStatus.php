@@ -4,50 +4,53 @@ namespace Sokeio\Platform;
 
 class PlatformStatus
 {
-    private const __KEY__ = 'PLATFORM_STATUS_';
+    private const KEY = 'PLATFORM_STATUS_';
     private function __construct(private $key)
     {
     }
     public function getFirstOrDefault($default = null)
     {
         $arr = $this->getArr();
-        if ($arr && count($arr) > 0) {
+        if ($arr && !empty($arr[0])) {
             return  $arr[0];
         }
         return $default;
     }
     public function getArr()
     {
-        return setting(self::__KEY__ . $this->key, []);
+        return setting(self::KEY . $this->key, []);
     }
-    public function Update($arr)
+    public function update($arr)
     {
-        $this->setStore(self::__KEY__ . $this->key, $arr);
+        $this->setStore(self::KEY . $this->key, $arr);
     }
-    public function Check($id)
+    public function check($id)
     {
         return in_array($id, $this->getArr());
     }
-    public function Active($id, $onlyOne = false)
+    public function active($id, $onlyOne = false)
     {
         if ($onlyOne) {
-            $this->setStore(self::__KEY__ . $this->key, [$id]);
+            $this->setStore(self::KEY . $this->key, [$id]);
         } else {
-            if ($this->Check($id)) return;
-            $this->setStore(self::__KEY__ . $this->key, array_unique([$id, ...$this->getArr()]));
+            if ($this->check($id)) {
+                return;
+            }
+            $this->setStore(self::KEY . $this->key, array_unique([$id, ...$this->getArr()]));
         }
     }
-    public function UnActive($id)
+    public function block($id)
     {
-        $this->setStore(self::__KEY__ . $this->key, array_filter($this->getArr(), function ($item) use ($id) {
+        $this->setStore(self::KEY . $this->key, array_filter($this->getArr(), function ($item) use ($id) {
             return $id !== $item;
         }));
     }
-    private function setStore($key,$data){
-        setSetting($key,$data);
+    private function setStore($key, $data)
+    {
+        setSetting($key, $data);
     }
     private static $arr = [];
-    public static function Key($key): self
+    public static function key($key): self
     {
         if (!isset(self::$arr[$key])) {
             self::$arr[$key] = new self($key);

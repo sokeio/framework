@@ -47,7 +47,7 @@ class ShortcodeserviceProvider extends ServiceProvider
      */
     public function registerShortcode()
     {
-        $this->app->singleton('shortcode', function ($app) {
+        $this->app->singleton('shortcode', function () {
             return new ShortcodeManager();
         });
     }

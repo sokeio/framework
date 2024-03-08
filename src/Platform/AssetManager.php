@@ -96,6 +96,33 @@ class AssetManager
     {
         $this->addAssetType($location, $base, $name, $content, self::STYLE, $priority);
     }
+    private function loadAssetFromManifest($base, $name, $location, $content, $type, $dataLoader)
+    {
+        $sokeio = platformBy($base);
+        $sokeioItem = $sokeio->find($name);
+        if (!$sokeioItem) {
+            return $dataLoader;
+        }
+        $manifestData = $sokeioItem->getManifestData();
+        if (isset($manifestData[$content]['imports'])) {
+            foreach ($manifestData[$content]['imports'] as $item) {
+                if (isset($manifestData[$item]['file'])) {
+                    $value = $sokeioItem->url('build/' . $manifestData[$item]['file']);
+                    $dataLoader[$location][$type][] = $value;
+                }
+            }
+        }
+        if (isset($manifestData[$content]['file'])) {
+            $dataLoader[$location][$type][] = $sokeioItem->url('build/' . $manifestData[$content]['file']);
+        } else {
+            if (File::exists($sokeioItem->getPathPublic($content))) {
+                $dataLoader[$location][$type][] = $sokeioItem->url($content);
+            } elseif (str($content)->startsWith('http')) {
+                $dataLoader[$location][$type][] = $content;
+            }
+        }
+        return  $dataLoader;
+    }
     private function loadFirst()
     {
         if ($this->loaded) {
@@ -121,28 +148,7 @@ class AssetManager
             if ($type == self::SCRIPT || $type == self::STYLE) {
                 $dataLoader[$location][$type][] = $content;
             } elseif ($base && $name) {
-                $sokeio = platformBy($base);
-                $sokeioItem = $sokeio->find($name);
-                if ($sokeioItem) {
-                    $manifestData = $sokeioItem->getManifestData();
-                    if (isset($manifestData[$content]['imports'])) {
-                        foreach ($manifestData[$content]['imports'] as $item) {
-                            if (isset($manifestData[$item]['file'])) {
-                                $value = $sokeioItem->url('build/' . $manifestData[$item]['file']);
-                                $dataLoader[$location][$type][] = $value;
-                            }
-                        }
-                    }
-                    if (isset($manifestData[$content]['file'])) {
-                        $dataLoader[$location][$type][] = $sokeioItem->url('build/' . $manifestData[$content]['file']);
-                    } else {
-                        if (File::exists($sokeioItem->getPathPublic($content))) {
-                            $dataLoader[$location][$type][] = $sokeioItem->url($content);
-                        } elseif (str($content)->startsWith('http')) {
-                            $dataLoader[$location][$type][] = $content;
-                        }
-                    }
-                }
+                $dataLoader = $this->loadAssetFromManifest($base, $name, $location, $content, $type, $dataLoader);
             } else {
                 $dataLoader[$location][$type][] = $content;
             }

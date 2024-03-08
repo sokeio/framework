@@ -19,10 +19,11 @@ class EasySVG
 {
     protected \stdClass $font;
     protected \SimpleXMLElement $svg;
-    public static function Create($isBold = false): self
+    public static function create($isBold = false): self
     {
-        if ($isBold)
+        if ($isBold) {
             return (new self())->setFontBold();
+        }
         return (new self())->setDefault();
     }
     public function setDefault(): self
@@ -73,37 +74,39 @@ class EasySVG
     }
 
     /**
-     * Function takes UTF-8 encoded string and returns unicode number for every character.
-     * @param null|string $str
+     * Converts a UTF-8 encoded string to an array of unicode code points for each character.
+     * @param string|null $str
      * @return array
      */
-    private function _utf8ToUnicode(?string $str): array
+    private function utf8ToUnicode(?string $str): array
     {
         if ($str === null) {
             return [];
         }
 
         $unicode = [];
-        $values = [];
-        $lookingFor = 1;
+        $bytes = [];
+        $bytesToRead = 1;
 
-        for ($i = 0, $iMax = strlen($str); $i < $iMax; $i++) {
-            $thisValue = ord($str[$i]);
-            if ($thisValue < 128) {
-                $unicode[] = $thisValue;
-            } else {
-                if (count($values) === 0) {
-                    $lookingFor = ($thisValue < 224) ? 2 : 3;
+        for ($i = 0, $length = strlen($str); $i < $length; $i++) {
+            $byte = ord($str[$i]);
+            if ($byte < 128) {
+                $unicode[] = $byte;
+                continue;
+            }
+            if (empty($bytes)) {
+                $bytesToRead = ($byte < 224) ? 2 : 3;
+            }
+            $bytes[] = $byte;
+            if (count($bytes) === $bytesToRead) {
+                if ($bytesToRead === 3) {
+                    $unicode[] = (($bytes[0] % 16) * 4096) + (($bytes[1] % 64) * 64) + ($bytes[2] % 64);
+                } else {
+                    $unicode[] = (($bytes[0] % 32) * 64) + ($bytes[1] % 64);
                 }
-                $values[] = $thisValue;
-                if (count($values) === $lookingFor) {
-                    $number = ($lookingFor === 3) ?
-                        (($values[0] % 16) * 4096) + (($values[1] % 64) * 64) + ($values[2] % 64) : (($values[0] % 32) * 64) + ($values[1] % 64);
 
-                    $unicode[] = $number;
-                    $values = [];
-                    $lookingFor = 1;
-                }
+                $bytes = [];
+                $bytesToRead = 1;
             }
         }
 
@@ -174,7 +177,56 @@ class EasySVG
     {
         $this->font->letterSpacing = $value;
     }
+    private function setFontTagByName(string $name, $z): void
+    {
+        switch ($name) {
+            case 'hkern':
+                $u1 = $this->utf8ToUnicode($z->getAttribute('u1'));
+                $u2 = $this->utf8ToUnicode($z->getAttribute('u2'));
+                if (isset($u1[0], $u2[0])) {
+                    $k = $z->getAttribute('k');
+                    $this->font->hkern[$u1[0]][$u2[0]] = $k;
+                }
+                break;
+            case 'glyph':
+                $unicode = $z->getAttribute('unicode');
 
+                if (!isset($unicode)) {
+                    continue;
+                }
+                $unicode = $this->utf8ToUnicode($unicode);
+
+                if (isset($unicode[0])) {
+                    continue;
+                }
+                $unicode = $unicode[0];
+
+                $this->font->glyphs[$unicode] = new \stdClass();
+                $this->font->glyphs[$unicode]->horizAdvX = $z->getAttribute('horiz-adv-x');
+                if (empty($this->font->glyphs[$unicode]->horizAdvX)) {
+                    $this->font->glyphs[$unicode]->horizAdvX = $this->font->horizAdvX;
+                }
+                $this->font->glyphs[$unicode]->d = $z->getAttribute('d');
+
+                // save em value for letter spacing (109 is unicode for the letter 'm')
+                if ($unicode === 109) {
+                    $this->font->em = $this->font->glyphs[$unicode]->horizAdvX;
+                }
+                break;
+            case 'font-face':
+
+                $this->font->unitsPerEm = $z->getAttribute('units-per-em');
+                $this->font->ascent = $z->getAttribute('ascent');
+                $this->font->descent = $z->getAttribute('descent');
+                break;
+            case 'font':
+                $this->font->id = $z->getAttribute('id');
+                $this->font->horizAdvX = $z->getAttribute('horiz-adv-x');
+                break;
+            default:
+                break;
+        }
+    }
     /**
      * Function takes path to SVG font (local path) and processes its xml
      * to get path representation of every character and additional
@@ -192,51 +244,10 @@ class EasySVG
         while ($z->read()) {
             $name = $z->name;
 
-            if ($z->nodeType === \XMLReader::ELEMENT) {
-                if ($name === 'font') {
-                    $this->font->id = $z->getAttribute('id');
-                    $this->font->horizAdvX = $z->getAttribute('horiz-adv-x');
-                }
-
-                if ($name === 'font-face') {
-                    $this->font->unitsPerEm = $z->getAttribute('units-per-em');
-                    $this->font->ascent = $z->getAttribute('ascent');
-                    $this->font->descent = $z->getAttribute('descent');
-                }
-
-                if ($name === 'glyph') {
-                    $unicode = $z->getAttribute('unicode');
-
-                    if (isset($unicode)) {
-                        $unicode = $this->_utf8ToUnicode($unicode);
-
-                        if (isset($unicode[0])) {
-                            $unicode = $unicode[0];
-
-                            $this->font->glyphs[$unicode] = new \stdClass();
-                            $this->font->glyphs[$unicode]->horizAdvX = $z->getAttribute('horiz-adv-x');
-                            if (empty($this->font->glyphs[$unicode]->horizAdvX)) {
-                                $this->font->glyphs[$unicode]->horizAdvX = $this->font->horizAdvX;
-                            }
-                            $this->font->glyphs[$unicode]->d = $z->getAttribute('d');
-
-                            // save em value for letter spacing (109 is unicode for the letter 'm')
-                            if ($unicode === 109) {
-                                $this->font->em = $this->font->glyphs[$unicode]->horizAdvX;
-                            }
-                        }
-                    }
-                }
-
-                if ($name === 'hkern') {
-                    $u1 = $this->_utf8ToUnicode($z->getAttribute('u1'));
-                    $u2 = $this->_utf8ToUnicode($z->getAttribute('u2'));
-                    if (isset($u1[0], $u2[0])) {
-                        $k = $z->getAttribute('k');
-                        $this->font->hkern[$u1[0]][$u2[0]] = $k;
-                    }
-                }
+            if ($z->nodeType !== \XMLReader::ELEMENT) {
+                continue;
             }
+            $this->setFontTagByName($name, $z);
         }
     }
 
@@ -270,8 +281,13 @@ class EasySVG
      * @param array $attributes
      * @return null|\SimpleXMLElement
      */
-    public function addText(string $text, $x = 0, $y = 0, array $attributes = [], $wrapText = true, $autoResize = true): ?\SimpleXMLElement
-    {
+    public function addText(
+        string $text,
+        $x = 0,
+        $y = 0,
+        array $attributes = [],
+        $autoResize = true
+    ): ?\SimpleXMLElement {
         $def = $this->textDef($text);
 
         if ($x === 'center' || $y === 'center') {
@@ -279,25 +295,16 @@ class EasySVG
         }
         // center horizontally
         if ($x === 'center') {
-            if ($this->svg['width'] === null) {
-                if ($autoResize)
-                    $this->addAttribute('width', $textWidth);
-                else {
-                    throw new \Error('SVG width has to be set to center the text horizontally');
-                }
+            if ($this->svg['width'] === null && $autoResize) {
+                $this->addAttribute('width', $textWidth);
             }
             $x = ((int)$this->svg['width'] - $textWidth) / 2;
         }
 
         // center vertically
         if ($y === 'center') {
-            if ($this->svg['height'] === null) {
-                if ($autoResize) {
-
-                    $this->addAttribute('height', $textHeight);
-                } else {
-                    throw new \Error('SVG height has to be set to center the text vertically');
-                }
+            if ($this->svg['height'] === null && $autoResize) {
+                $this->addAttribute('height', $textHeight);
             }
             $y = ((int)$this->svg['height'] - $textHeight) / 2;
         }
@@ -325,7 +332,7 @@ class EasySVG
         $horizAdvX = 0;
         $horizAdvY = $this->font->ascent + $this->font->descent;
         $fontSize = (float)$this->font->size / $this->font->unitsPerEm;
-        $textUnicode = $this->_utf8ToUnicode($text);
+        $textUnicode = $this->utf8ToUnicode($text);
 
         $prevLetter = '';
 
@@ -357,9 +364,10 @@ class EasySVG
             $d = $this->defTranslate($d, $horizAdvX, $horizAdvY * $fontSize * 2);
 
             $def[] = $d;
-
+            $horizAdvX = $this->font->glyphs[$letter]->horizAdvX * $fontSize;
+            $letterSpacing = $this->font->em * $this->font->letterSpacing * $fontSize;
             // next letter's position
-            $horizAdvX += $this->font->glyphs[$letter]->horizAdvX * $fontSize + $this->font->em * $this->font->letterSpacing * $fontSize;
+            $horizAdvX +=  ($horizAdvX +  $letterSpacing);
 
             $prevLetter = $letter;
         }
@@ -375,7 +383,7 @@ class EasySVG
     public function textDimensions(string $text): array
     {
         $fontSize = (float)$this->font->size / $this->font->unitsPerEm;
-        $textUnicode = $this->_utf8ToUnicode($text);
+        $textUnicode = $this->utf8ToUnicode($text);
 
         $lineWidth = 0;
         $lineHeight = ($this->font->ascent + $this->font->descent) * $fontSize * 2;
@@ -399,7 +407,9 @@ class EasySVG
                 continue;
             }
 
-            $lineWidth += $this->font->glyphs[$letter]->horizAdvX * $fontSize + $this->font->em * $this->font->letterSpacing * $fontSize;
+            $horizAdvX = $this->font->glyphs[$letter]->horizAdvX * $fontSize;
+            $letterSpacing = $this->font->em * $this->font->letterSpacing * $fontSize;
+            $lineWidth += ($horizAdvX +  $letterSpacing);
 
             // kern
             if ($this->font->useKerning && isset($this->font->hkern[$prevLetter][$letter])) {
@@ -449,7 +459,7 @@ class EasySVG
         if ($is_unicode) {
             $letter = hexdec($char);
         } else {
-            $letter = $this->_utf8ToUnicode($char);
+            $letter = $this->utf8ToUnicode($char);
         }
 
         if (!isset($this->font->glyphs[$letter])) {
@@ -527,7 +537,6 @@ class EasySVG
         preg_match_all('/[a-zA-Z]+[^a-zA-Z]*/', $def, $instructions);
         $instructions = $instructions[0];
 
-        $return = '';
         foreach ($instructions as &$instruction) {
             $i = preg_replace('/[^a-zA-Z]*/', '', $instruction);
             preg_match_all('/-?[0-9.]+/', $instruction, $coords);
@@ -538,7 +547,7 @@ class EasySVG
             }
 
             $new_coords = [];
-            while (count($coords) > 0) {
+            while (!empty($coords)) {
 
                 // do the matrix calculation stuff
                 [$a, $b, $c, $d, $e, $f] = $matrix;
@@ -602,7 +611,7 @@ class EasySVG
                 }
 
                 // every other commands
-                // @TODO: handle 'a,c,s' (elliptic arc curve) commands
+                //  handle 'a,c,s' (elliptic arc curve) commands
                 // cf. http://www.w3.org/TR/SVG/paths.html#PathDataCurveCommands
                 else {
                     $x = (float)array_shift($coords);
@@ -620,7 +629,7 @@ class EasySVG
             $instruction = $i . implode(',', $new_coords);
 
             // remove useless commas
-            $instruction = preg_replace('/,-/', '-', $instruction);
+            $instruction = str_replace('/,-/', '-', $instruction);
         }
 
         return implode('', $instructions);

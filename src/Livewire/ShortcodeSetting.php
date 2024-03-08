@@ -37,9 +37,9 @@ class ShortcodeSetting extends FormSettingCallback
                 ])->attribute(' wire:key="shortcode-' . $this->data->shortcode . '" '),
 
                 UI::tinymce('children')->label(__('Content'))->When(function () use ($shortcode, $checkShort) {
-                    return  $checkShort && ($shortcode)::EnableChild();
+                    return  $checkShort && ($shortcode)::withChild();
                 })->When(function () use ($shortcode, $checkShort) {
-                    return  $checkShort && ($shortcode)::EnableChild();
+                    return  $checkShort && ($shortcode)::withChild();
                 }),
             ]),
             UI::column7([

@@ -10,7 +10,7 @@ trait HandlesFormObjects
     {
         $forms = [];
 
-        foreach ($this->all() as $key => $value) {
+        foreach ($this->all() as  $value) {
             if ($value instanceof Form) {
                 $forms[] = $value;
             }

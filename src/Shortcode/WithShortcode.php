@@ -14,15 +14,17 @@ trait WithShortcode
     }
     public static function getTitle()
     {
+        return 'title';
     }
     public static function getKey()
     {
+        return 'key';
     }
     public static function getParamUI()
     {
         return [];
     }
-    public static function EnableChild()
+    public static function withChild()
     {
         return false;
     }
@@ -40,9 +42,8 @@ trait WithShortcode
         }
         return null;
     }
-
-
     public function renderHtml()
     {
+        return '';
     }
 }

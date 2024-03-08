@@ -30,7 +30,7 @@ trait WithServiceProvider
     }
     public function register()
     {
-        $this->ExtendPackage();
+        $this->extendPackage();
         $this->registerBase();
 
         $this->packageRegistered();

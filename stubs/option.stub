@@ -8,7 +8,7 @@ class Option
 {
     use WithOption;
       // Only Theme Site
-    public static function SetupOption()
+    public static function setupOption()
     {
         // Run when activating
     }

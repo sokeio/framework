@@ -188,7 +188,7 @@ class Setup extends Component
     private function activeItem($item)
     {
         if ($item) {
-            $item->Active();
+            $item->active();
             $item->doRegister();
             $item->doBoot();
         }
@@ -215,7 +215,7 @@ class Setup extends Component
         Cache::clear();
         TranslationFinder::updateToJson();
         Assets::setTitle('System Setup');
-        Theme::Layout('none');
+        Theme::layout('none');
         Assets::Theme('tabler');
         Assets::AddCss('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css');
         $this->lang = Locale::currentLocale();

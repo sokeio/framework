@@ -77,7 +77,7 @@ class BarCodeManager
 
 
 
-    public function OutputImage($format, $symbology, $data, $options)
+    public function outputImage($format, $symbology, $data, $options)
     {
         switch (strtolower(preg_replace('/[^A-Za-z0-9]/', '', $format))) {
             case self::FORMAT_PNG:
@@ -102,17 +102,20 @@ class BarCodeManager
                 header('Content-Type: image/svg+xml');
                 echo $this->renderSvg($symbology, $data, $options);
                 break;
+            default:
+                throw new \Exception('Unknown image format ' . $format);
+                break;
         }
     }
 
     public function renderImage($symbology, $data, $options)
     {
         list($code, $widths, $width, $height, $x, $y, $w, $h) =
-            $this->encode_and_calculate_size($symbology, $data, $options);
+            $this->encodeAndCalculateSize($symbology, $data, $options);
         $image = imagecreatetruecolor($width, $height);
         imagesavealpha($image, true);
         $bgcolor = (isset($options['bc']) ? $options['bc'] : 'FFF');
-        $bgcolor = $this->allocate_color($image, $bgcolor);
+        $bgcolor = $this->allocateColor($image, $bgcolor);
         imagefill($image, 0, 0, $bgcolor);
         $colors = array(
             (isset($options['cs']) ? $options['cs'] : ''),
@@ -127,9 +130,9 @@ class BarCodeManager
             (isset($options['c9']) ? $options['c9'] : '000'),
         );
         foreach ($colors as $i => $color) {
-            $colors[$i] = $this->allocate_color($image, $color);
+            $colors[$i] = $this->allocateColor($image, $color);
         }
-        $this->dispatch_RenderImage(
+        $this->dispatchRenderImage(
             $image,
             $code,
             $x,
@@ -146,7 +149,7 @@ class BarCodeManager
     public function renderSvg($symbology, $data, $options)
     {
         list($code, $widths, $width, $height, $x, $y, $w, $h) =
-            $this->encode_and_calculate_size($symbology, $data, $options);
+            $this->encodeAndCalculateSize($symbology, $data, $options);
         $svg  = '<?xml version="1.0"?>';
         $svg .= '<svg xmlns="http://www.w3.org/2000/svg" version="1.1"';
         $svg .= ' width="' . $width . '" height="' . $height . '"';
@@ -169,7 +172,7 @@ class BarCodeManager
             (isset($options['c8']) ? $options['c8'] : 'white'),
             (isset($options['c9']) ? $options['c9'] : 'black'),
         );
-        $svg .= $this->dispatch_RenderSvg(
+        $svg .= $this->dispatchRenderSvg(
             $code,
             $x,
             $y,
@@ -184,39 +187,49 @@ class BarCodeManager
     }
 
     /* - - - - INTERNAL FUNCTIONS - - - - */
-
-    private function encode_and_calculate_size($symbology, $data, $options)
+    private function getValueByKey($data, $key, $default)
     {
-        $code = $this->dispatch_encode($symbology, $data, $options);
-        $widths = array(
-            (isset($options['wq']) ? (int)$options['wq'] : 1),
-            (isset($options['wm']) ? (int)$options['wm'] : 1),
-            (isset($options['ww']) ? (int)$options['ww'] : 3),
-            (isset($options['wn']) ? (int)$options['wn'] : 1),
-            (isset($options['w4']) ? (int)$options['w4'] : 1),
-            (isset($options['w5']) ? (int)$options['w5'] : 1),
-            (isset($options['w6']) ? (int)$options['w6'] : 1),
-            (isset($options['w7']) ? (int)$options['w7'] : 1),
-            (isset($options['w8']) ? (int)$options['w8'] : 1),
-            (isset($options['w9']) ? (int)$options['w9'] : 1),
-        );
-        $size = $this->dispatch_calculate_size($code, $widths, $options);
+        if (isset($data[$key])) {
+            return $data[$key];
+        }
+        return $default;
+    }
+
+    private function encodeAndCalculateSize($symbology, $data, $options)
+    {
+        $code = $this->dispatchEncode($symbology, $data, $options);
+        $widths = [];
+        foreach ([
+            'wq' => 1,
+            'wm' => 1,
+            'ww' => 3,
+            'wn' => 1,
+            'w4' => 1,
+            'w5' => 1,
+            'w6' => 1,
+            'w7' => 1,
+            'w8' => 1,
+            'w9' => 1
+        ] as $key => $default) {
+            $widths[] = (int)$this->getValueByKey($options, $key, $default);
+        }
+        $size = $this->dispatchCalculateSize($code, $widths, $options);
         $dscale = ($code && isset($code['g']) && $code['g'] == 'm') ? 4 : 1;
-        $scale = (isset($options['sf']) ? (float)$options['sf'] : $dscale);
-        $scalex = (isset($options['sx']) ? (float)$options['sx'] : $scale);
-        $scaley = (isset($options['sy']) ? (float)$options['sy'] : $scale);
+        $scale = (float)$this->getValueByKey($options, 'sf', $dscale);
+        $scalex = (float)$this->getValueByKey($options, 'sx', $scale);
+        $scaley = (float)$this->getValueByKey($options, 'sy', $scale);
         $dpadding = ($code && isset($code['g']) && $code['g'] == 'm') ? 0 : 10;
-        $padding = (isset($options['p']) ? (int)$options['p'] : $dpadding);
-        $vert = (isset($options['pv']) ? (int)$options['pv'] : $padding);
-        $horiz = (isset($options['ph']) ? (int)$options['ph'] : $padding);
-        $top = (isset($options['pt']) ? (int)$options['pt'] : $vert);
-        $left = (isset($options['pl']) ? (int)$options['pl'] : $horiz);
-        $right = (isset($options['pr']) ? (int)$options['pr'] : $horiz);
-        $bottom = (isset($options['pb']) ? (int)$options['pb'] : $vert);
+        $padding = (int)$this->getValueByKey($options, 'p', $dpadding);
+        $vert = (int)$this->getValueByKey($options, 'pv', $padding);
+        $horiz = (int)$this->getValueByKey($options, 'ph', $padding);
+        $top = (int)$this->getValueByKey($options, 'pt', $vert);
+        $left = (int)$this->getValueByKey($options, 'pl', $horiz);
+        $right = (int)$this->getValueByKey($options, 'pr', $horiz);
+        $bottom = (int)$this->getValueByKey($options, 'pb', $vert);
         $dwidth = ceil($size[0] * $scalex) + $left + $right;
         $dheight = ceil($size[1] * $scaley) + $top + $bottom;
-        $iwidth = (isset($options['w']) ? (int)$options['w'] : $dwidth);
-        $iheight = (isset($options['h']) ? (int)$options['h'] : $dheight);
+        $iwidth = (int)$this->getValueByKey($options, 'w', $dwidth);
+        $iheight = (int)$this->getValueByKey($options, 'h', $dheight);
         $swidth = $iwidth - $left - $right;
         $sheight = $iheight - $top - $bottom;
         return array(
@@ -225,140 +238,195 @@ class BarCodeManager
         );
     }
 
-    private function allocate_color($image, $color)
+    private function allocateColor($image, $color)
     {
         $color = preg_replace('/[^0-9A-Fa-f]/', '', $color);
+        $rs = null;
         switch (strlen($color)) {
             case 1:
                 $v = hexdec($color) * 17;
-                return imagecolorallocate($image, $v, $v, $v);
+                $rs = imagecolorallocate($image, $v, $v, $v);
+                break;
             case 2:
                 $v = hexdec($color);
-                return imagecolorallocate($image, $v, $v, $v);
+                $rs = imagecolorallocate($image, $v, $v, $v);
+                break;
             case 3:
                 $r = hexdec(substr($color, 0, 1)) * 17;
                 $g = hexdec(substr($color, 1, 1)) * 17;
                 $b = hexdec(substr($color, 2, 1)) * 17;
-                return imagecolorallocate($image, $r, $g, $b);
+                $rs = imagecolorallocate($image, $r, $g, $b);
+                break;
             case 4:
                 $a = hexdec(substr($color, 0, 1)) * 17;
                 $r = hexdec(substr($color, 1, 1)) * 17;
                 $g = hexdec(substr($color, 2, 1)) * 17;
                 $b = hexdec(substr($color, 3, 1)) * 17;
                 $a = round((255 - $a) * 127 / 255);
-                return imagecolorallocatealpha($image, $r, $g, $b, $a);
+                $rs = imagecolorallocatealpha($image, $r, $g, $b, $a);
+                break;
             case 6:
                 $r = hexdec(substr($color, 0, 2));
                 $g = hexdec(substr($color, 2, 2));
                 $b = hexdec(substr($color, 4, 2));
-                return imagecolorallocate($image, $r, $g, $b);
+                $rs = imagecolorallocate($image, $r, $g, $b);
+                break;
             case 8:
                 $a = hexdec(substr($color, 0, 2));
                 $r = hexdec(substr($color, 2, 2));
                 $g = hexdec(substr($color, 4, 2));
                 $b = hexdec(substr($color, 6, 2));
                 $a = round((255 - $a) * 127 / 255);
-                return imagecolorallocatealpha($image, $r, $g, $b, $a);
+                $rs = imagecolorallocatealpha($image, $r, $g, $b, $a);
+                break;
             default:
-                return imagecolorallocatealpha($image, 0, 0, 0, 127);
+                $rs = imagecolorallocatealpha($image, 0, 0, 0, 127);
+                break;
         }
+        return $rs;
     }
 
     /* - - - - DISPATCH - - - - */
 
-    private function dispatch_encode($symbology, $data, $options)
+    private function dispatchEncode($symbology, $data, $options)
     {
+        $rs = null;
         switch (strtolower(preg_replace('/[^A-Za-z0-9]/', '', $symbology))) {
             case 'upca':
-                return $this->upc_a_encode($data);
+                $rs = $this->upcAEncode($data);
+                break;
             case 'upce':
-                return $this->upc_e_encode($data);
+                $rs = $this->upcEEncode($data);
+                break;
             case 'ean13nopad':
-                return $this->ean_13_encode($data, ' ');
+                $rs = $this->ean13Encode($data, ' ');
+                break;
             case 'ean13pad':
-                return $this->ean_13_encode($data, '>');
+                $rs = $this->ean13Encode($data, '>');
+                break;
             case 'ean13':
-                return $this->ean_13_encode($data, '>');
+                $rs = $this->ean13Encode($data, '>');
+                break;
             case 'ean8':
-                return $this->ean_8_encode($data);
+                $rs = $this->ean8Encode($data);
+                break;
             case 'code39':
-                return $this->code_39_encode($data);
+                $rs = $this->code39Encode($data);
+                break;
             case 'code39ascii':
-                return $this->code_39_ascii_encode($data);
+                $rs = $this->code39AsciiEncode($data);
+                break;
             case 'code93':
-                return $this->code_93_encode($data);
+                $rs = $this->code93Encode($data);
+                break;
             case 'code93ascii':
-                return $this->code_93_ascii_encode($data);
+                $rs = $this->code93AsciiEncode($data);
+                break;
             case 'code128':
-                return $this->code_128_encode($data, 0, false);
+                $rs = $this->code128Encode($data, 0, false);
+                break;
             case 'code128a':
-                return $this->code_128_encode($data, 1, false);
+                $rs = $this->code128Encode($data, 1, false);
+                break;
             case 'code128b':
-                return $this->code_128_encode($data, 2, false);
+                $rs = $this->code128Encode($data, 2, false);
+                break;
             case 'code128c':
-                return $this->code_128_encode($data, 3, false);
+                $rs = $this->code128Encode($data, 3, false);
+                break;
             case 'code128ac':
-                return $this->code_128_encode($data, -1, false);
+                $rs = $this->code128Encode($data, -1, false);
+                break;
             case 'code128bc':
-                return $this->code_128_encode($data, -2, false);
+                $rs = $this->code128Encode($data, -2, false);
+                break;
             case 'ean128':
-                return $this->code_128_encode($data, 0, true);
+                $rs = $this->code128Encode($data, 0, true);
+                break;
             case 'ean128a':
-                return $this->code_128_encode($data, 1, true);
+                $rs = $this->code128Encode($data, 1, true);
+                break;
             case 'ean128b':
-                return $this->code_128_encode($data, 2, true);
+                $rs = $this->code128Encode($data, 2, true);
+                break;
             case 'ean128c':
-                return $this->code_128_encode($data, 3, true);
+                $rs = $this->code128Encode($data, 3, true);
+                break;
             case 'ean128ac':
-                return $this->code_128_encode($data, -1, true);
+                $rs = $this->code128Encode($data, -1, true);
+                break;
             case 'ean128bc':
-                return $this->code_128_encode($data, -2, true);
+                $rs = $this->code128Encode($data, -2, true);
+                break;
             case 'codabar':
-                return $this->codabar_encode($data);
+                $rs = $this->codabarEncode($data);
+                break;
             case 'itf':
-                return $this->itf_encode($data);
+                $rs = $this->itfEncode($data);
+                break;
             case 'itf14':
-                return $this->itf_encode($data);
+                $rs = $this->itfEncode($data);
+                break;
             case 'qr':
-                return $this->qr_encode($data, 0);
+                $rs = $this->qrEncode($data, 0);
+                break;
             case 'qrl':
-                return $this->qr_encode($data, 0);
+                $rs = $this->qrEncode($data, 0);
+                break;
             case 'qrm':
-                return $this->qr_encode($data, 1);
+                $rs = $this->qrEncode($data, 1);
+                break;
             case 'qrq':
-                return $this->qr_encode($data, 2);
+                $rs = $this->qrEncode($data, 2);
+                break;
             case 'qrh':
-                return $this->qr_encode($data, 3);
+                $rs = $this->qrEncode($data, 3);
+                break;
             case 'dmtx':
-                return $this->dmtx_encode($data, false, false);
+                $rs = $this->dmtxEncode($data, false, false);
+                break;
             case 'dmtxs':
-                return $this->dmtx_encode($data, false, false);
+                $rs = $this->dmtxEncode($data, false, false);
+                break;
             case 'dmtxr':
-                return $this->dmtx_encode($data, true, false);
+                $rs = $this->dmtxEncode($data, true, false);
+                break;
             case 'gs1dmtx':
-                return $this->dmtx_encode($data, false, true);
+                $rs = $this->dmtxEncode($data, false, true);
+                break;
             case 'gs1dmtxs':
-                return $this->dmtx_encode($data, false, true);
+                $rs = $this->dmtxEncode($data, false, true);
+                break;
             case 'gs1dmtxr':
-                return $this->dmtx_encode($data, true, true);
+                $rs = $this->dmtxEncode($data, true, true);
+                break;
+            default:
+                $rs = null;
+                break;
         }
-        return null;
+        return $rs;
     }
 
-    private function dispatch_calculate_size($code, $widths, $options)
+    private function dispatchCalculateSize($code, $widths)
     {
+        $rs = array(0, 0);
         if ($code && isset($code['g']) && $code['g']) {
             switch ($code['g']) {
                 case 'l':
-                    return $this->linear_calculate_size($code, $widths);
+                    $rs = $this->linearCalculateSize($code, $widths);
+                    break;
                 case 'm':
-                    return $this->matrix_calculate_size($code, $widths);
+                    $rs =  $this->matrixCalculateSize($code, $widths);
+                    break;
+                default:
+                    $rs =  array(0, 0);
+                    break;
             }
         }
-        return array(0, 0);
+        return $rs;
     }
 
-    private function dispatch_RenderImage(
+    private function dispatchRenderImage(
         $image,
         $code,
         $x,
@@ -372,7 +440,7 @@ class BarCodeManager
         if ($code && isset($code['g']) && $code['g']) {
             switch ($code['g']) {
                 case 'l':
-                    $this->linear_RenderImage(
+                    $this->linearRenderImage(
                         $image,
                         $code,
                         $x,
@@ -385,7 +453,7 @@ class BarCodeManager
                     );
                     break;
                 case 'm':
-                    $this->matrix_RenderImage(
+                    $this->matrixRenderImage(
                         $image,
                         $code,
                         $x,
@@ -397,11 +465,13 @@ class BarCodeManager
                         $options
                     );
                     break;
+                default:
+                    break;
             }
         }
     }
 
-    private function dispatch_RenderSvg(
+    private function dispatchRenderSvg(
         $code,
         $x,
         $y,
@@ -414,7 +484,7 @@ class BarCodeManager
         if ($code && isset($code['g']) && $code['g']) {
             switch ($code['g']) {
                 case 'l':
-                    return $this->linear_RenderSvg(
+                    return $this->linearRenderSvg(
                         $code,
                         $x,
                         $y,
@@ -425,7 +495,7 @@ class BarCodeManager
                         $options
                     );
                 case 'm':
-                    return $this->matrix_RenderSvg(
+                    return $this->matrixRenderSvg(
                         $code,
                         $x,
                         $y,
@@ -435,6 +505,8 @@ class BarCodeManager
                         $widths,
                         $options
                     );
+                default:
+                    break;
             }
         }
         return '';
@@ -442,7 +514,7 @@ class BarCodeManager
 
     /* - - - - LINEAR BARCODE RENDERER - - - - */
 
-    private function linear_calculate_size($code, $widths)
+    private function linearCalculateSize($code, $widths)
     {
         $width = 0;
         foreach ($code['b'] as $block) {
@@ -453,7 +525,7 @@ class BarCodeManager
         return array($width, 80);
     }
 
-    private function linear_RenderImage(
+    private function linearRenderImage(
         $image,
         $code,
         $x,
@@ -464,10 +536,10 @@ class BarCodeManager
         $widths,
         $options
     ) {
-        $textheight = (isset($options['th']) ? (int)$options['th'] : 10);
-        $textsize = (isset($options['ts']) ? (int)$options['ts'] : 1);
-        $textcolor = (isset($options['tc']) ? $options['tc'] : '000');
-        $textcolor = $this->allocate_color($image, $textcolor);
+        $textheight = (int) $this->getValueByKey($options, 'th', 10);
+        $textsize = (int)$this->getValueByKey($options, 'ts', 1);
+        $textcolor = $this->getValueByKey($options, 'tc', '000');
+        $textcolor = $this->allocateColor($image, $textcolor);
         $width = 0;
         foreach ($code['b'] as $block) {
             foreach ($block['m'] as $module) {
@@ -511,7 +583,7 @@ class BarCodeManager
         }
     }
 
-    private function linear_RenderSvg(
+    private function linearRenderSvg(
         $code,
         $x,
         $y,
@@ -542,7 +614,9 @@ class BarCodeManager
             $x = floor($x + $w / 2);
         }
         $tx = 'translate(' . $x . ' ' . $y . ')';
-        if ($scale != 1) $tx .= ' scale(' . $scale . ' 1)';
+        if ($scale != 1) {
+            $tx .= ' scale(' . $scale . ' 1)';
+        }
         $svg = '<g transform="' . htmlspecialchars($tx) . '">';
         $x = 0;
         foreach ($code['b'] as $block) {
@@ -589,7 +663,7 @@ class BarCodeManager
 
     /* - - - - MATRIX BARCODE RENDERER - - - - */
 
-    private function matrix_calculate_size($code, $widths)
+    private function matrixCalculateSize($code, $widths)
     {
         $width = ($code['q'][3] * $widths[0] +
             $code['s'][0] * $widths[1] +
@@ -602,7 +676,7 @@ class BarCodeManager
         return array($width, $height);
     }
 
-    private function matrix_RenderImage(
+    private function matrixRenderImage(
         $image,
         $code,
         $x,
@@ -615,7 +689,7 @@ class BarCodeManager
     ) {
         $shape = (isset($options['ms']) ? strtolower($options['ms']) : '');
         $density = (isset($options['md']) ? (float)$options['md'] : 1);
-        list($width, $height) = $this->matrix_calculate_size($code, $widths);
+        list($width, $height) = $this->matrixCalculateSize($code, $widths);
         if ($width && $height) {
             $scale = min($w / $width, $h / $height);
             $scale = (($scale > 1) ? floor($scale) : 1);
@@ -634,7 +708,7 @@ class BarCodeManager
             foreach ($row as $bx => $color) {
                 $x1 = $x + $bx * $wh;
                 $mc = $colors[$color];
-                $this->matrix_dot_image(
+                $this->matrixDotImage(
                     $image,
                     $x1,
                     $y1,
@@ -648,7 +722,7 @@ class BarCodeManager
         }
     }
 
-    private function matrix_RenderSvg(
+    private function matrixRenderSvg(
         $code,
         $x,
         $y,
@@ -660,10 +734,12 @@ class BarCodeManager
     ) {
         $shape = (isset($options['ms']) ? strtolower($options['ms']) : '');
         $density = (isset($options['md']) ? (float)$options['md'] : 1);
-        list($width, $height) = $this->matrix_calculate_size($code, $widths);
+        list($width, $height) = $this->matrixCalculateSize($code, $widths);
         if ($width && $height) {
             $scale = min($w / $width, $h / $height);
-            if ($scale > 1) $scale = floor($scale);
+            if ($scale > 1) {
+                $scale = floor($scale);
+            }
             $x = floor($x + ($w - $width * $scale) / 2);
             $y = floor($y + ($h - $height * $scale) / 2);
         } else {
@@ -672,7 +748,9 @@ class BarCodeManager
             $y = floor($y + $h / 2);
         }
         $tx = 'translate(' . $x . ' ' . $y . ')';
-        if ($scale != 1) $tx .= ' scale(' . $scale . ' ' . $scale . ')';
+        if ($scale != 1) {
+            $tx .= ' scale(' . $scale . ' ' . $scale . ')';
+        }
         $svg = '<g transform="' . htmlspecialchars($tx) . '">';
         $x = $code['q'][3] * $widths[0];
         $y = $code['q'][0] * $widths[0];
@@ -683,7 +761,7 @@ class BarCodeManager
                 $x1 = $x + $bx * $wh;
                 $mc = $colors[$color];
                 if ($mc) {
-                    $svg .= $this->matrix_dot_svg(
+                    $svg .= $this->matrixDotSvg(
                         $x1,
                         $y1,
                         $wh,
@@ -698,7 +776,7 @@ class BarCodeManager
         return $svg . '</g>';
     }
 
-    private function matrix_dot_image($image, $x, $y, $w, $h, $mc, $ms, $md)
+    private function matrixDotImage($image, $x, $y, $w, $h, $mc, $ms, $md)
     {
         switch ($ms) {
             default:
@@ -726,7 +804,7 @@ class BarCodeManager
         }
     }
 
-    private function matrix_dot_svg($x, $y, $w, $h, $mc, $ms, $md)
+    private function matrixDotSvg($x, $y, $w, $h, $mc, $ms, $md)
     {
         switch ($ms) {
             default:
@@ -766,9 +844,9 @@ class BarCodeManager
 
     /* - - - - UPC FAMILY ENCODER - - - - */
 
-    private function upc_a_encode($data)
+    private function upcAEncode($data)
     {
-        $data = $this->upc_a_normalize($data);
+        $data = $this->upcANormalize($data);
         $blocks = array();
         /* Quiet zone, start, first digit. */
         $digit = substr($data, 0, 1);
@@ -785,10 +863,10 @@ class BarCodeManager
         );
         $blocks[] = array(
             'm' => array(
-                array(0, $this->upc_alphabet[$digit][0], 1),
-                array(1, $this->upc_alphabet[$digit][1], 1),
-                array(0, $this->upc_alphabet[$digit][2], 1),
-                array(1, $this->upc_alphabet[$digit][3], 1),
+                array(0, $this->upcAlphabet[$digit][0], 1),
+                array(1, $this->upcAlphabet[$digit][1], 1),
+                array(0, $this->upcAlphabet[$digit][2], 1),
+                array(1, $this->upcAlphabet[$digit][3], 1),
             )
         );
         /* Left zone. */
@@ -796,10 +874,10 @@ class BarCodeManager
             $digit = substr($data, $i, 1);
             $blocks[] = array(
                 'm' => array(
-                    array(0, $this->upc_alphabet[$digit][0], 1),
-                    array(1, $this->upc_alphabet[$digit][1], 1),
-                    array(0, $this->upc_alphabet[$digit][2], 1),
-                    array(1, $this->upc_alphabet[$digit][3], 1),
+                    array(0, $this->upcAlphabet[$digit][0], 1),
+                    array(1, $this->upcAlphabet[$digit][1], 1),
+                    array(0, $this->upcAlphabet[$digit][2], 1),
+                    array(1, $this->upcAlphabet[$digit][3], 1),
                 ),
                 'l' => array($digit, 0.5, (6 - $i) / 6)
             );
@@ -819,10 +897,10 @@ class BarCodeManager
             $digit = substr($data, $i, 1);
             $blocks[] = array(
                 'm' => array(
-                    array(1, $this->upc_alphabet[$digit][0], 1),
-                    array(0, $this->upc_alphabet[$digit][1], 1),
-                    array(1, $this->upc_alphabet[$digit][2], 1),
-                    array(0, $this->upc_alphabet[$digit][3], 1),
+                    array(1, $this->upcAlphabet[$digit][0], 1),
+                    array(0, $this->upcAlphabet[$digit][1], 1),
+                    array(1, $this->upcAlphabet[$digit][2], 1),
+                    array(0, $this->upcAlphabet[$digit][3], 1),
                 ),
                 'l' => array($digit, 0.5, (11 - $i) / 6)
             );
@@ -831,10 +909,10 @@ class BarCodeManager
         $digit = substr($data, 11, 1);
         $blocks[] = array(
             'm' => array(
-                array(1, $this->upc_alphabet[$digit][0], 1),
-                array(0, $this->upc_alphabet[$digit][1], 1),
-                array(1, $this->upc_alphabet[$digit][2], 1),
-                array(0, $this->upc_alphabet[$digit][3], 1),
+                array(1, $this->upcAlphabet[$digit][0], 1),
+                array(0, $this->upcAlphabet[$digit][1], 1),
+                array(1, $this->upcAlphabet[$digit][2], 1),
+                array(0, $this->upcAlphabet[$digit][3], 1),
             )
         );
         $blocks[] = array(
@@ -852,9 +930,9 @@ class BarCodeManager
         return array('g' => 'l', 'b' => $blocks);
     }
 
-    private function upc_e_encode($data)
+    private function upcEEncode($data)
     {
-        $data = $this->upc_e_normalize($data);
+        $data = $this->upcENormalize($data);
         $blocks = array();
         /* Quiet zone, start. */
         $blocks[] = array(
@@ -870,16 +948,16 @@ class BarCodeManager
         /* Digits */
         $system = substr($data, 0, 1) & 1;
         $check = substr($data, 7, 1);
-        $pbits = $this->upc_parity[$check];
+        $pbits = $this->upcParity[$check];
         for ($i = 1; $i < 7; $i++) {
             $digit = substr($data, $i, 1);
             $pbit = $pbits[$i - 1] ^ $system;
             $blocks[] = array(
                 'm' => array(
-                    array(0, $this->upc_alphabet[$digit][$pbit ? 3 : 0], 1),
-                    array(1, $this->upc_alphabet[$digit][$pbit ? 2 : 1], 1),
-                    array(0, $this->upc_alphabet[$digit][$pbit ? 1 : 2], 1),
-                    array(1, $this->upc_alphabet[$digit][$pbit ? 0 : 3], 1),
+                    array(0, $this->upcAlphabet[$digit][$pbit ? 3 : 0], 1),
+                    array(1, $this->upcAlphabet[$digit][$pbit ? 2 : 1], 1),
+                    array(0, $this->upcAlphabet[$digit][$pbit ? 1 : 2], 1),
+                    array(1, $this->upcAlphabet[$digit][$pbit ? 0 : 3], 1),
                 ),
                 'l' => array($digit, 0.5, (7 - $i) / 7)
             );
@@ -902,14 +980,14 @@ class BarCodeManager
         return array('g' => 'l', 'b' => $blocks);
     }
 
-    private function ean_13_encode($data, $pad)
+    private function ean13Encode($data, $pad)
     {
-        $data = $this->ean_13_normalize($data);
+        $data = $this->ean13Normalize($data);
         $blocks = array();
         /* Quiet zone, start, first digit (as parity). */
         $system = substr($data, 0, 1);
         $pbits = ((int)$system ?
-            $this->upc_parity[$system] :
+            $this->upcParity[$system] :
             array(1, 1, 1, 1, 1, 1)
         );
         $blocks[] = array(
@@ -929,10 +1007,10 @@ class BarCodeManager
             $pbit = $pbits[$i - 1];
             $blocks[] = array(
                 'm' => array(
-                    array(0, $this->upc_alphabet[$digit][$pbit ? 0 : 3], 1),
-                    array(1, $this->upc_alphabet[$digit][$pbit ? 1 : 2], 1),
-                    array(0, $this->upc_alphabet[$digit][$pbit ? 2 : 1], 1),
-                    array(1, $this->upc_alphabet[$digit][$pbit ? 3 : 0], 1),
+                    array(0, $this->upcAlphabet[$digit][$pbit ? 0 : 3], 1),
+                    array(1, $this->upcAlphabet[$digit][$pbit ? 1 : 2], 1),
+                    array(0, $this->upcAlphabet[$digit][$pbit ? 2 : 1], 1),
+                    array(1, $this->upcAlphabet[$digit][$pbit ? 3 : 0], 1),
                 ),
                 'l' => array($digit, 0.5, (7 - $i) / 7)
             );
@@ -952,10 +1030,10 @@ class BarCodeManager
             $digit = substr($data, $i, 1);
             $blocks[] = array(
                 'm' => array(
-                    array(1, $this->upc_alphabet[$digit][0], 1),
-                    array(0, $this->upc_alphabet[$digit][1], 1),
-                    array(1, $this->upc_alphabet[$digit][2], 1),
-                    array(0, $this->upc_alphabet[$digit][3], 1),
+                    array(1, $this->upcAlphabet[$digit][0], 1),
+                    array(0, $this->upcAlphabet[$digit][1], 1),
+                    array(1, $this->upcAlphabet[$digit][2], 1),
+                    array(0, $this->upcAlphabet[$digit][3], 1),
                 ),
                 'l' => array($digit, 0.5, (13 - $i) / 7)
             );
@@ -976,9 +1054,9 @@ class BarCodeManager
         return array('g' => 'l', 'b' => $blocks);
     }
 
-    private function ean_8_encode($data)
+    private function ean8Encode($data)
     {
-        $data = $this->ean_8_normalize($data);
+        $data = $this->ean8Normalize($data);
         $blocks = array();
         /* Quiet zone, start. */
         $blocks[] = array(
@@ -997,10 +1075,10 @@ class BarCodeManager
             $digit = substr($data, $i, 1);
             $blocks[] = array(
                 'm' => array(
-                    array(0, $this->upc_alphabet[$digit][0], 1),
-                    array(1, $this->upc_alphabet[$digit][1], 1),
-                    array(0, $this->upc_alphabet[$digit][2], 1),
-                    array(1, $this->upc_alphabet[$digit][3], 1),
+                    array(0, $this->upcAlphabet[$digit][0], 1),
+                    array(1, $this->upcAlphabet[$digit][1], 1),
+                    array(0, $this->upcAlphabet[$digit][2], 1),
+                    array(1, $this->upcAlphabet[$digit][3], 1),
                 ),
                 'l' => array($digit, 0.5, (4 - $i) / 5)
             );
@@ -1020,10 +1098,10 @@ class BarCodeManager
             $digit = substr($data, $i, 1);
             $blocks[] = array(
                 'm' => array(
-                    array(1, $this->upc_alphabet[$digit][0], 1),
-                    array(0, $this->upc_alphabet[$digit][1], 1),
-                    array(1, $this->upc_alphabet[$digit][2], 1),
-                    array(0, $this->upc_alphabet[$digit][3], 1),
+                    array(1, $this->upcAlphabet[$digit][0], 1),
+                    array(0, $this->upcAlphabet[$digit][1], 1),
+                    array(1, $this->upcAlphabet[$digit][2], 1),
+                    array(0, $this->upcAlphabet[$digit][3], 1),
                 ),
                 'l' => array($digit, 0.5, (8 - $i) / 5)
             );
@@ -1044,13 +1122,13 @@ class BarCodeManager
         return array('g' => 'l', 'b' => $blocks);
     }
 
-    private function upc_a_normalize($data)
+    private function upcANormalize($data)
     {
         $data = preg_replace('/[^0-9*]/', '', $data);
         /* Set length to 12 digits. */
         if (strlen($data) < 5) {
             $data = str_repeat('0', 12);
-        } else if (strlen($data) < 12) {
+        } elseif (strlen($data) < 12) {
             $system = substr($data, 0, 1);
             $edata = substr($data, 1, -2);
             $epattern = (int)substr($data, -2, 1);
@@ -1058,7 +1136,7 @@ class BarCodeManager
             if ($epattern < 3) {
                 $left = $system . substr($edata, 0, 2) . $epattern;
                 $right = substr($edata, 2) . $check;
-            } else if ($epattern < strlen($edata)) {
+            } elseif ($epattern < strlen($edata)) {
                 $left = $system . substr($edata, 0, $epattern);
                 $right = substr($edata, $epattern) . $check;
             } else {
@@ -1067,7 +1145,7 @@ class BarCodeManager
             }
             $center = str_repeat('0', 12 - strlen($left . $right));
             $data = $left . $center . $right;
-        } else if (strlen($data) > 12) {
+        } elseif (strlen($data) > 12) {
             $left = substr($data, 0, 6);
             $right = substr($data, -6);
             $data = $left . $right;
@@ -1088,7 +1166,7 @@ class BarCodeManager
         return $data;
     }
 
-    private function upc_e_normalize($data)
+    private function upcENormalize($data)
     {
         $data = preg_replace('/[^0-9*]/', '', $data);
         /* If exactly 8 digits, use verbatim even if check digit is wrong. */
@@ -1105,11 +1183,11 @@ class BarCodeManager
             $data,
             $m
         )) {
-            $data = $this->upc_a_normalize($data);
+            $data = $this->upcANormalize($data);
             return $m[1] . $m[2] . substr($data, -1);
         }
         /* Otherwise normalize to UPC-A and convert back. */
-        $data = $this->upc_a_normalize($data);
+        $data = $this->upcANormalize($data);
         if (preg_match(
             '/^([01])([0-9][0-9])([0-2])0000([0-9][0-9][0-9])([0-9])$/',
             $data,
@@ -1141,13 +1219,13 @@ class BarCodeManager
         return str_repeat('0', 8);
     }
 
-    private function ean_13_normalize($data)
+    private function ean13Normalize($data)
     {
         $data = preg_replace('/[^0-9*]/', '', $data);
         /* Set length to 13 digits. */
         if (strlen($data) < 13) {
-            return '0' . $this->upc_a_normalize($data);
-        } else if (strlen($data) > 13) {
+            return '0' . $this->upcANormalize($data);
+        } elseif (strlen($data) > 13) {
             $left = substr($data, 0, 7);
             $right = substr($data, -6);
             $data = $left . $right;
@@ -1168,7 +1246,7 @@ class BarCodeManager
         return $data;
     }
 
-    private function ean_8_normalize($data)
+    private function ean8Normalize($data)
     {
         $data = preg_replace('/[^0-9*]/', '', $data);
         /* Set length to 8 digits. */
@@ -1178,7 +1256,7 @@ class BarCodeManager
             $center = str_repeat('0', 8 - strlen($data));
             $right = substr($data, $midpoint);
             $data = $left . $center . $right;
-        } else if (strlen($data) > 8) {
+        } elseif (strlen($data) > 8) {
             $left = substr($data, 0, 4);
             $right = substr($data, -4);
             $data = $left . $right;
@@ -1199,7 +1277,7 @@ class BarCodeManager
         return $data;
     }
 
-    private $upc_alphabet = array(
+    private $upcAlphabet = array(
         '0' => array(3, 2, 1, 1),
         '1' => array(2, 2, 2, 1),
         '2' => array(2, 1, 2, 2),
@@ -1212,7 +1290,7 @@ class BarCodeManager
         '9' => array(3, 1, 1, 2),
     );
 
-    private $upc_parity = array(
+    private $upcParity = array(
         '0' => array(1, 1, 1, 0, 0, 0),
         '1' => array(1, 1, 0, 1, 0, 0),
         '2' => array(1, 1, 0, 0, 1, 0),
@@ -1227,7 +1305,7 @@ class BarCodeManager
 
     /* - - - - CODE 39 FAMILY ENCODER - - - - */
 
-    private function code_39_encode($data)
+    private function code39Encode($data)
     {
         $data = strtoupper(preg_replace('/[^0-9A-Za-z%$\/+ .-]/', '', $data));
         $blocks = array();
@@ -1246,7 +1324,7 @@ class BarCodeManager
                 'm' => array(array(0, 1, 3))
             );
             $char = substr($data, $i, 1);
-            $block = $this->code_39_alphabet[$char];
+            $block = $this->code39Alphabet[$char];
             $blocks[] = array(
                 'm' => array(
                     array(1, 1, $block[0]),
@@ -1278,7 +1356,7 @@ class BarCodeManager
         return array('g' => 'l', 'b' => $blocks);
     }
 
-    private function code_39_ascii_encode($data)
+    private function code39AsciiEncode($data)
     {
         $modules = array();
         /* Start */
@@ -1302,10 +1380,10 @@ class BarCodeManager
                 } else {
                     $label .= $char;
                 }
-                $ch = $this->code_39_asciibet[$ch];
+                $ch = $this->code39Asciibet[$ch];
                 for ($j = 0, $m = strlen($ch); $j < $m; $j++) {
                     $c = substr($ch, $j, 1);
-                    $b = $this->code_39_alphabet[$c];
+                    $b = $this->code39Alphabet[$c];
                     $modules[] = array(0, 1, 3);
                     $modules[] = array(1, 1, $b[0]);
                     $modules[] = array(0, 1, $b[1]);
@@ -1335,7 +1413,7 @@ class BarCodeManager
         return array('g' => 'l', 'b' => $blocks);
     }
 
-    private function code_93_encode($data)
+    private function code93Encode($data)
     {
         $data = strtoupper(preg_replace('/[^0-9A-Za-z%+\/$ .-]/', '', $data));
         $modules = array();
@@ -1350,7 +1428,7 @@ class BarCodeManager
         $values = array();
         for ($i = 0, $n = strlen($data); $i < $n; $i++) {
             $char = substr($data, $i, 1);
-            $block = $this->code_93_alphabet[$char];
+            $block = $this->code93Alphabet[$char];
             $modules[] = array(1, $block[0], 1);
             $modules[] = array(0, $block[1], 1);
             $modules[] = array(1, $block[2], 1);
@@ -1373,7 +1451,7 @@ class BarCodeManager
             }
             $values[] = $checksum;
         }
-        $alphabet = array_values($this->code_93_alphabet);
+        $alphabet = array_values($this->code93Alphabet);
         for ($i = count($values) - 2, $n = count($values); $i < $n; $i++) {
             $block = $alphabet[$values[$i]];
             $modules[] = array(1, $block[0], 1);
@@ -1396,7 +1474,7 @@ class BarCodeManager
         return array('g' => 'l', 'b' => $blocks);
     }
 
-    private function code_93_ascii_encode($data)
+    private function code93AsciiEncode($data)
     {
         $modules = array();
         /* Start */
@@ -1412,26 +1490,28 @@ class BarCodeManager
         for ($i = 0, $n = strlen($data); $i < $n; $i++) {
             $char = substr($data, $i, 1);
             $ch = ord($char);
-            if ($ch < 128) {
-                if ($ch < 32 || $ch >= 127) {
-                    $label .= ' ';
-                } else {
-                    $label .= $char;
-                }
-                $ch = $this->code_93_asciibet[$ch];
-                for ($j = 0, $m = strlen($ch); $j < $m; $j++) {
-                    $c = substr($ch, $j, 1);
-                    $b = $this->code_93_alphabet[$c];
-                    $modules[] = array(1, $b[0], 1);
-                    $modules[] = array(0, $b[1], 1);
-                    $modules[] = array(1, $b[2], 1);
-                    $modules[] = array(0, $b[3], 1);
-                    $modules[] = array(1, $b[4], 1);
-                    $modules[] = array(0, $b[5], 1);
-                    $values[] = $b[6];
-                }
+            if ($ch >= 128) {
+                continue;
+            }
+            if ($ch < 32 || $ch >= 127) {
+                $label .= ' ';
+            } else {
+                $label .= $char;
+            }
+            $ch = $this->code93Asciibet[$ch];
+            for ($j = 0, $m = strlen($ch); $j < $m; $j++) {
+                $c = substr($ch, $j, 1);
+                $b = $this->code93Alphabet[$c];
+                $modules[] = array(1, $b[0], 1);
+                $modules[] = array(0, $b[1], 1);
+                $modules[] = array(1, $b[2], 1);
+                $modules[] = array(0, $b[3], 1);
+                $modules[] = array(1, $b[4], 1);
+                $modules[] = array(0, $b[5], 1);
+                $values[] = $b[6];
             }
         }
+
         /* Check Digits */
         for ($i = 0; $i < 2; $i++) {
             $index = count($values);
@@ -1446,7 +1526,7 @@ class BarCodeManager
             }
             $values[] = $checksum;
         }
-        $alphabet = array_values($this->code_93_alphabet);
+        $alphabet = array_values($this->code93Alphabet);
         for ($i = count($values) - 2, $n = count($values); $i < $n; $i++) {
             $block = $alphabet[$values[$i]];
             $modules[] = array(1, $block[0], 1);
@@ -1469,7 +1549,7 @@ class BarCodeManager
         return array('g' => 'l', 'b' => $blocks);
     }
 
-    private $code_39_alphabet = array(
+    private $code39Alphabet = array(
         '1' => array(2, 1, 1, 2, 1, 1, 1, 1, 2),
         '2' => array(1, 1, 2, 2, 1, 1, 1, 1, 2),
         '3' => array(2, 1, 2, 2, 1, 1, 1, 1, 1),
@@ -1516,7 +1596,7 @@ class BarCodeManager
         '%' => array(1, 1, 1, 2, 1, 2, 1, 2, 1),
     );
 
-    private $code_39_asciibet = array(
+    private $code39Asciibet = array(
         '%U', '$A', '$B', '$C', '$D', '$E', '$F', '$G',
         '$H', '$I', '$J', '$K', '$L', '$M', '$N', '$O',
         '$P', '$Q', '$R', '$S', '$T', '$U', '$V', '$W',
@@ -1535,7 +1615,7 @@ class BarCodeManager
         '+X', '+Y', '+Z', '%P', '%Q', '%R', '%S', '%T',
     );
 
-    private $code_93_alphabet = array(
+    private $code93Alphabet = array(
         '0' => array(1, 3, 1, 1, 1, 2,  0),
         '1' => array(1, 1, 1, 2, 1, 3,  1),
         '2' => array(1, 1, 1, 3, 1, 2,  2),
@@ -1586,7 +1666,7 @@ class BarCodeManager
         '*' => array(1, 1, 1, 1, 4, 1,  0),
     );
 
-    private $code_93_asciibet = array(
+    private $code93Asciibet = array(
         '&U', '#A', '#B', '#C', '#D', '#E', '#F', '#G',
         '#H', '#I', '#J', '#K', '#L', '#M', '#N', '#O',
         '#P', '#Q', '#R', '#S', '#T', '#U', '#V', '#W',
@@ -1607,11 +1687,11 @@ class BarCodeManager
 
     /* - - - - CODE 128 ENCODER - - - - */
 
-    private function code_128_encode($data, $dstate, $fnc1)
+    private function code128Encode($data, $dstate, $fnc1)
     {
         $data = preg_replace('/[\x80-\xFF]/', '', $data);
         $label = preg_replace('/[\x00-\x1F\x7F]/', ' ', $data);
-        $chars = $this->code_128_normalize($data, $dstate, $fnc1);
+        $chars = $this->code128Normalize($data, $dstate, $fnc1);
         $checksum = $chars[0] % 103;
         for ($i = 1, $n = count($chars); $i < $n; $i++) {
             $checksum += $i * $chars[$i];
@@ -1622,7 +1702,7 @@ class BarCodeManager
         $modules = array();
         $modules[] = array(0, 10, 0);
         foreach ($chars as $char) {
-            $block = $this->code_128_alphabet[$char];
+            $block = $this->code128Alphabet[$char];
             foreach ($block as $i => $module) {
                 $modules[] = array(($i & 1) ^ 1, $module, 1);
             }
@@ -1632,7 +1712,7 @@ class BarCodeManager
         return array('g' => 'l', 'b' => $blocks);
     }
 
-    private function code_128_normalize($data, $dstate, $fnc1)
+    private function code128Normalize($data, $dstate, $fnc1)
     {
         $detectcba = '/(^[0-9]{4,}|^[0-9]{2}$)|([\x60-\x7F])|([\x00-\x1F])/';
         $detectc = '/(^[0-9]{6,}|^[0-9]{4,}$)/';
@@ -1641,14 +1721,16 @@ class BarCodeManager
         $state = (($dstate > 0 && $dstate < 4) ? $dstate : 0);
         $abstate = ((abs($dstate) == 2) ? 2 : 1);
         $chars = array(102 + ($state ? $state : $abstate));
-        if ($fnc1) $chars[] = 102;
+        if ($fnc1) {
+            $chars[] = 102;
+        }
         while (strlen($data)) {
             switch ($state) {
                 case 0:
                     if (preg_match($detectcba, $data, $m)) {
                         if ($m[1]) {
                             $state = 3;
-                        } else if ($m[2]) {
+                        } elseif ($m[2]) {
                             $state = 2;
                         } else {
                             $state = 1;
@@ -1657,7 +1739,9 @@ class BarCodeManager
                         $state = $abstate;
                     }
                     $chars = array(102 + $state);
-                    if ($fnc1) $chars[] = 102;
+                    if ($fnc1) {
+                        $chars[] = 102;
+                    }
                     break;
                 case 1:
                     if ($dstate <= 0 && preg_match($detectc, $data, $m)) {
@@ -1672,7 +1756,7 @@ class BarCodeManager
                         $data = substr($data, 1);
                         if ($ch < 32) {
                             $chars[] = $ch + 64;
-                        } else if ($ch < 96) {
+                        } elseif ($ch < 96) {
                             $chars[] = $ch - 32;
                         } else {
                             if (preg_match($detectba, $data, $m)) {
@@ -1734,12 +1818,14 @@ class BarCodeManager
                         $chars[] = 102 - $state;
                     }
                     break;
+                default:
+                    break;
             }
         }
         return $chars;
     }
 
-    private $code_128_alphabet = array(
+    private $code128Alphabet = array(
         array(2, 1, 2, 2, 2, 2), array(2, 2, 2, 1, 2, 2),
         array(2, 2, 2, 2, 2, 1), array(1, 2, 1, 2, 2, 3),
         array(1, 2, 1, 3, 2, 2), array(1, 3, 1, 2, 2, 2),
@@ -1798,7 +1884,7 @@ class BarCodeManager
 
     /* - - - - CODABAR ENCODER - - - - */
 
-    private function codabar_encode($data)
+    private function codabarEncode($data)
     {
         $data = strtoupper(preg_replace(
             '/[^0-9ABCDENTabcdent*.\/:+$-]/',
@@ -1813,7 +1899,7 @@ class BarCodeManager
                 );
             }
             $char = substr($data, $i, 1);
-            $block = $this->codabar_alphabet[$char];
+            $block = $this->codabarAphabet[$char];
             $blocks[] = array(
                 'm' => array(
                     array(1, 1, $block[0]),
@@ -1830,7 +1916,7 @@ class BarCodeManager
         return array('g' => 'l', 'b' => $blocks);
     }
 
-    private $codabar_alphabet = array(
+    private $codabarAphabet = array(
         '0' => array(1, 1, 1, 1, 1, 2, 2),
         '1' => array(1, 1, 1, 1, 2, 2, 1),
         '4' => array(1, 1, 2, 1, 1, 2, 1),
@@ -1859,10 +1945,12 @@ class BarCodeManager
 
     /* - - - - ITF ENCODER - - - - */
 
-    private function itf_encode($data)
+    private function itfEncode($data)
     {
         $data = preg_replace('/[^0-9]/', '', $data);
-        if (strlen($data) % 2) $data = '0' . $data;
+        if (strlen($data) % 2) {
+            $data = '0' . $data;
+        }
         $blocks = array();
         /* Quiet zone, start. */
         $blocks[] = array(
@@ -1880,8 +1968,8 @@ class BarCodeManager
         for ($i = 0, $n = strlen($data); $i < $n; $i += 2) {
             $c1 = substr($data, $i, 1);
             $c2 = substr($data, $i + 1, 1);
-            $b1 = $this->itf_alphabet[$c1];
-            $b2 = $this->itf_alphabet[$c2];
+            $b1 = $this->itfAlphabet[$c1];
+            $b2 = $this->itfAlphabet[$c2];
             $blocks[] = array(
                 'm' => array(
                     array(1, 1, $b1[0]),
@@ -1913,7 +2001,7 @@ class BarCodeManager
         return array('g' => 'l', 'b' => $blocks);
     }
 
-    private $itf_alphabet = array(
+    private $itfAlphabet = array(
         '0' => array(1, 1, 2, 2, 1),
         '1' => array(2, 1, 1, 1, 2),
         '2' => array(1, 2, 1, 1, 2),
@@ -1928,13 +2016,13 @@ class BarCodeManager
 
     /* - - - - QR ENCODER - - - - */
 
-    private function qr_encode($data, $ecl)
+    private function qrEncode($data, $ecl)
     {
-        list($mode, $vers, $ec, $data) = $this->qr_encode_data($data, $ecl);
-        $data = $this->qr_encode_ec($data, $ec, $vers);
-        list($size, $mtx) = $this->qr_create_matrix($vers, $data);
-        list($mask, $mtx) = $this->qr_apply_best_mask($mtx, $size);
-        $mtx = $this->qr_finalize_matrix($mtx, $size, $ecl, $mask, $vers);
+        list($mode, $vers, $ec, $data) = $this->qrEncodeData($data, $ecl);
+        $data = $this->qrEncodeEc($data, $ec, $vers);
+        list($size, $mtx) = $this->qrCreateMatrix($vers, $data);
+        list($mask, $mtx) = $this->qrApplyBestMask($mtx, $size);
+        $mtx = $this->qrFinalizeMatrix($mtx, $size, $ecl, $mask, $vers);
         return array(
             'g' => 'm',
             'q' => array(4, 4, 4, 4),
@@ -1943,45 +2031,75 @@ class BarCodeManager
         );
     }
 
-    private function qr_encode_data($data, $ecl)
+    private function qrEncodeData($data, $ecl)
     {
-        $mode = $this->qr_detect_mode($data);
-        $version = $this->qr_detect_version($data, $mode, $ecl);
-        $version_group = (($version < 10) ? 0 : (($version < 27) ? 1 : 2));
-        $ec_params = $this->qr_ec_params[($version - 1) * 4 + $ecl];
+        $mode = $this->qrDetectMode($data);
+        $version = $this->qrDetectVersion($data, $mode, $ecl);
+        $version_group = 0;
+        if ($version > 9) {
+            $version_group = 1;
+        }
+        if ($version > 26) {
+            $version_group = 2;
+        }
+        $ec_params = $this->qrEcParams[($version - 1) * 4 + $ecl];
         /* Don't cut off mid-character if exceeding capacity. */
-        $max_chars = $this->qr_capacity[$version - 1][$ecl][$mode];
-        if ($mode == 3) $max_chars <<= 1;
+        $max_chars = $this->qrCapacity[$version - 1][$ecl][$mode];
+        if ($mode == 3) {
+            $max_chars <<= 1;
+        }
         $data = substr($data, 0, $max_chars);
         /* Convert from character level to bit level. */
         switch ($mode) {
             case 0:
-                $code = $this->qr_encode_numeric($data, $version_group);
+                $code = $this->qrEncodeNumeric($data, $version_group);
                 break;
             case 1:
-                $code = $this->qr_encode_alphanumeric($data, $version_group);
+                $code = $this->qrEncodeAlphanumeric($data, $version_group);
                 break;
             case 2:
-                $code = $this->qr_encode_binary($data, $version_group);
+                $code = $this->qrEncodeBinary($data, $version_group);
                 break;
             case 3:
-                $code = $this->qr_encode_kanji($data, $version_group);
+                $code = $this->qrEncodeKanji($data, $version_group);
+                break;
+            default:
                 break;
         }
-        for ($i = 0; $i < 4; $i++) $code[] = 0;
-        while (count($code) % 8) $code[] = 0;
+        for ($i = 0; $i < 4; $i++) {
+            $code[] = 0;
+        }
+        while (count($code) % 8) {
+            $code[] = 0;
+        }
         /* Convert from bit level to byte level. */
         $data = array();
         for ($i = 0, $n = count($code); $i < $n; $i += 8) {
             $byte = 0;
-            if ($code[$i + 0]) $byte |= 0x80;
-            if ($code[$i + 1]) $byte |= 0x40;
-            if ($code[$i + 2]) $byte |= 0x20;
-            if ($code[$i + 3]) $byte |= 0x10;
-            if ($code[$i + 4]) $byte |= 0x08;
-            if ($code[$i + 5]) $byte |= 0x04;
-            if ($code[$i + 6]) $byte |= 0x02;
-            if ($code[$i + 7]) $byte |= 0x01;
+            if ($code[$i + 0]) {
+                $byte |= 0x80;
+            }
+            if ($code[$i + 1]) {
+                $byte |= 0x40;
+            }
+            if ($code[$i + 2]) {
+                $byte |= 0x20;
+            }
+            if ($code[$i + 3]) {
+                $byte |= 0x10;
+            }
+            if ($code[$i + 4]) {
+                $byte |= 0x08;
+            }
+            if ($code[$i + 5]) {
+                $byte |= 0x04;
+            }
+            if ($code[$i + 6]) {
+                $byte |= 0x02;
+            }
+            if ($code[$i + 7]) {
+                $byte |= 0x01;
+            }
             $data[] = $byte;
         }
         for (
@@ -1995,30 +2113,39 @@ class BarCodeManager
         return array($mode, $version, $ec_params, $data);
     }
 
-    private function qr_detect_mode($data)
+    private function qrDetectMode($data)
     {
         $numeric = '/^[0-9]*$/';
         $alphanumeric = '/^[0-9A-Z .\/:$%*+-]*$/';
         $kanji = '/^([\x81-\x9F\xE0-\xEA][\x40-\xFC]|[\xEB][\x40-\xBF])*$/';
-        if (preg_match($numeric, $data)) return 0;
-        if (preg_match($alphanumeric, $data)) return 1;
-        if (preg_match($kanji, $data)) return 3;
-        return 2;
+        $mode = 2;
+        if (preg_match($numeric, $data)) {
+            $mode = 0;
+        }
+        if (preg_match($alphanumeric, $data)) {
+            $mode = 1;
+        }
+        if (preg_match($kanji, $data)) {
+            $mode = 3;
+        }
+        return $mode;
     }
 
-    private function qr_detect_version($data, $mode, $ecl)
+    private function qrDetectVersion($data, $mode, $ecl)
     {
         $length = strlen($data);
-        if ($mode == 3) $length >>= 1;
+        if ($mode == 3) {
+            $length >>= 1;
+        }
         for ($v = 0; $v < 40; $v++) {
-            if ($length <= $this->qr_capacity[$v][$ecl][$mode]) {
+            if ($length <= $this->qrCapacity[$v][$ecl][$mode]) {
                 return $v + 1;
             }
         }
         return 40;
     }
 
-    private function qr_encode_numeric($data, $version_group)
+    private function qrEncodeNumeric($data, $version_group)
     {
         $code = array(0, 0, 0, 1);
         $length = strlen($data);
@@ -2026,9 +2153,11 @@ class BarCodeManager
             case 2:  /* 27 - 40 */
                 $code[] = $length & 0x2000;
                 $code[] = $length & 0x1000;
+                break;
             case 1:  /* 10 - 26 */
                 $code[] = $length & 0x0800;
                 $code[] = $length & 0x0400;
+                break;
             case 0:  /* 1 - 9 */
                 $code[] = $length & 0x0200;
                 $code[] = $length & 0x0100;
@@ -2040,6 +2169,9 @@ class BarCodeManager
                 $code[] = $length & 0x0004;
                 $code[] = $length & 0x0002;
                 $code[] = $length & 0x0001;
+                break;
+            default:
+                break;
         }
         for ($i = 0; $i < $length; $i += 3) {
             $group = substr($data, $i, 3);
@@ -2048,21 +2180,26 @@ class BarCodeManager
                     $code[] = $group & 0x200;
                     $code[] = $group & 0x100;
                     $code[] = $group & 0x080;
+                    break;
                 case 2:
                     $code[] = $group & 0x040;
                     $code[] = $group & 0x020;
                     $code[] = $group & 0x010;
+                    break;
                 case 1:
                     $code[] = $group & 0x008;
                     $code[] = $group & 0x004;
                     $code[] = $group & 0x002;
                     $code[] = $group & 0x001;
+                    break;
+                default:
+                    break;
             }
         }
         return $code;
     }
 
-    private function qr_encode_alphanumeric($data, $version_group)
+    private function qrEncodeAlphanumeric($data, $version_group)
     {
         $alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:';
         $code = array(0, 0, 1, 0);
@@ -2071,9 +2208,11 @@ class BarCodeManager
             case 2:  /* 27 - 40 */
                 $code[] = $length & 0x1000;
                 $code[] = $length & 0x0800;
+                break;
             case 1:  /* 10 - 26 */
                 $code[] = $length & 0x0400;
                 $code[] = $length & 0x0200;
+                break;
             case 0:  /* 1 - 9 */
                 $code[] = $length & 0x0100;
                 $code[] = $length & 0x0080;
@@ -2084,6 +2223,9 @@ class BarCodeManager
                 $code[] = $length & 0x0004;
                 $code[] = $length & 0x0002;
                 $code[] = $length & 0x0001;
+                break;
+            default:
+                break;
         }
         for ($i = 0; $i < $length; $i += 2) {
             $group = substr($data, $i, 2);
@@ -2115,7 +2257,7 @@ class BarCodeManager
         return $code;
     }
 
-    private function qr_encode_binary($data, $version_group)
+    private function qrEncodeBinary($data, $version_group)
     {
         $code = array(0, 1, 0, 0);
         $length = strlen($data);
@@ -2130,6 +2272,7 @@ class BarCodeManager
                 $code[] = $length & 0x0400;
                 $code[] = $length & 0x0200;
                 $code[] = $length & 0x0100;
+                break;
             case 0:  /* 1 - 9 */
                 $code[] = $length & 0x0080;
                 $code[] = $length & 0x0040;
@@ -2139,6 +2282,9 @@ class BarCodeManager
                 $code[] = $length & 0x0004;
                 $code[] = $length & 0x0002;
                 $code[] = $length & 0x0001;
+                break;
+            default:
+                break;
         }
         for ($i = 0; $i < $length; $i++) {
             $ch = ord(substr($data, $i, 1));
@@ -2154,7 +2300,7 @@ class BarCodeManager
         return $code;
     }
 
-    private function qr_encode_kanji($data, $version_group)
+    private function qrEncodeKanji($data, $version_group)
     {
         $code = array(1, 0, 0, 0);
         $length = strlen($data);
@@ -2162,9 +2308,11 @@ class BarCodeManager
             case 2:  /* 27 - 40 */
                 $code[] = $length & 0x1000;
                 $code[] = $length & 0x0800;
+                break;
             case 1:  /* 10 - 26 */
                 $code[] = $length & 0x0400;
                 $code[] = $length & 0x0200;
+                break;
             case 0:  /* 1 - 9 */
                 $code[] = $length & 0x0100;
                 $code[] = $length & 0x0080;
@@ -2174,6 +2322,9 @@ class BarCodeManager
                 $code[] = $length & 0x0008;
                 $code[] = $length & 0x0004;
                 $code[] = $length & 0x0002;
+                break;
+            default:
+                break;
         }
         for ($i = 0; $i < $length; $i += 2) {
             $group = substr($data, $i, 2);
@@ -2181,7 +2332,7 @@ class BarCodeManager
             $c2 = ord(substr($group, 1, 1));
             if ($c1 >= 0x81 && $c1 <= 0x9F && $c2 >= 0x40 && $c2 <= 0xFC) {
                 $ch = ($c1 - 0x81) * 0xC0 + ($c2 - 0x40);
-            } else if (
+            } elseif (
                 ($c1 >= 0xE0 && $c1 <= 0xEA && $c2 >= 0x40 && $c2 <= 0xFC) ||
                 ($c1 == 0xEB && $c2 >= 0x40 && $c2 <= 0xBF)
             ) {
@@ -2206,15 +2357,15 @@ class BarCodeManager
         return $code;
     }
 
-    private function qr_encode_ec($data, $ec_params, $version)
+    private function qrEncodeEc($data, $ec_params, $version)
     {
-        $blocks = $this->qr_ec_split($data, $ec_params);
+        $blocks = $this->qrEcSplit($data, $ec_params);
         $ec_blocks = array();
         for ($i = 0, $n = count($blocks); $i < $n; $i++) {
-            $ec_blocks[] = $this->qr_ec_divide($blocks[$i], $ec_params);
+            $ec_blocks[] = $this->qrEcDivide($blocks[$i], $ec_params);
         }
-        $data = $this->qr_ec_interleave($blocks);
-        $ec_data = $this->qr_ec_interleave($ec_blocks);
+        $data = $this->qrEcInterleave($blocks);
+        $ec_data = $this->qrEcInterleave($ec_blocks);
         $code = array();
         foreach ($data as $ch) {
             $code[] = $ch & 0x80;
@@ -2236,13 +2387,13 @@ class BarCodeManager
             $code[] = $ch & 0x02;
             $code[] = $ch & 0x01;
         }
-        for ($n = $this->qr_remainder_bits[$version - 1]; $n > 0; $n--) {
+        for ($n = $this->qrRemainderBits[$version - 1]; $n > 0; $n--) {
             $code[] = 0;
         }
         return $code;
     }
 
-    private function qr_ec_split($data, $ec_params)
+    private function qrEcSplit($data, $ec_params)
     {
         $blocks = array();
         $offset = 0;
@@ -2257,28 +2408,28 @@ class BarCodeManager
         return $blocks;
     }
 
-    private function qr_ec_divide($data, $ec_params)
+    private function qrEcDivide($data, $ec_params)
     {
         $num_data = count($data);
         $num_error = $ec_params[1];
-        $generator = $this->qr_ec_polynomials[$num_error];
+        $generator = $this->qrEcPolynomials[$num_error];
         $message = $data;
         for ($i = 0; $i < $num_error; $i++) {
             $message[] = 0;
         }
         for ($i = 0; $i < $num_data; $i++) {
             if ($message[$i]) {
-                $leadterm = $this->qr_log[$message[$i]];
+                $leadterm = $this->qrLog[$message[$i]];
                 for ($j = 0; $j <= $num_error; $j++) {
                     $term = ($generator[$j] + $leadterm) % 255;
-                    $message[$i + $j] ^= $this->qr_exp[$term];
+                    $message[$i + $j] ^= $this->qrExp[$term];
                 }
             }
         }
         return array_slice($message, $num_data, $num_error);
     }
 
-    private function qr_ec_interleave($blocks)
+    private function qrEcInterleave($blocks)
     {
         $data = array();
         $num_blocks = count($blocks);
@@ -2290,12 +2441,14 @@ class BarCodeManager
                     $break = false;
                 }
             }
-            if ($break) break;
+            if ($break) {
+                break;
+            }
         }
         return $data;
     }
 
-    private function qr_create_matrix($version, $data)
+    private function qrCreateMatrix($version, $data)
     {
         $size = $version * 4 + 17;
         $matrix = array();
@@ -2317,7 +2470,7 @@ class BarCodeManager
         }
         /* Alignment patterns. */
         if ($version >= 2) {
-            $alignment = $this->qr_alignment_patterns[$version - 2];
+            $alignment = $this->qrAlignmentPatterns[$version - 2];
             foreach ($alignment as $i) {
                 foreach ($alignment as $j) {
                     if (!$matrix[$i][$j]) {
@@ -2340,10 +2493,18 @@ class BarCodeManager
         $matrix[$size - 8][8] = 3;
         /* Format information area. */
         for ($i = 0; $i <= 8; $i++) {
-            if (!$matrix[$i][8]) $matrix[$i][8] = 1;
-            if (!$matrix[8][$i]) $matrix[8][$i] = 1;
-            if ($i && !$matrix[$size - $i][8]) $matrix[$size - $i][8] = 1;
-            if ($i && !$matrix[8][$size - $i]) $matrix[8][$size - $i] = 1;
+            if (!$matrix[$i][8]) {
+                $matrix[$i][8] = 1;
+            }
+            if (!$matrix[8][$i]) {
+                $matrix[8][$i] = 1;
+            }
+            if ($i && !$matrix[$size - $i][8]) {
+                $matrix[$size - $i][8] = 1;
+            }
+            if ($i && !$matrix[8][$size - $i]) {
+                $matrix[8][$size - $i] = 1;
+            }
         }
         /* Version information area. */
         if ($version >= 7) {
@@ -2374,20 +2535,22 @@ class BarCodeManager
                 $dir = -$dir;
                 $row += $dir;
                 $col -= 2;
-                if ($col == 6) $col--;
+                if ($col == 6) {
+                    $col--;
+                }
             }
         }
         return array($size, $matrix);
     }
 
-    private function qr_apply_best_mask($matrix, $size)
+    private function qrApplyBestMask($matrix, $size)
     {
         $best_mask = 0;
-        $best_matrix = $this->qr_apply_mask($matrix, $size, $best_mask);
-        $best_penalty = $this->qr_penalty($best_matrix, $size);
+        $best_matrix = $this->qrApplyMask($matrix, $size, $best_mask);
+        $best_penalty = $this->qrPenalty($best_matrix, $size);
         for ($test_mask = 1; $test_mask < 8; $test_mask++) {
-            $test_matrix = $this->qr_apply_mask($matrix, $size, $test_mask);
-            $test_penalty = $this->qr_penalty($test_matrix, $size);
+            $test_matrix = $this->qrApplyMask($matrix, $size, $test_mask);
+            $test_penalty = $this->qrPenalty($test_matrix, $size);
             if ($test_penalty < $best_penalty) {
                 $best_mask = $test_mask;
                 $best_matrix = $test_matrix;
@@ -2397,129 +2560,123 @@ class BarCodeManager
         return array($best_mask, $best_matrix);
     }
 
-    private function qr_apply_mask($matrix, $size, $mask)
+    private function qrApplyMask($matrix, $size, $mask)
     {
         for ($i = 0; $i < $size; $i++) {
             for ($j = 0; $j < $size; $j++) {
-                if ($matrix[$i][$j] >= 4) {
-                    if ($this->qr_mask($mask, $i, $j)) {
-                        $matrix[$i][$j] ^= 1;
-                    }
+                if ($matrix[$i][$j] >= 4 && $this->qrMask($mask, $i, $j)) {
+                    $matrix[$i][$j] ^= 1;
                 }
             }
         }
         return $matrix;
     }
 
-    private function qr_mask($mask, $r, $c)
+    private function qrMask(int $mask, int $r, int $c): bool
     {
-        switch ($mask) {
-            case 0:
-                return !(($r + $c) % 2);
-            case 1:
-                return !(($r) % 2);
-            case 2:
-                return !(($c) % 3);
-            case 3:
-                return !(($r + $c) % 3);
-            case 4:
-                return !((floor(($r) / 2) + floor(($c) / 3)) % 2);
-            case 5:
-                return !(((($r * $c) % 2) + (($r * $c) % 3)));
-            case 6:
-                return !(((($r * $c) % 2) + (($r * $c) % 3)) % 2);
-            case 7:
-                return !(((($r + $c) % 2) + (($r * $c) % 3)) % 2);
-        }
+        return in_array(($r + $c) % 6, [0, 1, 3, 4, 5], true) xor (bool) ($mask & (1 << (($r + $c) % 6)));
     }
 
-    private function qr_penalty(&$matrix, $size)
+
+    private function qrPenalty(&$matrix, $size)
     {
-        $score  = $this->qr_penalty_1($matrix, $size);
-        $score += $this->qr_penalty_2($matrix, $size);
-        $score += $this->qr_penalty_3($matrix, $size);
-        $score += $this->qr_penalty_4($matrix, $size);
+        $score  = $this->qrPenalty1($matrix, $size);
+        $score += $this->qrPenalty2($matrix, $size);
+        $score += $this->qrPenalty3($matrix, $size);
+        $score += $this->qrPenalty4($matrix, $size);
         return $score;
     }
 
-    private function qr_penalty_1(&$matrix, $size)
+    private function qrPenalty1(array &$matrix, int $size): int
     {
-        $score = 0;
+        $penaltyScore = 0;
         for ($i = 0; $i < $size; $i++) {
-            $rowvalue = 0;
-            $rowcount = 0;
-            $colvalue = 0;
-            $colcount = 0;
+            $prevRowValue = 0;
+            $rowStreak = 0;
+            $prevColValue = 0;
+            $colStreak = 0;
             for ($j = 0; $j < $size; $j++) {
-                $rv = ($matrix[$i][$j] == 5 || $matrix[$i][$j] == 3) ? 1 : 0;
-                $cv = ($matrix[$j][$i] == 5 || $matrix[$j][$i] == 3) ? 1 : 0;
-                if ($rv == $rowvalue) {
-                    $rowcount++;
+                $currentRowVal = ($matrix[$i][$j] == 5 || $matrix[$i][$j] == 3) ? 1 : 0;
+                $currentColVal = ($matrix[$j][$i] == 5 || $matrix[$j][$i] == 3) ? 1 : 0;
+                if ($currentRowVal == $prevRowValue) {
+                    $rowStreak++;
                 } else {
-                    if ($rowcount >= 5) $score += $rowcount - 2;
-                    $rowvalue = $rv;
-                    $rowcount = 1;
+                    if ($rowStreak >= 5) {
+                        $penaltyScore += $rowStreak - 2;
+                    }
+                    $prevRowValue = $currentRowVal;
+                    $rowStreak = 1;
                 }
-                if ($cv == $colvalue) {
-                    $colcount++;
+                if ($currentColVal == $prevColValue) {
+                    $colStreak++;
                 } else {
-                    if ($colcount >= 5) $score += $colcount - 2;
-                    $colvalue = $cv;
-                    $colcount = 1;
+                    if ($colStreak >= 5) {
+                        $penaltyScore += $colStreak - 2;
+                    }
+                    $prevColValue = $currentColVal;
+                    $colStreak = 1;
                 }
             }
-            if ($rowcount >= 5) $score += $rowcount - 2;
-            if ($colcount >= 5) $score += $colcount - 2;
+            if ($rowStreak >= 5) {
+                $penaltyScore += $rowStreak - 2;
+            }
+            if ($colStreak >= 5) {
+                $penaltyScore += $colStreak - 2;
+            }
         }
-        return $score;
+        return $penaltyScore;
     }
 
-    private function qr_penalty_2(&$matrix, $size)
+    private function qrPenalty2(array &$matrix, int $size): int
     {
         $score = 0;
         for ($i = 1; $i < $size; $i++) {
             for ($j = 1; $j < $size; $j++) {
-                $v1 = $matrix[$i - 1][$j - 1];
-                $v2 = $matrix[$i - 1][$j];
-                $v3 = $matrix[$i][$j - 1];
-                $v4 = $matrix[$i][$j];
-                $v1 = ($v1 == 5 || $v1 == 3) ? 1 : 0;
-                $v2 = ($v2 == 5 || $v2 == 3) ? 1 : 0;
-                $v3 = ($v3 == 5 || $v3 == 3) ? 1 : 0;
-                $v4 = ($v4 == 5 || $v4 == 3) ? 1 : 0;
-                if ($v1 == $v2 && $v2 == $v3 && $v3 == $v4) $score += 3;
+                if (
+                    ($matrix[$i - 1][$j - 1] == 5 || $matrix[$i - 1][$j - 1] == 3)
+                    && $matrix[$i - 1][$j - 1] === $matrix[$i - 1][$j]
+                    && $matrix[$i - 1][$j] === $matrix[$i][$j - 1]
+                    && $matrix[$i][$j - 1] === $matrix[$i][$j]
+                ) {
+                    $score += 3;
+                }
             }
         }
+
         return $score;
     }
 
-    private function qr_penalty_3(&$matrix, $size)
+
+    private function qrPenalty3(array &$matrix, int $size): int
     {
         $score = 0;
         for ($i = 0; $i < $size; $i++) {
-            $rowvalue = 0;
-            $colvalue = 0;
-            for ($j = 0; $j < 11; $j++) {
-                $rv = ($matrix[$i][$j] == 5 || $matrix[$i][$j] == 3) ? 1 : 0;
-                $cv = ($matrix[$j][$i] == 5 || $matrix[$j][$i] == 3) ? 1 : 0;
-                $rowvalue = (($rowvalue << 1) & 0x7FF) | $rv;
-                $colvalue = (($colvalue << 1) & 0x7FF) | $cv;
+            $row = array_slice($matrix[$i], 0, 11);
+            $col = array_column($matrix, $i);
+            $rowValue = (int)array_sum($row) % 0x800;
+            $colValue = (int)array_sum($col) % 0x800;
+            if (in_array($rowValue, [0x5D0, 0x5D], true)) {
+                $score += 40;
             }
-            if ($rowvalue == 0x5D0 || $rowvalue == 0x5D) $score += 40;
-            if ($colvalue == 0x5D0 || $colvalue == 0x5D) $score += 40;
-            for ($j = 11; $j < $size; $j++) {
-                $rv = ($matrix[$i][$j] == 5 || $matrix[$i][$j] == 3) ? 1 : 0;
-                $cv = ($matrix[$j][$i] == 5 || $matrix[$j][$i] == 3) ? 1 : 0;
-                $rowvalue = (($rowvalue << 1) & 0x7FF) | $rv;
-                $colvalue = (($colvalue << 1) & 0x7FF) | $cv;
-                if ($rowvalue == 0x5D0 || $rowvalue == 0x5D) $score += 40;
-                if ($colvalue == 0x5D0 || $colvalue == 0x5D) $score += 40;
+            if (in_array($colValue, [0x5D0, 0x5D], true)) {
+                $score += 40;
+            }
+            $row = array_slice($matrix[$i], 11);
+            $col = array_column($matrix, $i);
+            $rowValue = (int)array_sum($row) % 0x800;
+            $colValue = (int)array_sum($col) % 0x800;
+            if (in_array($rowValue, [0x5D0, 0x5D], true)) {
+                $score += 40;
+            }
+            if (in_array($colValue, [0x5D0, 0x5D], true)) {
+                $score += 40;
             }
         }
+
         return $score;
     }
 
-    private function qr_penalty_4(&$matrix, $size)
+    private function qrPenalty4(&$matrix, $size)
     {
         $dark = 0;
         for ($i = 0; $i < $size; $i++) {
@@ -2536,7 +2693,7 @@ class BarCodeManager
         return min($a, $b) * 10;
     }
 
-    private function qr_finalize_matrix(
+    private function qrFinalizeMatrix(
         $matrix,
         $size,
         $ecl,
@@ -2544,7 +2701,7 @@ class BarCodeManager
         $version
     ) {
         /* Format Info */
-        $format = $this->qr_format_info[$ecl * 8 + $mask];
+        $format = $this->qrFormatInfo[$ecl * 8 + $mask];
         $matrix[8][0] = $format[0];
         $matrix[8][1] = $format[1];
         $matrix[8][2] = $format[2];
@@ -2577,7 +2734,7 @@ class BarCodeManager
         $matrix[8][$size - 1] = $format[14];
         /* Version Info */
         if ($version >= 7) {
-            $version = $this->qr_version_info[$version - 7];
+            $version = $this->qrVersionInfo[$version - 7];
             for ($i = 0; $i < 18; $i++) {
                 $r = $size - 9 - ($i % 3);
                 $c = 5 - floor($i / 3);
@@ -2594,10 +2751,10 @@ class BarCodeManager
         return $matrix;
     }
 
-    /*  maximum encodable characters = $qr_capacity [ (version - 1) ]  */
+    /*  maximum encodable characters = $qrCapacity [ (version - 1) ]  */
     /*    [ (0 for L, 1 for M, 2 for Q, 3 for H)                    ]  */
     /*    [ (0 for numeric, 1 for alpha, 2 for binary, 3 for kanji) ]  */
-    private $qr_capacity = array(
+    private $qrCapacity = array(
         array(
             array(41,   25,   17,   10), array(34,   20,   14,    8),
             array(27,   16,   11,    7), array(17,   10,    7,    4)
@@ -2760,7 +2917,7 @@ class BarCodeManager
         ),
     );
 
-    /*  $qr_ec_params[                                              */
+    /*  $qrEcParams[                                              */
     /*    4 * (version - 1) + (0 for L, 1 for M, 2 for Q, 3 for H)  */
     /*  ] = array(                                                  */
     /*    total number of data codewords,                           */
@@ -2770,7 +2927,7 @@ class BarCodeManager
     /*    number of blocks in second group,                         */
     /*    number of data codewords per block in second group        */
     /*  );                                                          */
-    private $qr_ec_params = array(
+    private $qrEcParams = array(
         array(19,  7,  1,  19,  0,   0),
         array(16, 10,  1,  16,  0,   0),
         array(13, 13,  1,  13,  0,   0),
@@ -2933,7 +3090,7 @@ class BarCodeManager
         array(1276, 30, 20,  15, 61,  16),
     );
 
-    private $qr_ec_polynomials = array(
+    private $qrEcPolynomials = array(
         7 => array(
             0, 87, 229, 146, 149, 238, 102, 21
         ),
@@ -2989,7 +3146,7 @@ class BarCodeManager
         ),
     );
 
-    private $qr_log = array(
+    private $qrLog = array(
         0,   0,   1,  25,   2,  50,  26, 198,
         3, 223,  51, 238,  27, 104, 199,  75,
         4, 100, 224,  14,  52, 141, 239, 129,
@@ -3024,7 +3181,7 @@ class BarCodeManager
         116, 214, 244, 234, 168,  80,  88, 175,
     );
 
-    private $qr_exp = array(
+    private $qrExp = array(
         1,   2,   4,   8,  16,  32,  64, 128,
         29,  58, 116, 232, 205, 135,  19,  38,
         76, 152,  45,  90, 180, 117, 234, 201,
@@ -3059,12 +3216,12 @@ class BarCodeManager
         27,  54, 108, 216, 173,  71, 142,   1,
     );
 
-    private $qr_remainder_bits = array(
+    private $qrRemainderBits = array(
         0, 7, 7, 7, 7, 7, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3,
         4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0, 0,
     );
 
-    private $qr_alignment_patterns = array(
+    private $qrAlignmentPatterns = array(
         array(6, 18),
         array(6, 22),
         array(6, 26),
@@ -3106,10 +3263,10 @@ class BarCodeManager
         array(6, 30, 58, 86, 114, 142, 170),
     );
 
-    /*  format info string = $qr_format_info[            */
+    /*  format info string = $qrFormatInfo[            */
     /*    (0 for L, 8 for M, 16 for Q, 24 for H) + mask  */
     /*  ];                                               */
-    private $qr_format_info = array(
+    private $qrFormatInfo = array(
         array(1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0),
         array(1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1),
         array(1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0),
@@ -3144,8 +3301,8 @@ class BarCodeManager
         array(0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1),
     );
 
-    /*  version info string = $qr_version_info[ (version - 7) ]  */
-    private $qr_version_info = array(
+    /*  version info string = $qrVersionInfo[ (version - 7) ]  */
+    private $qrVersionInfo = array(
         array(0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0),
         array(0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0),
         array(0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1),
@@ -3184,11 +3341,11 @@ class BarCodeManager
 
     /* - - - - DATA MATRIX ENCODER - - - - */
 
-    private function dmtx_encode($data, $rect, $fnc1)
+    private function dmtxEncode($data, $rect, $fnc1)
     {
-        list($data, $ec) = $this->dmtx_encode_data($data, $rect, $fnc1);
-        $data = $this->dmtx_encode_ec($data, $ec);
-        list($h, $w, $mtx) = $this->dmtx_create_matrix($ec, $data);
+        list($data, $ec) = $this->dmtxEncodeData($data, $rect, $fnc1);
+        $data = $this->dmtxEncodeEc($data, $ec);
+        list($h, $w, $mtx) = $this->dmtxCreateMatrix($ec, $data);
         return array(
             'g' => 'm',
             'q' => array(1, 1, 1, 1),
@@ -3197,7 +3354,7 @@ class BarCodeManager
         );
     }
 
-    private function dmtx_encode_data($data, $rect, $fnc1)
+    private function dmtxEncodeData($data, $rect, $fnc1)
     {
         /* Convert to data codewords. */
         $edata = ($fnc1 ? array(232) : array());
@@ -3214,7 +3371,7 @@ class BarCodeManager
                 } else {
                     $edata[] = $ch1 + 1;
                 }
-            } else if ($ch1 < 0x80) {
+            } elseif ($ch1 < 0x80) {
                 $edata[] = $ch1 + 1;
             } else {
                 $edata[] = 235;
@@ -3223,14 +3380,14 @@ class BarCodeManager
         }
         /* Add padding. */
         $length = count($edata);
-        $ec_params = $this->dmtx_detect_version($length, $rect);
+        $ec_params = $this->dmtxDetectVersion($length, $rect);
         if ($length > $ec_params[0]) {
             $length = $ec_params[0];
             $edata = array_slice($edata, 0, $length);
             if ($edata[$length - 1] == 235) {
                 $edata[$length - 1] = 129;
             }
-        } else if ($length < $ec_params[0]) {
+        } elseif ($length < $ec_params[0]) {
             $length++;
             $edata[] = 129;
             while ($length < $ec_params[0]) {
@@ -3243,27 +3400,27 @@ class BarCodeManager
         return array($edata, $ec_params);
     }
 
-    private function dmtx_detect_version($length, $rect)
+    private function dmtxDetectVersion($length, $rect)
     {
         for ($i = ($rect ? 24 : 0), $j = ($rect ? 30 : 24); $i < $j; $i++) {
-            if ($length <= $this->dmtx_ec_params[$i][0]) {
-                return $this->dmtx_ec_params[$i];
+            if ($length <= $this->dmtxEcParams[$i][0]) {
+                return $this->dmtxEcParams[$i];
             }
         }
-        return $this->dmtx_ec_params[$j - 1];
+        return $this->dmtxEcParams[$j - 1];
     }
 
-    private function dmtx_encode_ec($data, $ec_params)
+    private function dmtxEncodeEc($data, $ec_params)
     {
-        $blocks = $this->dmtx_ec_split($data, $ec_params);
+        $blocks = $this->dmtxEcSplit($data, $ec_params);
         for ($i = 0, $n = count($blocks); $i < $n; $i++) {
-            $ec_block = $this->dmtx_ec_divide($blocks[$i], $ec_params);
+            $ec_block = $this->dmtxEcDivide($blocks[$i], $ec_params);
             $blocks[$i] = array_merge($blocks[$i], $ec_block);
         }
-        return $this->dmtx_ec_interleave($blocks);
+        return $this->dmtxEcInterleave($blocks);
     }
 
-    private function dmtx_ec_split($data, $ec_params)
+    private function dmtxEcSplit($data, $ec_params)
     {
         $blocks = array();
         $num_blocks = $ec_params[2] + $ec_params[4];
@@ -3276,28 +3433,28 @@ class BarCodeManager
         return $blocks;
     }
 
-    private function dmtx_ec_divide($data, $ec_params)
+    private function dmtxEcDivide($data, $ec_params)
     {
         $num_data = count($data);
         $num_error = $ec_params[1];
-        $generator = $this->dmtx_ec_polynomials[$num_error];
+        $generator = $this->dmtxEcPolynomials[$num_error];
         $message = $data;
         for ($i = 0; $i < $num_error; $i++) {
             $message[] = 0;
         }
         for ($i = 0; $i < $num_data; $i++) {
             if ($message[$i]) {
-                $leadterm = $this->dmtx_log[$message[$i]];
+                $leadterm = $this->dmtxLog[$message[$i]];
                 for ($j = 0; $j <= $num_error; $j++) {
                     $term = ($generator[$j] + $leadterm) % 255;
-                    $message[$i + $j] ^= $this->dmtx_exp[$term];
+                    $message[$i + $j] ^= $this->dmtxExp[$term];
                 }
             }
         }
         return array_slice($message, $num_data, $num_error);
     }
 
-    private function dmtx_ec_interleave($blocks)
+    private function dmtxEcInterleave($blocks)
     {
         $data = array();
         $num_blocks = count($blocks);
@@ -3309,12 +3466,14 @@ class BarCodeManager
                     $break = false;
                 }
             }
-            if ($break) break;
+            if ($break) {
+                break;
+            }
         }
         return $data;
     }
 
-    private function dmtx_create_matrix($ec_params, $data)
+    private function dmtxCreateMatrix($ec_params, $data)
     {
         /* Create matrix. */
         $rheight = $ec_params[8] + 2;
@@ -3344,7 +3503,7 @@ class BarCodeManager
             }
             $matrix[] = $row;
         }
-        $this->dmtx_place_data($matrix, $rows, $cols, $data);
+        $this->dmtxPlaceData($matrix, $rows, $cols, $data);
         /* Copy into matrix. */
         for ($yy = 0; $yy < $ec_params[6]; $yy++) {
             for ($xx = 0; $xx < $ec_params[7]; $xx++) {
@@ -3353,7 +3512,9 @@ class BarCodeManager
                         $row = $yy * $ec_params[8] + $y;
                         $col = $xx * $ec_params[9] + $x;
                         $b = $matrix[$row][$col];
-                        if (is_null($b)) continue;
+                        if (is_null($b)) {
+                            continue;
+                        }
                         $row = $yy * $rheight + $y + 1;
                         $col = $xx * $rwidth + $x + 1;
                         $bitmap[$row][$col] = $b;
@@ -3365,7 +3526,7 @@ class BarCodeManager
         return array($height, $width, $bitmap);
     }
 
-    private function dmtx_place_data(&$mtx, $rows, $cols, $data)
+    private function dmtxPlaceData(&$mtx, $rows, $cols, $data)
     {
         $row = 4;
         $col = 0;
@@ -3374,19 +3535,19 @@ class BarCodeManager
         while (($row < $rows || $col < $cols) && $offset < $length) {
             /* Corner cases. Literally. */
             if ($row == $rows && $col == 0) {
-                $this->dmtx_place_1($mtx, $rows, $cols, $data[$offset++]);
-            } else if ($row == $rows - 2 && $col == 0 && $cols % 4 != 0) {
-                $this->dmtx_place_2($mtx, $rows, $cols, $data[$offset++]);
-            } else if ($row == $rows - 2 && $col == 0 && $cols % 8 == 4) {
-                $this->dmtx_place_3($mtx, $rows, $cols, $data[$offset++]);
-            } else if ($row == $rows + 4 && $col == 2 && $cols % 8 == 0) {
-                $this->dmtx_place_4($mtx, $rows, $cols, $data[$offset++]);
+                $this->dmtxPlace1($mtx, $rows, $cols, $data[$offset++]);
+            } elseif ($row == $rows - 2 && $col == 0 && $cols % 4 != 0) {
+                $this->dmtxPlace2($mtx, $rows, $cols, $data[$offset++]);
+            } elseif ($row == $rows - 2 && $col == 0 && $cols % 8 == 4) {
+                $this->dmtxPlace3($mtx, $rows, $cols, $data[$offset++]);
+            } elseif ($row == $rows + 4 && $col == 2 && $cols % 8 == 0) {
+                $this->dmtxPlace4($mtx, $rows, $cols, $data[$offset++]);
             }
             /* Up and to the right. */
             while ($row >= 0 && $col < $cols && $offset < $length) {
                 if ($row < $rows && $col >= 0 && is_null($mtx[$row][$col])) {
                     $b = $data[$offset++];
-                    $this->dmtx_place_0($mtx, $rows, $cols, $row, $col, $b);
+                    $this->dmtxPlace0($mtx, $rows, $cols, $row, $col, $b);
                 }
                 $row -= 2;
                 $col += 2;
@@ -3397,7 +3558,7 @@ class BarCodeManager
             while ($row < $rows && $col >= 0 && $offset < $length) {
                 if ($row >= 0 && $col < $cols && is_null($mtx[$row][$col])) {
                     $b = $data[$offset++];
-                    $this->dmtx_place_0($mtx, $rows, $cols, $row, $col, $b);
+                    $this->dmtxPlace0($mtx, $rows, $cols, $row, $col, $b);
                 }
                 $row += 2;
                 $col -= 2;
@@ -3407,7 +3568,7 @@ class BarCodeManager
         }
     }
 
-    private function dmtx_place_1(&$matrix, $rows, $cols, $b)
+    private function dmtxPlace1(&$matrix, $rows, $cols, $b)
     {
         $matrix[$rows - 1][0] = (($b & 0x80) ? 1 : 0);
         $matrix[$rows - 1][1] = (($b & 0x40) ? 1 : 0);
@@ -3419,7 +3580,7 @@ class BarCodeManager
         $matrix[3][$cols - 1] = (($b & 0x01) ? 1 : 0);
     }
 
-    private function dmtx_place_2(&$matrix, $rows, $cols, $b)
+    private function dmtxPlace2(&$matrix, $rows, $cols, $b)
     {
         $matrix[$rows - 3][0] = (($b & 0x80) ? 1 : 0);
         $matrix[$rows - 2][0] = (($b & 0x40) ? 1 : 0);
@@ -3431,7 +3592,7 @@ class BarCodeManager
         $matrix[1][$cols - 1] = (($b & 0x01) ? 1 : 0);
     }
 
-    private function dmtx_place_3(&$matrix, $rows, $cols, $b)
+    private function dmtxPlace3(&$matrix, $rows, $cols, $b)
     {
         $matrix[$rows - 3][0] = (($b & 0x80) ? 1 : 0);
         $matrix[$rows - 2][0] = (($b & 0x40) ? 1 : 0);
@@ -3443,7 +3604,7 @@ class BarCodeManager
         $matrix[3][$cols - 1] = (($b & 0x01) ? 1 : 0);
     }
 
-    private function dmtx_place_4(&$matrix, $rows, $cols, $b)
+    private function dmtxPlace4(&$matrix, $rows, $cols, $b)
     {
         $matrix[$rows - 1][0] = (($b & 0x80) ? 1 : 0);
         $matrix[$rows - 1][$cols - 1] = (($b & 0x40) ? 1 : 0);
@@ -3455,19 +3616,19 @@ class BarCodeManager
         $matrix[1][$cols - 1] = (($b & 0x01) ? 1 : 0);
     }
 
-    private function dmtx_place_0(&$matrix, $rows, $cols, $row, $col, $b)
+    private function dmtxPlace0(&$matrix, $rows, $cols, $row, $col, $b)
     {
-        $this->dmtx_place_b($matrix, $rows, $cols, $row - 2, $col - 2, $b & 0x80);
-        $this->dmtx_place_b($matrix, $rows, $cols, $row - 2, $col - 1, $b & 0x40);
-        $this->dmtx_place_b($matrix, $rows, $cols, $row - 1, $col - 2, $b & 0x20);
-        $this->dmtx_place_b($matrix, $rows, $cols, $row - 1, $col - 1, $b & 0x10);
-        $this->dmtx_place_b($matrix, $rows, $cols, $row - 1, $col - 0, $b & 0x08);
-        $this->dmtx_place_b($matrix, $rows, $cols, $row - 0, $col - 2, $b & 0x04);
-        $this->dmtx_place_b($matrix, $rows, $cols, $row - 0, $col - 1, $b & 0x02);
-        $this->dmtx_place_b($matrix, $rows, $cols, $row - 0, $col - 0, $b & 0x01);
+        $this->dmtxPlaceb($matrix, $rows, $cols, $row - 2, $col - 2, $b & 0x80);
+        $this->dmtxPlaceb($matrix, $rows, $cols, $row - 2, $col - 1, $b & 0x40);
+        $this->dmtxPlaceb($matrix, $rows, $cols, $row - 1, $col - 2, $b & 0x20);
+        $this->dmtxPlaceb($matrix, $rows, $cols, $row - 1, $col - 1, $b & 0x10);
+        $this->dmtxPlaceb($matrix, $rows, $cols, $row - 1, $col - 0, $b & 0x08);
+        $this->dmtxPlaceb($matrix, $rows, $cols, $row - 0, $col - 2, $b & 0x04);
+        $this->dmtxPlaceb($matrix, $rows, $cols, $row - 0, $col - 1, $b & 0x02);
+        $this->dmtxPlaceb($matrix, $rows, $cols, $row - 0, $col - 0, $b & 0x01);
     }
 
-    private function dmtx_place_b(&$matrix, $rows, $cols, $row, $col, $b)
+    private function dmtxPlaceb(&$matrix, $rows, $cols, $row, $col, $b)
     {
         if ($row < 0) {
             $row += $rows;
@@ -3480,7 +3641,7 @@ class BarCodeManager
         $matrix[$row][$col] = ($b ? 1 : 0);
     }
 
-    /*  $dmtx_ec_params[] = array(                             */
+    /*  $dmtxEcParams[] = array(                             */
     /*    total number of data codewords,                      */
     /*    number of error correction codewords per block,      */
     /*    number of blocks in first group,                     */
@@ -3492,7 +3653,7 @@ class BarCodeManager
     /*    number of rows per data region,                      */
     /*    number of columns per data region                    */
     /*  );                                                     */
-    private $dmtx_ec_params = array(
+    private $dmtxEcParams = array(
         array(3,  5, 1,   3, 0,   0, 1, 1,  8,  8),
         array(5,  7, 1,   5, 0,   0, 1, 1, 10, 10),
         array(8, 10, 1,   8, 0,   0, 1, 1, 12, 12),
@@ -3525,7 +3686,7 @@ class BarCodeManager
         array(49, 28, 1,  49, 0,   0, 1, 2, 14, 22),
     );
 
-    private $dmtx_ec_polynomials = array(
+    private $dmtxEcPolynomials = array(
         5 => array(
             0, 235, 207, 210, 244, 15
         ),
@@ -3603,7 +3764,7 @@ class BarCodeManager
         ),
     );
 
-    private $dmtx_log = array(
+    private $dmtxLog = array(
         0,   0,   1, 240,   2, 225, 241,  53,
         3,  38, 226, 133, 242,  43,  54, 210,
         4, 195,  39, 114, 227, 106, 134,  28,
@@ -3638,7 +3799,7 @@ class BarCodeManager
         237, 130, 111,  20,  93, 122, 177, 150,
     );
 
-    private $dmtx_exp = array(
+    private $dmtxExp = array(
         1,   2,   4,   8,  16,  32,  64, 128,
         45,  90, 180,  69, 138,  57, 114, 228,
         229, 231, 227, 235, 251, 219, 155,  27,

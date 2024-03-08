@@ -5,7 +5,7 @@ namespace Sokeio;
 trait WithOption
 {
     // Only Theme Site
-    public static function SetupOption()
+    public static function setupOption()
     {
         // Run when activating
     }
@@ -21,7 +21,7 @@ trait WithOption
 
     public static function deactivate()
     {
-        // Run when deactivating 
+        // Run when deactivating
     }
 
     public static function deactivated()
@@ -31,7 +31,7 @@ trait WithOption
 
     public static function remove()
     {
-        // Run when remove 
+        // Run when remove
     }
 
     public static function removed()

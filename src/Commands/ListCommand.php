@@ -31,7 +31,7 @@ class ListCommand extends Command
         $sokeio = platformBy($type);
         $this->components->info('Platform:' . $type);
         foreach ($sokeio->getAll() as $item) {
-            $this->components->info($item->name . ':' . ($item->isActive() ? 'Actived' : 'UnActived'));
+            $this->components->info($item->name . ':' . ($item->isActive() ? 'Actived' : 'blockd'));
         }
         return 0;
     }

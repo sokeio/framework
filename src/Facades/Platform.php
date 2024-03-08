@@ -17,22 +17,22 @@ use Illuminate\Support\Facades\Facade;
  * @method static mix getDataInfo($path,$register)
  * @method static array getModels()
  * @method static void NotificationAdd($title,$description,$meta_data,$to_role,$to_user)
- * @method static void BootGate()
- * @method static void RouteAdminBeforeReady($callback = null)
- * @method static void DoRouteAdminBeforeReady()
- * @method static void RouteSiteBeforeReady($callback = null)
- * @method static void DoRouteSiteBeforeReady()
- * @method static void RouteApiBeforeReady($callback = null)
- * @method static void DoRouteApiBeforeReady()
+ * @method static void bootGate()
+ * @method static void routeAdminBeforeReady($callback = null)
+ * @method static void doRouteAdminBeforeReady()
+ * @method static void routeSiteBeforeReady($callback = null)
+ * @method static void doRouteSiteBeforeReady()
+ * @method static void routeApiBeforeReady($callback = null)
+ * @method static void doRouteApiBeforeReady()
  * @method static void Ready($callback = null)
  * @method static void DoReady()
  * @method static void ReadyAfter($callback = null)
  * @method static void DoReadyAfter()
- * @method static bool CheckGate();
- * @method static bool CheckConnectDB();
+ * @method static bool checkGate();
+ * @method static bool checkConnectDB();
  * @method static void setEnv($arrs)
- * @method static void Start();
- * @method static long ExecutionTime();
+ * @method static void start();
+ * @method static long executionTime();
  * @see \Sokeio\Facades\Platform
  */
 class Platform extends Facade

@@ -96,6 +96,6 @@ class MenuItemBuilder extends HtmlBuilder
     }
     protected function render()
     {
-        MenuRender::DoRenderItem($this, $this->parent->getPosition());
+        MenuRender::doRenderItem($this, $this->parent->getPosition());
     }
 }

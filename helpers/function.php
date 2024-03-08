@@ -41,7 +41,7 @@ if (!function_exists('sokeioDecode')) {
 if (!function_exists('sokeioTime')) {
     function sokeioTime()
     {
-        return Platform::ExecutionTime();
+        return Platform::executionTime();
     }
 }
 
@@ -198,7 +198,7 @@ if (!function_exists('themeLayout')) {
      */
     function themeLayout()
     {
-        return Theme::Layout(apply_filters(PLATFORM_THEME_LAYOUT, ''));
+        return Theme::layout(apply_filters(PLATFORM_THEME_LAYOUT, ''));
     }
 }
 
@@ -296,7 +296,6 @@ if (!function_exists('loadViewsFrom')) {
             }
         }, $app);
     }
-
 }
 
 if (!function_exists('getAllFile')) {
@@ -318,7 +317,6 @@ if (!function_exists('getAllFile')) {
 
         return $files->all();
     }
-
 }
 
 
@@ -348,7 +346,6 @@ if (!function_exists('getAllClass')) {
             return $classList->all();
         }
     }
-
 }
 
 if (!function_exists('getAllDirectory')) {
@@ -373,7 +370,7 @@ if (!function_exists('checkPermission')) {
     {
         $flg = true;
         if ($per) {
-            $flg = Platform::CheckGate($per);
+            $flg = Platform::checkGate($per);
         }
         return apply_filters(PLATFORM_CHECK_PERMISSION,  $flg, $per);
     }
@@ -568,7 +565,7 @@ if (!function_exists('themeMenu')) {
 if (!function_exists('permalinkRoute')) {
     function permalinkRoute($key, $permalink, $route_class, $route_name)
     {
-        PermalinkManager::Route($key, $permalink, $route_class, $route_name);
+        PermalinkManager::route($key, $permalink, $route_class, $route_name);
     }
 }
 
@@ -625,5 +622,21 @@ if (!function_exists('themeIsActive')) {
     function themeIsActive($name)
     {
         return Theme::find($name)?->isActiveOrVendor();
+    }
+}
+if (!function_exists('checkPathVendor')) {
+    function checkPathVendor($path, $baseType)
+    {
+        return !Str::contains($path, platformPath($baseType), true)
+            && !Str::contains($path, '/themes/', true)
+            && !Str::contains($path, '/plugins/', true);
+    }
+}
+if (!function_exists('includeFile')) {
+    function includeFile($path)
+    {
+        $loader = new \Composer\Autoload\ClassLoader();
+        $loader->add('file', $path, true);
+        $loader->register(true);
     }
 }

@@ -24,8 +24,12 @@ class ShortcodeFactory extends IlluminateViewFactory
      * @param  \Illuminate\Events\Dispatcher                           $events
      * @param   ShortcodeManager                                       $shortcode
      */
-    public function __construct(EngineResolver $engines, ViewFinderInterface $finder, Dispatcher $events, ShortcodeManager $shortcode)
-    {
+    public function __construct(
+        EngineResolver $engines,
+        ViewFinderInterface $finder,
+        Dispatcher $events,
+        ShortcodeManager $shortcode
+    ) {
         parent::__construct($engines, $finder, $events);
         $this->shortcode = $shortcode;
     }
@@ -50,7 +54,14 @@ class ShortcodeFactory extends IlluminateViewFactory
         // the caller for rendering or performing other view manipulations on this.
         $data = array_merge($mergeData, $this->parseData($data));
 
-        return tap(new ShortcodeView($this->shortcode, $this, $this->getEngineFromPath($path), $view, $path, $data), function ($view) {
+        return tap(new ShortcodeView(
+            $this->shortcode,
+            $this,
+            $this->getEngineFromPath($path),
+            $view,
+            $path,
+            $data
+        ), function ($view) {
             $this->callCreator($view);
         });
     }

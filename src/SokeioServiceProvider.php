@@ -34,7 +34,7 @@ class SokeioServiceProvider extends ServiceProvider
     use WithServiceProvider;
     public function configurePackage(ServicePackage $package): void
     {
-        Platform::Start();
+        Platform::start();
         $this->app->singleton(\Illuminate\Contracts\Debug\ExceptionHandler::class, ThemeHandler::class);
         $this->app->register(LocaleServiceProvider::class);
 
@@ -64,9 +64,7 @@ class SokeioServiceProvider extends ServiceProvider
         Blade::directive('permission',  [PlatformBladeDirectives::class, 'permission']);
         Blade::directive('endPermission', [PlatformBladeDirectives::class, 'endPermission']);
     }
-    protected function registerProvider()
-    {
-    }
+
     protected function registerMiddlewares()
     {
         /** @var \Illuminate\Routing\Router $router */
@@ -86,16 +84,8 @@ class SokeioServiceProvider extends ServiceProvider
         Theme::loadApp();
         Plugin::loadApp();
     }
-
-    public function packageRegistered()
+    private function addTrigger()
     {
-
-        $this->registerMiddlewares();
-        Collection::macro('paginate', function ($pageSize) {
-            return ColectionPaginate::paginate($this, $pageSize);
-        });
-
-        $this->registerBladeDirectives();
         add_action(PLATFORM_HEAD_BEFORE, function () {
             echo '<meta charset="utf-8">';
             echo '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">';
@@ -184,13 +174,48 @@ class SokeioServiceProvider extends ServiceProvider
             },400)") . "\"));
             </script>";
             Assets::Render(PLATFORM_BODY_AFTER);
-            if (!sokeioIsAdmin() && setting('COOKIE_BANNER_ENABLE', 1) && Request::isMethod('get') && !request()->cookie('cookie-consent')) {
+            if (
+                !sokeioIsAdmin() &&
+                setting('COOKIE_BANNER_ENABLE', 1) &&
+                Request::isMethod('get') &&
+                !request()->cookie('cookie-consent')
+            ) {
                 echo Livewire::mount('sokeio::gdpr-modal');
             }
+        });
+
+        add_action('SEO_SITEMAP', function () {
+            Shortcode::disable();
+        });
+    }
+    private function triggerApp()
+    {
+        $this->app->booted(function () {
+            Theme::RegisterRoute();
+            RouteEx::admin(function () {
+                Platform::doRouteAdminBeforeReady();
+            });
+            RouteEx::web(function () {
+                Platform::doRouteSiteBeforeReady();
+            });
+            RouteEx::api(function () {
+                Platform::doRouteApiBeforeReady();
+            });
         });
         $this->app->booting(function () {
             app('livewire')->componentHook(SupportFormObjects::class);
         });
+    }
+    private function triggerPlatform()
+    {
+        if (adminUrl() != '') {
+            Platform::routeSiteBeforeReady(function () {
+                Route::get('/', routeFilter(
+                    PLATFORM_HOMEPAGE,
+                    'sokeio::homepage'
+                ))->name('homepage');
+            });
+        }
         add_filter(PLATFORM_HOMEPAGE, function ($prev) {
             if (function_exists('SeoHelper')) {
                 SeoHelper()->SEODataTransformer(function ($data) {
@@ -204,47 +229,24 @@ class SokeioServiceProvider extends ServiceProvider
             Assets::setDescription(setting('PLATFORM_HOMEPAGE_DESCRIPTION'));
             return $prev;
         });
-        if (adminUrl() != '') {
-            Platform::RouteSiteBeforeReady(function () {
-                Route::get('/', routeFilter(
-                    PLATFORM_HOMEPAGE,
-                    'sokeio::homepage'
-                ))->name('homepage');
-            });
-        }
-        $this->app->booted(function () {
-            Theme::RegisterRoute();
-            RouteEx::Admin(function () {
-                Platform::DoRouteAdminBeforeReady();
-            });
-            RouteEx::Web(function () {
-                Platform::DoRouteSiteBeforeReady();
-            });
-            RouteEx::Api(function () {
-                Platform::DoRouteApiBeforeReady();
-            });
-        });
-        add_action('SEO_SITEMAP', function () {
-            Shortcode::disable();
-        });
-        Platform::Ready(function () {
+
+        Platform::ready(function () {
+            MenuRender::RegisterType(MenuItemLink::class);
             if (Request::isMethod('get')) {
                 if (!Platform::checkFolderPlatform()) {
                     Platform::makeLink();
                 }
                 IconManager::getInstance()->assets();
+            }
+
+            if (sokeioIsAdmin()) {
                 Menu::Register(function () {
-                    if (!sokeioIsAdmin()) return;
                     menuAdmin()->attachMenu('system_setting_menu', function (MenuBuilder $menu) {
                         $menu->route('admin.cookies-setting', 'Cookie Banner', '', [], 'admin.cookies-setting');
                         $menu->route('admin.permalink-setting', 'Permalink', '', [], 'admin.permalink-setting');
                         $menu->route('admin.item', 'Items', '', [], 'admin.item');
                     });
                 });
-            }
-            MenuRender::RegisterType(MenuItemLink::class);
-
-            if (sokeioIsAdmin()) {
                 add_filter('SOKEIO_MENU_ITEM_MANAGER', function ($prev) {
                     return [
                         ...$prev,
@@ -259,6 +261,19 @@ class SokeioServiceProvider extends ServiceProvider
                 }, 0);
             }
         });
+    }
+    public function packageRegistered()
+    {
+
+        $this->triggerApp();
+        $this->addTrigger();
+        $this->triggerPlatform();
+        $this->registerMiddlewares();
+        Collection::macro('paginate', function ($pageSize) {
+            return ColectionPaginate::paginate($this, $pageSize);
+        });
+
+        $this->registerBladeDirectives();
 
         Route::matched(function () {
             $route_name = Route::currentRouteName();
@@ -267,19 +282,24 @@ class SokeioServiceProvider extends ServiceProvider
                     return true;
                 }, 0);
             }
-            if ($route_name && $route_name != 'sokeio.setup' && !Platform::CheckConnectDB() && request()->isMethod('get')) {
+            if (
+                $route_name &&
+                $route_name != 'sokeio.setup' &&
+                !Platform::checkConnectDB() &&
+                request()->isMethod('get')
+            ) {
                 app(Redirector::class)->to(route('sokeio.setup'))->send();
                 return;
             }
             Theme::reTheme();
-            Theme::SetupOption();
-            Platform::BootGate();
-            Platform::DoReady();
-            Platform::DoReadyAfter();
+            Theme::setupOption();
+            Platform::bootGate();
+            Platform::doReady();
+            Platform::doReadyAfter();
         });
 
         Route::fallback(function () {
-            if (!Platform::CheckConnectDB() && request()->isMethod('get')) {
+            if (!Platform::checkConnectDB() && request()->isMethod('get')) {
                 app(Redirector::class)->to(route('sokeio.setup'))->send();
             }
             return abort(404);

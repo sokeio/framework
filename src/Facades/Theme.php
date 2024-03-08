@@ -26,7 +26,7 @@ use Sokeio\Platform\ThemeManager;
  * @method static void setUsed(string $name)
  * @method static void update(string $name)
  * @method static string Layout($default='')
- * @method static mix ThemeCurrent()
+ * @method static mix themeCurrent()
  * @method static void RegisterTheme()
  * @method static void setLayout($default='')
  * @method static ThemeManager DisableHtmlAjax()
@@ -44,7 +44,7 @@ use Sokeio\Platform\ThemeManager;
  * @method static array getLocations()
  * @method static \Sokeio\Platform\DataInfo SiteDataInfo()
  * @method static \Sokeio\Platform\DataInfo AdminDataInfo()
- * @method static void SetupOption()
+ * @method static void setupOption()
  * @see \Sokeio\Facades\Theme
  */
 class Theme extends Facade

@@ -30,7 +30,7 @@ class JwtManager
         'RS512' => \OPENSSL_ALGO_SHA512,
     ];
 
-    /** @var string|resource The signature key. */
+    /** @var string|resource|\OpenSSLAsymmetricKey The signature key. */
     protected $key;
 
     /** @var array The list of supported keys with id. */
@@ -68,11 +68,16 @@ class JwtManager
         int $leeway = 0,
         string $pass = null
     ) {
-        if (!$key)
-            $key = env("GATE_JWT_KEY", "O6YyI/TK0EePdIbtiLojqg==");
-        $algo = env("GATE_JWT_ALGO", "HS256");
-        $maxAge = env("GATE_JWT_MAX_AGE", 3600);
-        
+        if (!$key) {
+            $key = env("GATE_JWT_KEY", "4344fff0EePdIbtiLojqg==");
+        }
+        if ($temp = (env("GATE_JWT_ALGO", "HS256")) != "HS256") {
+            $algo = $temp;
+        }
+        if ($temp2 = env("GATE_JWT_MAX_AGE", 3600) !== 3600) {
+            $maxAge = $temp2;
+        }
+
         $this->validateConfig($key, $algo, $maxAge, $leeway);
 
         if (\is_array($key)) {

@@ -8,7 +8,6 @@ class PlatformUpdater
 {
     const VERSION_URL = 'repos/version';
     const DOWNLOAD_URL = 'repos/download';
-    private $token = null;
     private DataInfo $item;
     private $lastVersion = null;
     public function __construct(DataInfo $item)
@@ -39,11 +38,12 @@ class PlatformUpdater
         }
         return false;
     }
-    public function getLastVersion()
+    public function getLastVersion(): string
     {
         Http::post(self::VERSION_URL, [
             'id' => $this->getId(),
             ''
         ]);
+        return '1.0.0';
     }
 }

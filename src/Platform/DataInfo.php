@@ -4,23 +4,20 @@ namespace Sokeio\Platform;
 
 use Illuminate\Support\Facades\File;
 use Sokeio\Laravel\JsonData;
-use Sokeio\Events\PlatformChanged;
 use Illuminate\Support\Str;
 use Sokeio\Facades\Platform;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Traits\Macroable;
+use Sokeio\Platform\Concerns\WithDataInfoProperty;
+use Sokeio\Platform\Concerns\WithDataInfoStatus;
 use Sokeio\RouteEx;
 
 class DataInfo extends JsonData
 {
     use Macroable;
-    const Active = 1;
-    const UnActive = 0;
+    use WithDataInfoProperty;
+    use WithDataInfoStatus;
     private $updater = null;
-    public static function checkPathVendor($path, $baseType)
-    {
-        return !Str::contains($path, platformPath($baseType), true) && !Str::contains($path, '/themes/', true) && !Str::contains($path, '/plugins/', true);;
-    }
+
     public function __construct($path, $parent)
     {
         parent::__construct([], $parent);
@@ -50,76 +47,11 @@ class DataInfo extends JsonData
         return $this[$key] == $value;
     }
 
-    public function getPath($_path = '')
-    {
-        return $this->path . ($_path ? ('/' . $_path) : '');
-    }
-    public function getPublic($_path = '')
-    {
-        return $this->public . ($_path ? ('/' . $_path) : '');
-    }
-    public function getPathPublic($path)
-    {
-        return $this->getPath('public/' . $path);
-    }
-    public function url($_path = '')
-    {
-        return url(platformPath($this->baseType, $this->getName() . ($_path ? ('/' . $_path) : '')));
-    }
-    public function getFiles()
-    {
-        return $this['files'] ?? [];
-    }
-    public function getProviders()
-    {
-        return $this['providers'] ?? [];
-    }
-    public function getId()
-    {
-        return $this['id'];
-    }
-    public function getName()
-    {
-        return $this['name'] ?? '';
-    }
-    public function getTitle()
-    {
-        return $this['title'] ?? $this['name'];
-    }
-    public function getBaseType()
-    {
-        return $this['baseType'];
-    }
-    public function getDescription()
-    {
-        return $this['description'];
-    }
-    public function getVersion()
-    {
-        return $this['version'];
-    }
-
-    protected function getKeyOption($key)
-    {
-        return trim(Str::lower("option_datainfo_" . $this['baseType'] . '_' . $this->getId() . '_' . $key . '_value'));
-    }
-    public function getOption($key, $default = null)
-    {
-        return setting($this->getKeyOption($key), $default);
-    }
-    public function setOption($key, $value)
-    {
-        return setSetting($this->getKeyOption($key), $value);
-    }
-    public function getStatusData()
-    {
-        return $this->getBase()->Check($this->getId()) || $this['active'];
-    }
-    public function CallOperation($func)
+    public function TriggerEvent($func)
     {
         $classOptionOperation = '\\' . $this->getNamespaceInfo() . '\\Option';
         if (!class_exists($classOptionOperation) && File::exists($this->getPath('src/Option.php'))) {
-            include_once $this->getPath('src/Option.php');
+            includeFile($this->getPath('src/Option.php'));
         }
         if (class_exists($classOptionOperation) && method_exists($classOptionOperation, $func)) {
             call_user_func([$classOptionOperation, $func], $this);
@@ -128,30 +60,17 @@ class DataInfo extends JsonData
     private $manifestData = null;
     public function getManifestData()
     {
-        if (File::exists($this->getPath('public/build/manifest.json')))
-            return $this->manifestData ?? ($this->manifestData = self::getJsonFromFile($this->getPath('public/build/manifest.json')));
+        if (File::exists($this->getPath('public/build/manifest.json'))) {
+            if (!$this->manifestData) {
+                $this->manifestData = self::getJsonFromFile($this->getPath('public/build/manifest.json'));
+            }
+            return $this->manifestData;
+        }
         return null;
     }
     public function getBase()
     {
-        return  PlatformStatus::Key($this->getBaseType());
-    }
-    public function setStatusData($value)
-    {
-        if ($value === self::Active) {
-            $this->CallOperation('activate');
-            $this->getBase()->Active($this->getId());
-            $this->CallOperation('activated');
-        } else {
-            $this->CallOperation('deactivate');
-            $this->getBase()->UnActive($this->getId());
-            $this->CallOperation('deactivated');
-        }
-        ob_start();
-        PlatformChanged::dispatch($this);
-        Platform::makeLink();
-        runCmd(base_path(''), 'php artisan migrate');
-        Log::info(ob_get_clean());
+        return  PlatformStatus::key($this->getBaseType());
     }
     public function getModels()
     {
@@ -175,26 +94,7 @@ class DataInfo extends JsonData
         }
         return $arr;
     }
-    public function isVendor()
-    {
-        return self::checkPathVendor($this->getPath(), $this['baseType']);
-    }
-    public function isActive()
-    {
-        return $this->status == self::Active;
-    }
-    public function isActiveOrVendor()
-    {
-        return $this->isActive() || $this->isVendor();
-    }
-    public function Active()
-    {
-        $this->status = self::Active;
-    }
-    public function UnActive()
-    {
-        $this->status = self::UnActive;
-    }
+
     public function checkComposer()
     {
         return file_exists($this->getPath('composer.json'));
@@ -207,21 +107,9 @@ class DataInfo extends JsonData
     {
         runCmd($this->getPath(), 'composer dump -o -n -q');
     }
-    public function CheckName($name)
+    public function checkName($name)
     {
         return Str::lower($this->getId())  ==  Str::lower($name) || Str::lower($this->name) == Str::lower($name);
-    }
-    public function getStudlyName()
-    {
-        return Str::studly($this->getName());
-    }
-    public function getLowerName()
-    {
-        return Str::lower($this->getName());
-    }
-    public function getNamespaceInfo()
-    {
-        return $this['namespace'];
     }
     public function delete()
     {

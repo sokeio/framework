@@ -13,12 +13,13 @@ class PermalinkManager
     {
         return self::$permalinks;
     }
-    public static function Route($key, $permalink, $route_class, $route_name)
+    public static function route($key, $permalink, $route_class, $route_name)
     {
         $permalinks = static::getPermalink($key, $permalink);
         foreach ($permalinks as $value) {
             if (isset($value['lang']) && $value['lang'] != '' && $value['lang'] != 'null') {
-                Route::get(str_replace('{lang}', $value['lang'], $value['value']), routeTheme($route_class))->name($route_name . '.' . $value['lang']);
+                $url = str_replace('{lang}', $value['lang'], $value['value']);
+                Route::get($url, routeTheme($route_class))->name($route_name . '.' . $value['lang']);
             } else {
                 Route::get($value['value'], routeTheme($route_class))->name($route_name);
             }
@@ -47,7 +48,9 @@ class PermalinkManager
                 $all = Permalink::query()->where('status', true)->get();
                 $values = [];
                 foreach ($all as $item) {
-                    if (!isset($values[$item->key])) $values[$item->key] = [];
+                    if (!isset($values[$item->key])) {
+                        $values[$item->key] = [];
+                    }
                     $values[$item->key][] = [
                         'key' => $item->key,
                         'lang' => $item->lang,

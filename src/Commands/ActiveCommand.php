@@ -43,11 +43,11 @@ class ActiveCommand extends Command
             $rs_sokeio = $sokeio->find($name);
             if ($rs_sokeio) {
                 if ($active === true) {
-                    $rs_sokeio->Active();
+                    $rs_sokeio->active();
                     $this->components->info('module ' . $name . ' is Actived');
                 } else {
-                    $rs_sokeio->UnActive();
-                    $this->components->info('module ' . $name . ' is UnActived');
+                    $rs_sokeio->block();
+                    $this->components->info('module ' . $name . ' is blockd');
                 }
             }
         }
