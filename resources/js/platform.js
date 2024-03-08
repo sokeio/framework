@@ -105,7 +105,7 @@ export class Sokeio extends SokeioManager {
       },
       {
         refComponent,
-        ___theme___admin: Livewire.find(refComponent)?.___theme___admin,
+        soIsAdmin: Livewire.find(refComponent)?.soIsAdmin,
         ___setting_data: $data,
         ___setting_callback_event: EventCallBack,
       }
