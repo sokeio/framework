@@ -4,6 +4,7 @@ namespace Sokeio\Platform\Concerns;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
+use Sokeio\WatchTime;
 
 trait WithPlatformCallback
 {
@@ -27,7 +28,9 @@ trait WithPlatformCallback
             return;
         }
         foreach ($this->readyCallbackByKey[$key] as  $callback) {
+
             if ($callback['debug']) {
+                WatchTime::start();
                 Log::debug(
                     $key . "::start",
                     ['file' => $callback['debug']['file'], 'line' => $callback['debug']['line']]
@@ -35,8 +38,9 @@ trait WithPlatformCallback
             }
             $callback['callback']();
             if ($callback['debug']) {
+                WatchTime::logTime(true, $key);
                 Log::debug(
-                    $key . "::end",
+                    $key . "::end ",
                     ['file' => $callback['debug']['file'], 'line' => $callback['debug']['line']]
                 );
             }
@@ -69,7 +73,7 @@ trait WithPlatformCallback
     public function ready($callback = null)
     {
         // $tracking = debug_backtrace()[1];
-        // ['file' => $tracking['file'], 'line' => $tracking['line']]
+//, ['file' => $tracking['file'], 'line' => $tracking['line']
         $this->readyByKey('platform', $callback);
     }
     public function doReady()

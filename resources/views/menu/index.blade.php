@@ -78,7 +78,7 @@
                 }'
                                 wire:sortable-group.item-group="0" class="menu-editor-manager">
                                 @includeIf('sokeio::menu.menu-item', [
-                                    'menu_lists' => $menu_lists,
+                                    'menuLists' => $menuLists,
                                     'parent_id' => 0,
                                     'level' => 0,
                                 ])
