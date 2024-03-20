@@ -3,17 +3,14 @@
 use Illuminate\Routing\RouteAction;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Js;
 use Livewire\Livewire;
-use Ramsey\Uuid\Guid\Guid;
 use Symfony\Component\Finder\SplFileInfo;
 use Sokeio\Breadcrumb;
-use Sokeio\Components\UI;
 use Sokeio\Facades\Menu;
 use Sokeio\Facades\Module;
 use Sokeio\Facades\Platform;
@@ -589,6 +586,6 @@ if (!function_exists('includeFile')) {
             return;
         }
         //NOSONAR
-        include_once $path;
+        include_once($path);
     }
 }
