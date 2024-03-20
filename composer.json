@@ -1,0 +1,54 @@
+{
+  "name": "sokeio/framework",
+  "description": "a Laravel-based web application development package that provides support for developing modules, plugins, themes, livewire, and shortcodes.",
+  "license": "MIT",
+  "keywords": [],
+  "homepage": "https://github.com/sokeio/framework",
+  "authors": [
+    {
+      "name": "Nguyen Van Hau",
+      "email": "nguyenvanhau.soft@gmail.com",
+      "role": "Developer",
+      "homepage": "https://github.com/devhau"
+    }
+  ],
+  "require": {
+    "symfony/filesystem": "^6.3.1",
+    "staudenmeir/eloquent-eager-limit": "^1.8.3",
+    "livewire/livewire": "^3.4.8",
+    "unisharp/laravel-filemanager": "^2.6.4"
+  },
+  "require-dev": {},
+  "autoload": {
+    "files": [
+      "helpers/constraint.php",
+      "helpers/function.php"
+    ],
+    "psr-4": {
+      "Sokeio\\": "src/",
+      "Sokeio\\Seeders\\": "database/seeders/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {}
+  },
+  "scripts": {
+    "analyse": "vendor/bin/phpstan analyse",
+    "test": "vendor/bin/pest",
+    "test-coverage": "vendor/bin/pest --coverage",
+    "format": "vendor/bin/pint"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Sokeio\\SokeioServiceProvider"
+      ],
+      "aliases": {}
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}

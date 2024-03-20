@@ -1,0 +1,23 @@
+{
+    "name": "sokeio/theme-tabler",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nguyen Van Hau",
+            "email": "nguyenvanhaudev@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": ["SokeioTheme\\Tabler\\TablerServiceProvider"],
+            "aliases": {}
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "SokeioTheme\\Tabler\\": "src",
+            "SokeioTheme\\Tabler\\Database\\Factories\\": "database/factories",
+            "SokeioTheme\\Tabler\\Database\\Seeders\\": "database/seeders"
+        }
+    }
+}

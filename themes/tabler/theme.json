@@ -1,0 +1,13 @@
+{
+  "id": "theme-tabler-27882b66-90e1-4747-bf04-908f721460b95390441",
+  "name": "tabler",
+  "alias": "tabler",
+  "hide": true,
+  "description": "",
+  "keywords": [],
+  "priority": 200,
+  "aliases": {},
+  "namespace": "SokeioTheme\\Tabler",
+  "layout": "default",
+  "requires": []
+}

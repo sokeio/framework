@@ -1,0 +1,10 @@
+<?php
+/*******************************************
+* $BASE_TYPE$:$STUDLY_NAME$
+* 
+********************************************/
+if(!function_exists("$BASE_TYPE$_$STUDLY_NAME$_Hello")){
+    function $BASE_TYPE$_$STUDLY_NAME$_Hello(){
+        echo "Wellcome to $BASE_TYPE$:$STUDLY_NAME$";
+    }
+}
