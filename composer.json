@@ -13,7 +13,7 @@
     }
   ],
   "require": {
-    "symfony/filesystem": "^6.3.1",
+    "sokeio/laravel": "dev-main",
     "staudenmeir/eloquent-eager-limit": "^1.8.3",
     "livewire/livewire": "^3.4.8",
     "unisharp/laravel-filemanager": "^2.6.4"
