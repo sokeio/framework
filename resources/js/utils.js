@@ -9,7 +9,7 @@ export function onEventListenerFromDom(
     let targetCurrent = ev.target;
     if (targetCurrent.matches(selector)) {
       callback && callback(ev);
-    } else if (targetCurrent = ev.target.closest(selector)) {
+    } else if ((targetCurrent = ev.target.closest(selector))) {
       // ev.target = targetCurrent;
       callback && callback({ ...ev, target: targetCurrent });
     }
