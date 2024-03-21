@@ -63,7 +63,6 @@ export class LiveWireTinymceModule extends SokeioPlugin {
                     }
                   });
                   html = elFix.innerHTML;
-                  console.log({ html });
                   el.value = html;
                   self
                     .getManager()
