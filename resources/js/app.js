@@ -1,4 +1,5 @@
 import { Sokeio } from "./platform";
+import { getShortcodeObjectFromText, onEventListenerFromDom } from "./utils";
 import { ComponentModule } from "./modules/components";
 import { ActionModule } from "./modules/action";
 import { LiveWireModule } from "./modules/livewire";
@@ -10,12 +11,12 @@ import { LiveWireTinymceModule } from "./modules/livewire-tinymce";
 import { LiveWireGetValueParentModule } from "./modules/livewire-get-value-parent";
 import { LiveWireChartModule } from "./modules/livewire-chart";
 import { FileManagerModule } from "./modules/filemanager";
-import { getShortcodeObjectFromText, onEventListenerFromDom } from "./utils";
 import { LiveWireCountUpModule } from "./modules/livewire-countup";
 import { LiveWireTagifyModule } from "./modules/livewire-tagify";
 import { LiveWireFlatpickrModule } from "./modules/livewire-flatpickr";
 import { FormSettingModule } from "./modules/form-setting";
 import { LiveWireCarouselModule } from "./modules/livewire-carousel";
+import { LiveWireMasonryModule } from "./modules/livewire-masonry";
 let SokeioManager = new Sokeio();
 window.addEventListener("sokeio::register", function () {
   SokeioManager.registerPlugin(ConfirmModule);
@@ -34,6 +35,7 @@ window.addEventListener("sokeio::register", function () {
   SokeioManager.registerPlugin(LiveWireTinymceModule);
   SokeioManager.registerPlugin(LiveWireCarouselModule);
   SokeioManager.registerPlugin(FormSettingModule);
+  SokeioManager.registerPlugin(LiveWireMasonryModule);
 });
 window.SokeioManager = SokeioManager;
 window.showToast = function (
@@ -57,7 +59,7 @@ window.showFileManager = function (callback, type = "file") {
 window.openShortcodeSetting = function (
   $editorContainer,
   $shortcode,
-  $attrs = [],
+  $attrs,
   $child,
   callback = undefined
 ) {

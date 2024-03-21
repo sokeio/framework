@@ -9,19 +9,23 @@ export function onEventListenerFromDom(
     let targetCurrent = ev.target;
     if (targetCurrent.matches(selector)) {
       callback && callback(ev);
-    } else if ((targetCurrent = ev.target.closest(selector))) {
+    } else if (targetCurrent = ev.target.closest(selector)) {
       // ev.target = targetCurrent;
       callback && callback({ ...ev, target: targetCurrent });
     }
   });
 }
+window.shortcodePattern =
+  /\[([\w-:]+)((?:\s+\w+\s*=\s*"[^"]*")*)(\](.*?)\[\/\1\]|\s*\/\])/s;
+export function checkShortcode(shortcode) {
+  if (!shortcode) return false;
+  return window.shortcodePattern.test(shortcode);
+}
 export function getShortcodeObjectFromText(shortcode) {
   if (!shortcode) return null;
-  const pattern =
-    /\[([\w-:]+)((?:\s+\w+\s*=\s*"[^"]*")*)(\](.*?)\[\/\1\]|\s*\/\])/s;
 
   // Extract the root shortcode match
-  const match = shortcode.match(pattern);
+  const match = shortcode.match(window.shortcodePattern);
   console.log(match);
   if (match) {
     const shortcodeName = match[1];

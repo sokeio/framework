@@ -1,4 +1,5 @@
 import { SokeioPlugin } from "../core/plugin";
+import { checkShortcode } from "../utils";
 
 export class LiveWireTinymceModule extends SokeioPlugin {
   getKey() {
@@ -21,7 +22,7 @@ export class LiveWireTinymceModule extends SokeioPlugin {
             )();
           }
           cleanup(() => {
-            if (el.livewire____tinymce&&el.livewire____tinymce.remove) {
+            if (el.livewire____tinymce && el.livewire____tinymce.remove) {
               el.livewire____tinymce.remove();
               el.livewire____tinymce = null;
             }
@@ -41,14 +42,29 @@ export class LiveWireTinymceModule extends SokeioPlugin {
                   editor.save();
                 });
                 editor.on("change", function (e) {
+                  let html = editor.getContent();
                   if (window.removeHighlightShortcodes) {
-                    el.value = window.removeHighlightShortcodes(
-                      editor.getContent()
-                    );
-                  } else {
-                    el.value = editor.getContent();
+                    html = window.removeHighlightShortcodes(html);
                   }
-
+                  let elFix = document.createElement("div");
+                  elFix.innerHTML = html;
+                  elFix.querySelectorAll("p").forEach((elP) => {
+                    if (checkShortcode(elP.innerText)) {
+                      let elFixDiv = document.createElement("div");
+                      elFixDiv.innerHTML = elP.innerText;
+                      elP.classList.forEach((cls) => {
+                        elFixDiv.classList.add(cls);
+                      });
+                      elP.getAttributeNames().forEach((attr) => {
+                        elFixDiv.setAttribute(attr, elP.getAttribute(attr));
+                      })
+                      elP.parentNode.insertBefore(elFixDiv, elP);
+                      elP.parentNode.removeChild(elP);
+                    }
+                  });
+                  html = elFix.innerHTML;
+                  console.log({ html });
+                  el.value = html;
                   self
                     .getManager()
                     .dataSet(component.$wire, modelKey, el.value);
