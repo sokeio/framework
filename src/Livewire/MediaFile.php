@@ -13,14 +13,36 @@ class MediaFile extends Component
     {
         return Storage::disk($this->local);
     }
+    public function createFolder($name)
+    {
+        $this->skipRender();
+        $this->getStorage()->makeDirectory($this->directory . $name);
+        return $this->getDiskAll();
+    }
+    public function selectFolder($name)
+    {
+        $this->skipRender();
+        $this->directory = $this->directory . $name . '/';
+        return $this->getDiskAll();
+    }
     public function getDiskAll()
     {
         $this->skipRender();
         $disk = $this->getStorage();
         return [
-            'directories' => $disk->directories($this->directory),
+            'folders' => $disk->directories($this->directory),
             'files' => $disk->files($this->directory)
         ];
+    }
+    public function deleteFolder($name){
+        $this->skipRender();
+        $this->getStorage()->deleteDirectory($this->directory . $name);
+        return $this->getDiskAll();
+    }
+    public function deleteFile($name){
+        $this->skipRender();
+        $this->getStorage()->delete($this->directory . $name);
+        return $this->getDiskAll();
     }
 
     public function render()

@@ -1,18 +1,18 @@
 <div class="d-flex align-items-center g-2 bg-gray p-1">
     <div class="d-flex flex-grow-1 align-items-center">
-        <button class="btn btn-secondary rounded-1 m-1" type="button" @click.stop="showModalUpload()">
+        <button class="btn btn-secondary rounded-1 m-1" type="button" @click.stop="isShowUpload = true">
             <i class="bi bi-upload"></i>
             <span class="ms-1"> @lang('Upload')</span>
         </button>
-        <button class="btn btn-secondary rounded-1 m-1" type="button">
+        <button class="btn btn-secondary rounded-1 m-1" @click.stop="isShowFolderCreate=true" type="button">
             <i class="bi bi-download "></i>
             <span class="ms-1">@lang('Download')</span>
         </button>
-        <button class="btn btn-secondary rounded-1 m-1" type="button">
+        <button class="btn btn-secondary rounded-1 m-1" @click.stop="isShowFolderCreate=true" type="button">
             <i class="bi bi-folder"></i>
             <span class="ms-1">@lang('Create Folder')</span>
         </button>
-        <button class="btn btn-secondary rounded-1 m-1" type="button">
+        <button class="btn btn-secondary rounded-1 m-1" type="button" @click="loadAll()">
             <i class="bi bi-arrow-clockwise"></i>
             <span class="ms-1">@lang('Refresh')</span>
         </button>
