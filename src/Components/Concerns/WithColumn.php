@@ -51,4 +51,11 @@ trait WithColumn
         }
         return data_get($row, $this->getName());
     }
+    public function setLink()
+    {
+        $this->fieldValue(function ($row) {
+            echo '<a href="' . $row->getSeoCanonicalUrl() . '">' . data_get($row, $this->getName()) . '</a>';
+        });
+        return $this;
+    }
 }
