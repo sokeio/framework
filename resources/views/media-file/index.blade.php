@@ -9,8 +9,8 @@
             <div class="col">
                 <div class="overflow-auto">
                     <div class="d-flex flex-wrap" style="min-width: 650px; max-height: 500px;">
-                        <template x-if="$wire.directory!='/'">
-                            <div @dblclick.stop="backFolder();" class="card text-center m-1 item-hover rounded-1"
+                        <template x-if="$wire.directory!='/'&&$wire.directory!=''">
+                            <div @click.stop="backFolder();" class="card text-center m-1 item-hover rounded-1"
                                 style="width: calc(20% - .5rem);">
                                 <div class="card-body">
                                     <i class="bi bi-three-dots" style="font-size: 64px"></i>

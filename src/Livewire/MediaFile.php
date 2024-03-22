@@ -25,6 +25,12 @@ class MediaFile extends Component
         $this->directory = $this->directory . $name . '/';
         return $this->getDiskAll();
     }
+    public function getBackFolder()
+    {
+        $this->skipRender();
+        $this->directory = substr($this->directory, 0, strrpos($this->directory, '/'));
+        return $this->getDiskAll();
+    }
     public function getDiskAll()
     {
         $this->skipRender();
@@ -34,12 +40,14 @@ class MediaFile extends Component
             'files' => $disk->files($this->directory)
         ];
     }
-    public function deleteFolder($name){
+    public function deleteFolder($name)
+    {
         $this->skipRender();
         $this->getStorage()->deleteDirectory($this->directory . $name);
         return $this->getDiskAll();
     }
-    public function deleteFile($name){
+    public function deleteFile($name)
+    {
         $this->skipRender();
         $this->getStorage()->delete($this->directory . $name);
         return $this->getDiskAll();

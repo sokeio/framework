@@ -11,8 +11,8 @@ document.addEventListener("alpine:init", () => {
       let rs = await this.$wire.getDiskAll();
       this.setDataMedia(rs);
     },
-    backFolder(){
-
+    async backFolder(){
+        this.setDataMedia( await this.$wire.getBackFolder());
     },
 
     chooseFile($file) {
