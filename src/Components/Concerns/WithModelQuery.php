@@ -19,6 +19,9 @@ trait WithModelQuery
      */
     protected function getQuery()
     {
+        if($this->getModel() === null) {
+            return null;
+        }
         return ($this->getModel())::query();
     }
 }
