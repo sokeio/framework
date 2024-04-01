@@ -1,0 +1,41 @@
+.file-manager {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    background-color: #f5f5f5;
+    z-index: 9999999999 !important;
+
+    .toolbar-wrapper {
+        width: 100%;
+        min-height: 45px;
+        background-color: cadetblue;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        .toolbar-button {
+            flex: auto;
+
+            .btn {
+                margin-left: 5px;
+                border-radius: 2px;
+            }
+        }
+
+        .toolbar-search {
+            flex: none;
+            min-width: 120px;
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+
+            .btn {
+                margin-left: 5px;
+                border-radius: 2px;
+            }
+        }
+    }
+}

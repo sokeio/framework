@@ -68,9 +68,9 @@ Route::group(['prefix' => '__sokeio__'], function () {
         return 'hello, now is ' . now();
     })->name('__sokeio__');
 });
-Route::group(['middleware' => ['web', 'auth']], function () {
-    \UniSharp\LaravelFilemanager\Lfm::routes();
-});
+// Route::group(['middleware' => ['web', 'auth']], function () {
+//     \UniSharp\LaravelFilemanager\Lfm::routes();
+// });
 Route::get('routes', function () {
     $routeCollection = Route::getRoutes();
 

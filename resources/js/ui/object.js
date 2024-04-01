@@ -1,9 +1,13 @@
+import { MakeObjectProxy } from "./proxy";
+
 class ObjectJS {
   constructor($data) {
     this._data = $data ?? {};
     this._changeEventHandlers = {};
   }
-
+  has(property) {
+    return this._data.hasOwnProperty(property);
+  }
   get(property) {
     return this._data[property];
   }
@@ -37,7 +41,7 @@ class ObjectJS {
   doTrigger(property, oldValue, newValue) {
     if (this._changeEventHandlers[property]) {
       this._changeEventHandlers[property].forEach((handler) => {
-        handler(property, oldValue, newValue);
+        handler(oldValue, newValue, property);
       });
     }
   }
@@ -46,18 +50,5 @@ class ObjectJS {
   }
 }
 export function MakeObject($data) {
-  return new Proxy(new ObjectJS($data ?? {}), {
-    get: (target, property) => {
-      if (typeof property === "string") {
-        return this.get(property);
-      }
-    },
-    set: (target, property, value) => {
-      if (typeof property === "string") {
-        this.set(property, value);
-        return true;
-      }
-      return false;
-    },
-  });
+  return MakeObjectProxy(new ObjectJS($data ?? {}));
 }
