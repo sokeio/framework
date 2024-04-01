@@ -31,6 +31,9 @@ class SokeioPlatform
         }
         $response = $next($request);
         $response = applyFilters(PLATFORM_MIDDLEWARE_AFTER, $response, $request);
+        if (isset($response->headers)) {
+            $response->headers->set('X-Powered-Framework', 'Sokeio Framework');
+        }
         return $response;
     }
 }
