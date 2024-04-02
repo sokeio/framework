@@ -4,12 +4,11 @@ namespace Sokeio\Updater;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
-use Ramsey\Uuid\Guid\Fields;
 use ZipArchive;
 
 class UpdaterManager
 {
-    private $domain = 'http://sokeio.local/api/marketplace/'; // 'https://api.sokeio.com';
+    private $domain = 'https://sokeio.com/api/marketplace/';
     private $versionApi = 'v1';
     private $productId = 'sokeio';
     private $licenseKey = 'jx26dpclu8d7vfhyjgsnlhviezcan612';
@@ -25,6 +24,7 @@ class UpdaterManager
     }
     public function __construct()
     {
+        $this->domain = env('SOKEIO_PLATFORM_API', 'https://sokeio.com/api/marketplace/');
         $this->initClient();
     }
     public function sokeioInstall()
