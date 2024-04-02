@@ -12,17 +12,17 @@ export class FileManager extends UI {
     this.targetQuery(".toolbar-wrapper .toolbar-button", [
       ButtonUI.make("Add Folder 1")
         .on("click", () => {
-          console.log($this.$data.demo);
-          $this.$data.button1.text("Add Folder " + $this.$data.demo);
+          console.log($this.demo);
+          $this.button1.text("Add Folder " + $this.demo);
         })
         .ready(($button) => {
-          $this.$data.button1 = $button;
+          $this.button1 = $button;
         }),
       ButtonUI.make("Add Folder +1").on("click", () => {
-        $this.$data.demo = $this.$data.demo + 1;
+        $this.demo = $this.demo + 1;
       }),
       ButtonUI.make("Add Folder +2").on("click", () => {
-        $this.$data.demo = $this.$data.demo + 1;
+        $this.demo = $this.demo + 1;
       }),
       ButtonUI.make("Add Folder").on("click", () => {
         alert("Add Folder");
@@ -42,12 +42,12 @@ export class FileManager extends UI {
 
     this.ready(($this) => {
       $this.$watch("demo", (prevValue, nextValue) => {
-        $this.$data.button1.text("Text " + $this.$data.demo);
+        $this.button1.text("Text " + $this.$data.demo);
         console.log({ demo: "watch", prevValue, nextValue });
       });
       $this.queryOn(".search-input", "keyup", (e) => {
         console.log(e.target.value);
-        $this.$data.demo = e.target.value;
+        $this.demo = e.target.value;
       });
     });
   }
@@ -64,5 +64,5 @@ export class FileManager extends UI {
   </div>`;
   }
 }
-window.FileManager2 = new FileManager(null);
-// window.FileManager2.render();
+window.FileManager2 = FileManager.make();
+window.FileManager2.render();

@@ -8,9 +8,8 @@ export class UI {
   $selector = null;
   $renderedCallback = [];
   $data = {};
-  $self = this;
   $rendered = false;
-
+  $selfProxy = null;
   get(property) {
     if (this.$data.has(property)) return this.$data.get(property);
     return this[property];
@@ -61,7 +60,7 @@ export class UI {
   }
   constructor() {
     this.makeEl();
-    this.init && this.init();
+    this.init && this.init.bind(this.getProxy())();
   }
   template() {
     return "";
@@ -95,9 +94,9 @@ export class UI {
     }
   }
   doReady() {
-    let $this = this;
+    let self = this.getProxy();
     this.$renderedCallback.forEach((callback) => {
-      callback.bind($this)($this);
+      callback.bind(self)(self);
     });
   }
 
@@ -111,7 +110,9 @@ export class UI {
     return this;
   }
   render() {
-    if (this.$rendered) return this;
+    let self = this;
+    if (this.$rendered) return self;
+
     this.beforeRender && this.beforeRender();
 
     this.html(this.template());
@@ -122,11 +123,13 @@ export class UI {
     return this;
   }
   reRender() {
+    this.$rendered = false;
     this.html("");
     this.render();
     return this;
   }
   show() {
+    this.render();
     this.$el.style.display = "block";
     return this;
   }
@@ -264,7 +267,10 @@ export class UI {
     this.$el.innerHTML = html;
     return this;
   }
+  getProxy() {
+    return this.$selfProxy ?? (this.$selfProxy = MakeObjectProxy(this));
+  }
   static make() {
-    return MakeObjectProxy(new this());
+    return new this().getProxy();
   }
 }
