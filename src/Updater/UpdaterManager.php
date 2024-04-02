@@ -37,6 +37,9 @@ class UpdaterManager
         if (isset($sokeioInfo['modules']) && is_array($sokeioInfo['modules'])) {
             $this->installLastVersion($sokeioInfo['modules'], 'module');
         }
+        if (isset($sokeioInfo['themes']) && is_array($sokeioInfo['themes'])) {
+            $this->installLastVersion($sokeioInfo['themes'], 'theme');
+        }
     }
     public function getLastVersion($arrs = [], $type = 'module')
     {
