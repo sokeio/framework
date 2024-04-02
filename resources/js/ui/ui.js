@@ -96,7 +96,7 @@ export class UI {
   doReady() {
     let self = this.getProxy();
     this.$renderedCallback.forEach((callback) => {
-      callback.bind(self)(self);
+      callback.bind(self)();
     });
   }
 

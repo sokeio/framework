@@ -40,7 +40,7 @@ export class FileManager extends UI {
       }),
     ]);
 
-    this.ready(($this) => {
+    this.ready(() => {
       $this.$watch("demo", (prevValue, nextValue) => {
         $this.button1.text("Text " + $this.$data.demo);
         console.log({ demo: "watch", prevValue, nextValue });
