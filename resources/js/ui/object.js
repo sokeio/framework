@@ -15,11 +15,16 @@ class ObjectJS {
   set(property, value) {
     const oldValue = this._data[property];
     this._data[property] = value;
-
-    this.doTrigger(property, oldValue, value);
+    let self = this;
+    setTimeout(() => {
+      self.doTrigger(property, oldValue, value);
+    });
   }
-
-  onTrigger(property, handler) {
+  watch(property, callback) {
+    this.onChange(property, callback);
+    return this;
+  }
+  onChange(property, handler) {
     if (!this._changeEventHandlers[property]) {
       this._changeEventHandlers[property] = [];
     }

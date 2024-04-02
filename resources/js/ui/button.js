@@ -1,6 +1,7 @@
+import { MakeObject } from "./object";
 import { UI } from "./ui";
 
-export class Button extends UI {
+export class ButtonUI extends UI {
   constructor($parent) {
     super($parent, document.createElement("button"));
     this.$el.type = "button";
@@ -16,7 +17,7 @@ export class Button extends UI {
     this.html(this.label);
     return this;
   }
-  static Make($text) {
-    return new Button(null).setLabel($text);
+  static make($text) {
+    return super.make().setLabel($text);
   }
 }

@@ -1,4 +1,5 @@
 import { MakeObject } from "./object";
+import { MakeObjectProxy } from "./proxy";
 
 export class UI {
   $el = null;
@@ -8,6 +9,7 @@ export class UI {
   $renderedCallback = [];
   $data = {};
   $self = this;
+  $rendered = false;
 
   get(property) {
     if (this.$data.has(property)) return this.$data.get(property);
@@ -26,7 +28,7 @@ export class UI {
     return this;
   }
   $watch(property, callback) {
-    this.$data.onTrigger(property, callback);
+    this.$data.watch(property, callback);
     return this;
   }
   ready(callback) {
@@ -52,10 +54,13 @@ export class UI {
     }
     return this;
   }
-  constructor($parent = null, el = document.createElement("div")) {
-    this.$parent = $parent;
+  makeEl() {
+    let el = document.createElement("div");
+    el.___ui = this;
     this.$el = el;
-    this.$el.___ui = this;
+  }
+  constructor() {
+    this.makeEl();
     this.init && this.init();
   }
   template() {
@@ -92,7 +97,7 @@ export class UI {
   doReady() {
     let $this = this;
     this.$renderedCallback.forEach((callback) => {
-      callback($this);
+      callback.bind($this)($this);
     });
   }
 
@@ -106,11 +111,14 @@ export class UI {
     return this;
   }
   render() {
+    if (this.$rendered) return this;
     this.beforeRender && this.beforeRender();
+
     this.html(this.template());
     this.renderTarget();
     this.afterRender && this.afterRender();
     this.doReady();
+    this.$rendered = true;
     return this;
   }
   reRender() {
@@ -255,5 +263,8 @@ export class UI {
   html(html) {
     this.$el.innerHTML = html;
     return this;
+  }
+  static make() {
+    return MakeObjectProxy(new this());
   }
 }
