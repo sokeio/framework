@@ -35,9 +35,9 @@ export class FileManager extends UI {
         .on("keypress", (e) => {
           console.log(e.target.value);
         }),
-        Button.Make("Search").on("click", () => {
-          alert("Search");
-        })
+      Button.Make("Search").on("click", () => {
+        alert("Search");
+      }),
     ]);
 
     this.ready(($this) => {
@@ -50,7 +50,7 @@ export class FileManager extends UI {
       });
     });
   }
-  getHtml() {
+  template() {
     return `<div class="file-manager" tabindex="-1" style="display: block;">
     <div class="toolbar-wrapper">
       <div class="toolbar-button">

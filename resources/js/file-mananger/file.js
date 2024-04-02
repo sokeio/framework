@@ -1,4 +1,3 @@
 import { UI } from "../ui";
 
-export class File extends UI {
-}
+export class File extends UI {}

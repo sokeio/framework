@@ -58,7 +58,7 @@ export class UI {
     this.$el.___ui = this;
     this.init && this.init();
   }
-  getHtml() {
+  template() {
     return "";
   }
   query(selector) {
@@ -107,7 +107,7 @@ export class UI {
   }
   render() {
     this.beforeRender && this.beforeRender();
-    this.html(this.getHtml());
+    this.html(this.template());
     this.renderTarget();
     this.afterRender && this.afterRender();
     this.doReady();
