@@ -1,6 +1,7 @@
 <?php
 
 use Sokeio\Commands\ActiveCommand;
+use Sokeio\Commands\InstallCommand;
 use Sokeio\Commands\MakeModuleCommand;
 use Sokeio\Commands\MakePluginCommand;
 use Sokeio\Commands\MakeThemeCommand;
@@ -167,6 +168,7 @@ return [
         ]
     ],
     'commands' => [
+        InstallCommand::class,
         MakeThemeCommand::class,
         MakeModuleCommand::class,
         MakePluginCommand::class,

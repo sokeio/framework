@@ -72,6 +72,12 @@ if (!function_exists('sokeioModeDev')) {
 }
 
 if (!function_exists('platformBy')) {
+    /**
+     * A description of the entire PHP function.
+     *
+     * @param datatype $type description
+     * @return \Sokeio\Concerns\WithSystemExtend | mixed
+     */
     function platformBy($type)
     {
         if ($type == 'module') {
