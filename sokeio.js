@@ -6,31 +6,21 @@ window.addScriptToWindow = function (
   async = true,
   defer = true
 ) {
-  try {
+  setTimeout(() => {
     let script = document.createElement("script");
     const prior = beforeEl || document.getElementsByTagName("script")[0];
 
     script.async = async;
-    script.defer = defer;
 
-    function onloadHander(_, isAbort) {
-      if (
-        isAbort ||
-        !script.readyState ||
-        /loaded|complete/.test(script.readyState)
-      ) {
-        script.onload = null;
-        script.onreadystatechange = null;
-        script = undefined;
-        if (resolve) resolve();
-      }
-    }
-
-    script.onload = onloadHander;
-    script.onreadystatechange = onloadHander;
+    let onResolve = function () {
+      resolve && resolve();
+    };
+    script.onload = onResolve;
+    script.onreadystatechange = onResolve;
+    script.onerror = onResolve;
     script.src = source;
     prior.parentNode.insertBefore(script, prior);
-  } catch (ex) {}
+  }, 0);
 };
 window.addStyleToWindow = function (
   source,
@@ -40,31 +30,21 @@ window.addStyleToWindow = function (
   async = true,
   defer = true
 ) {
-  try {
+  setTimeout(() => {
     let script = document.createElement("link");
     const prior = beforeEl || document.getElementsByTagName("script")[0];
 
     script.async = async;
-    script.defer = defer;
-
-    function onloadHander(_, isAbort) {
-      if (
-        isAbort ||
-        !script.readyState ||
-        /loaded|complete/.test(script.readyState)
-      ) {
-        script.onload = null;
-        script.onreadystatechange = null;
-        script = undefined;
-        if (resolve) resolve();
-      }
-    }
+    let onResolve = function () {
+      resolve && resolve();
+    };
     script.rel = "stylesheet";
-    script.onload = onloadHander;
-    script.onreadystatechange = onloadHander;
+    script.onload = onResolve;
+    script.onreadystatechange = onResolve;
+    script.onerror = onResolve;
     script.href = source;
     prior.parentNode.insertBefore(script, prior);
-  } catch (ex) {}
+  }, 0);
 };
 
 window.SokeioLoadStyle = function (
