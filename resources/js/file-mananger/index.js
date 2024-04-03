@@ -1,68 +1,38 @@
-import { UI, ButtonUI, InputUI } from "../ui";
+import { Application } from "../sokeio/application";
+import { Demo } from "./demo";
 
-export class FileManager extends UI {
+export class FileManager extends Application {
+  state = {
+    demo: 123,
+  };
+  cast = {
+    demo: (v) => parseInt(v),
+  };
   init() {
-    let $this = this;
-    this.setState({
-      folders: [],
-      files: [],
-      demo: 1,
-      button1: null,
+    this.watch("demo", () => {
+      console.log(this.state.demo);
+      this.setText("#fm", this.state.demo);
     });
-    this.targetQuery(".toolbar-wrapper .toolbar-button", [
-      ButtonUI.make("Add Folder 1")
-        .on("click", () => {
-          console.log($this.demo);
-          $this.button1.text("Add Folder " + $this.demo);
-        })
-        .ready(($button) => {
-          $this.button1 = $button;
-        }),
-      ButtonUI.make("Add Folder +1").on("click", () => {
-        $this.demo = $this.demo + 1;
-      }),
-      ButtonUI.make("Add Folder +2").on("click", () => {
-        $this.demo = $this.demo + 1;
-      }),
-      ButtonUI.make("Add Folder").on("click", () => {
-        alert("Add Folder");
-      }),
-    ]);
-    this.targetQuery(".toolbar-wrapper .toolbar-search", [
-      InputUI.make()
-        .attr("placeholder", "Search")
-        .addClass("search-input")
-        .on("keypress", (e) => {
-          console.log(e.target.value);
-        }),
-      ButtonUI.make("Search").on("click", () => {
-        alert("Search");
-      }),
-    ]);
-
-    this.ready(() => {
-      $this.$watch("demo", (prevValue, nextValue) => {
-        $this.button1.text("Text " + $this.$data.demo);
-        console.log({ demo: "watch", prevValue, nextValue });
-      });
-      $this.queryOn(".search-input", "keyup", (e) => {
-        console.log(e.target.value);
-        $this.demo = e.target.value;
-      });
+    this.on("#open-file-manager", "click", () => {
+      this.demo = this.demo + 1;
     });
+    this.registerComponent("demo:abc", Demo);
   }
-  template() {
-    return `<div class="file-manager" tabindex="-1" style="display: block;">
-    <div class="toolbar-wrapper">
-      <div class="toolbar-button">
-      </div>
-      <div class="toolbar-search">
+  render() {
+    return `
+    <div class="file-manager">
+      <div class="container">
+        [demo:abc abc="12344" act="12222"/]
+        <h1>File Manager</h1>
+        [demo:abc /]
+        <input s-model="demo" type="text">
+        <div id="fm"></div>
+        [demo:abc /]
+        <button class="btn btn-primary" id="open-file-manager">Open</button>
       </div>
     </div>
-    <div class="fm-wrapper">
-    </div>
-  </div>`;
+    `;
   }
 }
 window.FileManager2 = FileManager.make();
-window.FileManager2.render();
+window.FileManager2.run();

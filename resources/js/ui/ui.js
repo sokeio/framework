@@ -9,18 +9,20 @@ export class UI {
   $renderedCallback = [];
   $data = {};
   $rendered = false;
-  $selfProxy = null;
   get(property) {
-    if (this.$data.has(property)) return this.$data.get(property);
+    if (this.$data.hasOwnProperty(property)) return this.$data.get(property);
     return this[property];
   }
 
   set(property, value) {
-    if (this.$data.has(property)) {
+    if (this.$data.hasOwnProperty(property)) {
       this.$data.set(property, value);
     } else {
       this[property] = value;
     }
+  }
+  has(property) {
+    return this.$data.hasOwnProperty(property) || this.hasOwnProperty(property);
   }
   setState(value) {
     this.$data = MakeObject(value);
@@ -53,14 +55,14 @@ export class UI {
     }
     return this;
   }
+  getMakeEl() {
+    return document.createElement("div");
+  }
   makeEl() {
-    let el = document.createElement("div");
+    let el = this.getMakeEl();
     el.___ui = this;
     this.$el = el;
-  }
-  constructor() {
-    this.makeEl();
-    this.init && this.init.bind(this.getProxy())();
+    return this;
   }
   template() {
     return "";
@@ -75,6 +77,7 @@ export class UI {
     this.query(selector).innerText = text;
   }
   renderTarget() {
+    console.log({ renderTarget: this.$target });
     let self = this;
     Object.keys(this.$target).forEach((key) => {
       self.$target[key].forEach((ui) => {
@@ -94,9 +97,9 @@ export class UI {
     }
   }
   doReady() {
-    let self = this.getProxy();
+    let self = this;
     this.$renderedCallback.forEach((callback) => {
-      callback.bind(self)();
+      callback.bind(self)(self);
     });
   }
 
@@ -267,10 +270,12 @@ export class UI {
     this.$el.innerHTML = html;
     return this;
   }
-  getProxy() {
-    return this.$selfProxy ?? (this.$selfProxy = MakeObjectProxy(this));
-  }
+
   static make() {
-    return new this().getProxy();
+    let inst = MakeObjectProxy(new this());
+    inst = inst.makeEl.bind(inst)();
+    inst.init();
+    console.log(inst);
+    return inst;
   }
 }

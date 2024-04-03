@@ -1,12 +1,13 @@
-import { MakeObject } from "./object";
 import { UI } from "./ui";
 
 export class InputUI extends UI {
-  makeEl() {
-    let el = document.createElement("input");
-    el.___ui = this;
-    this.$el = el;
+  getMakeEl() {
+    return document.createElement("input");
+  }
+  init() {
     this.$el.type = "text";
     this.$el.className = "form-control";
+    super.init();
+    return this;
   }
 }

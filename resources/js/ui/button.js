@@ -1,11 +1,14 @@
-import { MakeObject } from "./object";
 import { UI } from "./ui";
 
 export class ButtonUI extends UI {
-  constructor($parent) {
-    super($parent, document.createElement("button"));
+  getMakeEl() {
+    return document.createElement("button");
+  }
+  init() {
     this.$el.type = "button";
     this.$el.className = "btn";
+    super.init();
+    return this;
   }
   label = "";
   setLabel(label) {
