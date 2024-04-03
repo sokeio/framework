@@ -67,17 +67,19 @@ export class Application extends Component {
     });
     return template.content.firstChild;
   }
-  run($selectorOrEl = null) {
-    this.appInstance = this;
-    this.____number = new Date().getTime();
-    this.runComponent();
+  static run($selectorOrEl = null) {
+    let app = this.make();
+    app.appInstance = app;
+    app.getId();
+    app.runComponent();
     if (!$selectorOrEl) {
       $selectorOrEl = document.body;
     }
     if (typeof $selectorOrEl === "string") {
-      document.querySelector($selectorOrEl).appendChild(this.appEl);
+      document.querySelector($selectorOrEl).appendChild(app.appEl);
     } else {
-      $selectorOrEl.appendChild(this.appEl);
+      $selectorOrEl.appendChild(app.appEl);
     }
+    return app;
   }
 }

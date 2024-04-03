@@ -32,5 +32,4 @@ export class FileManager extends Application {
     `;
   }
 }
-window.FileManager2 = FileManager.make();
-// window.FileManager2.run();
+// window.FileManager2 = FileManager.run();
