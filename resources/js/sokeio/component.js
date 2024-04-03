@@ -30,6 +30,12 @@ export class Component extends BaseJS {
     this.appChildren = [...this.appChildren, ...$child];
     return this;
   }
+  clearChild() {
+    this.appChildren.forEach((child) => {
+      child.destroy();
+    });
+    this.appChildren = [];
+  }
   onReady($callback) {
     this.appReady.push($callback);
   }

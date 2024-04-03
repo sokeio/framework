@@ -1,6 +1,6 @@
 import { Component } from "../sokeio/component";
 
-export class Demo extends Component {
+export class Footer extends Component {
   state = {
     demo: 123,
   };
@@ -24,11 +24,8 @@ export class Demo extends Component {
   }
   render() {
     return `
-    <div>
-      <div> Demo Component 
-        <span s-text="demo"></span>
-        <button s-on:click="this.demoTest()">Click</button>
-      </div>
+    <div class="footer-wrapper">
+      Footer
     </div>
       `;
   }

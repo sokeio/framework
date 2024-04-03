@@ -19,24 +19,22 @@ export class BaseJS {
     });
   }
   get(property) {
-    if (this[property]) return this[property];
+    if (property in this) return this[property];
     return this.____value[property];
   }
   set(property, value) {
-    if (this[property] !== undefined) {
+    if (property in this) {
       this[property] = value;
       return;
     }
     let oldValue = this.____value[property];
     this.____value[property] = value;
     let self = this;
-    console.log("doChangeProperty1", property, oldValue, value);
     setTimeout(() => {
       self.doChangeProperty(property, oldValue, value);
     });
   }
   doChangeProperty(property, oldValue, newValue) {
-    console.log("doChangeProperty", property, oldValue, newValue);
     if (this.____valueChangeEvents[property]) {
       this.____valueChangeEvents[property].forEach((handler) => {
         handler(oldValue, newValue, property);
@@ -62,7 +60,10 @@ export class BaseJS {
     }
   }
   watch(property, callback) {
-    this.onChangeProperty(property, callback);
+    if (!Array.isArray(property)) property = [property];
+    property.forEach((p) => {
+      this.onChangeProperty(p, callback);
+    });
     return this;
   }
   static make() {

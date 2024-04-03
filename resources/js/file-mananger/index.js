@@ -1,37 +1,36 @@
 import { Application } from "../sokeio/application";
-import { Demo } from "./demo";
+import { Body } from "./body";
+import { File } from "./component/file";
+import { Footer } from "./footer";
+import { Header } from "./header";
+import { Toolbar } from "./toolbar";
 
 export class FileManager extends Application {
   components = {
-    "demo:abc": Demo,
+    "fm:Header": Header,
+    "fm:Toolbar": Toolbar,
+    "fm:Body": Body,
+    "fm:Footer": Footer,
+    "fm:File": File,
   };
   state = {
-    demo: 123,
+    files: [],
+    folders: [],
   };
   cast = {
-    demo: (v) => parseInt(v),
+    // demo: (v) => parseInt(v),
   };
-  init() {
-    this.watch("demo", () => {
-      console.log(this.state.demo);
-      this.setText("#fm", this.state.demo);
-    });
-  }
+  init() {}
   render() {
     return `
     <div class="file-manager">
-      <div class="container">
-        [demo:abc abc="12344" act="12222"/]
-        <h1>File Manager</h1>
-        [demo:abc /]
-        <input s-model="demo" type="text">
-        <div id="fm"></div>
-        [demo:abc /]
-        <button class="btn btn-primary" s-on:click="this.demo++">Open</button>
-      </div>
+      [fm:Header /]
+      [fm:Toolbar /]
+      [fm:Body /]
+      [fm:Footer /]
     </div>
     `;
   }
 }
 window.FileManager2 = FileManager.make();
-window.FileManager2.run();
+// window.FileManager2.run();

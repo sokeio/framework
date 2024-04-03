@@ -11,7 +11,7 @@ export class Application extends Component {
   nextId() {
     return ++this.____number;
   }
-  getComponentByName(name, $attrs, componentParent) {
+  getComponentByName(name, $attrs, componentParent, isAddChild = true) {
     if (!name || !this.components[name]) return null;
     let component = this.components[name].make();
     component.appInstance = this;
@@ -23,6 +23,9 @@ export class Application extends Component {
     props.setParent(componentParent);
     props.setCurrent(component);
     props.setAttrs($attrs);
+    if (isAddChild) {
+      componentParent.setChild(component);
+    }
     return component;
   }
   convertHtmlToElement(html, componentParent) {
@@ -51,7 +54,6 @@ export class Application extends Component {
     }
 
     template.innerHTML = html;
-    componentParent.setChild(tempComponents);
     componentParent.onReady(() => {
       tempComponents.forEach((item) => {
         if (!item) return;
