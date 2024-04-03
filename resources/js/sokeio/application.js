@@ -3,17 +3,17 @@ import { Props } from "./props";
 import { getComponentsFromText } from "./utils";
 
 export class Application extends Component {
-  ____components = {};
+  components = {};
   ____number = 1000;
   registerComponent(name, component) {
-    this.____components[name] = component;
+    this.components[name] = component;
   }
   nextId() {
     return ++this.____number;
   }
   getComponentByName(name, $attrs, componentParent) {
-    if (!name || !this.____components[name]) return null;
-    let component = this.____components[name].make();
+    if (!name || !this.components[name]) return null;
+    let component = this.components[name].make();
     component.appInstance = this;
     component.getId();
     if (componentParent) {
@@ -51,6 +51,7 @@ export class Application extends Component {
     }
 
     template.innerHTML = html;
+    componentParent.setChild(tempComponents);
     componentParent.onReady(() => {
       tempComponents.forEach((item) => {
         if (!item) return;

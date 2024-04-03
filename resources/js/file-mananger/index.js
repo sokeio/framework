@@ -2,6 +2,9 @@ import { Application } from "../sokeio/application";
 import { Demo } from "./demo";
 
 export class FileManager extends Application {
+  components = {
+    "demo:abc": Demo,
+  };
   state = {
     demo: 123,
   };
@@ -13,10 +16,6 @@ export class FileManager extends Application {
       console.log(this.state.demo);
       this.setText("#fm", this.state.demo);
     });
-    this.on("#open-file-manager", "click", () => {
-      this.demo = this.demo + 1;
-    });
-    this.registerComponent("demo:abc", Demo);
   }
   render() {
     return `
@@ -28,7 +27,7 @@ export class FileManager extends Application {
         <input s-model="demo" type="text">
         <div id="fm"></div>
         [demo:abc /]
-        <button class="btn btn-primary" id="open-file-manager">Open</button>
+        <button class="btn btn-primary" s-on:click="this.demo++">Open</button>
       </div>
     </div>
     `;

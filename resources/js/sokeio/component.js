@@ -20,6 +20,16 @@ export class Component extends BaseJS {
     this.appParent = $parent;
     return this;
   }
+  setChild($child) {
+    if (!this.appChildren) {
+      this.appChildren = [];
+    }
+    if (!Array.isArray($child)) {
+      $child = [$child];
+    }
+    this.appChildren = [...this.appChildren, ...$child];
+    return this;
+  }
   onReady($callback) {
     this.appReady.push($callback);
   }
