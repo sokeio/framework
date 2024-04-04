@@ -4,25 +4,30 @@ import { getComponentsFromText } from "./utils";
 
 export class Application extends Component {
   components = {};
-  ____number = 1000;
+  $wire = null;
+  $_number = 1000;
   registerComponent(name, component) {
     this.components[name] = component;
   }
+  init() {
+    this.$_number = new Date().getTime();
+  }
   nextId() {
-    return ++this.____number;
+    return ++this.$_number;
   }
   getComponentByName(name, $attrs, componentParent, isAddChild = true) {
     if (!name || !this.components[name]) return null;
     let component = this.components[name].make();
-    component.appInstance = this;
+    component.$main = this;
     component.getId();
     if (componentParent) {
       component.setParent(componentParent);
     }
     let props = Props.make();
+    props.setAttrs($attrs);
     props.setParent(componentParent);
     props.setCurrent(component);
-    props.setAttrs($attrs);
+    component.setProps(props);
     if (isAddChild) {
       componentParent.setChild(component);
     }
@@ -44,9 +49,9 @@ export class Application extends Component {
         if (tempComponents[index]) {
           templHtml +=
             '<span id="component-' +
-            tempComponents[index].appComponentId +
+            tempComponents[index].getId() +
             '">' +
-            tempComponents[index].appComponentId +
+            tempComponents[index].getId() +
             "</span>";
         }
       });
@@ -57,29 +62,36 @@ export class Application extends Component {
     componentParent.onReady(() => {
       tempComponents.forEach((item) => {
         if (!item) return;
-        let eltemp = componentParent.query("#component-" + item.appComponentId);
+        let eltemp = componentParent.query("#component-" + item.getId());
         if (eltemp) {
           item.runComponent();
-          eltemp.parentNode.insertBefore(item.appEl, eltemp);
+          eltemp.parentNode.insertBefore(item.$el, eltemp);
           eltemp.remove();
         }
       });
     });
     return template.content.firstChild;
   }
-  static run($selectorOrEl = null) {
+  static run($selectorOrEl = null, $attrs = null) {
     let app = this.make();
-    app.appInstance = app;
-    app.getId();
+    app.$main = app;
+    if ($attrs) {
+      app.setProps($attrs);
+    }
     app.runComponent();
+    if ($selectorOrEl && typeof $selectorOrEl === "string") {
+      $selectorOrEl = document.querySelector($selectorOrEl);
+    }
     if (!$selectorOrEl) {
       $selectorOrEl = document.body;
     }
-    if (typeof $selectorOrEl === "string") {
-      document.querySelector($selectorOrEl).appendChild(app.appEl);
-    } else {
-      $selectorOrEl.appendChild(app.appEl);
+    if ($selectorOrEl.getAttribute("id")) {
+      $selectorOrEl = document.getElementById($selectorOrEl);
     }
+    if ($selectorOrEl) {
+      $selectorOrEl.appendChild(app.$el);
+    }
+    $selectorOrEl.appendChild(app.$el);
     return app;
   }
 }

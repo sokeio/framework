@@ -14,6 +14,7 @@ export class ComponentModule extends SokeioPlugin {
         self.clickEventComponent.bind(this)
       );
   }
+  
   openComponent(key, toEl) {
     const self = this;
     if (!toEl) toEl = document?.body;

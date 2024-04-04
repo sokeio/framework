@@ -1,85 +1,187 @@
 import { BaseJS } from "./base";
 import { FeatureManager } from "./feature";
-import {} from "./utils";
 
 export class Component extends BaseJS {
-  appComponentId = 0;
-  appInstance = null;
-  appEl = null;
-  appParent = null;
-  appChildren = [];
-  appReady = [];
-  appDestroy = [];
-  appProps = null;
-  appFeature = null;
-  setProps(props) {
-    this.appProps = props;
-    return this;
-  }
-  setParent($parent) {
-    this.appParent = $parent;
+  $main = null;
+  $id = 0;
+  $el = null;
+  $children = [];
+  $props = null;
+  __eInit = [];
+  __eReady = [];
+  __eDestroy = [];
+  __eFeature = null;
+  setProps($props) {
+    this.$props = $props;
     return this;
   }
   setChild($child) {
-    if (!this.appChildren) {
-      this.appChildren = [];
+    if (!this.$children) {
+      this.$children = [];
     }
     if (!Array.isArray($child)) {
       $child = [$child];
     }
-    this.appChildren = [...this.appChildren, ...$child];
+    this.$children = [...this.$children, ...$child];
     return this;
   }
+
+  watch(property, callback, destroy = undefined) {
+    if (destroy === undefined) {
+      super.watch(property, callback, ($callback) => {
+        this.onDestroy(() => {
+          $callback();
+        });
+      });
+    } else {
+      super.watch(property, callback, destroy);
+    }
+  }
   clearChild() {
-    this.appChildren.forEach((child) => {
+    this.$children.forEach((child) => {
       child.destroy();
     });
-    this.appChildren = [];
+    this.$children = [];
+  }
+  onInit($callback) {
+    this.__eInit.push($callback);
+    return this;
   }
   onReady($callback) {
-    this.appReady.push($callback);
+    this.__eReady.push($callback);
   }
   onDestroy($callback) {
-    this.appDestroy.push($callback);
+    this.__eDestroy.push($callback);
   }
-  query(selectorOrEl) {
+  query(selectorOrEl, $callback = null) {
+    if ($callback) {
+      let el = this.query(selectorOrEl);
+      $callback.bind(this)(el);
+      return el;
+    }
     if (typeof selectorOrEl === "string") {
-      return this.appEl.querySelector(selectorOrEl);
+      return this.$el.querySelector(selectorOrEl);
     }
     if (Array.isArray(selectorOrEl)) {
       return selectorOrEl[0];
     }
     return selectorOrEl;
   }
-  queryAll(selectorOrEl) {
+  queryAll(selectorOrEl, $callback = null) {
+    if ($callback) {
+      let els = this.queryAll(selectorOrEl);
+      els.forEach(($el) => {
+        $callback.bind(this)($el);
+      });
+      return el;
+    }
     if (typeof selectorOrEl === "string") {
-      return this.appEl.querySelectorAll(selectorOrEl);
+      return this.$el.querySelectorAll(selectorOrEl);
     }
     if (Array.isArray(selectorOrEl)) {
       return selectorOrEl;
     }
     return [selectorOrEl];
   }
-  onAll(selector, event, callback) {
-    let els = this.queryAll(selector);
-    els.forEach((el) => {
-      if (typeof event === "string") event = [event];
-      event.forEach((ev) => {
-        el.addEventListener(ev, callback);
-      });
-    });
-    this.onDestroy(() => {
+  touchClass(className, selector = null) {
+    let el = selector ? this.query(selector) : this.$el;
+    if (el.classList.contains(className)) {
+      el.classList.remove(className);
+    } else {
+      el.classList.add(className);
+    }
+  }
+  addClass(className, selector = null) {
+    let el = selector ? this.query(selector) : this.$el;
+    el.classList.add(className);
+  }
+  removeClass(className, selector = null) {
+    let el = selector ? this.query(selector) : this.$el;
+    el.classList.remove(className);
+  }
+  setClass(className, selector = null) {
+    let el = selector ? this.query(selector) : this.$el;
+    el.className = className;
+  }
+  getClasses(selector = null) {
+    let el = selector ? this.query(selector) : this.$el;
+    return el.classList;
+  }
+  hasClass(className, selector = null) {
+    let el = selector ? this.query(selector) : this.$el;
+    return el.classList.contains(className);
+  }
+  getAttribute(attribute, selector = null) {
+    let el = selector ? this.query(selector) : this.$el;
+    return el.getAttribute(attribute);
+  }
+  setAttribute(attribute, value, selector = null) {
+    let el = selector ? this.query(selector) : this.$el;
+    el.setAttribute(attribute, value);
+  }
+  removeAttribute(attribute, selector = null) {
+    let el = selector ? this.query(selector) : this.$el;
+    el.removeAttribute(attribute);
+  }
+  getValue(selector = null) {
+    let el = selector ? this.query(selector) : this.$el;
+    return el.value;
+  }
+  setValue(value, selector = null) {
+    let el = selector ? this.query(selector) : this.$el;
+    el.value = value;
+  }
+  getText(selector = null) {
+    let el = selector ? this.query(selector) : this.$el;
+    return el.innerText;
+  }
+  setText(text, selector = null) {
+    let el = selector ? this.query(selector) : this.$el;
+    el.innerText = text;
+  }
+  setHtml(html, selector = null) {
+    let el = selector ? this.query(selector) : this.$el;
+    el.innerHTML = html;
+  }
+  getHtml(selector = null) {
+    let el = selector ? this.query(selector) : this.$el;
+    return el.innerHTML;
+  }
+  setStyle(style, selector = null) {
+    let el = selector ? this.query(selector) : this.$el;
+    el.style = style;
+  }
+
+  onAll(event, callback, selector = null) {
+    this.onReady(() => {
+      let els = selector ? this.queryAll(selector) : [this.$el];
       els.forEach((el) => {
         if (typeof event === "string") event = [event];
         event.forEach((ev) => {
-          el.removeEventListener(ev, callback);
+          el.addEventListener(ev, callback);
+        });
+      });
+      this.onDestroy(() => {
+        els.forEach((el) => {
+          if (typeof event === "string") event = [event];
+          event.forEach((ev) => {
+            el.removeEventListener(ev, callback);
+          });
         });
       });
     });
   }
-  on(selector, event, callback) {
+  onResize(callback) {
     this.onReady(() => {
-      let el = this.query(selector);
+      window.addEventListener("resize", callback);
+      this.onDestroy(() => {
+        window.removeEventListener("resize", callback);
+      });
+    });
+  }
+  on(event, callback, selector = null) {
+    this.onReady(() => {
+      let el = selector ? this.query(selector) : this.$el;
       if (typeof event === "string") event = [event];
       event.forEach((ev) => {
         el.addEventListener(ev, callback);
@@ -91,63 +193,69 @@ export class Component extends BaseJS {
       });
     });
   }
-  setText(selector, text) {
-    let el = this.query(selector);
-    el.innerText = text;
-  }
-  setHtml(selector, html) {
-    let el = this.query(selector);
-    el.innerHTML = html;
+
+  beforeInit() {
+    // do before init
   }
   init() {
-    ("init");
-  }
-  beforeInit() {
-    console.log("init");
+    // do init
   }
   afterInit() {
-    console.log("init");
+    // do after init
   }
   beforeRender() {
-    console.log("init");
+    // do before render
   }
   render() {
-    console.log("init");
+    // do render
+    // return `
+    // <div class="component-wrapper">
+    // </div>
+    // `;
   }
   afterRender() {
-    console.log("init");
+    // do after render
   }
   destroy() {
-    console.log("init");
+    this.__eDestroy.forEach((callback) => {
+      callback.bind(this)();
+    });
+    this.$el?.remove();
+    this.clearBase();
+    this.$el = null;
   }
   getId() {
-    if (!this.appComponentId) {
-      this.appComponentId = this.appInstance.nextId();
+    if (!this.$id) {
+      this.$id = this.$main.nextId();
     }
-    return this.appComponentId;
+    return this.$id;
   }
   doInit() {
     this.beforeInit();
     this.init();
+    let self = this;
+    this.__eInit.forEach((callback) => {
+      callback.bind(self)();
+    });
     this.afterInit();
   }
   doRender() {
     this.beforeRender();
-    this.appEl = this.appInstance.convertHtmlToElement(this.render(), this);
-    this.appEl.setAttribute("data-component-id", this.appComponentId);
+    this.$el = this.$main.convertHtmlToElement(this.render(), this);
+    this.$el.setAttribute("data-sokeio-id", this.getId());
     this.afterRender();
   }
   doReady() {
     let self = this;
-    this.appReady.forEach((callback) => {
+    this.__eReady.forEach((callback) => {
       callback.bind(self)();
     });
   }
   doFeature() {
-    if (!this.appFeature) {
-      this.appFeature = new FeatureManager(this);
+    if (!this.__eFeature) {
+      this.__eFeature = new FeatureManager(this);
     }
-    this.appFeature.runFeatures();
+    this.__eFeature.runFeatures();
   }
   runComponent() {
     this.doInit();

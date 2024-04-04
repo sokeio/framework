@@ -13,19 +13,23 @@ export class BindFeature {
         if (start) el.setSelectionRange(start, start);
       });
     });
-    this.$component.on(selectorOrEl, ["change", "keypress"], (e) => {
-      if (e.target.__timeout) {
-        clearTimeout(e.target.__timeout);
-        e.target.__binding = false;
-      }
-      e.target.__timeout = setTimeout(() => {
-        if (e.target.__binding === true) return;
-        e.target.__binding = true;
-        this.$component.set(state, e.target.value);
-        e.target.__binding = false;
-        e.target.__binding = null;
-      });
-    });
+    this.$component.on(
+      ["change", "keypress"],
+      (e) => {
+        if (e.target.__timeout) {
+          clearTimeout(e.target.__timeout);
+          e.target.__binding = false;
+        }
+        e.target.__timeout = setTimeout(() => {
+          if (e.target.__binding === true) return;
+          e.target.__binding = true;
+          this.$component.set(state, e.target.value);
+          e.target.__binding = false;
+          e.target.__binding = null;
+        });
+      },
+      selectorOrEl
+    );
   }
   bindText(state, selectorOrEl) {
     this.$component.watch(state, () => {

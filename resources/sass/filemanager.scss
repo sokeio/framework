@@ -6,6 +6,8 @@
     bottom: 20px;
     overflow: hidden;
     background-color: #f5f5f5;
+    border-radius: 2px;
+    border: 1px solid #ccc;
     z-index: 9999999999 !important;
     display: flex;
     flex-direction: column;
@@ -67,11 +69,14 @@
     .body-wrapper {
         background: #fff;
         flex: auto;
-        display: flex;
         overflow: auto;
-        justify-self: flex-start;
-        flex-direction: row;
-        flex-wrap: wrap;
+
+        .body-content {
+            display: flex;
+            align-content: flex-start;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
 
         .item-box {
             position: relative;

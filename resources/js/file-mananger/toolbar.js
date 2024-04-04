@@ -9,7 +9,18 @@ export class Toolbar extends Component {
     alert(this.searchText);
   }
   doCreateFolder() {
-    this.appInstance.files = [...this.appInstance.files, { file: "abc" }];
+    this.$main.files = [
+      ...this.$main.files,
+      ...[
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+      ].map((item) => {
+        return {
+          fileId: item + this.$main.files.length,
+          fileName: "abc_" + this.$main.files.length + item,
+          isFolder: true,
+        };
+      }),
+    ];
   }
   render() {
     return `

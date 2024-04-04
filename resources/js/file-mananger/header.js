@@ -1,15 +1,7 @@
 import { Component } from "../sokeio/component";
 
 export class Header extends Component {
-  state = {
-    demo: 123,
-  };
-  init() {
-    this.watch("demo", () => {
-      console.log("watch demo" + this.demo);
-    });
-  }
-  __time = null;
+  state = {};
   CloseApp() {
     alert("CloseApp");
   }

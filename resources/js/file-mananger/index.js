@@ -16,10 +16,25 @@ export class FileManager extends Application {
   state = {
     files: [],
     folders: [],
+    selectFiles: [],
+    selectFolders: [],
   };
   cast = {
     // demo: (v) => parseInt(v),
   };
+  selectFile($field) {
+    if (!this.selectFiles.includes($field)) {
+      this.selectFiles = [...this.selectFiles, $field];
+    }
+  }
+  touchFile($field) {
+    console.log({ fn: "selectFile", $field });
+    if (this.selectFiles.includes($field)) {
+      this.selectFiles = this.selectFiles.filter((item) => item !== $field);
+    } else {
+      this.selectFiles = [...this.selectFiles, $field];
+    }
+  }
   init() {}
   render() {
     return `
@@ -32,4 +47,4 @@ export class FileManager extends Application {
     `;
   }
 }
-// window.FileManager2 = FileManager.run();
+window.FileManager2 = FileManager.run();
