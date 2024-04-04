@@ -6,18 +6,14 @@ export class Body extends Component {
   };
   init() {
     this.$main.watch(["files", "folders"], (newValue, oldValue, proValue) => {
-      this.reRender();
-      console.log({
-        body: { oldValue: oldValue, newValue: newValue, proValue: proValue },
-      });
+      this.runRender();
     });
     this.onResize(() => {
-      this.reRender();
+      this.runRender();
     });
   }
-  reRender() {
-    this.clearChild();
-    this.query(".body-content", (el) => {
+  afterRender() {
+    this.query(".body-content .box-wrapper", (el) => {
       el.innerHTML = "";
       el.style.opacity = 40 / 100;
       this.$main.files.forEach((file) => {
@@ -34,8 +30,11 @@ export class Body extends Component {
   }
   render() {
     return `
-    <div class="body-wrapper">
-     <div class="body-content"></div>
+    <div class="fm-body">
+      <div class="body-content">
+        <div class="box-wrapper"></div>
+      </div>
+      [fm:ItemInfo /]
     </div>
       `;
   }

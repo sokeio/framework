@@ -23,10 +23,9 @@ export class Props extends BaseJS {
     return this;
   }
   setAttrs(state) {
-    let self = this;
     this.state = state;
     this.onReady(() => {
-      Object.keys(self.state).forEach((key) => {
+      Object.keys(this.state).forEach((key) => {
         if (this.parent.checkProperty(this.state[key])) {
           this.set(key, this.parent.get(this.state[key]));
           this.parent.watch(this.state[key], (value) => {

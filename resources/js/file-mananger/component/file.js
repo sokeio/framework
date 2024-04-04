@@ -6,10 +6,11 @@ export class File extends Component {
     fileName: "",
   };
   init() {
-    this.onReady(() => {
+    this.onInit(() => {
       this.fileId = this.$props.file.fileId;
       this.fileName = this.$props.file.fileName;
-
+    });
+    this.onReady(() => {
       this.$main.watch(
         "selectFiles",
         (newValue, oldValue, proValue) => {
@@ -33,31 +34,20 @@ export class File extends Component {
       if (e.which !== 1) {
         return;
       }
-      e.preventDefault();
       this.$main.selectFile(this.fileId);
-
-      console.log({ fn: "mouseenter", e, fileId: this.fileId });
     });
-    this.on(
-      ["selectstart", "selectend"],
-      (e) => {
-        e.preventDefault();
-        e.target.selectend = e.target.selectstart=false;
-      },
-      ".file-box"
-    );
   }
 
   touchFile() {
-    console.log({ fn: "touchFile", fileId: this.fileId });
     this.$main.touchFile(this.fileId);
   }
   render() {
     return `
     <div class="item-box">
-        <div class="file-box" s-on:click="this.touchFile()" s-text="fileName">
-        File
-        </div>
+      <div class="file-box item-wrapper"  s-on:click="this.touchFile()" >
+        <div class="item-body"></div>
+        <div class="item-name" s-text="fileName"></div>
+      </div>
     </div>
       `;
   }

@@ -24,7 +24,7 @@ export class Toolbar extends Component {
   }
   render() {
     return `
-    <div class="toolbar-wrapper">
+    <div class="fm-toolbar">
       <div class="toolbar-button">
         <button class="btn btn-primary" s-on:click="this.doCreateFolder()">Create Folder</button>
         <button class="btn btn-primary">Upload</button>

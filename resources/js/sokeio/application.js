@@ -16,7 +16,10 @@ export class Application extends Component {
     return ++this.$_number;
   }
   getComponentByName(name, $attrs, componentParent, isAddChild = true) {
-    if (!name || !this.components[name]) return null;
+    if (!name || !this.components[name]) {
+      console.warn({ name, $attrs, componentParent, isAddChild });
+      return null;
+    }
     let component = this.components[name].make();
     component.$main = this;
     component.getId();
@@ -60,15 +63,15 @@ export class Application extends Component {
 
     template.innerHTML = html;
     componentParent.onReady(() => {
-      tempComponents.forEach((item) => {
-        if (!item) return;
-        let eltemp = componentParent.query("#component-" + item.getId());
-        if (eltemp) {
-          item.runComponent();
-          eltemp.parentNode.insertBefore(item.$el, eltemp);
-          eltemp.remove();
-        }
-      });
+    tempComponents.forEach((item) => {
+      if (!item) return;
+      let eltemp = componentParent.query("#component-" + item.getId());
+      if (eltemp) {
+        item.runComponent();
+        eltemp.parentNode.insertBefore(item.$el, eltemp);
+        eltemp.remove();
+      }
+    });
     });
     return template.content.firstChild;
   }

@@ -1,7 +1,19 @@
 @import 'animate.css';
 @import './filemanager.scss';
+
 .error {
     color: red;
+}
+
+.disable-select {
+    user-select: none;
+    /* Standard syntax */
+    -moz-user-select: none;
+    /* Firefox */
+    -webkit-user-select: none;
+    /* Chrome, Safari, and Opera */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
 }
 
 .link-data-ajax-loading {

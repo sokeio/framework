@@ -5,7 +5,6 @@ namespace Sokeio\Concerns;
 use Carbon\Carbon;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\Inspiring;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Sokeio\Laravel\JsonData;
 

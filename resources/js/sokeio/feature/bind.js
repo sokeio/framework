@@ -26,7 +26,7 @@ export class BindFeature {
           this.$component.set(state, e.target.value);
           e.target.__binding = false;
           e.target.__binding = null;
-        });
+        }, 100);
       },
       selectorOrEl
     );
@@ -38,7 +38,7 @@ export class BindFeature {
       });
     });
     // set initial value
-    this.$component.set(state, this.$component.get(state));
+    // this.$component.set(state, this.$component.get(state));
   }
   bindHtml(state, selectorOrEl) {
     this.$component.watch(state, () => {
@@ -48,7 +48,6 @@ export class BindFeature {
     });
   }
   run() {
-    console.log("run bind feature");
     this.$component.queryAll("[s-model]").forEach((el) => {
       let state = el.getAttribute("s-model");
       this.bindState(state, el);

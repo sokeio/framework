@@ -39,10 +39,7 @@ export class BaseJS {
     }
     let oldValue = this.$_dataValue[property];
     this.$_dataValue[property] = value;
-    let self = this;
-    setTimeout(() => {
-      self.doChangeProperty(property, oldValue, value);
-    });
+    setTimeout(() => this.doChangeProperty(property, oldValue, value), 0);
   }
   doChangeProperty(property, oldValue, newValue) {
     if (this.$_dataValueChangeEvents[property]) {

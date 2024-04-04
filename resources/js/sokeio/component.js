@@ -9,6 +9,7 @@ export class Component extends BaseJS {
   $props = null;
   __eInit = [];
   __eReady = [];
+  __eMount = [];
   __eDestroy = [];
   __eFeature = null;
   setProps($props) {
@@ -36,12 +37,14 @@ export class Component extends BaseJS {
     } else {
       super.watch(property, callback, destroy);
     }
+    return this;
   }
   clearChild() {
     this.$children.forEach((child) => {
       child.destroy();
     });
     this.$children = [];
+    return this;
   }
   onInit($callback) {
     this.__eInit.push($callback);
@@ -49,9 +52,15 @@ export class Component extends BaseJS {
   }
   onReady($callback) {
     this.__eReady.push($callback);
+    return this;
+  }
+  onMount($callback) {
+    this.__eMount.push($callback);
+    return this;
   }
   onDestroy($callback) {
     this.__eDestroy.push($callback);
+    return this;
   }
   query(selectorOrEl, $callback = null) {
     if ($callback) {
@@ -90,18 +99,22 @@ export class Component extends BaseJS {
     } else {
       el.classList.add(className);
     }
+    return this;
   }
   addClass(className, selector = null) {
     let el = selector ? this.query(selector) : this.$el;
     el.classList.add(className);
+    return this;
   }
   removeClass(className, selector = null) {
     let el = selector ? this.query(selector) : this.$el;
     el.classList.remove(className);
+    return this;
   }
   setClass(className, selector = null) {
     let el = selector ? this.query(selector) : this.$el;
     el.className = className;
+    return this;
   }
   getClasses(selector = null) {
     let el = selector ? this.query(selector) : this.$el;
@@ -118,10 +131,12 @@ export class Component extends BaseJS {
   setAttribute(attribute, value, selector = null) {
     let el = selector ? this.query(selector) : this.$el;
     el.setAttribute(attribute, value);
+    return this;
   }
   removeAttribute(attribute, selector = null) {
     let el = selector ? this.query(selector) : this.$el;
     el.removeAttribute(attribute);
+    return this;
   }
   getValue(selector = null) {
     let el = selector ? this.query(selector) : this.$el;
@@ -130,6 +145,7 @@ export class Component extends BaseJS {
   setValue(value, selector = null) {
     let el = selector ? this.query(selector) : this.$el;
     el.value = value;
+    return this;
   }
   getText(selector = null) {
     let el = selector ? this.query(selector) : this.$el;
@@ -170,6 +186,7 @@ export class Component extends BaseJS {
         });
       });
     });
+    return this;
   }
   onResize(callback) {
     this.onReady(() => {
@@ -178,6 +195,7 @@ export class Component extends BaseJS {
         window.removeEventListener("resize", callback);
       });
     });
+    return this;
   }
   on(event, callback, selector = null) {
     this.onReady(() => {
@@ -192,6 +210,7 @@ export class Component extends BaseJS {
         });
       });
     });
+    return this;
   }
 
   beforeInit() {
@@ -220,7 +239,9 @@ export class Component extends BaseJS {
     this.__eDestroy.forEach((callback) => {
       callback.bind(this)();
     });
+    this.clearChild();
     this.$el?.remove();
+
     this.clearBase();
     this.$el = null;
   }
@@ -241,13 +262,24 @@ export class Component extends BaseJS {
   }
   doRender() {
     this.beforeRender();
+    let temp = this.$el;
     this.$el = this.$main.convertHtmlToElement(this.render(), this);
     this.$el.setAttribute("data-sokeio-id", this.getId());
+    if (temp) {
+      temp.parentNode.insertBefore(this.$el, temp);
+      temp.remove();
+    }
     this.afterRender();
   }
   doReady() {
     let self = this;
     this.__eReady.forEach((callback) => {
+      callback.bind(self)();
+    });
+  }
+  doMount() {
+    let self = this;
+    this.__eMount.forEach((callback) => {
       callback.bind(self)();
     });
   }
@@ -257,10 +289,15 @@ export class Component extends BaseJS {
     }
     this.__eFeature.runFeatures();
   }
-  runComponent() {
-    this.doInit();
+  runRender() {
+    this.clearChild();
     this.doRender();
     this.doFeature();
     this.doReady();
+  }
+  runComponent() {
+    this.doInit();
+    this.runRender();
+    this.doMount();
   }
 }

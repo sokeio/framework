@@ -3,6 +3,7 @@ import { Body } from "./body";
 import { File } from "./component/file";
 import { Footer } from "./footer";
 import { Header } from "./header";
+import { PropertyInfo } from "./property";
 import { Toolbar } from "./toolbar";
 
 export class FileManager extends Application {
@@ -12,6 +13,7 @@ export class FileManager extends Application {
     "fm:Body": Body,
     "fm:Footer": Footer,
     "fm:File": File,
+    "fm:ItemInfo": PropertyInfo,
   };
   state = {
     files: [],
@@ -28,23 +30,29 @@ export class FileManager extends Application {
     }
   }
   touchFile($field) {
-    console.log({ fn: "selectFile", $field });
     if (this.selectFiles.includes($field)) {
-      this.selectFiles = this.selectFiles.filter((item) => item !== $field);
+      this.selectFiles = [];
     } else {
-      this.selectFiles = [...this.selectFiles, $field];
+      this.selectFiles = [$field];
     }
+  }
+  closeApp() {
+    this.destroy();
   }
   init() {}
   render() {
     return `
     <div class="file-manager">
+      <div class="fm-wrapper">
       [fm:Header /]
       [fm:Toolbar /]
       [fm:Body /]
       [fm:Footer /]
+      </div>
     </div>
     `;
   }
 }
-window.FileManager2 = FileManager.run();
+window.FileManager2 = FileManager.run().onDestroy(() => {
+  window.FileManager2 = null;
+});
