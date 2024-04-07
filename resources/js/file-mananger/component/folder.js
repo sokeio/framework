@@ -47,7 +47,7 @@ export class Folder extends Component {
     return `
     <div class="item-box">
       <div class="folder-box item-wrapper"  s-on:click="this.touchFolder();" >
-        <div class="item-body">Folder</div>
+        <div class="item-body"><i class="ti ti-folder" style="font-size: 96px;"></i></div>
         <div class="item-name" s-text="folder.name"></div>
       </div>
     </div>

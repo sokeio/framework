@@ -44,7 +44,7 @@ export class File extends Component {
     return `
     <div class="item-box">
       <div class="file-box item-wrapper"  s-on:click="this.touchFile()" >
-        <div class="item-body"></div>
+        <div class="item-body"><i class="ti ti-file" style="font-size: 96px;"></i></div>
         <div class="item-name" s-text="file.name"></div>
       </div>
     </div>
