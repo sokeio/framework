@@ -3,14 +3,17 @@ export class OnFeature {
   constructor($component) {
     this.$component = $component;
   }
+  callFunction($func) {
+    try {
+      new Function($func).apply(this.$component);
+    } catch (e) {}
+  }
   onClick() {
     this.$component.queryAll("[s-on\\:click]").forEach((el) => {
       this.$component.on(
         "click",
         () => {
-          new Function(`return ${el.getAttribute("s-on:click")};`).bind(
-            this.$component
-          )();
+          this.callFunction(el.getAttribute("s-on:click"));
         },
         el
       );
@@ -22,9 +25,7 @@ export class OnFeature {
         "keyup",
         (e) => {
           if (e.keyCode === 13) {
-            new Function(`return ${el.getAttribute("s-on:enter")};`).bind(
-              this.$component
-            )();
+            this.callFunction(el.getAttribute("s-on:enter"));
           }
         },
         el

@@ -9,7 +9,7 @@
     .fm-wrapper {
         width: 90%;
         height: 90%;
-        margin: 5% auto;
+        margin: 2% auto;
         background-color: #f5f5f5;
         border-radius: 2px;
         border: 1px solid #ccc;
@@ -56,7 +56,7 @@
             display: flex;
             flex-direction: row;
             align-items: center;
-            padding: 4px 0;
+            padding: 5px 0;
 
             .toolbar-button {
                 flex: auto;
@@ -94,10 +94,8 @@
             }
 
             .box-wrapper {
-                display: flex;
-                align-content: flex-start;
-                flex-direction: row;
-                flex-wrap: wrap;
+                max-height: 70vh;
+                overflow: auto;
 
                 .item-box {
                     user-select: none;
@@ -108,16 +106,16 @@
                     /* Chrome, Safari, and Opera */
                     -ms-user-select: none;
                     /* Internet Explorer/Edge */
-                    position: relative;
-                    width: 200px;
-                    height: 250px;
-                    margin: 4px;
-                    border: 1px solid #ccc;
-                    border-radius: 3px;
+                    float: left;
+                    width: 180px;
+                    height: 200px;
+                    padding: 4px;
                     cursor: pointer;
                     display: flex;
 
                     .item-wrapper {
+                        border-radius: 3px;
+                        border: 1px solid #ccc;
                         flex: auto;
                         display: flex;
                         flex-direction: column;
@@ -138,9 +136,8 @@
 
                     background: #fff;
 
-                    &.item-active {
-                        border: 1px solid #bbd6d6;
-                        background-color: #00ffff;
+                    &.active .item-wrapper {
+                        border: 2px solid #576363;
                     }
 
                     .file-box {
@@ -200,4 +197,54 @@
         }
     }
 
+}
+
+.fm-modal {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9999999999 !important;
+    margin: 0 auto;
+
+    .fm-content {
+        border-radius: 3px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        width: 80%;
+        min-width: 300px;
+        margin: 10px auto;
+
+        .fm-modal-header {
+            padding: 5px 10px;
+            display: flex;
+            flex-direction: row;
+
+            .fm-modal-title {
+                flex: auto;
+                margin: 0;
+                padding: 0;
+            }
+
+            border-bottom: 1px solid #ccc;
+        }
+
+        .fm-modal-body {
+            padding: 10px;
+            min-height: 50px;
+        }
+
+        .fm-modal-footer {
+
+            border-top: 1px solid #ccc;
+            padding: 10px;
+            text-align: right;
+
+            .btn {
+                border-radius: 3px;
+                padding: 5px 10px;
+            }
+        }
+    }
 }

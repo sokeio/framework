@@ -165,7 +165,7 @@ export class Component extends BaseJS {
   }
   setStyle(style, selector = null) {
     let el = selector ? this.query(selector) : this.$el;
-    el.style = style;
+    Object.assign(el.style, style);
   }
 
   onAll(event, callback, selector = null) {
@@ -288,6 +288,9 @@ export class Component extends BaseJS {
       this.__eFeature = new FeatureManager(this);
     }
     this.__eFeature.runFeatures();
+  }
+  getArrayFuncs() {
+    return [super.getArrayFuncs()];
   }
   runRender() {
     this.clearChild();

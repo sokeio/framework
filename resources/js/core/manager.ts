@@ -24,13 +24,12 @@ export class SokeioManager extends ByteEvent {
     return elHtml;
   }
   htmlToElement(html: string) {
-    var template = document.createElement("template");
-    // html = html.trim(); // Never return a text node of whitespace as the result
+    let template = document.createElement("template");
     template.innerHTML = html;
     return template.content.firstChild;
   }
   htmlToElements(html: string) {
-    var template = document.createElement("template");
+    let template = document.createElement("template");
     template.innerHTML = html;
     return template.content.childNodes;
   }
@@ -81,12 +80,7 @@ export class SokeioManager extends ByteEvent {
   }
   public booted() {
     const self = this;
-    self.dispatch("sokeio::booted", {
-      manager: self,
-    });
-    self.dispatchDocument("sokeio::booted", {
-      manager: self,
-    });
+
     Object.keys(self.plugins).forEach((name) => {
       try {
         if (self.plugins[name].booted) {
@@ -95,6 +89,12 @@ export class SokeioManager extends ByteEvent {
       } catch (ex) {
         console.log({ register: ex });
       }
+    });
+    self.dispatch("sokeio::booted", {
+      manager: self,
+    });
+    self.dispatchDocument("sokeio::booted", {
+      manager: self,
     });
   }
   public dispose() {
@@ -137,7 +137,8 @@ export class SokeioManager extends ByteEvent {
     let segments = key.split(".");
 
     if (segments.length === 1) {
-      return (object[key] = value);
+      object[key] = value;
+      return object[key];
     }
 
     let firstSegment = segments.shift();

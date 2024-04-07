@@ -6,7 +6,7 @@ export class Footer extends Component {
   };
   init() {
     this.$main.watch("selectFiles", (newValue, oldValue, proValue) => {
-      this.fileSelectedCount = this.$main.selectFiles.length;
+      this.fileSelectedCount = this.$main.selectFiles?.length ?? 0;
     });
   }
   render() {

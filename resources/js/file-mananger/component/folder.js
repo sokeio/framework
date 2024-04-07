@@ -1,19 +1,19 @@
 import { Component } from "../../sokeio/component";
 
-export class File extends Component {
+export class Folder extends Component {
   state = {
-    file: undefined,
+    folder: undefined,
   };
   init() {
     this.onInit(() => {
-      this.file = this.$props.file;
+      this.folder = this.$props.folder;
     });
     this.onReady(() => {
       this.$el.style.width = this.parent.widthBox + "px";
       this.$main.watch(
-        "selectFiles",
+        "selectFolders",
         (newValue, oldValue, proValue) => {
-          if (newValue.includes(this.file)) {
+          if (newValue.includes(this.folder)) {
             this.$el.classList.add("active");
           } else {
             this.$el.classList.remove("active");
@@ -25,7 +25,7 @@ export class File extends Component {
           });
         }
       );
-      if (this.$main.selectFiles.includes(this.file)) {
+      if (this.$main.selectFolders.includes(this.folder)) {
         this.$el.classList.add("active");
       }
     });
@@ -33,19 +33,22 @@ export class File extends Component {
       if (e.which !== 1) {
         return;
       }
-      this.$main.selectFile(this.file);
+      this.$main.selectFolder(this.folder);
+    });
+    this.on("dblclick", (e) => {
+      this.$main.changePath(this.folder.path);
     });
   }
 
-  touchFile() {
-    this.$main.touchFile(this.file);
+  touchFolder() {
+    this.$main.touchFolder(this.folder);
   }
   render() {
     return `
     <div class="item-box">
-      <div class="file-box item-wrapper"  s-on:click="this.touchFile()" >
-        <div class="item-body"></div>
-        <div class="item-name" s-text="file.name"></div>
+      <div class="folder-box item-wrapper"  s-on:click="this.touchFolder();" >
+        <div class="item-body">Folder</div>
+        <div class="item-name" s-text="folder.name"></div>
       </div>
     </div>
       `;

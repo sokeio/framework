@@ -51,6 +51,9 @@ export class Sokeio extends SokeioManager {
   getUrl($url) {
     return this.$config["sokeio_url"] + "/" + $url;
   }
+  getAxios() {
+    return this.$axios;
+  }
   init() {
     super.init();
     let csrfToken = this.getCsrfToken();
@@ -64,10 +67,11 @@ export class Sokeio extends SokeioManager {
         ...(csrfToken && { "X-CSRF-TOKEN": csrfToken }),
       },
     });
+    console.log("axios", this.$axios);
   }
   start() {
     super.start();
-    this.dispatch("sokeio::loaded", document);
+    this.dispatch("sokeio::loaded", { app: this });
   }
   showFileManager(callback, type = "file") {
     if (this.$config["sokeio_filemanager"]) {
@@ -114,7 +118,7 @@ export class Sokeio extends SokeioManager {
   openShortcodeSetting(
     $editorContainer,
     $shortcode,
-    $attrs = [],
+    $attrs,
     $child,
     callback = undefined,
     callbackClosed = undefined

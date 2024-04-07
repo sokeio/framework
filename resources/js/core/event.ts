@@ -73,10 +73,8 @@ export class ByteEvent {
 
   dispatchDocument(event: string, details: any = {}) {
     document.dispatchEvent(
-      new window.Event(event, {
-        bubbles: true,
-        cancelable: false,
-        ...(details ?? {}),
+      new window.CustomEvent(event, {
+        detail: details ?? {},
       })
     );
   }
@@ -91,11 +89,10 @@ export class ByteEvent {
           document.addEventListener(event, function (ev) {
             if (ev.target) {
               let targetCurrent: any = ev.target;
-              if (targetCurrent.matches(selector)) {
-                callback && callback(ev);
-              } else if ((targetCurrent = targetCurrent.closest(selector))) {
-                callback && callback({ ...ev, target: targetCurrent });
+              if (!targetCurrent.matches(selector)) {
+                targetCurrent = targetCurrent.closest(selector);
               }
+              callback && callback({ ...ev, target: targetCurrent });
             }
           });
         });

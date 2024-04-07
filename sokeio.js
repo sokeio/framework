@@ -54,7 +54,7 @@ window.SokeioLoadStyle = function (
   defer = true
 ) {
   if (Array.isArray(source)) {
-    var arrSource = source.map(function (item) {
+    let arrSource = source.map(function (item) {
       return window.SokeioLoadStyle(item);
     });
     return Promise.all(arrSource);
@@ -70,7 +70,7 @@ window.SokeioLoadScript = function (
   defer = true
 ) {
   if (Array.isArray(source)) {
-    var arrSource = source.map(function (item) {
+    let arrSource = source.map(function (item) {
       return window.SokeioLoadScript(item);
     });
     return Promise.all(arrSource);
@@ -97,16 +97,16 @@ window.PlatformLoadScript = function (
   return window
     .SokeioLoadScript(source, beforeEl, async, defer)
     .then(function () {
-      dispatchDocument("sokeio::ready");
       if (window.SokeioManager) {
         window.SokeioManager.start();
+        dispatchDocument("sokeio::ready");
         window.PlatformLoadScript = undefined;
       }
     })
     .catch(function () {
-      dispatchDocument("sokeio::ready");
       if (window.SokeioManager) {
         window.SokeioManager.start();
+        dispatchDocument("sokeio::ready");
         window.PlatformLoadScript = undefined;
       }
     });
