@@ -8,8 +8,11 @@ export class Toolbar extends Component {
   };
   init() {}
   doSearch() {}
-  doCreateFolder() {
+  showCreateFolder() {
     this.$main.isCreateFolder = true;
+  }
+  showUploadFile() {
+    this.$main.isUploadFile = true;
   }
   backFolder() {
     this.$main.backFolder();
@@ -20,9 +23,8 @@ export class Toolbar extends Component {
     <div class="fm-toolbar">
       <div class="toolbar-button">
       <button class="btn btn-primary" s-on:click="this.backFolder()">Back</button>
-        <button class="btn btn-primary" s-on:click="this.doCreateFolder()">Create Folder</button>
-        <button class="btn btn-primary">Upload</button>
-        <button class="btn btn-primary">Upload</button>
+        <button class="btn btn-primary" s-on:click="this.showCreateFolder()">Create Folder</button>
+        <button class="btn btn-primary" s-on:click="this.showUploadFile()">Upload</button>
       </div>
       <div class="toolbar-search">
         <input s-model="searchText.demo" s-on:enter="this.doSearch()" type="text" class="form-control" placeholder="Search">

@@ -1,6 +1,6 @@
 import { Component } from "../../sokeio/component";
 
-export class CreateFolder extends Component {
+export class UploadFile extends Component {
   state = {
     fileSelectedCount: 0,
     name: "",
@@ -8,7 +8,7 @@ export class CreateFolder extends Component {
   init() {
     this.onReady(() => {
       this.$main.watch(
-        "isCreateFolder",
+        "isUploadFile",
         (newValue, oldValue, proValue) => {
           this.name = "";
           if (newValue) {
@@ -26,6 +26,11 @@ export class CreateFolder extends Component {
           });
         }
       );
+      this.query(".fm-upload-file", function (el) {
+        el.addEventListener("click", function () {
+          el.querySelector('input[type="file"]').click();
+        });
+      });
     });
   }
   closeModal() {
@@ -47,14 +52,16 @@ export class CreateFolder extends Component {
     <div style="display: none;">
         <div class="fm-modal-overlay" s-on:click="this.closeModal()"></div>
         <div class="fm-modal">
-            <div class="fm-content" style="width: 400px;">
+            <div class="fm-content"  style="max-width: 700px;">
                 <div class="fm-modal-header">
-                <h3 class="fm-modal-title">Create Folder</h3>
-                <button class="btn-close" s-on:click="this.closeModal()"></button>
+                    <h3 class="fm-modal-title">Upload File</h3>
+                    <button class="btn-close" s-on:click="this.closeModal()"></button>
                 </div>
                 <div class="fm-modal-body">
-                <div class="form-label">Folder Name</div>
-                <input type="text" name="folderName" class="form-control" s-model="name" placeholder="Folder Name" s-on:enter="this.doCreateFolder()">
+                    <div class="fm-upload-file">
+                        Upload File
+                        <input type="file" style="display: none;" name="file" />
+                    </div>
                 </div>
                 <div class="fm-modal-footer">
                     <button class="btn btn-danger"  s-on:click="this.closeModal()">Cancel</button>

@@ -5,6 +5,7 @@ import { Folder } from "./component/folder";
 import { Footer } from "./footer";
 import { Header } from "./header";
 import { CreateFolder } from "./modal/create-folder";
+import { UploadFile } from "./modal/upload-file";
 import { PropertyInfo } from "./property";
 import { Toolbar } from "./toolbar";
 
@@ -18,6 +19,7 @@ export class FileManager extends Application {
     "fm:Folder": Folder,
     "fm:ItemInfo": PropertyInfo,
     "fm:CreateFolder": CreateFolder,
+    "fm:UploadFile": UploadFile,
   };
   state = {
     searchText: "",
@@ -25,11 +27,13 @@ export class FileManager extends Application {
     disk: "local",
     path: "/",
     name: "",
-    isCreateFolder: false,
     files: [],
     folders: [],
     selectFiles: [],
     selectFolders: [],
+
+    isCreateFolder: false,
+    isUploadFile: false,
   };
   $axios;
   cast = {
@@ -145,6 +149,7 @@ export class FileManager extends Application {
   render() {
     return `
     <div>
+    <div class="fm-modal-overlay"></div>
       <div class="file-manager">
         <div class="fm-wrapper">
         [fm:Header /]
@@ -154,6 +159,7 @@ export class FileManager extends Application {
         </div>
       </div>
       [fm:CreateFolder /]
+      [fm:UploadFile /]
     </div>
     `;
   }

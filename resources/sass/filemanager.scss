@@ -201,6 +201,20 @@
 
 }
 
+.fm-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 9999999999 !important;
+    position: absolute;
+
+}
+
 .fm-modal {
     width: 100vw;
     height: 100vh;
@@ -211,6 +225,7 @@
     margin: 0 auto;
 
     .fm-content {
+        z-index: 9999999999 !important;
         border-radius: 3px;
         border: 1px solid #ccc;
         background-color: #fff;
@@ -235,6 +250,17 @@
         .fm-modal-body {
             padding: 10px;
             min-height: 50px;
+
+            .fm-upload-file {
+                width: 100%;
+                min-height: 200px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 1px dashed #a9a9a9;
+                border-radius: 3px;
+                padding: 10px;
+            }
         }
 
         .fm-modal-footer {
