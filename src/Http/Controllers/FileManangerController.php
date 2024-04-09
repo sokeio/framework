@@ -102,7 +102,7 @@ class FileManangerController extends BaseController
         if (!is_array($requestedFiles)) {
             $requestedFiles = [$requestedFiles];
         }
-        foreach ($requestedFiles as $requestedFileKey => $requestedFileValue) {
+        foreach ($requestedFiles as $requestedFileValue) {
             $name = $requestedFileValue->getClientOriginalName();
             Storage::disk($disk)->put($path . '/' . $name, file_get_contents($requestedFileValue));
         }

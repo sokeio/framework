@@ -27,6 +27,4 @@ Route::group(['as' => 'admin.'], function () {
         ->name('system.log-viewer');
     Route::get('system/clean-system-tool', routeTheme(\Sokeio\Livewire\CleanSystemTool::class))
         ->name('system.clean-system-tool');
-    Route::get('system/media-file-manager', routeTheme(\Sokeio\Livewire\MediaFile::class))
-        ->name('system.media-file-manager');
 });
