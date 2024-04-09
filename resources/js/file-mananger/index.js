@@ -93,20 +93,15 @@ export class FileManager extends Application {
     this.destroy();
   }
   isCallback() {
-    console.log("isCallback", this.$callbackEvent);
     return !!this.$callbackEvent;
   }
   onCallback($callback) {
-    console.log("onCallback", $callback);
     this.$callbackEvent = $callback;
     return this;
   }
   selectOk() {
     if (this.$callbackEvent) {
-      this.$callbackEvent({
-        files: this.selectFiles,
-        folders: this.selectFolders,
-      });
+      this.$callbackEvent(this.selectFiles);
     }
     this.closeApp();
   }
@@ -232,8 +227,8 @@ export class FileManager extends Application {
     `;
   }
 }
-window.FileManager2 = FileManager.run(null, null, function () {
-  this.onCallback((data) => console.log(data));
-}).onDestroy(() => {
-  window.FileManager2 = null;
-});
+// window.FileManager2 = FileManager.run(null, null, function () {
+//   this.onCallback((data) => console.log(data));
+// }).onDestroy(() => {
+//   window.FileManager2 = null;
+// });

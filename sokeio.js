@@ -99,6 +99,7 @@ window.PlatformLoadScript = function (
     .then(function () {
       if (window.SokeioManager) {
         window.SokeioManager.start();
+        console.log("sokeio::ready");
         dispatchDocument("sokeio::ready");
         window.PlatformLoadScript = undefined;
       }
@@ -106,6 +107,7 @@ window.PlatformLoadScript = function (
     .catch(function () {
       if (window.SokeioManager) {
         window.SokeioManager.start();
+        console.log("sokeio::ready.2");
         dispatchDocument("sokeio::ready");
         window.PlatformLoadScript = undefined;
       }

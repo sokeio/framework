@@ -72,7 +72,7 @@ export class ByteEvent {
   }
 
   dispatchDocument(event: string, details: any = {}) {
-    document.dispatchEvent(
+    window.dispatchEvent(
       new window.CustomEvent(event, {
         detail: details ?? {},
       })

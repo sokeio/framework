@@ -17,9 +17,9 @@ import { LiveWireFlatpickrModule } from "./modules/livewire-flatpickr";
 import { FormSettingModule } from "./modules/form-setting";
 import { LiveWireCarouselModule } from "./modules/livewire-carousel";
 import { LiveWireMasonryModule } from "./modules/livewire-masonry";
-import './file-mananger/index';
 let SokeioManager = new Sokeio();
 window.addEventListener("sokeio::register", function () {
+  console.log("sokeio::register");
   SokeioManager.registerPlugin(ConfirmModule);
   SokeioManager.registerPlugin(FileManagerModule);
   SokeioManager.registerPlugin(ActionModule);

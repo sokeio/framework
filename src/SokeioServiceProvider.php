@@ -129,7 +129,6 @@ class SokeioServiceProvider extends ServiceProvider
                 'url' => url(''),
                 'sokeio_url' => route('__sokeio__'),
                 'csrf_token' => csrf_token(),
-                'sokeio_filemanager' => route('unisharp.lfm.show'),
                 'sokeio_icon_setting' => [
                     'url' => route('admin.icon-setting'),
                     'title' => __('Icon Setting'),

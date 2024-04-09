@@ -6,6 +6,7 @@ import "lazysizes";
 // import a plugin
 import "lazysizes/plugins/parent-fit/ls.parent-fit";
 import { SokeioManager } from "./core/manager";
+import { FileManager } from "./file-mananger/index";
 export class Sokeio extends SokeioManager {
   $config = {};
   $loaded = false;
@@ -73,16 +74,11 @@ export class Sokeio extends SokeioManager {
     this.dispatch("sokeio::loaded", { app: this });
   }
   showFileManager(callback, type = "file") {
-    if (this.$config["sokeio_filemanager"]) {
-      window.open(
-        this.$config["sokeio_filemanager"] + "?type=" + (type || "file"),
-        "FileManager",
-        "width=900,height=600"
-      );
-      window.SetUrl = function (items) {
-        callback && callback(items);
-      };
-    }
+    FileManager.run(null, { type }, function () {
+      this.onCallback((data) => {
+        callback && callback(data);
+      });
+    });
   }
   openModal($option, dataModal = undefined) {
     return this.find("SOKEIO_MODAL_MODULE").openModal($option, dataModal);

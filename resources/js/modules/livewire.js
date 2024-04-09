@@ -14,13 +14,8 @@ export class LiveWireModule extends SokeioPlugin {
       }
       self.CacheRejs = setTimeout(function () {
         self.CacheRejs = undefined;
-        clearTimeout(self.CacheRejs);
-        if (self.CacheLivewire == true) {
-          // window.Livewire?.rescan();
-        } else {
-          window.Livewire?.start();
-        }
-        self.CacheLivewire = true;
+        window.Livewire?.start();
+        console.log('----Livewire start----');
       }, 80);
     });
     self.getManager().on("sokeio::loaded", (el) => {
