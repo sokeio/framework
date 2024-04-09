@@ -48,7 +48,7 @@ export class FileManager extends Application {
   cast = {
     // demo: (v) => parseInt(v),
   };
-  editItem($item) {
+  editImage($item) {
     let editItem = this.getComponentByName(
       "fm:EditImage",
       {
@@ -60,6 +60,7 @@ export class FileManager extends Application {
       this
     );
     editItem.runComponent();
+    this.$el.appendChild(editItem.$el);
   }
   selectFile($file) {
     if (!this.selectFiles.includes($file)) {

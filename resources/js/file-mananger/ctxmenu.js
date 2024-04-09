@@ -17,11 +17,14 @@ export class CtxMenu extends Component {
     this.$el.style.left = menuX + "px";
     this.$el.style.top = menuY + "px";
   }
+  editImage(){
+    this.$main.editImage(null);
+  }
   render() {
     return `
     <ul class="fm-ctxmenu">
         <li title="JS Functions" class="heading"><span>Actions</span></li>
-        <li title="" class="interactive"><span>click me</span></li>
+        <li title="" class="interactive" s-on:click="this.editImage()"><span>Edit Image</span></li>
         <li class="divider"></li><li title="links (<a>)" class="heading"><span>Anchors</span></li>
         <li title="opens in new tab" class="interactive"><a href="https://www.cssscript.com" target="_blank"><span>CSSScript (new tab)</span></a></li>
         <li class="divider"></li><li title="Tooltips are awesome" class="heading"><span>Tooltips</span></li>
