@@ -36,6 +36,18 @@ export class File extends Component {
       this.$main.selectFile(this.file);
     });
   }
+  isImage() {
+    return this.file && /^image\/[a-z]+$/.test(this.file.mime_type);
+  }
+  afterRender() {
+    if (this.file.thumb && this.isImage()) {
+      let item = document.createElement("img");
+      item.src = this.file.thumb;
+      this.query(".item-body", (el) => {
+        el.innerHTML = item.outerHTML;
+      });
+    }
+  }
 
   touchFile() {
     this.$main.touchFile(this.file);

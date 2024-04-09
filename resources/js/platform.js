@@ -67,7 +67,6 @@ export class Sokeio extends SokeioManager {
         ...(csrfToken && { "X-CSRF-TOKEN": csrfToken }),
       },
     });
-    console.log("axios", this.$axios);
   }
   start() {
     super.start();

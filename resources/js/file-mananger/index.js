@@ -2,6 +2,7 @@ import { Application } from "../sokeio/application";
 import { Body } from "./body";
 import { File } from "./component/file";
 import { Folder } from "./component/folder";
+import { ItemBack } from "./component/item-back";
 import { Footer } from "./footer";
 import { Header } from "./header";
 import { CreateFolder } from "./modal/create-folder";
@@ -20,22 +21,25 @@ export class FileManager extends Application {
     "fm:ItemInfo": PropertyInfo,
     "fm:CreateFolder": CreateFolder,
     "fm:UploadFile": UploadFile,
+    "fm:ItemBack": ItemBack,
   };
   state = {
     searchText: "",
     directory: "",
-    disk: "local",
+    disk: "public",
     path: "/",
     name: "",
     files: [],
     folders: [],
+    currentFolder: null,
+    currentFile: null,
     selectFiles: [],
     selectFolders: [],
-
     isCreateFolder: false,
     isUploadFile: false,
   };
   $axios;
+  $callbackEvent;
   cast = {
     // demo: (v) => parseInt(v),
   };
@@ -43,9 +47,13 @@ export class FileManager extends Application {
     if (!this.selectFiles.includes($file)) {
       this.selectFiles = [...this.selectFiles, $file];
     }
+    this.currentFolder = null;
+    this.currentFile = $file;
   }
   touchFile($file) {
     this.selectFolders = [];
+    this.currentFolder = null;
+    this.currentFile = $file;
     if (this.selectFiles.includes($file)) {
       this.selectFiles = [];
     } else {
@@ -56,9 +64,13 @@ export class FileManager extends Application {
     if (!this.selectFolders.includes($folder)) {
       this.selectFolders = [...this.selectFolders, $folder];
     }
+    this.currentFile = null;
+    this.currentFolder = $folder;
   }
   touchFolder($folder) {
     this.selectFiles = [];
+    this.currentFile = null;
+    this.currentFolder = $folder;
     if (this.selectFolders.includes($folder)) {
       this.selectFolders = [];
     } else {
@@ -79,6 +91,19 @@ export class FileManager extends Application {
   }
   closeApp() {
     this.destroy();
+  }
+  onCallback($callback) {
+    this.$callbackEvent = $callback;
+    return this;
+  }
+  selectOk() {
+    if (this.$callbackEvent) {
+      this.$callbackEvent({
+        files: this.selectFiles,
+        folders: this.selectFolders,
+      });
+    }
+    this.closeApp();
   }
   init() {
     this.onReady(() => {
@@ -112,6 +137,44 @@ export class FileManager extends Application {
       path: this.path,
       name: this.name,
     };
+  }
+  UploadFile(files, $callback = undefined, onUploadProgress = undefined) {
+    let formData = new FormData();
+    if (!Array.isArray(files)) {
+      files = [files];
+    }
+    for (let file of files) {
+      formData.append("files[]", file);
+    }
+    formData.append("disk", this.disk);
+    formData.append("path", this.path);
+
+    this.$axios
+      .post("/file-manager/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        onUploadProgress,
+      })
+      .then((response) => {
+        if (response.data.status == "error") {
+          alert(response.data.message);
+          if ($callback) {
+            $callback(false, { message: response.data.message });
+          }
+        } else {
+          this.setDataFileManager(response.data);
+          if ($callback) {
+            $callback(true, {});
+          }
+        }
+      })
+      .catch((error) => {
+        this.setDataFileManager({});
+        if ($callback) {
+          $callback(false, error);
+        }
+      });
   }
   actionManager($action = "load", $data = {}, $callback = undefined) {
     this.$axios
@@ -164,6 +227,8 @@ export class FileManager extends Application {
     `;
   }
 }
-// window.FileManager2 = FileManager.run().onDestroy(() => {
-//   window.FileManager2 = null;
-// });
+window.FileManager2 = FileManager.run()
+  .onCallback((data) => console.log(data))
+  .onDestroy(() => {
+    window.FileManager2 = null;
+  });

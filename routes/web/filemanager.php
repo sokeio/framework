@@ -9,5 +9,6 @@ Route::group([
     'as' => 'filemanager.',
     'namespace' => 'Sokeio\Http\Controllers'
 ], function () {
-    Route::post('/', 'FileManangerController@getIndex')->name('index');
+    Route::post('/', 'FileManangerController@postIndex')->name('index');
+    Route::post('upload', 'FileManangerController@postUpload')->name('upload');
 });

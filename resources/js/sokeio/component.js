@@ -292,6 +292,7 @@ export class Component extends BaseJS {
   getArrayFuncs() {
     return [super.getArrayFuncs()];
   }
+
   runRender() {
     this.clearChild();
     this.doRender();

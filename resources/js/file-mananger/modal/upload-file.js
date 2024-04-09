@@ -13,9 +13,6 @@ export class UploadFile extends Component {
           this.name = "";
           if (newValue) {
             this.removeAttribute("style");
-            this.query('input[name="folderName"]', function (el) {
-              el.focus();
-            });
           } else {
             this.setAttribute("style", "display: none;");
           }
@@ -31,22 +28,24 @@ export class UploadFile extends Component {
           el.querySelector('input[type="file"]').click();
         });
       });
+      this.query('input[type="file"]', function (el) {
+        el.addEventListener("change", (event) => {
+          this.$main.UploadFile(
+            [...event.target.files],
+            (rs, data) => {},
+            (event) => {
+              this.closeModal();
+            }
+          );
+          console.log(event.target.files);
+        });
+      });
     });
   }
   closeModal() {
-    this.$main.isCreateFolder = false;
+    this.$main.isUploadFile = false;
   }
-  doCreateFolder() {
-    if (!this.name) {
-      alertt("Folder name is required");
-      return;
-    }
-    this.$main.actionManager("createFolder", { name: this.name }, (rs) => {
-      if (rs) {
-        this.closeModal();
-      }
-    });
-  }
+
   render() {
     return `
     <div style="display: none;">
@@ -60,12 +59,8 @@ export class UploadFile extends Component {
                 <div class="fm-modal-body">
                     <div class="fm-upload-file">
                         Upload File
-                        <input type="file" style="display: none;" name="file" />
+                        <input type="file" multiple style="display: none;" name="file" />
                     </div>
-                </div>
-                <div class="fm-modal-footer">
-                    <button class="btn btn-danger"  s-on:click="this.closeModal()">Cancel</button>
-                    <button class="btn btn-blue" s-on:click="this.doCreateFolder()">OK</button>
                 </div>
             </div>
         </div>

@@ -1,13 +1,25 @@
+import { copyText } from "./utils";
+
 export class BaseJS {
-  $_dataValue = {};
-  $_dataValueChangeEvents = {};
-  $_dataEvents = {};
+  $dataValue = {};
+  $dataValueChangeEvents = {};
+  $dataEvents = {};
+  $timerCacheCallback = {};
   parent = null;
   state = {};
+  runTimeout($callback, key, time = 100) {
+    if (this.$timerCacheCallback[key]) {
+      clearTimeout(this.$timerCacheCallback[key]);
+    }
+    this.$timerCacheCallback[key] = setTimeout(() => {
+      $callback.bind(this)();
+      this.$timerCacheCallback[key] = null;
+    }, time);
+  }
   clearBase() {
-    this.$_dataValue = {};
-    this.$_dataValueChangeEvents = {};
-    this.$_dataEvents = {};
+    this.$dataValue = {};
+    this.$dataValueChangeEvents = {};
+    this.$dataEvents = {};
     this.parent = null;
   }
   setParent($parent) {
@@ -25,12 +37,12 @@ export class BaseJS {
     });
   }
   checkProperty(property) {
-    return property in this.$_dataValue;
+    return property in this.$dataValue;
   }
   get(property) {
     if (property in this) return this[property];
     let arrs = this.getPropertySplit(property);
-    let value = this.$_dataValue[arrs[0]];
+    let value = this.$dataValue[arrs[0]];
     if (arrs.length > 1) {
       for (let i = 1; i < arrs.length; i++) {
         if (value) {
@@ -38,7 +50,7 @@ export class BaseJS {
         }
       }
     }
-    // console.log({ arrs, value, data: this.$_dataValue[arrs[0]] });
+    // console.log({ arrs, value, data: this.$dataValue[arrs[0]] });
     return value;
   }
   set(property, value) {
@@ -47,7 +59,7 @@ export class BaseJS {
       return;
     }
     let arrs = this.getPropertySplit(property);
-    let oldValue = this.$_dataValue[arrs[0]];
+    let oldValue = this.$dataValue[arrs[0]];
     if (arrs.length > 1) {
       for (let i = 1; i < arrs.length; i++) {
         if (oldValue) {
@@ -57,7 +69,7 @@ export class BaseJS {
         }
       }
     }
-    let valueTemp = this.$_dataValue[arrs[0]] ?? {};
+    let valueTemp = this.$dataValue[arrs[0]] ?? {};
     if (arrs.length > 1) {
       let _valueTemp = valueTemp;
       for (let i = 1; i < arrs.length; i++) {
@@ -71,9 +83,9 @@ export class BaseJS {
           }
         }
       }
-      this.$_dataValue[arrs[0]] = valueTemp;
+      this.$dataValue[arrs[0]] = valueTemp;
     } else {
-      this.$_dataValue[arrs[0]] = value;
+      this.$dataValue[arrs[0]] = value;
     }
     setTimeout(() => this.doChangeProperty(property, oldValue, value), 0);
   }
@@ -81,28 +93,28 @@ export class BaseJS {
     return property.split(split);
   }
   doChangeProperty(property, oldValue, newValue) {
-    if (this.$_dataValueChangeEvents[property]) {
-      this.$_dataValueChangeEvents[property].forEach((handler) => {
+    if (this.$dataValueChangeEvents[property]) {
+      this.$dataValueChangeEvents[property].forEach((handler) => {
         handler(newValue, oldValue, property);
       });
     }
   }
   onChangeProperty(property, handler) {
-    if (!this.$_dataValueChangeEvents[property]) {
-      this.$_dataValueChangeEvents[property] = [];
+    if (!this.$dataValueChangeEvents[property]) {
+      this.$dataValueChangeEvents[property] = [];
     }
-    this.$_dataValueChangeEvents[property].push(handler);
+    this.$dataValueChangeEvents[property].push(handler);
   }
   removeChangeProperty(property, handler) {
-    if (this.$_dataValueChangeEvents[property]) {
-      this.$_dataValueChangeEvents[property] = this.$_dataValueChangeEvents[
+    if (this.$dataValueChangeEvents[property]) {
+      this.$dataValueChangeEvents[property] = this.$dataValueChangeEvents[
         property
       ].filter((h) => h !== handler);
     }
   }
   removeChangePropertyAll(property) {
-    if (this.$_dataValueChangeEvents[property]) {
-      this.$_dataValueChangeEvents[property] = [];
+    if (this.$dataValueChangeEvents[property]) {
+      this.$dataValueChangeEvents[property] = [];
     }
   }
   watch(property, callback, destroy) {
@@ -120,6 +132,9 @@ export class BaseJS {
     }
     return this;
   }
+  async copyText(value) {
+    await copyText(value);
+  }
   getArrayFuncs() {
     return [
       "get",
@@ -128,7 +143,7 @@ export class BaseJS {
       "state",
       "initState",
       "onInit",
-      "$_dataValue",
+      "$dataValue",
       "checkProperty",
       "$props",
       "getPropertySplit",

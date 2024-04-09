@@ -7,41 +7,56 @@ export class Body extends Component {
   };
   init() {
     this.$main.watch(["files", "folders"], (newValue, oldValue, proValue) => {
-      this.runRender();
+      this.refreshUI();
     });
     this.onResize(() => {
-      this.runRender();
+      this.refreshUI();
     });
     this.onReady(() => {
       this.callWithBox();
     });
   }
-  _timer = null;
+  refreshUI() {
+    this.runTimeout(() => {
+      this.runRender();
+    }, "refreshUI");
+  }
   callWithBox() {
     this.query(".body-content .box-wrapper", (el) => {
-      if (this._timer) {
-        clearTimeout(this._timer);
-      }
-      this._timer = setTimeout(() => {
-        const wrapperWidth = el.offsetWidth;
-        const minBoxWidth = 180;
+      this.runTimeout(
+        () => {
+          const wrapperWidth = el.offsetWidth-8;
+          const minBoxWidth = 180;
 
-        let rs = wrapperWidth / minBoxWidth;
-        let rsInt = parseInt(rs);
-        if (parseFloat(rsInt) + 0.6 < rs) {
-          rsInt = rsInt + 1;
-        }
-        let widthBox = parseInt(wrapperWidth / rsInt) - 15;
+          let rs = wrapperWidth / minBoxWidth;
+          let rsInt = parseInt(rs);
+          if (parseFloat(rsInt) + 0.9 < rs) {
+            rsInt = rsInt + 1;
+          }
+          console.log({ rs, rsInt });
+          let widthBox = parseInt(wrapperWidth / rsInt) - 4;
 
-        this.widthBox = widthBox;
-        this._timer = null;
-      }, 0);
+          this.widthBox = widthBox;
+        },
+        "callWithBox",
+        500
+      );
     });
   }
   afterRender() {
     this.query(".body-content .box-wrapper", (el) => {
       el.innerHTML = "";
       el.style.opacity = 40 / 100;
+      if (this.$main.path !== "/" && this.$main.path !== "") {
+        let itemBackComponent = this.$main.getComponentByName(
+          "fm:ItemBack",
+          {},
+          this
+        );
+        itemBackComponent.runComponent();
+        el.appendChild(itemBackComponent.$el);
+      }
+
       this.$main.folders?.forEach((folder) => {
         let folderComponent = this.$main.getComponentByName(
           "fm:Folder",

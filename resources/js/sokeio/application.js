@@ -63,15 +63,17 @@ export class Application extends Component {
 
     template.innerHTML = html;
     componentParent.onReady(() => {
-    tempComponents.forEach((item) => {
-      if (!item) return;
-      let eltemp = componentParent.query("#component-" + item.getId());
-      if (eltemp) {
-        item.runComponent();
-        eltemp.parentNode.insertBefore(item.$el, eltemp);
-        eltemp.remove();
-      }
-    });
+      tempComponents.forEach((item) => {
+        if (!item) return;
+        let eltemp = componentParent.query("#component-" + item.getId());
+        if (eltemp) {
+          item.onMount(() => {
+            eltemp.parentNode.insertBefore(item.$el, eltemp);
+            eltemp.remove();
+          });
+          item.runComponent();
+        }
+      });
     });
     return template.content.firstChild;
   }
@@ -81,20 +83,22 @@ export class Application extends Component {
     if ($attrs) {
       app.setProps($attrs);
     }
-    app.runComponent();
-    if ($selectorOrEl && typeof $selectorOrEl === "string") {
-      $selectorOrEl = document.querySelector($selectorOrEl);
-    }
-    if (!$selectorOrEl) {
-      $selectorOrEl = document.body;
-    }
-    if ($selectorOrEl.getAttribute("id")) {
-      $selectorOrEl = document.getElementById($selectorOrEl);
-    }
-    if ($selectorOrEl) {
+    app.onReady(() => {
+      if ($selectorOrEl && typeof $selectorOrEl === "string") {
+        $selectorOrEl = document.querySelector($selectorOrEl);
+      }
+      if (!$selectorOrEl) {
+        $selectorOrEl = document.body;
+      }
+      if ($selectorOrEl.getAttribute("id")) {
+        $selectorOrEl = document.getElementById($selectorOrEl);
+      }
+      if ($selectorOrEl) {
+        $selectorOrEl.appendChild(app.$el);
+      }
       $selectorOrEl.appendChild(app.$el);
-    }
-    $selectorOrEl.appendChild(app.$el);
+    });
+    app.runComponent();
     return app;
   }
 }

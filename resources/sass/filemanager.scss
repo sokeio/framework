@@ -8,7 +8,7 @@
 
     .fm-wrapper {
         width: 90%;
-        height: 90%;
+        height: 80%;
         margin: 2% auto;
         background-color: #f5f5f5;
         border-radius: 2px;
@@ -50,13 +50,13 @@
         }
 
         .fm-toolbar {
+            flex: none;
             width: 100%;
-            height: 45px;
+            height: 55px;
             background-color: rgb(90, 223, 240);
             display: flex;
             flex-direction: row;
             align-items: center;
-            padding: 5px 0;
 
             .toolbar-button {
                 flex: auto;
@@ -65,6 +65,21 @@
                     margin-left: 5px;
                     border-radius: 2px;
 
+                    i {
+                        font-size: 22px;
+                        margin-right: 5px;
+                    }
+
+                    @media screen and (max-width: 768px) {
+                        i {
+                            font-size: 18px;
+                        }
+
+                        span {
+                            display: none;
+                        }
+
+                    }
                 }
             }
 
@@ -79,6 +94,17 @@
                     margin-left: 5px;
                     border-radius: 2px;
                     margin-right: 5px;
+                }
+            }
+
+            @media screen and (max-width: 768px) {
+                flex-direction: column;
+                height: unset;
+
+                .toolbar-search,
+                .toolbar-button {
+                    margin-top: 5px;
+                    margin-bottom: 5px;
                 }
             }
         }
@@ -124,6 +150,15 @@
                             flex: auto;
                             text-align: center;
                             margin-top: 5%;
+                            position: relative;
+                            justify-content: center;
+                            align-items: center;
+                            display: flex;
+                            overflow: auto;
+                            img{
+                                max-height: 90%;
+                                max-width: 90%;
+                            }
                         }
 
                         .item-name {
@@ -149,11 +184,45 @@
                 }
             }
 
-            .property-wrapper {
+            .fm-property-wrapper {
                 flex: none;
                 border: 1px solid #ccc;
-                padding: 10px;
                 width: 250px;
+
+                .fm-property-header {
+                    height: 200px;
+                    border-bottom: 1px solid #ccc;
+                    justify-content: center;
+                    align-items: center;
+                    display: flex;
+                    img{
+                        max-height: 90%;
+                        max-width: 90%;
+                    }
+                    i{
+                        font-size: 96px;
+                    }
+                }
+
+                .fm-property-body {
+                    overflow: auto;
+                    max-height: 450px;
+                    .fm-property-item{
+                        padding: 5px;
+                        .fm-property-label{
+                            font-weight: 700;
+                        }
+                        .fm-property-value{
+                            margin-left: 2px;
+                        }
+                    }
+                }
+
+                @media screen and (max-width: 768px) {
+                    width: 100%;
+                    display: none;
+
+                }
             }
 
 
@@ -164,6 +233,7 @@
             min-height: 45px;
             display: flex;
             flex-direction: row;
+            flex: none;
 
             .footer-info {
                 flex: auto;
@@ -248,18 +318,33 @@
         }
 
         .fm-modal-body {
-            padding: 10px;
+            padding: 15px;
             min-height: 50px;
 
             .fm-upload-file {
+                cursor: pointer;
+                user-select: none;
+                /* Standard syntax */
+                -moz-user-select: none;
+                /* Firefox */
+                -webkit-user-select: none;
+                /* Chrome, Safari, and Opera */
+                -ms-user-select: none;
+                /* Internet Explorer/Edge */
+                font-weight: 700;
+                font-size: 20px;
                 width: 100%;
                 min-height: 200px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 border: 1px dashed #a9a9a9;
-                border-radius: 3px;
+                border-radius: 5px;
                 padding: 10px;
+
+                &:hover {
+                    background-color: #f5f5f5;
+                }
             }
         }
 
