@@ -227,8 +227,8 @@ export class FileManager extends Application {
     `;
   }
 }
-window.FileManager2 = FileManager.run()
-  .onCallback((data) => console.log(data))
-  .onDestroy(() => {
-    window.FileManager2 = null;
-  });
+// window.FileManager2 = FileManager.run(null, null, function () {
+//   this.onCallback((data) => console.log(data));
+// }).onDestroy(() => {
+//   window.FileManager2 = null;
+// });

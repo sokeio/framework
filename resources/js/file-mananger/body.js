@@ -33,7 +33,6 @@ export class Body extends Component {
           if (parseFloat(rsInt) + 0.9 < rs) {
             rsInt = rsInt + 1;
           }
-          console.log({ rs, rsInt });
           let widthBox = parseInt(wrapperWidth / rsInt) - 4;
 
           this.widthBox = widthBox;

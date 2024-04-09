@@ -77,11 +77,14 @@ export class Application extends Component {
     });
     return template.content.firstChild;
   }
-  static run($selectorOrEl = null, $attrs = null) {
+  static run($selectorOrEl = null, $attrs = null, $initCallback = null) {
     let app = this.make();
     app.$main = app;
     if ($attrs) {
       app.setProps($attrs);
+    }
+    if ($initCallback) {
+      $initCallback.bind(app);
     }
     app.onReady(() => {
       if ($selectorOrEl && typeof $selectorOrEl === "string") {

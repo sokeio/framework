@@ -8,10 +8,32 @@ export class Footer extends Component {
   init() {
     this.$main.watch("selectFiles", (newValue, oldValue, proValue) => {
       this.fileSelectedCount = this.$main.selectFiles?.length ?? 0;
+      if (this.fileSelectedCount > 0) {
+        this.query(".btn-ok", (el) => {
+          el.removeAttribute("disabled");
+          el.removeAttribute("style");
+        });
+      } else {
+        this.query(".btn-ok", (el) => {
+          el.setAttribute("disabled", true);
+        });
+      }
     });
     this.$main.watch("selectFolders", (newValue, oldValue, proValue) => {
       this.folderSelectedCount = this.$main.selectFolders?.length ?? 0;
-    })
+    });
+    this.onReady(() => {
+      if (!this.$main.$callbackEvent) {
+        this.query(".btn-ok", (el) => {
+          el.setAttribute("disabled", true);
+          el.setAttribute("style", "pointer-events: none;display: none;");
+        });
+        this.query(".btn-cancel", (el) => {
+          el.setAttribute("disabled", true);
+          el.setAttribute("style", "pointer-events: none;display: none;");
+        });
+      }
+    });
   }
   closeApp() {
     this.$main.closeApp();
@@ -33,8 +55,8 @@ export class Footer extends Component {
         </div>
       </div>
       <div class="footer-button">
-        <button class="btn btn-danger" s-on:click="this.closeApp()">Cancel</button>
-        <button class="btn btn-blue" s-on:click="this.selectOk()">OK</button>
+        <button class="btn btn-danger btn-cancel" s-on:click="this.closeApp()">Cancel</button>
+        <button class="btn btn-blue btn-ok" disabled s-on:click="this.selectOk()">OK</button>
       </div>
     </div>
       `;
