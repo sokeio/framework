@@ -1,46 +1,16 @@
 import { Component } from "../sokeio/component";
 
 export class Body extends Component {
-  state = {
-    demo: 123,
-    widthBox: 200,
-  };
+  state = {};
   init() {
     this.$main.watch(["files", "folders"], (newValue, oldValue, proValue) => {
       this.refreshUI();
-    });
-    this.onResize(() => {
-      this.refreshUI();
-    });
-    this.onReady(() => {
-      this.callWithBox();
     });
   }
   refreshUI() {
     this.runTimeout(() => {
       this.runRender();
     }, "refreshUI");
-  }
-  callWithBox() {
-    this.query(".body-content .box-wrapper", (el) => {
-      this.runTimeout(
-        () => {
-          const wrapperWidth = el.offsetWidth-8;
-          const minBoxWidth = 180;
-
-          let rs = wrapperWidth / minBoxWidth;
-          let rsInt = parseInt(rs);
-          if (parseFloat(rsInt) + 0.9 < rs) {
-            rsInt = rsInt + 1;
-          }
-          let widthBox = parseInt(wrapperWidth / rsInt) - 4;
-
-          this.widthBox = widthBox;
-        },
-        "callWithBox",
-        500
-      );
-    });
   }
   afterRender() {
     this.query(".body-content .box-wrapper", (el) => {

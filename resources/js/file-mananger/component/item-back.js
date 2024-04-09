@@ -2,11 +2,7 @@ import { Component } from "../../sokeio/component";
 
 export class ItemBack extends Component {
   state = {};
-  init() {
-    this.onReady(() => {
-      this.$el.style.width = this.parent.widthBox + "px";
-    });
-  }
+  init() {}
   backFolder() {
     this.$main.backFolder();
   }

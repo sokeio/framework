@@ -8,22 +8,34 @@ export class Footer extends Component {
   init() {
     this.$main.watch("selectFiles", (newValue, oldValue, proValue) => {
       this.fileSelectedCount = this.$main.selectFiles?.length ?? 0;
-      if (this.fileSelectedCount > 0) {
-        this.query(".btn-ok", (el) => {
-          el.removeAttribute("disabled");
-          el.removeAttribute("style");
-        });
-      } else {
-        this.query(".btn-ok", (el) => {
-          el.setAttribute("disabled", true);
-        });
+      if (this.$main.isCallback()) {
+        if (this.fileSelectedCount > 0) {
+          this.query(".btn-ok", (el) => {
+            el.removeAttribute("disabled");
+            el.removeAttribute("style");
+          });
+        } else {
+          this.query(".btn-ok", (el) => {
+            el.setAttribute("disabled", true);
+            el.removeAttribute("style");
+          });
+        }
       }
     });
     this.$main.watch("selectFolders", (newValue, oldValue, proValue) => {
       this.folderSelectedCount = this.$main.selectFolders?.length ?? 0;
     });
     this.onReady(() => {
-      if (!this.$main.$callbackEvent) {
+      if (this.$main.isCallback()) {
+        this.query(".btn-ok", (el) => {
+          el.setAttribute("disabled", true);
+          el.removeAttribute("style");
+        });
+        this.query(".btn-cancel", (el) => {
+          el.removeAttribute("disabled");
+          el.removeAttribute("style");
+        });
+      } else {
         this.query(".btn-ok", (el) => {
           el.setAttribute("disabled", true);
           el.setAttribute("style", "pointer-events: none;display: none;");

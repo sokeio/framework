@@ -133,11 +133,28 @@
                     -ms-user-select: none;
                     /* Internet Explorer/Edge */
                     float: left;
-                    width: 180px;
+                    width: 16.16666%;
                     height: 200px;
                     padding: 4px;
                     cursor: pointer;
                     display: flex;
+
+                    @media screen and (max-width: 1600px) {
+                        width: 16.66%;
+
+                    }
+
+                    @media screen and (max-width: 1440px) {
+                        width: 20%;
+                    }
+
+                    @media screen and (max-width: 1024px) {
+                        width: 25%;
+                    }
+
+                    @media screen and (max-width: 768px) {
+                        width: 33.33%;
+                    }
 
                     .item-wrapper {
                         border-radius: 3px;
@@ -155,7 +172,8 @@
                             align-items: center;
                             display: flex;
                             overflow: auto;
-                            img{
+
+                            img {
                                 max-height: 90%;
                                 max-width: 90%;
                             }
@@ -195,11 +213,13 @@
                     justify-content: center;
                     align-items: center;
                     display: flex;
-                    img{
+
+                    img {
                         max-height: 90%;
                         max-width: 90%;
                     }
-                    i{
+
+                    i {
                         font-size: 96px;
                     }
                 }
@@ -207,12 +227,15 @@
                 .fm-property-body {
                     overflow: auto;
                     max-height: 450px;
-                    .fm-property-item{
+
+                    .fm-property-item {
                         padding: 5px;
-                        .fm-property-label{
+
+                        .fm-property-label {
                             font-weight: 700;
                         }
-                        .fm-property-value{
+
+                        .fm-property-value {
                             margin-left: 2px;
                         }
                     }

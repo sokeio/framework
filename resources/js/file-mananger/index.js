@@ -92,7 +92,12 @@ export class FileManager extends Application {
   closeApp() {
     this.destroy();
   }
+  isCallback() {
+    console.log("isCallback", this.$callbackEvent);
+    return !!this.$callbackEvent;
+  }
   onCallback($callback) {
+    console.log("onCallback", $callback);
     this.$callbackEvent = $callback;
     return this;
   }
@@ -110,16 +115,16 @@ export class FileManager extends Application {
       if (window.SokeioManager) {
         this.$axios = window.SokeioManager.getAxios();
         if (this.$axios) {
-          this.refeshData();
+          this.refreshData();
         }
       }
     });
     window.addEventListener("sokeio::ready", (e) => {
       this.$axios = window.SokeioManager.getAxios();
-      this.refeshData();
+      this.refreshData();
     });
   }
-  refeshData() {
+  refreshData() {
     this.actionManager("load");
   }
   setDataFileManager($response) {
@@ -227,8 +232,8 @@ export class FileManager extends Application {
     `;
   }
 }
-// window.FileManager2 = FileManager.run(null, null, function () {
-//   this.onCallback((data) => console.log(data));
-// }).onDestroy(() => {
-//   window.FileManager2 = null;
-// });
+window.FileManager2 = FileManager.run(null, null, function () {
+  this.onCallback((data) => console.log(data));
+}).onDestroy(() => {
+  window.FileManager2 = null;
+});

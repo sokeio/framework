@@ -9,7 +9,6 @@ export class File extends Component {
       this.file = this.$props.file;
     });
     this.onReady(() => {
-      this.$el.style.width = this.parent.widthBox + "px";
       this.$main.watch(
         "selectFiles",
         (newValue, oldValue, proValue) => {

@@ -38,14 +38,18 @@ export class Toolbar extends Component {
   downloadSelected() {
     console.log("downloadSelected");
   }
+  refreshData() {
+    this.$main.refreshData();
+  }
   render() {
     return `
     <div class="fm-toolbar">
       <div class="toolbar-button">
+        <button class="btn btn-primary" s-on:click="this.refreshData()"><i class="ti ti-refresh"></i> <span>Refresh</span></button>
         <button class="btn btn-primary" s-on:click="this.showCreateFolder()"><i class="ti ti-folder-plus"></i> <span>Create Folder</span></button>
         <button class="btn btn-primary" s-on:click="this.showUploadFile()"><i class="ti ti-upload"></i><span> Upload</span></button>
         <button class="btn btn-primary d-none" s-on:click="this.downloadSelected()"><i class="ti ti-download"></i><span> Download</span></button>
-        <button class="btn btn-primary btn-item-selected" disabled s-on:click="this.deleteSelected()"><i class="ti ti-trash"></i><span> Delete</span></button>
+        <button class="btn btn-primary btn-item-selected d-none" disabled s-on:click="this.deleteSelected()"><i class="ti ti-trash"></i><span> Delete</span></button>
       </div>
       <div class="toolbar-search">
         <input s-model="searchText.demo" s-on:enter="this.doSearch()" type="text" class="form-control" placeholder="Search">

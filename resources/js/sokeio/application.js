@@ -84,7 +84,7 @@ export class Application extends Component {
       app.setProps($attrs);
     }
     if ($initCallback) {
-      $initCallback.bind(app);
+      $initCallback.bind(app)();
     }
     app.onReady(() => {
       if ($selectorOrEl && typeof $selectorOrEl === "string") {

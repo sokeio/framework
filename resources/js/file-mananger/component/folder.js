@@ -9,7 +9,6 @@ export class Folder extends Component {
       this.folder = this.$props.folder;
     });
     this.onReady(() => {
-      this.$el.style.width = this.parent.widthBox + "px";
       this.$main.watch(
         "selectFolders",
         (newValue, oldValue, proValue) => {
