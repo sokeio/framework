@@ -6,7 +6,6 @@ export class ToastsModule extends SokeioPlugin {
   }
   initPosition() {
     let self = this;
-    self.getManager().rem;
     Object.keys(self.postion).forEach((key) => {
       self.postion_el[key] = self
         .getManager()

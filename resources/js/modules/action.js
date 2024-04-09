@@ -8,6 +8,7 @@ export class ActionModule extends SokeioPlugin {
     let self = this;
     self.getManager().onDocument("click", "[sokeio\\:action]", function (e) {
       let elCurrentTarget = e.target;
+      if (!elCurrentTarget) return;
       elCurrentTarget.setAttribute("sokeio:action-loading", "");
       let action = elCurrentTarget.getAttribute("sokeio:action");
       let url = elCurrentTarget.getAttribute("sokeio:action-url");

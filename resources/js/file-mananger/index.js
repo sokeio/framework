@@ -3,9 +3,11 @@ import { Body } from "./body";
 import { File } from "./component/file";
 import { Folder } from "./component/folder";
 import { ItemBack } from "./component/item-back";
+import { CtxMenu } from "./ctxmenu";
 import { Footer } from "./footer";
 import { Header } from "./header";
 import { CreateFolder } from "./modal/create-folder";
+import { EditImage } from "./modal/edit-image";
 import { UploadFile } from "./modal/upload-file";
 import { PropertyInfo } from "./property";
 import { Toolbar } from "./toolbar";
@@ -22,6 +24,8 @@ export class FileManager extends Application {
     "fm:CreateFolder": CreateFolder,
     "fm:UploadFile": UploadFile,
     "fm:ItemBack": ItemBack,
+    "fm:EditImage": EditImage,
+    "fm:CtxMenu": CtxMenu,
   };
   state = {
     searchText: "",
@@ -40,9 +44,23 @@ export class FileManager extends Application {
   };
   $axios;
   $callbackEvent;
+  $contextMenu;
   cast = {
     // demo: (v) => parseInt(v),
   };
+  editItem($item) {
+    let editItem = this.getComponentByName(
+      "fm:EditImage",
+      {
+        item: $item,
+        callback: (data) => {
+          console.log(data);
+        },
+      },
+      this
+    );
+    editItem.runComponent();
+  }
   selectFile($file) {
     if (!this.selectFiles.includes($file)) {
       this.selectFiles = [...this.selectFiles, $file];
@@ -113,6 +131,9 @@ export class FileManager extends Application {
           this.refreshData();
         }
       }
+      this.$contextMenu = this.getComponentByName("fm:CtxMenu", {}, this);
+      this.$contextMenu.runComponent();
+      this.$el.appendChild(this.$contextMenu.$el);
     });
     window.addEventListener("sokeio::ready", (e) => {
       this.$axios = window.SokeioManager.getAxios();

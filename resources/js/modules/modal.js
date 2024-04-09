@@ -9,6 +9,7 @@ export class ModalModule extends SokeioPlugin {
     let self = this;
     self.getManager().onDocument("click", "[sokeio\\:modal]", function (e) {
       let elCurrentTarget = e.target;
+      if (!elCurrentTarget) return;
       let $url = elCurrentTarget.getAttribute("sokeio:modal");
       let $modelField = elCurrentTarget.getAttribute("sokeio:model");
       if (!$url) return;

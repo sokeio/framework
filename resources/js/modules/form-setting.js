@@ -11,6 +11,7 @@ export class FormSettingModule extends SokeioPlugin {
       .getManager()
       .onDocument("click", "[sokeio\\:form-setting]", function (e) {
         let elCurrentTarget = e.target;
+        if (!elCurrentTarget) return;
         let $keyform = elCurrentTarget.getAttribute("sokeio:form-setting");
         if (!$keyform) return;
         console.log($keyform);

@@ -37,6 +37,11 @@ export class Folder extends Component {
     this.on("dblclick", (e) => {
       this.$main.changePath(this.folder.path);
     });
+    this.on('contextmenu', (e) => {
+      this.$main.selectFolder(this.folder);
+      e.preventDefault();
+      this.$main.$contextMenu.setEvent(e);
+    })
   }
 
   touchFolder() {

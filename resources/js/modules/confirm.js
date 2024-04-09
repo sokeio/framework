@@ -19,9 +19,10 @@ export class ConfirmModule extends SokeioPlugin {
   }
   clickEvent(e) {
     const self = this;
-    e.stopPropagation();
-    e.stopImmediatePropagation();
+    e.preventDefault && e.preventDefault();
+    e.stopImmediatePropagation && e.stopImmediatePropagation();
     let elCurrentTarget = e.target;
+    if (!elCurrentTarget) return;
     let message = elCurrentTarget.getAttribute("sokeio:confirm");
     let title = elCurrentTarget.getAttribute("sokeio:confirm-title") ?? "";
     let btnYes = elCurrentTarget.getAttribute("sokeio:confirm-yes") ?? "Yes";

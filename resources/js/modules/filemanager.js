@@ -17,6 +17,7 @@ export class FileManagerModule extends SokeioPlugin {
     e.stopImmediatePropagation && e.stopImmediatePropagation();
     e.preventDefault && e.preventDefault();
     let elCurrentTarget = e.target;
+    if (!elCurrentTarget) return;
     let parentEl = elCurrentTarget.closest("[wire\\:id]");
     let componentId = parentEl?.getAttribute("wire:id");
     let filemanagerModel = elCurrentTarget?.getAttribute("sokeio:filemanager");

@@ -6,6 +6,9 @@ export class Body extends Component {
     this.$main.watch(["files", "folders"], (newValue, oldValue, proValue) => {
       this.refreshUI();
     });
+    this.on("contextmenu", (e) => {
+      e.preventDefault();
+    });
   }
   refreshUI() {
     this.runTimeout(() => {

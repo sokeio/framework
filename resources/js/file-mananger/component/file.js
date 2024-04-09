@@ -34,6 +34,11 @@ export class File extends Component {
       }
       this.$main.selectFile(this.file);
     });
+    this.on("contextmenu", (e) => {
+      this.$main.selectFile(this.file);
+      e.preventDefault();
+      this.$main.$contextMenu.setEvent(e);
+    });
   }
   isImage() {
     return this.file && /^image\/[a-z]+$/.test(this.file.mime_type);
