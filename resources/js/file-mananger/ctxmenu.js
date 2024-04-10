@@ -1,49 +1,62 @@
 import { Component } from "../sokeio/component";
 
 export class CtxMenu extends Component {
-  state = {};
+  state = {
+    item: null,
+  };
   closeApp() {
     this.$main.closeApp();
   }
   init() {
-    document.addEventListener("click", (e) => {
-      this.$el.style.display = "none";
+    let hideCtxMenu = () => {
+      if (this.$el?.style?.display) {
+        this.$el.style.display = "none";
+      }
+    };
+    this.onDestroy(() => {
+      document.removeEventListener("click", hideCtxMenu);
     });
+    document.addEventListener("click", hideCtxMenu);
   }
-  setEvent(e) {
+  setEvent(e, item) {
+    e.preventDefault && e.preventDefault();
+    e.stopPropagation && e.stopPropagation();
+    e.stopImmediatePropagation && e.stopImmediatePropagation();
+    this.item = item;
     this.$el.style.display = "block";
     const menuX = e.clientX + 1;
     const menuY = e.clientY + 1;
     this.$el.style.left = menuX + "px";
     this.$el.style.top = menuY + "px";
+    this.queryAll(".item-folder", (el) => {
+      if (item && item.type == "folder") {
+        el.style.display = "block";
+      } else {
+        el.style.display = "none";
+      }
+    });
+    this.queryAll(".item-file", (el) => {
+      if (item && item.type == "file") {
+        el.style.display = "block";
+      } else {
+        el.style.display = "none";
+      }
+    });
   }
-  editImage(){
-    this.$main.editImage(null);
+  editImage() {
+    this.$main.editImage(this.item);
+  }
+  downloadFile() {
+    this.$main.actionManager("downloadFile", { item: this.item }, (rs) => {});
   }
   render() {
     return `
     <ul class="fm-ctxmenu">
-        <li title="JS Functions" class="heading"><span>Actions</span></li>
-        <li title="" class="interactive" s-on:click="this.editImage()"><span>Edit Image</span></li>
-        <li class="divider"></li><li title="links (<a>)" class="heading"><span>Anchors</span></li>
-        <li title="opens in new tab" class="interactive"><a href="https://www.cssscript.com" target="_blank"><span>CSSScript (new tab)</span></a></li>
-        <li class="divider"></li><li title="Tooltips are awesome" class="heading"><span>Tooltips</span></li>
-        <li title="Disabled items can also have a tooltip" class="disabled"><span>Hover me!</span></li>
-        <li class="divider"></li><li title="Properties can also be defined by a tooltip" class="heading"><span>Callbacks</span></li>
-        <li title="Disabled items can also have a tooltip" class="disabled"><span>Every property can be defined in a callback</span></li>
-        <li title="" class="interactive submenu"><span>Submenus can also be defined in a callback.</span></li>
-        <li class="divider"></li>
-        <li title="" class="heading"><span>Custom Elements</span></li>
-        <li title="" class="disabled submenu"><select style="margin: 2px 20px"><option>Option1</option><option>Option2</option></select></li>
-        <li title="" class="disabled submenu"><img src="https://www.jqueryscript.net/favicon.ico" style="margin: 2px 20px; height: 32px;"></li>
-        <li class="divider"></li>
-        <li title="" class="heading"><span>Styling</span></li>
-        <li title="No need to provide a completely custom element" style="font-style: italic; font-weight: normal; text-decoration: underline; transform: skewY(1.5deg); transform-origin: left; color: #ee9900; letter-spacing: 2px; margin-bottom: 10px;" class="heading"><span>Items can be individually styled</span></li>
-        <li class="divider"></li><li title="" class="heading"><span>Menuception</span></li>
-        <li title="" class="interactive submenu"><span>more ...</span></li>
-        <li title="" class="interactive submenu"><span>even more actions</span></li>
-        <li class="divider"></li><li title="" class="heading"><span>Event specific stuff</span></li>
-        <li title="" class="interactive"><span>Hover me!</span></li>
+        <li title="JS Functions" class="heading"><span>Action</span></li>
+        <li title="Rename" class="interactive" s-on:click="this.editImage()"><span>Rename</span></li>
+        <li title="Delete" class="interactive" s-on:click="this.editImage()"><span>Delete</span></li>
+        <li title="Download" class="interactive item-file" s-on:click="this.downloadFile()"><span>Download</span></li>
+        <li title="Edit Image" class="interactive item-file" s-on:click="this.editImage()"><span>Edit Image</span></li>
     </ul>
       `;
   }

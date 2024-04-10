@@ -69,7 +69,7 @@ class UrlGenerator extends LaravelUrlGenerator
     {
         $locale = app()->getLocale();
 
-        if (!$this->hideDefaultLocale($locale)) {
+        if (!sokeioIsAdmin() && !$this->hideDefaultLocale($locale)) {
             $name = $locale . '.' . $name;
         }
 

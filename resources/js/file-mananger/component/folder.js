@@ -38,9 +38,8 @@ export class Folder extends Component {
       this.$main.changePath(this.folder.path);
     });
     this.on('contextmenu', (e) => {
-      this.$main.selectFolder(this.folder);
-      e.preventDefault();
-      this.$main.$contextMenu.setEvent(e);
+      this.$main.touchFolder(this.folder,true);
+      this.$main.$contextMenu.setEvent(e, this.folder);
     })
   }
 

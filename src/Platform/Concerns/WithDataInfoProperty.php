@@ -20,7 +20,7 @@ trait WithDataInfoProperty
     }
     public function url($_path = '')
     {
-        return url(platformPath($this->baseType, $this->getName() . ($_path ? ('/' . $_path) : '')));
+        return asset(platformPath($this->baseType, $this->getName() . ($_path ? ('/' . $_path) : '')));
     }
     public function getFiles()
     {

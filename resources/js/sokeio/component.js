@@ -12,6 +12,12 @@ export class Component extends BaseJS {
   __eMount = [];
   __eDestroy = [];
   __eFeature = null;
+  bodyOverflowHide($class = "overflow-hide") {
+    document.body.classList.add($class);
+    this.onDestroy(() => {
+      document.body.classList.remove($class);
+    });
+  }
   setProps($props) {
     this.$props = $props;
     return this;
@@ -82,7 +88,7 @@ export class Component extends BaseJS {
       els.forEach(($el) => {
         $callback.bind(this)($el);
       });
-      return el;
+      return els;
     }
     if (typeof selectorOrEl === "string") {
       return this.$el.querySelectorAll(selectorOrEl);

@@ -126,7 +126,7 @@ class SokeioServiceProvider extends ServiceProvider
             echo  \Livewire\Mechanisms\FrontendAssets\FrontendAssets::scripts();
             $scriptSokeio = file_get_contents(__DIR__ . '/../sokeio.js');
             $arrConfigjs = [
-                'url' => url(''),
+                'url' => asset(''),
                 'sokeio_url' => route('__sokeio__'),
                 'csrf_token' => csrf_token(),
                 'sokeio_icon_setting' => [

@@ -57,7 +57,7 @@ export class LiveWireTinymceModule extends SokeioPlugin {
                       });
                       elP.getAttributeNames().forEach((attr) => {
                         elFixDiv.setAttribute(attr, elP.getAttribute(attr));
-                      })
+                      });
                       elP.parentNode.insertBefore(elFixDiv, elP);
                       elP.parentNode.removeChild(elP);
                     }
@@ -70,36 +70,8 @@ export class LiveWireTinymceModule extends SokeioPlugin {
                 });
               },
               file_picker_callback: function (callback, value, meta) {
-                if (!self.getManager().$config["sokeio_filemanager"]) return;
-                const x =
-                  window.innerWidth ||
-                  document.documentElement.clientWidth ||
-                  document.getElementsByTagName("body")[0].clientWidth;
-                const y =
-                  window.innerHeight ||
-                  document.documentElement.clientHeight ||
-                  document.getElementsByTagName("body")[0].clientHeight;
-
-                let cmsURL =
-                  self.getManager().$config["sokeio_filemanager"] +
-                  "?editor=" +
-                  meta.fieldname;
-                if (meta.filetype == "image") {
-                  cmsURL = cmsURL + "&type=Images";
-                } else {
-                  cmsURL = cmsURL + "&type=Files";
-                }
-
-                tinyMCE.activeEditor.windowManager.openUrl({
-                  url: cmsURL,
-                  title: "Filemanager",
-                  width: x * 0.8,
-                  height: y * 0.8,
-                  resizable: "yes",
-                  close_previous: "no",
-                  onMessage: (api, message) => {
-                    callback(message.content);
-                  },
+                window.showFileManager(function (content) {
+                  callback(content[0].url);
                 });
               },
             });

@@ -53,7 +53,7 @@ export class FileManager extends Application {
       "fm:EditImage",
       {
         item: $item,
-        callback: (data) => {
+        onSave: (data) => {
           console.log(data);
         },
       },
@@ -69,11 +69,11 @@ export class FileManager extends Application {
     this.currentFolder = null;
     this.currentFile = $file;
   }
-  touchFile($file) {
+  touchFile($file, flg = false) {
     this.selectFolders = [];
     this.currentFolder = null;
     this.currentFile = $file;
-    if (this.selectFiles.includes($file)) {
+    if (this.selectFiles.includes($file) && !flg) {
       this.selectFiles = [];
     } else {
       this.selectFiles = [$file];
@@ -86,11 +86,11 @@ export class FileManager extends Application {
     this.currentFile = null;
     this.currentFolder = $folder;
   }
-  touchFolder($folder) {
+  touchFolder($folder, flg = false) {
     this.selectFiles = [];
     this.currentFile = null;
     this.currentFolder = $folder;
-    if (this.selectFolders.includes($folder)) {
+    if (this.selectFolders.includes($folder) && !flg) {
       this.selectFolders = [];
     } else {
       this.selectFolders = [$folder];
@@ -110,6 +110,9 @@ export class FileManager extends Application {
   }
   closeApp() {
     this.destroy();
+    if (this.$callbackEvent) {
+      this.$callbackEvent(false);
+    }
   }
   isCallback() {
     return !!this.$callbackEvent;
@@ -126,6 +129,7 @@ export class FileManager extends Application {
   }
   init() {
     this.onReady(() => {
+      this.bodyOverflowHide("fm-body-overflow-hide");
       if (window.SokeioManager) {
         this.$axios = window.SokeioManager.getAxios();
         if (this.$axios) {
@@ -249,8 +253,3 @@ export class FileManager extends Application {
     `;
   }
 }
-// window.FileManager2 = FileManager.run(null, null, function () {
-//   this.onCallback((data) => console.log(data));
-// }).onDestroy(() => {
-//   window.FileManager2 = null;
-// });

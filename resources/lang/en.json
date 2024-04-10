@@ -92,5 +92,13 @@
     "Clear Asset Platform": "Clear Asset Platform",
     "This feature will help you clear folders all in platform.": "This feature will help you clear folders all in platform.",
     "Clear Platform Folder": "Clear Platform Folder",
-    "Folder asset platform cleared": "Folder asset platform cleared"
+    "Folder asset platform cleared": "Folder asset platform cleared",
+    "Upload": "Upload",
+    "Download": "Download",
+    "Create Folder": "Create Folder",
+    "Refresh": "Refresh",
+    "Filter": "Filter",
+    "Mode View": "Mode View",
+    "Drop files here to upload": "Drop files here to upload",
+    "Logs Viewer": "Logs Viewer"
 }

@@ -46,6 +46,7 @@ class FileManangerController extends BaseController
         $storage = $this->getStorage($disk);
         return [
             'path' => $path,
+            'directory' => dirname($path),
             'name' => basename($path),
             'ext' => pathinfo($path, PATHINFO_EXTENSION),
             'mime_type' => $storage->mimeType($path),
@@ -86,6 +87,20 @@ class FileManangerController extends BaseController
                 ]);
             }
             $disk->makeDirectory($data['path'] . '/' . $data['name']);
+        }
+        if ($action === 'delete') {
+            $disk = $this->getStorage($data['disk'] ?? 'public');
+            $disk->delete($data['path']);
+        }
+        if ($action === 'rename') {
+            $disk = $this->getStorage($data['disk'] ?? 'public');
+            if ($disk->exists(dirname($data['path']) . '/' . $data['name'])) {
+                return Response::json([
+                    'status' => 'error',
+                    'message' => 'Name already exists'
+                ]);
+            }
+            $disk->rename($data['path'], dirname($data['path']) . '/' . $data['name']);
         }
         return $this->getDiskAll($data['disk'] ?? 'public', $data['path'] ?? '');
     }

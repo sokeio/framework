@@ -35,9 +35,8 @@ export class File extends Component {
       this.$main.selectFile(this.file);
     });
     this.on("contextmenu", (e) => {
-      this.$main.selectFile(this.file);
-      e.preventDefault();
-      this.$main.$contextMenu.setEvent(e);
+      this.$main.touchFile(this.file, true);
+      this.$main.$contextMenu.setEvent(e, this.file);
     });
   }
   isImage() {
