@@ -49,6 +49,15 @@ trait WithFieldBase
     {
         return $this->getValue('format');
     }
+    public function afterTemplate($afterTemplate): static
+    {
+        return $this->setKeyValue('afterTemplate', $afterTemplate);
+    }
+    public function getAfterTemplate()
+    {
+        return $this->getValue('afterTemplate');
+    }
+
     public function getFormFieldEncode()
     {
         return self::getFieldName($this->getFormField());
