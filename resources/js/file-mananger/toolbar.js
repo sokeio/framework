@@ -27,7 +27,13 @@ export class Toolbar extends Component {
   }
   doSearch() {}
   showCreateFolder() {
-    this.$main.isCreateFolder = true;
+    let elInputText = this.$main.inputText("Create Folder", "", (data) => {
+      this.$main.actionManager("createFolder", { name: data }, (rs) => {
+        if (rs) {
+          elInputText.doClose();
+        }
+      });
+    });
   }
   showUploadFile() {
     this.$main.isUploadFile = true;
@@ -52,8 +58,8 @@ export class Toolbar extends Component {
         <button class="btn btn-primary btn-item-selected d-none" disabled s-on:click="this.deleteSelected()"><i class="ti ti-trash"></i><span> Delete</span></button>
       </div>
       <div class="toolbar-search">
-        <input s-model="searchText.demo" s-on:enter="this.doSearch()" type="text" class="form-control" placeholder="Search">
-        <button s-on:click="this.doSearch()" class="btn btn-primary">Search</button>
+        <input s-model="searchText.demo" s-on:enter="this.doSearch()" type="text" class="form-control  d-none" placeholder="Search">
+        <button s-on:click="this.doSearch()" class="btn btn-primary  d-none">Search</button>
       </div>
     </div>
       `;

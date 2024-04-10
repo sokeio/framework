@@ -49,12 +49,47 @@ export class CtxMenu extends Component {
   downloadFile() {
     this.$main.actionManager("downloadFile", { item: this.item }, (rs) => {});
   }
+  rename() {
+    let elInputText = this.$main.inputText(
+      "Rename",
+      this.item.name_without_ext ?? this.item.name,
+      (data) => {
+        this.$main.actionManager(
+          "rename",
+          { item: this.item, name: data },
+          (rs) => {
+            if (rs) {
+              elInputText.doClose();
+            }
+          }
+        );
+      }
+    );
+  }
+  delete() {
+    let elConfirmDelete = this.$main.confirm(
+      "Delete",
+      "Are you sure you want to delete it?\n" +
+        (this.item.name_without_ext ?? this.item.name),
+      (data) => {
+        this.$main.actionManager(
+          "delete",
+          { item: this.item, name: data },
+          (rs) => {
+            if (rs) {
+              elConfirmDelete.doClose();
+            }
+          }
+        );
+      }
+    );
+  }
   render() {
     return `
     <ul class="fm-ctxmenu">
         <li title="JS Functions" class="heading"><span>Action</span></li>
-        <li title="Rename" class="interactive" s-on:click="this.editImage()"><span>Rename</span></li>
-        <li title="Delete" class="interactive" s-on:click="this.editImage()"><span>Delete</span></li>
+        <li title="Rename" class="interactive" s-on:click="this.rename()"><span>Rename</span></li>
+        <li title="Delete" class="interactive" s-on:click="this.delete()"><span>Delete</span></li>
         <li title="Download" class="interactive item-file" s-on:click="this.downloadFile()"><span>Download</span></li>
         <li title="Edit Image" class="interactive item-file" s-on:click="this.editImage()"><span>Edit Image</span></li>
     </ul>

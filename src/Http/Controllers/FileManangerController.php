@@ -48,6 +48,7 @@ class FileManangerController extends BaseController
             'path' => $path,
             'directory' => dirname($path),
             'name' => basename($path),
+            'name_without_ext' => pathinfo($path, PATHINFO_FILENAME),
             'ext' => pathinfo($path, PATHINFO_EXTENSION),
             'mime_type' => $storage->mimeType($path),
             'size' => $this->convertFileSize($storage->size($path)),
@@ -100,7 +101,7 @@ class FileManangerController extends BaseController
                     'message' => 'Name already exists'
                 ]);
             }
-            $disk->rename($data['path'], dirname($data['path']) . '/' . $data['name']);
+            $disk->move($data['path'], dirname($data['path']) . '/' . $data['name']);
         }
         return $this->getDiskAll($data['disk'] ?? 'public', $data['path'] ?? '');
     }

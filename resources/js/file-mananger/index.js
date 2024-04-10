@@ -6,8 +6,9 @@ import { ItemBack } from "./component/item-back";
 import { CtxMenu } from "./ctxmenu";
 import { Footer } from "./footer";
 import { Header } from "./header";
-import { CreateFolder } from "./modal/create-folder";
+import { Confirm } from "./modal/confirm";
 import { EditImage } from "./modal/edit-image";
+import { InputText } from "./modal/input-text";
 import { UploadFile } from "./modal/upload-file";
 import { PropertyInfo } from "./property";
 import { Toolbar } from "./toolbar";
@@ -21,7 +22,8 @@ export class FileManager extends Application {
     "fm:File": File,
     "fm:Folder": Folder,
     "fm:ItemInfo": PropertyInfo,
-    "fm:CreateFolder": CreateFolder,
+    "fm:InputText": InputText,
+    "fm:Confirm": Confirm,
     "fm:UploadFile": UploadFile,
     "fm:ItemBack": ItemBack,
     "fm:EditImage": EditImage,
@@ -61,6 +63,39 @@ export class FileManager extends Application {
     );
     editItem.runComponent();
     this.$el.appendChild(editItem.$el);
+    return editItem;
+  }
+  inputText(title, text, callback) {
+    let editItem = this.getComponentByName(
+      "fm:InputText",
+      {
+        title,
+        text,
+        onSave: (data) => {
+          this.runTimeout(() => callback(data), "inputText");
+        },
+      },
+      this
+    );
+    editItem.runComponent();
+    this.$el.appendChild(editItem.$el);
+    return editItem;
+  }
+  confirm(title, text, callback) {
+    let editItem = this.getComponentByName(
+      "fm:Confirm",
+      {
+        title,
+        text,
+        onSave: (data) => {
+          this.runTimeout(() => callback(data), "confirm");
+        },
+      },
+      this
+    );
+    editItem.runComponent();
+    this.$el.appendChild(editItem.$el);
+    return editItem;
   }
   selectFile($file) {
     if (!this.selectFiles.includes($file)) {
@@ -183,12 +218,14 @@ export class FileManager extends Application {
         onUploadProgress,
       })
       .then((response) => {
+        console.log(this);
         if (response.data.status == "error") {
           alert(response.data.message);
           if ($callback) {
             $callback(false, { message: response.data.message });
           }
         } else {
+          console.log(this);
           this.setDataFileManager(response.data);
           if ($callback) {
             $callback(true, {});
@@ -247,7 +284,6 @@ export class FileManager extends Application {
         [fm:Footer /]
         </div>
       </div>
-      [fm:CreateFolder /]
       [fm:UploadFile /]
     </div>
     `;

@@ -295,6 +295,12 @@ export class Component extends BaseJS {
     }
     this.__eFeature.runFeatures();
   }
+  doClose($callback = undefined) {
+    this.destroy();
+    if ($callback) {
+      $callback();
+    }
+  }
   getArrayFuncs() {
     return [super.getArrayFuncs()];
   }

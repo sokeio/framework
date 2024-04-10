@@ -100,6 +100,7 @@ export class PropertyInfo extends Component {
         el.innerHTML += propertyItemInput("URL", currentItem.url);
         el.innerHTML += propertyItem("Type", currentItem.mime_type);
         el.innerHTML += propertyItem("Size", currentItem.size);
+        el.innerHTML += propertyItem("Ext", "." + currentItem.ext);
       } else {
         el.innerHTML += propertyItem("File Count", currentItem.file_count);
       }
