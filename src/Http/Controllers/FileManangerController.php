@@ -58,7 +58,7 @@ class FileManangerController extends BaseController
             'modified_at' => Carbon::parse($storage->lastModified($path))->format('Y-m-d H:i:s')
         ];
     }
-    public function getDiskAll($disk = 'local', $directory = '')
+    private function getDiskAll($disk = 'local', $directory = '')
     {
         $storage = $this->getStorage($disk);
         return [
@@ -78,6 +78,12 @@ class FileManangerController extends BaseController
     }
     public function postIndex()
     {
+        if (!auth()->check()) {
+            return Response::json([
+                'status' => 'error',
+                'message' => 'Unauthorized'
+            ]);
+        }
         ['action' => $action, 'data' => $data] = request()->all();
         if ($action === 'createFolder') {
             $disk = $this->getStorage($data['disk'] ?? 'public');
@@ -107,6 +113,12 @@ class FileManangerController extends BaseController
     }
     public function postUpload()
     {
+        if (!auth()->check()) {
+            return Response::json([
+                'status' => 'error',
+                'message' => 'Unauthorized'
+            ]);
+        }
         ['disk' => $disk, 'path' => $path] = request()->all();
         $requestedFiles = request('files');
         if ($disk == '') {
