@@ -76,12 +76,29 @@ trait WithTable
     {
         return '';
     }
+    protected function getModalTitle($isNew = true, $row = null)
+    {
+        if ($isNew) {
+            return __('Create ' . $this->getTitle() ?? 'Form');
+        } else {
+            return __('Edit ' . $this->getTitle() ?? 'Form');
+        }
+    }
+    protected function getModalSize($isNew = true, $row = null)
+    {
+        return 'modal-lg';
+    }
     protected function getButtons()
     {
         return [
             UI::buttonCreate(__('Create'))
                 ->modalRoute($this->getRoute() . '.add')
-                ->modalTitle(__('Create Data'))
+                ->modalTitle(function () {
+                    return $this->getModalTitle();
+                })
+                ->modalSize(function () {
+                    return $this->getModalSize();
+                })
         ];
     }
 
@@ -93,7 +110,9 @@ trait WithTable
                 return [
                     'dataId' => $row->id
                 ];
-            })->modalTitle(__('Edit Data')),
+            })->modalTitle(function ($row) {
+                return $this->getModalTitle(false, $row);
+            }),
             UI::buttonRemove(__('Remove'))
                 ->confirm(__('Do you want to delete this record?'), 'Confirm')
                 ->wireClick(function ($item) {
