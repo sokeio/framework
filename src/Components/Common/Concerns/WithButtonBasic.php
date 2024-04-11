@@ -2,6 +2,7 @@
 
 namespace Sokeio\Components\Common\Concerns;
 
+use Sokeio\Components\UI;
 
 trait WithButtonBasic
 {
@@ -40,11 +41,11 @@ trait WithButtonBasic
     }
     public function large(): static
     {
-        return $this->buttonSize('large');
+        return $this->buttonSize(UI::BUTTON_LARGE);
     }
     public function small(): static
     {
-        return $this->buttonSize('sm');
+        return $this->buttonSize(UI::BUTTON_SMALL);
     }
 
     public function route($name, $paramOrcallback = [])

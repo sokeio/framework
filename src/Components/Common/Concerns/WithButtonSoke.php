@@ -2,6 +2,8 @@
 
 namespace Sokeio\Components\Common\Concerns;
 
+use Sokeio\Components\UI;
+
 trait WithButtonSoke
 {
     public function modalRoute($name, $paramOrcallback = []): static
@@ -31,40 +33,40 @@ trait WithButtonSoke
     }
     public function modalSmall()
     {
-        return $this->modalSize('modal-sm');
+        return $this->modalSize(UI::MODAL_SMALL);
     }
     public function modalLarge()
     {
-        return $this->modalSize('modal-lg');
+        return $this->modalSize(UI::MODAL_LARGE);
     }
     public function modalExtraLarge()
     {
-        return $this->modalSize('modal-xl');
+        return $this->modalSize(UI::MODAL_FULLSCREEN_XXL);
     }
     public function modalFullscreen()
     {
-        return $this->modalSize('modal-fullscreen');
+        return $this->modalSize(UI::MODAL_FULLSCREEN);
     }
     public function modalFullscreenSM()
     {
-        return $this->modalSize('modal-fullscreen-sm-down');
+        return $this->modalSize(UI::MODAL_FULLSCREEN_SM);
     }
     public function modalFullscreenMD()
     {
-        return $this->modalSize('modal-fullscreen-md-down');
+        return $this->modalSize(UI::MODAL_FULLSCREEN_MD);
     }
     public function modalFullscreenLG()
     {
-        return $this->modalSize('modal-fullscreen-lg-down');
+        return $this->modalSize(UI::MODAL_FULLSCREEN_LG);
     }
     public function modalFullscreenXL()
     {
-        return $this->modalSize('modal-fullscreen-xl-down');
+        return $this->modalSize(UI::MODAL_FULLSCREEN_XL);
     }
 
     public function modalFullscreenXXL()
     {
-        return $this->modalSize('modal-fullscreen-xxl-down');
+        return $this->modalSize(UI::MODAL_FULLSCREEN_XXL);
     }
 
     public function modalTitle($modalTitle): static

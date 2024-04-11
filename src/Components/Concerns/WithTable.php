@@ -112,6 +112,8 @@ trait WithTable
                 ];
             })->modalTitle(function ($row) {
                 return $this->getModalTitle(false, $row);
+            })->modalSize(function ($row) {
+                return $this->getModalSize(false, $row);
             }),
             UI::buttonRemove(__('Remove'))
                 ->confirm(__('Do you want to delete this record?'), 'Confirm')
