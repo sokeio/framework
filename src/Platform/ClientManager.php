@@ -20,6 +20,9 @@ class ClientManager
         if (file_exists(base_path('platform/sokeio.json'))) {
             $this->sokeioInfo = json_decode(File::get(base_path('platform/sokeio.json')), true) ?? [];
         }
+        if (isset($this->sokeioInfo['productId']) && $this->sokeioInfo['productId']) {
+            $this->productId = $this->sokeioInfo['productId'];
+        }
         $this->client = Http::withHeaders([
             'X-License-Product' => $this->productId,
             'X-License-Key' => $this->licenseKey,
