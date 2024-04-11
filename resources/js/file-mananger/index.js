@@ -56,7 +56,7 @@ export class FileManager extends Application {
       {
         item: $item,
         onSave: (data) => {
-          console.log(data);
+          console.log({ data });
         },
       },
       this

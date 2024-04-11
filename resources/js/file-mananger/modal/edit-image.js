@@ -15,11 +15,12 @@ export class EditImage extends Component {
         const config = {
           source: this.$props.item.url,
           onSave: (editedImageObject, designState) => {
-            this.$props.onSave({
-              item: this.$props.item,
-              image: editedImageObject,
-              design: designState,
-            });
+            console.log({ editedImageObject, designState });
+            // this.$props.onSave({
+            //   item: this.$props.item,
+            //   image: editedImageObject,
+            //   design: designState,
+            // });
           },
           annotationsCommon: {
             fill: "#ff0000",
@@ -85,10 +86,8 @@ export class EditImage extends Component {
       });
     };
     if (window.FilerobotImageEditor) {
-      console.log("FilerobotImageEditor");
       imageEditorCreate();
     } else {
-      console.log("addScriptToWindow");
       window.addScriptToWindow(
         window.SokeioManager.getUrlPublic(
           "platform/modules/sokeio/filerobot-image-editor/filerobot-image-editor.min.js"
