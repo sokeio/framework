@@ -12,6 +12,7 @@ class ClientManager
     private $versionApi = 'v1';
     private $productId = 'sokeio';
     private $licenseKey = 'jx26dpclu8d7vfhyjgsnlhviezcan612';
+    private $licenseInfo = [];
     private $sokeioInfo = [];
     private \Illuminate\Http\Client\PendingRequest $client;
     private function initClient()
@@ -22,7 +23,7 @@ class ClientManager
         $this->client = Http::withHeaders([
             'X-License-Product' => $this->productId,
             'X-License-Key' => $this->licenseKey,
-            'X-License-Domain' => config('app.url'),
+            'X-License-Domain' => $_SERVER['HTTP_HOST'],
             'Accept' => 'application/vnd.api+json',
         ])->baseUrl($this->domain .  $this->versionApi);
     }
@@ -109,10 +110,32 @@ class ClientManager
         File::copyDirectory($pathLocalTemp, $pathMoveTo);
         File::deleteDirectory($pathLocalTemp);
     }
-    public function checkLicense($key, $domain)
+    public function checkLicenseKey($key)
     {
-        $this->initClient();
-        $response = $this->client->get('check-license');
+        $response = $this->client->post('check-license-key', [
+            'key' => $key
+        ]);
         return $response->json('data');
+    }
+    public function checkLicense()
+    {
+        if (file_exists(base_path('platform/license.json'))) {
+            $this->licenseInfo = json_decode(File::get(base_path('platform/license.json')), true) ?? [];
+        }
+        if (!isset($this->licenseInfo['token']) || !$this->licenseInfo['token']) {
+            return false;
+        }
+        $response = $this->client->post('check-license', [
+            'token' => $this->licenseInfo['token']
+        ]);
+        return $response->json('data') != null;
+    }
+
+    public function getLicense()
+    {
+        if (!$this->checkLicense()) {
+            return false;
+        }
+        return $this->licenseInfo;
     }
 }
