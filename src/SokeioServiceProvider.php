@@ -262,6 +262,15 @@ class SokeioServiceProvider extends ServiceProvider
                             'admin.system.permalink-setting'
                         );
                     });
+                    menuAdmin()
+                        ->route(
+                            'admin.system.license',
+                            __('System License'),
+                            '<i class="ti ti-license fs-2"></i>',
+                            [],
+                            '',
+                            9999999999999999
+                        );
                 });
                 addFilter('SOKEIO_MENU_ITEM_MANAGER', function ($prev) {
                     return [

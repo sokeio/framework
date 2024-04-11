@@ -2,30 +2,10 @@
 
 namespace Sokeio\Components\Concerns;
 
-use Sokeio\Breadcrumb;
 
 trait WithLayoutUI
 {
-    protected function getTitle()
-    {
-        return null;
-    }
-    protected function getBreadcrumb()
-    {
-
-        if (sokeioIsAdmin()) {
-            return [
-                Breadcrumb::Item(__('Home'), route('admin.dashboard'))
-            ];
-        }
-        return [
-            Breadcrumb::Item(__('Home'), url(''))
-        ];
-    }
-    protected function doBreadcrumb()
-    {
-        breadcrumb()->title($this->getTitle())->breadcrumb($this->getBreadcrumb());
-    }
+    use WithBreadcrumb;
     private $actionUI = [];
     public function addActionUI($actonKey, $actonFn)
     {

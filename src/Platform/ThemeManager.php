@@ -28,9 +28,13 @@ class ThemeManager extends ActionHook
     {
         return $this->isAdmin;
     }
+    private $layoutDefault = '';
     public function layoutDefault()
     {
-        return 'default';
+        if (!$this->layoutDefault) {
+            $this->layoutDefault = applyFilters('PLATFORM_THEME_LAYOUT_DEFAULT', 'default');
+        }
+        return $this->layoutDefault;
     }
 
     public function isRegisterBeforeLoad()

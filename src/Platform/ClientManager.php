@@ -1,20 +1,24 @@
 <?php
 
-namespace Sokeio\Updater;
+namespace Sokeio\Platform;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use ZipArchive;
 
-class UpdaterManager
+class ClientManager
 {
     private $domain = 'https://sokeio.com/api/marketplace/';
     private $versionApi = 'v1';
     private $productId = 'sokeio';
     private $licenseKey = 'jx26dpclu8d7vfhyjgsnlhviezcan612';
+    private $sokeioInfo = [];
     private \Illuminate\Http\Client\PendingRequest $client;
     private function initClient()
     {
+        if (file_exists(base_path('platform/sokeio.json'))) {
+            $this->sokeioInfo = json_decode(File::get(base_path('platform/sokeio.json')), true) ?? [];
+        }
         $this->client = Http::withHeaders([
             'X-License-Product' => $this->productId,
             'X-License-Key' => $this->licenseKey,
@@ -29,16 +33,11 @@ class UpdaterManager
     }
     public function sokeioInstall()
     {
-        $path = base_path('platform/sokeio.json');
-        if (!File::exists($path)) {
-            return;
+        if (isset($this->sokeioInfo['modules']) && is_array($this->sokeioInfo['modules'])) {
+            $this->installLastVersion($this->sokeioInfo['modules'], 'module');
         }
-        $sokeioInfo = json_decode(File::get($path), true);
-        if (isset($sokeioInfo['modules']) && is_array($sokeioInfo['modules'])) {
-            $this->installLastVersion($sokeioInfo['modules'], 'module');
-        }
-        if (isset($sokeioInfo['themes']) && is_array($sokeioInfo['themes'])) {
-            $this->installLastVersion($sokeioInfo['themes'], 'theme');
+        if (isset($this->sokeioInfo['themes']) && is_array($this->sokeioInfo['themes'])) {
+            $this->installLastVersion($this->sokeioInfo['themes'], 'theme');
         }
     }
     public function getLastVersion($arrs = [], $type = 'module')
@@ -109,5 +108,11 @@ class UpdaterManager
         }
         File::copyDirectory($pathLocalTemp, $pathMoveTo);
         File::deleteDirectory($pathLocalTemp);
+    }
+    public function checkLicense($key, $domain)
+    {
+        $this->initClient();
+        $response = $this->client->get('check-license');
+        return $response->json('data');
     }
 }
