@@ -12,7 +12,7 @@ export class LiveWireTinymceModule extends SokeioPlugin {
         "tinymce",
         ({ el, directive, component, cleanup }) => {
           // Only fire this handler on the "root" directive.
-          if (directive.modifiers.length > 0 || el.livewire____tinymce) {
+          if (directive.modifiers.length > 0 || el.$wire_tinymce) {
             return;
           }
           let options = {};
@@ -22,17 +22,17 @@ export class LiveWireTinymceModule extends SokeioPlugin {
             )();
           }
           cleanup(() => {
-            if (el.livewire____tinymce && el.livewire____tinymce.remove) {
-              el.livewire____tinymce.remove();
-              el.livewire____tinymce = null;
+            if (el.$wire_tinymce && el.$wire_tinymce.remove) {
+              el.$wire_tinymce.remove();
+              el.$wire_tinymce = null;
             }
           });
           let modelKey =
             el.getAttribute("wire:tinymce-model") ??
             el.getAttribute("wire:model");
           const tinymceInit = () => {
-            if (el.livewire____tinymce) return;
-            el.livewire____tinymce = window.tinymce.init({
+            if (el.$wire_tinymce) return;
+            el.$wire_tinymce = window.tinymce.init({
               ...(self.getManager().$config["tinyecm_option"] ?? {}),
               ...options,
               promotion: false,

@@ -9,7 +9,7 @@ export class LiveWireSortablejsModule extends SokeioPlugin {
       let self = this;
       window.Livewire.directive("sortable", ({ el, directive, component }) => {
         // Only fire this handler on the "root" directive.
-        if (directive.modifiers.length > 0 || el.livewire____sortable) {
+        if (directive.modifiers.length > 0 || el.$wire_sortable) {
           return;
         }
         let options = {};
@@ -20,8 +20,8 @@ export class LiveWireSortablejsModule extends SokeioPlugin {
           )();
         }
         const SortableCreate = () => {
-          if (el.livewire____sortable) return;
-          el.livewire____sortable = window.Sortable.create(el, {
+          if (el.$wire_sortable) return;
+          el.$wire_sortable = window.Sortable.create(el, {
             animation: 150,
             ...options,
             draggable: "[wire\\:sortable\\.item]",
@@ -73,7 +73,7 @@ export class LiveWireSortablejsModule extends SokeioPlugin {
           // Only fire this handler on the "root" group directive.
           if (
             !directive.modifiers.includes("item-group") ||
-            el.livewire____sortable
+            el.$wire_sortable
           ) {
             return;
           }
@@ -87,8 +87,8 @@ export class LiveWireSortablejsModule extends SokeioPlugin {
           }
 
           const SortableCreate = () => {
-            if (el.livewire____sortable) return;
-            el.livewire____sortable = window.Sortable.create(el, {
+            if (el.$wire_sortable) return;
+            el.$wire_sortable = window.Sortable.create(el, {
               animation: 150,
               ...options,
               draggable: "[wire\\:sortable-group\\.item]",
@@ -116,7 +116,7 @@ export class LiveWireSortablejsModule extends SokeioPlugin {
                   return {
                     order: index + 1,
                     value: el.getAttribute("wire:sortable-group.item-group"),
-                    items: el.livewire____sortable
+                    items: el.$wire_sortable
                       .toArray()
                       .map((value, index) => {
                         return {

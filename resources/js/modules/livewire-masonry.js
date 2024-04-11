@@ -9,13 +9,13 @@ export class LiveWireMasonryModule extends SokeioPlugin {
       let self = this;
       window.Livewire.directive("masonry", ({ el, directive, component }) => {
         // Only fire this handler on the "root" directive.
-        if (directive.modifiers.length > 0 || el.livewire____masonry) {
+        if (directive.modifiers.length > 0 || el.$wire_masonry) {
           return;
         }
         let options = {};
         const masonryCreate = () => {
-          if (el.livewire____masonry) return;
-          el.livewire____masonry = new Masonry(el, options);
+          if (el.$wire_masonry) return;
+          el.$wire_masonry = new Masonry(el, options);
         };
         if (window.Masonry) {
           masonryCreate();

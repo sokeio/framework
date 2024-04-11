@@ -44,10 +44,11 @@ class FileManangerController extends BaseController
     private function getFileInfo($disk, $path)
     {
         $storage = $this->getStorage($disk);
+        $name = basename($path);
         return [
             'path' => $path,
-            'directory' => dirname($path),
-            'name' => basename($path),
+            'directory' => $name === $path ? '/' : dirname($path),
+            'name' => $name,
             'name_without_ext' => pathinfo($path, PATHINFO_FILENAME),
             'ext' => pathinfo($path, PATHINFO_EXTENSION),
             'mime_type' => $storage->mimeType($path),
@@ -66,14 +67,18 @@ class FileManangerController extends BaseController
             'disks' => ['local', 'public'],
             'path' => $directory,
             'name' => basename($directory),
-            'folders' => collect($storage->directories($directory))->map(function ($path) use ($disk) {
-                return $this->getFolderInfo($disk, $path);
-            }),
-            'files' => [...collect($storage->files($directory))->map(function ($path) use ($disk) {
-                return $this->getFileInfo($disk, $path);
-            })->filter(function ($file) {
-                return $file['size'] > 0 && $file['ext'] !== 'php' && !str($file['name'])->startsWith('.');
-            })]
+            'folders' => collect($storage->directories($directory))
+                ->sortBy('name', SORT_STRING)
+                ->map(function ($path) use ($disk) {
+                    return $this->getFolderInfo($disk, $path);
+                }),
+            'files' => [...collect($storage->files($directory))
+                ->sortBy('name', SORT_STRING)
+                ->map(function ($path) use ($disk) {
+                    return $this->getFileInfo($disk, $path);
+                })->filter(function ($file) {
+                    return $file['size'] > 0 && $file['ext'] !== 'php' && !str($file['name'])->startsWith('.');
+                })]
         ];
     }
     public function postIndex()
@@ -85,6 +90,8 @@ class FileManangerController extends BaseController
             ]);
         }
         ['action' => $action, 'data' => $data] = request()->all();
+        $item = $data['item'] ?? [];
+        $name = $data['name'] ?? '';
         if ($action === 'createFolder') {
             $disk = $this->getStorage($data['disk'] ?? 'public');
             if ($disk->exists($data['path'] . $data['name'])) {
@@ -95,19 +102,24 @@ class FileManangerController extends BaseController
             }
             $disk->makeDirectory($data['path'] . '/' . $data['name']);
         }
-        if ($action === 'delete') {
-            $disk = $this->getStorage($data['disk'] ?? 'public');
-            $disk->delete($data['path']);
+        if ($action === 'delete' && $data['disk'] && isset($item['type']) && isset($item['path'])) {
+            if ($item['type'] === 'folder') {
+                $disk = $this->getStorage($data['disk']);
+                $disk->deleteDirectory($item['path']);
+            } elseif ($item['type'] === 'file'  && $data['path'] === $item['directory']) {
+                $disk = $this->getStorage($data['disk']);
+                $disk->delete($item['path']);
+            }
         }
-        if ($action === 'rename') {
-            $disk = $this->getStorage($data['disk'] ?? 'public');
-            if ($disk->exists(dirname($data['path']) . '/' . $data['name'])) {
+        if ($action === 'rename' && $data['disk'] && isset($item['type']) && isset($item['path']) && $name) {
+            $disk = $this->getStorage($data['disk']);
+            if ($disk->exists(dirname($item['path']) . '/' . $name)) {
                 return Response::json([
                     'status' => 'error',
                     'message' => 'Name already exists'
                 ]);
             }
-            $disk->move($data['path'], dirname($data['path']) . '/' . $data['name']);
+            $disk->move($item['path'], dirname($item['path']) . '/' . $name);
         }
         return $this->getDiskAll($data['disk'] ?? 'public', $data['path'] ?? '');
     }

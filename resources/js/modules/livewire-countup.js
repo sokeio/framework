@@ -9,7 +9,7 @@ export class LiveWireCountUpModule extends SokeioPlugin {
       let self = this;
       window.Livewire.directive("countup", ({ el, directive, component }) => {
         // Only fire this handler on the "root" directive.
-        if (directive.modifiers.length > 0 || el.livewire____countup) {
+        if (directive.modifiers.length > 0 || el.$wire_countup) {
           return;
         }
         let options = {};
@@ -27,12 +27,12 @@ export class LiveWireCountUpModule extends SokeioPlugin {
           );
         }
         const countupCreate = () => {
-          if (el.livewire____countup) return;
-          el.livewire____countup = new window.CountUp(el, valueNumber, options);
-          if (!el.livewire____countup.error) {
-            el.livewire____countup.start();
+          if (el.$wire_countup) return;
+          el.$wire_countup = new window.CountUp(el, valueNumber, options);
+          if (!el.$wire_countup.error) {
+            el.$wire_countup.start();
           } else {
-            console.error(el.livewire____countup.error);
+            console.error(el.$wire_countup.error);
           }
         };
         if (window.CountUp) {

@@ -4,7 +4,7 @@
     height: 100%;
     top: 0;
     left: 0;
-    z-index: 1300 !important;
+    z-index: 1050 !important;
 
     .fm-wrapper {
         width: 90%;
@@ -122,7 +122,8 @@
             .box-wrapper {
                 max-height: 70vh;
                 overflow: auto;
-
+                padding: 0;
+                margin: 0;
                 .item-box {
                     user-select: none;
                     /* Standard syntax */
@@ -303,7 +304,7 @@
     top: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0.3);
-    z-index: 1300 !important;
+    z-index: 1050 !important;
     position: absolute;
 
 }
@@ -314,11 +315,11 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 1300 !important;
+    z-index: 1050 !important;
     margin: 0 auto;
 
     .fm-content {
-        z-index: 1300 !important;
+        z-index: 1050 !important;
         border-radius: 3px;
         border: 1px solid #ccc;
         background-color: #fff;
@@ -341,7 +342,7 @@
         }
 
         .fm-modal-body {
-            padding: 15px;
+            padding: 10px;
             min-height: 50px;
 
             .fm-upload-file {
@@ -374,7 +375,7 @@
         .fm-modal-footer {
 
             border-top: 1px solid #ccc;
-            padding: 10px;
+            padding: 5px 10px;
             text-align: right;
 
             .btn {

@@ -17,6 +17,7 @@ import { LiveWireFlatpickrModule } from "./modules/livewire-flatpickr";
 import { FormSettingModule } from "./modules/form-setting";
 import { LiveWireCarouselModule } from "./modules/livewire-carousel";
 import { LiveWireMasonryModule } from "./modules/livewire-masonry";
+import { LiveWireQrCodeModule } from "./modules/livewire-qrcode";
 let SokeioManager = new Sokeio();
 window.addEventListener("sokeio::register", function () {
   SokeioManager.registerPlugin(ConfirmModule);
@@ -36,6 +37,7 @@ window.addEventListener("sokeio::register", function () {
   SokeioManager.registerPlugin(LiveWireCarouselModule);
   SokeioManager.registerPlugin(FormSettingModule);
   SokeioManager.registerPlugin(LiveWireMasonryModule);
+  SokeioManager.registerPlugin(LiveWireQrCodeModule);
 });
 window.SokeioManager = SokeioManager;
 window.showToast = function (

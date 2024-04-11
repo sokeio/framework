@@ -9,7 +9,7 @@ export class LiveWireClipboardModule extends SokeioPlugin {
       let self = this;
       window.Livewire.directive("clipboard", ({ el, directive, component }) => {
         // Only fire this handler on the "root" directive.
-        if (directive.modifiers.length > 0 || el.livewire____clipboard) {
+        if (directive.modifiers.length > 0 || el.$wire_clipboard) {
           return;
         }
         let options = {};
@@ -20,8 +20,8 @@ export class LiveWireClipboardModule extends SokeioPlugin {
           )();
         }
         const clipboardCreate = () => {
-          if (el.livewire____clipboard) return;
-          el.livewire____clipboard = new window.Clipboard(el, options);
+          if (el.$wire_clipboard) return;
+          el.$wire_clipboard = new window.Clipboard(el, options);
         };
         if (window.Clipboard) {
           clipboardCreate();

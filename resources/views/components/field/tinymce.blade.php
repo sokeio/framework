@@ -6,7 +6,7 @@
 @endphp
 <div wire:ignore x-data="{
     async tinymceInit(value) {
-        let rs = await $refs['tinymce-{{ $formField }}'].livewire____tinymce;
+        let rs = await $refs['tinymce-{{ $formField }}'].$wire_tinymce;
         if (rs && rs[0]) {
             rs[0].setContent(value);
         }

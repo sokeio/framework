@@ -13,8 +13,8 @@
     class="form-control" wire:model='{{ $formField }}' name="{{ $modelField }}"
     placeholder="{{ $item->getPlaceholder() }}" x-init="@if ($toField) $watch('$wire.{{ $item->getModelField($toField) }}',
     function() {
-        $el.livewire____flatpickr.set('maxDate', $wire.{{ $item->getModelField($toField) }});
+        $el.$wire_flatpickr.set('maxDate', $wire.{{ $item->getModelField($toField) }});
     }); @endif @if ($fromField) $watch('$wire.{{ $item->getModelField($fromField) }};',
     function() {
-        $el.livewire____flatpickr.set('minDate', $wire.{{ $item->getModelField($fromField) }});
+        $el.$wire_flatpickr.set('minDate', $wire.{{ $item->getModelField($fromField) }});
     }); @endif">

@@ -54,7 +54,7 @@ export class Body extends Component {
     return `
     <div class="fm-body">
       <div class="body-content">
-        <div class="box-wrapper"></div>
+        <ul class="box-wrapper"></ul>
       </div>
       [fm:ItemInfo /]
     </div>

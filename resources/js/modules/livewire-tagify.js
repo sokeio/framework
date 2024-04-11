@@ -11,13 +11,13 @@ export class LiveWireTagifyModule extends SokeioPlugin {
         "tagify",
         ({ el, directive, component, cleanup }) => {
           // Only fire this handler on the "root" directive.
-          if (directive.modifiers.length > 0 || el.livewire____tagify) {
+          if (directive.modifiers.length > 0 || el.$wire_tagify) {
             return;
           }
           cleanup(() => {
-            if (el.livewire____tagify) {
-              el.livewire____tagify.destroy();
-              el.livewire____tagify = null;
+            if (el.$wire_tagify) {
+              el.$wire_tagify.destroy();
+              el.$wire_tagify = null;
             }
             el.removeEventListener("input", onInput);
             el.removeEventListener("change", onChange);
@@ -58,10 +58,10 @@ export class LiveWireTagifyModule extends SokeioPlugin {
           let modelKey = el.getAttribute("wire:model");
           const onInput = (e) => {
             var value = e.detail.value;
-            el.livewire____tagify.loading(true);
+            el.$wire_tagify.loading(true);
             component.$wire.callActionUI(options.whitelistAction,value).then(function (rs) {
-              el.livewire____tagify.whitelist = rs;
-              el.livewire____tagify.loading(false).dropdown.show(value);
+              el.$wire_tagify.whitelist = rs;
+              el.$wire_tagify.loading(false).dropdown.show(value);
             });
           };
           const onChange = (e) => {
@@ -71,12 +71,12 @@ export class LiveWireTagifyModule extends SokeioPlugin {
           };
           const tagifyCreate = () => {
             setTimeout(() => {
-              if (!el.livewire____tagify) {
-                el.livewire____tagify = new window.Tagify(el, options);
+              if (!el.$wire_tagify) {
+                el.$wire_tagify = new window.Tagify(el, options);
                 if (options.whitelistAction) {
-                  el.livewire____tagify.on("input", onInput);
+                  el.$wire_tagify.on("input", onInput);
                 }
-                el.livewire____tagify.on("change", onChange);
+                el.$wire_tagify.on("change", onChange);
               }
             }, 50);
           };

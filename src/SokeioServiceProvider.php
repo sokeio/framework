@@ -24,6 +24,7 @@ use Sokeio\Facades\Menu;
 use Sokeio\Facades\MenuRender;
 use Sokeio\Facades\Shortcode;
 use Sokeio\Icon\IconManager;
+use Sokeio\Livewire\HomePage;
 use Sokeio\Livewire\MenuItemLink;
 use Sokeio\Menu\MenuBuilder;
 use Sokeio\Shortcode\ShortcodeserviceProvider;
@@ -217,19 +218,11 @@ class SokeioServiceProvider extends ServiceProvider
             Platform::routeSiteBeforeReady(function () {
                 Route::get('/', routeFilter(
                     PLATFORM_HOMEPAGE,
-                    'sokeio::homepage'
+                    HomePage::class
                 ))->name('homepage');
             });
         }
         addFilter(PLATFORM_HOMEPAGE, function ($prev) {
-            if (function_exists('SeoHelper')) {
-                SeoHelper()->SEODataTransformer(function ($data) {
-                    $data['title'] = setting('PLATFORM_HOMEPAGE_TITLE');
-                    $data['description'] = setting('PLATFORM_HOMEPAGE_DESCRIPTION');
-                    return $data;
-                });
-            }
-
             Assets::setTitle(setting('PLATFORM_HOMEPAGE_TITLE'));
             Assets::setDescription(setting('PLATFORM_HOMEPAGE_DESCRIPTION'));
             return $prev;

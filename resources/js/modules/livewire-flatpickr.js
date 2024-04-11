@@ -9,7 +9,7 @@ export class LiveWireFlatpickrModule extends SokeioPlugin {
       let self = this;
       window.Livewire.directive("flatpickr", ({ el, directive, component }) => {
         // Only fire this handler on the "root" directive.
-        if (directive.modifiers.length > 0 || el.livewire____flatpickr) {
+        if (directive.modifiers.length > 0 || el.$wire_flatpickr) {
           return;
         }
         let options = {};
@@ -21,8 +21,8 @@ export class LiveWireFlatpickrModule extends SokeioPlugin {
         }
         let modelKey = el.getAttribute("wire:model");
         const flatpickrCreate = async () => {
-          if (el.livewire____flatpickr) return;
-          el.livewire____flatpickr = new window.flatpickr(el, {
+          if (el.$wire_flatpickr) return;
+          el.$wire_flatpickr = new window.flatpickr(el, {
             ...options,
             onChange: (selectedDates, dateStr, instance) => {
               self
@@ -31,7 +31,7 @@ export class LiveWireFlatpickrModule extends SokeioPlugin {
             },
           });
           // setTimeout(async () => {
-          //   el.livewire____flatpickr.setDate(
+          //   el.$wire_flatpickr.setDate(
           //     await self.getManager().dataGet(component.$wire, modelKey)
           //   );
           // }, 500);

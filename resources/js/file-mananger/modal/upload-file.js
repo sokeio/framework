@@ -32,12 +32,12 @@ export class UploadFile extends Component {
         el.addEventListener("change", (event) => {
           this.$main.UploadFile(
             [...event.target.files],
+            {},
             (rs, data) => {},
             (event) => {
               this.closeModal();
             }
           );
-          console.log(event.target.files);
         });
       });
     });

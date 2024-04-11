@@ -48,12 +48,12 @@ export class Folder extends Component {
   }
   render() {
     return `
-    <div class="item-box">
+    <li class="item-box">
       <div class="folder-box item-wrapper"  s-on:click="this.touchFolder();" >
         <div class="item-body"><i class="ti ti-folder" style="font-size: 96px;"></i></div>
         <div class="item-name" s-text="folder.name"></div>
       </div>
-    </div>
+    </li>
       `;
   }
 }

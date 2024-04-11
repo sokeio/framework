@@ -1,4 +1,5 @@
 import { Application } from "../sokeio/application";
+import { downloadFile } from "../utils";
 import { Body } from "./body";
 import { File } from "./component/file";
 import { Folder } from "./component/folder";
@@ -50,13 +51,102 @@ export class FileManager extends Application {
   cast = {
     // demo: (v) => parseInt(v),
   };
+
+  UploadFile(
+    files,
+    $initData = undefined,
+    $callback = undefined,
+    onUploadProgress = undefined
+  ) {
+    let formData = new FormData();
+    if (!Array.isArray(files)) {
+      files = [files];
+    }
+    for (let file of files) {
+      formData.append("files[]", file);
+    }
+    formData.append("disk", this.disk);
+    formData.append("path", this.path);
+    if ($initData && typeof $initData === "function") {
+      $initData(formData);
+    } else if ($initData && typeof $initData === "object") {
+      for (let key in $initData) {
+        formData.append(key, $initData[key]);
+      }
+    }
+    this.$axios
+      .post("/file-manager/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        onUploadProgress,
+      })
+      .then((response) => {
+        if (response.data.status == "error") {
+          alert(response.data.message);
+          if ($callback) {
+            $callback(false, { message: response.data.message });
+          }
+        } else {
+          this.setDataFileManager(response.data);
+          if ($callback) {
+            $callback(true, {});
+          }
+        }
+      })
+      .catch((error) => {
+        this.setDataFileManager({});
+        if ($callback) {
+          $callback(false, error);
+        }
+      });
+  }
+  actionManager($action = "load", $data = {}, $callback = undefined) {
+    this.$axios
+      .post("/file-manager", {
+        action: $action,
+        data: {
+          disk: this.disk,
+          path: this.path,
+          ...$data,
+        },
+      })
+      .then((response) => {
+        if (response.data.status == "error") {
+          alert(response.data.message);
+          if ($callback) {
+            $callback(false, { message: response.data.message });
+          }
+        } else {
+          this.setDataFileManager(response.data);
+          if ($callback) {
+            $callback(true, {});
+          }
+        }
+      })
+      .catch((error) => {
+        this.setDataFileManager({});
+        if ($callback) {
+          $callback(false, error);
+        }
+      });
+  }
   editImage($item) {
     let editItem = this.getComponentByName(
       "fm:EditImage",
       {
         item: $item,
         onSave: (data) => {
-          console.log({ data });
+          this.UploadFile(
+            [],
+            (formData) => {
+              formData.append("nameOld", data.nameOld);
+              formData.append("files", data.file, data.name);
+            },
+            (rs, data) => {
+              this.refreshData();
+            }
+          );
         },
       },
       this
@@ -96,6 +186,12 @@ export class FileManager extends Application {
     editItem.runComponent();
     this.$el.appendChild(editItem.$el);
     return editItem;
+  }
+  downloadFile($item) {
+    if ($item.type === "folder") {
+      return;
+    }
+    downloadFile($item.url, $item.name);
   }
   selectFile($file) {
     if (!this.selectFiles.includes($file)) {
@@ -198,76 +294,6 @@ export class FileManager extends Application {
       path: this.path,
       name: this.name,
     };
-  }
-  UploadFile(files, $callback = undefined, onUploadProgress = undefined) {
-    let formData = new FormData();
-    if (!Array.isArray(files)) {
-      files = [files];
-    }
-    for (let file of files) {
-      formData.append("files[]", file);
-    }
-    formData.append("disk", this.disk);
-    formData.append("path", this.path);
-
-    this.$axios
-      .post("/file-manager/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        onUploadProgress,
-      })
-      .then((response) => {
-        console.log(this);
-        if (response.data.status == "error") {
-          alert(response.data.message);
-          if ($callback) {
-            $callback(false, { message: response.data.message });
-          }
-        } else {
-          console.log(this);
-          this.setDataFileManager(response.data);
-          if ($callback) {
-            $callback(true, {});
-          }
-        }
-      })
-      .catch((error) => {
-        this.setDataFileManager({});
-        if ($callback) {
-          $callback(false, error);
-        }
-      });
-  }
-  actionManager($action = "load", $data = {}, $callback = undefined) {
-    this.$axios
-      .post("/file-manager", {
-        action: $action,
-        data: {
-          disk: this.disk,
-          path: this.path,
-          ...$data,
-        },
-      })
-      .then((response) => {
-        if (response.data.status == "error") {
-          alert(response.data.message);
-          if ($callback) {
-            $callback(false, { message: response.data.message });
-          }
-        } else {
-          this.setDataFileManager(response.data);
-          if ($callback) {
-            $callback(true, {});
-          }
-        }
-      })
-      .catch((error) => {
-        this.setDataFileManager({});
-        if ($callback) {
-          $callback(false, error);
-        }
-      });
   }
   getArrayFuncs() {
     return [...super.getArrayFuncs(), "$axios"];

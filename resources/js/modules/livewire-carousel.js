@@ -9,7 +9,7 @@ export class LiveWireCarouselModule extends SokeioPlugin {
       let self = this;
       window.Livewire.directive("carousel", ({ el, directive, component }) => {
         // Only fire this handler on the "root" directive.
-        if (directive.modifiers.length > 0 || el.livewire____carousel) {
+        if (directive.modifiers.length > 0 || el.$wire_carousel) {
           return;
         }
         let options = {};
@@ -20,10 +20,10 @@ export class LiveWireCarouselModule extends SokeioPlugin {
           )();
         }
         const clipboardCreate = () => {
-          if (el.livewire____carousel) return;
-          el.livewire____carousel =
+          if (el.$wire_carousel) return;
+          el.$wire_carousel =
             window.bootstrap.Carousel.getOrCreateInstance(el, options);
-          console.log(el.livewire____carousel);
+          console.log(el.$wire_carousel);
         };
         clipboardCreate();
       });

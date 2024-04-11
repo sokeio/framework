@@ -18,6 +18,14 @@ export class CtxMenu extends Component {
     });
     document.addEventListener("click", hideCtxMenu);
   }
+
+  isImage() {
+    return (
+      this.item &&
+      this.item.type == "file" &&
+      /^image\/[a-z]+$/.test(this.item.mime_type)
+    );
+  }
   setEvent(e, item) {
     e.preventDefault && e.preventDefault();
     e.stopPropagation && e.stopPropagation();
@@ -37,7 +45,15 @@ export class CtxMenu extends Component {
     });
     this.queryAll(".item-file", (el) => {
       if (item && item.type == "file") {
-        el.style.display = "block";
+        if (el.classList.contains("file-image")) {
+          if (this.isImage()) {
+            el.style.display = "block";
+          } else {
+            el.style.display = "none";
+          }
+        } else {
+          el.style.display = "block";
+        }
       } else {
         el.style.display = "none";
       }
@@ -47,7 +63,7 @@ export class CtxMenu extends Component {
     this.$main.editImage(this.item);
   }
   downloadFile() {
-    this.$main.actionManager("downloadFile", { item: this.item }, (rs) => {});
+    this.$main.downloadFile(this.item);
   }
   rename() {
     let elInputText = this.$main.inputText(
@@ -71,16 +87,13 @@ export class CtxMenu extends Component {
       "Delete",
       "Are you sure you want to delete it?\n" +
         (this.item.name_without_ext ?? this.item.name),
-      (data) => {
-        this.$main.actionManager(
-          "delete",
-          { item: this.item, name: data },
-          (rs) => {
-            if (rs) {
-              elConfirmDelete.doClose();
-            }
+      () => {
+        elConfirmDelete.doClose();
+        this.$main.actionManager("delete", { item: this.item }, (rs) => {
+          this.$main.refreshData();
+          if (rs) {
           }
-        );
+        });
       }
     );
   }
@@ -91,7 +104,7 @@ export class CtxMenu extends Component {
         <li title="Rename" class="interactive" s-on:click="this.rename()"><span>Rename</span></li>
         <li title="Delete" class="interactive" s-on:click="this.delete()"><span>Delete</span></li>
         <li title="Download" class="interactive item-file" s-on:click="this.downloadFile()"><span>Download</span></li>
-        <li title="Edit Image" class="interactive item-file" s-on:click="this.editImage()"><span>Edit Image</span></li>
+        <li title="Edit Image" class="interactive item-file file-image" s-on:click="this.editImage()"><span>Edit Image</span></li>
     </ul>
       `;
   }

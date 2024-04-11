@@ -11,7 +11,7 @@ export class LiveWireChartModule extends SokeioPlugin{
         "apexcharts",
         ({ el, directive, component, cleanup }) => {
           // Only fire this handler on the "root" directive.
-          if (directive.modifiers.length > 0 || el.livewire____apexcharts) {
+          if (directive.modifiers.length > 0 || el.$wire_apexcharts) {
             return;
           }
           let options = {};
@@ -20,14 +20,14 @@ export class LiveWireChartModule extends SokeioPlugin{
               `return ${el.getAttribute("wire:apexcharts")};`
             )();
           }
-          if (el.livewire____apexcharts) {
-            el.livewire____apexcharts.updateOptions(options);
+          if (el.$wire_apexcharts) {
+            el.$wire_apexcharts.updateOptions(options);
             return;
           }
           const apexchartsInit = () => {
-            if (el.livewire____apexcharts) return;
-            el.livewire____apexcharts = new window.ApexCharts(el, options);
-            el.livewire____apexcharts.render();
+            if (el.$wire_apexcharts) return;
+            el.$wire_apexcharts = new window.ApexCharts(el, options);
+            el.$wire_apexcharts.render();
           };
           if (window.ApexCharts) {
             apexchartsInit();
