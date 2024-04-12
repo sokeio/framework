@@ -24,8 +24,6 @@ $ composer require sokeio/admin
 ## Technology used:
 - Laravel 10x
 - Livewire 3x
-- unisharp/laravel-filemanager 2.6
-- staudenmeir/eloquent-eager-limit 1.8.3
 - Boostrap 5x
 - Tabler and Tabler-icon
 
