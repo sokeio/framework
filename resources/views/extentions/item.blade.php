@@ -18,24 +18,29 @@
         <div class="card-footer">
             <div class="row align-items-center">
                 <div class="col-auto">
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dr{{ $item->getId() }}"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Add More
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dr{{ $item->getId() }}">
-                            <li><a class="dropdown-item"
-                                    sokeio:modal="{{ route('admin.extension.' . $ExtentionType . '.create-file', ['ExtentionId' => $item->getName()]) }}"
-                                    sokeio:modal-title="Create File In {!! $ExtentionType ?? '' !!}">Add File</a></li>
-                            <li><a @click="alert('devlop....')" class="dropdown-item" href="#">Add CURD</a></li>
-                            @if ($ExtentionType == 'module')
-                                <li><a @click="alert('devlop....')" class="dropdown-item" href="#">Add Theme</a>
+                    @if ($mode_dev == true)
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dr{{ $item->getId() }}"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Add More
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dr{{ $item->getId() }}">
+                                <li><a class="dropdown-item"
+                                        sokeio:modal="{{ route('admin.extension.' . $ExtentionType . '.create-file', ['ExtentionId' => $item->getName()]) }}"
+                                        sokeio:modal-title="Create File In {!! $ExtentionType ?? '' !!}">Add File</a></li>
+                                <li><a @click="alert('devlop....')" class="dropdown-item" href="#">Add CURD</a>
                                 </li>
-                                <li><a @click="alert('devlop....')" class="dropdown-item" href="#">Add Plugin</a>
-                                </li>
-                            @endif
-                        </ul>
-                    </div>
+                                @if ($ExtentionType == 'module')
+                                    <li><a @click="alert('devlop....')" class="dropdown-item" href="#">Add
+                                            Theme</a>
+                                    </li>
+                                    <li><a @click="alert('devlop....')" class="dropdown-item" href="#">Add
+                                            Plugin</a>
+                                    </li>
+                                @endif
+                            </ul>
+                        </div>
+                    @endif
                 </div>
                 <div class="col-auto ms-auto">
                     @if ($ExtentionType == 'theme' || !$item->isVendor())
@@ -44,7 +49,13 @@
                                 @if ($item->isActive()) checked="true" @endif
                                 @change="$wire.ItemChangeStatus('{{ $item->getId() }}',$event.target.checked?1:0)">
                         </label>
+                    @else
+                        <label class="form-check form-switch m-0">
+                            <input class="form-check-input position-static" type="checkbox" value="1" checked
+                                readonly disabled />
+                        </label>
                     @endif
+
                 </div>
             </div>
         </div>

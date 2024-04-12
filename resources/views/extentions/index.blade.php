@@ -21,7 +21,7 @@
                         <span class="ps-2">Management</span>
                     </button>
                 </li>
-                <li class="nav-item" role="presentation">
+                <li class="nav-item d-none" role="presentation">
                     <button wire:click='switchStore()' class="nav-link @if ($viewType == 'store') active @endif"
                         data-bs-toggle="tab" aria-selected="false" role="tab" tabindex="-1">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-building-store"
@@ -38,7 +38,7 @@
                         <span class="ps-2">Store</span>
                     </button>
                 </li>
-                <li class="nav-item" role="presentation">
+                <li class="nav-item d-none" role="presentation">
                     <button wire:click='switchUpload()' class="nav-link @if ($viewType == 'upload') active @endif"
                         data-bs-toggle="tab" aria-selected="false" role="tab" tabindex="-1">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-upload"
@@ -54,7 +54,7 @@
                 </li>
                 <li class="nav-item ms-auto d-print-none" role="presentation">
                     <div class="btn-list">
-                        @if ($mode_dev)
+                        @if ($mode_dev==true)
                             <button class="btn btn-primary"
                                 sokeio:modal="{{ route('admin.extension.'. $ExtentionType.'.create', ['ExtentionType' => $ExtentionType]) }}"
                                 sokeio:modal-title="Create {{ $page_title ?? '' }}">

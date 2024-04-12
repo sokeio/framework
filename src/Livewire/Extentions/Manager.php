@@ -19,7 +19,8 @@ class Manager extends Component
     {
         return view('sokeio::extentions.manager', [
             'dataItems' => collect(platformBy($this->ExtentionType)->getDataAll())->paginate($this->pageSize),
-            'pageSizeList' => [5, 10, 20, 50]
+            'pageSizeList' => [5, 10, 20, 50],
+            'mode_dev'=> sokeioModeDev()
         ]);
     }
 }
