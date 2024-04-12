@@ -2,6 +2,7 @@
 
 namespace Sokeio;
 
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Collection;
@@ -59,6 +60,7 @@ class SokeioServiceProvider extends ServiceProvider
 
     protected function registerBladeDirectives()
     {
+
         //Blade directives
         Blade::directive('ThemeBody', [PlatformBladeDirectives::class, 'themeBody']);
         Blade::directive('ThemeHead', [PlatformBladeDirectives::class, 'themeHead']);
@@ -258,7 +260,7 @@ class SokeioServiceProvider extends ServiceProvider
                     menuAdmin()
                         ->subMenu(__('System'), '<i class="ti ti-assembly fs-2"></i>', function (MenuBuilder $menu) {
                             $menu->setTargetId('system_menu');
-                            
+
                             $menu->route(
                                 'admin.system.updater',
                                 __('System Updater'),
@@ -313,7 +315,10 @@ class SokeioServiceProvider extends ServiceProvider
         Collection::macro('paginate', function ($pageSize) {
             return ColectionPaginate::paginate($this, $pageSize);
         });
-
+        Blueprint::macro('byUser', function () {
+            $this->interger('created_by')->nullable();
+            $this->interger('updated_by')->nullable();
+        });
         $this->registerBladeDirectives();
 
         Route::matched(function () {

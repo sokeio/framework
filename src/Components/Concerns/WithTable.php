@@ -153,7 +153,6 @@ trait WithTable
     protected function getView()
     {
         if ($this->currentIsPage()) {
-            Assets::setTitle($this->getTitle());
             $this->doBreadcrumb();
             return 'sokeio::components.table.page';
         }

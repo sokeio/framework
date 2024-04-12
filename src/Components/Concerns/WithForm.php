@@ -72,7 +72,6 @@ trait WithForm
     protected function getView()
     {
         if ($this->currentIsPage()) {
-            Assets::setTitle($this->getTitle());
             $this->doBreadcrumb();
             return 'sokeio::components.form.page';
         }
@@ -136,6 +135,14 @@ trait WithForm
             }
         }
         return $objData;
+    }
+    protected function doSaveByUser($objData, $isNew)
+    {
+        if ($isNew) {
+            $objData->created_by = auth()->user()->id;
+        } else {
+            $objData->updated_by = auth()->user()->id;
+        }
     }
     public function doSave()
     {

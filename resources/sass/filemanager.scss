@@ -4,7 +4,7 @@
     height: 100%;
     top: 0;
     left: 0;
-    z-index: 1050 !important;
+    z-index: 1056 !important;
 
     .fm-wrapper {
         width: 90%;
@@ -124,6 +124,7 @@
                 overflow: auto;
                 padding: 0;
                 margin: 0;
+
                 .item-box {
                     user-select: none;
                     /* Standard syntax */
@@ -301,12 +302,8 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    top: 0;
-    left: 0;
     background-color: rgba(0, 0, 0, 0.3);
-    z-index: 1050 !important;
-    position: absolute;
-
+    z-index: 1056 !important;
 }
 
 .fm-modal {
@@ -315,11 +312,11 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 1050 !important;
+    z-index: 1056 !important;
     margin: 0 auto;
 
     .fm-content {
-        z-index: 1050 !important;
+        z-index: 1056 !important;
         border-radius: 3px;
         border: 1px solid #ccc;
         background-color: #fff;
@@ -490,5 +487,5 @@
 }
 
 .fm-body-overflow-hide {
-    overflow: hidden;
+    overflow: hidden !important;
 }
