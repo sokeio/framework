@@ -21,7 +21,7 @@
             @php
                 doAction('THEME_ADMIN_RIGHT');
             @endphp
-            <div class="nav-item">
+            <div class="nav-item d-none">
                 <livewire:sokeio::languages />
             </div>
             <div class="d-none d-md-flex">
