@@ -29,4 +29,7 @@ Route::group(['as' => 'admin.'], function () {
         ->name('system.clean-system-tool');
     Route::get('system/license', routeTheme(\Sokeio\Livewire\License::class))
         ->name('system.license');
+
+    Route::get('system/updater', routeTheme(\Sokeio\Livewire\Updater::class))
+        ->name('system.updater');
 });

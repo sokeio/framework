@@ -13,7 +13,7 @@
                     <input type="text" wire:model='licenseKey' maxlength="20" class="form-control" id="licenseKey"
                         placeholder="XX-XXXX-XXXX-XXXX-XXXX">
                 </div>
-                <div class="mb-3 text-center">
+                <div class="text-center">
                     <button class="btn btn-primary" wire:click='doLicense()'>Check License</button>
                 </div>
             </div>

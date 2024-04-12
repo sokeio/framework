@@ -242,7 +242,7 @@ class SokeioServiceProvider extends ServiceProvider
                     menuAdmin()->attachMenu('system_setting_menu', function (MenuBuilder $menu) {
                         $menu->route(
                             'admin.system.clean-system-tool',
-                            'Clean System Tool ',
+                            'System Tool ',
                             '',
                             [],
                             'admin.system.clean-system-tool'
@@ -254,23 +254,40 @@ class SokeioServiceProvider extends ServiceProvider
                             [],
                             'admin.system.cookies-setting'
                         );
-                        $menu->route(
-                            'admin.system.permalink-setting',
-                            __('Permalink'),
-                            '',
-                            [],
-                            'admin.system.permalink-setting'
-                        );
                     });
                     menuAdmin()
-                        ->route(
-                            'admin.system.license',
-                            __('System License'),
-                            '<i class="ti ti-license fs-2"></i>',
-                            [],
-                            '',
-                            9999999999999999
-                        );
+                        ->subMenu(__('System'), '<i class="ti ti-assembly fs-2"></i>', function (MenuBuilder $menu) {
+                            $menu->setTargetId('system_menu');
+                            
+                            $menu->route(
+                                'admin.system.updater',
+                                __('System Updater'),
+                                '',
+                                [],
+                                ''
+                            );
+                            $menu->route(
+                                'admin.system.license',
+                                __('Your License'),
+                                '',
+                                [],
+                                ''
+                            );
+                            $menu->route(
+                                'admin.system.log-viewer',
+                                __('Log Viewer'),
+                                '',
+                                [],
+                                'admin.system.log-viewer'
+                            );
+                            $menu->route(
+                                'admin.system.permalink-setting',
+                                __('Permalink'),
+                                '',
+                                [],
+                                'admin.system.permalink-setting'
+                            );
+                        }, 9999999999999999);
                 });
                 addFilter('SOKEIO_MENU_ITEM_MANAGER', function ($prev) {
                     return [
