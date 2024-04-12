@@ -13,6 +13,7 @@ class ThemeManager extends ActionHook
     use \Sokeio\Concerns\WithSystemExtend;
     use WithThemeProcess;
     private $isHtmlAjax = true;
+    private $isSiteInfo = null;
     public function DisableHtmlAjax(): self
     {
         $this->isHtmlAjax = false;
@@ -70,6 +71,13 @@ class ThemeManager extends ActionHook
     public function SiteDataInfo()
     {
         return $this->find($this->SiteId());
+    }
+    public function checkSite()
+    {
+        if ($this->isSiteInfo == null) {
+            $this->isSiteInfo = $this->find($this->SiteId()) == null ? false : true;
+        }
+        return $this->isSiteInfo;
     }
     public function getStatusData($theme)
     {
@@ -146,6 +154,7 @@ class ThemeManager extends ActionHook
     public function reTheme()
     {
         $this->dataActive = null;
+        $this->isSiteInfo = null;
         $this->themeCurrent();
     }
 }

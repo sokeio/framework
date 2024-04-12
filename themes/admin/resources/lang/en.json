@@ -1,0 +1,8 @@
+{
+    "sokeio::sidebars.dashboard": "sokeio::sidebars.dashboard",
+    "sokeio::sidebars.user": "sokeio::sidebars.user",
+    "sokeio::sidebars.role": "sokeio::sidebars.role",
+    "sokeio::sidebars.permission": "sokeio::sidebars.permission",
+    "sokeio::sidebars.appearance": "sokeio::sidebars.appearance",
+    "Show notifications": "Show notifications"
+}
