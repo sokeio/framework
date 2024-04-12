@@ -14,6 +14,7 @@ class ClientManager
     private $licenseKey = 'jx26dpclu8d7vfhyjgsnlhviezcan612';
     private $licenseInfo = [];
     private $sokeioInfo = [];
+    private const PATH_LICENSE = 'platform/license.json';
     private \Illuminate\Http\Client\PendingRequest $client;
     private function initClient()
     {
@@ -84,10 +85,6 @@ class ClientManager
         mkdir($pathFolder);
         $zip->extractTo($pathFolder);
         $zip->close();
-
-
-
-        $pathFolder = storage_path('temps/folder-1712046286');
         $pathLocalTemp = '';
         $fileInfo = [];
         foreach (File::allFiles($pathFolder) as $file) {
@@ -118,6 +115,7 @@ class ClientManager
         $response = $this->client->post('check-license-key', [
             'key' => $key
         ]);
+        file_put_contents(base_path('platform/license.json'), json_encode($response->json('data')));
         return $response->json('data');
     }
     public function checkLicense()

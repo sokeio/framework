@@ -4,6 +4,7 @@ namespace Sokeio\Livewire;
 
 use Sokeio\Component;
 use Sokeio\Components\Concerns\WithBreadcrumb;
+use Sokeio\Facades\Client;
 
 class License extends Component
 {
@@ -19,7 +20,9 @@ class License extends Component
     }
     public function doLicense()
     {
-        $this->showMessage('License key ' . $this->licenseKey . ' is not valid');
+        if (!Client::checkLicenseKey($this->licenseKey)) {
+            $this->showMessage('License key ' . $this->licenseKey . ' is valid');
+        }
     }
     public function render()
     {
