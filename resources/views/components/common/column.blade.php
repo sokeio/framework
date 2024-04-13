@@ -1,4 +1,4 @@
-<div class="{{ $column->getClassName() ?? '' }} {{ columnSize($column->getCol() ?? 'col') }}" {!! $column->getAttribute() ?? '' !!}>
+<div class="{{ $column->getClassName() ?? '' }} {{ $column->getColumnClass() }}" {!! $column->getAttribute() ?? '' !!}>
     @includeIf('sokeio::components.layout', [
         'layout' => $column->getContent(),
         'dataItem' => $column->getDataItem(),

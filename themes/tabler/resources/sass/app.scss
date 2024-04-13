@@ -87,3 +87,43 @@ $utilities: (
 
 @import "bootstrap/scss/utilities/api";
 
+.sidebar-menu {
+    .menu-item-active {
+        --tblr-bg-opacity: 1;
+        background-color: rgba(var(--tblr-azure-rgb), var(--tblr-bg-opacity)) !important;
+        color: #fff !important;
+        border-radius: 0 .375rem .375rem 0 !important;
+
+        i,svg {
+            color: #fff !important;
+        }
+    }
+
+    .menu-item-show {
+        display: block !important;
+    }
+}
+
+.navbar-menu {
+    .menu-item-active {
+        --tblr-bg-opacity: 1;
+        background-color: rgba(var(--tblr-azure-rgb), var(--tblr-bg-opacity)) !important;
+        color: #fff !important;
+        border-radius: 0 !important;
+
+        i,svg {
+            color: #fff !important;
+        }
+    }
+
+    .menu-item-show:not(.navbar-nav):not(.dropdown-menu) {
+        --tblr-bg-opacity: 1;
+        background-color: rgba(var(--tblr-azure-rgb), var(--tblr-bg-opacity)) !important;
+        border-radius: 0 !important;
+        color: #fff !important;
+
+        i,svg {
+            color: #fff !important;
+        }
+    }
+}

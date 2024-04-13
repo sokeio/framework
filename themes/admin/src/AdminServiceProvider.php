@@ -30,34 +30,6 @@ class AdminServiceProvider extends ServiceProvider
     public function packageBooted()
     {
 
-        Platform::ReadyAfter(function () {
-            if (sokeioIsAdmin()) {
-
-                addFilter('SOKEIO_ADMIN_SETTING_OVERVIEW', function ($prev) {
-                    return [
-                        UI::column6([
-                            UI::select('PLATFORM_ADMIN_LAYOUT_DEFAULT')
-                                ->label(__('Layout Of Admin'))
-                                ->dataSource(function () {
-                                    return [
-                                        [
-                                            'id' => 'default',
-                                            'name' => 'Default'
-                                        ],
-                                        [
-                                            'id' => 'default-navbar',
-                                            'name' => 'Navbar'
-                                        ]
-                                    ];
-                                })
-                        ]),
-                        ...$prev
-                    ];
-                });
-                addFilter('PLATFORM_THEME_LAYOUT_DEFAULT', function ($prev) {
-                    return setting('PLATFORM_ADMIN_LAYOUT_DEFAULT', 'default');
-                });
-            }
-        });
+       
     }
 }

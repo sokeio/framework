@@ -7,7 +7,9 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Sokeio\ColectionPaginate;
+use Sokeio\Components\UI;
 use Sokeio\Directives\PlatformBladeDirectives;
+use Sokeio\Facades\Platform;
 
 class PlatformExtentionServiceProvider extends ServiceProvider
 {
@@ -30,6 +32,13 @@ class PlatformExtentionServiceProvider extends ServiceProvider
             $table = $this;
             $table->interger('created_by')->nullable();
             $table->interger('updated_by')->nullable();
+        });
+        Platform::ReadyAfter(function () {
+            if (sokeioIsAdmin()) {
+                addFilter('PLATFORM_THEME_LAYOUT_DEFAULT', function ($prev) {
+                    return setting('PLATFORM_ADMIN_LAYOUT_DEFAULT', 'default');
+                });
+            }
         });
     }
 }

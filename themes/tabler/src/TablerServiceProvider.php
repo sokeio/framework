@@ -42,7 +42,7 @@ class TablerServiceProvider extends ServiceProvider
     {
         $this->bootGate();
         MenuRender::renderCallback(function (MenuBuilder $menu) {
-            $classActive = $menu->checkActive() ? 'show' : '';
+            $classActive = $menu->checkActive() ? ' menu-item-show ' : '';
             if ($menu->checkSub()) {
                 echo '<div id="' . $menu->getId() . '" class="dropdown-menu ' . $classActive . '" data-bs-popper="static">';
                 foreach ($menu->getItems() as $_item) {
@@ -62,7 +62,7 @@ class TablerServiceProvider extends ServiceProvider
                 return;
             }
             $itemActiveClass = ' menu-item-active';
-            $classActive = $item->checkActive() ? 'show' : '';
+            $classActive = $item->checkActive() ? ' menu-item-show ' : '';
             if ($item->getParent()->checkSub()) {
                 if ($item->checkSubMenu()) {
                     echo '<div id="' . $item->getId() . '" class="dropend ' . $classActive . '" data-sort="' . $item->getValueSort() . '">';

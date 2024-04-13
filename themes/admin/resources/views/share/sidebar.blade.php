@@ -5,19 +5,11 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <h1 class="navbar-brand navbar-brand-autodark">
-            {!! applyFilters(
-                'THEME_ADMIN_SIDEBAR_LOGO',
-                ' <a href="' .
-                    route('admin.dashboard') .
-                    '"><span class=" fw-bold fs-1 p-1">' .
-                    setting('PLATFORM_SYSTEM_NAME', 'Admin') .
-                    '</span></a>',
-            ) !!}
-
+            @includeIf(applyFilters('THEME_ADMIN_LOGO', 'theme::partials.logo'))
         </h1>
         <div class="navbar-nav flex-row d-lg-none">
         </div>
-        <div class="collapse navbar-collapse" id="sidebar-menu">
+        <div class="collapse navbar-collapse sidebar-menu" id="sidebar-menu">
             {!! applyFilters('THEME_SIDEBAR_BEFORE', '') !!}
             {!! menuAdmin(true) !!}
             {!! applyFilters('THEME_SIDEBAR_AFTTER', '') !!}

@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">
-
 <head>
     @ThemeHead(before)
     @ThemeHead(after)
