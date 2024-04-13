@@ -70,18 +70,6 @@ class MenuBuilder extends HtmlBuilder
             MenuItemBuilder::KEY_SORT => $sort >  -1 ? $sort : (self::$sortNumber++)
         ], $afterCallback);
     }
-    public function action($data, $text, $icon = '', $attributes = [], $per = '', $sort = 20, $afterCallback = null)
-    {
-        return $this->addItem([
-            MenuItemBuilder::KEY_TYPE => MenuItemBuilder::ITEM_ACTION,
-            MenuItemBuilder::KEY_DATA => $data,
-            MenuItemBuilder::KEY_TEXT => $text,
-            MenuItemBuilder::KEY_ICON => $icon,
-            MenuItemBuilder::KEY_ATTRIBUTE => $attributes,
-            MenuItemBuilder::KEY_PERMISSION => $per,
-            MenuItemBuilder::KEY_SORT => $sort >  -1 ? $sort : (self::$sortNumber++)
-        ], $afterCallback);
-    }
     public function button($text, $icon = '', $attributes = [], $per = '', $sort  = 20, $afterCallback = null): self
     {
         return $this->addItem([

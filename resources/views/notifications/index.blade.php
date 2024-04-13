@@ -75,9 +75,9 @@
                     </a>
                 </div>
             </div>
-            <div x-show="flgLoadMore" x-text="flgLoadMore ? 'Loading...' : ''" x-cloak></div>
         </div>
         <div class="offcanvas-body p-2" x-ref="notificationBody">
+            <div x-show="flgLoadMore" x-text="flgLoadMore ? 'Loading...' : ''" x-cloak></div>
             <div class="divide-y" x-html="getPageHtml()">
             </div>
         </div>
