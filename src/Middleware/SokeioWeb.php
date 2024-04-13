@@ -2,6 +2,7 @@
 
 namespace Sokeio\Middleware;
 
+use Illuminate\Support\Facades\Log;
 use Sokeio\Facades\Locale;
 use Sokeio\Facades\Platform;
 use Sokeio\Facades\Theme;
@@ -18,9 +19,7 @@ class SokeioWeb
     {
         Platform::cleanThemeAdmin();
         Locale::setLocaleApp();
-        if (!isLivewireRequest()) {
-            Theme::reTheme();
-        }
+        Theme::reTheme();
         Theme::setupOption();
         Platform::bootGate();
         Platform::doReady();

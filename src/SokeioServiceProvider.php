@@ -14,6 +14,7 @@ use Sokeio\Locales\LocaleServiceProvider;
 use Sokeio\Middleware\ThemeLayout;
 use Sokeio\Concerns\WithServiceProvider;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 use Sokeio\Icon\IconManager;
 use Sokeio\Livewire\HomePage;
@@ -140,10 +141,6 @@ class SokeioServiceProvider extends ServiceProvider
             Route::pushMiddlewareToGroup('web', SokeioWeb::class);
             Route::pushMiddlewareToGroup('web', SokeioPlatform::class);
             Route::pushMiddlewareToGroup('api', SokeioPlatform::class);
-
-            if (isLivewireRequest()) {
-                Theme::reTheme();
-            }
         });
 
         Route::fallback(function () {

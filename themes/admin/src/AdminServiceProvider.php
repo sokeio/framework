@@ -27,9 +27,4 @@ class AdminServiceProvider extends ServiceProvider
             ->hasTranslations()
             ->runsMigrations();
     }
-    public function packageBooted()
-    {
-
-       
-    }
 }
