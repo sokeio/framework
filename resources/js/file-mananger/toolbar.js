@@ -36,7 +36,7 @@ export class Toolbar extends Component {
     });
   }
   showUploadFile() {
-    this.$main.isUploadFile = true;
+    this.$main.showUploadFile();
   }
   deleteSelected() {
     console.log("deleteSelected");

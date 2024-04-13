@@ -42,7 +42,6 @@ export class FileManager extends Application {
     currentFile: null,
     selectFiles: [],
     selectFolders: [],
-    isCreateFolder: false,
     isUploadFile: false,
   };
   $axios;
@@ -145,6 +144,27 @@ export class FileManager extends Application {
             },
             (rs, data) => {
               this.refreshData();
+            }
+          );
+        },
+      },
+      this
+    );
+    editItem.runComponent();
+    this.$el.appendChild(editItem.$el);
+    return editItem;
+  }
+  showUploadFile() {
+    let editItem = this.getComponentByName(
+      "fm:UploadFile",
+      {
+        onSave: (files) => {
+          this.UploadFile(
+            files,
+            (formData) => {},
+            (rs, data) => {
+              this.refreshData();
+              editItem.closeModal();
             }
           );
         },
@@ -301,7 +321,7 @@ export class FileManager extends Application {
   render() {
     return `
     <div>
-    <div class="fm-modal-overlay"></div>
+      <div class="fm-modal-overlay"></div>
       <div class="file-manager">
         <div class="fm-wrapper">
         [fm:Header /]
@@ -310,7 +330,6 @@ export class FileManager extends Application {
         [fm:Footer /]
         </div>
       </div>
-      [fm:UploadFile /]
     </div>
     `;
   }

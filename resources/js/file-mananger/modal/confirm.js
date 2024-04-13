@@ -11,8 +11,8 @@ export class Confirm extends Component {
       this.text = this.$props.text;
     });
   }
-  closeModal() {
-    this.$main.isCreateFolder = false;
+  doClose() {
+    this.destroy();
   }
   doOk() {
     this.$props.onSave?.(this.text);

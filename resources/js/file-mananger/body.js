@@ -16,7 +16,7 @@ export class Body extends Component {
     }, "refreshUI");
   }
   afterRender() {
-    this.query(".body-content .box-wrapper", (el) => {
+    this.query(".box-wrapper", (el) => {
       el.innerHTML = "";
       el.style.opacity = 40 / 100;
       if (this.$main.path !== "/" && this.$main.path !== "") {
@@ -53,9 +53,7 @@ export class Body extends Component {
   render() {
     return `
     <div class="fm-body">
-      <div class="body-content">
-        <ul class="box-wrapper"></ul>
-      </div>
+    <ul class="box-wrapper"></ul>
       [fm:ItemInfo /]
     </div>
       `;

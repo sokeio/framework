@@ -55,7 +55,7 @@ export class Footer extends Component {
   }
   render() {
     return `
-    <div class="footer-wrapper">
+    <div class="fm-footer">
       <div class="footer-info">
         <div class="box-info">
           <div class="label-info">File Selected</div>

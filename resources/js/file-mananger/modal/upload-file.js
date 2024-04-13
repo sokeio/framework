@@ -7,22 +7,6 @@ export class UploadFile extends Component {
   };
   init() {
     this.onReady(() => {
-      this.$main.watch(
-        "isUploadFile",
-        (newValue, oldValue, proValue) => {
-          this.name = "";
-          if (newValue) {
-            this.removeAttribute("style");
-          } else {
-            this.setAttribute("style", "display: none;");
-          }
-        },
-        (destroy) => {
-          this.onDestroy(() => {
-            destroy();
-          });
-        }
-      );
       this.query(".fm-upload-file", function (el) {
         el.addEventListener("click", function () {
           el.querySelector('input[type="file"]').click();
@@ -30,25 +14,18 @@ export class UploadFile extends Component {
       });
       this.query('input[type="file"]', function (el) {
         el.addEventListener("change", (event) => {
-          this.$main.UploadFile(
-            [...event.target.files],
-            {},
-            (rs, data) => {},
-            (event) => {
-              this.closeModal();
-            }
-          );
+          this.$props.onSave([...event.target.files]);
         });
       });
     });
   }
   closeModal() {
-    this.$main.isUploadFile = false;
+    this.destroy();
   }
 
   render() {
     return `
-    <div style="display: none;">
+    <div>
         <div class="fm-modal-overlay" s-on:click="this.closeModal()"></div>
         <div class="fm-modal">
             <div class="fm-content"  style="max-width: 700px;">
