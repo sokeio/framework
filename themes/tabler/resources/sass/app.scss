@@ -94,13 +94,19 @@ $utilities: (
         color: #fff !important;
         border-radius: 0 .375rem .375rem 0 !important;
 
-        i,svg {
+        i,
+        svg {
             color: #fff !important;
         }
     }
 
     .menu-item-show {
         display: block !important;
+    }
+
+    .dropdown-toggle:after {
+        position: absolute;
+        right: 1px;
     }
 }
 
@@ -111,7 +117,8 @@ $utilities: (
         color: #fff !important;
         border-radius: 0 !important;
 
-        i,svg {
+        i,
+        svg {
             color: #fff !important;
         }
     }
@@ -122,7 +129,8 @@ $utilities: (
         border-radius: 0 !important;
         color: #fff !important;
 
-        i,svg {
+        i,
+        svg {
             color: #fff !important;
         }
     }

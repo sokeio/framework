@@ -14,10 +14,8 @@
             {!! menuAdmin(true) !!}
             {!! applyFilters('THEME_SIDEBAR_AFTTER', '') !!}
             <div class=" text-center p-1 text-bold">
-                <a href="https://sokeio.com" target="_blank">Sokeio Framework {{ sokeioVersion() }}</a>
+                @includeIf('theme::partials.copyright')
             </div>
-
-            <div class="text-center">Page Loaded:{{ sokeioTime() }}ms</div>
         </div>
     </div>
 </aside>

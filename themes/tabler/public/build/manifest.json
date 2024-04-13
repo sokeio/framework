@@ -957,7 +957,7 @@
   },
   "node_modules/@tabler/core/dist/img/flags/um.svg": {
     "file": "assets/um-51ad67af.svg",
-    "src": "node_modules/@tabler/core/dist/img/flags/um.svg"
+    "src": "node_modules/@tabler/core/dist/img/flags/us.svg"
   },
   "node_modules/@tabler/core/dist/img/flags/unasur.svg": {
     "file": "assets/unasur-c3fcac50.svg",
@@ -965,7 +965,7 @@
   },
   "node_modules/@tabler/core/dist/img/flags/us.svg": {
     "file": "assets/um-51ad67af.svg",
-    "src": "node_modules/@tabler/core/dist/img/flags/um.svg"
+    "src": "node_modules/@tabler/core/dist/img/flags/us.svg"
   },
   "node_modules/@tabler/core/dist/img/flags/uy.svg": {
     "file": "assets/uy-ea1660c8.svg",
@@ -1513,7 +1513,7 @@
     "src": "resources/js/app.js"
   },
   "resources/sass/app.scss": {
-    "file": "assets/app-6341a435.css",
+    "file": "assets/app-e8c0c904.css",
     "isEntry": true,
     "src": "resources/sass/app.scss"
   }

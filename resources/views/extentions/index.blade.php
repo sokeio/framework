@@ -55,7 +55,7 @@
                 <li class="nav-item ms-auto d-print-none" role="presentation">
                     <div class="btn-list">
                         @if ($mode_dev == true)
-                            <button class="btn btn-primary"
+                            <button class="btn btn-primary mb-2"
                                 sokeio:modal="{{ route('admin.extension.' . $ExtentionType . '.create', ['ExtentionType' => $ExtentionType]) }}"
                                 sokeio:modal-title="Create {{ $page_title ?? '' }}">
                                 Add New
