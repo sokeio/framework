@@ -9,7 +9,7 @@
 Make an Administrator page in 5 minutes: 
 
 ```bash
-$ composer require sokeio/admin
+$ composer require sokeio/framework
 ```
 
 
