@@ -13,16 +13,15 @@ $ composer require sokeio/framework
 ```
 
 
-**Template boilerplate**: https://github.com/ByteAsia/laravel-boilerplate
+**Template boilerplate**: [https://github.com/sokeio/sokeio](https://github.com/sokeio/sokeio)
 ## Feature(New):
 - Modules
 - Themes
-- Plugins
 - Actions
 - ShortCodes
 
 ## Technology used:
-- Laravel 10x
+- Laravel 11x
 - Livewire 3x
 - Boostrap 5x
 - Tabler and Tabler-icon
@@ -38,8 +37,6 @@ You can install package via composer
 
 ```bash
 $ composer require sokeio/framework
-$ php artisan vendor:publish --tag=lfm_config
-$ php artisan vendor:publish --tag=lfm_public
 ```
 
 ```bash
@@ -54,12 +51,6 @@ Make module:
 
 ```bash
 $ php artisan so:make-module Demo3 -a true -f true
-```
-
-Make plugin:
-
-```bash
-$ php artisan so:make-plugin Demo3 -a true -f true
 ```
 
 Make theme:
@@ -77,6 +68,7 @@ Please make sure to update tests as appropriate.
 ## Product list:
 
 [Free Online Tutorials](https://tutorialaz.com/)
+[Discover The Best AI Websites & Tools](https://hau.xyz/)
 
 ## License
 
