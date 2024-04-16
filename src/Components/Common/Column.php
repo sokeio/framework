@@ -10,7 +10,7 @@ class Column extends BaseCommon
     protected function __construct($value)
     {
         parent::__construct($value);
-        $this->col();
+        $this->col(0);
     }
   
     public function getView()
