@@ -19,7 +19,7 @@ class MakeUserAdminCommand extends Command
     {
         return [
             ['email', 'e', InputOption::VALUE_OPTIONAL, 'your email', 'admin@sokeio.com'],
-            ['name', 'n', InputOption::VALUE_OPTIONAL, 'your name', 'nguyen van hau'],
+            ['fullname', 'f', InputOption::VALUE_OPTIONAL, 'your fullname', 'nguyen van hau'],
         ];
     }
     protected function getArguments()
@@ -31,11 +31,12 @@ class MakeUserAdminCommand extends Command
      */
     public function handle(): int
     {
-        if (env('APP_MAKE_USER_ADMIN') !== 'true') {
+        if (env('SOKEIO_MAKE_USER_ADMIN') !== true) {
+            $this->info('SOKEIO_MAKE_USER_ADMIN is not enabled');
             return 0;
         }
         $email = $this->option('email');
-        $name = $this->option('email');
+        $name = $this->option('fullname');
 
         $roleModel = (config('sokeio.model.role', \Sokeio\Models\Role::class));
         $userModel = (config('sokeio.model.user', \Sokeio\Models\User::class));
