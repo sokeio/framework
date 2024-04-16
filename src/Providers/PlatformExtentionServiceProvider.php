@@ -30,8 +30,8 @@ class PlatformExtentionServiceProvider extends ServiceProvider
         Blueprint::macro('byUser', function () {
             /** @var \Illuminate\Database\Schema\Blueprint $table */
             $table = $this;
-            $table->interger('created_by')->nullable();
-            $table->interger('updated_by')->nullable();
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
         });
         Platform::ReadyAfter(function () {
             if (sokeioIsAdmin()) {
