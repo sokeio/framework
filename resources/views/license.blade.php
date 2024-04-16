@@ -3,6 +3,7 @@
         <div class="card rounded-1" style="max-width: 700px;">
             <h5 class="card-header p-3">License Key</h5>
             <div class="card-body p-3">
+                <div class="mb-3"> This feature not available on version beta.</div>
                 <div class="mb-3">
                     <label for="licenseDomain" class="form-label">Your Domain</label>
                     <input type="text" class="form-control" readonly id="licenseDomain" placeholder="sokeio.com"
