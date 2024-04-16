@@ -1,0 +1,15 @@
+{
+    "id":"theme-blog-c40391d2-4d3b-4229-8063-7aaf45529f237941744",
+    "name": "Blog",
+    "version":"v1.0.0",
+    "alias": "blog",
+    "description": "",
+    "parent": "tabler",
+    "keywords": [],
+    "priority": 200,
+    "aliases": {},
+    "namespace":"SokeioTheme\\Blog",
+    "locations": [],
+    "layout":"",
+    "requires": []
+}

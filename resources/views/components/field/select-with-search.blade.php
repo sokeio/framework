@@ -6,7 +6,7 @@
     $datasources = $column->getDataSource() ?? [];
     $FieldKey = $column->getFieldKey();
     $FieldText = $column->getFieldText();
-    $searchDatasource = $column->getSearchFn();
+    $searchFn = $column->getSearchFn();
     $textNoData = $column->getTextNoData();
     $viewTemplate = $column->getViewTemplate();
 @endphp
@@ -22,7 +22,7 @@
         this.valueText = text && text[this.FieldText] != '' ? text[this.FieldText] : '{{ $modelLabel }}';
     },
     async doSearch() {
-        this.Datasources = (await $wire.callActionUI('{{ $searchDatasource ?? 'searchData' . $modelField }}',
+        this.Datasources = (await $wire.callActionUI('{{ $searchFn ?? 'searchData' . $modelField }}',
             this.searchText, $wire.{{ $formField }})) ?? [];
     },
     changeValue(value) {

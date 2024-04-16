@@ -3,18 +3,12 @@
 namespace Sokeio\Components\Field;
 
 use Sokeio\Components\Field\Concerns\WithDatasource;
+use Sokeio\Components\Field\Concerns\WithSearchFn;
 
 class SelectWithSearchField extends BaseField
 {
     use WithDatasource;
-    public function searchFn($searchFn): static
-    {
-        return $this->setKeyValue('searchFn', $searchFn);
-    }
-    public function getSearchFn()
-    {
-        return $this->getValue('searchFn');
-    }
+    use WithSearchFn;
 
     public function getFieldView()
     {
