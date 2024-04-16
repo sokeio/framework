@@ -44,7 +44,7 @@ getValueText();" class="form-control dropdown" name="field-{{ $modelField }}"
             <input class="form-control" type="text" placeholder="@lang('Search...')" x-model="searchText" />
         </div>
         <div class="pb-2" style="max-height: 300px; overflow-y: auto;">
-            <div x-text="Datasources.length === 0 ? '{{ $textNoData }}': ''"></div>
+            <div class="p-2" x-text="Datasources.length === 0 ? '{{ $textNoData }}': ''"></div>
             <template x-for="item in Datasources">
                 <div class="dropdown-item p-0 border-top hover" x-on:click="changeValue(item.{{ $FieldKey }})">
                     @if ($viewTemplate)
