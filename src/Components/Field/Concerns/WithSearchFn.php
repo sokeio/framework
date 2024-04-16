@@ -23,8 +23,8 @@ trait WithSearchFn
         }
         $this->searchFn($name);
         $this->actionUI($name, $fnQuery);
-        $this->dataSource(function () use ($fnQuery) {
-            return call_user_func($fnQuery, '');
+        $this->dataSource(function ($field) use ($fnQuery) {
+            return call_user_func($fnQuery, $field->getManager(), '');
         });
         return $this;
     }

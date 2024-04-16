@@ -5,10 +5,14 @@
     $uiBefore = $column->getUIBefore();
     $uiAfter = $column->getUIAfter();
     $afterTemplate = $column->getAfterTemplate();
+    $hideLabel = $column->getHideLabel();
+    $enableEditInTable = $column->getEnableEditInTable();
 @endphp
-<div class=" {{ $column->getClassName() ?? 'mb-3' }}" {!! $column->getAttribute() ?? '' !!}>
+<div class=" {{ $column->getClassName() ?? ($enableEditInTable ? '' : 'mb-3') }}" {!! $column->getAttribute() ?? '' !!}>
     <div x-data="{ showTemplate: false }">
-        <label class="form-label" {!! $column->getAttributeLabel() ?? '' !!}>{!! $modelLabel !!}</label>
+        @if (!$hideLabel)
+            <label class="form-label" {!! $column->getAttributeLabel() ?? '' !!}>{!! $modelLabel !!}</label>
+        @endif
         @if ($uiBefore || $uiAfter)
             <div class="input-group">
         @endif

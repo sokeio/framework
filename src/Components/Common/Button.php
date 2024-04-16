@@ -15,19 +15,6 @@ class Button extends BaseCommon
     {
         $this->Name($value);
     }
-
-    public function getFieldValue($row)
-    {
-        $this->ClearCache();
-        $this->dataItem($row);
-        if ($this->fieldValueCallback) {
-            return call_user_func($this->fieldValueCallback, $row, $this, $this->getManager());
-        }
-        $this->title(data_get($row, $this->getName()));
-        return view($this->getView(), [
-            'column' => $this
-        ])->render();
-    }
     public function getView()
     {
         return 'sokeio::components.common.button';

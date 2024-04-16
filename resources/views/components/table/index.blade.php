@@ -42,8 +42,8 @@
                 <div class="input-icon">
                     <div class="input-group">
                         @if ($searchWithColumns && count($searchWithColumns) > 0)
-                            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside"
-                                aria-haspopup="true" aria-expanded="false">
+                            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
+                                data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
                                 Search
                             </button>
                             <div class="dropdown-menu" style="">
@@ -130,7 +130,8 @@
                             autocomplete="off" aria-label="Select all"></th>
                     @isset($tablecolumns)
                         @foreach ($tablecolumns as $column)
-                            <th data-field="{{ $column->getName() }}">
+                            <th data-field="{{ $column->getName() }}"
+                                @if ($columnWidth = $column->getColumnWidth()) style="width: {{ $columnWidth }}" @endif>
                                 @if ($column->getNoSort())
                                     {{ $column->getLabel() }}
                                 @else
@@ -164,7 +165,13 @@
                             </td>
                             @isset($tablecolumns)
                                 @foreach ($tablecolumns as $column)
-                                    <td>{!! $column->getFieldValue($row) !!}</td>
+                                    @php
+                                        $column->ClearCache();
+                                        $column->dataItem($row);
+                                    @endphp
+                                    <td @if ($cellClass = $column->getCellClass()) class="{{ $cellClass }}" @endif>
+                                        {!! $column->columnValueRender() !!}
+                                    </td>
                                 @endforeach
                             @endisset
 

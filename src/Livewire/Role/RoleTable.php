@@ -40,7 +40,7 @@ class RoleTable extends Table
                 }
                 $status = $item->getDataItem()->status ? 0 : 1;
                 return 'doChangeStatus(' . $item->getDataItem()->id . ',' . $status . ')';
-            })
+            })->enableEditInTable()
         ];
     }
 }
