@@ -8,6 +8,7 @@ use Sokeio\Commands\MakeThemeCommand;
 use Sokeio\Commands\MakeFileCommand;
 use Sokeio\Commands\ListCommand;
 use Sokeio\Commands\MakeCommand;
+use Sokeio\Commands\MakeUserAdminCommand;
 
 return [
     'updator' => [
@@ -175,7 +176,8 @@ return [
         MakeCommand::class,
         MakeFileCommand::class,
         ListCommand::class,
-        ActiveCommand::class
+        ActiveCommand::class,
+        MakeUserAdminCommand::class
     ],
     'fields' => [],
     'shortcodes' => [],
