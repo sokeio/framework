@@ -21,6 +21,14 @@ trait WithShortcode
     {
         return 'key';
     }
+    public static function getIcon()
+    {
+        return 'ti ti-table-shortcut';
+    }
+    public static function getImage()
+    {
+        return null;
+    }
     public static function getParamUI()
     {
         return [];

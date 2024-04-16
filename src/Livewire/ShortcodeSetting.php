@@ -8,40 +8,79 @@ use Sokeio\Components\UI;
 
 class ShortcodeSetting extends FormSettingCallback
 {
+    public $arrShortcodes = [];
+    public function mount()
+    {
+        parent::mount();
+        $this->arrShortcodes = collect(Shortcode::getRegistered())->map(function ($item, $key) {
+            return [
+                'id' => $key,
+                'name' => ($item)::getTitle(),
+                'icon' => ($item)::getIcon(),
+                'image' => ($item)::getImage()
+            ];
+        })->toArray();
+    }
+    public function changeShortcode($id)
+    {
+        $this->data->shortcode = $id;
+    }
     public function SettingUI()
     {
         $shortcode = Shortcode::getItemByKey($this->data->shortcode);
         $checkShort = $shortcode != null;
         return UI::row([
             UI::column([
-                UI::select('shortcode')->label(__('Shortcode'))->dataSource(function () {
-                    return [
-                        [
-                            'id' => '',
-                            'name' => __('None')
-                        ],
-                        ...collect(Shortcode::getRegistered())->map(function ($item, $key) {
-                            return [
-                                'id' => $key,
-                                'name' => ($item)::getTitle()
-                            ];
-                        })->toArray()
-                    ];
-                })->wireLive(),
+                UI::div('
+                <h3>Choose Shortcode</h3>
+                <template x-for="item in $wire.arrShortcodes">
+                    <div class="col-6 col-md-4 col-lg-3 col-xl-2"  x-data="{ hover: false }">
+                        <div class="p-4 border rounded cursor-pointer"  x-data="{ hover: false }"
+                            @mouseenter="hover = true"
+                            @mouseleave="hover = false"
+                            @click="changeShortcode(item.id)"
+                            
+                            :class="hover || $wire.data.shortcode === item.id? \'bg-azure\' : \'\'" >
+                            <div class="text-center">
+                            <i x-show="!item.image" :class="item.icon" style="font-size: 5rem"></i>
+                            <img x-show="item.image" :src="item.image" style="width: 5rem">
+                            </div>
+                            <div class="text-center mt-2" x-text="item.name"></div>
+                        </div>
+                    </div>
+                </template>
+                ')->className('row')->attribute(' x-show="!$wire.data.shortcode" '),
+                UI::div('
+                <div wire:loading.delay wire:target="changeShortcode"
+                class="spinner-border spinner-border-sm mx-2" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="input-group mb-2" wire:loading.add.class="d-none" wire:target="changeShortcode" >
+                    <input type="text" class="form-control bg-danger text-bg-danger"
+                     readonly x-model="$wire.data.shortcode">
+                    <button class="btn" type="button" @click="changeShortcode(\'\')">
+                        <i class="ti ti-replace"></i> <span class="ps-1">Change</span>
+                    </button>
+                </div>')
+                    ->attribute(' x-show="$wire.data.shortcode"'),
                 UI::Div([
                     UI::prex('data.attrs', function () use ($checkShort, $shortcode) {
                         return  $checkShort ? ($shortcode)::getParamUI() : [];
                     })->when(function () use ($checkShort) {
                         return  $checkShort;
                     }),
-                ])->attribute(' wire:key="shortcode-' . $this->data->shortcode . '" '),
+                    UI::tinymce('children')->label(__('Content'))->when(function () use ($shortcode, $checkShort) {
+                        return  $checkShort && ($shortcode)::withChild();
+                    }),
+                ])->attribute(' x-show="$wire.data.shortcode" '),
 
-                UI::tinymce('children')->label(__('Content'))->when(function () use ($shortcode, $checkShort) {
-                    return  $checkShort && ($shortcode)::withChild();
-                })->when(function () use ($shortcode, $checkShort) {
-                    return  $checkShort && ($shortcode)::withChild();
-                }),
-            ]),
+
+            ])->xData("{
+                changeShortcode(id){
+                    \$wire.data.shortcode = id
+                    \$wire.changeShortcode(id)
+                }
+            }"),
             UI::column7([
                 UI::Div([
                     UI::Div("")
@@ -71,7 +110,7 @@ class ShortcodeSetting extends FormSettingCallback
             }")->xInit('doPreview()')
                 ->when(function () use ($checkShort) {
                     return $checkShort;
-                })
+                })->attribute(' x-show="$wire.data.shortcode" '),
         ]);
     }
     private function getShortCodeHtml()

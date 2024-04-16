@@ -46,49 +46,37 @@ trait WithColumnGrid
     }
     public function getColumnClass()
     {
+        $sm = $this->getSm() ?? -1;
+        $md = $this->getMd() ?? -1;
+        $lg = $this->getLg() ?? -1;
+        $xl = $this->getXl() ?? -1;
+        $xxl = $this->getXxl() ?? -1;
+        if ($sm == 0 && $md == 0 && $lg == 0 && $xl == 0 && $xxl == 0) {
+            return ' col ';
+        }
         $class = "";
-        if (($sm = $this->getSm()) != null) {
-            if ($sm == 0) {
-                $class .= "col-sm";
-            } else {
-                $class .= "col-sm-{$sm} ";
-            }
+        if ($sm > 0) {
+            $class .= "col-sm-{$sm} ";
         } else {
             $class .= "col-sm-12 ";
         }
-        if (($md = $this->getMd()) != null) {
-            if ($md == 0) {
-                $class .= "col-md";
-            } else {
-                $class .= "col-md-{$md} ";
-            }
+        if ($md > 0) {
+            $class .= "col-md-{$md} ";
         } else {
             $class .= "col-md-12 ";
         }
-        if (($lg = $this->getLg()) != null) {
-            if ($lg == 0) {
-                $class .= "col-lg";
-            } else {
-                $class .= "col-lg-{$lg} ";
-            }
+        if ($lg > 0) {
+            $class .= "col-lg-{$lg} ";
         } else {
             $class .= "col-lg-12 ";
         }
-        if (($xl = $this->getXl()) != null) {
-            if ($xl == 0) {
-                $class .= "col-xl";
-            } else {
-                $class .= "col-xl-{$xl} ";
-            }
+        if ($xl > 0) {
+            $class .= "col-xl-{$xl} ";
         } else {
             $class .= "col-xl-12 ";
         }
-        if (($xxl = $this->getXxl()) != null) {
-            if ($xxl == 0) {
-                $class .= "col-xxl";
-            } else {
-                $class .= "col-xxl-{$xxl} ";
-            }
+        if ($xxl > 0) {
+            $class .= "col-xxl-{$xxl} ";
         } else {
             $class .= "col-xxl-12 ";
         }

@@ -4,7 +4,7 @@ namespace Sokeio\Components\Concerns;
 
 trait WithBaseBasic
 {
-    public function when($when)
+    public function when($when):static
     {
         return $this->setKeyValue('when', $when);
     }
@@ -28,7 +28,7 @@ trait WithBaseBasic
         return $attr;
     }
 
-    public function className($className)
+    public function className($className):static
     {
         return $this->setKeyValue('className', $className);
     }
@@ -115,7 +115,7 @@ trait WithBaseBasic
     {
         return $this->getLevelData('EachIndex');
     }
-    public function prex($prex)
+    public function prex($prex):static
     {
         return $this->setKeyValue('prex', $prex, true);
     }
@@ -123,7 +123,7 @@ trait WithBaseBasic
     {
         return $this->getValue('prex');
     }
-    public function xData($xData)
+    public function xData($xData):static
     {
         return $this->setKeyValue('xData', $xData);
     }
@@ -131,7 +131,7 @@ trait WithBaseBasic
     {
         return $this->getValue('xData');
     }
-    public function xInit($xInit)
+    public function xInit($xInit):static
     {
         return $this->setKeyValue('xInit', $xInit);
     }

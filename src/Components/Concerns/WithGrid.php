@@ -13,7 +13,7 @@ trait WithGrid
     }
     public static function column($value)
     {
-        return Column::make($value);
+        return Column::make($value)->col(0);
     }
     public static function column1($value)
     {
