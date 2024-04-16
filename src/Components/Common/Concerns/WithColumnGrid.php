@@ -4,7 +4,7 @@ namespace Sokeio\Components\Common\Concerns;
 
 trait WithColumnGrid
 {
-    public function sm($sm)
+    public function sm($sm): static
     {
         return $this->setKeyValue('sm', $sm);
     }
@@ -12,7 +12,7 @@ trait WithColumnGrid
     {
         return $this->getValue('sm');
     }
-    public function md($md)
+    public function md($md): static
     {
         return $this->setKeyValue('md', $md);
     }
@@ -20,7 +20,7 @@ trait WithColumnGrid
     {
         return $this->getValue('md');
     }
-    public function lg($lg)
+    public function lg($lg): static
     {
         return $this->setKeyValue('lg', $lg);
     }
@@ -28,7 +28,7 @@ trait WithColumnGrid
     {
         return $this->getValue('lg');
     }
-    public function xl($xl)
+    public function xl($xl): static
     {
         return $this->setKeyValue('xl', $xl);
     }
@@ -36,7 +36,7 @@ trait WithColumnGrid
     {
         return $this->getValue('xl');
     }
-    public function xxl($xxl)
+    public function xxl($xxl): static
     {
         return $this->setKeyValue('xxl', $xxl);
     }
@@ -93,60 +93,60 @@ trait WithColumnGrid
         return $class;
     }
 
-    public function col()
+    public function col(): static
     {
         return $this->sm(0)->md(0)->lg(0)->xl(0)->xxl(0);
     }
-    public function col1()
+    public function col1(): static
     {
         return $this->sm(12)->md(12)->lg(1)->xl(1)->xxl(1);
     }
-    public function col2()
+    public function col2(): static
     {
         return $this->sm(12)->md(12)->lg(2)->xl(2)->xxl(2);
     }
-    public function col3()
+    public function col3(): static
     {
         return $this->sm(12)->md(12)->lg(3)->xl(3)->xxl(3);
     }
-    public function col4()
+    public function col4(): static
     {
         return $this->sm(12)->md(12)->lg(4)->xl(4)->xxl(4);
     }
-    public function col5()
+    public function col5(): static
     {
         return $this->sm(12)->md(12)->lg(5)->xl(5)->xxl(5);
     }
-    public function col6()
+    public function col6(): static
     {
         return $this->sm(12)->md(12)->lg(6)->xl(6)->xxl(6);
     }
-    public function col7()
+    public function col7(): static
     {
         return $this->sm(12)->md(12)->lg(7)->xl(7)->xxl(7);
     }
-    public function col8()
+    public function col8(): static
     {
         return $this->sm(12)->md(12)->lg(8)->xl(8)->xxl(8);
     }
-    public function col9()
+    public function col9(): static
     {
         return $this->sm(12)->md(12)->lg(9)->xl(9)->xxl(9);
     }
-    public function col10()
+    public function col10(): static
     {
         return $this->sm(12)->md(12)->lg(10)->xl(10)->xxl(10);
     }
-    public function col11()
+    public function col11(): static
     {
         return $this->sm(12)->md(12)->lg(11)->xl(11)->xxl(11);
     }
 
-    public function col12()
+    public function col12(): static
     {
         return $this->sm(12)->md(12)->lg(12)->xl(12)->xxl(12);
     }
-    public function colAuto()
+    public function colAuto(): static
     {
         return $this->sm('auto')->md('auto')->lg('auto')->xl('auto')->xxl('auto');
     }
