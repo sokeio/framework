@@ -28,14 +28,16 @@ class FormMenu extends Form
     protected function DefaultUI()
     {
         return [
-            UI::row([
-                UI::column(UI::icon('icon')->label(__('Icon'))),
-                UI::column(UI::color('color')->label(__('Color'))),
-            ]),
             UI::text('name')->label(__('Name'))->required(),
             UI::textarea('info')->label(__('Info')),
-            UI::text('attr_name')->label(__('Attribute')),
-            UI::text('class_name')->label(__('Class name')),
+            UI::row([
+                UI::column6(UI::icon('icon')->label(__('Icon'))),
+                UI::column6(UI::color('color')->label(__('Color'))),
+            ]),
+            UI::row([
+                UI::column6(UI::text('class_name')->label(__('Class name'))),
+                UI::column6(UI::text('attr_name')->label(__('Attribute'))),
+            ]),
             UI::hidden('data_type')->valueDefault(function () {
                 return static::getMenuType();
             })

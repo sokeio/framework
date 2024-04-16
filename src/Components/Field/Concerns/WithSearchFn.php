@@ -28,4 +28,29 @@ trait WithSearchFn
         });
         return $this;
     }
+    public function querySearchWithModel($model, $name)
+    {
+        $this->querySearchFn(function ($component, $text, $currentId = null) use ($model) {
+            $component->skipRender();
+
+            $rs = ($model)::query()
+                ->when($text != "", function ($query) use ($text) {
+                    $query->where('name', 'like', '%' . $text . '%');
+                })
+                ->limit(20)->get(['id', 'name']);
+            if ($currentId && $text == '') {
+                $currentItem = ($model)::find($currentId);
+                if ($currentItem) {
+                    return [
+                        [
+                            'id' => $currentItem->id,
+                            'name' => $currentItem->name
+                        ],
+                        ...$rs->toArray(),
+                    ];
+                }
+            }
+            return $rs;
+        }, $name);
+    }
 }

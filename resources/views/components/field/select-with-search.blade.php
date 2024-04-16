@@ -17,9 +17,16 @@
     FieldKey: '{{ $FieldKey }}',
     FieldText: '{{ $FieldText }}',
     valueText: '',
+    elTimer: null,
     getValueText() {
-        let text = this.Datasources?.find((item) => item[this.FieldKey] === $wire.{{ $formField }});
-        this.valueText = text && text[this.FieldText] != '' ? text[this.FieldText] : '{{ $modelLabel }}';
+        if (this.elTimer) {
+            clearTimeout(this.elTimer);
+        }
+        this.elTimer = setTimeout(() => {
+            let rsItem = this.Datasources?.find((item) => item[this.FieldKey] == $wire.{{ $formField }});
+            this.valueText = rsItem && rsItem[this.FieldText] != '' ? rsItem[this.FieldText] : '{{ $modelLabel }}';
+            this.elTimer = null;
+        }, 100);
     },
     async doSearch() {
         this.Datasources = (await $wire.callActionUI('{{ $searchFn ?? 'searchData' . $modelField }}',
@@ -46,7 +53,8 @@ getValueText();" class="form-control dropdown" name="field-{{ $modelField }}"
         <div class="pb-2" style="max-height: 300px; overflow-y: auto;">
             <div class="p-2" x-text="Datasources.length === 0 ? '{{ $textNoData }}': ''"></div>
             <template x-for="item in Datasources">
-                <div class="dropdown-item p-0 border-top hover" x-on:click="changeValue(item.{{ $FieldKey }})">
+                <div class="dropdown-item p-0 border-top hover" x-on:click="changeValue(item.{{ $FieldKey }})"
+                    :class="{ 'active': item.{{ $FieldKey }} == $wire.{{ $formField }} }">
                     @if ($viewTemplate)
                         {!! $viewTemplate !!}
                     @else
