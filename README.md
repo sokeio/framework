@@ -7,13 +7,17 @@
 **Sokeio** is a Laravel-based web application development package that provides support for developing modules, plugins, themes, livewire, and shortcodes. With Sokeio, users can develop web applications faster and easier than ever before. The package provides flexible features and utilities to help users optimize the development process and accelerate the development speed of their web applications.
 
 ## Quick tutorial
-Make an Administrator page in 5 minutes: 
+* Make an Administrator page in 5 minutes: 
 
 ```bash
 $ composer require sokeio/framework
 ```
 
-Create user admin or reset password for account supper-admin
+```bash
+$ php artisan migrate
+```
+
+* Create user admin or reset password for account supper-admin
 
 set .env
 
@@ -22,7 +26,7 @@ SOKEIO_MAKE_USER_ADMIN=true
 ```
 
 ```bash
-php artisan so:make-user-admin --e "admin@sokeio.com" --f "Nguyen Van Hau"
+$ php artisan so:make-user-admin --e "admin@sokeio.com" --f "Nguyen Van Hau"
 ```
 
 ## Template boilerplate 
