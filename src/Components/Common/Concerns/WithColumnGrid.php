@@ -44,13 +44,23 @@ trait WithColumnGrid
     {
         return $this->getValue('xxl');
     }
+    public function checkColumnClass()
+    {
+        $sm = $this->getSm();
+        $md = $this->getMd();
+        $lg = $this->getLg();
+        $xl = $this->getXl();
+        $xxl = $this->getXxl();
+        return !($sm == null && $md == null && $lg == null && $xl == null && $xxl == null);
+    }
     public function getColumnClass()
     {
-        $sm = $this->getSm() ?? -1;
-        $md = $this->getMd() ?? -1;
-        $lg = $this->getLg() ?? -1;
-        $xl = $this->getXl() ?? -1;
-        $xxl = $this->getXxl() ?? -1;
+        $sm = $this->getSm();
+        $md = $this->getMd();
+        $lg = $this->getLg();
+        $xl = $this->getXl();
+        $xxl = $this->getXxl();
+
         if ($sm == 0 && $md == 0 && $lg == 0 && $xl == 0 && $xxl == 0) {
             return ' col ';
         }

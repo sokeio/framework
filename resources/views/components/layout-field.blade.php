@@ -7,9 +7,17 @@
     $afterTemplate = $column->getAfterTemplate();
     $hideLabel = $column->getHideLabel();
     $enableEditInTable = $column->getEnableEditInTable();
+    $isColumnClass = $column->checkColumnClass();
+    $classFieldDiv = $column->getClassName() ?? 'mb-3';
+    if ($enableEditInTable) {
+        $classFieldDiv = '';
+    }
 @endphp
-<div class=" {{ $column->getClassName() ?? ($enableEditInTable ? '' : 'mb-3') }}" {!! $column->getAttribute() ?? '' !!}>
-    <div x-data="{ showTemplate: false }">
+
+
+<div x-data="{ showTemplate: false }" @if ($isColumnClass) class="{{ $column->getColumnClass() }}" @endif>
+    <div class="{{ $classFieldDiv }}" {!! $column->getAttribute() ?? '' !!}>
+
         @if (!$hideLabel)
             <label class="form-label" {!! $column->getAttributeLabel() ?? '' !!}>{!! $modelLabel !!}</label>
         @endif
