@@ -86,7 +86,7 @@ trait WithTable
     }
     protected function getModalSize($isNew = true, $row = null)
     {
-        return 'modal-lg';
+        return UI::MODAL_LARGE;
     }
     protected function getButtons()
     {

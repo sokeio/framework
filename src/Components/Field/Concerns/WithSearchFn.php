@@ -28,9 +28,9 @@ trait WithSearchFn
         });
         return $this;
     }
-    public function querySearchWithModel($model, $name)
+    public function querySearchWithModel($model, $name = null)
     {
-        $this->querySearchFn(function ($component, $text, $currentId = null) use ($model) {
+        return $this->querySearchFn(function ($component, $text, $currentId = null) use ($model) {
             $component->skipRender();
 
             $rs = ($model)::query()
