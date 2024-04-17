@@ -24,7 +24,7 @@
             Copyright © {{ date('Y') }} {!! themeOption(
                 'footer_copyright',
                 '<a href="https://sokeio.com" class=" fw-bold ' .
-                    themeOption('footer_color', 'bg-dark text-dark-fg') .
+                    themeOption('footer_color', '') .
                     '" title="Sokeio">Sokeio.com</a>',
             ) !!} All rights reserved. @if (!setting('PLATFORM_HIDE_LOADED_TIME', false))
                 Developed by <a href="https://hau.xyz" class="fw-bold {!! themeOption('footer_color') !!}"
