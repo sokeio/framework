@@ -166,7 +166,7 @@
                             @isset($tablecolumns)
                                 @foreach ($tablecolumns as $column)
                                     @php
-                                        $column->ClearCache();
+                                        $column->clearCache();
                                         $column->dataItem($row);
                                     @endphp
                                     <td @if ($cellClass = $column->getCellClass()) class="{{ $cellClass }}" @endif>

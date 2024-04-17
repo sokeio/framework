@@ -1,6 +1,6 @@
 @php
-    $columnWidget = $widget->getColumn() ?? '';
-    $pollWidget = $widget->getPoll() ?? ''; ///wire:poll;
+    $columnWidget = $widget?->getColumn() ?? '';
+    $pollWidget = $widget?->getPoll() ?? ''; ///wire:poll;
 @endphp
 <div class="{{ columnSize($columnWidget) }} widget-view" {{ $pollWidget }} wire:sortable.item="{{ $widgetId }}"
     wire:key='widget-{{ $widgetId }}'>

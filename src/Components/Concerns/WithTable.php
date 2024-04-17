@@ -46,7 +46,7 @@ trait WithTable
         if (isset($this->orderBy->{$name})) {
             $this->orderBy->{$name} = $this->orderBy->{$name} == 0;
         } else {
-            $this->orderBy->Clear();
+            $this->orderBy->clear();
             $this->orderBy->{$name} = 1;
         }
     }

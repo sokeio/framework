@@ -44,7 +44,7 @@ trait WithBaseBasic
     public function dataItem($value): static
     {
         $this->dataItem = $value;
-        $this->ClearCache();
+        $this->clearCache();
         foreach ($this->getChildComponents() as $component) {
             $component->dataItem($value);
         }
@@ -58,7 +58,7 @@ trait WithBaseBasic
     public function levelIndex($value = 0)
     {
         $this->levelIndex = $value > 0 ? $value : $this->levelIndex + 1;
-        $this->ClearCache();
+        $this->clearCache();
         foreach ($this->getChildComponents() as $component) {
             $component->levelIndex($this->levelIndex);
         }
@@ -72,7 +72,7 @@ trait WithBaseBasic
     public function levelDataUI($value): static
     {
         $this->levelData = $value ?? [];
-        $this->ClearCache();
+        $this->clearCache();
         foreach ($this->getChildComponents() as $component) {
             $component->levelDataUI($this->levelData);
         }

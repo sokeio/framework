@@ -10,7 +10,7 @@ class UserTotalWidget extends Widget
     public function __construct($key)
     {
         parent::__construct($key);
-        $this->Name(__('User Total'))->WidgetNumber()->Data(function () {
+        $this->name(__('User Total'))->widgetNumber()->data(function () {
             return [
                 'widgetTitle' => __('User Total'),
                 'widgetData' => User::count()

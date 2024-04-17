@@ -8,7 +8,7 @@
         @if ($item && $item->getWhen())
             @isset($dataItem)
                 @php
-                    $item->ClearCache();
+                    $item->clearCache();
                     $item->dataItem($dataItem);
                 @endphp
             @endisset

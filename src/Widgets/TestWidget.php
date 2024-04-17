@@ -10,14 +10,13 @@ class TestWidget extends Widget
     public function __construct($key)
     {
         parent::__construct($key);
-        $this->Name(__('Test'))->View('sokeio::test')->Data(function () {
+        $this->name(__('Test'))->view('sokeio::test')->data(function () {
             return [
                 'widgetTitle' => __('Role Total'),
                 'widgetData' => Role::count()
             ];
-        })->Action('test', function ($pam) {
+        })->action('test', function ($pam) {
             $this->getComponent()->showMessage(json_encode($pam));
-            return;
         });
     }
 }

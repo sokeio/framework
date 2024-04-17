@@ -3,27 +3,23 @@
 namespace Sokeio\Livewire\Widget;
 
 use Livewire\Attributes\Reactive;
-use Sokeio\Dashboard\Widget;
 use Sokeio\Facades\Dashboard;
 use Sokeio\Component;
+use Sokeio\Components\Concerns\WithActionUI;
 
 class Index extends Component
 {
+    use WithActionUI;
     #[Reactive]
     public $widgetId;
 
     #[Reactive]
     public $locked = false;
-    private Widget $widgetItem;
+    private $widgetItem;
     public function booted()
     {
-        $this->widgetItem = Dashboard::getWidgetByKey($this->widgetId)?->Component($this);
-    }
-
-    public function Action($action, $params)
-    {
-        $this->widgetItem->callAction($action, [$params], $this, $this->widgetId, $this->widgetItem);
-        return $this;
+        parent::booted();
+        $this->widgetItem = Dashboard::getWidgetByKey($this->widgetId)?->component($this);
     }
     public function render()
     {

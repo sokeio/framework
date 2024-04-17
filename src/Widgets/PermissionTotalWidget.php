@@ -11,7 +11,7 @@ class PermissionTotalWidget extends Widget
     public function __construct($key)
     {
         parent::__construct($key);
-        $this->Name(__('Permission Total'))->WidgetNumber()->Data(function () {
+        $this->name(__('Permission Total'))->widgetNumber()->data(function () {
             return [
                 'widgetTitle' => __('Permission Total'),
                 'widgetData' => Permission::count()

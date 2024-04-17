@@ -3,9 +3,10 @@
 namespace Sokeio\Dashboard;
 
 use Illuminate\Support\Traits\Macroable;
+use Sokeio\Laravel\BaseCallback;
 use Sokeio\Platform\PlatformStatus;
 
-class Widget
+class Widget extends BaseCallback
 {
     use Macroable;
     private const DASHBOARD_WIDGET_STATUS = 'DASHBOARD_WIDGET_STATUS';
@@ -25,7 +26,7 @@ class Widget
         return $this->getStatus()->check($this->key);
     }
 
-    public function Active()
+    public function active()
     {
         return $this->getStatus()->active($this->key);
     }
@@ -34,98 +35,94 @@ class Widget
     {
         return $this->getStatus()->block($this->key);
     }
-    private $action = [];
-    public function Action($action, $callback)
+    private $callbackReady = [];
+    public function ready($callback)
     {
-        $this->action[$action] = $callback;
+        if (!is_callable($callback)) {
+            return $this;
+        }
+        $this->callbackReady[] = $callback;
         return $this;
     }
-    public function callAction($action, $params)
+    public function doReady()
     {
-        if (isset($this->action[$action]))
-            return call_user_func($this->action[$action], ...$params);
+        foreach ($this->callbackReady as $callback) {
+            call_user_func($callback, $this, $this->getComponent());
+        }
     }
-    private $component;
-    public function Component($component)
+    public function action($action, $callback)
+    {
+        return $this->ready(function ($widget) use ($action, $callback) {
+            $widget->getComponent()->addActionUI($action, $callback);
+        });
+    }
+    private $component = null;
+    public function component($component): static
     {
         $this->component = $component;
+        $this->doReady();
         return $this;
     }
     public function getComponent()
     {
         return $this->component;
     }
-    private $params;
-    public function Params($params)
+    public function params($params): static
     {
-        $this->params = $params;
-        return $this;
+        return $this->setKeyValue('params', $params);
     }
     public function getParams()
     {
-        return $this->params;
+        return $this->getValue('params');
     }
-    private $name;
-    public function Name($name)
+    public function name($name): static
     {
-        $this->name = $name;
-        return $this;
+        return $this->setKeyValue('name', $name);
     }
     public function getName()
     {
-        return  $this->name;
+        return $this->getValue('name');
     }
-    private $view;
-    public function View($view)
+    public function view($view): static
     {
-        $this->view = $view;
-        return $this;
+        return $this->setKeyValue('view', $view);
     }
     public function getView()
     {
-        return  $this->view;
+        return $this->getValue('view');
     }
-    private $data;
-    public function Data($data)
+    public function data($data): static
     {
-        $this->data = $data;
-        return $this;
+        return $this->setKeyValue('data', $data);
     }
     public function getData()
     {
-        if ($this->data) {
-            if (is_callable($this->data)) return call_user_func($this->data, $this);
-            else return $this->data;
-        }
-        return [];
+
+        return $this->getValue('data');
     }
-    private $column;
-    public function Column($column)
+    public function column($column): static
     {
-        $this->column = $column;
-        return $this;
+        return $this->setKeyValue('column', $column);
     }
     public function getColumn()
     {
-        return  $this->column;
+        return  $this->getValue('column');
     }
-    private $poll;
-    public function Poll($poll)
+    public function poll($poll): static
     {
-        $this->poll = $poll;
-        return $this;
+        return $this->setKeyValue('poll', $poll);
     }
     public function getPoll()
     {
-        return  $this->poll;
+        return $this->getValue('poll');
     }
 
-    public function WidgetNumber()
+    public function widgetNumber()
     {
-        return $this->View('sokeio::widgets.number-widget');
+        return $this->view('sokeio::widgets.number-widget');
     }
-    public function WidgetApexcharts()
+    public function widgetApexcharts()
     {
-        return $this->View('sokeio::widgets.apexcharts-widget');
+        return $this->view('sokeio::widgets.apexcharts-widget');
     }
 }

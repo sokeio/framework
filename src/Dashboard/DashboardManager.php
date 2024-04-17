@@ -17,7 +17,9 @@ class DashboardManager
     }
     public function getWidget()
     {
-        if ($this->temps != null) return $this->temps;
+        if ($this->temps != null) {
+            return $this->temps;
+        }
 
         $temps = [];
         foreach ($this->widgets as $key => $widget) {
@@ -35,7 +37,9 @@ class DashboardManager
     public function getWidgetByKey($key)
     {
         $data = $this->getWidget();
-        if (isset($data[$key])) return $data[$key];
+        if (isset($data[$key])) {
+            return $data[$key];
+        }
         return null;
     }
 }

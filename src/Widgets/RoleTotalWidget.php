@@ -10,7 +10,7 @@ class RoleTotalWidget extends Widget
     public function __construct($key)
     {
         parent::__construct($key);
-        $this->Name(__('Role Total'))->WidgetNumber()->Data(function () {
+        $this->name(__('Role Total'))->widgetNumber()->data(function () {
             return [
                 'widgetTitle' => __('Role Total'),
                 'widgetData' => Role::count()

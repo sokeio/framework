@@ -53,9 +53,9 @@ class Base extends BaseCallback
     }
     public function boot()
     {
-        $this->ClearCache();
+        $this->clearCache();
         foreach ($this->getChildComponents() as $component) {
-            $component->Manager($this->getManager());
+            $component->manager($this->getManager());
             $component->prex($this->getPrex());
             $component->boot();
         }

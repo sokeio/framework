@@ -10,7 +10,7 @@ class Form extends SupportFormObjectsForm implements \JsonSerializable
     use Macroable;
     protected $soTemplateData = [];
 
-    public function Clear()
+    public function clear()
     {
         $this->soTemplateData = [];
     }

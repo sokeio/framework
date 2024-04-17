@@ -2,7 +2,6 @@
 
 namespace Sokeio\Concerns;
 
-use Illuminate\Support\Facades\Crypt;
 use Sokeio\LivewireLoader;
 use Livewire\Features\SupportPageComponents\PageComponentConfig;
 use Livewire\Features\SupportPageComponents\SupportPageComponents;
@@ -112,11 +111,12 @@ trait WithLivewire
         // This way, users can pass Livewire components into Routes as if they were
         // simple invokable controllers. Ex: Route::get('...', SomeLivewireComponent::class);
         $html = '';
-        //NOSONAR
-        $layoutConfig = SupportPageComponents::interceptTheRenderOfTheComponentAndRetreiveTheLayoutConfiguration(function () use (&$html) {
-            $params = SupportPageComponents::gatherMountMethodParamsFromRouteParameters($this);
-            $html = app('livewire')->mount($this::class, [...$params, 'soIsPage' => request()->isMethod('get')]);
-        });
+        $layoutConfig = SupportPageComponents::interceptTheRenderOfTheComponentAndRetreiveTheLayoutConfiguration(
+            function () use (&$html) {
+                $params = SupportPageComponents::gatherMountMethodParamsFromRouteParameters($this);
+                $html = app('livewire')->mount($this::class, [...$params, 'soIsPage' => request()->isMethod('get')]);
+            }
+        );
 
         $layoutConfig = $layoutConfig ?: new PageComponentConfig();
 
