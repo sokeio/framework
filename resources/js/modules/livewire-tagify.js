@@ -15,16 +15,12 @@ export class LiveWireTagifyModule extends SokeioPlugin {
             return;
           }
           cleanup(() => {
-            if (el.$wire_tagify) {
-              el.$wire_tagify.destroy();
+            if (el?.$wire_tagify) {
+              el.$wire_tagify?.destroy && el.$wire_tagify.destroy();
               el.$wire_tagify = null;
             }
             el.removeEventListener("input", onInput);
             el.removeEventListener("change", onChange);
-            if (el.__tagify) {
-              el.__tagify.destroy();
-              el.__tagify = null;
-            }
           });
           let options = {};
 
@@ -57,12 +53,17 @@ export class LiveWireTagifyModule extends SokeioPlugin {
           }
           let modelKey = el.getAttribute("wire:model");
           const onInput = (e) => {
+            if (!el.$wire_tagify) {
+              return;
+            }
             var value = e.detail.value;
             el.$wire_tagify.loading(true);
-            component.$wire.callActionUI(options.whitelistAction,value).then(function (rs) {
-              el.$wire_tagify.whitelist = rs;
-              el.$wire_tagify.loading(false).dropdown.show(value);
-            });
+            component.$wire
+              .callActionUI(options.whitelistAction, value)
+              .then(function (rs) {
+                el.$wire_tagify.whitelist = rs;
+                el.$wire_tagify.loading(false).dropdown.show(value);
+              });
           };
           const onChange = (e) => {
             self
