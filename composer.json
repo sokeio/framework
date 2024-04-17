@@ -13,7 +13,7 @@
     }
   ],
   "require": {
-    "sokeio/laravel": "^1.0.0",
+    "sokeio/laravel": "^1.0.1",
     "livewire/livewire": "^3.4.10"
   },
   "require-dev": {},
