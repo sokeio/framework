@@ -28,7 +28,7 @@ class BaseField extends Base
     public function boot()
     {
         parent::boot();
-        if (!$this->getNoSave() && method_exists($this->getManager(), 'addInputUI')) {
+        if (method_exists($this->getManager(), 'addInputUI')) {
             $this->getManager()?->addInputUI($this, $this->getPrex() ?? 'data');
         }
     }

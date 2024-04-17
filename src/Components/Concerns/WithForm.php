@@ -5,7 +5,6 @@ namespace Sokeio\Components\Concerns;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Url;
 use Sokeio\Components\UI;
-use Sokeio\Facades\Assets;
 use Sokeio\Form;
 
 trait WithForm
@@ -160,8 +159,10 @@ trait WithForm
                 call_user_func([$this, 'fillDataBefore'], $objData);
             }
             foreach ($this->getAllInputUI() as $column) {
-                $value = data_get($this, $column->getFormFieldEncode(), $column->getValueDefault());
-                data_set($objData, $column->getNameEncode(), $value);
+                if (!$column->getNoSave()) {
+                    $value = data_get($this, $column->getFormFieldEncode(), $column->getValueDefault());
+                    data_set($objData, $column->getNameEncode(), $value);
+                }
             }
             if (method_exists($this, 'saveBefore')) {
                 call_user_func([$this, 'saveBefore'], $objData);
