@@ -4,7 +4,7 @@ namespace Sokeio\Components\Common\Concerns;
 
 trait WithName
 {
-    public function name($name)
+    public function name($name): static
     {
         return $this->setKeyValue('name', $name);
     }

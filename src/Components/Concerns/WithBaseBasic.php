@@ -12,7 +12,7 @@ trait WithBaseBasic
     {
         return $this->getValue('when', true);
     }
-    public function attribute($attribute)
+    public function attribute($attribute): static
     {
         return $this->setKeyValue('attribute', $attribute);
     }
@@ -41,7 +41,7 @@ trait WithBaseBasic
         return $this->checkKey('prex') && $this->getPrex() != '';
     }
     private $dataItem = null;
-    public function dataItem($value)
+    public function dataItem($value): static
     {
         $this->dataItem = $value;
         $this->ClearCache();
@@ -69,7 +69,7 @@ trait WithBaseBasic
         return $this->levelIndex;
     }
     private $levelData = [];
-    public function levelDataUI($value)
+    public function levelDataUI($value): static
     {
         $this->levelData = $value ?? [];
         $this->ClearCache();

@@ -4,7 +4,6 @@ namespace Sokeio\Components\Common\Concerns;
 
 trait WithButtonColor
 {
-
     public function buttonColor($buttonColor): static
     {
         return $this->setKeyValue('buttonColor', $buttonColor);
@@ -13,138 +12,138 @@ trait WithButtonColor
     {
         return $this->getValue('buttonColor');
     }
-    public function primary($prev = '')
+    public function primary($prev = ''): static
     {
         return $this->buttonColor($prev . '-primary');
     }
-    public function secondary($prev = '')
+    public function secondary($prev = ''): static
     {
         return $this->buttonColor($prev . '-secondary');
     }
-    public function success($prev = '')
+    public function success($prev = ''): static
     {
         return $this->buttonColor($prev . '-success');
     }
-    public function warning($prev = '')
+    public function warning($prev = ''): static
     {
         return $this->buttonColor($prev . '-warning');
     }
-    public function danger($prev = '')
+    public function danger($prev = ''): static
     {
         return $this->buttonColor($prev . '-danger');
     }
-    public function info($prev = '')
+    public function info($prev = ''): static
     {
         return $this->buttonColor($prev . '-info');
     }
-    public function dark($prev = '')
+    public function dark($prev = ''): static
     {
         return $this->buttonColor($prev . '-dark');
     }
-    public function light($prev = '')
+    public function light($prev = ''): static
     {
         return $this->buttonColor($prev . '-light');
     }
-    public function blue($prev = '')
+    public function blue($prev = ''): static
     {
         return $this->buttonColor($prev . '-blue');
     }
-    public function azure($prev = '')
+    public function azure($prev = ''): static
     {
         return $this->buttonColor($prev . '-azure');
     }
-    public function indigo($prev = '')
+    public function indigo($prev = ''): static
     {
         return $this->buttonColor($prev . '-indigo');
     }
-    public function purple($prev = '')
+    public function purple($prev = ''): static
     {
         return $this->buttonColor($prev . '-purple');
     }
-    public function pink($prev = '')
+    public function pink($prev = ''): static
     {
         return $this->buttonColor($prev . '-pink');
     }
-    public function red($prev = '')
+    public function red($prev = ''): static
     {
         return $this->buttonColor($prev . '-red');
     }
-    public function orange($prev = '')
+    public function orange($prev = ''): static
     {
         return $this->buttonColor($prev . '-orange');
     }
-    public function yellow($prev = '')
+    public function yellow($prev = ''): static
     {
         return $this->buttonColor($prev . '-yellow');
     }
-    public function lime($prev = '')
+    public function lime($prev = ''): static
     {
         return $this->buttonColor($prev . '-lime');
     }
-    public function green($prev = '')
+    public function green($prev = ''): static
     {
         return $this->buttonColor($prev . '-green');
     }
-    public function teal($prev = '')
+    public function teal($prev = ''): static
     {
         return $this->buttonColor($prev . '-teal');
     }
-    public function cyan($prev = '')
+    public function cyan($prev = ''): static
     {
         return $this->buttonColor($prev . '-cyan');
     }
 
     //Outline
     private const OUTLINE = '-outline';
-    public function outlinePrimary()
+    public function outlinePrimary(): static
     {
         return $this->primary(static::OUTLINE);
     }
-    public function outlineSecondary()
+    public function outlineSecondary(): static
     {
         return $this->secondary(static::OUTLINE);
     }
-    public function outlineSuccess()
+    public function outlineSuccess(): static
     {
         return $this->success(static::OUTLINE);
     }
-    public function outlineWarning()
+    public function outlineWarning(): static
     {
         return $this->warning(static::OUTLINE);
     }
-    public function outlineDanger()
+    public function outlineDanger(): static
     {
         return $this->danger(static::OUTLINE);
     }
-    public function outlineInfo()
+    public function outlineInfo(): static
     {
         return $this->info(static::OUTLINE);
     }
-    public function outlineDark()
+    public function outlineDark(): static
     {
         return $this->dark(static::OUTLINE);
     }
-    public function outlineLight()
+    public function outlineLight(): static
     {
         return $this->light(static::OUTLINE);
     }
-    public function outlineBlue()
+    public function outlineBlue(): static
     {
         return $this->blue(static::OUTLINE);
     }
-    public function outlineAzure()
+    public function outlineAzure(): static
     {
         return $this->azure(static::OUTLINE);
     }
-    public function outlineIndigo()
+    public function outlineIndigo(): static
     {
         return $this->indigo(static::OUTLINE);
     }
-    public function outlinePurple()
+    public function outlinePurple(): static
     {
         return $this->purple(static::OUTLINE);
     }
-    public function outlinePink()
+    public function outlinePink(): static
     {
         return $this->pink(static::OUTLINE);
     }
@@ -160,81 +159,81 @@ trait WithButtonColor
     {
         return $this->yellow(static::OUTLINE);
     }
-    public function outlineLime()
+    public function outlineLime(): static
     {
         return $this->lime(static::OUTLINE);
     }
-    public function outlineGreen()
+    public function outlineGreen(): static
     {
         return $this->green(static::OUTLINE);
     }
-    public function outlineTeal()
+    public function outlineTeal(): static
     {
         return $this->teal(static::OUTLINE);
     }
-    public function outlineCyan()
+    public function outlineCyan(): static
     {
         return $this->cyan(static::OUTLINE);
     }
     //Ghost
     private const GHOST = '-ghost';
-    public function ghostPrimary()
+    public function ghostPrimary(): static
     {
         return $this->primary(static::GHOST);
     }
-    public function ghostSecondary()
+    public function ghostSecondary(): static
     {
         return $this->secondary(static::GHOST);
     }
-    public function ghostSuccess()
+    public function ghostSuccess(): static
     {
         return $this->success(static::GHOST);
     }
-    public function ghostWarning()
+    public function ghostWarning(): static
     {
         return $this->warning(static::GHOST);
     }
-    public function ghostDanger()
+    public function ghostDanger(): static
     {
         return $this->danger(static::GHOST);
     }
-    public function ghostInfo()
+    public function ghostInfo(): static
     {
         return $this->info(static::GHOST);
     }
-    public function ghostDark()
+    public function ghostDark(): static
     {
         return $this->dark(static::GHOST);
     }
-    public function ghostLight()
+    public function ghostLight(): static
     {
         return $this->light(static::GHOST);
     }
-    public function ghostBlue()
+    public function ghostBlue(): static
     {
         return $this->blue(static::GHOST);
     }
-    public function ghostAzure()
+    public function ghostAzure(): static
     {
         return $this->azure(static::GHOST);
     }
-    public function ghostIndigo()
+    public function ghostIndigo(): static
     {
         return $this->indigo(static::GHOST);
     }
-    public function ghostPurple()
+    public function ghostPurple(): static
     {
         return $this->purple(static::GHOST);
     }
-    public function ghostPink()
+    public function ghostPink(): static
     {
         return $this->pink(static::GHOST);
     }
-    public function ghostRed()
+    public function ghostRed(): static
     {
         return $this->red(static::GHOST);
     }
-    public function ghostOrange()
+    public function ghostOrange(): static
     {
         return $this->orange(static::GHOST);
     }
@@ -250,11 +249,11 @@ trait WithButtonColor
     {
         return $this->green(static::GHOST);
     }
-    public function ghostTeal()
+    public function ghostTeal(): static
     {
         return $this->teal(static::GHOST);
     }
-    public function ghostCyan()
+    public function ghostCyan(): static
     {
         return $this->cyan(static::GHOST);
     }

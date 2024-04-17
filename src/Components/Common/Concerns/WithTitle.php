@@ -4,7 +4,7 @@ namespace Sokeio\Components\Common\Concerns;
 
 trait WithTitle
 {
-    public function title($title)
+    public function title($title):static
     {
         return $this->setKeyValue('title', $title);
     }

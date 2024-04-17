@@ -48,7 +48,7 @@ trait WithButtonBasic
         return $this->buttonSize(UI::BUTTON_SMALL);
     }
 
-    public function route($name, $paramOrcallback = [])
+    public function route($name, $paramOrcallback = []):static
     {
         return $this->link(function ($item, $manager) use ($name, $paramOrcallback) {
             if ($paramOrcallback && is_callable($paramOrcallback)) {

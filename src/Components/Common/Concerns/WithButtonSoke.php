@@ -31,40 +31,40 @@ trait WithButtonSoke
     {
         return $this->getValue('modalSize');
     }
-    public function modalSmall()
+    public function modalSmall(): static
     {
         return $this->modalSize(UI::MODAL_SMALL);
     }
-    public function modalLarge()
+    public function modalLarge(): static
     {
         return $this->modalSize(UI::MODAL_LARGE);
     }
-    public function modalExtraLarge()
+    public function modalExtraLarge(): static
     {
         return $this->modalSize(UI::MODAL_FULLSCREEN_XXL);
     }
-    public function modalFullscreen()
+    public function modalFullscreen(): static
     {
         return $this->modalSize(UI::MODAL_FULLSCREEN);
     }
-    public function modalFullscreenSM()
+    public function modalFullscreenSM(): static
     {
         return $this->modalSize(UI::MODAL_FULLSCREEN_SM);
     }
-    public function modalFullscreenMD()
+    public function modalFullscreenMD(): static
     {
         return $this->modalSize(UI::MODAL_FULLSCREEN_MD);
     }
-    public function modalFullscreenLG()
+    public function modalFullscreenLG(): static
     {
         return $this->modalSize(UI::MODAL_FULLSCREEN_LG);
     }
-    public function modalFullscreenXL()
+    public function modalFullscreenXL(): static
     {
         return $this->modalSize(UI::MODAL_FULLSCREEN_XL);
     }
 
-    public function modalFullscreenXXL()
+    public function modalFullscreenXXL(): static
     {
         return $this->modalSize(UI::MODAL_FULLSCREEN_XXL);
     }

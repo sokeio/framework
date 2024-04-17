@@ -67,7 +67,7 @@ trait WithColumn
     {
         return $this->getValue('label');
     }
-    public function hideLabel()
+    public function hideLabel(): static
     {
         return $this->setKeyValue('hideLabel', true);
     }
