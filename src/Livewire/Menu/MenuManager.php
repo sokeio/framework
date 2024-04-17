@@ -8,6 +8,7 @@ use Sokeio\Breadcrumb;
 use Sokeio\Models\Menu;
 use Sokeio\Models\MenuLocation;
 use Sokeio\Component;
+use Sokeio\Components\UI;
 use Sokeio\Facades\Assets;
 use Sokeio\Facades\Theme;
 
@@ -70,28 +71,9 @@ class MenuManager extends Component
         breadcrumb()->title($this->getTitle())->breadcrumb($this->getBreadcrumb());
         $this->loadMenu($this->locationId);
     }
-    private function updateSortMenu($data_list, $items, $parent_id)
-    {
-        foreach ($items as $item) {
-            $value = $item['value'];
-            $order = $item['order'];
-            if (!isset($data_list[$value])) {
-                $data_list[$value] = [
-                    'order' => $order,
-                    'parent_id' => $parent_id
-                ];
-            }
-
-            if (isset($item['items']) && count($item['items']) > 0) {
-                $_items = $item['items'];
-                $data_list = $this->updateSortMenu($data_list, $_items, $value);
-            }
-        }
-        return $data_list;
-    }
     public function doUpdateSortMenu($items)
     {
-        $menuLists2 = $this->updateSortMenu([], $items, 0);
+        $menuLists2 = UI::convertSortableToItems([], $items, 0);
         $data_list = [];
         foreach ($this->menuLists as $item) {
             if (isset($menuLists2[$item['id']])) {
