@@ -12,9 +12,9 @@
                 <a href="{{ url('/') }}">
                     @if ($logo = themeOption('site_logo'))
                         <img src="{{ $logo }}" width="110" height="32"
-                            alt="{{ themeOption('site_name', 'Tools') }}" class="navbar-brand-image">
+                            alt="{{ themeOption('site_name', 'sokeio.com') }}" class="navbar-brand-image">
                     @else
-                        <span class="fw-bold fs-3">{{ themeOption('site_name', 'Tools') }}</span>
+                        <span class="fw-bold fs-3">{{ themeOption('site_name', 'sokeio.com') }}</span>
                     @endif
                 </a>
             </h1>
@@ -23,13 +23,13 @@
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
                             aria-label="Open user menu">
-                            <span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)"></span>
+                            <span class="avatar avatar-sm" style=""></span>
                             <div class="d-none d-xl-block ps-2">
                                 <div>{{ auth()->user()->name }}</div>
                             </div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" data-bs-theme="light">
-                            <a href="{{route('site.logout')}}" class="dropdown-item">Logout</a>
+                            <a href="{{ route('site.logout') }}" class="dropdown-item">Logout</a>
                         </div>
                     </div>
                 @else
