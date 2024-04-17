@@ -4,7 +4,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/sokeio/framework.svg?style=flat-square)](https://packagist.org/packages/sokeio/framework)
 
 
-**Sokeio** is a Laravel-based web application development package that provides support for developing modules, plugins, themes, livewire, and shortcodes. With Sokeio, users can develop web applications faster and easier than ever before. The package provides flexible features and utilities to help users optimize the development process and accelerate the development speed of their web applications.
+**Sokeio** is a Laravel-based web application development package that provides support for developing modules, themes, livewire, and shortcodes. With Sokeio, users can develop web applications faster and easier than ever before. The package provides flexible features and utilities to help users optimize the development process and accelerate the development speed of their web applications.
 
 ## Quick tutorial
 * Make an Administrator page in 5 minutes: 
