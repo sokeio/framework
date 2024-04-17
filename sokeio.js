@@ -31,6 +31,10 @@ window.addStyleToWindow = function (
   defer = true
 ) {
   setTimeout(() => {
+    if (document.querySelector('link[href="' + source + '"]')) {
+      resolve && resolve();
+      return;
+    }
     let script = document.createElement("link");
     const prior = beforeEl || document.getElementsByTagName("script")[0];
 

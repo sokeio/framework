@@ -81,15 +81,15 @@ export class LiveWireTagifyModule extends SokeioPlugin {
               }
             }, 50);
           };
+          window.addStyleToWindow(
+            self
+              .getManager()
+              .getUrlPublic("platform/modules/sokeio/tagify/dist/tagify.css"),
+            function () {}
+          );
           if (window.Tagify) {
             tagifyCreate();
           } else {
-            window.addStyleToWindow(
-              self
-                .getManager()
-                .getUrlPublic("platform/modules/sokeio/tagify/dist/tagify.css"),
-              function () {}
-            );
             window.addScriptToWindow(
               self
                 .getManager()

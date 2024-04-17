@@ -36,17 +36,18 @@ export class LiveWireFlatpickrModule extends SokeioPlugin {
           //   );
           // }, 500);
         };
+        window.addStyleToWindow(
+          self
+            .getManager()
+            .getUrlPublic(
+              "platform/modules/sokeio/flatpickr/dist/flatpickr.min.css"
+            ),
+          function () {}
+        );
         if (window.flatpickr) {
           flatpickrCreate();
         } else {
-          window.addStyleToWindow(
-            self
-              .getManager()
-              .getUrlPublic(
-                "platform/modules/sokeio/flatpickr/dist/flatpickr.min.css"
-              ),
-            function () {}
-          );
+         
           window.addScriptToWindow(
             self
               .getManager()

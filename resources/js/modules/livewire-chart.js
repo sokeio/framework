@@ -1,8 +1,8 @@
 import { SokeioPlugin } from "../core/plugin";
 
-export class LiveWireChartModule extends SokeioPlugin{
-  getKey(){
-    return 'SOKEIO_LIVEWIRE_CHART_MODULE';
+export class LiveWireChartModule extends SokeioPlugin {
+  getKey() {
+    return "SOKEIO_LIVEWIRE_CHART_MODULE";
   }
   booting() {
     if (window.Livewire) {
@@ -29,19 +29,23 @@ export class LiveWireChartModule extends SokeioPlugin{
             el.$wire_apexcharts = new window.ApexCharts(el, options);
             el.$wire_apexcharts.render();
           };
+          window.addStyleToWindow(
+            self
+              .getManager()
+              .getUrlPublic(
+                "platform/modules/sokeio/apexcharts/dist/apexcharts.css"
+              ),
+            function () {}
+          );
           if (window.ApexCharts) {
             apexchartsInit();
           } else {
-            window.addStyleToWindow(
-              self.getManager().getUrlPublic(
-                "platform/modules/sokeio/apexcharts/dist/apexcharts.css"
-              ),
-              function () {}
-            );
             window.addScriptToWindow(
-              self.getManager().getUrlPublic(
-                "platform/modules/sokeio/apexcharts/dist/apexcharts.min.js"
-              ),
+              self
+                .getManager()
+                .getUrlPublic(
+                  "platform/modules/sokeio/apexcharts/dist/apexcharts.min.js"
+                ),
               function () {
                 apexchartsInit();
               }
