@@ -12,6 +12,7 @@ trait WithUtils
             $order = $item['order'];
             if (!isset($data_list[$value])) {
                 $data_list[$value] = [
+                    'id' => $value,
                     'order' => $order,
                     'parent_id' => $parent_id
                 ];
