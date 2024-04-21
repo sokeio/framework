@@ -5,7 +5,7 @@
     $formField = $column->getFormField();
     $modelTitle = $column->getTitle() ?? $modelLabel;
 @endphp
-<label class="form-check">
+<label class="form-check pt-2">
     <input type="checkbox" class="form-check-input" name="field-{{ $modelField }}" placeholder="{{ $modelPlaceholder }}"
         {!! $column->getWireAttribute() !!} />
     <span class="form-check-label">{{ $modelTitle }}</span>

@@ -11,7 +11,7 @@
     <div class="row">
         @foreach ($datasources as $item)
             <div class="col-6">
-                <label class="form-check">
+                <label class="form-check pt-2">
                     <input wire:model='{{ $formField }}' name="{{ $formField }}" class="form-check-input"
                         type="checkbox" value="{{ data_get($item, $FieldKey) }}">
                     <span class="form-check-label">{{ data_get($item, $FieldText) }}</span>
