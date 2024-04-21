@@ -25,7 +25,7 @@ export class LiveWireFlatpickrModule extends SokeioPlugin {
           el.$wire_flatpickr = new window.flatpickr(el, {
             allowInput: true,
             allowInvalidPreload: true,
-            dateFormat: "dd/mm/yyyy",
+            dateFormat: "d/m/Y",
             ...options,
             onChange: (selectedDates, dateStr, instance) => {
               self
