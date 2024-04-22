@@ -169,6 +169,10 @@ class PlatformManager
         }
         return false;
     }
+    public function checkSetupUI()
+    {
+        return !$this->checkConnectDB() && env('SOKEIO_SETUP', false);
+    }
     private $gateIgnores = [];
     public function checkGate()
     {

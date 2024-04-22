@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static void DoReadyAfter()
  * @method static bool checkGate();
  * @method static bool checkConnectDB();
+ * @method static bool checkSetupUI();
  * @method static void setEnv($arrs)
  * @method static void start();
  * @method static long executionTime();

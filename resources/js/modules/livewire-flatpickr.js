@@ -25,7 +25,6 @@ export class LiveWireFlatpickrModule extends SokeioPlugin {
           el.$wire_flatpickr = new window.flatpickr(el, {
             allowInput: true,
             allowInvalidPreload: true,
-            dateFormat: "d/m/Y",
             ...options,
             onChange: (selectedDates, dateStr, instance) => {
               self
@@ -33,11 +32,11 @@ export class LiveWireFlatpickrModule extends SokeioPlugin {
                 .dataSet(component.$wire, modelKey, selectedDates);
             },
           });
-          // setTimeout(async () => {
-          //   el.$wire_flatpickr.setDate(
-          //     await self.getManager().dataGet(component.$wire, modelKey)
-          //   );
-          // }, 500);
+          setTimeout(async () => {
+            el.$wire_flatpickr.setDate(
+              await self.getManager().dataGet(component.$wire, modelKey)
+            );
+          }, 10);
         };
         window.addStyleToWindow(
           self

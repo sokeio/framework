@@ -91,6 +91,6 @@ Route::get('routes', function () {
     }
     echo "</table>";
 });
-if (!Platform::checkConnectDB() || env('SOKEIO_SETUP', true)) {
+if (Platform::checkSetupUI()) {
     Route::get('/setup', Setup::class)->name('sokeio.setup');
 }

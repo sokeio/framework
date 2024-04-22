@@ -132,8 +132,8 @@ class SokeioServiceProvider extends ServiceProvider
             if (
                 $route_name &&
                 $route_name != 'sokeio.setup' &&
-                !Platform::checkConnectDB() &&
-                request()->isMethod('get')
+                request()->isMethod('get') &&
+                Platform::checkSetupUI()
             ) {
                 app(Redirector::class)->to(route('sokeio.setup'))->send();
                 return;
