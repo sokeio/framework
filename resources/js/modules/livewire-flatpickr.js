@@ -1,4 +1,5 @@
 import { SokeioPlugin } from "../core/plugin";
+import { convertDateTimeFormatToMask } from "../utils";
 
 export class LiveWireFlatpickrModule extends SokeioPlugin {
   getKey() {
@@ -19,12 +20,17 @@ export class LiveWireFlatpickrModule extends SokeioPlugin {
             `return ${el.getAttribute("wire:flatpickr.options")};`
           )();
         }
+
         let modelKey = el.getAttribute("wire:model");
+        let dateFormat =
+          options.dateFormat ?? (options.enableTime ? "Y/m/d H:i:S" : "Y/m/d");
+        let maskFormat = convertDateTimeFormatToMask(dateFormat);
         const flatpickrCreate = async () => {
           if (el.$wire_flatpickr) return;
           el.$wire_flatpickr = new window.flatpickr(el, {
             allowInput: true,
             allowInvalidPreload: true,
+            dateFormat,
             ...options,
             onChange: (selectedDates, dateStr, instance) => {
               self
@@ -36,6 +42,7 @@ export class LiveWireFlatpickrModule extends SokeioPlugin {
             el.$wire_flatpickr.setDate(
               await self.getManager().dataGet(component.$wire, modelKey)
             );
+            Alpine.$data(el).maskFormat = maskFormat;
           }, 10);
         };
         window.addStyleToWindow(

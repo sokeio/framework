@@ -77,3 +77,41 @@ export function downloadFile(url, fileName) {
       URL.revokeObjectURL(href);
     });
 }
+export function convertDateFormatToMask(dateFormat) {
+  let mask = dateFormat.toLowerCase();
+
+  // Thay đổi định dạng ngày
+  mask = mask.replace("dd", "99");
+  mask = mask.replace("d", "99");
+
+  // Thay đổi định dạng tháng
+  mask = mask.replace("mm", "99");
+  mask = mask.replace("m", "99");
+
+  // Thay đổi định dạng năm
+  mask = mask.replace("yyyy", "9999");
+  mask = mask.replace("yy", "9999");
+  mask = mask.replace("y", "9999");
+
+  return mask;
+}
+export function convertTimeFormatToMask(timeFormat) {
+  let mask = timeFormat.toLowerCase();
+
+  // Thay đổi định dạng giờ
+  mask = mask.replace("hh", "99");
+  mask = mask.replace("h", "99");
+
+  // Thay đổi định dạng phút
+  mask = mask.replace("ii", "99");
+  mask = mask.replace("i", "99");
+
+  // Thay đổi định dạng giây
+  mask = mask.replace("ss", "99");
+  mask = mask.replace("s", "99");
+
+  return mask;
+}
+export function convertDateTimeFormatToMask(dateTimeFormat) {
+  return convertTimeFormatToMask(convertDateFormatToMask(dateTimeFormat));
+}

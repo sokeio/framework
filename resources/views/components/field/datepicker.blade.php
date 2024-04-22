@@ -20,10 +20,8 @@
     }
     $MinValue = $column->getMinValue();
     $MaxValue = $column->getMaxValue();
-    $dateFormat = $column->getFieldOption()['dateFormat'] ?? 'Y-m-d';
 @endphp
-<div x-data="{ format: '{{ $dateFormat }}'">
-    <input wire:ignore name="{{ $modelField }}" wire:flatpickr wire:flatpickr.options='@json($item->getFieldOption())'
-        {!! $item->getAttribute() ?? '' !!} class="form-control" wire:model='{{ $formField }}' name="{{ $modelField }}"
-        placeholder="{{ $item->getPlaceholder() }}" x-init="{!! $xInit !!}">
-</div>
+<input wire:ignore name="{{ $modelField }}" wire:flatpickr wire:flatpickr.options='@json($item->getFieldOption())'
+    {!! $item->getAttribute() ?? '' !!} class="form-control" wire:model='{{ $formField }}' name="{{ $modelField }}"
+    autocomplete="off" placeholder="{{ $item->getPlaceholder() }}" x-data="{ maskFormat: '9999/99/99' }"
+    x-mask:dynamic="maskFormat" x-init="{!! $xInit !!}" >
