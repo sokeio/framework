@@ -39,9 +39,9 @@ export class LiveWireFlatpickrModule extends SokeioPlugin {
             },
           });
           setTimeout(async () => {
-            el.$wire_flatpickr.setDate(
-              await self.getManager().dataGet(component.$wire, modelKey)
-            );
+            // el.$wire_flatpickr.setDate(
+            //   await self.getManager().dataGet(component.$wire, modelKey)
+            // );
             Alpine.$data(el).maskFormat = maskFormat;
           }, 10);
         };

@@ -33,7 +33,7 @@ class ClientManager
     }
     public function __construct()
     {
-        $this->domain = env('SOKEIO_PLATFORM_API', 'https://sokeio.com/api/marketplace/');
+        $this->domain = env('SOKEIO_PLATFORM_API', 'https://sokeio.com/api/');
         $this->initClient();
     }
     public function sokeioInstall()
@@ -47,7 +47,7 @@ class ClientManager
     }
     public function getLastVersion($arrs = [], $type = 'module')
     {
-        return $this->client->post('latest-version', [
+        return $this->client->post('marketplace/latest-version', [
             'type' => $type,
             'data' => $arrs
         ]);
@@ -65,7 +65,7 @@ class ClientManager
             mkdir(storage_path('temps'));
         }
         $pathFileTemp = storage_path('temps') . '/' . time() . '.zip';
-        $this->client->sink($pathFileTemp)->post('download', [
+        $this->client->sink($pathFileTemp)->post('marketplace/download', [
             'type' => $type,
             'data' => $packageToken
         ]);
@@ -112,7 +112,7 @@ class ClientManager
     }
     public function checkLicenseKey($key)
     {
-        $response = $this->client->post('check-license-key', [
+        $response = $this->client->post('product/activation', [
             'key' => $key
         ]);
         file_put_contents(base_path('platform/license.json'), json_encode($response->json('data')));
@@ -126,7 +126,7 @@ class ClientManager
         if (!isset($this->licenseInfo['token']) || !$this->licenseInfo['token']) {
             return false;
         }
-        $response = $this->client->post('check-license', [
+        $response = $this->client->post('product/verfy', [
             'token' => $this->licenseInfo['token']
         ]);
         return $response->json('data') != null;
