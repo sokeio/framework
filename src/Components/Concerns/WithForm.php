@@ -161,6 +161,9 @@ trait WithForm
             foreach ($this->getAllInputUI() as $column) {
                 if (!$column->getNoSave()) {
                     $value = data_get($this, $column->getFormFieldEncode(), $column->getValueDefault());
+                    if ($value === '' && $column->getConvertEmptyStringsToNull()) {
+                        $value = null;
+                    }
                     data_set($objData, $column->getNameEncode(), $value);
                 }
             }

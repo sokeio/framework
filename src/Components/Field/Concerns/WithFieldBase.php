@@ -41,6 +41,14 @@ trait WithFieldBase
     {
         return $this->getValue('noSave');
     }
+    public function convertEmptyStringsToNull(): static
+    {
+        return $this->setKeyValue('convertEmptyStringsToNull', true);
+    }
+    public function getConvertEmptyStringsToNull()
+    {
+        return $this->getValue('convertEmptyStringsToNull');
+    }
     public function format($format): static
     {
         return $this->setKeyValue('format', $format);
