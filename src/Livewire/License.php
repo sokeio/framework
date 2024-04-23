@@ -20,14 +20,19 @@ class License extends Component
     }
     public function doLicense()
     {
-        if (!Client::checkLicenseKey($this->licenseKey)) {
-            $this->showMessage('License key ' . $this->licenseKey . ' is valid');
+        $rs =  Client::checkLicenseKey($this->licenseKey);
+        if (isset($rs['status']) && $rs['status'] == 1) {
+            $this->showMessage($rs['message']);
+        } else {
+            $this->showMessage(__('Invalid license key'));
         }
     }
     public function render()
     {
         return view('sokeio::license', [
             'domain' => request()->getHost(),
+            'prodcutId' => Client::getProductId(),
+            'licenseInfo' => Client::getLicense(),
         ]);
     }
 }

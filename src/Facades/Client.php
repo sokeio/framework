@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static mix checkLicenseKey($key)
  * @method static mix checkLicense()
  * @method static mix getLicense()
+ * @method static string getProductId()
  * @see \Sokeio\Facades\Client
  */
 class Client extends Facade

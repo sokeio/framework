@@ -12,10 +12,12 @@ class ClientManager
     private $versionApi = 'v1';
     private $productId = 'sokeio';
     private $licenseKey = 'jx26dpclu8d7vfhyjgsnlhviezcan612';
+    private $licenseToken = '';
     private $licenseInfo = [];
     private $sokeioInfo = [];
     private const PATH_LICENSE = 'platform/license.json';
     private \Illuminate\Http\Client\PendingRequest $client;
+
     private function initClient()
     {
         if (file_exists(base_path('platform/sokeio.json'))) {
@@ -24,17 +26,36 @@ class ClientManager
         if (isset($this->sokeioInfo['productId']) && $this->sokeioInfo['productId']) {
             $this->productId = $this->sokeioInfo['productId'];
         }
+        $this->resetClient();
+    }
+    private function resetClient()
+    {
+        if (file_exists(base_path(self::PATH_LICENSE))) {
+            $this->licenseInfo = json_decode(File::get(base_path(self::PATH_LICENSE)), true) ?? [];
+        }
+        if (isset($this->licenseInfo['data']['token']) && $this->licenseInfo['data']['token']) {
+            $this->licenseToken = $this->licenseInfo['data']['token'];
+        }
+        if (isset($this->licenseInfo['data']['key']) && $this->licenseInfo['data']['key']) {
+            $this->licenseKey = $this->licenseInfo['data']['key'];
+        }
         $this->client = Http::withHeaders([
             'X-License-Product' => $this->productId,
             'X-License-Key' => $this->licenseKey,
+            'X-License-Token' => $this->licenseToken,
             'X-License-Domain' => $_SERVER['HTTP_HOST'],
             'Accept' => 'application/vnd.api+json',
         ])->baseUrl($this->domain .  $this->versionApi);
     }
+
     public function __construct()
     {
         $this->domain = env('SOKEIO_PLATFORM_API', 'https://sokeio.com/api/');
         $this->initClient();
+    }
+    public function getProductId()
+    {
+        return $this->productId;
     }
     public function sokeioInstall()
     {
@@ -112,31 +133,28 @@ class ClientManager
     }
     public function checkLicenseKey($key)
     {
-        $response = $this->client->post('product/activation', [
+        $rs = $this->client->post('product/activation', [
             'key' => $key
-        ]);
-        file_put_contents(base_path('platform/license.json'), json_encode($response->json('data')));
-        return $response->json('data');
+        ])->json();
+        if ($rs && isset($rs['token']) && $rs['token']) {
+            $this->licenseKey = $key;
+            $this->licenseInfo = $rs;
+            File::put(base_path(self::PATH_LICENSE), json_encode($rs));
+        }
+        return $rs;
     }
     public function checkLicense()
     {
-        if (file_exists(base_path('platform/license.json'))) {
-            $this->licenseInfo = json_decode(File::get(base_path('platform/license.json')), true) ?? [];
-        }
-        if (!isset($this->licenseInfo['token']) || !$this->licenseInfo['token']) {
-            return false;
-        }
-        $response = $this->client->post('product/verfy', [
-            'token' => $this->licenseInfo['token']
-        ]);
-        return $response->json('data') != null;
+        $this->resetClient();
+        $rs = $this->client->post('product/verify')->json();
+        return isset($rs['status']) && $rs['status'] == 1;
     }
 
     public function getLicense()
     {
-        if (!$this->checkLicense()) {
-            return false;
-        }
-        return $this->licenseInfo;
+        return [
+            'status' => $this->checkLicense(),
+            'data' => $this->licenseInfo ? $this->licenseInfo['data'] : null
+        ];
     }
 }
