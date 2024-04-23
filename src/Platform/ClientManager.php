@@ -136,9 +136,7 @@ class ClientManager
         $rs = $this->client->post('product/activation', [
             'key' => $key
         ])->json();
-        if ($rs && isset($rs['token']) && $rs['token']) {
-            $this->licenseKey = $key;
-            $this->licenseInfo = $rs;
+        if ($rs && isset($rs['status']) && $rs['status'] == 1) {
             File::put(base_path(self::PATH_LICENSE), json_encode($rs));
         }
         return $rs;

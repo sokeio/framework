@@ -22,7 +22,7 @@ class License extends Component
     {
         $rs =  Client::checkLicenseKey($this->licenseKey);
         if (isset($rs['status']) && $rs['status'] == 1) {
-            $this->showMessage($rs['message']);
+            $this->showMessage(__('Activated successfully'));
         } else {
             $this->showMessage(__('Invalid license key'));
         }
