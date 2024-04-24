@@ -5,7 +5,6 @@ namespace Sokeio\Models;
 
 class Translation extends \Sokeio\Model
 {
-
     /**
      * The attributes that are mass assignable.
      *

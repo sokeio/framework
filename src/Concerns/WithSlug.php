@@ -2,18 +2,19 @@
 
 namespace Sokeio\Concerns;
 
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
+use Sokeio\Models\Slug;
 
 trait WithSlug
 {
-    /**
-     * Get the route key for the model.
-     *
-     * @return string
-     */
-    public function getRouteKeyName()
+    public function getSlugKeyAttribute()
     {
-        return 'slug';
+        if ($this->slug) {
+            return $this->slug->key;
+        }
+        return null;
     }
     protected function getSlugText()
     {
@@ -21,8 +22,8 @@ trait WithSlug
     }
     private function getSlugCountMax($slug)
     {
-        $slugMax = static::where('slug', 'like', "{$slug}%")
-            ->orderBy('slug', 'desc')
+        $slugMax = $this->slug()->where('key', 'like', "{$slug}%")
+            ->orderBy('key', 'desc')
             ->first();
         $count = 0;
 
@@ -33,32 +34,59 @@ trait WithSlug
         }
         return $count;
     }
+    public function checkSlug($lug)
+    {
+        return $this->slug()->where('key', $lug)->exists();
+    }
     public function reSlug()
     {
-        if (empty($this->slug)) {
+        if (!$this->slug) {
             $slug = Str::slug($this->getSlugText() ?? '');
             if (empty($slug)) {
                 return;
             }
+            $slugTemp =  $slug;
             $count = $this->getSlugCountMax($slug);
             do {
-                $this->slug = $count > 0 ? "{$slug}-{$count}" : $slug;
+                $slugTemp = $count > 0 ? "{$slug}-{$count}" : $slug;
 
-                if (static::where('slug', $this->slug)->exists()) {
-                    $this->slug = null;
+                if ($this->checkSlug($slugTemp)) {
+                    $slugTemp = null;
                 }
 
                 $count++;
-            } while ($this->slug === null && $count < 100);
+            } while ($slugTemp === null && $count < 100);
+            $locale = '';
+            if (method_exists($this, 'locale')) {
+                $locale = $this->locale();
+            }
+            $this->slug()->updateOrCreate([
+                'key' => $slugTemp,
+                'locale' => $locale,
+            ], []);
         }
     }
     public function initializeWithSlug()
     {
-        static::creating(function ($model) {
+        static::created(function ($model) {
             $model->reSlug();
         });
-        static::saving(function ($model) {
+        static::saved(function ($model) {
             $model->reSlug();
+        });
+    }
+    public function slug(): MorphOne
+    {
+        $query = $this->morphOne(Slug::class, 'reference');
+        if (method_exists($this, 'locale')) {
+            $query = $query->where('locale', $this->locale());
+        }
+        return $query;
+    }
+    public function scopeWithSlugKey(Builder $query, $key)
+    {
+        return $query->with('slug')->whereHas('slug', function ($query) use ($key) {
+            $query->where('key', $key);
         });
     }
 }

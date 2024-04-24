@@ -3,7 +3,8 @@
 namespace Sokeio\Components\Concerns;
 
 use Illuminate\Support\Facades\DB;
-use Livewire\Attributes\Url;
+use Illuminate\Support\Facades\Log;
+use Mockery\Generator\Method;
 use Sokeio\Components\UI;
 use Sokeio\Form;
 
@@ -12,8 +13,8 @@ trait WithForm
     use WithModelQuery;
     use WithLayoutUI;
     public $dataId;
-    #[Url]
     public $copyId;
+    public $localeRef;
     public Form $data;
     protected $layout;
     protected $footer;
@@ -35,6 +36,9 @@ trait WithForm
         if ($this->dataId) {
             $query =  $query->where('id', $this->dataId);
             $data = $query->first();
+            if ($this->localeRef && method_exists($data, 'setDefaultLocale')) {
+                $data->setDefaultLocale($this->localeRef);
+            }
             if (!$data) {
                 return abort(404);
             }
@@ -48,6 +52,9 @@ trait WithForm
         } elseif ($this->copyId) {
             $query =  $query->where('id', $this->copyId);
             $data = $query->first();
+            if ($this->localeRef && method_exists($data, 'setDefaultLocale')) {
+                $data->setDefaultLocale($this->localeRef);
+            }
             if (method_exists($this, 'loadDataBefore')) {
                 call_user_func([$this, 'loadDataBefore'], $data);
             }
@@ -133,6 +140,9 @@ trait WithForm
                 $objData = new ($this->getModel());
             }
         }
+        if ($this->localeRef && method_exists($objData, 'setDefaultLocale')) {
+            $objData->setDefaultLocale($this->localeRef);
+        }
         return $objData;
     }
     protected function doSaveByUser($objData, $isNew)
@@ -197,7 +207,14 @@ trait WithForm
     }
     public function mount()
     {
+        $this->localeRef = request()->get('locale');
+        if (method_exists($this, 'beforeMount')) {
+            call_user_func([$this, 'beforeMount']);
+        }
         $this->loadData();
+        if (method_exists($this, 'afterMount')) {
+            call_user_func([$this, 'afterMount']);
+        }
     }
     public function render()
     {

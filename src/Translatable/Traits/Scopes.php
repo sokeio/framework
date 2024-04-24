@@ -149,6 +149,6 @@ trait Scopes
 
     protected function getTranslationsTable(): string
     {
-        return app()->make($this->getTranslationModelName())->getTable();
+        return $this->getTable() . '_translations';
     }
 }

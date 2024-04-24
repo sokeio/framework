@@ -71,15 +71,17 @@ trait Relationship
      */
     protected function newRelatedInstance($class)
     {
-        $instance = parent::newRelatedInstance($class);
-        if ($class === ModelTranslatable::class) {
-            $tableTranslatable = $this->getTable() . '_translations';
-            $instance->setTable($tableTranslatable);
-            if (isset($this->translatedAttributes)) {
-                $instance->fillable($this->translatedAttributes);
+        return tap(new $class, function ($instance) use ($class) {
+            if (!$instance->getConnectionName()) {
+                $instance->setConnection($this->connection);
             }
-        }
-        return $instance;
+            if ($class === ModelTranslatable::class) {
+                $instance->setTable($this->getTranslationsTable());
+                if (isset($this->translatedAttributes)) {
+                    $instance->fillable($this->translatedAttributes);
+                }
+            }
+        });
     }
     protected function localeOrFallback()
     {

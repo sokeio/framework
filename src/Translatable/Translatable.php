@@ -174,7 +174,7 @@ trait Translatable
      */
     public function getLocaleKey(): string
     {
-        return $this->localeKey ?: config('translatable.locale_key', 'locale');
+        return $this->localeKey ?: config('sokeio.translatable.locale_key', 'locale');
     }
 
     public function getNewTranslation(string $locale): Model
@@ -183,6 +183,7 @@ trait Translatable
 
         /** @var Model $translation */
         $translation = new $modelName();
+        $translation->setTable($this->getTranslationsTable());
         $translation->setAttribute($this->getLocaleKey(), $locale);
         $this->translations->add($translation);
 
@@ -354,7 +355,7 @@ trait Translatable
             return $this->getDefaultLocale();
         }
 
-        return Locale::current();
+        return Locale::currentLocale();
     }
 
     protected function saveTranslations(): bool
@@ -370,7 +371,7 @@ trait Translatable
                 if (!empty($connectionName = $this->getConnectionName())) {
                     $translation->setConnection($connectionName);
                 }
-
+                $translation->setTable($this->getTranslationsTable());
                 $translation->setAttribute($this->getTranslationRelationKey(), $this->getKey());
                 $saved = $translation->save();
             }
