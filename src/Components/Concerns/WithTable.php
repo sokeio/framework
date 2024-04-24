@@ -91,7 +91,8 @@ trait WithTable
     protected function getButtons()
     {
         return [
-            UI::buttonCreate(__('Create'))
+            UI::buttonCreate(__(''))
+                ->icon('<i class="ti ti-circle-plus fs-2"></i>')
                 ->modalRoute($this->getRoute() . '.add')
                 ->modalTitle(function () {
                     return $this->getModalTitle();
@@ -106,16 +107,19 @@ trait WithTable
     protected function getTableActions()
     {
         return [
-            UI::buttonEdit(__('Edit'))->modalRoute($this->getRoute() . '.edit', function ($row) {
-                return [
-                    'dataId' => $row->id
-                ];
-            })->modalTitle(function ($row) {
-                return $this->getModalTitle(false, $row);
-            })->modalSize(function ($row) {
-                return $this->getModalSize(false, $row);
-            }),
-            UI::buttonRemove(__('Remove'))
+            UI::buttonEdit(__(''))
+                ->icon('<i class="ti ti-edit fs-2"></i>')
+                ->modalRoute($this->getRoute() . '.edit', function ($row) {
+                    return [
+                        'dataId' => $row->id
+                    ];
+                })->modalTitle(function ($row) {
+                    return $this->getModalTitle(false, $row);
+                })->modalSize(function ($row) {
+                    return $this->getModalSize(false, $row);
+                }),
+            UI::buttonRemove(__(''))
+                ->icon('<i class="ti ti-trash fs-2"></i>')
                 ->confirm(__('Do you want to delete this record?'), 'Confirm')
                 ->wireClick(function ($item) {
                     return 'doRemove(' . $item->getDataItem()->id . ')';
