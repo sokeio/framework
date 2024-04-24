@@ -105,7 +105,6 @@ class LocaleManager
             }
         }
         foreach (Language::all() as $item) {
-
             $this->translationToTable('app', '', base_path('lang/' . $item->code . self::EXT_JSON), $item);
             foreach (['theme', 'plugin', 'module'] as $type) {
                 foreach (platformBy($type)->getAll() as $data) {
