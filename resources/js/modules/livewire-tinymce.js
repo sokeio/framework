@@ -38,10 +38,11 @@ export class LiveWireTinymceModule extends SokeioPlugin {
               promotion: false,
               target: el,
               setup: function (editor) {
-                editor.on("init change", function () {
-                  editor.save();
+                editor.on("init", function () {
+                  editor.setContent(el.value);
+                  editor.undoManager.dispatchChange();
                 });
-                editor.on("change", function (e) {
+                editor.on("blur", function (e) {
                   let html = editor.getContent();
                   if (window.removeHighlightShortcodes) {
                     html = window.removeHighlightShortcodes(html);
@@ -75,6 +76,9 @@ export class LiveWireTinymceModule extends SokeioPlugin {
                 });
               },
             });
+            setTimeout(() => {
+              el.$wire_tinymce.setContent(el.value);
+            }, 200);
           };
           if (window.tinymce) {
             tinymceInit();
@@ -86,7 +90,7 @@ export class LiveWireTinymceModule extends SokeioPlugin {
               function () {
                 setTimeout(() => {
                   tinymceInit();
-                }, 50);
+                }, 10);
               }
             );
           }

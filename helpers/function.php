@@ -604,7 +604,9 @@ if (!function_exists('sokeioFieldLocateRender')) {
             $link = route($routeName, ['dataId' => $row->id, 'locale' => $locale]);
             echo '<a sokeio:modal="' . $link . '"
          sokeio:modal-size="modal-fullscreen"
-         sokeio:modal-title="' . $title . '" title="' . $title . '" class="px-2 py-1 btn btn-secondary">' . $locale . '</a> ';
+         sokeio:modal-title="' . $title . '" 
+         title="' . $title . '"
+          class="px-2 py-1 btn btn-secondary">' . $locale . '</a> ';
         }
     }
 }
