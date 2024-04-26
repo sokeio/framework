@@ -11,6 +11,7 @@ use Illuminate\Support\Js;
 use Livewire\Livewire;
 use Symfony\Component\Finder\SplFileInfo;
 use Sokeio\Breadcrumb;
+use Sokeio\Facades\Locale;
 use Sokeio\Facades\Menu;
 use Sokeio\Facades\Module;
 use Sokeio\Facades\Platform;
@@ -593,5 +594,17 @@ if (!function_exists('includeFile')) {
         }
         //NOSONAR
         include_once($path);
+    }
+}
+
+if (!function_exists('sokeioFieldLocateRender')) {
+    function sokeioFieldLocateRender($row, $routeName, $title)
+    {
+        foreach (Locale::supportedLocales() as $locale) {
+            $link = route($routeName, ['dataId' => $row->id, 'locale' => $locale]);
+            echo '<a sokeio:modal="' . $link . '"
+         sokeio:modal-size="modal-fullscreen"
+         sokeio:modal-title="' . $title . '" class="px-2 py-1 btn btn-secondary">' . $locale . '</a> ';
+        }
     }
 }

@@ -45,7 +45,7 @@ trait WithForm
             if (method_exists($this, 'loadDataBefore')) {
                 call_user_func([$this, 'loadDataBefore'], $data);
             }
-            $this->data->fill($data);
+            $this->fillData($data);
             if (method_exists($this, 'loadDataAfter')) {
                 call_user_func([$this, 'loadDataAfter'], $data);
             }
@@ -58,12 +58,21 @@ trait WithForm
             if (method_exists($this, 'loadDataBefore')) {
                 call_user_func([$this, 'loadDataBefore'], $data);
             }
-            $this->data->fill($data);
+            $this->fillData($data);
             if (method_exists($this, 'loadDataAfter')) {
                 call_user_func([$this, 'loadDataAfter'], $data);
             }
         }
         $this->loadDefault();
+    }
+    protected function fillData($data)
+    {
+        foreach ($this->getAllInputUI() as $column) {
+            if (!$column->getNoSave()) {
+                $value = data_get($data, $column->getNameEncode(), $column->getValueDefault());
+                data_set($this, $column->getFormFieldEncode(), $value);
+            }
+        }
     }
     protected function loadDefault()
     {

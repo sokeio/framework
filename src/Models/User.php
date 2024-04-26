@@ -6,14 +6,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Sokeio\Concerns\WithModelHook;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Sokeio\Concerns\WithPermission;
-use Sokeio\Concerns\WithSlug;
 use Illuminate\Support\Facades\Hash;
-use Sokeio\Database\Factories\UserFactory;
 
 class User extends Authenticatable
 {
     use SoftDeletes;
-    use WithPermission, WithSlug;
+    use WithPermission;
     use WithModelHook;
     protected $fillable = ["*"];
     public function isActive()
@@ -55,12 +53,5 @@ class User extends Authenticatable
                 $model->password = Hash::make($model->password);
             }
         });
-    }
-    /**
-     * @return UserFactory
-     */
-    protected static function newFactory(): UserFactory
-    {
-        return UserFactory::new();
     }
 }

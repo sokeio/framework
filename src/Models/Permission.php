@@ -5,7 +5,6 @@ namespace Sokeio\Models;
 
 class Permission extends \Sokeio\Model
 {
-
     protected $fillable = ['name', 'group', 'slug'];
 
     public function roles()

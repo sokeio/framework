@@ -2,11 +2,9 @@
 
 namespace Sokeio\Models;
 
-use Sokeio\Concerns\WithSlug;
 
 class Role extends \Sokeio\Model
 {
-    use WithSlug;
     private static $roleSupperAdmin = null;
     public static function SupperAdmin()
     {

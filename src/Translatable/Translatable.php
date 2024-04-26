@@ -144,7 +144,7 @@ trait Translatable
     {
         [$attribute, $locale] = $this->getAttributeAndLocale($key);
 
-        if ($this->isTranslationAttribute($attribute)) {
+        if (!$this->checkLocaleDefault($locale) &&  $this->isTranslationAttribute($attribute)) {
             if ($this->getTranslation($locale) === null) {
                 return $this->getAttributeValue($attribute);
             }
@@ -268,7 +268,9 @@ trait Translatable
     public function hasTranslation(?string $locale = null): bool
     {
         $locale = $locale ?: $this->locale();
-
+        if ($this->checkLocaleDefault($locale)) {
+            return true;
+        }
         foreach ($this->translations as $translation) {
             if ($translation->getAttribute($this->getLocaleKey()) == $locale) {
                 return true;
@@ -299,8 +301,7 @@ trait Translatable
     public function setAttribute($key, $value)
     {
         [$attribute, $locale] = $this->getAttributeAndLocale($key);
-
-        if ($this->isTranslationAttribute($attribute)) {
+        if (!$this->checkLocaleDefault($locale) && $this->isTranslationAttribute($attribute)) {
             $this->getTranslationOrNew($locale)->$attribute = $value;
 
             return $this;
@@ -348,14 +349,17 @@ trait Translatable
 
         return count($dirtyAttributes) > 0;
     }
-
+    public function checkLocaleDefault($locale): bool
+    {
+        return Locale::defaultLocale() === $locale;
+    }
     protected function locale(): string
     {
         if ($this->getDefaultLocale()) {
             return $this->getDefaultLocale();
         }
 
-        return Locale::currentLocale();
+        return Locale::defaultLocale();
     }
 
     protected function saveTranslations(): bool
@@ -383,10 +387,10 @@ trait Translatable
     protected function getAttributeAndLocale(string $key): array
     {
         if (Str::contains($key, ':')) {
-            return explode(':', $key);
+            return [...explode(':', $key), true];
         }
 
-        return [$key, $this->locale()];
+        return [$key, $this->locale(), false];
     }
 
     protected function getAttributeOrFallback(?string $locale, string $attribute)
