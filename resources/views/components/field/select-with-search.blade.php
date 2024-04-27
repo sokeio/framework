@@ -39,29 +39,25 @@
     }
 
 }" x-init="$watch('searchText', async () => await doSearch());
-getValueText();" class="form-control dropdown" name="field-{{ $modelField }}"
+getValueText();" class="dropdown p-0" name="field-{{ $modelField }}"
     placeholder="{{ $modelPlaceholder }}" {!! $column->getWireAttribute() !!} @click.away="showList = false">
-    <a class="nav-link dropdown-toggle w-100" @click="showList = !showList">
-        <template x-if="valueText">
-            <span class="nav-link-title d-inline-block w-100" x-text="valueText"></span>
+    <pre x-text="JSON.stringify(Datasources, null, 2)"></pre>
+    <input class="form-control" type="text" placeholder="@lang('Search...')" x-model="valueText"
+        @focus="showList = true" />
+    <div class="dropdown-menu" :class="{ 'show': showList }" wire:ignore>
+        <template x-if="Datasources.length === 0">
+            <div>{{ $textNoData }}</div>
         </template>
-    </a>
-    <div class="dropdown-menu mt-1 w-75" :class="{ 'show': showList }" style="max-width: 300px" wire:ignore>
-        <div class="p-2">
-            <input class="form-control" type="text" placeholder="@lang('Search...')" x-model="searchText" />
-        </div>
-        <div class="pb-2" style="max-height: 300px; overflow-y: auto;">
-            <div class="p-2" x-text="Datasources.length === 0 ? '{{ $textNoData }}': ''"></div>
-            <template x-for="item in Datasources">
-                <div class="dropdown-item p-0 border-top hover" x-on:click="changeValue(item.{{ $FieldKey }})"
-                    :class="{ 'active': item.{{ $FieldKey }} == $wire.{{ $formField }} }">
-                    @if ($viewTemplate)
-                        {!! $viewTemplate !!}
-                    @else
-                        <div class="p-2 w-100 mt-1 " x-text="item.{{ $FieldText }}"></div>
-                    @endif
-                </div>
-            </template>
-        </div>
+        
+        <template x-for="item in Datasources">
+            <div class="dropdown-item border-top hover" x-on:click="changeValue(item.{{ $FieldKey }})"
+                :class="{ 'active': item.{{ $FieldKey }} == $wire.{{ $formField }} }">
+                @if ($viewTemplate)
+                    {!! $viewTemplate !!}
+                @else
+                    <div class="p-2 w-100 mt-1 " x-text="item.{{ $FieldText }}"></div>
+                @endif
+            </div>
+        </template>
     </div>
 </div>

@@ -122,7 +122,11 @@ trait Translatable
                 Locale::has($key)
                 && is_array($values)
             ) {
-                $this->getTranslationOrNew($key)->fill($values);
+                if ($this->checkLocaleDefault($key)) {
+                    parent::fill($values);
+                } else {
+                    $this->getTranslationOrNew($key)->fill($values);
+                }
                 unset($attributes[$key]);
             } else {
                 [$attribute, $locale] = $this->getAttributeAndLocale($key);
@@ -130,6 +134,7 @@ trait Translatable
                 if (
                     Locale::has($locale)
                     && $this->isTranslationAttribute($attribute)
+                    && !$this->checkLocaleDefault($locale)
                 ) {
                     $this->getTranslationOrNew($locale)->fill([$attribute => $values]);
                     unset($attributes[$key]);
@@ -389,12 +394,14 @@ trait Translatable
         if (Str::contains($key, ':')) {
             return [...explode(':', $key), true];
         }
-
         return [$key, $this->locale(), false];
     }
 
     protected function getAttributeOrFallback(?string $locale, string $attribute)
     {
+        if ($locale === null || $this->checkLocaleDefault($locale)) {
+            return $this->getAttribute($attribute);
+        }
         $translation = $this->getTranslation($locale);
 
         if (
@@ -423,8 +430,7 @@ trait Translatable
         ) {
             return $fallback;
         }
-
-        return config('sokeio.translatable.fallback_locale');
+        return Locale::defaultLocale();
     }
 
     protected function getTranslationByLocaleKey(string $key): ?Model
