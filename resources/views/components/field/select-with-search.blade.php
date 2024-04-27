@@ -18,44 +18,59 @@
     FieldText: '{{ $FieldText }}',
     valueText: '',
     elTimer: null,
+    elTimerSearch: null,
     getValueText() {
         if (this.elTimer) {
             clearTimeout(this.elTimer);
         }
         this.elTimer = setTimeout(() => {
             let rsItem = this.Datasources?.find((item) => item[this.FieldKey] == $wire.{{ $formField }});
-            this.valueText = rsItem && rsItem[this.FieldText] != '' ? rsItem[this.FieldText] : '{{ $modelLabel }}';
+            this.valueText = rsItem && rsItem[this.FieldText] != '' ? rsItem[this.FieldText] : '';
+            this.searchText = this.valueText;
             this.elTimer = null;
         }, 100);
     },
-    async doSearch() {
-        this.Datasources = (await $wire.callActionUI('{{ $searchFn ?? 'searchData' . $modelField }}',
-            this.searchText, $wire.{{ $formField }})) ?? [];
+    doSearch() {
+        if (this.elTimerSearch) {
+            clearTimeout(this.elTimerSearch);
+        }
+        this.elTimerSearch = setTimeout(async () => {
+            let rs = (await $wire.callActionUI('{{ $searchFn ?? 'searchData' . $modelField }}',
+                this.searchText, $wire.{{ $formField }})) ?? [];
+            this.Datasources = rs;
+            this.elTimerSearch = null;
+        }, 100);
+
     },
     changeValue(value) {
         this.$wire.{{ $formField }} = value;
         this.getValueText();
         this.showList = false;
+    },
+    blurSearch() {
+        if (this.searchText != this.valueText) {
+            this.valueText = '';
+            this.searchText = '';
+            this.$wire.{{ $formField }} = '';
+        }
     }
 
-}" x-init="$watch('searchText', async () => await doSearch());
+}" x-init="$watch('searchText', ()=>{doSearch()});
 getValueText();" class="dropdown p-0" name="field-{{ $modelField }}"
     placeholder="{{ $modelPlaceholder }}" {!! $column->getWireAttribute() !!} @click.away="showList = false">
-    <pre x-text="JSON.stringify(Datasources, null, 2)"></pre>
-    <input class="form-control" type="text" placeholder="@lang('Search...')" x-model="valueText"
-        @focus="showList = true" />
+    <input class="form-control" type="text" placeholder="@lang('Search...')" x-model="searchText" @focus="showList = true"
+        @keyup.escape="searchText= valueText" @blur="blurSearch()" />
     <div class="dropdown-menu" :class="{ 'show': showList }" wire:ignore>
         <template x-if="Datasources.length === 0">
-            <div>{{ $textNoData }}</div>
+            <div class="dropdown-item">{{ $textNoData }}</div>
         </template>
-        
         <template x-for="item in Datasources">
-            <div class="dropdown-item border-top hover" x-on:click="changeValue(item.{{ $FieldKey }})"
+            <div class="dropdown-item hover" x-on:click="changeValue(item.{{ $FieldKey }})"
                 :class="{ 'active': item.{{ $FieldKey }} == $wire.{{ $formField }} }">
                 @if ($viewTemplate)
                     {!! $viewTemplate !!}
                 @else
-                    <div class="p-2 w-100 mt-1 " x-text="item.{{ $FieldText }}"></div>
+                    <div x-text="item.{{ $FieldText }}"></div>
                 @endif
             </div>
         </template>

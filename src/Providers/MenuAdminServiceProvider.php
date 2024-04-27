@@ -55,7 +55,7 @@ class MenuAdminServiceProvider extends ServiceProvider
                                 $menu->route([
                                     'name' => 'admin.extension.theme.option',
                                     'params' => []
-                                ], 'Theme Option', '', [], 'admin.extension.theme.option');
+                                ], 'Customize', '', [], 'admin.extension.theme.option');
                             }
                             if (Theme::SiteDataInfo()) {
                                 $menu->route([

@@ -36,7 +36,7 @@ class ThemeOptionSetting extends FormSetting
     }
     protected function getTitle()
     {
-        return __('Theme Options');
+        return __('Customize Theme');
     }
     public function SettingUI()
     {
