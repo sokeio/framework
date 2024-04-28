@@ -1,12 +1,12 @@
 <?php
 
-namespace Sokeio\Commands;
+namespace Sokeio\Console;
 
 use Symfony\Component\Console\Input\InputOption;
 
-class MakeThemeCommand extends MakeCommand
+class MakePluginCommand extends MakeCommand
 {
-    protected $name = 'so:make-theme';
+    protected $name = 'so:make-plugin';
 
     /**
      * Get the console command options.
@@ -23,6 +23,6 @@ class MakeThemeCommand extends MakeCommand
     }
     public function getBaseTypeName()
     {
-        return 'theme';
+        return 'plugin';
     }
 }

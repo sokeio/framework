@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Commands;
+namespace Sokeio\Console;
 
 use Illuminate\Console\Command;
 use Sokeio\Concerns\WithGeneratorStub;

@@ -19,6 +19,7 @@ class Updater extends Component
     public function doUpdate()
     {
         $this->showMessage('Update');
+        $application = new \Composer\Console\Application();
     }
     public function render()
     {

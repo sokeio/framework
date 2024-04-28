@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Commands;
+namespace Sokeio\Console;
 
 use Symfony\Component\Console\Input\InputOption;
 

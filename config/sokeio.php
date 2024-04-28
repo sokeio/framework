@@ -1,14 +1,14 @@
 <?php
 
-use Sokeio\Commands\ActiveCommand;
-use Sokeio\Commands\InstallCommand;
-use Sokeio\Commands\MakeModuleCommand;
-use Sokeio\Commands\MakePluginCommand;
-use Sokeio\Commands\MakeThemeCommand;
-use Sokeio\Commands\MakeFileCommand;
-use Sokeio\Commands\ListCommand;
-use Sokeio\Commands\MakeCommand;
-use Sokeio\Commands\MakeUserAdminCommand;
+use Sokeio\Console\ActiveCommand;
+use Sokeio\Console\InstallCommand;
+use Sokeio\Console\MakeModuleCommand;
+use Sokeio\Console\MakePluginCommand;
+use Sokeio\Console\MakeThemeCommand;
+use Sokeio\Console\MakeFileCommand;
+use Sokeio\Console\ListCommand;
+use Sokeio\Console\MakeCommand;
+use Sokeio\Console\MakeUserAdminCommand;
 
 return [
     'updator' => [
