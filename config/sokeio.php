@@ -815,9 +815,9 @@ return [
         'base' => ['path' => '', 'namespace' => '', 'generate' => false],
         'src' => ['path' => 'src', 'namespace' => '', 'generate' => false],
         'module-theme' => ['path' => 'themes', 'generate' => true, 'only' => ['module']],
-        'module-plugin' => ['path' => 'plugins', 'generate' => true, 'only' => ['module']],
+        'module-plugin' => ['path' => 'plugins', 'generate' => false, 'only' => ['module']],
         'config' => ['path' => 'config', 'generate' => true, 'only' => ['module']],
-        'command' => ['path' => 'src/Commands', 'namespace' => 'Commands', 'generate' => true, 'only' => ['module']],
+        'command' => ['path' => 'src/Console', 'namespace' => 'Commands', 'generate' => true, 'only' => ['module']],
         'migration' => [
             'path' => 'database/migrations',
             'namespace' => 'Database\\Migrations',
