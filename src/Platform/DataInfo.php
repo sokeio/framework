@@ -17,7 +17,7 @@ class DataInfo extends JsonData
     use WithDataInfoProperty;
     use WithDataInfoStatus;
     private $updater = null;
-
+    
     public function __construct($path, $parent)
     {
         parent::__construct([], $parent);
@@ -98,6 +98,10 @@ class DataInfo extends JsonData
     public function checkComposer()
     {
         return file_exists($this->getPath('composer.json'));
+    }
+    public function getRequired()
+    {
+        return data_get($this->getJsonFromFile($this->getPath('composer.json')), 'require',[]);
     }
     public function checkDump()
     {

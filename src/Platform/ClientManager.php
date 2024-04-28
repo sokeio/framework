@@ -4,6 +4,7 @@ namespace Sokeio\Platform;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
+use Sokeio\Facades\Platform;
 use ZipArchive;
 
 class ClientManager
@@ -16,12 +17,31 @@ class ClientManager
     private $licenseInfo = [];
     private $sokeioInfo = [];
     private const PATH_LICENSE = 'platform/license.json';
-    private \Illuminate\Http\Client\PendingRequest $client;
+    private const PATH_PACKAGE_SOKEIO = 'platform/sokeio.json';
+    private ?\Illuminate\Http\Client\PendingRequest $client;
+    public function savePackage()
+    {
+        $this->sokeioInfo['productId'] = $this->productId;
+        $require =  $this->sokeioInfo['require'] ?? [];
+        $platforms = [];
+        foreach (Platform::getExtends() as $key) {
+            foreach (platformBy($key)->getAll() as $item) {
+                $require = [...$require, ...$item->getRequired()];
+                $platforms[$key . 's'][$item->getId()] =  $item->getVersion();
+            }
+        }
+        $this->sokeioInfo = [
+            ...$this->sokeioInfo,
+            'require' => $require,
+            ...$platforms
+        ];
+        File::put(base_path(self::PATH_PACKAGE_SOKEIO), json_encode($this->sokeioInfo, 0, 2));
+    }
 
     private function initClient()
     {
-        if (file_exists(base_path('platform/sokeio.json'))) {
-            $this->sokeioInfo = json_decode(File::get(base_path('platform/sokeio.json')), true) ?? [];
+        if (file_exists(base_path(self::PATH_PACKAGE_SOKEIO))) {
+            $this->sokeioInfo = json_decode(File::get(base_path(self::PATH_PACKAGE_SOKEIO)), true) ?? [];
         }
         if (isset($this->sokeioInfo['productId']) && $this->sokeioInfo['productId']) {
             $this->productId = $this->sokeioInfo['productId'];
@@ -39,15 +59,21 @@ class ClientManager
         if (isset($this->licenseInfo['data']['key']) && $this->licenseInfo['data']['key']) {
             $this->licenseKey = $this->licenseInfo['data']['key'];
         }
-        $this->client = Http::withHeaders([
-            'X-License-Product' => $this->productId,
-            'X-License-Key' => $this->licenseKey,
-            'X-License-Token' => $this->licenseToken,
-            'X-License-Domain' => $_SERVER['HTTP_HOST'],
-            'Accept' => 'application/vnd.api+json',
-        ])->baseUrl($this->domain .  $this->versionApi);
+        $this->client = null;
     }
-
+    private function getClient()
+    {
+        if (!$this->client) {
+            $this->client = Http::withHeaders([
+                'X-License-Product' => $this->productId,
+                'X-License-Key' => $this->licenseKey,
+                'X-License-Token' => $this->licenseToken,
+                'X-License-Domain' => $_SERVER['HTTP_HOST'],
+                'Accept' => 'application/vnd.api+json',
+            ])->baseUrl($this->domain .  $this->versionApi);
+        }
+        return $this->client;
+    }
     public function __construct()
     {
         $this->domain = env('SOKEIO_PLATFORM_API', 'https://sokeio.com/api/');
@@ -68,7 +94,7 @@ class ClientManager
     }
     public function getLastVersion($arrs = [], $type = 'module')
     {
-        return $this->client->post('marketplace/latest-version', [
+        return $this->getClient()->post('marketplace/latest-version', [
             'type' => $type,
             'data' => $arrs
         ]);
@@ -86,7 +112,7 @@ class ClientManager
             mkdir(storage_path('temps'));
         }
         $pathFileTemp = storage_path('temps') . '/' . time() . '.zip';
-        $this->client->sink($pathFileTemp)->post('marketplace/download', [
+        $this->getClient()->sink($pathFileTemp)->post('marketplace/download', [
             'type' => $type,
             'data' => $packageToken
         ]);
@@ -133,7 +159,7 @@ class ClientManager
     }
     public function checkLicenseKey($key)
     {
-        $rs = $this->client->post('product/activation', [
+        $rs = $this->getClient()->post('product/activation', [
             'key' => $key
         ])->json();
         if ($rs && isset($rs['status']) && $rs['status'] == 1) {
@@ -144,7 +170,7 @@ class ClientManager
     public function checkLicense()
     {
         $this->resetClient();
-        $rs = $this->client->post('product/verify')->json();
+        $rs = $this->getClient()->post('product/verify')->json();
         return isset($rs['status']) && $rs['status'] == 1;
     }
 

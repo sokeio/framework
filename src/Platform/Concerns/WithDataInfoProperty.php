@@ -52,7 +52,7 @@ trait WithDataInfoProperty
     }
     public function getVersion()
     {
-        return $this['version'];
+        return $this['version'] ?? 'v1.0.0';
     }
 
     protected function getKeyOption($key)

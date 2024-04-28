@@ -3,7 +3,7 @@
 namespace Sokeio\Commands;
 
 use Illuminate\Console\Command;
-use Sokeio\Facades\Updater;
+use Sokeio\Facades\Client;
 
 class InstallCommand extends Command
 {
@@ -28,7 +28,7 @@ class InstallCommand extends Command
      */
     public function handle(): int
     {
-        Updater::sokeioInstall();
+        Client::savePackage();
         return 0;
     }
 }
