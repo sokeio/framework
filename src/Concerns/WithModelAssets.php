@@ -28,7 +28,7 @@ trait WithModelAssets
     public function setAssets()
     {
         $this->setAssetLayout();
-        Assets::setTitle($this->name);
+        Assets::setTitle($this->title);
         Assets::setDescription($this->description);
         Assets::setKeywords($this->keywords);
         if (function_exists('SeoHelper')) {

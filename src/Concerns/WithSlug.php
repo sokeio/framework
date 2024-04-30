@@ -18,7 +18,7 @@ trait WithSlug
     }
     protected function getSlugText()
     {
-        return $this->name;
+        return $this->title;
     }
     private function getSlugCountMax($slug)
     {
