@@ -9,10 +9,10 @@ use Sokeio\Models\Slug;
 
 trait WithSlug
 {
-    public function getSlugKeyAttribute()
+    public function getSlugAttribute()
     {
-        if ($this->slug) {
-            return $this->slug->key;
+        if ($this->slugModel) {
+            return $this->slugModel->key;
         }
         return null;
     }
@@ -22,13 +22,13 @@ trait WithSlug
     }
     private function getSlugCountMax($slug)
     {
-        $slugMax = $this->slug()->where('key', 'like', "{$slug}%")
+        $slugMax = $this->slugModel()->where('key', 'like', "{$slug}%")
             ->orderBy('key', 'desc')
             ->first();
         $count = 0;
 
         if ($slugMax === null) {
-            $this->slug = $slug;
+            return 0;
         } elseif ($slug !== $slugMax->slug) {
             $count = (int)str_replace("{$slug}-", "", $slugMax->slug) + 1;
         }
@@ -36,11 +36,11 @@ trait WithSlug
     }
     public function checkSlug($lug)
     {
-        return $this->slug()->where('key', $lug)->exists();
+        return $this->slugModel()->where('key', $lug)->exists();
     }
     public function reSlug()
     {
-        if (!$this->slug) {
+        if (!$this->slugModel) {
             $slug = Str::slug($this->getSlugText() ?? '');
             if (empty($slug)) {
                 return;
@@ -60,7 +60,7 @@ trait WithSlug
             if (method_exists($this, 'locale')) {
                 $locale = $this->locale();
             }
-            $this->slug()->updateOrCreate([
+            $this->slugModel()->updateOrCreate([
                 'key' => $slugTemp,
                 'locale' => $locale,
             ], []);
@@ -75,7 +75,7 @@ trait WithSlug
             $model->reSlug();
         });
     }
-    public function slug(): MorphOne
+    public function slugModel(): MorphOne
     {
         $query = $this->morphOne(Slug::class, 'reference');
         if (method_exists($this, 'locale')) {
@@ -85,7 +85,7 @@ trait WithSlug
     }
     public function scopeWithSlugKey(Builder $query, $key)
     {
-        return $query->with('slug')->whereHas('slug', function ($query) use ($key) {
+        return $query->with('slugModel')->whereHas('slug', function ($query) use ($key) {
             $query->where('key', $key);
         });
     }
