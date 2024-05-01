@@ -89,7 +89,7 @@
                             <div class="" wire:ignore>
                                 @foreach ($locations as $item)
                                     <label class="form-check">
-                                        <input wire:model.live='menu_locations.{{ $item }}'
+                                        <input wire:model.live='menuLocations.{{ $item }}'
                                             wire:loading.attr="disabled" class="form-check-input" value="false"
                                             type="checkbox" />
                                         <span class="form-check-label">{{ $item }}</span>

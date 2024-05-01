@@ -33,6 +33,7 @@ class MenuManager extends Component
                 return $item;
             }));
             $location->save();
+            return $this->redirectCurrent();
         }
     }
     public function __loadData()
