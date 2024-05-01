@@ -14,7 +14,7 @@
   ],
   "require": {
     "sokeio/laravel": "^1.0.1",
-    "livewire/livewire": "^3.4.10"
+    "livewire/livewire": "^3.4.11"
   },
   "require-dev": {},
   "autoload": {

@@ -4,10 +4,11 @@ namespace Sokeio\Platform;
 
 class PlatformStatus
 {
-    private const KEY = 'PLATFORM_STATUS_';
+    private const PATH_STATUS = 'platform/sokeio_status.json';
     private function __construct(private $key)
     {
     }
+
     public function getFirstOrDefault($default = null)
     {
         $arr = $this->getArr();
@@ -18,11 +19,25 @@ class PlatformStatus
     }
     public function getArr()
     {
-        return setting(self::KEY . $this->key, []);
+        return self::$arrData[$this->key] ?? [];
     }
     public function update($arr)
     {
-        $this->setStore(self::KEY . $this->key, $arr);
+        self::$arrData[$this->key] = $arr;
+        self::saveData();
+    }
+    public function option($key, $data)
+    {
+        if (!isset(self::$arrData[$this->key . '_OPTIONS'])) {
+            self::$arrData[$this->key . '_OPTIONS'] = [];
+        }
+        self::$arrData[$this->key . '_OPTIONS'][$key] = $data;
+    }
+    public function remove($id)
+    {
+        $this->update(array_filter($this->getArr(), function ($item) use ($id) {
+            return $id !== $item;
+        }));
     }
     public function check($id)
     {
@@ -31,29 +46,36 @@ class PlatformStatus
     public function active($id, $onlyOne = false)
     {
         if ($onlyOne) {
-            $this->setStore(self::KEY . $this->key, [$id]);
+            $this->update([$id]);
         } else {
             if ($this->check($id)) {
                 return;
             }
-            $this->setStore(self::KEY . $this->key, array_unique([$id, ...$this->getArr()]));
+            $this->update(array_merge($this->getArr(), [$id]));
         }
     }
     public function block($id)
     {
-        $this->setStore(self::KEY . $this->key, array_filter($this->getArr(), function ($item) use ($id) {
-            return $id !== $item;
-        }));
-    }
-    private function setStore($key, $data)
-    {
-        setSetting($key, $data);
+        $this->remove($id);
     }
     private static $arr = [];
+    private static $arrData = [];
+    private static function loadData()
+    {
+        if (!file_exists(base_path(self::PATH_STATUS))) {
+            self::saveData();
+        }
+        self::$arrData = json_decode(file_get_contents(base_path(self::PATH_STATUS)), true) ?? [];
+    }
+    private static function saveData()
+    {
+        file_put_contents(base_path(self::PATH_STATUS), json_encode(self::$arrData ?? []));
+    }
     public static function key($key): self
     {
         if (!isset(self::$arr[$key])) {
             self::$arr[$key] = new self($key);
+            self::loadData();
         }
         return self::$arr[$key];
     }
