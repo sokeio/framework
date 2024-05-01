@@ -3,11 +3,11 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/sokeio/framework.svg?style=flat-square)](https://packagist.org/packages/sokeio/framework)
 [![Total Downloads](https://img.shields.io/packagist/dt/sokeio/framework.svg?style=flat-square)](https://packagist.org/packages/sokeio/framework)
 
-
 **Sokeio** is a Laravel-based web application development package that provides support for developing modules, themes, livewire, and shortcodes. With Sokeio, users can develop web applications faster and easier than ever before. The package provides flexible features and utilities to help users optimize the development process and accelerate the development speed of their web applications.
 
 ## Quick tutorial
-* Make an Administrator page in 5 minutes: 
+
+- Make an Administrator page in 5 minutes:
 
 ```bash
 $ composer require sokeio/framework
@@ -17,7 +17,7 @@ $ composer require sokeio/framework
 $ php artisan migrate
 ```
 
-* Create user admin or reset password for account supper-admin
+- Create user admin or reset password for account supper-admin
 
 set .env
 
@@ -29,21 +29,23 @@ SOKEIO_MAKE_USER_ADMIN=true
 $ php artisan so:make-user-admin --e "admin@sokeio.com" --f "Nguyen Van Hau"
 ```
 
-## Template boilerplate 
+## Template boilerplate
+
 Link [https://github.com/sokeio/sokeio](https://github.com/sokeio/sokeio)
 
 ## Feature(New):
+
 - Modules
 - Themes
 - Actions
 - ShortCodes
 
 ## Technology used:
+
 - Laravel 11x
 - Livewire 3x
 - Boostrap 5x
 - Tabler and Tabler-icon
-
 
 ## Requirements
 
