@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 use Sokeio\Icon\IconManager;
 use Sokeio\Livewire\HomePage;
+use Sokeio\Middleware\Authenticate;
 use Sokeio\Shortcode\ShortcodeserviceProvider;
 use Sokeio\Support\SupportFormObjects\SupportFormObjects;
 use Sokeio\Middleware\SokeioPlatform;
@@ -141,6 +142,7 @@ class SokeioServiceProvider extends ServiceProvider
             Route::pushMiddlewareToGroup('web', SokeioWeb::class);
             Route::pushMiddlewareToGroup('web', SokeioPlatform::class);
             Route::pushMiddlewareToGroup('api', SokeioPlatform::class);
+            Route::aliasMiddleware('auth', Authenticate::class);
         });
 
         Route::fallback(function () {
