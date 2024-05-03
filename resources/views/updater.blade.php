@@ -1,6 +1,6 @@
 <div class="page-body mt-2">
-    <div class="container m-0">
-        <div class="card rounded-1" style="max-width: 700px;">
+    <div class="container-fluid">
+        <div class="card rounded-1  m-auto-navbar" style="max-width: 900px;">
             <h5 class="card-header p-3">@lang('System Updater')</h5>
             <div class="card-body p-3">
                 <div class="mb-3"> This feature not available on version beta.</div>

@@ -10,7 +10,7 @@
     </style>
 </head>
 
-<body class="{{ themeClass() }}">
+<body class="{{ themeClass() }} theme-layout-navbar">
     @ThemeBody(before)
     <div class="page">
         @include('theme::share.header-navbar')

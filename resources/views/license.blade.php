@@ -1,6 +1,6 @@
 <div class="page-body mt-2">
-    <div class="container m-0">
-        <div class="card rounded-1" style="max-width: 700px;">
+    <div class="container-fluid">
+        <div class="card rounded-1 m-auto-navbar" style="max-width: 900px;">
             @if ($licenseInfo['data'])
                 <h5 class="card-header p-3">License Info</h5>
                 <div class="card-body p-3">
