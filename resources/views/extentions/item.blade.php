@@ -1,4 +1,4 @@
-<div class="{{ columnSize('col3') }}" wire:key='{{ $item->getId() }}_{{ $item->isActive() }}'>
+<div class="col-6 col-md-6 col-lg-4 col-xl-3 col-xxl-2" wire:key='{{ $item->getId() }}_{{ $item->isActive() }}'>
     <div class="card @if ($item->isActiveOrVendor()) card-active @endif">
         @if (!$item->isVendor() && $item->isActive())
             <div class="ribbon bg-warning">Active</div>

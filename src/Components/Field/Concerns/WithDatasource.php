@@ -42,6 +42,6 @@ trait WithDatasource
     }
     public function getFieldText()
     {
-        return $this->getValue('fieldText', 'name');
+        return $this->getValue('fieldText', 'title');
     }
 }

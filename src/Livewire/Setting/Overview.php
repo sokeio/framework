@@ -27,11 +27,11 @@ class Overview extends FormSetting
                             return [
                                 [
                                     'id' => 'default',
-                                    'name' => 'Default'
+                                    'title' => 'Default'
                                 ],
                                 [
                                     'id' => 'default-navbar',
-                                    'name' => 'Navbar'
+                                    'title' => 'Navbar'
                                 ]
                             ];
                         }),
