@@ -1,1 +1,1 @@
-@livewire($column->getContent(), $column->getParams())
+@livewire($column->getContent(), $column->getParams()??[])
