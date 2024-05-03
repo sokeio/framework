@@ -28,18 +28,20 @@ trait WithSearchFn
         });
         return $this;
     }
-    public function querySearchWithModel($model, $name = null)
+    public function querySearchWithModel($model, $name = null, $queryCallback = null)
     {
         $self = $this;
-        return $this->querySearchFn(function ($component, $text, $currentId = null) use ($model, $self) {
+        return $this->querySearchFn(function ($component, $text, $currentId = null) use ($model, $self, $queryCallback) {
             $component->skipRender();
             $fieldText = $self->getFieldText();
-
-            $rs = ($model)::query()
+            $query = ($model)::query()
                 ->when($text != "", function ($query) use ($text, $fieldText) {
                     $query->where($fieldText, 'like', '%' . $text . '%');
-                })
-                ->limit(20)->get(['id', $fieldText]);
+                });
+            if ($queryCallback) {
+                $query = call_user_func($queryCallback, $query, $component, $text, $currentId);
+            }
+            $rs = $query->limit(20)->get(['id', $fieldText]);
             if ($currentId && $text == '') {
                 $currentItem = ($model)::find($currentId);
                 if ($currentItem) {
