@@ -12,6 +12,8 @@
             @includeIf(applyFilters('THEME_ADMIN_LOGO', 'theme::partials.logo'))
             </h1>
             <div class="navbar-nav flex-row order-md-last">
+                @includeIf('theme::partials.change-theme')
+                @includeIf('theme::partials.notication')
                 @includeIf(applyFilters('THEME_ADMIN_USER_PROFILE', 'theme::partials.user-profile'))
             </div>
             <div class="collapse navbar-collapse" id="navbar-menu">

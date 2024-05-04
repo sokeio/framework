@@ -10,7 +10,7 @@
     </style>
 </head>
 
-<body class="{{ themeClass() }} theme-layout-navbar">
+<body class="{{ themeClass() }} theme-layout-navbar" :data-bs-theme="themeDark && 'dark'" x-data="{ themeDark: false }">
     @ThemeBody(before)
     <div class="page">
         @include('theme::share.header-navbar')
@@ -36,6 +36,7 @@
     <script type="text/javascript">
         {!! themeOption('custom_js') !!}
     </script>
+    <livewire:sokeio::notifications :showIcon="false">
 </body>
 
 </html>

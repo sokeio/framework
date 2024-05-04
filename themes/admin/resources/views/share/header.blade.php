@@ -23,13 +23,10 @@
             <div class="nav-item d-none">
                 <livewire:sokeio::languages />
             </div>
-            <div class="d-none d-md-flex">
-                @includeIf('theme::partials.change-theme')
-                @includeIf('theme::partials.notication')
-            </div>
+            @includeIf('theme::partials.change-theme')
+            @includeIf('theme::partials.notication')
             @includeIf(applyFilters('THEME_ADMIN_USER_PROFILE', 'theme::partials.user-profile'))
         </div>
 
     </div>
 </header>
-<livewire:sokeio::notifications :showIcon="false">

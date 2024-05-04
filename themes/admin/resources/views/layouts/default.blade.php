@@ -20,6 +20,7 @@
     </div>
     @ThemeBody(after)
     @stack('scripts')
+    <livewire:sokeio::notifications :showIcon="false">
 
 </body>
 
