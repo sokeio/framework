@@ -1,6 +1,8 @@
 <span class="touch-sidebar-menu-admin" @click="miniSidebar=!miniSidebar">
-    <i x-show="!miniSidebar" class="ti ti-chevrons-left fs-3"></i>
-    <i x-show="miniSidebar" class="ti ti-chevrons-right  fs-3" style="display: none"></i>
+    <i x-show="!miniSidebar" class="ti ti-chevrons-left fs-3"
+        @if (\Sokeio\Facades\Theme::isSitebarMini()) style="display: none" @endif></i>
+    <i x-show="miniSidebar" class="ti ti-chevrons-right  fs-3"
+        @if (!\Sokeio\Facades\Theme::isSitebarMini()) style="display: none" @endif></i>
 </span>
 <aside class="navbar navbar-vertical navbar-expand-md navbar-transparent border-end">
     <div class="container-fluid">

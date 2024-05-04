@@ -45,6 +45,8 @@ use Sokeio\Platform\ThemeManager;
  * @method static \Sokeio\Platform\DataInfo SiteDataInfo()
  * @method static \Sokeio\Platform\DataInfo AdminDataInfo()
  * @method static bool checkSite()
+ * @method static void sitebarAdmin($flg)
+ * @method static bool isSitebarMini()
  * @method static void setupOption()
  * @see \Sokeio\Facades\Theme
  */

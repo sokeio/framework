@@ -42,6 +42,14 @@ class ThemeManager extends ActionHook
     {
         return false;
     }
+    public function sitebarAdmin($flg = true)
+    {
+        session(['sitebarAdmin' => $flg ? 'true' : 'false']);
+    }
+    public function isSitebarMini()
+    {
+        return session('sitebarAdmin', 'false') === 'true';
+    }
     public function getName()
     {
         return "theme";

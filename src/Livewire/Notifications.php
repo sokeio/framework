@@ -4,6 +4,7 @@ namespace Sokeio\Livewire;
 
 use Sokeio\Component;
 use Livewire\Attributes\On;
+use Sokeio\Facades\Theme;
 
 class Notifications extends Component
 {
@@ -14,6 +15,12 @@ class Notifications extends Component
     // {
     //     // $this->dispatch('notifyNew');
     // }
+    #[On('change-sidebar-admin')]
+    public function changeSitebarAdmin($miniSidebar)
+    {
+        Theme::sitebarAdmin($miniSidebar == 'true');
+        $this->skipRender();
+    }
     public function changeType($type)
     {
         $this->page = 0;

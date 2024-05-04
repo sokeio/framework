@@ -7,16 +7,24 @@
     @stack('styles')
 </head>
 {{-- admnin-sidebar-mini --}}
-<body class="{{ themeClass() }} " :data-bs-theme="themeDark && 'dark'" x-data="{ themeDark: false, miniSidebar: false }"
-    :class="{ 'admnin-sidebar-mini': miniSidebar }">
-    @ThemeBody(before)
-    <div class="page">
-        <!-- Sidebar -->
-        @include('theme::share.sidebar')
-        @include('theme::share.header')
-        <div class="page-wrapper">
-            @yield('content')
-        </div>
+
+<body class="{{ themeClass() }} {{ \Sokeio\Facades\Theme::isSitebarMini() ? 'admnin-sidebar-mini' : '' }}"
+    :data-bs-theme="themeDark && 'dark'" x-data="{initBody(){
+
+        $watch('miniSidebar', (value) => {
+            console.log({'hange-sidebar-admin':value})
+            Livewire.dispatch('change-sidebar-admin', {miniSidebar: value});
+        })
+    }, themeDark: false, miniSidebar: {{ \Sokeio\Facades\Theme::isSitebarMini() ? 'true' : 'false' }} }" :class="{ 'admnin-sidebar-mini': miniSidebar }"
+    x-init="initBody"
+        >
+        @ThemeBody(before) <div class ="page">
+    <!-- Sidebar -->
+    @include('theme::share.sidebar')
+    @include('theme::share.header')
+    <div class="page-wrapper">
+        @yield('content')
+    </div>
     </div>
     @ThemeBody(after)
     @stack('scripts')
