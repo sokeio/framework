@@ -196,6 +196,7 @@
     }
 
 }
+
 .touch-sidebar-menu-admin {
     position: absolute;
     display: block !important;
@@ -207,6 +208,7 @@
         background-color: #9595f6 !important;
     }
 }
+
 @media screen and (min-width: 768px) {
     .navbar-brand {
         min-height: 55px !important;
@@ -337,10 +339,12 @@
         overflow-y: auto;
         z-index: 9999;
     }
-}
 
-@media screen and (max-width: 468px) {
     .touch-sidebar-menu-admin {
         display: none !important;
+    }
+
+    .sidebar-menu-opened {
+        overflow: hidden;
     }
 }

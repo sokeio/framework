@@ -15,7 +15,19 @@
             @includeIf('theme::partials.notication')
             @includeIf(applyFilters('THEME_ADMIN_USER_PROFILE', 'theme::partials.user-profile'))
         </div>
-        <div class="collapse navbar-collapse sidebar-menu" id="sidebar-menu">
+        <div class="collapse navbar-collapse sidebar-menu" id="sidebar-menu" x-data="{
+            initEvent() {
+                setTimeout(() => {
+                    this.$el.addEventListener('hidden.bs.collapse', function() {
+                        document.body.classList.remove('sidebar-menu-opened');
+                    })
+                    this.$el.addEventListener('show.bs.collapse', function() {
+                        document.body.classList.add('sidebar-menu-opened');
+                    })
+                })
+            }
+        }"
+            x-init="initEvent()">
             <span class="badge bg-yellow text-yellow-fg badge-pill touch-sidebar-menu-admin"
                 @click="miniSidebar=!miniSidebar">
                 <i x-show="!miniSidebar" class="ti ti-chevrons-left fs-2"></i>
