@@ -1,12 +1,14 @@
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">
+
 <head>
     @ThemeHead(before)
     @ThemeHead(after)
     @stack('styles')
 </head>
-
-<body class="{{ themeClass() }}" :data-bs-theme="themeDark && 'dark'" x-data="{ themeDark: false }">
+{{-- admnin-sidebar-mini --}}
+<body class="{{ themeClass() }} " :data-bs-theme="themeDark && 'dark'" x-data="{ themeDark: false, miniSidebar: false }"
+    :class="{ 'admnin-sidebar-mini': miniSidebar }">
     @ThemeBody(before)
     <div class="page">
         <!-- Sidebar -->

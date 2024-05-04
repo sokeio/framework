@@ -192,7 +192,7 @@ if (!function_exists('themeClass')) {
      * @param  string $default
      * @return  string | null
      */
-    function themeClass($default = 'sokeio::page')
+    function themeClass($default = 'sokeio-page')
     {
         return applyFilters(PLATFORM_THEME_CLASS, $default);
     }

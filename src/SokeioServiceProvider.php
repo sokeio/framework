@@ -110,7 +110,10 @@ class SokeioServiceProvider extends ServiceProvider
                 addAction('THEME_ADMIN_RIGHT', function () {
                     echo '<div class="nav-item">
                     <a class="nav-link fw-bold" target="_blank" href="' . url('/') . '">
+                    <i class="ti ti-view-360 fs-2"></i>
+                    <span class="ms-1 d-none d-sm-inline">
                     ' . __('Visit website') . '
+                    </span>
                     </a>
                     </div>';
                 });

@@ -24,45 +24,8 @@
                 <livewire:sokeio::languages />
             </div>
             <div class="d-none d-md-flex">
-                <a @click="themeDark=true" class="nav-link px-0 hide-theme-dark" data-bs-toggle="tooltip"
-                    data-bs-placement="bottom" aria-label="Enable dark mode" data-bs-original-title="Enable dark mode">
-                    <!-- Download SVG icon from http://tabler-icons.io/i/moon -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path>
-                    </svg>
-                </a>
-                <a @click="themeDark=false" class="nav-link px-0 hide-theme-light" data-bs-toggle="tooltip"
-                    data-bs-placement="bottom" aria-label="Enable light mode"
-                    data-bs-original-title="Enable light mode">
-                    <!-- Download SVG icon from http://tabler-icons.io/i/sun -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path>
-                        <path
-                            d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7">
-                        </path>
-                    </svg>
-                </a>
-                <div class="nav-item dropdown d-none d-md-flex me-3">
-                    <a data-bs-toggle="offcanvas" href="#noticationUserManager" role="button"
-                        aria-controls="noticationUserManager" title="@lang('Show notifications')">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <path
-                                d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6">
-                            </path>
-                            <path d="M9 17v1a3 3 0 0 0 6 0v-1"></path>
-                        </svg>
-                        <span class="badge bg-red"></span>
-                    </a>
-                </div>
+                @includeIf('theme::partials.change-theme')
+                @includeIf('theme::partials.notication')
             </div>
             @includeIf(applyFilters('THEME_ADMIN_USER_PROFILE', 'theme::partials.user-profile'))
         </div>

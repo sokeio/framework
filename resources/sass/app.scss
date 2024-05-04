@@ -184,3 +184,163 @@
         margin: auto !important;
     }
 }
+
+
+@media (min-width: 992px) {
+    .navbar-vertical.navbar-expand-lg {
+        overflow-y: auto !important;
+
+        .sidebar-menu {
+            padding-right: 20px;
+        }
+    }
+
+}
+.touch-sidebar-menu-admin {
+    position: absolute;
+    display: block !important;
+    margin-left: calc(240px - 37px);
+    margin-top: 10px;
+    z-index: 1000 !important;
+
+    &:hover {
+        background-color: #9595f6 !important;
+    }
+}
+@media screen and (min-width: 768px) {
+    .navbar-brand {
+        min-height: 55px !important;
+        margin-bottom: 1px;
+        --tblr-navbar-border-color: var(--tblr-border-color);
+        box-shadow: inset 0 calc(-1* var(--tblr-navbar-border-width)) 0 0 var(--tblr-navbar-border-color);
+    }
+
+    .admnin-sidebar-mini {
+        .touch-sidebar-menu-admin {
+            margin-left: 48px;
+        }
+
+        .navbar-brand {
+            --tblr-navbar-border-color: var(--tblr-border-color);
+            box-shadow: inset 0 calc(-1* var(--tblr-navbar-border-width)) 0 0 var(--tblr-navbar-border-color);
+        }
+
+
+        aside.navbar-vertical {
+            width: 55px !important;
+            overflow-y: unset !important;
+            --tblr-gutter-x: 0 !important;
+        }
+
+        .navbar-expand-lg.navbar-vertical~.navbar,
+        .navbar-expand-lg.navbar-vertical~.page-wrapper {
+            margin-left: 55px !important;
+        }
+
+        .admin-logo {
+            display: none;
+        }
+
+        .sidebar-menu {
+            .nav-link {
+                display: inline-block !important;
+                width: 100% !important;
+            }
+
+            .nav-link-title,
+            .admin-copyright {
+                display: none;
+            }
+
+            padding-right: 0 !important;
+
+            width: 55px !important;
+
+            .dropdown-toggle:after,
+            .dropdown-menu {
+                display: none !important;
+            }
+
+            .nav-link {
+                border-radius: 0;
+            }
+
+            .nav-link.menu-item-show {
+                --tblr-bg-opacity: 1;
+                background-color: rgba(var(--tblr-azure-rgb), var(--tblr-bg-opacity)) !important;
+                border-radius: 0;
+
+                &,
+                & * {
+                    color: #fff !important;
+                }
+            }
+
+            .nav-item:hover {
+                width: 255px;
+                height: 40px;
+                position: relative !important;
+
+                &,
+                & * {
+                    color: #fff !important;
+                }
+
+                .nav-link {
+                    position: absolute !important;
+                    background-color: #9595f6;
+                    border-radius: 0;
+                    z-index: 9999 !important;
+                }
+
+                .nav-link-title {
+                    padding-left: 20px;
+                    display: unset !important;
+                }
+
+                .dropdown-menu {
+                    margin-top: -1px;
+                    border-top: 2px solid #b6b6b8;
+                    width: calc(100% - 55px) !important;
+                    position: absolute !important;
+                    display: unset !important;
+                    margin-left: 55px;
+
+                    background-color: #9595f6;
+                    border-radius: 0;
+
+                    .dropdown-item {
+                        padding-left: 10px;
+                    }
+
+                }
+            }
+
+            .menu-item-active {
+                border-radius: 0 !important;
+            }
+        }
+    }
+
+}
+
+@media screen and (max-width: 768px) {
+
+    .sidebar-menu {
+        position: fixed;
+        width: 100vw;
+        background: #fff;
+        top: 60px;
+        left: 0;
+        padding: 10px 10px 0px 0;
+        height: calc(100vh - 60px);
+        overflow-y: auto;
+        z-index: 9999;
+    }
+}
+
+@media screen and (max-width: 468px) {
+    .touch-sidebar-menu-admin {
+        display: none !important;
+    }
+}

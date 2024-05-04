@@ -8,8 +8,19 @@
             @includeIf(applyFilters('THEME_ADMIN_LOGO', 'theme::partials.logo'))
         </h1>
         <div class="navbar-nav flex-row d-lg-none">
+            @php
+                doAction('THEME_ADMIN_RIGHT');
+            @endphp
+            @includeIf('theme::partials.change-theme')
+            @includeIf('theme::partials.notication')
+            @includeIf(applyFilters('THEME_ADMIN_USER_PROFILE', 'theme::partials.user-profile'))
         </div>
         <div class="collapse navbar-collapse sidebar-menu" id="sidebar-menu">
+            <span class="badge bg-yellow text-yellow-fg badge-pill touch-sidebar-menu-admin"
+                @click="miniSidebar=!miniSidebar">
+                <i x-show="!miniSidebar" class="ti ti-chevrons-left fs-2"></i>
+                <i x-show="miniSidebar" class="ti ti-chevrons-right  fs-2" style="display: none"></i>
+            </span>
             {!! applyFilters('THEME_SIDEBAR_BEFORE', '') !!}
             {!! menuAdmin(true) !!}
             {!! applyFilters('THEME_SIDEBAR_AFTTER', '') !!}
