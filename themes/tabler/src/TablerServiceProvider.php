@@ -84,14 +84,14 @@ class TablerServiceProvider extends ServiceProvider
                     echo '<li id="' . $item->getId() . '" class="nav-item dropdown" data-sort="' . $item->getValueSort() . '">';
                     echo '<a class="nav-link dropdown-toggle   ' . $classActive . '" data-bs-toggle="dropdown" data-bs-auto-close="false" role="button" aria-expanded="true">';
                     if ($icon = $item->getValueIcon()) {
-                        echo '<span class="nav-link-icon d-md-none d-lg-inline-block">';
+                        echo '<span class="nav-link-icon d-sm-none d-md-inline-block">';
                         echo $icon;
                         echo '</span>';
                         echo '<span class="nav-link-title">';
                         echo $item->getValueText();
                         echo '</span>';
                     } else {
-                        echo '<span class="nav-link-icon d-md-none d-lg-inline-block">';
+                        echo '<span class="nav-link-icon d-sm-none d-md-inline-block">';
                         echo '<i class="ti ti-sticker-2 fs-2"></i>';
                         echo '</span>';
                         echo '<span class="nav-link-title">';
@@ -109,14 +109,14 @@ class TablerServiceProvider extends ServiceProvider
                         echo '<li id="' . $item->getId() . '" class="nav-item" data-sort="' . $item->getValueSort() . '">';
                         echo '<a  wire:navigate class="nav-link   ' . $classActive . '" href="' . $item->getValueLink() . '">';
                         if ($icon = $item->getValueIcon()) {
-                            echo '<span class="nav-link-icon d-md-none d-lg-inline-block">';
+                            echo '<span class="nav-link-icon d-sm-none d-md-inline-block">';
                             echo $icon;
                             echo '</span>';
                             echo '<span class="nav-link-title">';
                             echo $item->getValueText();
                             echo '</span>';
                         } else {
-                            echo '<span class="nav-link-icon d-md-none d-lg-inline-block">';
+                            echo '<span class="nav-link-icon d-sm-none d-md-inline-block">';
                             echo '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-border-all" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                             <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
@@ -134,14 +134,14 @@ class TablerServiceProvider extends ServiceProvider
                         echo '<li id="' . $item->getId() . '" class="nav-item" data-sort="' . $item->getValueSort() . '">';
                         echo '<a class="nav-link   ' . $classActive . '" href="#" sokeio:component="' . $item->getValueLink() . '">';
                         if ($icon = $item->getValueIcon()) {
-                            echo '<span class="nav-link-icon d-md-none d-lg-inline-block">';
+                            echo '<span class="nav-link-icon d-sm-none d-md-inline-block">';
                             echo $icon;
                             echo '</span>';
                             echo '<span class="nav-link-title">';
                             echo $item->getValueText();
                             echo '</span>';
                         } else {
-                            echo '<span class="nav-link-icon d-md-none d-lg-inline-block">';
+                            echo '<span class="nav-link-icon d-sm-none d-md-inline-block">';
                             echo '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-border-all" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                             <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>

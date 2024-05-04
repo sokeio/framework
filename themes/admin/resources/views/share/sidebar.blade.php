@@ -1,4 +1,8 @@
-<aside class="navbar navbar-vertical navbar-expand-lg navbar-transparent border-end">
+<span class="touch-sidebar-menu-admin" @click="miniSidebar=!miniSidebar">
+    <i x-show="!miniSidebar" class="ti ti-chevrons-left fs-3"></i>
+    <i x-show="miniSidebar" class="ti ti-chevrons-right  fs-3" style="display: none"></i>
+</span>
+<aside class="navbar navbar-vertical navbar-expand-md navbar-transparent border-end">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu"
             aria-controls="sidebar-menu" aria-expanded="false" aria-label="Toggle navigation">
@@ -7,7 +11,7 @@
         <h1 class="navbar-brand navbar-brand-autodark">
             @includeIf(applyFilters('THEME_ADMIN_LOGO', 'theme::partials.logo'))
         </h1>
-        <div class="navbar-nav flex-row d-lg-none">
+        <div class="navbar-nav flex-row d-md-none">
             @php
                 doAction('THEME_ADMIN_RIGHT');
             @endphp
@@ -28,11 +32,6 @@
             }
         }"
             x-init="initEvent()">
-            <span class="badge bg-yellow text-yellow-fg badge-pill touch-sidebar-menu-admin"
-                @click="miniSidebar=!miniSidebar">
-                <i x-show="!miniSidebar" class="ti ti-chevrons-left fs-2"></i>
-                <i x-show="miniSidebar" class="ti ti-chevrons-right  fs-2" style="display: none"></i>
-            </span>
             {!! applyFilters('THEME_SIDEBAR_BEFORE', '') !!}
             {!! menuAdmin(true) !!}
             {!! applyFilters('THEME_SIDEBAR_AFTTER', '') !!}

@@ -187,7 +187,7 @@
 
 
 @media (min-width: 992px) {
-    .navbar-vertical.navbar-expand-lg {
+    .navbar-vertical {
         overflow-y: auto !important;
 
         .sidebar-menu {
@@ -198,11 +198,15 @@
 }
 
 .touch-sidebar-menu-admin {
+    padding: 1px 3px;
+    background: #7fbdc5;
+    color: #fff;
+    border-radius: 3px;
     position: absolute;
     display: block !important;
-    margin-left: calc(240px - 37px);
-    margin-top: 10px;
-    z-index: 1000 !important;
+    margin-left: 235px;
+    margin-top: 45px;
+    z-index: 999999999 !important;
 
     &:hover {
         background-color: #9595f6 !important;
@@ -219,7 +223,7 @@
 
     .admnin-sidebar-mini {
         .touch-sidebar-menu-admin {
-            margin-left: 48px;
+            margin-left: 50px;
         }
 
         .navbar-brand {
@@ -234,8 +238,8 @@
             --tblr-gutter-x: 0 !important;
         }
 
-        .navbar-expand-lg.navbar-vertical~.navbar,
-        .navbar-expand-lg.navbar-vertical~.page-wrapper {
+        .navbar-vertical~.navbar,
+        .navbar-vertical~.page-wrapper {
             margin-left: 55px !important;
         }
 
@@ -247,6 +251,12 @@
             .nav-link {
                 display: inline-block !important;
                 width: 100% !important;
+                text-align: center !important;
+                border-radius: 0;
+
+                .nav-link-icon {
+                    margin-right: 0 !important;
+                }
             }
 
             .nav-link-title,
@@ -263,9 +273,6 @@
                 display: none !important;
             }
 
-            .nav-link {
-                border-radius: 0;
-            }
 
             .nav-link.menu-item-show {
                 --tblr-bg-opacity: 1;
@@ -293,6 +300,11 @@
                     background-color: #9595f6;
                     border-radius: 0;
                     z-index: 9999 !important;
+                    text-align: unset !important;
+
+                    .nav-link-icon {
+                        margin-right: .5rem !important;
+                    }
                 }
 
                 .nav-link-title {
