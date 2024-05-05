@@ -14,6 +14,10 @@ class BaseField extends Base
 {
     use WithFieldWire, WithFieldRule, WithFieldBase, withFieldOperator, WithColumn;
     use WithColumnGrid;
+    public function isSyncRelations()
+    {
+        return method_exists($this, 'getSyncRelations') && $this->getSyncRelations() === true;
+    }
     protected function ChildComponents()
     {
         return [

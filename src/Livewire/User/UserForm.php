@@ -71,15 +71,15 @@ class UserForm extends Form
                 ),
                 UI::row([
                     UI::column12([
-                        UI::checkBoxMutil('roleids')->label(__('Role'))->dataSource(function () {
+                        UI::checkBoxMutil('roles')->label(__('Role'))->fieldText('name')->dataSource(function () {
                             return Role::all();
-                        })->noSave()
+                        })->syncRelations()
                     ]),
                     UI::column12([
-                        UI::checkBoxMutil('permissionids')->label(__('Permission'))->fieldText('name')
+                        UI::checkBoxMutil('permissions')->label(__('Permission'))->fieldText('name')
                             ->dataSource(function () {
                                 return Permission::all();
-                            })->noSave()
+                            })->syncRelations()
                     ]),
                 ])->when(function () {
                     return  $this->isEdit();

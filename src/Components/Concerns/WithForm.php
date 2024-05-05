@@ -3,8 +3,6 @@
 namespace Sokeio\Components\Concerns;
 
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Mockery\Generator\Method;
 use Sokeio\Components\UI;
 use Sokeio\Form;
 
@@ -16,6 +14,7 @@ trait WithForm
     public $copyId;
     public $localeRef;
     public Form $data;
+    public Form $dataRelations;
     protected $layout;
     protected $footer;
 
@@ -30,29 +29,25 @@ trait WithForm
         }
         return __('The record updated successfully');
     }
-    public function loadData()
+    private function getDataRow()
     {
         $query = $this->getQuery();
         if ($this->dataId) {
             $query =  $query->where('id', $this->dataId);
-            $data = $query->first();
-            if ($this->localeRef && method_exists($data, 'setDefaultLocale')) {
-                $data->setDefaultLocale($this->localeRef);
-            }
-            if (!$data) {
-                return abort(404);
-            }
-            if (method_exists($this, 'loadDataBefore')) {
-                call_user_func([$this, 'loadDataBefore'], $data);
-            }
-            $this->fillData($data);
-            if (method_exists($this, 'loadDataAfter')) {
-                call_user_func([$this, 'loadDataAfter'], $data);
-            }
+            return $query->first();
         } elseif ($this->copyId) {
             $query =  $query->where('id', $this->copyId);
-            $data = $query->first();
-            if ($this->localeRef && method_exists($data, 'setDefaultLocale')) {
+            return $query->first();
+        }
+    }
+    public function loadData()
+    {
+        if ($this->dataId || $this->copyId) {
+            $data = $this->getDataRow();
+            if (!$data && $this->dataId) {
+                return abort(404);
+            }
+            if ($data && $this->localeRef && method_exists($data, 'setDefaultLocale')) {
                 $data->setDefaultLocale($this->localeRef);
             }
             if (method_exists($this, 'loadDataBefore')) {
@@ -68,7 +63,7 @@ trait WithForm
     protected function fillData($data)
     {
         foreach ($this->getAllInputUI() as $column) {
-            if (!$column->getNoSave()) {
+            if (!$column->getNoSave() && !$column->isSyncRelations()) {
                 $value = data_get($data, $column->getNameEncode(), $column->getValueDefault());
                 data_set($this, $column->getFormFieldEncode(), $value);
             }
@@ -78,7 +73,11 @@ trait WithForm
     {
         //set default value
         foreach ($this->getAllInputUI() as $column) {
-            if (data_get($this, $column->getFormFieldEncode()) === null && $column->getValueDefault() != null) {
+            if (
+                !$column->isSyncRelations() &&
+                data_get($this, $column->getFormFieldEncode()) === null &&
+                $column->getValueDefault() != null
+            ) {
                 data_set($this, $column->getFormFieldEncode(), $column->getValueDefault());
             }
         }
@@ -162,6 +161,18 @@ trait WithForm
             $objData->updated_by = auth()->user()->id;
         }
     }
+    private function fillToModel($objData)
+    {
+        foreach ($this->getAllInputUI() as $column) {
+            if (!$column->getNoSave() && !$column->isSyncRelations()) {
+                $value = data_get($this, $column->getFormFieldEncode(), $column->getValueDefault());
+                if ($value === '' && $column->getConvertEmptyStringsToNull()) {
+                    $value = null;
+                }
+                data_set($objData, $column->getNameEncode(), $value);
+            }
+        }
+    }
     public function doSave()
     {
         if (!$this->doValidate()) {
@@ -173,19 +184,10 @@ trait WithForm
         $objData = $this->getDataObject();
         $isNew =  !$this->dataId;
         DB::transaction(function () use ($objData) {
-
             if (method_exists($this, 'fillDataBefore')) {
                 call_user_func([$this, 'fillDataBefore'], $objData);
             }
-            foreach ($this->getAllInputUI() as $column) {
-                if (!$column->getNoSave()) {
-                    $value = data_get($this, $column->getFormFieldEncode(), $column->getValueDefault());
-                    if ($value === '' && $column->getConvertEmptyStringsToNull()) {
-                        $value = null;
-                    }
-                    data_set($objData, $column->getNameEncode(), $value);
-                }
-            }
+            $this->fillToModel($objData);
             if (method_exists($this, 'saveBefore')) {
                 call_user_func([$this, 'saveBefore'], $objData);
             }
