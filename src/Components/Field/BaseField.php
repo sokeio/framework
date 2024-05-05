@@ -6,13 +6,13 @@ use Sokeio\Components\Base;
 use Sokeio\Components\Common\Concerns\WithColumnGrid;
 use Sokeio\Components\Concerns\WithColumn;
 use Sokeio\Components\Field\Concerns\WithFieldBase;
-use Sokeio\Components\Field\Concerns\withFieldOperator;
+use Sokeio\Components\Field\Concerns\WithFieldOperator;
 use Sokeio\Components\Field\Concerns\WithFieldRule;
 use Sokeio\Components\Field\Concerns\WithFieldWire;
 
 class BaseField extends Base
 {
-    use WithFieldWire, WithFieldRule, WithFieldBase, withFieldOperator, WithColumn;
+    use WithFieldWire, WithFieldRule, WithFieldBase, WithFieldOperator, WithColumn;
     use WithColumnGrid;
     public function isSyncRelations()
     {
