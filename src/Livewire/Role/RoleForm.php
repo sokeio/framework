@@ -62,9 +62,10 @@ class RoleForm extends Form
             ),
             UI::row([
                 UI::column12([
-                    UI::checkBoxMutil('permissionids')->label(__('Permission'))->dataSource(function () {
-                        return Permission::all();
-                    })->noSave()
+                    UI::checkBoxMutil('permissionids')->label(__('Permission'))->fieldText('name')
+                        ->dataSource(function () {
+                            return Permission::all();
+                        })->noSave()
                 ]),
             ])
         ])

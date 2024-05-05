@@ -12,7 +12,7 @@ class UserForm extends Form
 {
     public $roleids = [];
     public $permissionids = [];
-    protected function getModel():string
+    protected function getModel(): string
     {
         return User::class;
     }
@@ -76,9 +76,10 @@ class UserForm extends Form
                         })->noSave()
                     ]),
                     UI::column12([
-                        UI::checkBoxMutil('permissionids')->label(__('Permission'))->dataSource(function () {
-                            return Permission::all();
-                        })->noSave()
+                        UI::checkBoxMutil('permissionids')->label(__('Permission'))->fieldText('name')
+                            ->dataSource(function () {
+                                return Permission::all();
+                            })->noSave()
                     ]),
                 ])->when(function () {
                     return  $this->isEdit();
