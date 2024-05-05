@@ -6,11 +6,12 @@
     $datasources = $column->getDataSource();
     $FieldKey = $column->getFieldKey();
     $FieldText = $column->getFieldText();
+    $classCell = $column->getClassCell();
 @endphp
 @if ($datasources)
     <div class="row">
         @foreach ($datasources as $item)
-            <div class="col-6">
+            <div class="{{ $classCell }}">
                 <div class="form-check pt-2">
                     <input wire:model='{{ $formField }}' name="{{ $formField }}-{{ data_get($item, $FieldKey) }}"
                         id="{{ $formField }}-{{ data_get($item, $FieldKey) }}" class="form-check-input" type="checkbox"
