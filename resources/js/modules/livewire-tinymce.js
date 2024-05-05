@@ -76,9 +76,10 @@ export class LiveWireTinymceModule extends SokeioPlugin {
                 });
               },
             });
-            setTimeout(() => {
-              el.$wire_tinymce.setContent(el.value);
-            }, 200);
+            // setTimeout(() => {
+              
+            //   el.$wire_tinymce.setContent(el.value);
+            // }, 200);
           };
           if (window.tinymce) {
             tinymceInit();

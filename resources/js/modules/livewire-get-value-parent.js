@@ -18,7 +18,7 @@ export class LiveWireGetValueParentModule extends SokeioPlugin {
           let varKey = el.getAttribute("wire:get-value");
           let parentId =
             el.getAttribute("wire:get-value-parent") ??
-            component.$wire._refComponentId;
+            component.$wire.soRefId;
           if (!parentId) {
             return;
           }
