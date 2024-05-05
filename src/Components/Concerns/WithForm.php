@@ -3,6 +3,7 @@
 namespace Sokeio\Components\Concerns;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Sokeio\Components\UI;
 use Sokeio\Form;
 
@@ -63,8 +64,22 @@ trait WithForm
     protected function fillData($data)
     {
         foreach ($this->getAllInputUI() as $column) {
-            if (!$column->getNoSave() && !$column->isSyncRelations()) {
+            if (!$column->getNoSave()) {
                 $value = data_get($data, $column->getNameEncode(), $column->getValueDefault());
+                if ($column->isSyncRelations()) {
+                    $arr = $data->{$column->getNameEncode()};
+                    if ($arr) {
+                        $value = $arr->map(function ($item) {
+                            return $item->id;
+                        });
+                    } else {
+                        $value = [];
+                    }
+                    if (count($value) == 0) {
+                        $value = [0];
+                    }
+                }
+                Log::info(['fill' => $column->getNameEncode(), 'value' => $value]);
                 data_set($this, $column->getFormFieldEncode(), $value);
             }
         }
@@ -74,11 +89,15 @@ trait WithForm
         //set default value
         foreach ($this->getAllInputUI() as $column) {
             if (
-                !$column->isSyncRelations() &&
                 data_get($this, $column->getFormFieldEncode()) === null &&
                 $column->getValueDefault() != null
             ) {
-                data_set($this, $column->getFormFieldEncode(), $column->getValueDefault());
+                if ($column->isSyncRelations()) {
+                    Log::info(['isSyncRelations', 'fill' => $column->getNameEncode()]);
+                    data_set($this, $column->getFormFieldEncode(), $column->getValueDefault() ?? [-1, -2]);
+                } else {
+                    data_set($this, $column->getFormFieldEncode(), $column->getValueDefault());
+                }
             }
         }
     }
@@ -173,6 +192,30 @@ trait WithForm
             }
         }
     }
+    private function syncRelations($objData)
+    {
+        try {
+            foreach ($this->getAllInputUI() as $column) {
+                if (!$column->getNoSave() && $column->isSyncRelations()) {
+                    $value = data_get($this, $column->getFormFieldEncode(), $column->getValueDefault());
+                    if ($value === '' && $column->getConvertEmptyStringsToNull()) {
+                        $value = null;
+                    }
+                    $value = collect($value ?? [])
+                        ->map(function ($item) {
+                            return (int)$item;
+                        })
+                        ->filter(function ($item) {
+                            return $item > 0;
+                        })
+                        ->toArray();
+                    call_user_func([$objData, $column->getNameEncode()])->sync($value);
+                }
+            }
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+        }
+    }
     public function doSave()
     {
         if (!$this->doValidate()) {
@@ -196,6 +239,7 @@ trait WithForm
                 call_user_func([$this, 'saveAfter'], $objData);
             }
         });
+        $this->syncRelations($objData);
         $this->dataId = $objData->id;
         $this->showMessage($this->formMessage($isNew));
         $this->doRefreshRef();

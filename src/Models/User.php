@@ -14,6 +14,7 @@ class User extends Authenticatable
     use WithPermission;
     use WithModelHook;
     protected $fillable = ["*"];
+    protected $hidden = ["password"];
     public function isActive()
     {
         return $this->status == 1;
@@ -25,18 +26,6 @@ class User extends Authenticatable
     public function isBlock()
     {
         return !$this->isActive();
-    }
-    public function getPermissionIdsAttribute()
-    {
-        return  $this->permissions()->get()->map(function ($item) {
-            return $item->id;
-        })->toArray();
-    }
-    public function getRoleIdsAttribute()
-    {
-        return  $this->roles()->get()->map(function ($item) {
-            return $item->id;
-        })->toArray();
     }
 
     public static function boot()

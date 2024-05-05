@@ -72,15 +72,17 @@ trait WithFieldBase
     }
     public function getFormField()
     {
-        if ($this->checkPrex()) {
-            $field = $this->getPrex() . '.';
+        if ($this->checkPrex() || $this->isSyncRelations()) {
+            $field = ($this->isSyncRelations() ? 'dataRelations' : $this->getPrex()) . '.';
 
             $operator = $this->getOperatorField();
             if ($operator != '') {
                 $field .=  ($operator . '.');
             }
             $field .= str_replace('.', UI::KEY_FIELD_NAME, $this->getName());
-
+            // if($this->isSyncRelations()){
+            //     $field .= '[]';
+            // }
             return $field;
         }
         return $this->getName();

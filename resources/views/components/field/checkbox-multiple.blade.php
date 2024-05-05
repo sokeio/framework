@@ -11,11 +11,14 @@
     <div class="row">
         @foreach ($datasources as $item)
             <div class="col-6">
-                <label class="form-check pt-2">
-                    <input wire:model='{{ $formField }}' name="{{ $formField }}" class="form-check-input"
-                        type="checkbox" value="{{ data_get($item, $FieldKey) }}">
-                    <span class="form-check-label">{{ data_get($item, $FieldText) }}</span>
-                </label>
+                <div class="form-check pt-2">
+                    <input wire:model='{{ $formField }}' name="{{ $formField }}-{{ data_get($item, $FieldKey) }}"
+                        id="{{ $formField }}-{{ data_get($item, $FieldKey) }}" class="form-check-input" type="checkbox"
+                        value="{{ data_get($item, $FieldKey) }}">
+                    <label class="form-check-label" for="{{ $formField }}-{{ data_get($item, $FieldKey) }}">
+                        {{ data_get($item, $FieldText) }}
+                    </label>
+                </div>
             </div>
         @endforeach
     </div>
