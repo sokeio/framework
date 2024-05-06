@@ -430,6 +430,7 @@ return [
                 'name' => '$BASE_TYPE_LOWER_NAME$.json',
                 'doblue' => true,
                 'replacements' => [
+                    'VENDOR',
                     'BASE_TYPE_LOWER_NAME',
                     'STUDLY_NAME',
                     'LOWER_NAME',
@@ -442,6 +443,7 @@ return [
                 'name' => '$BASE_TYPE_LOWER_NAME$.json',
                 'doblue' => true,
                 'replacements' => [
+                    'VENDOR',
                     'BASE_TYPE_LOWER_NAME',
                     'STUDLY_NAME',
                     'LOWER_NAME',
