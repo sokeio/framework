@@ -7,6 +7,11 @@ use Sokeio\Components\Field\Concerns\WithFieldRange;
 class NumberField extends BaseField
 {
     use WithFieldRange;
+    public function boot()
+    {
+        parent::boot();
+        $this->convertEmptyStringsToNull();
+    }
     public function digits($digits): static
     {
         return $this->setKeyValue('digits', $digits);
