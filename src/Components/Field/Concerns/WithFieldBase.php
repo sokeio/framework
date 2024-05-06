@@ -3,11 +3,12 @@
 namespace Sokeio\Components\Field\Concerns;
 
 use Sokeio\Components\Common\Concerns\WithName;
+use Sokeio\Components\Concerns\WithCollapse;
 use Sokeio\Components\UI;
 
 trait WithFieldBase
 {
-    use WithName;
+    use WithName,WithCollapse;
     public static function getFieldName($fieldEncode)
     {
         return str_replace(UI::KEY_FIELD_NAME, '.', $fieldEncode);
