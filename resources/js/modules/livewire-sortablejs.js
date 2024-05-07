@@ -29,7 +29,7 @@ export class LiveWireSortablejsModule extends SokeioPlugin {
               ? "[wire\\:sortable\\.handle]"
               : null,
             sort: true,
-            dataIdAttr: "wire:sortable.item",
+            dataIdAttr: "data-sortable-id",
             group: {
               animation: 150,
               ...(options?.group ?? {}),
@@ -46,7 +46,11 @@ export class LiveWireSortablejsModule extends SokeioPlugin {
                     value: value,
                   };
                 });
-                component.$wire.call(directive.expression, items);
+                if (directive.expression) {
+                  component.$wire.call(directive.expression, items);
+                } else {
+                  Alpine.$data(el).onSortable?.call(el, items);
+                }
               },
             },
           });
@@ -57,9 +61,7 @@ export class LiveWireSortablejsModule extends SokeioPlugin {
           window.addScriptToWindow(
             self
               .getManager()
-              .getUrlPublic(
-                "platform/modules/sokeio/sortable/sortable.min.js"
-              ),
+              .getUrlPublic("platform/modules/sokeio/sortable/sortable.min.js"),
             function () {
               SortableCreate();
             }
@@ -116,14 +118,12 @@ export class LiveWireSortablejsModule extends SokeioPlugin {
                   return {
                     order: index + 1,
                     value: el.getAttribute("wire:sortable-group.item-group"),
-                    items: el.$wire_sortable
-                      .toArray()
-                      .map((value, index) => {
-                        return {
-                          order: index + 1,
-                          value: value,
-                        };
-                      }),
+                    items: el.$wire_sortable.toArray().map((value, index) => {
+                      return {
+                        order: index + 1,
+                        value: value,
+                      };
+                    }),
                   };
                 });
                 component.$wire.call(

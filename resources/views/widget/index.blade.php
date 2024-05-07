@@ -2,7 +2,7 @@
     $columnWidget = $widget?->getColumn() ?? '';
     $pollWidget = $widget?->getPoll() ?? ''; ///wire:poll;
 @endphp
-<div class="{{ columnSize($columnWidget) }} widget-view" {{ $pollWidget }} wire:sortable.item="{{ $widgetId }}"
+<div class="{{ columnSize($columnWidget) }} widget-view" {{ $pollWidget }} wire:sortable.item data-sortable-id="{{ $widgetId }}"
     wire:key='widget-{{ $widgetId }}'>
     <div class="card">
         <div class="card-body p-1">
