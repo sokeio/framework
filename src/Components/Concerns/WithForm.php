@@ -18,6 +18,7 @@ trait WithForm
     public Form $dataRelations;
     protected $layout;
     protected $footer;
+    protected $skipClose = false;
 
     protected function isEdit()
     {
@@ -241,8 +242,10 @@ trait WithForm
         });
         $this->syncRelations($objData);
         $this->dataId = $objData->id;
-        $this->showMessage($this->formMessage($isNew));
-        $this->doRefreshRef();
+        if ($this->skipClose === false) {
+            $this->showMessage($this->formMessage($isNew));
+            $this->doRefreshRef();
+        }
     }
     protected function doRefreshRef()
     {

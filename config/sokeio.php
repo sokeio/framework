@@ -819,7 +819,7 @@ return [
         'module-theme' => ['path' => 'themes', 'generate' => true, 'only' => ['module']],
         'module-plugin' => ['path' => 'plugins', 'generate' => false, 'only' => ['module']],
         'config' => ['path' => 'config', 'generate' => true, 'only' => ['module']],
-        'command' => ['path' => 'src/Console', 'namespace' => 'Commands', 'generate' => true, 'only' => ['module']],
+        'command' => ['path' => 'src/Console', 'namespace' => 'Console', 'generate' => true, 'only' => ['module']],
         'migration' => [
             'path' => 'database/migrations',
             'namespace' => 'Database\\Migrations',
