@@ -20,6 +20,7 @@ use Sokeio\Components\Field\RangeField;
 use Sokeio\Components\Field\SelectField;
 use Sokeio\Components\Field\SelectWithSearchField;
 use Sokeio\Components\Field\TagifyField;
+use Sokeio\Components\Field\TemplateField;
 use Sokeio\Components\Field\TextareaField;
 use Sokeio\Components\Field\TextField;
 use Sokeio\Components\Field\TinymceField;
@@ -114,5 +115,9 @@ trait WithField
     public static function treeView($value)
     {
         return TreeViewField::make($value);
+    }
+    public static function templateField($value)
+    {
+        return TemplateField::make($value);
     }
 }

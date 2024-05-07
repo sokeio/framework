@@ -7,10 +7,12 @@
     $FieldKey = $column->getFieldKey();
     $FieldText = $column->getFieldText();
 @endphp
-<select class="form-select" wire:key='{{ $formField }}' name="field-{{ $modelField }}" placeholder="{{ $modelPlaceholder }}" {!! $column->getWireAttribute() !!}>
+<select class="form-select" wire:key='{{ $formField }}' name="field-{{ $modelField }}"
+    placeholder="{{ $modelPlaceholder }}" {!! $column->getWireAttribute() !!}>
     @if ($datasources)
         @foreach ($datasources as $item)
-            <option value="{{ data_get($item, $FieldKey) }}">{{ data_get($item, $FieldText) }}</option>
+            <option value="{{ data_get($item, $FieldKey) }}" title="{{ data_get($item, $FieldKey) }}">
+                {{ data_get($item, $FieldText) }}</option>
         @endforeach
     @endif
 </select>

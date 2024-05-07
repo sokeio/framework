@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Sokeio\Livewire\Extentions\BuildCrud;
 use Sokeio\Livewire\Extentions\Create;
 use Sokeio\Livewire\Extentions\Index;
 use Sokeio\Livewire\Extentions\CreateFile;
@@ -21,4 +22,5 @@ Route::group(['as' => 'admin.extension.'], function () {
     routeExtension('plugin');
     routeExtension('module');
     routeExtension('theme');
+    Route::get('build-crud', BuildCrud::class)->name('build-crud');
 });
