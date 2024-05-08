@@ -2,13 +2,15 @@
 
 namespace Sokeio\Platform;
 
+use Sokeio\Facades\Platform;
+
 class PlatformStatus
 {
     private const PATH_STATUS = 'platform/sokeio_status.json';
     private function __construct(private $key)
     {
         if (!file_exists(base_path("platform"))) {
-            mkdir(base_path("platform"));
+            Platform::makeLink();
         }
     }
 
