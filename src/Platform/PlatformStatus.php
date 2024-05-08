@@ -7,6 +7,9 @@ class PlatformStatus
     private const PATH_STATUS = 'platform/sokeio_status.json';
     private function __construct(private $key)
     {
+        if (!file_exists(base_path("platform"))) {
+            mkdir(base_path("platform"));
+        }
     }
 
     public function getFirstOrDefault($default = null)
