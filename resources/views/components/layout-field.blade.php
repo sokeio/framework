@@ -14,8 +14,10 @@
         $classFieldDiv = '';
     }
 @endphp
-<div x-data="{ showTemplate: false, showCollapse: {{ $collapse === true ? 'true' : 'false' }} }" @if ($isColumnClass) class="{{ $column->getColumnClass() }}" @endif>
-    <div class="{{ $classFieldDiv }}" {!! $column->getAttribute() ?? '' !!}>
+<div @if ($isColumnClass) class="{{ $column->getColumnClass() }}" @endif
+    x-data="{ showTemplate: false, showCollapse: {{ $collapse === true ? 'true' : 'false' }} }"
+    {!! $column->getAttribute() ?? '' !!}>
+    <div class="{{ $classFieldDiv }}">
 
         @if (!$hideLabel)
             <label class="form-label position-relative" {!! $column->getAttributeLabel() ?? '' !!}>
