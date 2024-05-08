@@ -4,7 +4,7 @@ namespace Sokeio\Components\Field\Concerns;
 
 use Sokeio\Components\UI;
 
-trait withFieldOperator
+trait WithFieldOperator
 {
     public static function getOperatorType($operator)
     {
