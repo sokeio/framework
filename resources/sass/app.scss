@@ -169,6 +169,11 @@
     box-shadow: 5px 5px 5px #ECECFF;
 }
 
+.item-bg-hover:hover {
+    background-color: #ECECFF;
+    border: 1px solid #d8d8fa;
+}
+
 .item-active {
     background-color: #c6c6fa;
     border: 1px solid #bfbff3;

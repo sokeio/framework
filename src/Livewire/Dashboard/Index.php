@@ -1,11 +1,12 @@
 <?php
 
-namespace Sokeio\Livewire;
+namespace Sokeio\Livewire\Dashboard;
 
 use Sokeio\Component;
 use Sokeio\Facades\Assets;
+use Sokeio\Facades\Dashboard as FacadesDashboard;
 
-class Dashboard extends Component
+class Index extends Component
 {
     public function mount()
     {
@@ -14,7 +15,8 @@ class Dashboard extends Component
     public function render()
     {
         return view('sokeio::dashboard.index', [
-            'page_title' => __('Dashboard')
+            'page_title' => __('Dashboard'),
+            'widgets' => FacadesDashboard::getWidgetInDashboard('dashboard-default')
         ]);
     }
 }

@@ -3,13 +3,17 @@
 namespace Sokeio\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use Sokeio\Dashboard\Widget;
 
 /**
- * 
+ *
  * @method static void Register($key, $widget = null)
- * @method static mix getWidget()
- * @method static Widget getWidgetByKey($key)
+ * @method static array getPosition()
+ * @method static mixed getData()
+ * @method static mixed getDashboard($id)
+ * @method static mixed getWidgetInDashboard($id)
+ * @method static mixed getWidgetComponent($dashboardId, $widgetId, $component)
+ * @method static mixed getWidget($id)
+ *
  *
  * @see \Sokeio\Dashboard\DashboardManager
  */

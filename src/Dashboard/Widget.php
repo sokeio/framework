@@ -3,38 +3,47 @@
 namespace Sokeio\Dashboard;
 
 use Illuminate\Support\Traits\Macroable;
+use Sokeio\Components\UI;
+use Sokeio\Facades\Dashboard;
 use Sokeio\Laravel\BaseCallback;
-use Sokeio\Platform\PlatformStatus;
 
 class Widget extends BaseCallback
 {
     use Macroable;
-    private const DASHBOARD_WIDGET_STATUS = 'DASHBOARD_WIDGET_STATUS';
-    public function __construct(protected $key)
+    public static function getId()
     {
+        return 'id';
     }
-    public function getKey()
+    protected static function paramDefault()
     {
-        return $this->key;
+        return [
+            UI::text('title')->label(__('title')),
+            UI::select('column')->label(__('column'))->options(function () {
+                return collect(range(1, 12))->mapWithKeys(function ($value) {
+                    return [
+                        'id' => 'col' . $value,
+                        'name' => 'col ' . $value
+                    ];
+                });
+            }),
+            UI::select('position')->label(__('position'))->options(function () {
+                return Dashboard::getPosition();
+            })
+        ];
     }
-    private function getStatus()
+    public static function getParams()
     {
-        return PlatformStatus::key(self::DASHBOARD_WIDGET_STATUS);
+        return [...self::paramDefault(), ...self::param() ?? []];
     }
-    public function isActive()
+    protected static function param()
     {
-        return $this->getStatus()->check($this->key);
+        return [];
+    }
+    public function boot()
+    {
+        return $this;
     }
 
-    public function active()
-    {
-        return $this->getStatus()->active($this->key);
-    }
-
-    public function block()
-    {
-        return $this->getStatus()->block($this->key);
-    }
     private $callbackReady = [];
     public function ready($callback)
     {
@@ -67,22 +76,6 @@ class Widget extends BaseCallback
     {
         return $this->component;
     }
-    public function params($params): static
-    {
-        return $this->setKeyValue('params', $params);
-    }
-    public function getParams()
-    {
-        return $this->getValue('params');
-    }
-    public function name($name): static
-    {
-        return $this->setKeyValue('name', $name);
-    }
-    public function getName()
-    {
-        return $this->getValue('name');
-    }
     public function view($view): static
     {
         return $this->setKeyValue('view', $view);
@@ -97,26 +90,8 @@ class Widget extends BaseCallback
     }
     public function getData()
     {
-
         return $this->getValue('data');
     }
-    public function column($column): static
-    {
-        return $this->setKeyValue('column', $column);
-    }
-    public function getColumn()
-    {
-        return  $this->getValue('column');
-    }
-    public function poll($poll): static
-    {
-        return $this->setKeyValue('poll', $poll);
-    }
-    public function getPoll()
-    {
-        return $this->getValue('poll');
-    }
-
     public function widgetNumber()
     {
         return $this->view('sokeio::widgets.number-widget');

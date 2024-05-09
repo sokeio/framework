@@ -9,9 +9,7 @@ class WidgetServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        Dashboard::Register(UserTotalWidget::class);
-        Dashboard::Register(RoleTotalWidget::class);
-        Dashboard::Register(PermissionTotalWidget::class);
-        Dashboard::Register(TestWidget::class);
+        //TODO: Add your package boot logic here
+        Dashboard::Register(ModelCountWidget::class);
     }
 }
