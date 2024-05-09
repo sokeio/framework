@@ -7,12 +7,13 @@
 <div>
     <div class="d-flex">
         <button class="btn btn-sm btn-primary" sokeio:form-setting="sokeio_color_setting"
-            sokeio:form-setting.model="{{ $formField }}">Change Color</button>
-        <button  x-show="$wire.{{ $formField }}" style="display: none" class=" ms-3 btn btn-danger btn-sm" @click="$wire.{{ $formField }}=''">Remove</button>
+            sokeio:form-setting.model="{{ $formField }}">@lang('Change Color')</button>
+        <button x-show="fieldValue" style="display: none" class=" ms-3 btn btn-danger btn-sm"
+            @click="fieldValue=''">X</button>
     </div>
-    <div class="mt-2" x-show="$wire.{{ $formField }}" style="display: none">
-        <p class="form-text" x-text="$wire.{{ $formField }}"></p>
-        <span class="p-2" x-bind:class="$wire.{{ $formField }}"
-            :title="$wire.{{ $formField }}">{!! $modelPlaceholder !!}</span>
+    <div class="mt-2" x-show="fieldValue" style="display: none">
+        <p class="form-text" x-text="fieldValue"></p>
+        <span class="p-2" x-bind:class="fieldValue"
+            :title="fieldValue">{!! $modelPlaceholder !!}</span>
     </div>
 </div>

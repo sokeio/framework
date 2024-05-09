@@ -25,17 +25,29 @@
                                 Add More
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dr{{ $item->getId() }}">
-                                <li><a class="dropdown-item"
-                                        sokeio:modal="{{ route('admin.extension.' . $ExtentionType . '.create-file', ['ExtentionId' => $item->getName()]) }}"
-                                        sokeio:modal-title="Create File In {!! $ExtentionType ?? '' !!}">Add File</a></li>
-                                <li><a @click="alert('devlop....')" class="dropdown-item" href="#">Add CURD</a>
+                                @php
+                                    $url = route('admin.extension.' . $ExtentionType . '.create', [
+                                        'ExtentionId' => $item->getName(),
+                                    ]);
+                                @endphp
+                                <li><a class="dropdown-item" sokeio:modal="{{ $url }}"
+                                        sokeio:modal-title="Create File In {!! $ExtentionType ?? '' !!}: {{ $item->getId() }}">
+                                        Add File
+                                    </a>
                                 </li>
+
                                 @if ($ExtentionType == 'module')
-                                    <li><a @click="alert('devlop....')" class="dropdown-item" href="#">Add
-                                            Theme</a>
+                                    <li>
+                                        <a class="dropdown-item"
+                                            sokeio:modal="{{ route('admin.devtool.crud.add', ['moduleId' => $item->getId()]) }}"
+                                            sokeio:modal-title="Create Crud In {!! $ExtentionType ?? '' !!}: {{ $item->getId() }}"
+                                            sokeio:modal-size="modal-xl">
+                                            Add
+                                            CURD
+                                        </a>
                                     </li>
                                     <li><a @click="alert('devlop....')" class="dropdown-item" href="#">Add
-                                            Plugin</a>
+                                            Theme</a>
                                     </li>
                                 @endif
                             </ul>

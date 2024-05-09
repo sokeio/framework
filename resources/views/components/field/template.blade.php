@@ -4,14 +4,7 @@
     $modelPlaceholder = $column->getPlaceholder() ?? $modelLabel;
     $formField = $column->getFormField();
 @endphp
-<div wire:ignore x-data="{
-    set dataFields(val) {
-        $wire.{{ $formField }} = val;
-    },
-    get dataFields() {
-        return $wire.{{ $formField }};
-    }
-}">
+<div wire:ignore>
     @includeIf($column->getTemplateView(), [
         'column' => $column,
         'formField' => $formField,

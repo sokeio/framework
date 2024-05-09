@@ -14,8 +14,10 @@
         $classFieldDiv = '';
     }
 @endphp
-<div @if ($isColumnClass) class="{{ $column->getColumnClass() }}" @endif
-    x-data="{ showTemplate: false, showCollapse: {{ $collapse === true ? 'true' : 'false' }} }"
+<div @if ($isColumnClass) class="{{ $column->getColumnClass() }}" @endif x-data="{
+    showTemplate: false,
+    showCollapse: {{ $collapse === true ? 'true' : 'false' }}
+}"
     {!! $column->getAttribute() ?? '' !!}>
     <div class="{{ $classFieldDiv }}">
 
@@ -38,16 +40,25 @@
             @if ($uiBefore)
                 @include('sokeio::components.layout', ['layout' => $uiBefore])
             @endif
-            @include($column->getFieldView(), ['column' => $column])
+            <div class="field-body" x-data="{
+                set fieldValue(val) {
+                    $wire.{{ $formField }} = val;
+                },
+                get fieldValue() {
+                    return $wire.{{ $formField }};
+                }
+            }">
+                @include($column->getFieldView(), ['column' => $column])
+            </div>
             @if ($uiAfter)
                 @include('sokeio::components.layout', ['layout' => $uiAfter])
             @endif
             @if ($uiAfter || $uiBefore)
-        </div>
-        @endif
-        @error($formField)
-            <div>
-                <span class="error">{{ $message }}</span>
+                </div>
+            @endif
+            @error($formField)
+                <div>
+                    <span class ="error">{{ $message }}</span>
             </div>
         @enderror
         @if ($infoText)

@@ -13,7 +13,7 @@
 <button {!! $item->getAttribute() ?? '' !!} sokeio:modal-choose="{{ $modalChoose ?? '' }}" sokeio:modal="{{ $modal ?? '' }}"
     sokeio:modal-title="{{ $modalTitle ?? '' }}" sokeio:modal-size="{{ $modalSize ?? '' }}"
     sokeio:model="{{ $formField }}" class="btn btn-blue btn-sm">
-    <span class="dz-default dz-message">Choose {{ $modelLabel }}</span>
+    <span class="dz-default dz-message">@lang('Choose :label', ['label' => $modelLabel]) </span>
 
 </button>
 <div wire:ignore x-show="$wire.{{ $formField }}" x-data="{
