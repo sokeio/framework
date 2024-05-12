@@ -42,4 +42,21 @@ class ModelCountWidget extends Widget
             })
         ];
     }
+    public function boot()
+    {
+        $this->view(self::WIDGET_NUMBER);
+        return  parent::boot();
+    }
+    public function getData()
+    {
+        $model = $this->getOptionByKey('model');
+        if ($model) {
+            $model = app($model);
+        }
+        return [
+            'number' => $model?->count() ?? 0,
+            'title' => $this->getOptionByKey('title'),
+            'icon' => $this->getOptionByKey('icon'),
+        ];
+    }
 }

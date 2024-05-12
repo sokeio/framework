@@ -10,6 +10,8 @@ use Sokeio\Laravel\BaseCallback;
 class Widget extends BaseCallback
 {
     use Macroable;
+    public const WIDGET_NUMBER = 'sokeio::widgets.number-widget';
+    public const WIDGET_APEXCHARTS = 'sokeio::widgets.apexcharts-widget';
     public static function getId()
     {
         return 'id';
@@ -26,9 +28,51 @@ class Widget extends BaseCallback
                     ];
                 });
             }),
-            UI::select('position')->label(__('position'))->options(function () {
-                return Dashboard::getPosition();
-            })
+
+            UI::select('poll')->label(__('Poll'))->options(function () {
+                return [
+                    [
+                        'id' => '',
+                        'name' => 'No Poll'
+                    ],
+                    [
+                        'id' => '1s',
+                        'name' => '1 Second'
+                    ],
+                    [
+                        'id' => '5s',
+                        'name' => '5 Seconds'
+                    ],
+                    [
+                        'id' => '10s',
+                        'name' => '10 Seconds'
+                    ],
+                    [
+                        'id' => '30s',
+                        'name' => '30 Seconds'
+                    ],
+                    [
+                        'id' => '1m',
+                        'name' => '1 Minute'
+                    ],
+                    [
+                        'id' => '5m',
+                        'name' => '5 Minutes'
+                    ],
+                    [
+                        'id' => '10m',
+                        'name' => '10 Minutes'
+                    ],
+                    [
+                        'id' => '30m',
+                        'name' => '30 Minutes'
+                    ],
+                    [
+                        'id' => '1h',
+                        'name' => '1 Hour'
+                    ]
+                ];
+            }),
         ];
     }
     public static function getParams()
@@ -84,20 +128,27 @@ class Widget extends BaseCallback
     {
         return $this->getValue('view');
     }
-    public function data($data): static
+    public function option($option): static
     {
-        return $this->setKeyValue('data', $data);
+        return $this->setKeyValue('option', $option);
+    }
+    public function getOption()
+    {
+        return $this->getValue('option');
+    }
+    public function getOptionByKey($key, $default = null)
+    {
+        if (!isset($this->getOption()[$key])) {
+            return $default;
+        }
+        return $this->getOption()[$key];
     }
     public function getData()
     {
-        return $this->getValue('data');
+        return [];
     }
-    public function widgetNumber()
+    public function render()
     {
-        return $this->view('sokeio::widgets.number-widget');
-    }
-    public function widgetApexcharts()
-    {
-        return $this->view('sokeio::widgets.apexcharts-widget');
+        return view($this->getView(), $this->getData())->render();
     }
 }

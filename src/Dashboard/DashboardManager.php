@@ -4,8 +4,6 @@ namespace Sokeio\Dashboard;
 
 class DashboardManager
 {
-    // private const DASHBOARD_WIDGET_STATUS = 'DASHBOARD_WIDGET_STATUS';
-    // private const DASHBOARD_WIDGET_TEMP = 'DASHBOARD_WIDGET_TEMP';
     private $widgets = [];
     private $data = [
         [
@@ -18,7 +16,9 @@ class DashboardManager
                     "type" => "sokeio::widgets.model-count",
                     "position" => "WIDGET_HEADER",
                     "options" => [
+                        "column" => "col4",
                         "title" => "Users",
+                        "icon" => "bi bi-person",
                         "model" => "Sokeio\\Models\\User"
                     ]
                 ],
@@ -27,7 +27,9 @@ class DashboardManager
                     "type" => "sokeio::widgets.model-count",
                     "position" => "WIDGET_HEADER",
                     "options" => [
-                        "title" => "Users",
+                        "column" => "col4",
+                        "title" => "Roles",
+                        "icon" => "bi bi-person-badge",
                         "model" => "Sokeio\\Models\\Role"
                     ]
                 ],
@@ -36,7 +38,9 @@ class DashboardManager
                     "type" => "sokeio::widgets.model-count",
                     "position" => "WIDGET_HEADER",
                     "options" => [
-                        "title" => "Users",
+                        "column" => "col4",
+                        "title" => "Permissions",
+                        "icon" => "bi bi-key",
                         "model" => "Sokeio\\Models\\Permission"
                     ]
                 ]
@@ -89,9 +93,8 @@ class DashboardManager
     public function getWidgetComponent($dashboardId, $widgetId, $component)
     {
         $widget = $this->getWidget($dashboardId, $widgetId);
-        print_r($widget);
         if (isset($widget['class']) && $temp = app($widget['class'])) {
-            return $temp->boot()->component($component);
+            return $temp->boot()->component($component)->option($widget['options'] ?? []);
         }
         return null;
     }
@@ -100,16 +103,19 @@ class DashboardManager
     {
         return [
             [
-                'id' => 'WIDGET_BODY',
-                'title' => 'Body',
-            ],
-            [
                 'id' => 'WIDGET_HEADER',
                 'title' => 'Header',
+                'class' => 'dashboard-header',
+            ],
+            [
+                'id' => 'WIDGET_BODY',
+                'title' => 'Body',
+                'class' => 'dashboard-body',
             ],
             [
                 'id' => 'WIDGET_FOOTER',
                 'title' => 'Footer',
+                'class' => 'dashboard-footer',
             ]
         ];
     }

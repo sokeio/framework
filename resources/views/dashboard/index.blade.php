@@ -37,16 +37,23 @@
     </div>
     <div class="page-body mt-2">
         <div class="container-fluid">
-            @foreach ($widgets as $widget)
-                @livewire(
-                    'sokeio::dashboard.widget',
-                    [
-                        'widgetId' => $widget['id'],
-                        'dashboardId' => $widget['dashboardId'],
-                    ],
-                    key($widget['dashboardId'] . $widget['id'])
-                )
+            @foreach ($positions as $item)
+                <div class="row {{ $item['class'] ?? '' }}">
+                    @foreach ($widgets as $widget)
+                        @if ($widget['position'] == $item['id'])
+                            @livewire(
+                                'sokeio::dashboard.widget',
+                                [
+                                    'widgetId' => $widget['id'],
+                                    'dashboardId' => $widget['dashboardId'],
+                                ],
+                                key($widget['dashboardId'] . $widget['id'])
+                            )
+                        @endif
+                    @endforeach
+                </div>
             @endforeach
+
 
         </div>
     </div>
