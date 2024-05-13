@@ -3,18 +3,12 @@
 namespace Sokeio\Livewire\Dashboard;
 
 use Livewire\Attributes\Session;
-use Sokeio\Component;
+use Sokeio\Components\Form;
 
-class FormWidgetSetting extends Component
+class FormWidgetSetting extends Form
 {
     public $dashboardId;
     public $widgetId;
     #[Session('widget_settings')]
     public $widgets;
-    public function render()
-    {
-        return "
-        <div>" . json_encode($this->widgets) . "</div>
-        ";
-    }
 }

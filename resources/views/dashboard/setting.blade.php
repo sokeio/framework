@@ -8,7 +8,7 @@
             <div class="row {{ $item['class'] ?? '' }}" wire:sortable>
                 @foreach ($widgets as $widget)
                     @if ($widget['position'] == $item['id'])
-                        <div class="{{ columnSize($widget['options']['column']) }}"
+                        <div class="{{ columnSize($widget['options']['column']) }} mb-1"
                             wire:sortable.item="{{ $widget['id'] }}">
                             <div class="card bg-secondary text-bg-secondary">
                                 <div class="card-body">
