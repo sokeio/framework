@@ -12,7 +12,7 @@
                     <div class="btn-list">
                         @if (auth()->user()->isSuperAdmin())
                             <a class="btn btn-primary p-2" sokeio:modal="{{ route('admin.dashboard-setting') }}"
-                                sokeio:modal-size="modal-lg" sokeio:modal-title="@lang('Setting')">
+                                sokeio:modal-size="modal-fullscreen" sokeio:modal-title="@lang('Setting')">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home-cog"
                                     width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
                                     stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -38,7 +38,7 @@
     <div class="page-body mt-2">
         <div class="container-fluid">
             @foreach ($positions as $item)
-                <div class="row {{ $item['class'] ?? '' }}">
+                <div class="row {{ $item['class'] ?? '' }}" wire:masonry>
                     @foreach ($widgets as $widget)
                         @if ($widget['position'] == $item['id'])
                             @livewire(
@@ -53,8 +53,6 @@
                     @endforeach
                 </div>
             @endforeach
-
-
         </div>
     </div>
 </div>

@@ -16,7 +16,7 @@ class DashboardManager
                     "type" => "sokeio::widgets.model-count",
                     "position" => "WIDGET_HEADER",
                     "options" => [
-                        "column" => "col4",
+                        "column" => "col6",
                         "title" => "Users",
                         "icon" => "bi bi-person",
                         "model" => "Sokeio\\Models\\User"

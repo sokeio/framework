@@ -4,7 +4,6 @@ namespace Sokeio\Dashboard;
 
 use Illuminate\Support\Traits\Macroable;
 use Sokeio\Components\UI;
-use Sokeio\Facades\Dashboard;
 use Sokeio\Laravel\BaseCallback;
 
 class Widget extends BaseCallback
@@ -73,6 +72,35 @@ class Widget extends BaseCallback
                     ]
                 ];
             }),
+            UI::select('ratio')->label(__('ratio'))->options(function () {
+                return [
+                    [
+                        'id' => '',
+                        'name' => 'No Ratio'
+                    ],
+                    [
+                        'id' => '1x1',
+                        'name' => '1x1'
+                    ],
+                    [
+                        'id' => '2x1',
+                        'name' => '2x1'
+                    ],
+                    [
+                        'id' => '4x3',
+                        'name' => '4x3'
+                    ],
+                    [
+                        'id' => '16x9',
+                        'name' => '16x9'
+
+                    ],
+                    [
+                        'id' => '21x9',
+                        'name' => '21x9'
+                    ]
+                ];
+            })
         ];
     }
     public static function getParams()

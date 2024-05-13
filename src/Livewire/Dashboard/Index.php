@@ -15,7 +15,6 @@ class Index extends Component
     public function render()
     {
         return view('sokeio::dashboard.index', [
-            'page_title' => __('Dashboard'),
             'widgets' => FacadesDashboard::getWidgetInDashboard('dashboard-default'),
             'positions' => FacadesDashboard::getPosition()
         ]);
