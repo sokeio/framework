@@ -36,19 +36,15 @@
         </div>
     </div>
     <div class="page-body mt-2">
-        <div class="container-fluid">
+        <div class="container-fluid" wire:key="dashboard-{{ $soNumberLoading }}">
             @foreach ($positions as $item)
-                <div class="row {{ $item['class'] ?? '' }}" wire:masonry>
+                <div class="row {{ $item['class'] ?? '' }}" wire:masonry
+                    data-masonry='{ "itemSelector": ".widget-item" }'>
                     @foreach ($widgets as $widget)
                         @if ($widget['position'] == $item['id'])
-                            @livewire(
-                                'sokeio::dashboard.widget',
-                                [
-                                    'widgetId' => $widget['id'],
-                                    'dashboardId' => $widget['dashboardId'],
-                                ],
-                                key($widget['dashboardId'] . $widget['id'])
-                            )
+                            <livewire:sokeio::dashboard.widget
+                                wire:key="widget-{{ $widget['id'] }}-{{ $soNumberLoading }}" :widgetId="$widget['id']"
+                                :dashboardId="$widget['dashboardId']" />
                         @endif
                     @endforeach
                 </div>

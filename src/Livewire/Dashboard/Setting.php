@@ -5,7 +5,7 @@ namespace Sokeio\Livewire\Dashboard;
 use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Session;
 use Sokeio\Component;
-use Sokeio\Facades\Dashboard as FacadesDashboard;
+use Sokeio\Facades\Dashboard;
 
 class Setting extends Component
 {
@@ -15,8 +15,8 @@ class Setting extends Component
     public $dashboardId = 'dashboard-default';
     public function mount()
     {
-        $this->widgets = FacadesDashboard::getWidgetInDashboard($this->dashboardId);
-        $this->positions = FacadesDashboard::getPosition();
+        $this->widgets = Dashboard::getWidgetInDashboard($this->dashboardId);
+        $this->positions = Dashboard::getPosition();
     }
     public function updatePosition($position, $items)
     {
@@ -50,6 +50,13 @@ class Setting extends Component
                 ]
             ];
         }
+    }
+    public function saveSettings()
+    {
+        Dashboard::store($this->dashboardId, $this->widgets);
+        $this->closeComponent();
+        $this->refreshRefComponent();
+        $this->showMessage(__('Saved successfully'));
     }
     public function render()
     {

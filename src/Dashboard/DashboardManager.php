@@ -2,12 +2,15 @@
 
 namespace Sokeio\Dashboard;
 
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 
 class DashboardManager
 {
+    const PATH_DASHBOARD = 'platform/sokeio_dashboard.json';
     private $widgets = [];
-    private $data = [
+    private $data;
+    private $dataDefault = [
         [
             "id" => "dashboard-default",
             "name" => "Dashboard Default",
@@ -50,20 +53,38 @@ class DashboardManager
             ]
         ]
     ];
+    public function store($dashboardId, $widgets)
+    {
+        $data = $this->getData();
+        foreach ($data as $key => $value) {
+            if ($value['id'] == $dashboardId) {
+                $data[$key]['widgets'] = $widgets;
+                $this->data = $data;
+                break;
+            }
+        }
+
+        file_put_contents(base_path(self::PATH_DASHBOARD), json_encode($data));
+    }
     public function getData()
     {
+        if (File::exists(base_path(self::PATH_DASHBOARD))) {
+            $this->data = json_decode(file_get_contents(base_path(self::PATH_DASHBOARD)), true) ?? $this->dataDefault;
+        } else {
+            $this->data = $this->dataDefault;
+        }
         return $this->data;
     }
     public function getDashboard($id)
     {
         if ($id) {
-            foreach ($this->data as  $value) {
+            foreach ($this->getData() as  $value) {
                 if ($value['id'] == $id) {
                     return $value;
                 }
             }
         }
-        foreach ($this->data as  $value) {
+        foreach ($this->getData() as  $value) {
             if ($value['default'] === true) {
                 return $value;
             }

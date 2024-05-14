@@ -22,7 +22,6 @@
                                 <div class="card-body">
                                     {{ $widget['options']['title'] ?? '' }}
                                     {{ $widget['id'] ?? '' }}
-                                    @json($widget)
                                     <div class="position-absolute top-0 pt-1 pe-1 end-0">
                                         <a sokeio:modal="{{ route('admin.form-widget-setting', [
                                             'dataId' => $widget['id'],
@@ -41,6 +40,6 @@
         </div>
     @endforeach
     <div class="text-center">
-        <button class="btn btn-primary">@lang('Save Settings')</button>
+        <button wire:click="saveSettings" class="btn btn-primary">@lang('Save Settings')</button>
     </div>
 </div>

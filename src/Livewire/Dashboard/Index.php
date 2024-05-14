@@ -4,7 +4,7 @@ namespace Sokeio\Livewire\Dashboard;
 
 use Sokeio\Component;
 use Sokeio\Facades\Assets;
-use Sokeio\Facades\Dashboard as FacadesDashboard;
+use Sokeio\Facades\Dashboard;
 
 class Index extends Component
 {
@@ -15,8 +15,8 @@ class Index extends Component
     public function render()
     {
         return view('sokeio::dashboard.index', [
-            'widgets' => FacadesDashboard::getWidgetInDashboard('dashboard-default'),
-            'positions' => FacadesDashboard::getPosition()
+            'widgets' => Dashboard::getWidgetInDashboard('dashboard-default'),
+            'positions' => Dashboard::getPosition()
         ]);
     }
 }
