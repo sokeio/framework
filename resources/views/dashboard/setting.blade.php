@@ -18,10 +18,10 @@
                     @if ($widget['position'] == $item['id'])
                         <div class="{{ columnSize($widget['options']['column']) }} mb-1" wire:sortable.item
                             data-sortable-id="{{ $widget['id'] }}">
-                            <div class="card bg-secondary text-bg-secondary">
+                            <div class="card bg-azure text-azure-fg">
                                 <div class="card-body">
-                                    {{ $widget['options']['title'] ?? '' }}
-                                    {{ $widget['id'] ?? '' }}
+                                    <div>{{ $widget['options']['title'] ?? '' }}</div>
+                                    <div> {{ $widget['type'] ?? '' }}</div>
                                     <div class="position-absolute top-0 pt-1 pe-1 end-0">
                                         <a sokeio:modal="{{ route('admin.form-widget-setting', [
                                             'dataId' => $widget['id'],

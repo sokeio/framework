@@ -11,7 +11,7 @@ export class LiveWireChartModule extends SokeioPlugin {
         "apexcharts",
         ({ el, directive, component, cleanup }) => {
           // Only fire this handler on the "root" directive.
-          if (directive.modifiers.length > 0 || el.$wire_apexcharts) {
+          if (directive.modifiers.length > 0) {
             return;
           }
           let options = {};
@@ -28,6 +28,14 @@ export class LiveWireChartModule extends SokeioPlugin {
             if (el.$wire_apexcharts) return;
             el.$wire_apexcharts = new window.ApexCharts(el, options);
             el.$wire_apexcharts.render();
+            cleanup(() => {
+              el.$wire_apexcharts.destroy();
+              el.$wire_apexcharts = null;
+            });
+            window.addEventListener('resize', () => {
+              el.$wire_apexcharts.updateOptions(options);
+            });
+
           };
           window.addStyleToWindow(
             self

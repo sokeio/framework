@@ -1,5 +1,5 @@
 @php
-    $chartData = isset($WidgetData['chartData']) ? $WidgetData['chartData'] : [];
+    $chartData = isset($chartData) ? $chartData : [];
 @endphp
 <div class="card card-sm">
     <div class="card-body">
