@@ -15,101 +15,106 @@ class Widget extends BaseCallback
     {
         return 'id';
     }
-    protected static function paramDefault()
+    private static function paramDefault()
     {
         return [
             UI::text('title')->label(__('title')),
-            UI::select('column')->label(__('column'))->options(function () {
-                return collect(range(1, 12))->mapWithKeys(function ($value) {
+            UI::select('column')->label(__('column'))->dataSource(function () {
+                return collect(range(1, 12))->map(function ($value) {
                     return [
                         'id' => 'col' . $value,
-                        'name' => 'col ' . $value
+                        'title' => 'Col ' . $value
                     ];
-                });
-            }),
+                })->toArray();
+            })->col4(),
 
-            UI::select('poll')->label(__('Poll'))->options(function () {
+
+            UI::select('ratio')->label(__('ratio'))->dataSource(function () {
                 return [
                     [
                         'id' => '',
-                        'name' => 'No Poll'
-                    ],
-                    [
-                        'id' => '1s',
-                        'name' => '1 Second'
-                    ],
-                    [
-                        'id' => '5s',
-                        'name' => '5 Seconds'
-                    ],
-                    [
-                        'id' => '10s',
-                        'name' => '10 Seconds'
-                    ],
-                    [
-                        'id' => '30s',
-                        'name' => '30 Seconds'
-                    ],
-                    [
-                        'id' => '1m',
-                        'name' => '1 Minute'
-                    ],
-                    [
-                        'id' => '5m',
-                        'name' => '5 Minutes'
-                    ],
-                    [
-                        'id' => '10m',
-                        'name' => '10 Minutes'
-                    ],
-                    [
-                        'id' => '30m',
-                        'name' => '30 Minutes'
-                    ],
-                    [
-                        'id' => '1h',
-                        'name' => '1 Hour'
-                    ]
-                ];
-            }),
-            UI::select('ratio')->label(__('ratio'))->options(function () {
-                return [
-                    [
-                        'id' => '',
-                        'name' => 'No Ratio'
+                        'title' => 'No Ratio'
                     ],
                     [
                         'id' => '1x1',
-                        'name' => '1x1'
+                        'title' => '1x1'
                     ],
                     [
                         'id' => '2x1',
-                        'name' => '2x1'
+                        'title' => '2x1'
                     ],
                     [
                         'id' => '4x3',
-                        'name' => '4x3'
+                        'title' => '4x3'
                     ],
                     [
                         'id' => '16x9',
-                        'name' => '16x9'
+                        'title' => '16x9'
 
                     ],
                     [
                         'id' => '21x9',
-                        'name' => '21x9'
+                        'title' => '21x9'
                     ]
                 ];
-            })
+            })->col4(),
+            UI::select('poll')->label(__('Poll'))->dataSource(function () {
+                return [
+                    [
+                        'id' => '',
+                        'title' => 'No Poll'
+                    ],
+                    [
+                        'id' => '1s',
+                        'title' => '1 Second'
+                    ],
+                    [
+                        'id' => '5s',
+                        'title' => '5 Seconds'
+                    ],
+                    [
+                        'id' => '10s',
+                        'title' => '10 Seconds'
+                    ],
+                    [
+                        'id' => '30s',
+                        'title' => '30 Seconds'
+                    ],
+                    [
+                        'id' => '1m',
+                        'title' => '1 Minute'
+                    ],
+                    [
+                        'id' => '5m',
+                        'title' => '5 Minutes'
+                    ],
+                    [
+                        'id' => '10m',
+                        'title' => '10 Minutes'
+                    ],
+                    [
+                        'id' => '30m',
+                        'title' => '30 Minutes'
+                    ],
+                    [
+                        'id' => '1h',
+                        'title' => '1 Hour'
+                    ]
+                ];
+            })->col4(),
         ];
     }
     public static function getParams()
     {
-        return [...self::paramDefault(), ...self::param() ?? []];
+        return [...self::paramDefault(), ...(static::param() ?? [])];
     }
     protected static function param()
     {
         return [];
+    }
+    public function getParamUI()
+    {
+        return static::getParams();
     }
     public function boot()
     {

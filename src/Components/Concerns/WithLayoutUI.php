@@ -54,6 +54,9 @@ trait WithLayoutUI
     public function boot()
     {
         if (!isLivewireRequestUpdated()) {
+            if (method_exists($this, 'bootInitLayout')) {
+                call_user_func([$this, 'bootInitLayout']);
+            }
             $this->initLayout();
         }
     }

@@ -2,6 +2,8 @@
 
 namespace Sokeio\Dashboard;
 
+use Illuminate\Support\Facades\Log;
+
 class DashboardManager
 {
     private $widgets = [];
@@ -96,6 +98,7 @@ class DashboardManager
         if (isset($widget['class']) && $temp = app($widget['class'])) {
             return $temp->boot()->component($component)->option($widget['options'] ?? []);
         }
+        Log::info(['Widget not found', 'widgetId' => $widgetId, 'dashboardId' => $dashboardId]);
         return null;
     }
 

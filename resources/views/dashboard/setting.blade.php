@@ -15,7 +15,9 @@
                                     {{ $widget['options']['title'] ?? '' }}
                                     {{ $widget['id'] ?? '' }}
                                     <div class="position-absolute top-0 pt-1 pe-1 end-0">
-                                        <a href="#" class="btn btn-success btn-sm">@lang('Edit')</a>
+                                        <a sokeio:modal="{{ route('admin.form-widget-setting', ['dataId' => $widget['id'], 'dashboardId' => $widget['dashboardId']]) }}"
+                                            sokeio:modal-size="modal-lg" sokeio:modal-title="@lang('Edit Widget')"
+                                            class="btn btn-success btn-sm">@lang('Edit')</a>
                                         <a href="#" class="btn btn-danger btn-sm">@lang('Delete')</a>
                                     </div>
                                 </div>

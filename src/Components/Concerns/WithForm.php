@@ -31,7 +31,7 @@ trait WithForm
         }
         return __('The record updated successfully');
     }
-    private function getDataRow()
+    protected function getDataRow()
     {
         $query = $this->getQuery();
         if ($this->dataId) {
@@ -46,6 +46,7 @@ trait WithForm
     {
         if ($this->dataId || $this->copyId) {
             $data = $this->getDataRow();
+            Log::info(['data' => $data, 'dataId' => $this->dataId, 'copyId' => $this->copyId]);
             if (!$data && $this->dataId) {
                 return abort(404);
             }
@@ -80,7 +81,6 @@ trait WithForm
                         $value = [0];
                     }
                 }
-                Log::info(['fill' => $column->getNameEncode(), 'value' => $value]);
                 data_set($this, $column->getFormFieldEncode(), $value);
             }
         }
@@ -94,7 +94,6 @@ trait WithForm
                 $column->getValueDefault() != null
             ) {
                 if ($column->isSyncRelations()) {
-                    Log::info(['isSyncRelations', 'fill' => $column->getNameEncode()]);
                     data_set($this, $column->getFormFieldEncode(), $column->getValueDefault() ?? [-1, -2]);
                 } else {
                     data_set($this, $column->getFormFieldEncode(), $column->getValueDefault());
@@ -181,7 +180,7 @@ trait WithForm
             $objData->updated_by = auth()->user()->id;
         }
     }
-    private function fillToModel($objData)
+    protected function fillToModel($objData)
     {
         foreach ($this->getAllInputUI() as $column) {
             if (!$column->getNoSave() && !$column->isSyncRelations()) {
@@ -192,6 +191,7 @@ trait WithForm
                 data_set($objData, $column->getNameEncode(), $value);
             }
         }
+        return $objData;
     }
     private function syncRelations($objData)
     {
