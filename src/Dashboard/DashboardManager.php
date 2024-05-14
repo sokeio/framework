@@ -77,8 +77,7 @@ class DashboardManager
             return collect($dashboard['widgets'] ?? [])->map(function ($widget) use ($dashboard) {
                 return [
                     ...$widget,
-                    'dashboardId' => $dashboard['id'],
-                    'class' => $this->getWidgetClassByKey($widget['type'])
+                    'dashboardId' => $dashboard['id']
                 ];
             });
         }
@@ -95,7 +94,7 @@ class DashboardManager
     public function getWidgetComponent($dashboardId, $widgetId, $component)
     {
         $widget = $this->getWidget($dashboardId, $widgetId);
-        if (isset($widget['class']) && $temp = app($widget['class'])) {
+        if (isset($widget['type']) && $temp = app($this->getWidgetClassByKey($widget['type']))) {
             return $temp->boot()->component($component)->option($widget['options'] ?? []);
         }
         Log::info(['Widget not found', 'widgetId' => $widgetId, 'dashboardId' => $dashboardId]);
@@ -125,7 +124,8 @@ class DashboardManager
     public function register($key)
     {
         $this->widgets[md5($key)] = [
-            'key' => ($key)::getId(),
+            'id' => ($key)::getId(),
+            'title' => ($key)::getTitle(),
             'class' => $key,
         ];
     }
@@ -135,7 +135,7 @@ class DashboardManager
     }
     public function getWidgetClassByKey($key)
     {
-        $temp = collect($this->widgets)->where('key', $key)->first();
+        $temp = collect($this->widgets)->where('id', $key)->first();
         if ($temp) {
             return $temp['class'];
         }

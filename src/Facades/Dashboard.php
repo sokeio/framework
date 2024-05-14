@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static mixed getWidgetComponent($dashboardId, $widgetId, $component)
  * @method static mixed getWidgetClassByKey($key)
  * @method static mixed getWidget($id)
+ * @method static mixed getWidgetType()
  *
  *
  * @see \Sokeio\Dashboard\DashboardManager

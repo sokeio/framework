@@ -2,6 +2,7 @@
 
 namespace Sokeio\Livewire\Dashboard;
 
+use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Session;
 use Sokeio\Component;
 use Sokeio\Facades\Dashboard as FacadesDashboard;
@@ -11,20 +12,44 @@ class Setting extends Component
     #[Session('widget_settings')]
     public $widgets;
     public $positions;
+    public $dashboardId = 'dashboard-default';
     public function mount()
     {
-        $this->widgets = FacadesDashboard::getWidgetInDashboard('dashboard-default');
+        $this->widgets = FacadesDashboard::getWidgetInDashboard($this->dashboardId);
         $this->positions = FacadesDashboard::getPosition();
+    }
+    public function updatePosition($position, $items)
+    {
+        $temp1 = collect($this->widgets)->where('position', '!=', $position)->toArray();
+        $temp2 = collect($items)->map(function ($item) use ($position) {
+            return collect($this->widgets)->where('id', $item['value'])
+                ->where('position', '=', $position)->first() ?? [];
+        })->toArray();
+        $this->widgets = [
+            ...$temp1,
+            ...$temp2
+        ];
+        Log::info(['updatePosition', $this->widgets]);
     }
     public function changeWidget($data = [])
     {
-        $this->showMessage(json_encode($data));
-        $this->widgets = collect($this->widgets)->map(function ($item) use ($data) {
-            if ($item['id'] == $data['id']) {
-                $item = $data;
-            }
-            return $item;
-        })->toArray();
+        if (isset($data['id'])) {
+            $this->widgets = collect($this->widgets)->map(function ($item) use ($data) {
+                if ($item['id'] == $data['id']) {
+                    $item = $data;
+                }
+                return $item;
+            })->toArray();
+        } else {
+            $this->widgets = [
+                ...$this->widgets,
+                [
+                    'id' => 'widget-' . uniqid(),
+                    ...$data,
+
+                ]
+            ];
+        }
     }
     public function render()
     {

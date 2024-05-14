@@ -18,8 +18,8 @@ class Widget extends BaseCallback
     private static function paramDefault()
     {
         return [
-            UI::text('title')->label(__('title')),
-            UI::select('column')->label(__('column'))->dataSource(function () {
+            UI::text('title')->label(__('Title')),
+            UI::select('column')->label(__('Column'))->dataSource(function () {
                 return collect(range(1, 12))->map(function ($value) {
                     return [
                         'id' => 'col' . $value,
@@ -29,7 +29,7 @@ class Widget extends BaseCallback
             })->col4(),
 
 
-            UI::select('ratio')->label(__('ratio'))->dataSource(function () {
+            UI::select('ratio')->label(__('Ratio'))->dataSource(function () {
                 return [
                     [
                         'id' => '',
@@ -115,6 +115,10 @@ class Widget extends BaseCallback
     public function getParamUI()
     {
         return static::getParams();
+    }
+    public function getWidgetType()
+    {
+        return static::getId();
     }
     public function boot()
     {
