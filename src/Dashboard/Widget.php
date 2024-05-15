@@ -19,6 +19,7 @@ class Widget extends BaseCallback
     {
         return [
             UI::text('title')->label(__('Title')),
+            UI::icon('icon')->label(__('Icon')),
             UI::select('column')->label(__('Column'))->dataSource(function () {
                 return collect(range(1, 12))->map(function ($value) {
                     return [

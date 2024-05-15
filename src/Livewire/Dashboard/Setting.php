@@ -51,6 +51,12 @@ class Setting extends Component
             ];
         }
     }
+    public function deleteWidget($widgetId, $position)
+    {
+        $this->widgets = collect($this->widgets)->reject(function ($item) use ($widgetId, $position) {
+            return $item['id'] == $widgetId && $item['position'] == $position;
+        })->toArray();
+    }
     public function saveSettings()
     {
         Dashboard::store($this->dashboardId, $this->widgets);

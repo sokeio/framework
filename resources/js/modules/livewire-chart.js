@@ -32,11 +32,24 @@ export class LiveWireChartModule extends SokeioPlugin {
               el.$wire_apexcharts.destroy();
               el.$wire_apexcharts = null;
             });
+            let $wire_apexchart_timer = null;
             window.addEventListener("resize", () => {
-              el.$wire_apexcharts.updateOptions(options, false, false);
+              if ($wire_apexchart_timer) {
+                clearTimeout($wire_apexchart_timer);
+              }
+              $wire_apexchart_timer = setTimeout(() => {
+                el.$wire_apexcharts.updateOptions(options, false, false);
+                $wire_apexchart_timer = null;
+              },100);
             });
             window.addEventListener("sokeio::rezize", () => {
-              el.$wire_apexcharts.updateOptions(options, false, false);
+              if ($wire_apexchart_timer) {
+                clearTimeout($wire_apexchart_timer);
+              }
+              $wire_apexchart_timer = setTimeout(() => {
+                el.$wire_apexcharts.updateOptions(options, false, false);
+                $wire_apexchart_timer = null;
+              },100);
             });
           };
           window.addStyleToWindow(
