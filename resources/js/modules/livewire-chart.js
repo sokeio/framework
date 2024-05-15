@@ -21,7 +21,7 @@ export class LiveWireChartModule extends SokeioPlugin {
             )();
           }
           if (el.$wire_apexcharts) {
-            el.$wire_apexcharts.updateOptions(options);
+            el.$wire_apexcharts.updateOptions(options, true, true);
             return;
           }
           const apexchartsInit = () => {
@@ -32,10 +32,12 @@ export class LiveWireChartModule extends SokeioPlugin {
               el.$wire_apexcharts.destroy();
               el.$wire_apexcharts = null;
             });
-            window.addEventListener('resize', () => {
-              el.$wire_apexcharts.updateOptions(options);
+            window.addEventListener("resize", () => {
+              el.$wire_apexcharts.updateOptions(options, false, false);
             });
-
+            window.addEventListener("sokeio::rezize", () => {
+              el.$wire_apexcharts.updateOptions(options, false, false);
+            });
           };
           window.addStyleToWindow(
             self

@@ -16,6 +16,9 @@ export class LiveWireMasonryModule extends SokeioPlugin {
         const masonryCreate = () => {
           if (el.$wire_masonry) return;
           el.$wire_masonry = new Masonry(el, options);
+          window.addEventListener("sokeio::rezize", () => {
+            el.$wire_masonry.layout();
+          });
         };
         if (window.Masonry) {
           masonryCreate();
