@@ -28,10 +28,10 @@ trait WithSearchFn
         });
         return $this;
     }
-    public function querySearchWithModel($model, $name = null, $queryCallback = null)
+    public function querySearchWithModel($model, $name = null, $queryCallback = null, $optionNone = null)
     {
         $self = $this;
-        return $this->querySearchFn(function ($component, $text, $currentId = null) use ($model, $self, $queryCallback) {
+        return $this->querySearchFn(function ($component, $text, $currentId = null) use ($model, $self, $queryCallback, $optionNone) {
             $component->skipRender();
             $fieldText = $self->getFieldText();
             $query = ($model)::query()
@@ -46,6 +46,12 @@ trait WithSearchFn
                 $currentItem = ($model)::find($currentId);
                 if ($currentItem) {
                     return [
+                        ...($optionNone ? [
+                            [
+                                'id' => '',
+                                $fieldText => $optionNone
+                            ]
+                        ] : []),
                         [
                             'id' => $currentItem->id,
                             $fieldText => $currentItem->name
