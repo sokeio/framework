@@ -46,7 +46,6 @@ trait WithForm
     {
         if ($this->dataId || $this->copyId) {
             $data = $this->getDataRow();
-            Log::info(['data' => $data, 'dataId' => $this->dataId, 'copyId' => $this->copyId]);
             if (!$data && $this->dataId) {
                 return abort(404);
             }
