@@ -5,7 +5,7 @@
     @ThemeHead(after)
     @stack('styles')
 </head>
-<body class="{{themeClass()}}">
+<body class="{{themeClass()}} admin-page">
     @ThemeBody(before)
     @yield('content')
     @ThemeBody(after)

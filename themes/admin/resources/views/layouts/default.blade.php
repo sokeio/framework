@@ -8,7 +8,7 @@
 </head>
 {{-- admnin-sidebar-mini --}}
 
-<body class="{{ themeClass() }} {{ \Sokeio\Facades\Theme::isSitebarMini() ? 'admnin-sidebar-mini' : '' }}"
+<body class="{{ themeClass() }} {{ \Sokeio\Facades\Theme::isSitebarMini() ? 'admnin-sidebar-mini' : '' }} admin-page"
     :data-bs-theme="themeDark && 'dark'" x-data="{
         initBody() {
             $watch('miniSidebar', (value) => {

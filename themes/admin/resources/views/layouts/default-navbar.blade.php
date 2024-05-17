@@ -10,7 +10,7 @@
     </style>
 </head>
 
-<body class="{{ themeClass() }} theme-layout-navbar" :data-bs-theme="themeDark && 'dark'" x-data="{ themeDark: false }">
+<body class="{{ themeClass() }} theme-layout-navbar admin-page" :data-bs-theme="themeDark && 'dark'" x-data="{ themeDark: false }">
     @ThemeBody(before)
     <div class="page">
         @include('theme::share.header-navbar')

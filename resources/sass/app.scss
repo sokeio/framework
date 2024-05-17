@@ -219,14 +219,17 @@
 }
 
 @media screen and (min-width: 768px) {
-    .navbar-vertical {
-        .navbar-brand {
-            min-height: 55px !important;
-            margin-bottom: 1px;
-            --tblr-navbar-border-color: var(--tblr-border-color);
-            box-shadow: inset 0 calc(-1* var(--tblr-navbar-border-width)) 0 0 var(--tblr-navbar-border-color);
+    .admin-page{
+        .navbar-vertical {
+            .navbar-brand {
+                min-height: 55px !important;
+                margin-bottom: 1px;
+                --tblr-navbar-border-color: var(--tblr-border-color);
+                box-shadow: inset 0 calc(-1* var(--tblr-navbar-border-width)) 0 0 var(--tblr-navbar-border-color);
+            }
         }
     }
+    
 
 
     .admnin-sidebar-mini {
