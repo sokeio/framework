@@ -39,11 +39,12 @@ export class ToastsModule extends SokeioPlugin {
   postion_el = {};
   addToast(
     content,
-    postion = "bottom_right",
+    postion = undefined,
     title = undefined,
     metaType = undefined,
     autohide = true,
-    onCallback = undefined
+    onCallback = undefined,
+    icon
   ) {
     let self = this;
     let toastContainer = this.postion_el["bottom_right"];
@@ -58,6 +59,7 @@ export class ToastsModule extends SokeioPlugin {
           autohide !== true ? 'data-bs-autohide="false"' : ""
         } >
     <div class="toast-header">
+    ${icon ?? ""}
       <strong class="me-auto">${title}</strong>
       <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
@@ -91,15 +93,23 @@ export class ToastsModule extends SokeioPlugin {
     }
   }
   showMessageEvent = (el) => {
-    const { message, meta, type } = el;
-    const { postion, title, type: metaType, autohide, onCallback } = meta;
+    const { message, meta, type, position: positionEl } = el;
+    const {
+      position,
+      title,
+      type: metaType,
+      autohide,
+      onCallback,
+      icon,
+    } = meta;
     this.addToast(
       message,
-      postion,
+      position ?? positionEl,
       title,
       metaType ?? type,
       autohide,
-      onCallback
+      onCallback,
+      icon
     );
   };
 }

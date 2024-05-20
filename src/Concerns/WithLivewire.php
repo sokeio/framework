@@ -9,7 +9,7 @@ use Sokeio\Facades\Platform;
 
 trait WithLivewire
 {
-    use WithHelpers;
+    use WithHelpers, WithLivewireMessage;
     public $soDataTemp = [];
     public $soRefId;
     public $soIsPage = false;
@@ -84,10 +84,7 @@ trait WithLivewire
     {
         return redirect(request()->header('Referer'));
     }
-    public function showMessage($option)
-    {
-        $this->dispatch('sokeio::message', option: $option);
-    }
+
     public function closeComponent($component = null)
     {
         if ($component) {
