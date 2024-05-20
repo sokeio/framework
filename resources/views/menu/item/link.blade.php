@@ -41,8 +41,8 @@
 @else
     @if ($item->checkSubMenu())
         <li id="{{ $item->getId() }}" class="nav-item dropdown" data-sort="{{ $item->getValueSort() }}">
-            <a class="nav-link dropdown-toggle {{ $item->getValueContentColor() }} {{ $item->getValueClassName() }}" href="{{ $link }}"
-                role="button">
+            <a class="nav-link dropdown-toggle {{ $item->getValueContentColor() }} {{ $item->getValueClassName() }}"
+                href="{{ $link }}" role="button">
                 <div class="w-100 d-flex align-items-center">
                     @if ($icon = $item->getValueIcon())
                         <span class="nav-link-icon d-flex align-items-center">
@@ -61,7 +61,8 @@
         </li>
     @else
         <li id="{{ $item->getId() }}" class="nav-item " data-sort="{{ $item->getValueSort() }}">
-            <a wire:navigate class="nav-link flex-column {{ $item->getValueContentColor() }} {{ $item->getValueClassName() }}"
+            <a wire:navigate
+                class="nav-link flex-column {{ $item->getValueContentColor() }} {{ $item->getValueClassName() }}"
                 href="{{ $link }}">
                 <div class="w-100 d-flex align-items-center">
                     @if ($icon = $item->getValueIcon())
