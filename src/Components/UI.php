@@ -14,7 +14,7 @@ class UI
     use WithUtils;
 
     public const KEY_FIELD_NAME = '###______###';
-    
+
     public const MODAL_SMALL = 'modal-sm';
     public const MODAL_LARGE = 'modal-lg';
     public const MODAL_EXTRA_LARGE = 'modal-xl';
@@ -27,4 +27,54 @@ class UI
 
     public const BUTTON_SMALL = 'sm';
     public const BUTTON_LARGE = 'lg';
+    // {
+    //     "type":"div",
+    //     "attrs":[],
+    //     "children":[
+    //         {
+    //             "type":"div",
+    //             "attrs":[
+    //                 {
+    //                     "name":"class",
+    //                     "value":"btn-group",
+    //                     "type":"function"
+    //                 }
+    //             ],
+    //             "children":[
+    //                 {
+    //                     "type":"div",
+    //                     "attrs":[
+    //                         {
+    //                             "name":"class",
+    //                             "value":"btn-group"
+    //                         }
+    //                     ]
+
+    //         }]}]}
+    // }
+    public static function loadFormfromJson($json)
+    {
+        $layout = [];
+        if (is_array($json)) {
+            foreach ($json as $item) {
+                $layout[] = self::loadFormfromJson($item);
+            }
+        } else {
+
+            if (!isset($json['type'])) {
+                $layout = self::{$json['type']}('');
+                if ($layout) {
+                    $args = isset($json['attrs']) ? $json['attrs'] : [];
+                    foreach ($args as $arg) {
+                        $value = $arg['value'];
+                        if (isset($arg['type']) && $arg['type'] == 'function') {
+                            $value = eval($arg['value']);
+                        }
+                        $layout->{$arg['name']}($value);
+                    }
+                }
+            }
+        }
+        return $layout;
+    }
 }
