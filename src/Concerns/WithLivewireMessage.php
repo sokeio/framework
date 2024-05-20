@@ -23,7 +23,7 @@ trait WithLivewireMessage
     public const MESSAGE_POSITION_BOTTOM_CENTER = 'bottom_center';
     public const MESSAGE_POSITION_BOTTOM_LEFT = 'bottom_left';
 
-    public function showMessage($message, $title, $icon, $type = 'success', $position = 'top-right', $option = [])
+    public function showMessage($message, $title=null, $icon=null, $type = 'success', $position = 'top-right', $option = [])
     {
         $this->showMessageByOption([
             ...$option ?? [],

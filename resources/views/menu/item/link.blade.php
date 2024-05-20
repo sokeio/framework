@@ -13,7 +13,7 @@
                             <i class="{{ $icon }} fs-2 {{ $item->getValueContentColor() }}"></i>
                         </span>
                     @endif
-                    {{ $item->getValueText() }}
+                    {!! $item->getValueText() !!}
                 </div>
                 @if ($info)
                     <div class="w-100 menu-item-info">{{ $info }}</div>
@@ -31,7 +31,7 @@
                         <i class="{{ $icon }} fs-2 {{ $item->getValueContentColor() }}"></i>
                     </span>
                 @endif
-                {{ $item->getValueText() }}
+                {!! $item->getValueText() !!}
             </div>
             @if ($info)
                 <div class="w-100 menu-item-info">{{ $info }}</div>
@@ -50,7 +50,7 @@
                         </span>
                     @endif
                     <span class="nav-link-title">
-                        {{ $item->getValueText() }}
+                        {!! $item->getValueText() !!}
                     </span>
                 </div>
                 @if ($info)
@@ -69,7 +69,7 @@
                             <i class="{{ $icon }} fs-2 {{ $item->getValueContentColor() }}"></i>
                         </span>
                     @endif
-                    {{ $item->getValueText() }}
+                    {!! $item->getValueText() !!}
                 </div>
                 @if ($info)
                     <div class="w-100 menu-item-info">{{ $info }}</div>

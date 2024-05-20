@@ -3,7 +3,7 @@
         <i class="{{ $item['icon'] }} fs-3 me-2"></i>
     @endif
     <div class="flex-grow-1 justify-content-center align-items-center pe-5" data-menu="{{ $item['id'] }}">
-        {{ $item['name'] }}
+        {!! $item['name'] !!}
         @if ($item['info'])
             <div class="bg-warning p-2 rounded">{{ $item['info'] }}</div>
         @endif
