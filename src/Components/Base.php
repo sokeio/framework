@@ -8,6 +8,10 @@ use Sokeio\Laravel\BaseCallback;
 class Base extends BaseCallback
 {
     use WithBaseBasic;
+    public function getGroup()
+    {
+        return 'base';
+    }
     protected function childComponents()
     {
         return [];
@@ -73,7 +77,7 @@ class Base extends BaseCallback
     {
         return new static($value);
     }
-    public function actionUI($key, $callbackUI, $over = false): static
+    public function actionUI(string $key, callable $callbackUI, bool  $over = false): static
     {
         $this->ready(function ($component) use ($key, $callbackUI, $over) {
             $component->getManager()->addActionUI($key, $callbackUI, $over);

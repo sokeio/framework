@@ -58,6 +58,16 @@
     .modal-content {
         border: #ccc 1px solid;
         overflow: auto;
+        border-radius: 3px;
+
+        .modal-header {
+            min-height: 3rem;
+
+            .btn-close {
+                height: 3rem;
+                width: 3rem;
+            }
+        }
     }
 }
 
@@ -219,7 +229,7 @@
 }
 
 @media screen and (min-width: 768px) {
-    .admin-page{
+    .admin-page {
         .navbar-vertical {
             .navbar-brand {
                 min-height: 55px !important;
@@ -229,7 +239,7 @@
             }
         }
     }
-    
+
 
 
     .admnin-sidebar-mini {

@@ -6,6 +6,7 @@ use Sokeio\Support\Svg\EasySVG;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
+use Sokeio\Components\UI;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,9 +69,6 @@ Route::group(['prefix' => '__sokeio__'], function () {
         return 'hello, now is ' . now();
     })->name('__sokeio__');
 });
-// Route::group(['middleware' => ['web', 'auth']], function () {
-//     \UniSharp\LaravelFilemanager\Lfm::routes();
-// });
 Route::get('routes', function () {
     $routeCollection = Route::getRoutes();
 
@@ -90,6 +88,9 @@ Route::get('routes', function () {
         echo "</tr>";
     }
     echo "</table>";
+});
+Route::get('labss', function () {
+    return UI::getTagUI();
 });
 if (Platform::checkSetupUI()) {
     Route::get('/setup', Setup::class)->name('sokeio.setup');

@@ -6,6 +6,10 @@ use Sokeio\Components\Base;
 
 class BaseCommon extends Base
 {
+    public function getGroup()
+    {
+        return 'common';
+    }
     protected function __construct($value)
     {
         $this->content($value);

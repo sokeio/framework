@@ -10,7 +10,10 @@
     $MinValue = $column->getMinValue();
     $MaxValue = $column->getMaxValue();
 @endphp
-<input x-mask:dynamic="$money($input, '.', ',', {{ $digits }})" type="text" class="form-control"
+<input type="number" class="form-control" name="field-{{ $modelField }}" placeholder="{{ $modelPlaceholder }}"
+    {!! $column->getWireAttribute() !!}>
+
+{{-- <input x-mask:dynamic="$money($input, '.', ',', {{ $digits }})" type="text" class="form-control"
     name="field-{{ $modelField }}" placeholder="{{ $modelPlaceholder }}" {!! $column->getWireAttribute() !!} x-data="{
         flg: false
     }"
@@ -31,4 +34,4 @@ function() {
         $wire.{{ $formField }} = $wire.{{ $fromField }};
     }
     flg = false;
-}); @endif">
+}); @endif"> --}}

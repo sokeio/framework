@@ -12,6 +12,10 @@ use Sokeio\Components\Field\Concerns\WithFieldWire;
 
 class BaseField extends Base
 {
+    public function getGroup()
+    {
+        return 'Form Input';
+    }
     use WithFieldWire, WithFieldRule, WithFieldBase, WithFieldOperator, WithColumn;
     use WithColumnGrid;
     public function isSyncRelations()

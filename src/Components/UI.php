@@ -77,4 +77,88 @@ class UI
         }
         return $layout;
     }
+    public static function getTagUIBy($class_name)
+    {
+        $inogre_methods = [
+            'getTagUI',
+            "loadFormfromJson",
+            "macro",
+            "mixin",
+            'getGroup',
+            "hasMacro",
+            "flushMacros",
+            "__callStatic",
+            'convertSortableToItems',
+            "ready",
+            "boot",
+            "disableCache",
+            "enableCache",
+            "clear",
+            "clearCache",
+            "manager",
+            "__call",
+            'getTagUIBy'
+
+        ];
+        return collect(get_class_methods($class_name))->filter(function ($method) use ($class_name, $inogre_methods) {
+            if (
+                is_string($method) &&
+                method_exists($class_name, $method) &&
+                (new \ReflectionMethod($class_name, $method))->isStatic()
+                && !in_array($method, $inogre_methods)
+            ) {
+                return true;
+            }
+            return false;
+        })->map(function ($method) use ($class_name, $inogre_methods) {
+
+            switch ($method) {
+                case 'forEach':
+                case 'prex';
+                    $inst = ($class_name)::{$method}("", []);
+
+                    break;
+                default:
+                    $inst = ($class_name)::{$method}("");
+            }
+
+            $class = get_class($inst);
+            $attrs = collect(get_class_methods($class))->filter(function ($method) use ($class, $inogre_methods) {
+                if (
+                    !str($method)->startsWith('get') &&
+                    is_string($method) &&
+                    method_exists($class, $method) &&
+                    (!(new \ReflectionMethod($class, $method))->isStatic())
+                    && !in_array($method, $inogre_methods)
+                ) {
+                    return true;
+                }
+                return false;
+            })->map(function ($method) use ($class) {
+                return [
+                    'name' => $method,
+                    'params' => collect((new \ReflectionMethod($class, $method))->getParameters())
+                        ->map(function ($param) {
+                            return [
+                                'name' => $param->getName(),
+                                'type' => $param->getType()?->getName(),
+                                'optional' => $param->isOptional(),
+                                'default' => $param->isDefaultValueAvailable() ? $param->getDefaultValue() : null,
+                            ];
+                        })->values(),
+                ];
+            })->values();
+            return [
+                'type' => $method,
+                'group' => $inst->getGroup(),
+                'class' => $class,
+                'attrs' => $attrs,
+            ];
+        })->values();
+    }
+
+    public static function getTagUI()
+    {
+        return applyFilters("UI_TAG_INFO", static::getTagUIBy(static::class));
+    }
 }
