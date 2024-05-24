@@ -85,7 +85,7 @@ trait WithSlug
     }
     public function scopeWithSlugKey(Builder $query, $key)
     {
-        return $query->with('slugModel')->whereHas('slug', function ($query) use ($key) {
+        return $query->with('slugModel')->whereHas('slugModel', function ($query) use ($key) {
             $query->where('key', $key);
         });
     }
