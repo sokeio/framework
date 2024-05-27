@@ -61,7 +61,7 @@ class UI
             }
         } else {
             if (isset($json['type'])) {
-                $layout =  call_user_func([static::class, $json['type']], '');
+                $layout =  call_user_func([static::class, $json['type']], $json['value'] ?? '');
                 if ($layout) {
                     $args = isset($json['attrs']) ? $json['attrs'] : [];
                     foreach ($args as $arg) {
