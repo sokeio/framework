@@ -55,22 +55,27 @@ class UI
     public static function loadFormfromJson($json)
     {
         $layout = [];
-        if (is_array($json)) {
+        if (is_array($json) && !isset($json['type'])) {
             foreach ($json as $item) {
-                $layout[] = self::loadFormfromJson($item);
+                $layout[] = static::loadFormfromJson($item);
             }
         } else {
-
-            if (!isset($json['type'])) {
-                $layout = self::{$json['type']}('');
+            if (isset($json['type'])) {
+                $layout =  call_user_func([static::class, $json['type']], '');
                 if ($layout) {
                     $args = isset($json['attrs']) ? $json['attrs'] : [];
                     foreach ($args as $arg) {
                         $value = $arg['value'];
                         if (isset($arg['type']) && $arg['type'] == 'function') {
-                            $value = eval($arg['value']);
+                            $value = function ($item, $manager) use ($arg) {
+                                return eval($arg['value']);
+                            };
                         }
-                        $layout->{$arg['name']}($value);
+                        call_user_func([$layout, $arg['name']], $value);
+                    }
+                    if (isset($json['children'])) {
+                        $children = static::loadFormfromJson($json['children']);
+                        $layout->content($children);
                     }
                 }
             }
@@ -97,7 +102,20 @@ class UI
             "clearCache",
             "manager",
             "__call",
-            'getTagUIBy'
+            'getTagUIBy',
+            'col',
+            'col1',
+            'col2',
+            'col3',
+            'col4',
+            'col5',
+            'col6',
+            'col7',
+            'col8',
+            'col9',
+            'col10',
+            'col11',
+            'col12',
 
         ];
         return collect(get_class_methods($class_name))->filter(function ($method) use ($class_name, $inogre_methods) {

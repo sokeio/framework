@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Sokeio\Components\UI;
+use Sokeio\Livewire\ViewUILab;
 
 /*
 |--------------------------------------------------------------------------
@@ -92,6 +93,7 @@ Route::get('routes', function () {
 Route::get('labss', function () {
     return UI::getTagUI();
 });
+Route::get('test-layout', ViewUILab::class);
 if (Platform::checkSetupUI()) {
     Route::get('/setup', Setup::class)->name('sokeio.setup');
 }

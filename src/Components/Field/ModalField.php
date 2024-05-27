@@ -2,9 +2,19 @@
 
 namespace Sokeio\Components\Field;
 
+use Sokeio\Components\Common\Concerns\WithButtonSoke;
 
 class ModalField extends BaseField
 {
+    use WithButtonSoke;
+    public function hideData($hideData=true): static
+    {
+        return $this->setKeyValue('hideData', $hideData);
+    }
+    public function getHideData()
+    {
+        return $this->getValue('hideData');
+    }
 
     public function modalChoose($modalChoose): static
     {
@@ -13,31 +23,6 @@ class ModalField extends BaseField
     public function getModalChoose()
     {
         return $this->getValue('modalChoose');
-    }
-    public function modalTitle($modalTitle): static
-    {
-        return $this->setKeyValue('modalTitle', $modalTitle);
-    }
-    public function getModalTitle()
-    {
-        return $this->getValue('modalTitle');
-    }
-    public function modalSize($modalSize): static
-    {
-        return $this->setKeyValue('modalSize', $modalSize);
-    }
-    public function getModalSize()
-    {
-        return $this->getValue('modalSize');
-    }
-
-    public function modal($modal): static
-    {
-        return $this->setKeyValue('modal', $modal);
-    }
-    public function getModal()
-    {
-        return $this->getValue('modal');
     }
     public function template($template): static
     {

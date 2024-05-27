@@ -15,6 +15,7 @@ export class ModalModule extends SokeioPlugin {
       if (!$url) return;
       let $title = elCurrentTarget.getAttribute("sokeio:modal-title") ?? "";
       let $size = elCurrentTarget.getAttribute("sokeio:modal-size") ?? "";
+      let $method = elCurrentTarget.getAttribute("sokeio:modal-method") ?? "";
       let $btnChoose = "";
       if (elCurrentTarget.hasAttribute("sokeio:modal-choose")) {
         $btnChoose = elCurrentTarget.getAttribute("sokeio:modal-choose");
@@ -36,6 +37,7 @@ export class ModalModule extends SokeioPlugin {
           $btnChoose,
           $modelField,
           $btnElement: elCurrentTarget,
+          $method,
         },
         { refComponent, selectIds }
       );
@@ -71,6 +73,7 @@ export class ModalModule extends SokeioPlugin {
       $modelField,
       $btnElement,
       $callbackClosed,
+      $method,
     },
     dataModal = {}
   ) {
@@ -89,7 +92,10 @@ export class ModalModule extends SokeioPlugin {
     });
     self
       .getManager()
-      .$axios.post($url, dataModal, {
+      .$axios.request({
+        method: !$method ? "POST" : $method,
+        url: $url,
+        data: dataModal,
         timeout: 1000 * 10, // Wait for 10 seconds
         headers: {
           "Content-Type": "application/json",

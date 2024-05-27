@@ -37,16 +37,16 @@
                                 </li>
 
                                 @if ($ExtentionType == 'module')
-                                @if(moduleIsActive('devtool'))
-                                    <li>
-                                        <a class="dropdown-item"
-                                            sokeio:modal="{{ route('admin.devtool.crud.add', ['moduleId' => $item->getId()]) }}"
-                                            sokeio:modal-title="Create Crud In {!! $ExtentionType ?? '' !!}: {{ $item->getId() }}"
-                                            sokeio:modal-size="modal-xl">
-                                            Add
-                                            CURD
-                                        </a>
-                                    </li>
+                                    @if (moduleIsActive('devtool'))
+                                        <li>
+                                            <a class="dropdown-item"
+                                                sokeio:modal="{{ route('admin.devtool.crud.add', ['moduleId' => $item->getId()]) }}"
+                                                sokeio:modal-title="Create Crud In {!! $ExtentionType ?? '' !!}: {{ $item->getId() }}"
+                                                sokeio:modal-size="modal-xl">
+                                                Add
+                                                CURD
+                                            </a>
+                                        </li>
                                     @endif
                                     <li><a @click="alert('devlop....')" class="dropdown-item" href="#">Add
                                             Theme</a>

@@ -77,6 +77,14 @@ trait WithButtonSoke
     {
         return $this->getValue('modalTitle');
     }
+    public function modalMethod($modalMethod): static
+    {
+        return $this->setKeyValue('modalMethod', $modalMethod);
+    }
+    public function getModalMethod()
+    {
+        return $this->getValue('modalMethod');
+    }
     private $wireConfirm;
     public function confirm($message, $title, $yes = 'Yes', $no = 'No'): static
     {
@@ -100,6 +108,9 @@ trait WithButtonSoke
         }
         if ($size = $this->getModalSize()) {
             $buttonAtrr .= ' sokeio:modal-size="' . $size . '" ';
+        }
+        if ($method = $this->getModalMethod()) {
+            $buttonAtrr .= ' sokeio:modal-method="' . $method . '" ';
         }
         if ($title = $this->getModalTitle()) {
             $buttonAtrr .= ' sokeio:modal-title="' . $title . '" ';
