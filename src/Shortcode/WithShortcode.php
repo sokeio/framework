@@ -13,7 +13,7 @@ trait WithShortcode
     {
         Shortcode::register(static::class);
     }
-    public static function getTitle()
+    public static function getShortcodeTitle()
     {
         return 'title';
     }

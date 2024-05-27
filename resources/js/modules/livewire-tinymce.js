@@ -32,8 +32,12 @@ export class LiveWireTinymceModule extends SokeioPlugin {
             el.getAttribute("wire:model");
           const tinymceInit = () => {
             if (el.$wire_tinymce) return;
+            let config = self.getManager().$config["tinyecm_option"];
+            if (el.hasAttribute("wire:tinymce-skip")) {
+              config = {};
+            }
             el.$wire_tinymce = window.tinymce.init({
-              ...(self.getManager().$config["tinyecm_option"] ?? {}),
+              ...(config ?? {}),
               ...options,
               promotion: false,
               target: el,
@@ -77,7 +81,7 @@ export class LiveWireTinymceModule extends SokeioPlugin {
               },
             });
             // setTimeout(() => {
-              
+
             //   el.$wire_tinymce.setContent(el.value);
             // }, 200);
           };

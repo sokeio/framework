@@ -15,7 +15,7 @@ class ShortcodeSetting extends FormSettingCallback
         $this->arrShortcodes = collect(Shortcode::getRegistered())->map(function ($item, $key) {
             return [
                 'id' => $key,
-                'name' => ($item)::getTitle(),
+                'name' => ($item)::getShortcodeTitle(),
                 'icon' => ($item)::getIcon(),
                 'image' => ($item)::getImage()
             ];
