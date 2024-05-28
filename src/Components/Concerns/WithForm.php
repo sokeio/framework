@@ -84,22 +84,7 @@ trait WithForm
             }
         }
     }
-    protected function loadDefault()
-    {
-        //set default value
-        foreach ($this->getAllInputUI() as $column) {
-            if (
-                data_get($this, $column->getFormFieldEncode()) === null &&
-                $column->getValueDefault() != null
-            ) {
-                if ($column->isSyncRelations()) {
-                    data_set($this, $column->getFormFieldEncode(), $column->getValueDefault() ?? [-1, -2]);
-                } else {
-                    data_set($this, $column->getFormFieldEncode(), $column->getValueDefault());
-                }
-            }
-        }
-    }
+   
 
     protected function getView()
     {
