@@ -20,6 +20,8 @@ class Login extends Component
     ];
     public function doWork()
     {
+        $this->showMessage(sokeioIsAdmin() ? "Admin" : "User");
+        return;
         $this->validate();
         if (Auth::attempt(['email' => $this->username, 'password' => $this->password], $this->isRememberMe)) {
             return redirect($this->urlRef);
@@ -29,7 +31,7 @@ class Login extends Component
     }
     public function mount()
     {
-        $this->urlRef = urldecode(request('ref')) ?? route('admin.dashboard');
+        $this->urlRef = urldecode(request('ref')) ?? route('home');
         Assets::setTitle(__('Login to your account'));
     }
     public function render()

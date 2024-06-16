@@ -13,7 +13,7 @@ trait WithTable
     use WithLayoutUI;
 
     public $lazyloadingTable = true;
-    public $searchWithFields = ['name'];
+    public $searchWithFields = ['title'];
     private $searchlayout;
     private $tablecolumns;
     private $tableActions;

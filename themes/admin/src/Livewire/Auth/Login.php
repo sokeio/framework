@@ -19,6 +19,7 @@ class Login extends Component
     ];
     public function doWork()
     {
+        $this->showMessage('admin.login');
         $this->validate();
         if (Auth::attempt(['email' => $this->username, 'password' => $this->password], $this->isRememberMe)) {
             return redirect($this->urlRef);

@@ -40,7 +40,7 @@ trait WithSlug
     }
     public function reSlug()
     {
-        if (!$this->slugModel) {
+        if (!$this->slugModel()->exists()) {
             $slug = Str::slug($this->getSlugText() ?? '');
             if (empty($slug)) {
                 return;

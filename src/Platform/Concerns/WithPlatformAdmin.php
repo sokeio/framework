@@ -3,7 +3,6 @@
 namespace Sokeio\Platform\Concerns;
 
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 trait WithPlatformAdmin
@@ -52,6 +51,6 @@ trait WithPlatformAdmin
     }
     public function keyAdmin()
     {
-        return $this->keyAdminEncrypted;
+        return  $this->isThemeAdmin() ? $this->keyAdminEncrypted : null;
     }
 }
