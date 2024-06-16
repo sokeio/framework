@@ -51,6 +51,6 @@ trait WithPlatformAdmin
     }
     public function keyAdmin()
     {
-        return  $this->isThemeAdmin() ? $this->keyAdminEncrypted : null;
+        return $this->isThemeAdmin() ? $this->keyAdminEncrypted : null;
     }
 }
