@@ -4,7 +4,6 @@ namespace Sokeio\Widgets;
 
 use Sokeio\Components\UI;
 use Sokeio\Dashboard\Widget;
-use Sokeio\Facades\Platform;
 
 class ChartDataWidget extends Widget
 {

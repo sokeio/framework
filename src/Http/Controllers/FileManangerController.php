@@ -4,7 +4,6 @@ namespace Sokeio\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 

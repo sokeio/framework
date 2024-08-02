@@ -12,7 +12,7 @@ trait WithLivewireMessage
     public const MESSAGE_TYPE_INFO = 'info';
     public const MESSAGE_TYPE_WARNING = 'warning';
     public const MESSAGE_TYPE_DANGER = 'text-bg-danger';
-    
+
     public const MESSAGE_POSITION_TOP_RIGHT = 'top_right';
     public const MESSAGE_POSITION_TOP_CENTER = 'top_center';
     public const MESSAGE_POSITION_TOP_LEFT = 'top_left';
@@ -23,8 +23,14 @@ trait WithLivewireMessage
     public const MESSAGE_POSITION_BOTTOM_CENTER = 'bottom_center';
     public const MESSAGE_POSITION_BOTTOM_LEFT = 'bottom_left';
 
-    public function showMessage($message, $title=null, $icon=null, $type = 'success', $position = 'top-right', $option = [])
-    {
+    public function showMessage(
+        $message,
+        $title = null,
+        $icon = null,
+        $type = 'success',
+        $position = 'top_right',
+        $option = []
+    ) {
         $this->showMessageByOption([
             ...$option ?? [],
             'message' => $message,

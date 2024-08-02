@@ -49,27 +49,27 @@ trait WithServiceProvider
 
     public function boot()
     {
-
         if ($this->baseType == 'module') {
             Theme::Load($this->package->basePath('/../themes/'));
             Plugin::Load($this->package->basePath('/../plugins/'));
         }
         if ($this->baseType != 'theme') {
             RouteEx::Load($this->package->basePath('/../routes/'));
+        } else {
+            $this->package->hasAssets = false;
         }
-
         if ($this->baseType && $this->dataInfo) {
             Assets::AssetType($this->dataInfo['name'], $this->baseType);
         }
         $this->bootBase();
-        $namespace = $this->getNamespaceName() . '\\Livewire';
-        $shortname = $this->package->shortName() . '::';
-        LivewireLoader::Register($this->package->basePath('/Livewire'), $namespace, $shortname);
-
+        $namespace = $this->getNamespaceName();
+        $shortname = $this->package->shortName();
+        LivewireLoader::Register($this->package->basePath('/Livewire'), $namespace . '\\Livewire', $shortname . '::');
+        LivewireLoader::registerPage($this->package->basePath('/Pages'), $namespace . '\\Pages', $shortname . '::page.');
         $this->packageBooted();
-
         return $this;
     }
+
     protected function loadViewsFrom($path, $namespace)
     {
         $this->callAfterResolving('view', function ($view) use ($path, $namespace) {

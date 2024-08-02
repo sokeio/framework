@@ -70,6 +70,37 @@ class LivewireLoader
             }
         );
     }
+    public static function registerPage($path, $namespace, $aliasPrefix = '')
+    {
+        getAllClass(
+            $path,
+            $namespace,
+            function ($class) use ($namespace, $aliasPrefix) {
+                $alias = $aliasPrefix . Str::of($class)
+                    ->after($namespace . '\\')
+                    ->replace(['/', '\\'], '.')
+                    ->explode('.')
+                    ->map([Str::class, 'kebab'])
+                    ->implode('.');
+                // fix class namespace
+                $alias_class = self::getNameByClass($class);
+                if (Str::endsWith($class, ['\Index', '\index'])) {
+                    self::pushComponent(Str::beforeLast($alias, '.index'), $class);
+                    self::pushComponent(Str::beforeLast($alias_class, '.index'), $class);
+                }
+                self::pushComponent($alias, $class);
+                self::pushComponent($alias_class, $class);
+                ($class)::RoutePage();
+            },
+            function ($class) {
+                if (!class_exists($class)) {
+                    return false;
+                }
+                $refClass = new ReflectionClass($class);
+                return  $refClass && !$refClass->isAbstract()  && $refClass->isSubclassOf(Component::class);
+            }
+        );
+    }
     public static function viewRoute($class)
     {
         return function () use ($class) {

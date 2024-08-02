@@ -9,12 +9,14 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
-            @includeIf(applyFilters('THEME_ADMIN_LOGO', 'theme::partials.logo'))
+                @includeIf(applyFilters('THEME_ADMIN_LOGO', 'theme::partials.logo'))
             </h1>
             <div class="navbar-nav flex-row order-md-last">
                 @includeIf('theme::partials.change-theme')
                 @includeIf('theme::partials.notication')
-                @includeIf(applyFilters('THEME_ADMIN_USER_PROFILE', 'theme::partials.user-profile'))
+                @auth
+                    @includeIf(applyFilters('THEME_ADMIN_USER_PROFILE', 'theme::partials.user-profile'))
+                @endauth
             </div>
             <div class="collapse navbar-collapse" id="navbar-menu">
                 <div

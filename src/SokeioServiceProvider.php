@@ -14,7 +14,6 @@ use Sokeio\Locales\LocaleServiceProvider;
 use Sokeio\Middleware\ThemeLayout;
 use Sokeio\Concerns\WithServiceProvider;
 use Illuminate\Routing\Redirector;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 use Sokeio\Icon\IconManager;
 use Sokeio\Livewire\HomePage;
@@ -49,13 +48,6 @@ class SokeioServiceProvider extends ServiceProvider
             ->runsMigrations()
             ->runsSeeds();
     }
-    public function bootingPackage()
-    {
-        Module::loadApp();
-        Theme::loadApp();
-        Plugin::loadApp();
-    }
-
     public function packageBooted()
     {
         config(['auth.providers.users.model' => config('sokeio.model.user')]);
@@ -65,6 +57,13 @@ class SokeioServiceProvider extends ServiceProvider
         $this->app->register(ViewTriggerServiceProvider::class);
         $this->app->register(PlatformExtentionServiceProvider::class);
         $this->app->register(WidgetServiceProvider::class);
+    }
+    public function registeringPackage()
+    {
+
+        Module::loadApp();
+        Theme::loadApp();
+        Plugin::loadApp();
     }
     public function packageRegistered()
     {

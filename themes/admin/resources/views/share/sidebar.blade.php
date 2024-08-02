@@ -19,7 +19,9 @@
             @endphp
             @includeIf('theme::partials.change-theme')
             @includeIf('theme::partials.notication')
-            @includeIf(applyFilters('THEME_ADMIN_USER_PROFILE', 'theme::partials.user-profile'))
+            @auth
+                @includeIf(applyFilters('THEME_ADMIN_USER_PROFILE', 'theme::partials.user-profile'))
+            @endauth
         </div>
         <div class="collapse navbar-collapse sidebar-menu" id="sidebar-menu" x-data="{
             initEvent() {
