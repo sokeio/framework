@@ -11,7 +11,6 @@ use Illuminate\Support\Js;
 use Livewire\Livewire;
 use Symfony\Component\Finder\SplFileInfo;
 use Sokeio\Breadcrumb;
-use Sokeio\Facades\Locale;
 use Sokeio\Facades\Menu;
 use Sokeio\Facades\Module;
 use Sokeio\Facades\Platform;
@@ -27,18 +26,6 @@ use Sokeio\Notification;
 use Sokeio\Platform\PermalinkManager;
 use Sokeio\Platform\ThemeOptionManager;
 
-if (!function_exists('sokeioEncode')) {
-    function sokeioEncode($data)
-    {
-        return base64_encode(urlencode(json_encode($data ?? [])));
-    }
-}
-if (!function_exists('sokeioDecode')) {
-    function sokeioDecode($data)
-    {
-        return json_decode(urldecode(base64_decode($data)), true);
-    }
-}
 if (!function_exists('sokeioTime')) {
     function sokeioTime()
     {
@@ -93,6 +80,7 @@ if (!function_exists('platformBy')) {
     }
 }
 
+// TODO: Remove this on Pages Folder
 if (!function_exists('routeCrud')) {
     function routeCrud($name, $table, $form, $isGet = false)
     {
@@ -594,19 +582,5 @@ if (!function_exists('includeFile')) {
         }
         //NOSONAR
         include_once($path);
-    }
-}
-
-if (!function_exists('sokeioFieldLocateRender')) {
-    function sokeioFieldLocateRender($row, $routeName, $title)
-    {
-        foreach (Locale::supportedLocales() as $locale) {
-            $link = route($routeName, ['dataId' => $row->id, 'locale' => $locale]);
-            echo '<a sokeio:modal="' . $link . '"
-         sokeio:modal-size="modal-fullscreen"
-         sokeio:modal-title="' . $title . '" 
-         title="' . $title . '"
-          class="px-2 py-1 btn btn-secondary">' . $locale . '</a> ';
-        }
     }
 }
