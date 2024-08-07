@@ -5,9 +5,9 @@ namespace Sokeio\Dashboard;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 
-class DashboardManager
+class WidgetManager
 {
-    const PATH_DASHBOARD = 'platform/sokeio_dashboard.json';
+    const PATH_DASHBOARD = 'platform/sokeio_widgets.json';
     private $widgets = [];
     private $data;
     private $dataDefault = [

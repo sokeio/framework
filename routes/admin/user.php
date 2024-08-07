@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Sokeio\Livewire\Language\LanguageForm;
-use Sokeio\Livewire\Language\LanguageTable;
 use Sokeio\Livewire\Permission\PermissionTable;
 use Sokeio\Livewire\Role\RoleForm;
 use Sokeio\Livewire\Role\RoleTable;
