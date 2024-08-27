@@ -2,11 +2,10 @@
 
 namespace Sokeio\Livewire;
 
-use Sokeio\Concerns\WithDoAction;
-use Sokeio\Concerns\WithLivewire;
 use Livewire\Component as ComponentBase;
+use Sokeio\Livewire\Concerns\WithLivewire;
 
 class Component extends ComponentBase
 {
-    use WithDoAction, WithLivewire;
+    use  WithLivewire;
 }

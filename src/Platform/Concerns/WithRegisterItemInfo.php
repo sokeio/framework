@@ -8,6 +8,9 @@ trait WithRegisterItemInfo
     private $providers = [];
     private function registerItemInfo($path)
     {
+        if ($this->isVendor()) {
+            return;
+        }
         $this->registerComposer($path);
     }
     private function registerComposer($path)

@@ -9,10 +9,8 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
     public function register()
     {
         $this->app->singleton('sokeio_platform', PlatformManager::class);
-        $this->app->singleton('sokeio_platform_loader', PlatformLoaderManager::class);
-        Platform::loadFromPath(Platform::platformPath());
+        Platform::loadFromPath(Platform::getPath());
         $this->app->booting(function () {
-            Platform::loader();
             Platform::boot();
         });
     }

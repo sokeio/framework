@@ -2,22 +2,38 @@
 
 namespace Sokeio\Platform;
 
-use Sokeio\Platform\Concerns\WithComponentLoader;
+use Illuminate\Pipeline\Pipeline;
+use Sokeio\Platform\Loader\PageLoader;
 
 class PlatformManager
 {
-    use WithComponentLoader;
+    private $pipelineLoader = [
+        PageLoader::class
+    ];
     private $callbackBooting = [];
     private $callbackBooted = [];
     private $urlAdmin;
     private $pathPlatform;
+    public function addLoader($loader)
+    {
+        $this->pipelineLoader[] = $loader;
+    }
+    public function applyLoader($data)
+    {
+        return app(Pipeline::class)->send($data)
+            ->through($this->pipelineLoader)->thenReturn();
+    }
     public function adminUrl()
     {
         return $this->urlAdmin ?? ($this->urlAdmin = config('sokeio.admin_url'));
     }
-    public function platformPath()
+    public function getPath()
     {
         return $this->pathPlatform ?? ($this->pathPlatform = base_path('platform'));
+    }
+    public function isVendor($path)
+    {
+        return !str(realpath($path))->startsWith($this->getPath());
     }
 
     public function booting($callback)
@@ -35,17 +51,14 @@ class PlatformManager
             $callback();
         }
         $this->callbackBooting = [];
+        $this->module()->loader();
+        $this->theme()->loader();
         $this->module()->boot();
         $this->theme()->boot();
         foreach ($this->callbackBooted as $callback) {
             $callback();
         }
         $this->callbackBooted = [];
-    }
-    public function loader()
-    {
-        $this->module()->loader();
-        $this->theme()->loader();
     }
 
 

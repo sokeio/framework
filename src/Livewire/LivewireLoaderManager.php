@@ -31,7 +31,7 @@ class LivewireLoaderManager
             Log::info('Register component is exits.' . $component . ':' . $class);
         }
     }
-    protected function getNameByClass($class)
+    private function getNameByClass($class)
     {
         return  trim(Str::of($class)
             ->replace(['/', '\\'], '.')

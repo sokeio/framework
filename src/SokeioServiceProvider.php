@@ -5,6 +5,7 @@ namespace Sokeio;
 use Sokeio\Concerns\WithServiceProvider;
 use Sokeio\Livewire\LivewireServiceProvider;
 use Sokeio\Platform\PlatformServiceProvider;
+use Sokeio\Theme\ThemeServiceProvider;
 
 class SokeioServiceProvider extends \Illuminate\Support\ServiceProvider
 {
@@ -35,5 +36,6 @@ class SokeioServiceProvider extends \Illuminate\Support\ServiceProvider
         WatchTime::start();
         $this->app->register(LivewireServiceProvider::class);
         $this->app->register(PlatformServiceProvider::class);
+        $this->app->register(ThemeServiceProvider::class);
     }
 }

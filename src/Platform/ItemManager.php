@@ -21,6 +21,10 @@ class ItemManager
      */
     private $arrItems = [];
     private function __construct(private $type) {}
+    public function isTheme(): bool
+    {
+        return $this->type === 'theme';
+    }
     public function boot(): void
     {
         foreach ($this->arrItems as $itemInfo) {
@@ -28,7 +32,7 @@ class ItemManager
                 continue;
             }
 
-            if ($this->type === 'theme') {
+            if ($this->isTheme()) {
                 $isAdmin = Arr::get($itemInfo, 'admin');
                 if (Platform::isUrlAdmin() && !$isAdmin) {
                     continue;
@@ -48,7 +52,7 @@ class ItemManager
                 continue;
             }
 
-            if ($this->type === 'theme') {
+            if ($this->isTheme()) {
                 $isAdmin = Arr::get($itemInfo, 'admin');
                 if (Platform::isUrlAdmin() && !$isAdmin) {
                     continue;
@@ -93,7 +97,7 @@ class ItemManager
         $statusKey = $this->type;
         $onlyOne = false;
 
-        if ($this->type === 'theme') {
+        if ($this->isTheme()) {
             if (Arr::get($item, 'admin')) {
                 $statusKey = 'theme_admin';
             }
@@ -116,7 +120,7 @@ class ItemManager
 
         $statusKey = $this->type;
 
-        if ('theme' === $this->type && (int) $item->admin === 1) {
+        if ($this->isTheme() && (int) $item->admin === 1) {
             $statusKey .= '_admin';
         }
 

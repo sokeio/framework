@@ -5,13 +5,14 @@ namespace Sokeio\Platform;
 use Sokeio\ObjectJson;
 use Sokeio\Platform;
 use Sokeio\Platform\Concerns\WithRegisterItemInfo;
-use Sokeio\PlatformLoader;
 use Sokeio\ServicePackage;
 
 class ItemInfo extends ObjectJson
 {
     use WithRegisterItemInfo;
     private ServicePackage $package;
+    private $flgActive = null;
+    private $flgVendor = null;
     public function getPackage(): ServicePackage
     {
         return $this->package;
@@ -27,17 +28,27 @@ class ItemInfo extends ObjectJson
         $this->path = realpath($this->path);
         parent::__construct($data);
     }
+    public function getManager(): ItemManager
+    {
+        return $this->manager;
+    }
     public function getPath()
     {
         return $this->path;
     }
     public function isVendor(): bool
     {
-        return !str($this->path)->startsWith(Platform::platformPath());
+        if ($this->flgVendor === null) {
+            $this->flgVendor = Platform::isVendor($this->path);
+        }
+        return $this->flgVendor;
     }
     public function isActive(): bool
     {
-        return $this->manager->isActive($this);
+        if ($this->flgActive === null) {
+            $this->flgActive = $this->manager->isActive($this);
+        }
+        return $this->flgActive;
     }
     public function setActive(): bool
     {
@@ -49,6 +60,6 @@ class ItemInfo extends ObjectJson
     }
     public function loader(): void
     {
-        PlatformLoader::apply($this);
+        Platform::applyLoader($this);
     }
 }

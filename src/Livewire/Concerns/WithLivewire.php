@@ -3,8 +3,6 @@
 namespace Sokeio\Livewire\Concerns;
 
 use Sokeio\LivewireLoader;
-use Livewire\Features\SupportPageComponents\PageComponentConfig;
-use Livewire\Features\SupportPageComponents\SupportPageComponents;
 use Sokeio\Concerns\WithHelpers;
 use Sokeio\Facades\Platform;
 
@@ -24,8 +22,7 @@ trait WithLivewire
     {
         return [
             'refreshData' => 'soLoadData',
-            'refreshData' . $this->getId() => 'soLoadData',
-            'refreshData' . LivewireLoader::getNameByClass(get_called_class()) => 'soLoadData'
+            'refreshData' . $this->getId() => 'soLoadData'
         ];
     }
 
@@ -97,11 +94,8 @@ trait WithLivewire
     }
     public function booted()
     {
-        $this->soIsAdmin = Platform::keyAdmin();
         if (!$this->soRefId) {
             $this->soRefId = request('refComponent');
         }
     }
-
-   
 }

@@ -21,7 +21,7 @@ trait WithServiceProvider
     private static ItemInfo $itemInfo;
     public static function itemInfo(): ItemInfo
     {
-        return self::$itemInfo;
+        return static::$itemInfo;
     }
     protected function extendPackage($flg = true)
     {
@@ -52,17 +52,17 @@ trait WithServiceProvider
             $this->mergeConfigFrom($fileConfig, $this->package->shortName());
         }
         self::$itemInfo = Platform::loadFromServicePackage($this->package);
-        if (self::$itemInfo->isActive()) {
-            if ($this->package->hasRouteWeb) {
-                Route::middleware('web')
-                    ->group($this->getPackagePath('/../routes/web.php'));
-            }
+        if (static::itemInfo()->isActive() && $this->package->hasRouteWeb) {
+            Route::middleware('web')
+                ->group($this->getPackagePath('/../routes/web.php'));
         }
 
         if (!$this->extendPackage) {
             $this->packageRegistered();
         }
-
+        if (static::itemInfo()->getManager()->isTheme()) {
+            $this->package->name('theme');
+        }
         return $this;
     }
 
