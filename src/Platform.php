@@ -18,7 +18,10 @@ use Illuminate\Support\Facades\Facade;
  * @method static \Sokeio\Platform\ItemManager theme()
  * @method static bool isUrlAdmin()
  * @method static bool isVendor($path)
- * @method static string getPath();
+ * @method static string getPlatformPath()
+ * @method static string currentUrl();
+ * @method static void routeWeb($group,$isAuth=false)
+ * @method static void routeAdmin($group,$isGuest = false)
  */
 class Platform extends Facade
 {

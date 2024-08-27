@@ -3,6 +3,8 @@
 namespace Sokeio\Platform;
 
 use Illuminate\Pipeline\Pipeline;
+use Illuminate\Support\Facades\Route;
+use Livewire\Livewire;
 use Sokeio\Platform\Loader\PageLoader;
 
 class PlatformManager
@@ -27,13 +29,13 @@ class PlatformManager
     {
         return $this->urlAdmin ?? ($this->urlAdmin = config('sokeio.admin_url'));
     }
-    public function getPath()
+    public function getPlatformPath()
     {
         return $this->pathPlatform ?? ($this->pathPlatform = base_path('platform'));
     }
     public function isVendor($path)
     {
-        return !str(realpath($path))->startsWith($this->getPath());
+        return !str(realpath($path))->startsWith($this->getPlatformPath());
     }
 
     public function booting($callback)
@@ -87,8 +89,21 @@ class PlatformManager
         }
         return null;
     }
+    public function routeWeb($group, $isAuth = false)
+    {
+        Route::middleware(['sokeio.web' . ($isAuth ? '.auth' : '')])->group($group);
+    }
+    public function routeAdmin($group, $isGuest = false)
+    {
+        Route::middleware(['sokeio.admin' . ($isGuest ? '.guest' : '')])
+            ->prefix($this->adminUrl())->as('admin.')->group($group);
+    }
+    public function currentUrl()
+    {
+        return Livewire::originalPath();
+    }
     public function isUrlAdmin()
     {
-        return request()->segment(1) === $this->adminUrl() ? true : false;
+        return str($this->currentUrl())->startsWith($this->adminUrl());
     }
 }

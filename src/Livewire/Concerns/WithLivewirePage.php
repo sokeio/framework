@@ -2,26 +2,34 @@
 
 namespace Sokeio\Livewire\Concerns;
 
-use Illuminate\Support\Facades\View;
 use Livewire\Features\SupportPageComponents\PageComponentConfig;
 use Livewire\Features\SupportPageComponents\SupportPageComponents;
 
 trait WithLivewirePage
 {
+    protected static function pageUrl()
+    {
+        return null;
+    }
+    protected static function pageName()
+    {
+        return null;
+    }
+    protected static function menuTitle()
+    {
+        return null;
+    }
     protected static function isThemeAdmin()
     {
         return false;
     }
-    protected static function themeLayout($page)
+
+    protected static function isAuth()
     {
-        return null;
+        return false;
     }
     protected function themePage()
     {
-        $layout = null;
-        if ($layout = static::themeLayout($this) && View::exists($layout)) {
-            return $layout;
-        }
         return 'sokeio::layouts.none';
     }
     public function __invoke()

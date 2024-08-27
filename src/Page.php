@@ -17,18 +17,20 @@ class Page extends Component implements ILoader
         $namespacePage = $itemInfo->namespace . '\\Pages\\';
         // do nothing
         $url = str($classMe)->after($namespacePage);
-        $urlRoute = str($url)->split('/\\\\/', -1, PREG_SPLIT_NO_EMPTY)
+        $urlRoute = static::pageUrl() ?? str($url)->split('/\\\\/', -1, PREG_SPLIT_NO_EMPTY)
             ->map([Str::class, 'kebab'])->join('/');
-        $nameRoute =  $itemInfo->getPackage()->shortName() . '-page.' . str($urlRoute)->replace('/', '.');
-        // echo '<pre>';
-        // print_r([
-        //     'url' => $url,
-        //     'urlRoute' => $urlRoute,
-        //     'nameRoute' => $nameRoute
-        // ]);
+        $nameRoute = static::pageName() ??  ($itemInfo
+            ->getPackage()
+            ->shortName() . '-page.' . str($urlRoute)->replace('/', '.'));
+
         if (static::isThemeAdmin()) {
+            Platform::routeAdmin(function () use ($classMe, $urlRoute, $nameRoute) {
+                Route::get($urlRoute, $classMe)->name($nameRoute);
+            }, !static::isAuth());
         } else {
-            Route::get($urlRoute, $classMe)->name($nameRoute);
+            Platform::routeWeb(function () use ($classMe, $urlRoute, $nameRoute) {
+                Route::get($urlRoute, $classMe)->name($nameRoute);
+            }, static::isAuth());
         }
     }
 }
