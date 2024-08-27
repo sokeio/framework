@@ -32,7 +32,7 @@ class WatchTime
     {
         self::$startTime = 0;
     }
-    public static function logTime($reset = false, $key = 'watchTime', $tracking = false)
+    public static function logTime($key = 'watchTime',  $tracking = false, $reset = false)
     {
         if (!self::$status) {
             return;

@@ -3,21 +3,23 @@
 namespace Sokeio;
 
 use Illuminate\Support\Facades\Route;
+use Sokeio\Livewire\Component;
+use Sokeio\Livewire\Concerns\WithLivewirePage;
+use Sokeio\Platform\ItemInfo;
 
-class Page extends Component
+class Page extends Component implements ILoader
 {
-    protected static function RouteName()
+    use WithLivewirePage;
+    public static function runLoad(ItemInfo $itemInfo)
     {
-        return 'page-detail';
-    }
-    protected static function RouteUrl()
-    {
-        return '/page-demo';
-    }
-    public static function RoutePage()
-    {
-        RouteEx::web(function () {
-            Route::get(static::RouteUrl(), static::class)->name(static::RouteName());
-        });
+        $classMe = static::class;
+        $namespacePage = $itemInfo->namespace . '\\Page';
+        // do nothing
+        $url = str($classMe)->after($namespacePage . '\\');
+        $url = str($url)->before('.php');
+        $urlRoute = str($url)->replace('\\', '/')->kebab();
+        $nameRoute = str($url)->replace('\\', '.')->kebab();
+        
+        Route::get($urlRoute, $classMe)->name($nameRoute);
     }
 }

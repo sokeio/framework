@@ -13,11 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
+
         Schema::table('users', function (Blueprint $table) {
-            $table->string('avatar')->nullable();
-            $table->boolean('status')->nullable();
+            $table->dropUnique(['email']);
+        });
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('username')->nullable();
+            $table->string('avatar_url')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->boolean('is_active')->nullable();
             $table->boolean('is_banned')->nullable();
-            $table->text('info')->nullable();
+            $table->unique(array('phone_number', 'email'), 'phone_number_email_unique');
         });
     }
 
@@ -29,10 +35,16 @@ return new class extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->removeColumn('avatar');
-            $table->removeColumn('status');
-            $table->removeColumn('is_banned');
-            $table->removeColumn('info');
+            $table->dropUnique(['phone_number_email_unique']);
+            $table->dropUnique(['email']);
+        });
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('username');
+            $table->dropColumn('avatar_url');
+            $table->dropColumn('phone_number');
+            $table->dropColumn('is_active');
+            $table->dropColumn('is_banned');
+            $table->unique('email');
         });
     }
 };
