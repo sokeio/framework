@@ -10,6 +10,11 @@
             font-family: 'Arvo', serif;
         }
 
+        .page_box {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
         .page_404 img {
             width: 100%;
         }
@@ -36,6 +41,7 @@
             background: #39ac31;
             margin: 20px 0;
             display: inline-block;
+            text-decoration: none;
         }
 
         .contant_box_404 {
@@ -50,7 +56,7 @@
 
 <body>
     <section class="page_404">
-        <div class="text-center">
+        <div class="text-center page_box">
             <div class="four_zero_four_bg">
                 <h1 class="text-center ">404</h1>
             </div>
