@@ -98,6 +98,11 @@ class PlatformManager
         Route::middleware(['sokeio.admin' . ($isGuest ? '.guest' : '')])
             ->prefix($this->adminUrl())->as('admin.')->group($group);
     }
+    public function routeApi($group, $isGuest = false)
+    {
+        Route::middleware(['sokeio.api' . ($isGuest ? '.guest' : '')])
+            ->prefix('api')->as('api.')->group($group);
+    }
     public function currentUrl()
     {
         return Livewire::originalPath();
@@ -105,5 +110,9 @@ class PlatformManager
     public function isUrlAdmin()
     {
         return str($this->currentUrl())->startsWith($this->adminUrl());
+    }
+    public function gate()
+    {
+        return GateManager::getInstance($this);
     }
 }

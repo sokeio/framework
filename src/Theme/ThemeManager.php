@@ -17,6 +17,14 @@ class ThemeManager
     private $arrStyle = [];
     private $arrLinkCss = [];
     private $arrLinkJs = [];
+    public function getSiteInfo()
+    {
+        return [
+            'title' => $this->title,
+            'description' => $this->description,
+            'keywords' => $this->keywords,
+        ];
+    }
     public function title($title)
     {
         $this->title = $title;

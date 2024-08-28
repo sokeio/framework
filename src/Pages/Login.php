@@ -7,7 +7,10 @@ use Sokeio\Concerns\WithThemeAdminGuest;
 class Login extends \Sokeio\Page
 {
     use WithThemeAdminGuest;
-
+    protected function pageTitle()
+    {
+        return 'Login';
+    }
     protected static function pageName()
     {
         return 'login';

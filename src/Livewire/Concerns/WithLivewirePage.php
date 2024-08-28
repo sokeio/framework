@@ -4,6 +4,7 @@ namespace Sokeio\Livewire\Concerns;
 
 use Livewire\Features\SupportPageComponents\PageComponentConfig;
 use Livewire\Features\SupportPageComponents\SupportPageComponents;
+use Sokeio\Theme;
 
 trait WithLivewirePage
 {
@@ -27,6 +28,10 @@ trait WithLivewirePage
     protected static function isAuth()
     {
         return false;
+    }
+    protected function pageTitle()
+    {
+        return null;
     }
     protected function themePage()
     {
@@ -52,7 +57,7 @@ trait WithLivewirePage
         $layoutConfig->view = $this->themePage();
         $layoutConfig->slotOrSection = 'content';
         $layoutConfig->type = 'themeLayout';
-
+        Theme::title($this->pageTitle());
         return SupportPageComponents::renderContentsIntoLayout($html, $layoutConfig);
     }
 }

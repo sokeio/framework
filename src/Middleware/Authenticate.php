@@ -12,10 +12,11 @@ class Authenticate extends Middleware
     public function handle($request, Closure $next, ...$guards)
     {
         $response = parent::handle($request, $next, ...$guards);
+        Platform::gate()->setUser($request->user());
         // Like: users.index
         $route = $request->route()->getName();
         //skip with prexfix '_' and  Hasn't permission
-        if (!Str::startsWith($route, '_')) {
+        if (!(Str::startsWith($route, '_') || Str::endsWith($route, '_')) && !Platform::gate()->check($route)) {
             return abort(403);
         }
 

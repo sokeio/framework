@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static string currentUrl();
  * @method static void routeWeb($group,$isAuth=false)
  * @method static void routeAdmin($group,$isGuest = false)
+ * @method static void routeApi($group,$isGuest = false)
+ * @method static \Sokeio\Platform\GateManager gate()
  */
 class Platform extends Facade
 {
