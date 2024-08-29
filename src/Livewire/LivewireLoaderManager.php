@@ -4,12 +4,13 @@ namespace Sokeio\Livewire;
 
 
 use Illuminate\Support\Str;
+use Symfony\Component\Finder\SplFileInfo;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
-use Symfony\Component\Finder\SplFileInfo;
 use Livewire\Livewire;
 use Livewire\Component as LivewireComponent;
 use ReflectionClass;
+use Sokeio\ILoader;
 
 class LivewireLoaderManager
 {
@@ -63,37 +64,23 @@ class LivewireLoaderManager
             return $classList->all();
         }
     }
-    public function register($path, $namespace, $aliasPrefix = '', $callback = null)
+    public function register($class, $namespace, $aliasPrefix = '')
     {
-        $this->scanAllClass(
-            $path,
-            $namespace,
-            function ($class) use ($namespace, $aliasPrefix, $callback) {
-                $alias = $aliasPrefix . Str::of($class)
-                    ->after($namespace . '\\')
-                    ->replace(['/', '\\'], '.')
-                    ->explode('.')
-                    ->map([Str::class, 'kebab'])
-                    ->implode('.');
-                // fix class namespace
-                $alias_class = $this->getNameByClass($class);
-                if (Str::endsWith($class, ['\Index', '\index'])) {
-                    $this->pushComponent(Str::beforeLast($alias, '.index'), $class);
-                    $this->pushComponent(Str::beforeLast($alias_class, '.index'), $class);
-                }
-                $this->pushComponent($alias, $class);
-                $this->pushComponent($alias_class, $class);
-                if ($callback) {
-                    $callback($class);
-                }
-            },
-            function ($class) {
-                if (!class_exists($class)) {
-                    return false;
-                }
-                $refClass = new ReflectionClass($class);
-                return  $refClass && !$refClass->isAbstract()  && $refClass->isSubclassOf(LivewireComponent::class);
-            }
-        );
+        
+        $alias = $aliasPrefix . Str::of($class)
+            ->after($namespace . '\\')
+            ->replace(['/', '\\'], '.')
+            ->explode('.')
+            ->map([Str::class, 'kebab'])
+            ->implode('.');
+        // fix class namespace
+        $alias_class = $this->getNameByClass($class);
+        if (Str::endsWith($class, ['\Index', '\index'])) {
+            $this->pushComponent(Str::beforeLast($alias, '.index'), $class);
+            $this->pushComponent(Str::beforeLast($alias_class, '.index'), $class);
+        }
+        $this->pushComponent($alias, $class);
+        $this->pushComponent($alias_class, $class);
+        return true;
     }
 }

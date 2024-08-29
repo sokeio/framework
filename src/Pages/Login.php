@@ -2,16 +2,16 @@
 
 namespace Sokeio\Pages;
 
-use Sokeio\Concerns\WithThemeAdminGuest;
+use Sokeio\Concerns\WithPageAdminGuest;
 
 class Login extends \Sokeio\Page
 {
-    use WithThemeAdminGuest;
+    use WithPageAdminGuest;
     protected function pageTitle()
     {
         return 'Login';
     }
-    protected static function pageName()
+    public static function pageName()
     {
         return 'login';
     }

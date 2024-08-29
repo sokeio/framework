@@ -3,23 +3,20 @@
 namespace Sokeio\Platform\Loader;
 
 use Closure;
-use Sokeio\LivewireLoader;
-use Sokeio\Platform\ILoader;
+use Sokeio\Platform;
+use Sokeio\Platform\IPipeLoader;
 use Sokeio\Platform\ItemInfo;
 
-class PageLoader implements ILoader
+class PageLoader implements IPipeLoader
 {
-    public function handle(ItemInfo $data, Closure $next): mixed
+    public function handle(ItemInfo $item, Closure $next): mixed
     {
-        LivewireLoader::register(
-            $data->getPackage()->basePath('Pages'),
-            $data->namespace . '\\Pages',
-            $data->getPackage()->shortName() . '::pages',
-            function ($class) use ($data) {
-                call_user_func([$class, 'runLoad'], $data);
-                return $class;
-            }
+        Platform::runLoader(
+            $item,
+            $item->getPackage()->basePath('Pages'),
+            $item->namespace . '\\Pages',
+            $item->getPackage()->shortName() . '::pages'
         );
-        return $next($data);
+        return $next($item);
     }
 }

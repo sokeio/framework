@@ -3,13 +3,13 @@
 namespace Sokeio\Concerns;
 
 
-trait WithThemeAdmin
+trait WithPageAdmin
 {
-    protected static function isThemeAdmin()
+    public static function pageAdmin()
     {
         return true;
     }
-    protected static function isAuth()
+    public static function pageAuth()
     {
         return true;
     }

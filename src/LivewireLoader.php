@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Facade;
 /**
  * @see \Sokeio\LivewireLoader
  *
- * @method static void register($path, $namespace, $aliasPrefix = '', $callback = null)
+ * @method static void register($class, $namespace, $aliasPrefix = '')
  * @method static mix getComponents()
  */
 

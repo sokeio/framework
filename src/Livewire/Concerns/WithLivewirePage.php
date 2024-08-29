@@ -8,11 +8,11 @@ use Sokeio\Theme;
 
 trait WithLivewirePage
 {
-    protected static function pageUrl()
+    public static function pageUrl()
     {
         return null;
     }
-    protected static function pageName()
+    public static function pageName()
     {
         return null;
     }
@@ -20,12 +20,12 @@ trait WithLivewirePage
     {
         return null;
     }
-    protected static function isThemeAdmin()
+    protected static function pageAdmin()
     {
         return false;
     }
 
-    protected static function isAuth()
+    public static function pageAuth()
     {
         return false;
     }

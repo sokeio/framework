@@ -4,7 +4,7 @@ namespace Sokeio\Platform;
 
 use Closure;
 
-interface ILoader
+interface IPipeLoader
 {
 
     /**

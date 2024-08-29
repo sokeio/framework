@@ -3,12 +3,12 @@
 namespace Sokeio\Pages\SystemAdmin;
 
 use Livewire\Livewire;
-use Sokeio\Concerns\WithThemeAdmin;
+use Sokeio\Concerns\WithPageAdmin;
 use Sokeio\Platform;
 
 class Demo extends \Sokeio\Page
 {
-    use WithThemeAdmin;
+    use WithPageAdmin;
     public $test = 'test';
     public function change()
     {

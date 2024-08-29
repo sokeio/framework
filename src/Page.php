@@ -8,7 +8,7 @@ use Sokeio\Livewire\Component;
 use Sokeio\Livewire\Concerns\WithLivewirePage;
 use Sokeio\Platform\ItemInfo;
 
-class Page extends Component implements ILoader
+class Page extends Component implements IPage
 {
     use WithLivewirePage;
     public static function runLoad(ItemInfo $itemInfo)
@@ -23,14 +23,14 @@ class Page extends Component implements ILoader
             ->getPackage()
             ->shortName() . '-page.' . str($urlRoute)->replace('/', '.'));
 
-        if (static::isThemeAdmin()) {
+        if (static::pageAdmin()) {
             Platform::routeAdmin(function () use ($classMe, $urlRoute, $nameRoute) {
                 Route::get($urlRoute, $classMe)->name($nameRoute);
-            }, !static::isAuth());
+            }, !static::pageAuth());
         } else {
             Platform::routeWeb(function () use ($classMe, $urlRoute, $nameRoute) {
                 Route::get($urlRoute, $classMe)->name($nameRoute);
-            }, static::isAuth());
+            }, static::pageAuth());
         }
     }
 }
