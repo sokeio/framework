@@ -4,6 +4,7 @@ use Sokeio\Console\DebugCommand;
 
 return [
     'admin_url' => env('PLATFORM_URL_ADMIN', 'admin'),
+    'admin_theme' => env('PLATFORM_THEME_ADMIN', 'sokeio/theme-admin'),
     'updator' => [
         'url' =>  env('PLATFORM_UPDATOR_URL', 'https://updator.sokeio.com/'),
         'temps' => env('PLATFORM_UPDATOR_TEMP', 'temps')

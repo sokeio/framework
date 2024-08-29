@@ -2,6 +2,8 @@
 
 namespace Sokeio\Theme;
 
+use Illuminate\Support\Facades\View;
+use Sokeio\Platform;
 
 class ThemeManager
 {
@@ -161,5 +163,31 @@ class ThemeManager
             return;
         }
         $this->headAfter[] = $callback;
+    }
+    public function namespaceTheme()
+    {
+        return Platform::isUrlAdmin() ? 'theme\\admin' : 'theme\\site';
+    }
+    public function view($view, $data = [], $mergeData = [])
+    {
+        // Extract the namespace and the view name from the view parameter
+        [$namespace, $viewName] = explode('::', $view);
+
+        // If the namespace is not a theme namespace, try to find the view in the theme namespace
+        if (!str_starts_with($namespace, 'theme\\')) {
+            $themeNamespace = $this->namespaceTheme();
+            $scopeViewName = "{$namespace}.{$viewName}";
+            $scopeView = "{$themeNamespace}::scope.{$scopeViewName}";
+            $viewWithoutScope = "{$themeNamespace}::scope.{$viewName}";
+
+            if (View::exists($scopeView)) {
+                return view($scopeView, $data, $mergeData);
+            } elseif (View::exists($viewWithoutScope)) {
+                return view($viewWithoutScope, $data, $mergeData);
+            }
+        }
+
+        // If the view was not found in the theme namespace, render the original view
+        return view($view, $data, $mergeData);
     }
 }

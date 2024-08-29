@@ -21,6 +21,10 @@ class ItemManager
      */
     private $arrItems = [];
     private function __construct(private $type) {}
+    public function getItemActive(): array
+    {
+        return collect($this->arrItems)->where('isActive', true)->values()->all();
+    }
     public function isTheme(): bool
     {
         return $this->type === 'theme';
@@ -83,8 +87,13 @@ class ItemManager
         if (Arr::get($item, 'active')) {
             return true;
         }
+        $statusKey = $this->type;
 
-        return ItemStatus::key($this->type)->check($item['id']);
+        if ($this->isTheme() && Arr::get($item, 'admin')) {
+            $statusKey = 'theme_admin';
+        }
+
+        return ItemStatus::key($statusKey)->check($item['id']);
     }
     public function setActive(array| ItemInfo|string $id): bool
     {
@@ -113,16 +122,11 @@ class ItemManager
     {
         $item = $this->getItem($id);
 
-
-        if (!$item) {
+        if (!$item || $this->isTheme()) {
             return;
         }
 
         $statusKey = $this->type;
-
-        if ($this->isTheme() && (int) $item->admin === 1) {
-            $statusKey .= '_admin';
-        }
 
         ItemStatus::key($statusKey)->block($item['id']);
     }
@@ -148,7 +152,7 @@ class ItemManager
     }
     private function checkSkip($fileInfo)
     {
-        if ($this->type === 'theme') {
+        if ($this->isTheme() && $fileInfo) {
             return !$this->isActive($fileInfo);
         }
         return false;
@@ -162,7 +166,9 @@ class ItemManager
         }
         if (!isset($this->arrItems[$pathFileJson])) {
             $fileInfo = json_decode(file_get_contents($pathFileJson), true);
-
+            if (!$fileInfo) {
+                return null;
+            }
             $this->arrItems[$pathFileJson] =
                 new ItemInfo($path, $this,  $fileInfo);
             if (!$this->checkSkip($fileInfo)) {

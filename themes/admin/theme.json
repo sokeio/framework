@@ -1,0 +1,14 @@
+{
+  "id": "sokeio/theme-admin",
+  "name": "admin",
+  "alias": "admin",
+  "description": "",
+  "hide": true,
+  "admin": true,
+  "keywords": [],
+  "priority": 100,
+  "namespace": "SokeioTheme\\Adnin",
+  "aliases": {},
+  "files": [],
+  "requires": []
+}

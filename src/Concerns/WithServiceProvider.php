@@ -7,11 +7,11 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
-use ReflectionClass;
 use Sokeio\Exceptions\InvalidPackage;
 use Sokeio\Platform;
 use Sokeio\Platform\ItemInfo;
 use Sokeio\ServicePackage;
+use ReflectionClass;
 
 trait WithServiceProvider
 {

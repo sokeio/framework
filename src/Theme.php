@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static void description($description);
  * @method static void keywords($keywords);
  * @method static mixed getSiteInfo();
+ * @method static mixed view($view, $data = [], $mergeData = [])
  * @method static void enableCdn();
  * @method static void disableCdn();
  * @method static void js($content);
