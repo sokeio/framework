@@ -30,14 +30,17 @@ class ThemeManager
     public function title($title)
     {
         $this->title = $title;
+        return $this;
     }
     public function description($description)
     {
         $this->description = $description;
+        return $this;
     }
     public function keywords($keywords)
     {
         $this->keywords = $keywords;
+        return $this;
     }
     public function enableCdn()
     {
@@ -49,11 +52,25 @@ class ThemeManager
         $this->useCdn = false;
         return $this;
     }
+    public function jsFromPath($path)
+    {
+        if (file_exists($path)) {
+            return $this->js(file_get_contents($path));
+        }
+        return $this;
+    }
     public function js($content)
     {
         $content = trim($content);
         $key = md5($content);
         $this->arrJavascript[$key] = $content;
+        return $this;
+    }
+    public function styleFromPath($path)
+    {
+        if (file_exists($path)) {
+            return $this->style(file_get_contents($path));
+        }
         return $this;
     }
     public function style($content)
@@ -88,7 +105,9 @@ class ThemeManager
         if ($this->keywords) {
             echo '<meta name="keywords" content="' . $this->keywords . '">';
         }
-
+        foreach ($this->headBefore as $callback) {
+            $callback();
+        }
         foreach ($this->arrLinkCss as $link => $cdn) {
             if ($cdn && $this->useCdn) {
                 $this->linkRender($cdn);
@@ -101,9 +120,7 @@ class ThemeManager
             echo '<style type="text/css" id="' . $key . '">' . $value . '</style>';
         }
 
-        foreach ($this->headBefore as $callback) {
-            $callback();
-        }
+
         foreach ($this->headAfter as $callback) {
             $callback();
         }
@@ -117,7 +134,7 @@ class ThemeManager
 
     private function jsRender($script)
     {
-        echo '<script type="text/javascript" src="' . ($script) . '"></script>';
+        echo '<script type="text/javascript" id="' . md5($script) . '" src="' . ($script) . '"></script>';
     }
     public function bodyEndRender()
     {
@@ -164,20 +181,28 @@ class ThemeManager
         }
         $this->headAfter[] = $callback;
     }
+    public function getNamespace($isAdmin = false)
+    {
+        return $isAdmin ? 'theme\\admin' : 'theme\\site';
+    }
     public function namespaceTheme()
     {
-        return Platform::isUrlAdmin() ? 'theme\\admin' : 'theme\\site';
+        return $this->getNamespace(Platform::isUrlAdmin());
     }
-    public function view($view, $data = [], $mergeData = [])
+    public function view(string $view, array $data = [], array $mergeData = [])
     {
-        // Extract the namespace and the view name from the view parameter
-        [$namespace, $viewName] = explode('::', $view);
+        $viewParts = explode('::', $view);
 
-        // If the namespace is not a theme namespace, try to find the view in the theme namespace
+        if (count($viewParts) === 1) {
+            $view = $this->getNamespace(Platform::isUrlAdmin()) . '::' . $view;
+            $viewParts = explode('::', $view);
+        }
+
+        [$namespace, $viewName] = $viewParts;
+
         if (!str_starts_with($namespace, 'theme\\')) {
             $themeNamespace = $this->namespaceTheme();
-            $scopeViewName = "{$namespace}.{$viewName}";
-            $scopeView = "{$themeNamespace}::scope.{$scopeViewName}";
+            $scopeView = "{$themeNamespace}::scope.{$namespace}.{$viewName}";
             $viewWithoutScope = "{$themeNamespace}::scope.{$viewName}";
 
             if (View::exists($scopeView)) {
@@ -187,7 +212,6 @@ class ThemeManager
             }
         }
 
-        // If the view was not found in the theme namespace, render the original view
         return view($view, $data, $mergeData);
     }
 }

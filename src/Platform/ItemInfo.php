@@ -10,10 +10,10 @@ use Sokeio\ServicePackage;
 class ItemInfo extends ObjectJson
 {
     use WithRegisterItemInfo;
-    private ServicePackage $package;
+    private ServicePackage|null $package = null;
     private $flgActive = null;
     private $flgVendor = null;
-    public function getPackage(): ServicePackage
+    public function getPackage(): ServicePackage|null
     {
         return $this->package;
     }
@@ -32,6 +32,7 @@ class ItemInfo extends ObjectJson
     {
         return $this->manager;
     }
+
     public function getPath()
     {
         return $this->path;
@@ -57,9 +58,5 @@ class ItemInfo extends ObjectJson
     public function block(): void
     {
         $this->manager->block($this);
-    }
-    public function loader(): void
-    {
-        Platform::applyLoader($this);
     }
 }

@@ -7,7 +7,7 @@
   "admin": true,
   "keywords": [],
   "priority": 100,
-  "namespace": "SokeioTheme\\Adnin",
+  "namespace": "SokeioTheme\\Admin",
   "aliases": {},
   "files": [],
   "requires": []

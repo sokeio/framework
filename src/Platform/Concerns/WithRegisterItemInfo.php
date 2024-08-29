@@ -2,19 +2,24 @@
 
 namespace Sokeio\Platform\Concerns;
 
+use Sokeio\Platform;
 
 trait WithRegisterItemInfo
 {
+    private $flgRegister = false;
+    private $flgLoader = false;
+    private $flgBoot = false;
     private $providers = [];
     private function registerItemInfo($path)
     {
-        if ($this->isVendor()) {
+        if ($this->isVendor() && !$this->getManager()->isTheme()) {
             return;
         }
         $this->registerComposer($path);
     }
     private function registerComposer($path)
     {
+
         if (!file_exists($path . '/composer.json')) {
             return [];
         }
@@ -50,15 +55,31 @@ trait WithRegisterItemInfo
     }
     public function register()
     {
+        if ($this->flgRegister) {
+            return;
+        }
+        $this->flgRegister = true;
         $this->registerItemInfo($this->path);
     }
     public function boot()
     {
+        if ($this->flgBoot) {
+            return;
+        }
+        $this->flgBoot = true;
         if ($this->providers == null) {
             $this->providers = [];
         }
         foreach ($this->providers as $item) {
             $item->boot();
         }
+    }
+    public function loader(): void
+    {
+        if ($this->flgLoader) {
+            return;
+        }
+        $this->flgLoader = true;
+        Platform::applyLoader($this);
     }
 }

@@ -13,7 +13,10 @@ class ItemStatus
     {
         return $this->key . '.' . md5($id) . '.status';
     }
-
+    public function empty()
+    {
+        return empty(Arr::get(self::$arrData, $this->key, []));
+    }
     public function check($id)
     {
         return Arr::get(self::$arrData, $this->getKeyStatus($id), false);

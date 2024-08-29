@@ -3,6 +3,7 @@
 namespace Sokeio\Concerns;
 
 use Carbon\Carbon;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
@@ -12,6 +13,7 @@ use Sokeio\Platform;
 use Sokeio\Platform\ItemInfo;
 use Sokeio\ServicePackage;
 use ReflectionClass;
+use Sokeio\Theme;
 
 trait WithServiceProvider
 {
@@ -61,7 +63,9 @@ trait WithServiceProvider
             $this->packageRegistered();
         }
         if (static::itemInfo()->getManager()->isTheme()) {
-            $this->package->name('theme');
+            $this->package->name(Theme::getNamespace(Arr::get(static::itemInfo(), 'admin') === true));
+        } else {
+            Platform::theme()->loadFromPath($this->getPackagePath('/..'));
         }
         return $this;
     }
@@ -279,5 +283,21 @@ trait WithServiceProvider
         $reflector = new ReflectionClass(get_class($this));
 
         return $reflector->getNamespaceName();
+    }
+    protected function loadViewsFrom($path, $namespace)
+    {
+        $this->callAfterResolving('view', function ($view) use ($path, $namespace) {
+            if (
+                isset($this->app->config['view']['paths']) &&
+                is_array($this->app->config['view']['paths'])
+            ) {
+                foreach ($this->app->config['view']['paths'] as $viewPath) {
+                    if (is_dir($appPath = $viewPath . '/vendor/' . $namespace)) {
+                        $view->prependNamespace($namespace, $appPath);
+                    }
+                }
+            }
+            $view->prependNamespace($namespace, $path);
+        });
     }
 }

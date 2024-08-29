@@ -80,7 +80,6 @@ class PlatformManager
     public function loadFromServicePackage(\Sokeio\ServicePackage $servicePackage)
     {
         $path = $servicePackage->basePath('../');
-        $this->theme()->loadFromPath($path);
         if ($item = $this->theme()->addFromPath($path)) {
             return $item->setPackage($servicePackage);
         }

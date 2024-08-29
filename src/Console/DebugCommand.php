@@ -15,7 +15,9 @@ class DebugCommand extends Command
     public function handle(): int
     {
         $this->comment('Hello, World!');
-        Platform::module()->setActive('sokeio/comment');
+        // Platform::module()->setActive('sokeio/comment');
+        // Platform::theme()->setActive('sokeio/theme-admin');
+        $this->info(Platform::theme()->isActive('sokeio/theme-admin'));
         return 0;
     }
 }

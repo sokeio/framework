@@ -6,21 +6,24 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @see \Sokeio\Theme
- * @method static void title($title);
- * @method static void description($description);
- * @method static void keywords($keywords);
+ * @method static Sokeio\Theme\ThemeManager title($title);
+ * @method static Sokeio\Theme\ThemeManager description($description);
+ * @method static Sokeio\Theme\ThemeManager keywords($keywords);
  * @method static mixed getSiteInfo();
  * @method static mixed view($view, $data = [], $mergeData = [])
- * @method static void enableCdn();
- * @method static void disableCdn();
- * @method static void js($content);
- * @method static void style($content);
- * @method static void linkCss($link, $cdn = null);
- * @method static void linkJs($link, $cdn = null);
- * @method static void bodyBefore($callback);
- * @method static void bodyAfter($callback);
- * @method static void headBefore($callback);
- * @method static void headAfter($callback);
+ * @method static string getNamespace($isAdmin = false)
+ * @method static Sokeio\Theme\ThemeManager enableCdn();
+ * @method static Sokeio\Theme\ThemeManager disableCdn();
+ * @method static Sokeio\Theme\ThemeManager js($content);
+ * @method static Sokeio\Theme\ThemeManager jsFromPath($path);
+ * @method static Sokeio\Theme\ThemeManager style($content);
+ * @method static Sokeio\Theme\ThemeManager styleFromPath($path)
+ * @method static Sokeio\Theme\ThemeManager linkCss($link, $cdn = null);
+ * @method static Sokeio\Theme\ThemeManager linkJs($link, $cdn = null);
+ * @method static Sokeio\Theme\ThemeManager bodyBefore($callback);
+ * @method static Sokeio\Theme\ThemeManager bodyAfter($callback);
+ * @method static Sokeio\Theme\ThemeManager headBefore($callback);
+ * @method static Sokeio\Theme\ThemeManager headAfter($callback);
  * @method static void headRender()
  * @method static void bodyRender()
  * @method static void bodyEndRender()

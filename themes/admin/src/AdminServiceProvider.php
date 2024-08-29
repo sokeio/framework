@@ -1,12 +1,12 @@
 <?php
 
-namespace SokeioTheme\Adnin;
+namespace SokeioTheme\Admin;
 
 use Illuminate\Support\ServiceProvider;
 use Sokeio\Concerns\WithServiceProvider;
 use Sokeio\ServicePackage;
 
-class AdninServiceProvider extends ServiceProvider
+class AdminServiceProvider extends ServiceProvider
 {
     use WithServiceProvider;
 

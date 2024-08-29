@@ -29,10 +29,17 @@ class ItemManager
     {
         return $this->type === 'theme';
     }
+    private function checkItemActive($itemInfo, $isVendor = true)
+    {
+        if ($this->isTheme()) {
+            return $itemInfo->isActive();
+        }
+        return ($itemInfo->isActive() && !$itemInfo->isVendor()) || ($itemInfo->isVendor() === $isVendor);
+    }
     public function boot(): void
     {
         foreach ($this->arrItems as $itemInfo) {
-            if (!$itemInfo->isActive() || $itemInfo->isVendor()) {
+            if (!$this->checkItemActive($itemInfo)) {
                 continue;
             }
 
@@ -52,7 +59,7 @@ class ItemManager
     public function loader(): void
     {
         foreach ($this->arrItems as $itemInfo) {
-            if (!$itemInfo->isActive() && !$itemInfo->isVendor()) {
+            if (!$this->checkItemActive($itemInfo)) {
                 continue;
             }
 
@@ -81,19 +88,25 @@ class ItemManager
     public function isActive(array| ItemInfo|string $id): bool
     {
         $item = $this->getItem($id);
+
         if (!$item) {
             return false;
         }
-        if (Arr::get($item, 'active')) {
-            return true;
-        }
+
         $statusKey = $this->type;
 
         if ($this->isTheme() && Arr::get($item, 'admin')) {
             $statusKey = 'theme_admin';
         }
 
-        return ItemStatus::key($statusKey)->check($item['id']);
+        $isActive = ItemStatus::key($statusKey)->check($item['id']);
+
+        if (!$isActive && $this->isTheme() && ItemStatus::key($statusKey)->empty()) {
+            $themeConfigKey = Arr::get($item, 'admin') ? 'admin_theme' : 'site_theme';
+            $isActive = $item->id === config("sokeio.$themeConfigKey");
+        }
+
+        return $isActive;
     }
     public function setActive(array| ItemInfo|string $id): bool
     {
@@ -138,11 +151,11 @@ class ItemManager
     }
     public function getAll()
     {
-        return collect($this->arrItems)->values()->all();
+        return collect($this->arrItems);
     }
     public function loadFromPath(string $path)
     {
-        $pathDir = "{$path}/{$this->type}s";
+        $pathDir = realpath("{$path}/{$this->type}s");
         if (!File::exists($pathDir)) {
             return;
         }
@@ -171,7 +184,7 @@ class ItemManager
             }
             $this->arrItems[$pathFileJson] =
                 new ItemInfo($path, $this,  $fileInfo);
-            if (!$this->checkSkip($fileInfo)) {
+            if (!$this->checkSkip($this->arrItems[$pathFileJson])) {
                 $this->arrItems[$pathFileJson]->register();
             }
         }
