@@ -16,7 +16,6 @@ return [
         'role' => Sokeio\Models\Role::class,
         'permission' => Sokeio\Models\Permission::class,
     ],
-
     'commands' => [
         DebugCommand::class
     ]

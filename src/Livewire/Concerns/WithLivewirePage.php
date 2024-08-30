@@ -54,7 +54,7 @@ trait WithLivewirePage
 
         $layoutConfig->normalizeViewNameAndParamsForBladeComponents();
 
-        $layoutConfig->view = $this->themePage();
+        $layoutConfig->view = Theme::getLayout($this->themePage());
         $layoutConfig->slotOrSection = 'content';
         $layoutConfig->type = 'themeLayout';
         Theme::title($this->pageTitle());

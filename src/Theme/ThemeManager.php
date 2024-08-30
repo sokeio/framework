@@ -19,6 +19,7 @@ class ThemeManager
     private $arrStyle = [];
     private $arrLinkCss = [];
     private $arrLinkJs = [];
+    private $layout;
     public function getSiteInfo()
     {
         return [
@@ -217,7 +218,26 @@ class ThemeManager
                 return view($viewWithoutScope, $data, $mergeData);
             }
         }
-
         return view($view, $data, $mergeData);
+    }
+    public function include($view, array $data = [], array $mergeData = [])
+    {
+        echo $this->view($view, $data, $mergeData)->render();
+    }
+    public function getLayout(string $default = null): string
+    {
+        $arrs = [
+            $this->layout,
+            $this->namespaceTheme() . '::layouts.default',
+            $default
+        ];
+        foreach ($arrs as $layout) {
+            if ($layout && View::exists($layout)) {
+                return $layout;
+            }
+        }
+
+
+        return 'sokeio::layouts.none';
     }
 }

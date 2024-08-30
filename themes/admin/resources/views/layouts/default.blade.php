@@ -1,18 +1,15 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="{{ app()->getLocale() }}">
 
 <head>
-    @ThemeHead(before)
-    @ThemeHead(after)
-    @stack('styles')
+    @themeHead
+    @csrf
 </head>
 
-<body class="{{ themeClass() }}">
-    @ThemeBody(before)
-    121212
+<body>
+    @themeBody
     @yield('content')
-    @ThemeBody(after)
-    @stack('scripts')
+    @themeBodyEnd
 </body>
 
 </html>

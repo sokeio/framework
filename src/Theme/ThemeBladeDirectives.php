@@ -29,4 +29,12 @@ class ThemeBladeDirectives
         ?>
         EOT;
     }
+    public static function themeInclude($expression)
+    {
+        return <<<EOT
+        <?php
+            \Sokeio\Theme::include("{$expression}");
+        ?>
+        EOT;
+    }
 }

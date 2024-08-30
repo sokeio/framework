@@ -15,5 +15,6 @@ class ThemeServiceProvider extends \Illuminate\Support\ServiceProvider
         Blade::directive('themeBodyEnd', [ThemeBladeDirectives::class, 'themeBodyEnd']);
         Blade::directive('themeBody',  [ThemeBladeDirectives::class, 'themeBody']);
         Blade::directive('themeHead', [ThemeBladeDirectives::class, 'themeHead']);
+        Blade::directive('themeInclude', [ThemeBladeDirectives::class, 'themeInclude']);
     }
 }

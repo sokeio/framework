@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static Sokeio\Theme\ThemeManager keywords($keywords);
  * @method static mixed getSiteInfo();
  * @method static mixed view($view, $data = [], $mergeData = [])
+ * @method static void include($view, $data = [], $mergeData = [])
+ * @method static string getLayout($default=null)
  * @method static string getNamespace($isAdmin = false)
  * @method static Sokeio\Theme\ThemeManager enableCdn();
  * @method static Sokeio\Theme\ThemeManager disableCdn();
