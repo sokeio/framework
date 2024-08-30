@@ -92,7 +92,10 @@ class ThemeManager
     }
     private function linkRender($link)
     {
-        echo '<link rel="stylesheet" href="' . ($link) . '">';
+        if (!$link) {
+            return;
+        }
+        echo '<link rel="stylesheet"  href="' . ($link) . '"/>';
     }
     public function headRender()
     {
@@ -109,7 +112,7 @@ class ThemeManager
             $callback();
         }
         foreach ($this->arrLinkCss as $link => $cdn) {
-            if ($cdn && $this->useCdn) {
+            if ($cdn && $this->useCdn || !$link) {
                 $this->linkRender($cdn);
             } else {
                 $this->linkRender($link);
@@ -134,12 +137,15 @@ class ThemeManager
 
     private function jsRender($script)
     {
+        if (!$script) {
+            return;
+        }
         echo '<script type="text/javascript" id="' . md5($script) . '" src="' . ($script) . '"></script>';
     }
     public function bodyEndRender()
     {
         foreach ($this->arrLinkJs as $link => $cdn) {
-            if ($cdn && $this->useCdn) {
+            if ($cdn && $this->useCdn || !$link) {
                 $this->jsRender($cdn);
             } else {
                 $this->jsRender($link);

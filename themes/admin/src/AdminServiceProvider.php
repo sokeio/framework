@@ -4,7 +4,9 @@ namespace SokeioTheme\Admin;
 
 use Illuminate\Support\ServiceProvider;
 use Sokeio\Concerns\WithServiceProvider;
+use Sokeio\Platform;
 use Sokeio\ServicePackage;
+use Sokeio\Theme;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -24,5 +26,12 @@ class AdminServiceProvider extends ServiceProvider
             ->hasAssets()
             ->hasTranslations()
             ->runsMigrations();
+    }
+    public function packageBooted()
+    {
+        if (Platform::isUrlAdmin()) {
+            Theme::linkJs('', 'https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta20/dist/js/tabler.min.js');
+            Theme::linkCss('', 'https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta20/dist/css/tabler.min.css');
+        }
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
-namespace SokeioTheme\Admin\Pages;
+namespace SokeioTheme\Admin\Pages\Auth;
 
 use Sokeio\Concerns\WithPageAdminGuest;
 use Sokeio\Theme;
 
-class ThemeAdmin extends \Sokeio\Page
+class Login extends \Sokeio\Page
 {
     use WithPageAdminGuest;
     protected function pageTitle()
@@ -18,6 +18,6 @@ class ThemeAdmin extends \Sokeio\Page
     }
     public function render()
     {
-        return Theme::view('pages.test');
+        return Theme::view('pages.auth.login');
     }
 }

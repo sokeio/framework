@@ -1,3 +1,0 @@
-<div>
-    Xin chào
-</div>

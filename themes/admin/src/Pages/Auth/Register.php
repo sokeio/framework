@@ -1,26 +1,23 @@
 <?php
 
-namespace Sokeio\Pages;
+namespace SokeioTheme\Admin\Pages\Auth;
 
 use Sokeio\Concerns\WithPageAdminGuest;
+use Sokeio\Theme;
 
-class Login extends \Sokeio\Page
+class Register extends \Sokeio\Page
 {
     use WithPageAdminGuest;
     protected function pageTitle()
     {
-        return 'Login';
+        return 'Register';
     }
     public static function pageName()
     {
-        return 'login';
+        return 'register';
     }
     public function render()
     {
-        return <<<html
-        <div >
-        Hello, Dashboard
-        </div>
-html;
+        return Theme::view('pages.auth.register');
     }
 }
