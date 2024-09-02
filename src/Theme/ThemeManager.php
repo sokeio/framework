@@ -20,6 +20,30 @@ class ThemeManager
     private $arrLinkCss = [];
     private $arrLinkJs = [];
     private $layout;
+    private $themeSite = null;
+    private $themeAdmin = null;
+    public function getThemeAdmin()
+    {
+        if (!$this->themeAdmin) {
+            $this->themeAdmin = Platform::theme()->getAll()->where('admin', true)->where('isActive', true)->first();
+        }
+        return $this->themeAdmin;
+    }
+    public function getThemeSite()
+    {
+        if (!$this->themeSite) {
+            $this->themeSite = Platform::theme()->getAll()->where('admin', false)->where('isActive', true)->first();
+        }
+        return $this->themeSite;
+    }
+    public function getTheme()
+    {
+        if (Platform::isUrlAdmin()) {
+            return $this->getThemeAdmin();
+        }
+
+        return $this->getThemeSite();
+    }
     public function getSiteInfo()
     {
         return [
