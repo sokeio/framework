@@ -2,6 +2,7 @@
 
 namespace Sokeio\Platform;
 
+use Illuminate\Support\Facades\File;
 use Sokeio\ObjectJson;
 use Sokeio\Platform;
 use Sokeio\Platform\Concerns\WithRegisterItemInfo;
@@ -58,5 +59,12 @@ class ItemInfo extends ObjectJson
     public function block(): void
     {
         $this->manager->block($this);
+    }
+    public function getLayouts(): array
+    {
+        return  collect(File::allFiles($this->path . '/resources/views/layouts'))->map(function ($file) {
+            // remove .blade.php
+            return str_replace('.blade.php', '', $file->getRelativePathname());
+        })->toArray();
     }
 }

@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static void booted($callback)
  * @method static \Sokeio\Platform\ItemManager module()
  * @method static \Sokeio\Platform\ItemManager theme()
+ * @method static string adminUrl()
  * @method static bool isUrlAdmin()
  * @method static bool isVendor($path)
  * @method static string getPlatformPath()

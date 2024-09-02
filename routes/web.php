@@ -25,8 +25,7 @@ Route::get('routes', function () {
     echo "</table>";
 });
 Platform::routeAdmin(function () {
-
     Route::get('/', function () {
-        return   Theme::getTheme();
+        return   Theme::getTheme()->getLayouts();
     });
 }, true);

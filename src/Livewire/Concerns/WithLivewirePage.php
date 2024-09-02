@@ -16,11 +16,11 @@ trait WithLivewirePage
     {
         return null;
     }
-    protected static function menuTitle()
+    public static function menuTitle()
     {
         return null;
     }
-    protected static function pageAdmin()
+    public static function pageAdmin()
     {
         return false;
     }

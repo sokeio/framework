@@ -248,6 +248,18 @@ class ThemeManager
     {
         echo $this->view($view, $data, $mergeData)->render();
     }
+    public function setLayout(string $layout, $isAdmin = null)
+    {
+        if (!View::exists($layout)) {
+            if ($isAdmin === null) {
+                $isAdmin = Platform::isUrlAdmin();
+            }
+            if (View::exists($this->getNamespace($isAdmin) . '::layouts.' . $layout)) {
+                $layout = $this->getNamespace($isAdmin) . '::layouts.' . $layout;
+            }
+        }
+        $this->layout = $layout;
+    }
     public function getLayout(string $default = null): string
     {
         $arrs = [
