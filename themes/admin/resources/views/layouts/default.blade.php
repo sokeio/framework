@@ -9,6 +9,7 @@
     @themeBody
     @themeInclude('partials.header')
     @yield('content')
+    @themeInclude('partials.footer')
     @themeBodyEnd
 </body>
 
