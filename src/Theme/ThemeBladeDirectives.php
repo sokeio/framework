@@ -33,7 +33,7 @@ class ThemeBladeDirectives
     {
         return <<<EOT
         <?php
-            \Sokeio\Theme::include("{$expression}");
+            \Sokeio\Theme::include({$expression});
         ?>
         EOT;
     }

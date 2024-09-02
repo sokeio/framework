@@ -7,6 +7,7 @@
 
 <body>
     @themeBody
+    @themeInclude('partials.header')
     @yield('content')
     @themeBodyEnd
 </body>
