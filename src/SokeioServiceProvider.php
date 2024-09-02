@@ -19,6 +19,7 @@ class SokeioServiceProvider extends \Illuminate\Support\ServiceProvider
         $package
             ->name('sokeio')
             ->hasConfigFile()
+            ->routeWeb()
             ->hasViews()
             ->hasHelpers()
             ->hasAssets()

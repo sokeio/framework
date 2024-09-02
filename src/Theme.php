@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Facade;
  * @method static Sokeio\Theme\ThemeManager description($description);
  * @method static Sokeio\Theme\ThemeManager keywords($keywords);
  * @method static mixed getSiteInfo();
+ * @method static mixed getTheme();
+ * @method static mixed getThemeAdmin();
+ * @method static mixed getThemeSite();
+ * 
  * @method static mixed view($view, $data = [], $mergeData = [])
  * @method static void include($view, $data = [], $mergeData = [])
  * @method static string getLayout($default=null)

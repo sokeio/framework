@@ -153,6 +153,12 @@ class ItemManager
     {
         return collect($this->arrItems);
     }
+    public function getActiveAll()
+    {
+        return collect($this->arrItems)->where(function ($item) {
+            return $item->isActive();
+        });
+    }
     public function loadFromPath(string $path)
     {
         $pathDir = realpath("{$path}/{$this->type}s");

@@ -54,7 +54,7 @@ trait WithServiceProvider
             $this->mergeConfigFrom($fileConfig, $this->package->shortName());
         }
         self::$itemInfo = Platform::loadFromServicePackage($this->package);
-        if (static::itemInfo()->isActive() && $this->package->hasRouteWeb) {
+        if ((static::itemInfo()->isActive() || static::itemInfo()->isVendor()) && $this->package->hasRouteWeb) {
             Route::middleware('web')
                 ->group($this->getPackagePath('/../routes/web.php'));
         }

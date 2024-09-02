@@ -25,14 +25,14 @@ class ThemeManager
     public function getThemeAdmin()
     {
         if (!$this->themeAdmin) {
-            $this->themeAdmin = Platform::theme()->getAll()->where('admin', true)->where('isActive', true)->first();
+            $this->themeAdmin = Platform::theme()->getActiveAll()->where('admin', true)->first();
         }
         return $this->themeAdmin;
     }
     public function getThemeSite()
     {
         if (!$this->themeSite) {
-            $this->themeSite = Platform::theme()->getAll()->where('admin', false)->where('isActive', true)->first();
+            $this->themeSite = Platform::theme()->getActiveAll()->where('admin', false)->first();
         }
         return $this->themeSite;
     }
