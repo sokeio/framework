@@ -18,6 +18,7 @@ class Login extends \Sokeio\Page
     }
     public function render()
     {
+        Theme::setLayout();
         return Theme::view('pages.auth.login');
     }
 }

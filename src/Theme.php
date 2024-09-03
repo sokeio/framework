@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Facade;
  * 
  * @method static mixed view($view, $data = [], $mergeData = [])
  * @method static void include($view, $data = [], $mergeData = [])
+ * @method static void setLayout(string $layout='none', $isAdmin = null)
  * @method static string getLayout($default=null)
  * @method static string getNamespace($isAdmin = false)
  * @method static Sokeio\Theme\ThemeManager enableCdn();

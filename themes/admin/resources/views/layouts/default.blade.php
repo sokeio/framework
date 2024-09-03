@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
+
 <head>
     @themeHead
     @csrf
@@ -7,9 +8,13 @@
 
 <body>
     @themeBody
-    @themeInclude('partials.header')
-    @yield('content')
-    @themeInclude('partials.footer')
+    <div class="page">
+        @themeInclude('partials.header')
+        <div class="page-wrapper">
+            @yield('content')
+        </div>
+        @themeInclude('partials.footer')
+    </div>
     @themeBodyEnd
 </body>
 

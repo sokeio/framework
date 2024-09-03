@@ -248,7 +248,7 @@ class ThemeManager
     {
         echo $this->view($view, $data, $mergeData)->render();
     }
-    public function setLayout(string $layout, $isAdmin = null)
+    public function setLayout(string $layout='none', $isAdmin = null)
     {
         if (!View::exists($layout)) {
             if ($isAdmin === null) {

@@ -18,6 +18,7 @@ class Register extends \Sokeio\Page
     }
     public function render()
     {
+        Theme::setLayout();
         return Theme::view('pages.auth.register');
     }
 }
