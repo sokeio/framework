@@ -3,7 +3,7 @@
 use Sokeio\Console\DebugCommand;
 
 return [
-    'version' => env('PLATFORM_VERSION', '1.0.0'),
+    'version' => '1.0.0',
     'admin_url' => env('PLATFORM_URL_ADMIN', 'admin'),
     'admin_theme' => env('PLATFORM_THEME_ADMIN', 'sokeio/theme-admin'),
     'site_theme' => env('PLATFORM_THEME_SITE', 'sokeio/theme-cms'),
