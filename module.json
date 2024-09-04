@@ -1,11 +1,12 @@
 {
   "id": "sokeio/framework",
   "name": "sokeio",
-  "version":"v1.0.0",
+  "version": "1.0.0",
   "title": "Sokeio",
   "alias": "sokeio",
   "description": "<b>Sokeio</b> is a Laravel-based web application development package that provides support for developing modules, plugins, themes,actions, livewire, and shortcodes. ",
   "keywords": [],
+  "url": "https://sokeio.com",
   "priority": 100,
   "namespace": "Sokeio",
   "aliases": {},
