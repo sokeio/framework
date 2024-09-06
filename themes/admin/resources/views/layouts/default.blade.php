@@ -9,11 +9,11 @@
 <body>
     @themeBody
     <div class="page">
-        @themeInclude('partials.header')
+        @themeInclude('shared.header')
         <div class="page-wrapper">
             @yield('content')
         </div>
-        @themeInclude('partials.footer')
+        @themeInclude('shared.footer')
     </div>
     @themeBodyEnd
 </body>

@@ -3,6 +3,8 @@
 namespace Sokeio\Platform;
 
 use Illuminate\Support\Facades\Route;
+use Sokeio\Menu\MenuItem;
+use Sokeio\Menu\MenuManager;
 use Sokeio\Middleware\Authenticate;
 use Sokeio\Middleware\JwtUser;
 use Sokeio\Platform;

@@ -107,12 +107,12 @@ class ThemeManager
     }
     public function linkCss($link, $cdn = null)
     {
-        $this->arrLinkCss[trim($link)] = $cdn;
+        $this->arrLinkCss[] = ['link' => trim($link), 'cdn' => $cdn];
         return $this;
     }
     public function linkJs($link, $cdn = null)
     {
-        $this->arrLinkJs[trim($link)] = $cdn;
+        $this->arrLinkJs[] = ['link' => trim($link), 'cdn' => $cdn];
         return $this;
     }
     private function linkRender($link)
@@ -136,7 +136,7 @@ class ThemeManager
         foreach ($this->headBefore as $callback) {
             $callback();
         }
-        foreach ($this->arrLinkCss as $link => $cdn) {
+        foreach ($this->arrLinkCss as ['link' => $link, 'cdn' => $cdn]) {
             if ($cdn && $this->useCdn || !$link) {
                 $this->linkRender($cdn);
             } else {
@@ -169,7 +169,7 @@ class ThemeManager
     }
     public function bodyEndRender()
     {
-        foreach ($this->arrLinkJs as $link => $cdn) {
+        foreach ($this->arrLinkJs as ['link' => $link, 'cdn' => $cdn]) {
             if ($cdn && $this->useCdn || !$link) {
                 $this->jsRender($cdn);
             } else {
@@ -248,7 +248,7 @@ class ThemeManager
     {
         echo $this->view($view, $data, $mergeData)->render();
     }
-    public function setLayout(string $layout='none', $isAdmin = null)
+    public function setLayout(string $layout = 'none', $isAdmin = null)
     {
         if (!View::exists($layout)) {
             if ($isAdmin === null) {

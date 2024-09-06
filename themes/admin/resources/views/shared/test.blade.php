@@ -1,3 +1,0 @@
-<div>
-    Demo themeInclude
-</div>

@@ -33,6 +33,10 @@ trait WithLivewirePage
     {
         return null;
     }
+    public static function pageIcon()
+    {
+        return null;
+    }
     protected function themePage()
     {
         return 'sokeio::layouts.none';

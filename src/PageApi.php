@@ -35,6 +35,11 @@ abstract class PageApi  implements IPage
 
         return null;
     }
+    public static function pageIcon()
+    {
+
+        return null;
+    }
     public static function runLoad(ItemInfo $itemInfo)
     {
         $classMe = static::class;

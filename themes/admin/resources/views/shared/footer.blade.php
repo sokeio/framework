@@ -9,7 +9,7 @@
                     <li class="list-inline-item"><a href="https://github.com/tabler/tabler" target="_blank"
                             class="link-secondary" rel="noopener">Source code</a></li>
                     <li class="list-inline-item">
-                        <a href="https://github.com/sponsors/codecalm" target="_blank" class="link-secondary"
+                        <a href="https://github.com/sponsors/devhau" target="_blank" class="link-secondary"
                             rel="noopener">
                             <!-- Download SVG icon from http://tabler-icons.io/i/heart -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -28,12 +28,12 @@
                 <ul class="list-inline list-inline-dots mb-0">
                     <li class="list-inline-item">
                         Copyright © 2024
-                        <a href="." class="link-secondary">Tabler</a>.
+                        <a href="." class="link-secondary">sokeio</a>.
                         All rights reserved.
                     </li>
                     <li class="list-inline-item">
-                        <a href="./changelog.html" class="link-secondary" rel="noopener">
-                            v1.0.0-beta20
+                        <a href="https://github.com/sponsors/devhau" class="link-secondary" rel="noopener">
+                            v2.0.0
                         </a>
                     </li>
                 </ul>
