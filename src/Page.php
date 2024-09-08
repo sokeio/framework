@@ -26,15 +26,18 @@ class Page extends Component implements IPage
             ->shortName() . '-page.' . str($url)->replace('\\', '.')->kebab());
 
         if (static::pageAdmin()) {
-            if (static::pageAuth()) {
+            if (static::pageAuth() && static::menuEnabled()) {
                 $menuTitle = static::menuTitle() ?? str(str($nameRoute)->afterLast('.'))->replace('-', ' ');
-
+                $target = static::menuTarget();
+                if (!$target && count(str($nameRoute)->split('/\./', -1, PREG_SPLIT_NO_EMPTY)) > 2) {
+                    $target = str($nameRoute)->beforeLast('.');
+                }
                 MenuManager::registerItem(
                     MenuItem::make($nameRoute, str($menuTitle)->title()->replace('-', ' '), null)
                         ->route('admin.' . $nameRoute)
-                        ->setup(function (MenuItem $item) use ($nameRoute) {
-                            if (count(str($nameRoute)->split('/\./', -1, PREG_SPLIT_NO_EMPTY)) > 2) {
-                                $item->target = str($nameRoute)->beforeLast('.');
+                        ->setup(function (MenuItem $item) use ($target) {
+                            if ($target) {
+                                $item->target =  $target;
                             }
                         })
                 );

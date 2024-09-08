@@ -8,15 +8,23 @@ use Sokeio\Theme;
 
 trait WithLivewirePage
 {
+    public static function menuEnabled()
+    {
+        return true;
+    }
+    public static function menuTitle()
+    {
+        return null;
+    }
+    public static function menuTarget()
+    {
+        return null;
+    }
     public static function pageUrl()
     {
         return null;
     }
     public static function pageName()
-    {
-        return null;
-    }
-    public static function menuTitle()
     {
         return null;
     }

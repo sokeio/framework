@@ -21,6 +21,10 @@ class ItemManager
      */
     private $arrItems = [];
     private function __construct(private $type) {}
+    public function getItemType()
+    {
+        return $this->type;
+    }
     public function getItemActive(): array
     {
         return collect($this->arrItems)->where('isActive', true)->values()->all();
@@ -54,6 +58,7 @@ class ItemManager
                 }
             }
             $itemInfo->boot();
+            $itemInfo->makePublic();
         }
     }
     public function loader(): void

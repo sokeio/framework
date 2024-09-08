@@ -67,4 +67,21 @@ class ItemInfo extends ObjectJson
             return str_replace('.blade.php', '', $file->getRelativePathname());
         })->toArray();
     }
+    /**
+     * Copy the public folder of this item to the public_path('platform/$itemType/$name')
+     * if not exists.
+     *
+     * @return $this
+     */
+    public function makePublic()
+    {
+        $pathPublic = $this->path . '/public';
+        if (file_exists($pathPublic)) {
+            $pathTarget = public_path('platform/' . $this->getManager()->getItemType() . 's/' . $this->name);
+            if (!file_exists($pathTarget)) {
+                File::copyDirectory($pathPublic, $pathTarget);
+            }
+        }
+        return $this;
+    }
 }
