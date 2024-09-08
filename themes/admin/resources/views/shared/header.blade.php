@@ -174,7 +174,7 @@
             <div class="nav-item dropdown">
                 <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
                     aria-label="Open user menu">
-                    <span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)"></span>
+                    <span class="avatar avatar-sm" ></span>
                     <div class="d-none d-xl-block ps-2">
                         <div>Paweł Kuna</div>
                         <div class="mt-1 small text-secondary">UI Designer</div>
@@ -192,7 +192,7 @@
         </div>
         <div class="collapse navbar-collapse" id="navbar-menu">
             <div class="d-flex flex-column flex-md-row flex-fill align-items-stretch align-items-md-center">
-                {!! \Sokeio\Menu\MenuManager::renderMenu() !!}
+                {!! \Sokeio\Support\Menu\MenuManager::renderMenu() !!}
             </div>
         </div>
     </div>

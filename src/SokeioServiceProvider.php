@@ -3,9 +3,9 @@
 namespace Sokeio;
 
 use Sokeio\Concerns\WithServiceProvider;
-use Sokeio\Livewire\LivewireServiceProvider;
-use Sokeio\Platform\PlatformServiceProvider;
-use Sokeio\Theme\ThemeServiceProvider;
+use Sokeio\Support\Livewire\LivewireServiceProvider;
+use Sokeio\Support\Platform\PlatformServiceProvider;
+use Sokeio\Support\Theme\ThemeServiceProvider;
 
 class SokeioServiceProvider extends \Illuminate\Support\ServiceProvider
 {

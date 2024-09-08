@@ -3,7 +3,7 @@
 namespace Sokeio\Pages;
 
 use Sokeio\Concerns\WithPageAdminGuest;
-use Sokeio\Menu\MenuManager;
+use Sokeio\Support\Menu\MenuManager;
 use Sokeio\Platform;
 
 class Dashboard extends \Sokeio\Page

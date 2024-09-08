@@ -4,11 +4,11 @@ namespace Sokeio;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
-use Sokeio\Livewire\Component;
-use Sokeio\Livewire\Concerns\WithLivewirePage;
-use Sokeio\Menu\MenuItem;
-use Sokeio\Menu\MenuManager;
-use Sokeio\Platform\ItemInfo;
+use Sokeio\Support\Livewire\Component;
+use Sokeio\Support\Livewire\Concerns\WithLivewirePage;
+use Sokeio\Support\Menu\MenuItem;
+use Sokeio\Support\Menu\MenuManager;
+use Sokeio\Support\Platform\ItemInfo;
 
 class Page extends Component implements IPage
 {
@@ -23,7 +23,7 @@ class Page extends Component implements IPage
             ->map([Str::class, 'kebab'])->join('/');
         $nameRoute = static::pageName() ??  ($itemInfo
             ->getPackage()
-            ->shortName() . '-page.' . str($url)->replace('\\', '.')->kebab());
+            ->shortName() . '-page.' . str($url)->split('/\\\\/', -1)->map([Str::class, 'kebab'])->join('.'));
 
         if (static::pageAdmin()) {
             if (static::pageAuth() && static::menuEnabled()) {

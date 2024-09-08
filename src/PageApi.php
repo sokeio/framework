@@ -4,7 +4,7 @@ namespace Sokeio;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
-use Sokeio\Platform\ItemInfo;
+use Sokeio\Support\Platform\ItemInfo;
 
 abstract class PageApi  implements IPage
 {

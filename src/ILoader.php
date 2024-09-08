@@ -2,7 +2,7 @@
 
 namespace Sokeio;
 
-use Sokeio\Platform\ItemInfo;
+use Sokeio\Support\Platform\ItemInfo;
 
 interface ILoader
 {
