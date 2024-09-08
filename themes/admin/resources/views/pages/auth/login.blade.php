@@ -2,7 +2,7 @@
     <div class="container container-tight py-4">
         <div class="text-center mb-4">
             <a href="." class="navbar-brand navbar-brand-autodark">
-                {!! \Sokeio\Platform::logoFull() !!}
+                {!! \Sokeio\Platform::logoFull('200px') !!}
             </a>
         </div>
         <div class="card card-md">
