@@ -28,6 +28,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static \Sokeio\Platform\GateManager gate()
  * @method static void scanAllClass($directory, $namespace, callable $callback = null, callable $filter = null)
  * @method static void runLoader(\Sokeio\Platform\ItemInfo $item, $path, $namespace, $aliasPrefix = '')
+ * @method static string logoFull()
+ * @method static string logo()
  */
 class Platform extends Facade
 {

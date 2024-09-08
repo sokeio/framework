@@ -11,12 +11,12 @@ class LivewireLoader implements IPipeLoader
 {
     public function handle(ItemInfo $item, Closure $next): mixed
     {
-        // Platform::runLoader(
-        //     $item,
-        //     $item->getPackage()->basePath('Pages'),
-        //     $item->namespace . '\\Pages',
-        //     $item->getPackage()->shortName() . '::pages'
-        // );
+        Platform::runLoader(
+            $item,
+            $item->getPackage()->basePath('Livewire'),
+            $item->namespace . '\\Livewire',
+            $item->getPackage()->shortName() . '::'
+        );
         return $next($item);
     }
 }

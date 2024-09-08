@@ -4,7 +4,6 @@ namespace Sokeio;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
-use Sokeio\Support\Livewire\Component;
 use Sokeio\Support\Livewire\Concerns\WithLivewirePage;
 use Sokeio\Support\Menu\MenuItem;
 use Sokeio\Support\Menu\MenuManager;

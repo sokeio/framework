@@ -2,6 +2,7 @@
 
 namespace Sokeio\Support\Platform\Concerns;
 
+use Illuminate\Support\Facades\File;
 use Sokeio\Support\Platform\ItemManager;
 
 trait WithPlatform
@@ -11,10 +12,25 @@ trait WithPlatform
     private $pathPlatform;
     private $callbackBooting = [];
     private $callbackBooted = [];
-
+    private $logoFull;
+    private $logo;
     public function version()
     {
         return $this->version ?? ($this->version = config('sokeio.version'));
+    }
+    public function logoFull($with = '100%')
+    {
+        if (!$this->logoFull && File::exists(__DIR__ . '/../../../../public/sokeio-full.svg')) {
+            $this->logoFull = file_get_contents(__DIR__ . '/../../../../public/sokeio-full.svg');
+        }
+        return str($this->logoFull ?? '')->replace('width="100%"', 'width="' . $with . '"')->toString();
+    }
+    public function logo($with = '100%')
+    {
+        if (!$this->logo && File::exists(__DIR__ . '/../../../../public/sokeio.svg')) {
+            $this->logo = file_get_contents(__DIR__ . '/../../../../public/sokeio.svg');
+        }
+        return str($this->logo ?? '')->replace('width="100%"', 'width="' . $with . '"')->toString();
     }
     public function adminUrl()
     {

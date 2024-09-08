@@ -43,6 +43,7 @@ trait WithLivewireComponent
             ->explode('.')
             ->map([Str::class, 'kebab'])
             ->implode('.');
+        $alias = str($alias)->replace('::.', '::')->toString();
         // fix class namespace
         $alias_class = $this->getLivewireNameByClass($class);
         if (Str::endsWith($class, ['\Index', '\index'])) {

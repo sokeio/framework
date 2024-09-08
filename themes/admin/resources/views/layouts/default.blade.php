@@ -6,7 +6,8 @@
     @csrf
 </head>
 
-<body>
+<body :data-bs-theme="themeDark && 'dark'"
+x-data="{ themeDark: false, toggleTheme() {  this.themeDark = !this.themeDark; }}">
     @themeBody
     <div class="page">
         @themeInclude('shared.header')
