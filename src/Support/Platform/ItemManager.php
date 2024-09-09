@@ -58,6 +58,7 @@ class ItemManager
                 }
             }
             $itemInfo->boot();
+            $itemInfo->autoAssets();
             $itemInfo->makePublic();
         }
     }

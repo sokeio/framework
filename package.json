@@ -4,9 +4,7 @@
     "dev": "vite",
     "build": "vite build",
     "watch": "vite build --watch",
-    "preview": "vite preview",
-    "reinstall": "node ./vendor/sokeio/sokeio/reinstall.js",
-    "rebuild": "node ./vendor/sokeio/sokeio/rebuild.js"
+    "preview": "vite preview"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",

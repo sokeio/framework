@@ -7,6 +7,7 @@ use Sokeio\ObjectJson;
 use Sokeio\Platform;
 use Sokeio\Support\Platform\Concerns\WithRegisterItemInfo;
 use Sokeio\ServicePackage;
+use Sokeio\Theme;
 
 class ItemInfo extends ObjectJson
 {
@@ -66,6 +67,21 @@ class ItemInfo extends ObjectJson
             // remove .blade.php
             return str_replace('.blade.php', '', $file->getRelativePathname());
         })->toArray();
+    }
+    public function autoAssets(): void
+    {
+        $pathPublic = $this->path . '/public/';
+       
+        if (file_exists($pathPublic . 'build/manifest.json')) {
+            $manifest = json_decode(file_get_contents($pathPublic . 'build/manifest.json'), true);
+            $url = url('platform/' . $this->getManager()->getItemType() . 's/' . $this->name . '/build');
+            if (isset($manifest['resources/js/app.js']['file'])) {
+                Theme::linkJs($url . '/' . $manifest['resources/js/app.js']['file']);
+            }
+            if (isset($manifest['resources/sass/app.scss']['file'])) {
+                Theme::linkCss($url . '/' . $manifest['resources/sass/app.scss']['file']);
+            }
+        }
     }
     /**
      * Copy the public folder of this item to the public_path('platform/$itemType/$name')
