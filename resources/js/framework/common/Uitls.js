@@ -11,10 +11,12 @@ function getComponentsFromText(htmlString) {
     };
   });
 }
+const tagSplit = "############$$$$$$$$############";
 function LOG(...args) {
   console.log(...args);
 }
 export const Utils = {
   getComponentsFromText,
   LOG,
+  tagSplit,
 };
