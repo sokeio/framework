@@ -1,8 +1,10 @@
+import Component from "./Component";
+
 class Application extends Component {
   number = 1000;
+  number = new Date().getTime();
+  components = {};
   constructor() {
-    this.number = new Date().getTime();
-    this.components = {};
     return super();
   }
   nextId() {
