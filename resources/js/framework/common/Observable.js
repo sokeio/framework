@@ -1,6 +1,7 @@
 class Observable {
   constructor() {
     this.state = this.state ?? {};
+    this.props = this.props ?? {};
     this.listeners = {};
 
     // Sử dụng Proxy để theo dõi sự thay đổi
@@ -14,15 +15,23 @@ class Observable {
           target.applyProperty(property, value, oldValue);
           return true; // Trả về true để xác nhận thay đổi
         }
+        if (property in target.props) {
+          const oldValue = target.props[property];
+          target.props[property] = value;
+
+          // Kích hoạt onChange nếu có listener
+          target.applyProperty(property, value, oldValue);
+          return true; // Trả về true để xác nhận thay đổi
+        }
         target[property] = value; // Trả về undefined nếu không tìm thể
         return false;
       },
       get: (target, property) => {
-        if (
-          property in target.state ||
-          ["state", "listeners"].includes(property)
-        ) {
+        if (property in target.state) {
           return target.state[property];
+        }
+        if (property in target.props) {
+          return target.props[property];
         }
         return target[property]; // Trả về undefined nếu không tìm thấy
       },
