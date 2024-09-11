@@ -1,13 +1,13 @@
 import BaseFeature from "./base";
 
-class onFeature extends BaseFeature {
+class onEvent extends BaseFeature {
   selector = "so-on\\:";
   constructor(component) {
     super(component);
   }
 
   applyItem(el) {
-    console.log(el);
+    console.log({el});
     return;
   
     if (variable) {
@@ -18,4 +18,4 @@ class onFeature extends BaseFeature {
     }
   }
 }
-export default onFeature;
+export default onEvent;

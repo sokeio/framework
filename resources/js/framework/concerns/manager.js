@@ -1,10 +1,10 @@
 import BindHtml from "./bind-html";
 import BindModel from "./bind-model";
 import BindText from "./bind-text";
-import onFeature from "./on";
+import onEvent from "./on-event";
 
 class FeatureManager {
-  chain = [BindText, BindHtml, BindModel, onFeature];
+  chain = [BindText, BindHtml, BindModel, onEvent];
   run(component) {
     this.chain.forEach((feature) => {
       new feature(component).run();

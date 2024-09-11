@@ -1,6 +1,6 @@
 import Observable from "./common/Observable";
 import { Utils } from "./common/Uitls";
-import { featureManager } from "./concerns/feature";
+import { featureManager } from "./concerns/manager";
 
 class Component extends Observable {
   number = new Date().getTime();
