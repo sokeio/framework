@@ -1,5 +1,6 @@
 import Observable from "./common/Observable";
 import { Utils } from "./common/Uitls";
+import { featureManager } from "./concerns/feature";
 
 class Component extends Observable {
   number = new Date().getTime();
@@ -27,7 +28,7 @@ class Component extends Observable {
     });
     if (tempComponents.length) {
       let templHtml = "";
-      html.split(tagSplit).forEach((item, index) => {
+      html.split(Utils.tagSplit).forEach((item, index) => {
         templHtml += item;
         if (tempComponents[index]) {
           templHtml +=
@@ -50,32 +51,41 @@ class Component extends Observable {
     if (!this.el) {
       this.el = document.createElement("div");
     }
-    this.el.innerHTML = html;
-    if (this.el.children.length !== 1) {
-      let eltemp = this.el.children[0];
-      this.el.parentNode.insertBefore(eltemp, this.el);
-      this.el.remove();
-      this.el = eltemp;
+    if (html) {
+      this.el.innerHTML = html;
+    }
+    if (this.el.children.length) {
+      if (html && this.el.parentNode) {
+        let eltemp = this.el.children[0];
+        this.el.parentNode.insertBefore(eltemp, this.el);
+        this.el.remove();
+        this.el = eltemp;
+      }
+
+      let temp = this.applyComponent(this.el.innerHTML);
+      if (temp) {
+        this.el = temp;
+      }
       this.el.setAttribute("data-sokeio-id", this.getId());
-      this.applyComponent(this.el.innerHTML);
+      this.el.__sokeio = this;
+      featureManager.run(this);
       this.children.forEach((item) => {
         if (!item) return;
         item.parent = this;
         item.renderComponent();
         let elTemp = this.el.querySelector("#sokeio-component-" + item.getId());
+        if (!elTemp) return;
         elTemp.parentNode.insertBefore(item.el, elTemp);
         elTemp.remove();
       });
-    } else {
+    } else if (!this.el.innerHTML) {
       this.el.innerHTML = "[NOT ONE COMPONENT]";
     }
   }
   render() {
     return "";
   }
-  run() {
-    //
-  }
+  boot() {}
   ready() {
     //TODO:
   }

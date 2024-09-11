@@ -1,4 +1,5 @@
 function getComponentsFromText(htmlString) {
+  
   const regexComponent =
     /\[([\w-:]+)((?:\s+\w+\s*=\s*"[^"]*")*)(\](.*?)\[\/\1\]|\s*\/\])/gs;
   return [...htmlString.matchAll(regexComponent)].map((match) => {

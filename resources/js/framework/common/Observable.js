@@ -1,8 +1,10 @@
 class Observable {
+  listeners = {};
+  state = {};
+  props = {};
   constructor() {
     this.state = this.state ?? {};
     this.props = this.props ?? {};
-    this.listeners = {};
 
     // Sử dụng Proxy để theo dõi sự thay đổi
     return new Proxy(this, {
@@ -12,7 +14,9 @@ class Observable {
           target.state[property] = value;
 
           // Kích hoạt onChange nếu có listener
-          target.applyProperty(property, value, oldValue);
+          setTimeout(() => {
+            target.applyProperty(property, value, oldValue);
+          }, 1);
           return true; // Trả về true để xác nhận thay đổi
         }
         if (property in target.props) {
@@ -20,11 +24,13 @@ class Observable {
           target.props[property] = value;
 
           // Kích hoạt onChange nếu có listener
-          target.applyProperty(property, value, oldValue);
+          setTimeout(() => {
+            target.applyProperty(property, value, oldValue);
+          }, 1);
           return true; // Trả về true để xác nhận thay đổi
         }
         target[property] = value; // Trả về undefined nếu không tìm thể
-        return false;
+        return true;
       },
       get: (target, property) => {
         if (property in target.state) {
