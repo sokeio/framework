@@ -2,9 +2,6 @@ import BaseFeature from "./base";
 
 class BindHtml extends BaseFeature {
   selector = "so-html";
-  constructor(component) {
-    super(component);
-  }
 
   applyItem(el) {
     let variable = el.getAttribute(this.selector);

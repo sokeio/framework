@@ -2,9 +2,6 @@ import BaseFeature from "./base";
 
 class BindModel extends BaseFeature {
   selector = "so-model";
-  constructor(component) {
-    super(component);
-  }
 
   applyItem(el) {
     let variable = el.getAttribute(this.selector);

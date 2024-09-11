@@ -8,6 +8,9 @@ class Observable {
 
     // Sử dụng Proxy để theo dõi sự thay đổi
     return new Proxy(this, {
+      ownKeys(target) {
+        return Object.keys(target.state).concat(Object.keys(target.props));
+      },
       set: (target, property, value) => {
         if (property in target.state) {
           const oldValue = target.state[property];

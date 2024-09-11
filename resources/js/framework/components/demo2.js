@@ -17,7 +17,9 @@ export class Demo2 extends Component {
             <option value="3">3</option>
             <option value="4">4</option>
             </select>
-            <textarea so-model="tesst" so-on:dblclick="tesst = $event.target.value"></textarea>
+            <textarea so-model="tesst" ></textarea>
+            <button so-on:click="tesst=new Date().getTime();">click</button>
+            <button so-on:click="this.tesst=new Date().getTime();">click2</button>
         </div>
         `;
   }
