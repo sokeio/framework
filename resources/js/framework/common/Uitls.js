@@ -36,7 +36,6 @@ function getMethods(obj) {
 function mapObservableProxy(app) {
   let obj = {};
   Reflect.ownKeys(app).forEach((key) => {
-    console.log(key);
     // Định nghĩa getter và setter cho thuộc tính value
     Object.defineProperty(obj, key, {
       get() {
