@@ -10,6 +10,7 @@ class Component extends Observable {
   manager;
   parent;
   children = [];
+  elApp = null;
   el;
   $id;
   getId() {
@@ -46,6 +47,20 @@ class Component extends Observable {
     template.innerHTML = html;
     return template.content.firstChild;
   }
+  onEvent(event, callback, selector = null) {
+    let arrEl = [this.el];
+    if (selector) {
+      arrEl = [...this.el.querySelectorAll(selector)];
+    }
+    if (!arrEl || !arrEl.length) return;
+    arrEl.forEach((item) => {
+      if (!item) return;
+      item.addEventListener(event, callback);
+      this.cleanup(() => {
+        item.removeEventListener(event, callback);
+      });
+    });
+  }
   renderComponent() {
     let html = this.render();
     if (!this.el) {
@@ -81,6 +96,9 @@ class Component extends Observable {
     } else if (!this.el.innerHTML) {
       this.el.innerHTML = "[NOT ONE COMPONENT]";
     }
+    if (this.elApp) {
+      this.elApp.appendChild(this.el);
+    }
   }
   render() {
     return "";
@@ -88,6 +106,20 @@ class Component extends Observable {
   boot() {}
   ready() {
     //TODO:
+  }
+  applyCleanup() {
+    this.children.forEach((item) => {
+      if (item) {
+        item.applyCleanup();
+      }
+    });
+    this.children = [];
+    super.applyCleanup();
+    this.el.parentNode.removeChild(this.el);
+    this.el = null;
+    this.parent = null;
+    this.$id = null;
+    this.children = null;
   }
 }
 

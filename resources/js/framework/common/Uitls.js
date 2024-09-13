@@ -15,9 +15,28 @@ const tagSplit = "############$$$$$$$$############";
 function LOG(...args) {
   console.log(...args);
 }
+function getMethods(obj) {
+  const isGetter = (x, name) =>
+    (Object.getOwnPropertyDescriptor(x, name) || {}).get;
+  const isFunction = (x, name) => typeof x[name] === "function";
+  const deepFunctions = (x) =>
+    x &&
+    x !== Object.prototype &&
+    Object.getOwnPropertyNames(x)
+      .filter((name) => isGetter(x, name) || isFunction(x, name))
+      .concat(deepFunctions(Object.getPrototypeOf(x)) || []);
+  const distinctDeepFunctions = (x) => Array.from(new Set(deepFunctions(x)));
+  const userFunctions = (x) =>
+    distinctDeepFunctions(x).filter(
+      (name) => name !== "constructor" && !~name.indexOf("__")
+    );
+  return userFunctions(obj);
+}
+
 function mapObservableProxy(app) {
   let obj = {};
-  Object.keys(app.state).forEach((key) => {
+  Reflect.ownKeys(app).forEach((key) => {
+    console.log(key);
     // Định nghĩa getter và setter cho thuộc tính value
     Object.defineProperty(obj, key, {
       get() {
@@ -43,4 +62,5 @@ export const Utils = {
   LOG,
   tagSplit,
   runFunction,
+  getMethods,
 };

@@ -1,5 +1,8 @@
+import { Utils } from "./Uitls";
+
 class Observable {
   listeners = {};
+  removeListeners = [];
   state = {};
   props = {};
   constructor() {
@@ -9,7 +12,24 @@ class Observable {
     // Sử dụng Proxy để theo dõi sự thay đổi
     return new Proxy(this, {
       ownKeys(target) {
-        return Object.keys(target.state).concat(Object.keys(target.props));
+        return Object.keys(target.state)
+          .concat(Object.keys(target.props))
+          .concat(Object.keys(target))
+          .concat(Utils.getMethods(target))
+          .filter((item, index, items) => {
+            return items.indexOf(item) === index;
+          })
+          .filter(
+            (item) =>
+              ![
+                "elApp",
+                "state",
+                "props",
+                "listeners",
+                "removeListeners",
+                "number",
+              ].includes(item)
+          );
       },
       set: (target, property, value) => {
         if (property in target.state) {
@@ -46,7 +66,9 @@ class Observable {
       },
     });
   }
-
+  cleanup(callback) {
+    this.removeListeners.push(callback);
+  }
   // Phương thức để đăng ký listener
   watch(property, callback) {
     if (!this.listeners[property]) {
@@ -58,6 +80,11 @@ class Observable {
     if (this.listeners[property]) {
       this.listeners[property].forEach((callback) => callback(value, oldValue));
     }
+  }
+  applyCleanup() {
+    this.removeListeners.forEach((callback) => callback());
+    this.removeListeners = [];
+    this.listeners = {};
   }
 
   // Phương thức để gán giá trị và kích hoạt onChange

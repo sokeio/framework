@@ -18,6 +18,11 @@ class onEvent extends BaseFeature {
         el.addEventListener(eventName, (e) => {
           Utils.runFunction(variable, e, this.component);
         });
+        this.component.cleanup(() => {
+          el.removeEventListener(eventName, (e) => {
+            Utils.runFunction(variable, e, this.component);
+          });
+        });
       }
     });
   }

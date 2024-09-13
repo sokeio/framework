@@ -7,6 +7,7 @@ class Application extends Component {
     "sokeio::demo": Demo,
     "sokeio::demo2": Demo2,
   };
+  template = null;
   registerComponent(name, component) {
     this.components[name] = component;
   }
@@ -21,13 +22,12 @@ class Application extends Component {
     return component;
   }
   render() {
-    return `
-    <div>
-    Tesst [sokeio::demo /]
-    </div>
-    `;
+    if (this.template) {
+      return this.template;
+    }
+    return `<div>Tesst [sokeio::demo /] </div>`;
   }
-  run(querySelectorOrEl = null) {
+  run(querySelectorOrEl = null, template = null) {
     if (!querySelectorOrEl) {
       querySelectorOrEl = document.body;
     }
@@ -36,8 +36,9 @@ class Application extends Component {
     }
     this.manager = this;
     this.el = null;
+    this.template = template;
+    this.elApp = querySelectorOrEl;
     this.renderComponent();
-    querySelectorOrEl.appendChild(this.el);
   }
 }
 

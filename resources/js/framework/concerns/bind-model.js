@@ -14,6 +14,11 @@ class BindModel extends BaseFeature {
       el.addEventListener("input", (e) => {
         this.component[variable] = e.target.value;
       });
+      this.component.cleanup(() => {
+        el.removeEventListener("input", (e) => {
+          this.component[variable] = e.target.value;
+        });
+      });
     }
   }
 }
