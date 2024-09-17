@@ -1,6 +1,4 @@
-import Component from "../Component";
-
-export class Demo extends Component {
+export default {
   render() {
     return `
         <div>
@@ -8,5 +6,5 @@ export class Demo extends Component {
             [sokeio::demo2 /]
         </div>
         `;
-  }
-}
+  },
+};

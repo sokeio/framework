@@ -56,10 +56,41 @@ function runFunction(txtFunc, $event, app) {
     [$event, mapObservableProxy(app)]
   );
 }
+function dataSet(object, key, value) {
+  if (!key || !object) {
+    return;
+  }
+  let segments = key.split(".");
+
+  if (segments.length === 1) {
+    object[key] = value;
+    return object[key];
+  }
+
+  let firstSegment = segments.shift();
+  let restOfSegments = segments.join(".");
+  if (firstSegment) {
+    if (object[firstSegment] === undefined) {
+      object[firstSegment] = {};
+    }
+    this.dataSet(object[firstSegment], restOfSegments, value);
+  }
+}
+function dataGet(object, key) {
+  if (key === "" || !key) return object;
+
+  return key.split(".").reduce((carry, i) => {
+    if (carry === undefined) return undefined;
+
+    return carry[i];
+  }, object);
+}
 export const Utils = {
   getComponentsFromText,
   LOG,
   tagSplit,
   runFunction,
   getMethods,
+  dataSet,
+  dataGet,
 };

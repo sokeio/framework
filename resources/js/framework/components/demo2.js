@@ -1,9 +1,7 @@
-import Component from "../Component";
-
-export class Demo2 extends Component {
-  state = {
+export default {
+  state: {
     tesst: "<h1>hello world</h1>test",
-  };
+  },
   render() {
     return `
         <div>
@@ -22,5 +20,5 @@ export class Demo2 extends Component {
             <button so-on:click="this.tesst=new Date().getTime();">click2</button>
         </div>
         `;
-  }
-}
+  },
+};
