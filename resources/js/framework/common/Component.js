@@ -14,9 +14,12 @@ export function getComponents() {
   return components;
 }
 export function getComponent($name, $props, $parent = null) {
-  if (!components[$name]) {
+  if (!components[$name] && !$parent?.components[$name]) {
     console.error("Component not found: " + $name);
     return null;
+  }
+  if ($parent?.components[$name]) {
+    return Component($parent?.components[$name], $props, $parent);
   }
   return Component(components[$name], $props, $parent);
 }
@@ -49,6 +52,51 @@ function getChildComponent(component) {
 
   return component;
 }
+export function doBoot(component) {
+  let html = component.render ? component.render() : "<div></div>";
+  html = html.trim();
+  component.$el = Utils.convertHtmlToElement(html);
+  getChildComponent(component);
+  feature(component);
+  if (component.$children) {
+    component.$children.forEach((item) => {
+      doBoot(item);
+      item.boot && item.boot();
+    });
+  }
+}
+export function doRender(component) {
+  if (component.$children) {
+    component.$children.forEach((item) => {
+      let elTemp = component.$el.querySelector(
+        "#sokeio-component-" + item.getId()
+      );
+      elTemp.parentNode.insertBefore(item.$el, elTemp);
+      elTemp.remove();
+      doRender(item);
+    });
+  }
+  if (component.$el) {
+    component.$el.setAttribute("data-sokeio-id", component.getId());
+    component.$el._sokeio = component;
+  }
+}
+export function doReady(component) {
+  if (component.$children) {
+    component.$children.forEach((item) => {
+      doReady(item);
+      item.ready && item.ready();
+    });
+  }
+}
+export function doDestroy(component) {
+  if (component.$children) {
+    component.$children.forEach((item) => {
+      doDestroy(item);
+      item.destroy && item.destroy();
+    });
+  }
+}
 export function Component($options, $props, $parent = null) {
   let component = {
     ...$options,
@@ -56,25 +104,13 @@ export function Component($options, $props, $parent = null) {
     $children: [],
     $id: 0,
     $el: null,
-    $manager: null,
   };
   let keys = Object.keys(component)
     .concat(Object.keys($options.state ?? {}))
     .concat(Object.keys($props))
     .concat(Utils.getMethods(component))
     .filter(fnFilter)
-    .concat([
-      "getId",
-      "watch",
-      "cleanup",
-      "doBoot",
-      "doRender",
-      "doUpdate",
-      "doDestroy",
-      "doReady",
-      "__data__",
-      "__props__",
-    ]);
+    .concat(["getId", "watch", "cleanup", "__data__", "__props__"]);
   Object.defineProperty(component, "getId", {
     value: function () {
       if (!this.$id) {
@@ -104,61 +140,6 @@ export function Component($options, $props, $parent = null) {
   Object.defineProperty(component, "cleanup", {
     value: function (property, callback) {
       this.__data__.cleanup(property, callback);
-    },
-  });
-
-  Object.defineProperty(component, "doBoot", {
-    value: function () {
-      let html = this.render ? this.render() : "<div></div>";
-      html = html.trim();
-      this.$el = Utils.convertHtmlToElement(html);
-      getChildComponent(this);
-      feature(this);
-      if (this.$children) {
-        this.$children.forEach((item) => {
-          item.doBoot();
-          item.boot && item.boot();
-        });
-      }
-    },
-  });
-
-  Object.defineProperty(component, "doRender", {
-    value: function () {
-      if (this.$children) {
-        this.$children.forEach((item) => {
-          let elTemp = this.$el.querySelector(
-            "#sokeio-component-" + item.getId()
-          );
-          elTemp.parentNode.insertBefore(item.$el, elTemp);
-          elTemp.remove();
-          item.doRender();
-        });
-      }
-      // if (this.$el) {
-      //   this.$el.setAttribute("data-sokeio-id", this.getId());
-      //   this.$el._sokeio = this;
-      // }
-    },
-  });
-  Object.defineProperty(component, "doReady", {
-    value: function () {
-      if (this.$children) {
-        this.$children.forEach((item) => {
-          item.doReady();
-        });
-      }
-    },
-  });
-
-  Object.defineProperty(component, "doDestroy", {
-    value: function () {
-      if (this.$children) {
-        this.$children.forEach((item) => {
-          item.doDestroy();
-          item.destroy && item.destroy();
-        });
-      }
     },
   });
 

@@ -1,4 +1,11 @@
-import { Component, registerComponent } from "./common/Component";
+import {
+  Component,
+  registerComponent,
+  doBoot as componentDoBoot,
+  doRender as componentDoRender,
+  doDestroy as componentDoDestroy,
+  doReady as componentDoReady,
+} from "./common/Component";
 
 let isReady = false;
 let isRegister = false;
@@ -26,20 +33,20 @@ export function register() {
   );
 }
 export function boot(component) {
-  component && component.doBoot();
+  componentDoBoot(component);
   document.dispatchEvent(new CustomEvent("sokeio::boot"));
 }
 export function render(component) {
-  component && component.doRender();
+  componentDoRender(component);
   document.dispatchEvent(new CustomEvent("sokeio::render"));
 }
 export function ready(component) {
-  component && component.doReady();
+  componentDoReady(component);
   document.dispatchEvent(new CustomEvent("sokeio::ready"));
   isReady = true;
 }
 export function destroy(component) {
-  component && component.doDestroy();
+  componentDoDestroy(component);
   document.dispatchEvent(new CustomEvent("sokeio::destroy"));
 }
 export function run(template = {}, querySelectorOrEl = null) {

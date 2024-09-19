@@ -1,6 +1,8 @@
 export default {
+  ready() {
+    console.log("ready");
+  },
   render() {
-    console.log("render");
     return `
         <div>
             <h1>hello world</h1>
