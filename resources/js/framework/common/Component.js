@@ -58,6 +58,23 @@ export function Component($options, $props, $parent = null) {
     $el: null,
     $manager: null,
   };
+  let keys = Object.keys(component)
+    .concat(Object.keys($options.state ?? {}))
+    .concat(Object.keys($props))
+    .concat(Utils.getMethods(component))
+    .filter(fnFilter)
+    .concat([
+      "getId",
+      "watch",
+      "cleanup",
+      "doBoot",
+      "doRender",
+      "doUpdate",
+      "doDestroy",
+      "doReady",
+      "__data__",
+      "__props__",
+    ]);
   Object.defineProperty(component, "getId", {
     value: function () {
       if (!this.$id) {
@@ -67,7 +84,7 @@ export function Component($options, $props, $parent = null) {
     },
   });
   Object.defineProperty(component, "__data__", {
-    value: new DataValue($options.state??{}),
+    value: new DataValue($options.state ?? {}),
   });
   Object.defineProperty(component, "__props__", {
     value: new DataValue($props),
@@ -146,13 +163,8 @@ export function Component($options, $props, $parent = null) {
   });
 
   return new Proxy(component, {
-    ownKeys: (target) => {
-      return target.__data__
-        .getKeys()
-        .concat(target.__props__.getKeys())
-        .concat(Utils.getMethods(target))
-        .concat(Object.keys(target))
-        .filter(fnFilter);
+    ownKeys: () => {
+      return keys;
     },
     set: (target, property, value) => {
       if (target.__data__.check(property)) {
