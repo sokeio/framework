@@ -85,6 +85,11 @@ function dataGet(object, key) {
     return carry[i];
   }, object);
 }
+function convertHtmlToElement(html) {
+  const template = document.createElement("template");
+  template.innerHTML = html;
+  return template.content.firstChild;
+}
 export const Utils = {
   getComponentsFromText,
   LOG,
@@ -93,4 +98,5 @@ export const Utils = {
   getMethods,
   dataSet,
   dataGet,
+  convertHtmlToElement,
 };

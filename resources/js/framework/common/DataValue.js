@@ -1,6 +1,7 @@
 export class DataValue {
   listeners = {};
   removeListeners = [];
+  data = {};
   constructor(data = undefined) {
     this.data = data ?? {};
   }
@@ -31,7 +32,7 @@ export class DataValue {
     this.listeners = {};
   }
   check(property) {
-    return property in this.data;
+    return this.data[property] !== undefined;
   }
   getKeys() {
     return Object.keys(this.data);

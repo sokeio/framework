@@ -19,7 +19,12 @@ class Dashboard extends \Sokeio\Page
     }
     public function render()
     {
-        Theme::js('window.sokeioApp.run("#test-app");');
+        Theme::js('window.sokeio.Application.run({
+        render(){
+            return `<div>1[demo::test/]2<span>test</span> 3[demo::test/]4 </div>`;
+        }
+        
+        },"#test-app");');
         return <<<html
         <div>
         <div id="test-app"></div>

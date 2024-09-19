@@ -1,3 +1,4 @@
+import feature from "../feature/_index";
 import { DataValue } from "./DataValue";
 import { Utils } from "./Uitls";
 
@@ -12,23 +13,66 @@ export function registerComponent(name, component) {
 export function getComponents() {
   return components;
 }
-export function getComponent($name, $props) {
-  return Component(components[$name], $props);
+export function getComponent($name, $props, $parent = null) {
+  if (!components[$name]) {
+    console.error("Component not found: " + $name);
+    return null;
+  }
+  return Component(components[$name], $props, $parent);
 }
-export function Component($options, $props) {
+function getChildComponent(component) {
+  let html = component.$el.innerHTML;
+
+  let components = Utils.getComponentsFromText(html);
+  let tempComponents = components.map((item) => {
+    html = html.split(item.component).join(Utils.tagSplit);
+    return getComponent(item.tag, item.attrs, component);
+  });
+  if (tempComponents.length) {
+    let templHtml = "";
+    html.split(Utils.tagSplit).forEach((item, index) => {
+      templHtml += item;
+      if (tempComponents[index]) {
+        templHtml +=
+          '<span id="sokeio-component-' +
+          tempComponents[index].getId() +
+          '">' +
+          tempComponents[index].getId() +
+          "</span>";
+      }
+    });
+    html = templHtml;
+    component.$children = tempComponents;
+  }
+
+  component.$el.innerHTML = html;
+
+  return component;
+}
+export function Component($options, $props, $parent = null) {
   let component = {
     ...$options,
+    $parent: $parent,
+    $children: [],
+    $id: 0,
+    $el: null,
+    $manager: null,
   };
+  Object.defineProperty(component, "getId", {
+    value: function () {
+      if (!this.$id) {
+        this.$id = ++number;
+      }
+      return this.$id;
+    },
+  });
   Object.defineProperty(component, "__data__", {
-    value: new DataValue($options.state),
+    value: new DataValue($options.state??{}),
   });
   Object.defineProperty(component, "__props__", {
     value: new DataValue($props),
   });
 
-  Object.defineProperty(component, "id", {
-    value: ++number,
-  });
   Object.defineProperty(component, "watch", {
     value: function (property, callback) {
       if (this.__data__.check(property)) {
@@ -45,6 +89,62 @@ export function Component($options, $props) {
       this.__data__.cleanup(property, callback);
     },
   });
+
+  Object.defineProperty(component, "doBoot", {
+    value: function () {
+      let html = this.render ? this.render() : "<div></div>";
+      html = html.trim();
+      this.$el = Utils.convertHtmlToElement(html);
+      getChildComponent(this);
+      feature(this);
+      if (this.$children) {
+        this.$children.forEach((item) => {
+          item.doBoot();
+          item.boot && item.boot();
+        });
+      }
+    },
+  });
+
+  Object.defineProperty(component, "doRender", {
+    value: function () {
+      if (this.$children) {
+        this.$children.forEach((item) => {
+          let elTemp = this.$el.querySelector(
+            "#sokeio-component-" + item.getId()
+          );
+          elTemp.parentNode.insertBefore(item.$el, elTemp);
+          elTemp.remove();
+          item.doRender();
+        });
+      }
+      // if (this.$el) {
+      //   this.$el.setAttribute("data-sokeio-id", this.getId());
+      //   this.$el._sokeio = this;
+      // }
+    },
+  });
+  Object.defineProperty(component, "doReady", {
+    value: function () {
+      if (this.$children) {
+        this.$children.forEach((item) => {
+          item.doReady();
+        });
+      }
+    },
+  });
+
+  Object.defineProperty(component, "doDestroy", {
+    value: function () {
+      if (this.$children) {
+        this.$children.forEach((item) => {
+          item.doDestroy();
+          item.destroy && item.destroy();
+        });
+      }
+    },
+  });
+
   return new Proxy(component, {
     ownKeys: (target) => {
       return target.__data__

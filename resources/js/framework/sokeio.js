@@ -1,10 +1,15 @@
-import Application from "./Application";
-import Component from "./Component";
+import demo from "./components/demo";
+import demo2 from "./components/demo2";
+import * as lifecycle from "./lifecycle";
+
+document.addEventListener(
+  "sokeio::register",
+  ({ detail: { registerComponent } }) => {
+    registerComponent("demo::test", demo);
+    registerComponent("sokeio::demo2", demo2);
+  }
+);
 
 window.sokeio = {
-  Application: Application,
-  Component: Component,
+  Application: lifecycle,
 };
-window.sokeioApp = new Application();
-
-export default window.sokeioApp;
