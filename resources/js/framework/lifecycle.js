@@ -55,8 +55,9 @@ export function run(template = {}, options = {}) {
     isRegister = true;
   }
   let querySelectorOrEl = options.selector;
-  let init = options.init;
+  let init = options.init === undefined ? true : options.init;
   document.dispatchEvent(new CustomEvent("sokeio::run"));
+  console.log(options.props);
   let appComponent = new Component(template, options.props ?? {});
   if (init) {
     boot(appComponent);

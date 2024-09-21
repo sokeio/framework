@@ -20,7 +20,8 @@ export default {
     });
   },
   closeModal() {
-    this.delete();
+    alert(this.url);
+    // this.delete();
   },
   showModal(url, data, callback, type) {},
   ready() {},

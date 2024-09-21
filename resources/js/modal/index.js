@@ -6,5 +6,5 @@ window.showModal = function (
   callback = undefined,
   type = "modal"
 ) {
-  window.sokeioUI.run(modal).showModal(url, data, callback, type);
+  window.sokeioUI.run(modal, { props: { url, data, callback, type } });
 };
