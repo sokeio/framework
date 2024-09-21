@@ -8,7 +8,7 @@ use Sokeio\Theme;
 class Dashboard extends \Sokeio\Page
 {
     use WithPageAdminGuest;
-    public $test;
+    public $test = "abc";
     public static function pageUrl()
     {
         return '/';
@@ -27,7 +27,10 @@ class Dashboard extends \Sokeio\Page
         // },"#test-app");');
         return <<<html
         <div>
-        <input wire:get-value="test" wire:model="test"/>
+        <input wire:tinymce wire:model="test"/>
+        <input wire:model="test"/>
+        <div wire:qrcode="test"></div>
+        <div wire:countup="1000"></div>
         </div>
 html;
     }

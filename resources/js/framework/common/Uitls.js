@@ -97,15 +97,13 @@ let addScriptToWindow = function (source) {
   if (!Array.isArray(source)) {
     source = [source];
   }
-  for (let src in source) {
+  console.log(source);
+  const prior = document.getElementsByTagName("script")[0];
+  source.forEach((src) => {
     let script = document.createElement("script");
-    const prior = document.getElementsByTagName("script")[0];
-    script.onload = onResolve;
-    script.onreadystatechange = onResolve;
-    script.onerror = onResolve;
     script.src = src;
     prior.parentNode.insertBefore(script, prior);
-  }
+  });
 };
 let addStyleToWindow = function (source) {
   if (!source) {
@@ -114,18 +112,13 @@ let addStyleToWindow = function (source) {
   if (!Array.isArray(source)) {
     source = [source];
   }
-  for (let src in source) {
-    if (document.querySelector('link[href="' + source + '"]')) {
-      continue;
-    }
+  const prior = document.getElementsByTagName("link")[0];
+  source.forEach((src) => {
     let script = document.createElement("link");
-    const prior = document.getElementsByTagName("link")[0];
-
-    script.async = async;
     script.rel = "stylesheet";
     script.href = src;
     prior.parentNode.insertBefore(script, prior);
-  }
+  });
 };
 export const Utils = {
   getComponentsFromText,
