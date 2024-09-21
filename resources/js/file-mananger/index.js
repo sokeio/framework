@@ -1,4 +1,5 @@
 import manager from "./component/manager";
 
-// let FileManager = window.sokeioUI.run(manager);
-// export default FileManager;
+window.showFileManager = function (callback, type = "file") {
+  window.sokeioUI.run(manager).showFileManager(callback, type);
+};

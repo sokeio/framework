@@ -1,7 +1,34 @@
-.so-file-manager {
+.fm-body-wrapper{
+    overflow: hidden !important;
+}
+.so-fm {
     width: 100%;
     height: 100%;
     position: absolute;
     top: 0;
     left: 0;
+
+    .so-fm-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.3);
+        z-index: 1056 !important;
+    }
+
+    .so-fm-application {
+        width: 80%;
+        min-width: 400px;
+        height: 80%;
+        min-height: 300px;
+        display: flex;
+
+        .so-fm-header {}
+
+        .so-fm-body {}
+
+        .so-fm-footer {}
+    }
 }

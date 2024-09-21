@@ -97,7 +97,6 @@ let addScriptToWindow = function (source) {
   if (!Array.isArray(source)) {
     source = [source];
   }
-  console.log(source);
   const prior = document.getElementsByTagName("script")[0];
   source.forEach((src) => {
     let script = document.createElement("script");

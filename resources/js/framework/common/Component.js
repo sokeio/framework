@@ -61,9 +61,9 @@ export function doBoot(component) {
   if (component.$children) {
     component.$children.forEach((item) => {
       doBoot(item);
-      item.boot && item.boot();
     });
   }
+  component.boot && component.boot();
 }
 export function doRender(component) {
   if (component.$children) {
@@ -85,17 +85,23 @@ export function doReady(component) {
   if (component.$children) {
     component.$children.forEach((item) => {
       doReady(item);
-      item.ready && item.ready();
     });
   }
+  component.ready && component.ready();
 }
 export function doDestroy(component) {
   if (component.$children) {
     component.$children.forEach((item) => {
       doDestroy(item);
-      item.destroy && item.destroy();
     });
   }
+  component.destroy && component.destroy();
+  if (component.$hookDestroy) {
+    component.$hookDestroy.forEach((fn) => {
+      fn();
+    });
+  }
+  component.$hookDestroy = [];
 }
 export function Component($options, $props, $parent = null) {
   let component = {
@@ -104,13 +110,23 @@ export function Component($options, $props, $parent = null) {
     $children: [],
     $id: 0,
     $el: null,
+    $hookDestroy: [],
   };
   let keys = Object.keys(component)
     .concat(Object.keys($options.state ?? {}))
     .concat(Object.keys($props))
     .concat(Utils.getMethods(component))
     .filter(fnFilter)
-    .concat(["getId", "watch", "cleanup", "__data__", "__props__"]);
+    .concat([
+      "getId",
+      "watch",
+      "cleanup",
+      "boot",
+      "ready",
+      "destroy",
+      "__data__",
+      "__props__",
+    ]);
   Object.defineProperty(component, "getId", {
     value: function () {
       if (!this.$id) {
@@ -138,8 +154,19 @@ export function Component($options, $props, $parent = null) {
   });
 
   Object.defineProperty(component, "cleanup", {
-    value: function (property, callback) {
-      this.__data__.cleanup(property, callback);
+    value: function ($callback) {
+      if ($callback) {
+        this.$hookDestroy.push($callback);
+      }
+    },
+  });
+
+  Object.defineProperty(component, "reRender", {
+    value: function () {
+      doDestroy(this);
+      doBoot(this);
+      doRender(this);
+      doReady(this);
     },
   });
 

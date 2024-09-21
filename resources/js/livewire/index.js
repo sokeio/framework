@@ -5,16 +5,15 @@ let waitLoader = (setting, items, level) => {
     setting.init(items);
     return;
   }
-  if (level > 5) {
+  if (level > 20) {
     return;
   }
   setTimeout(() => {
     waitLoader(setting, items, level + 1);
-  }, 100);
+  }, 50);
 };
 document.addEventListener("livewire:init", () => {
   Object.keys(directive).forEach(function (key) {
-    console.log(key);
     let setting = directive[key];
     ///{ el, directive, component }
     window.Livewire.directive(key, (items) => {
