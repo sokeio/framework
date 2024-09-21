@@ -4,12 +4,13 @@ export default {
   components: {
     "so-filemanager::header": header,
   },
-  boot(){
-    document.body.classList.add('fm-body-wrapper');
+  boot() {
+    document.body.classList.add("fm-body-wrapper");
+    this.cleanup(function(){
+      
+    })
   },
-  showFileManager(callback, type = "file") {
-
-  },
+  showFileManager(callback, type = "file") {},
   render() {
     return `<div class="so-fm">
         <div class="so-fm-overlay"></div>
