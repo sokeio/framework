@@ -88,6 +88,11 @@ export function doReady(component) {
     });
   }
   component.ready && component.ready();
+  if (component.$hookReady) {
+    component.$hookReady.forEach((fn) => {
+      fn.bind(component)();
+    });
+  }
 }
 export function doDestroy(component) {
   if (component.$children) {
@@ -98,10 +103,14 @@ export function doDestroy(component) {
   component.destroy && component.destroy();
   if (component.$hookDestroy) {
     component.$hookDestroy.forEach((fn) => {
-      fn();
+      fn.bind(component)();
     });
   }
+  component.$el.remove();
   component.$hookDestroy = [];
+  component.$hookReady = [];
+  component.$children = [];
+  component.$el = null;
 }
 export function Component($options, $props, $parent = null) {
   let component = {
@@ -111,6 +120,7 @@ export function Component($options, $props, $parent = null) {
     $id: 0,
     $el: null,
     $hookDestroy: [],
+    $hookReady: [],
   };
   let keys = Object.keys(component)
     .concat(Object.keys($options.state ?? {}))
@@ -123,10 +133,18 @@ export function Component($options, $props, $parent = null) {
       "cleanup",
       "boot",
       "ready",
+      "delete",
       "destroy",
+      "onReady",
+      "reRender",
+      "querySelectorAll",
+      "on",
       "__data__",
       "__props__",
-    ]);
+    ])
+    .filter(function (item, index, self) {
+      return self.indexOf(item) === index;
+    });
   Object.defineProperty(component, "getId", {
     value: function () {
       if (!this.$id) {
@@ -142,6 +160,32 @@ export function Component($options, $props, $parent = null) {
     value: new DataValue($props),
   });
 
+  Object.defineProperty(component, "querySelectorAll", {
+    value: function (selector, callback) {
+      this.onReady(function () {
+        if (this.$el) {
+          let arr = [...this.$el.querySelectorAll(selector)];
+          if (callback) {
+            callback.bind(this)(arr);
+          }
+          return arr;
+        }
+      });
+    },
+  });
+  Object.defineProperty(component, "on", {
+    value: function (selector, event, callback) {
+      this.querySelectorAll(selector, (arr) => {
+        arr.forEach((item) => {
+          console.log(event, item, callback);
+          item.addEventListener(event, callback);
+          this.$hookDestroy.push(() => {
+            item.removeEventListener(event, callback);
+          });
+        });
+      });
+    },
+  });
   Object.defineProperty(component, "watch", {
     value: function (property, callback) {
       if (this.__data__.check(property)) {
@@ -153,10 +197,22 @@ export function Component($options, $props, $parent = null) {
     },
   });
 
+  Object.defineProperty(component, "delete", {
+    value: function () {
+      doDestroy(this);
+    },
+  });
   Object.defineProperty(component, "cleanup", {
     value: function ($callback) {
       if ($callback) {
         this.$hookDestroy.push($callback);
+      }
+    },
+  });
+  Object.defineProperty(component, "onReady", {
+    value: function ($callback) {
+      if ($callback) {
+        this.$hookReady.push($callback);
       }
     },
   });
