@@ -49,24 +49,28 @@ export function destroy(component) {
   componentDoDestroy(component);
   document.dispatchEvent(new CustomEvent("sokeio::destroy"));
 }
-export function run(template = {}, querySelectorOrEl = null) {
+export function run(template = {}, options = {}) {
   if (!isRegister) {
     register();
     isRegister = true;
   }
+  let querySelectorOrEl = options.selector;
+  let init = options.init;
   document.dispatchEvent(new CustomEvent("sokeio::run"));
-  let appComponent = new Component(template, {});
-  boot(appComponent);
-  render(appComponent);
-  ready(appComponent);
-  if (!querySelectorOrEl) {
-    querySelectorOrEl = document.body;
-  }
-  if (typeof querySelectorOrEl === "string") {
-    querySelectorOrEl = document.querySelector(querySelectorOrEl);
-  }
-  if (querySelectorOrEl) {
-    querySelectorOrEl.appendChild(appComponent.$el);
+  let appComponent = new Component(template, options.props ?? {});
+  if (init) {
+    boot(appComponent);
+    render(appComponent);
+    ready(appComponent);
+    if (!querySelectorOrEl) {
+      querySelectorOrEl = document.body;
+    }
+    if (typeof querySelectorOrEl === "string") {
+      querySelectorOrEl = document.querySelector(querySelectorOrEl);
+    }
+    if (querySelectorOrEl) {
+      querySelectorOrEl.appendChild(appComponent.$el);
+    }
   }
   return appComponent;
 }

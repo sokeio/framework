@@ -5,10 +5,6 @@ export default {
     title: "ac",
   },
   boot() {
-    // this.on(".so-modal-overlay", "click", function () {
-    //   alert("1");
-    // });
-    // this.on(".so-modal-close", this.closeModal);
     let html = Utils.convertHtmlToElement(
       '<div class="so-modal-overlay"></div>'
     );
