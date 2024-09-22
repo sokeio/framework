@@ -2,7 +2,7 @@ import { Utils } from "../framework/common/Uitls";
 
 export default {
   state: {
-    title: "ac",
+    title: "",
   },
   boot() {
     let html = Utils.convertHtmlToElement(
@@ -14,16 +14,13 @@ export default {
     } else {
       document.body.appendChild(html);
     }
-    html.addEventListener("click", this.closeModal.bind(this));
     this.cleanup(function () {
       document.body.removeChild(html);
     });
   },
   closeModal() {
-    alert(this.url);
-    // this.delete();
+    this.delete();
   },
-  showModal(url, data, callback, type) {},
   ready() {},
   render() {
     return `<div class="so-modal" tabindex="-1" aria-modal="true" so-on:click="closeModal()" so-on:ignore=".so-modal-dialog">
