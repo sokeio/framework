@@ -5,6 +5,7 @@ import countup from "./directive/countup";
 import flatpickr from "./directive/flatpickr";
 import getValue from "./directive/get-value";
 import masonry from "./directive/masonry";
+import modal from "./directive/modal";
 import qrcode from "./directive/qrcode";
 import sortable from "./directive/sortable";
 import sortableGroup from "./directive/sortable-group";
@@ -23,5 +24,6 @@ export default {
   sortable,
   "sortable-group": sortableGroup,
   tagify,
-  tinymce
+  tinymce,
+  modal
 };

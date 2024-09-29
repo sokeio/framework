@@ -25,12 +25,11 @@ class Dashboard extends \Sokeio\Page
         // }
 
         // },"#test-app");');
+        Theme::js('');
         return <<<html
         <div>
-        <input wire:tinymce wire:model="test"/>
-        <input wire:model="test"/>
-        <div wire:qrcode="test"></div>
-        <div wire:countup="1000"></div>
+            <button class="btn btn-primary" wire:modal wire:modal.title="Choà mọig nừo" >demo</button>
+            
         </div>
 html;
     }

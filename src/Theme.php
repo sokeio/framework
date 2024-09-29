@@ -21,10 +21,10 @@ use Illuminate\Support\Facades\Facade;
  * @method static string getNamespace($isAdmin = false)
  * @method static Sokeio\Theme\ThemeManager enableCdn();
  * @method static Sokeio\Theme\ThemeManager disableCdn();
- * @method static Sokeio\Theme\ThemeManager js($content);
- * @method static Sokeio\Theme\ThemeManager jsFromPath($path);
- * @method static Sokeio\Theme\ThemeManager style($content);
- * @method static Sokeio\Theme\ThemeManager styleFromPath($path)
+ * @method static Sokeio\Theme\ThemeManager js($content, $id = null);
+ * @method static Sokeio\Theme\ThemeManager jsFromPath($path, $id = null);
+ * @method static Sokeio\Theme\ThemeManager style($content, $id = null);
+ * @method static Sokeio\Theme\ThemeManager styleFromPath($path, $id = null);
  * @method static Sokeio\Theme\ThemeManager linkCss($link, $cdn = null);
  * @method static Sokeio\Theme\ThemeManager linkJs($link, $cdn = null);
  * @method static Sokeio\Theme\ThemeManager bodyBefore($callback);

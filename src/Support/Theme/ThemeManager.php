@@ -77,32 +77,38 @@ class ThemeManager
         $this->useCdn = false;
         return $this;
     }
-    public function jsFromPath($path)
+    public function jsFromPath($path, $id = null)
     {
         if (file_exists($path)) {
-            return $this->js(file_get_contents($path));
+            return $this->js(file_get_contents($path), $id);
         }
         return $this;
     }
-    public function js($content)
+    public function js($content, $id = null)
     {
         $content = trim($content);
         $key = md5($content);
-        $this->arrJavascript[$key] = $content;
+        $this->arrJavascript[$key] = [
+            'content' => $content,
+            'id' => $id
+        ];
         return $this;
     }
-    public function styleFromPath($path)
+    public function styleFromPath($path, $id = null)
     {
         if (file_exists($path)) {
-            return $this->style(file_get_contents($path));
+            return $this->style(file_get_contents($path), $id);
         }
         return $this;
     }
-    public function style($content)
+    public function style($content, $id = null)
     {
         $content = trim($content);
         $key = md5($content);
-        $this->arrStyle[$key] = $content;
+        $this->arrStyle[$key] = [
+            'content' => $content,
+            'id' => $id
+        ];
         return $this;
     }
     public function linkCss($link, $cdn = null)
@@ -145,7 +151,11 @@ class ThemeManager
         }
 
         foreach ($this->arrStyle as $key => $value) {
-            echo '<style type="text/css" id="' . $key . '">' . $value . '</style>';
+            if ($value['id']) {
+                echo '<style type="text/css" id="' . $value['id'] . '">' . $value['content'] . '</style>';
+            } else {
+                echo '<style type="text/css" id="' . $key . '">' . $value['content'] . '</style>';
+            }
         }
 
 
@@ -177,7 +187,11 @@ class ThemeManager
             }
         }
         foreach ($this->arrJavascript as $key => $value) {
-            echo '<script type="text/javascript" id="' . $key . '">' . $value . '</script>';
+            if ($value['id']) {
+                echo '<script type="text/javascript" id="' . $value['id'] . '">' . $value['content'] . '</script>';
+            } else {
+                echo '<script type="text/javascript" id="' . $key . '">' . $value['content'] . '</script>';
+            }
         }
 
         foreach ($this->bodyAfter as $callback) {

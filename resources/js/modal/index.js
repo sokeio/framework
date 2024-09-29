@@ -1,10 +1,35 @@
-import modal from "./modal";
+import modal, { getModalHtmlRender } from "./modal";
 
 window.showModal = function (
-  url,
-  data = {},
-  callback = undefined,
-  type = "modal"
+  title = "",
+  options = {
+    url: "",
+    template: "",
+    templateId: "",
+    component: undefined,
+    data: {},
+    callback: () => {},
+  }
 ) {
-  window.sokeioUI.run(modal, { props: { url, data, callback, type } });
+  if (options.component) {
+    window.sokeioUI.run(
+      {
+        ...options.component,
+        render: function () {
+          return getModalHtmlRender(
+            options.component.render(),
+            options.component.footer?.(),
+            options.component.header?.(),
+            options.component.icon
+          );
+        },
+      },
+      {
+        props: { title, ...options },
+      }
+    );
+    return;
+  }
+console.log('----mdoel');
+  window.sokeioUI.run(modal, { props: { title, ...options } });
 };

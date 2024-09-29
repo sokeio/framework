@@ -47,38 +47,48 @@
             outline: 0;
             overflow: hidden;
 
+            .so-modal-close {
+                text-decoration: none;
+                cursor: pointer;
+
+                &:hover {
+                    color: #a29b9b;
+                }
+
+
+                &::before {
+                    border: 1px solid #1F5968;
+                    background: #1F5968;
+                    padding: 0px 10px;
+                    font-size: 17px;
+                    position: absolute;
+                    right: 5px;
+                    top: 5px;
+                    color: #fff;
+                    border-radius: 2px;
+                    content: "\00d7";
+                }
+            }
+
             .so-modal-header {
                 height: 40px;
                 display: flex;
+                align-items: flex-start;
+                justify-content: space-between;
+                padding-top: 10px;
+                padding-left: 5px;
 
-                .so-modal-title {
-                    color: #fff;
-                    line-height: 40px;
-                    padding-left: 10px;
-                    flex: 1;
+                .so-modal-icon {
+                    font-size: 20px;
+                    color: #1F5968;
                 }
 
-                .so-modal-close {
-                    text-decoration: none;
-                    cursor: pointer;
-
-                    &:hover {
-                        color: #a29b9b;
-                    }
-
-
-                    &::before {
-                        border: 1px solid #1F5968;
-                        background: #1F5968;
-                        padding: 0px 10px;
-                        font-size: 17px;
-                        position: absolute;
-                        right: 5px;
-                        top: 5px;
-                        color: #fff;
-                        border-radius: 2px;
-                        content: "\00d7";
-                    }
+                .so-modal-title {
+                    display: flex;
+                    align-items: center;
+                    color: #1F5968;
+                    padding-left: 5px;
+                    flex: 1;
                 }
             }
 
