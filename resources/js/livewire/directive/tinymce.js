@@ -42,11 +42,21 @@ export default {
         editor.on("input", function (e) {
           Utils.dataSet(component.$wire, modelKey, editor.getContent());
         });
+        editor.on("ExecCommand", (e) => {
+          if (["mceFocus"].includes(e.command)) return;
+          Utils.dataSet(component.$wire, modelKey, editor.getContent());
+        });
       },
       file_picker_callback: function (callback, value, meta) {
-        window.showFileManager(function (content) {
-          callback(content[0].url);
-        });
+        window.showFileManager(
+          function (content) {
+            callback(content[0].url);
+          },
+          {
+            type: "image",
+            value: value,
+          }
+        );
       },
     });
   },

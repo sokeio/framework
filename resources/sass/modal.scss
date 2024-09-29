@@ -24,7 +24,7 @@
     width: 100%;
     height: 100%;
     z-index: 1056 !important;
-
+    animation: fadein 0.5s;
 
     .so-modal-dialog {
         position: relative;
@@ -43,13 +43,12 @@
             background-color: #ffffff;
             background-clip: padding-box;
             border-radius: 2px;
-            box-shadow: rgba(24, 36, 51, 0.04) 0 2px 4px 0;
+            box-shadow: #1f596837 0 2px 4px 0;
             outline: 0;
             overflow: hidden;
 
             .so-modal-header {
                 height: 40px;
-                background-color: #226A79;
                 display: flex;
 
                 .so-modal-title {
@@ -60,22 +59,24 @@
                 }
 
                 .so-modal-close {
-                    color: #fff;
-                    line-height: 35px;
-                    padding-right: 10px;
-                    font-size: 25px;
                     text-decoration: none;
                     cursor: pointer;
 
                     &:hover {
-                        color: #ccc;
+                        color: #a29b9b;
                     }
 
-                    &:active {
-                        color: #fff;
-                    }
 
                     &::before {
+                        border: 1px solid #1F5968;
+                        background: #1F5968;
+                        padding: 0px 10px;
+                        font-size: 17px;
+                        position: absolute;
+                        right: 5px;
+                        top: 5px;
+                        color: #fff;
+                        border-radius: 2px;
                         content: "\00d7";
                     }
                 }
@@ -89,7 +90,6 @@
 
             .so-modal-footer {
                 height: 40px;
-                background-color: #226A79;
             }
 
 

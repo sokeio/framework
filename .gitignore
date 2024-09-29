@@ -23,3 +23,14 @@ Homestead.json
 .phpunit.result.cache
 example/composer.json
 example/public/platform
+
+#dev
+src2
+resources/js2
+resources/sass2
+resources/views2
+helpers2
+config/sokeio2.php
+database/migrations2
+notestak.txt
+package-lock.json
