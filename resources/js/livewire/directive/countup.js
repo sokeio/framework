@@ -10,14 +10,7 @@ export default {
     js: [],
     css: [],
   },
-  init: ({ el, directive, component, cleanup }) => {
-    if (el.$sokeio_countup) return;
-    let options = {};
-    if (el.hasAttribute("wire:countup.options")) {
-      options = new Function(
-        `return ${el.getAttribute("wire:countup.options")};`
-      )();
-    }
+  init: ({ el, directive, component, cleanup, options }) => {
     let valueNumber = el.getAttribute("wire:countup");
     if (!valueNumber || valueNumber == "") {
       valueNumber = Utils.dataGet(

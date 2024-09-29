@@ -8,34 +8,30 @@ export default {
     js: [],
     css: [],
   },
-  init: ({ el, directive, component, cleanup }) => {
-    let options = {
+  init: ({ el, directive, component, cleanup, options }) => {
+    let options2 = {
       titleFont: "normal normal bold 18px Arial", //font. default is "bold 16px Arial"
       titleColor: "#004284", // color. default is "#000"
       titleBackgroundColor: "#ccc", // background color. default is "#fff"
       titleHeight: 40, // height, including subTitle. default is 0
-      titleTop: 25, // draws y coordinates. default is 30
+      titleTop: 25, // draws y coordinates. default is 30,
+
+      ...options,
     };
 
-    if (el.hasAttribute("wire:qrcode.options")) {
-      options = {
-        ...options,
-        ...new Function(`return ${el.getAttribute("wire:qrcode.options")};`)(),
-      };
-    }
     if (
-      (options.text == null || options.text == "") &&
+      (options2.text == null || options2.text == "") &&
       el.getAttribute("wire:qrcode") != ""
     ) {
-      options.text = component.$wire[el.getAttribute("wire:qrcode")];
+      options2.text = component.$wire[el.getAttribute("wire:qrcode")];
     }
     if (el.hasAttribute("wire:qrcode.text")) {
-      options.text = el.getAttribute("wire:qrcode.text");
+      options2.text = el.getAttribute("wire:qrcode.text");
     }
     if (el.hasAttribute("wire:qrcode.title")) {
-      options.title = el.getAttribute("wire:qrcode.title");
+      options2.title = el.getAttribute("wire:qrcode.title");
     }
     if (el.$sokeio_qrcode) return;
-    el.$sokeio_qrcode = new window.QRCode(el, options);
+    el.$sokeio_qrcode = new window.QRCode(el, options2);
   },
 };

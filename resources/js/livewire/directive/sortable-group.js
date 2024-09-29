@@ -8,22 +8,10 @@ export default {
     js: [],
     css: [],
   },
-  init: ({ el, directive, component, cleanup }) => {
-    if (
-      !directive.modifiers.includes("item-group") ||
-      el.$sokeio_sortable_group
-    ) {
+  init: ({ el, directive, component, cleanup,options }) => {
+    if (!directive.modifiers.includes("item-group")) {
       return;
     }
-
-    let options = {};
-
-    if (el.hasAttribute("wire:sortable-group.options")) {
-      options = new Function(
-        `return ${el.getAttribute("wire:sortable-group.options")};`
-      )();
-    }
-
     el.$sokeio_sortable_group = window.Sortable.create(el, {
       animation: 150,
       ...options,

@@ -8,18 +8,8 @@ export default {
     js: [],
     css: [],
   },
-  init: ({ el, directive, component, cleanup }) => {
-    // Only fire this handler on the "root" directive.
-    if (directive.modifiers.length > 0 || el.$sokeio_tagify) {
-      return;
-    }
-    let options = {};
+  init: ({ el, directive, component, cleanup ,options}) => {
 
-    if (el.hasAttribute("wire:tagify-options")) {
-      options = new Function(
-        `return ${el.getAttribute("wire:tagify-options")};`
-      )();
-    }
     if (options.templates) {
       options.templates = new Function(`return ${options.templates};`)();
     }

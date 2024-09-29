@@ -8,15 +8,9 @@ export default {
     js: [],
     css: [],
   },
-  init: ({ el, directive, component, cleanup }) => {
+  init: ({ el, directive, component, cleanup ,options}) => {
     if (el.$sokeio_sortable) return;
-    let options = {};
-
-    if (el.hasAttribute("wire:sortable.options")) {
-      options = new Function(
-        `return ${el.getAttribute("wire:sortable.options")};`
-      )();
-    }
+ 
     el.$sokeio_sortable = window.Sortable.create(el, {
       animation: 150,
       ...options,

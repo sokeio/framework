@@ -10,9 +10,8 @@ export default {
     js: [],
     css: [],
   },
-  init: ({ el, directive, component, cleanup }) => {
+  init: ({ el, directive, component, cleanup, options }) => {
     if (el.$sokeio_tinymce) return;
-    let options = {};
 
     if (el.hasAttribute("wire:tinymce")) {
       options = new Function(`return ${el.getAttribute("wire:tinymce")};`)();

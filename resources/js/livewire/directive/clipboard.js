@@ -8,15 +8,7 @@ export default {
     js: [],
     css: [],
   },
-  init: ({ el, directive, component, cleanup }) => {
-    if (el.$sokeio_clipboard) return;
-    let options = {};
-
-    if (el.hasAttribute("wire:clipboard.options")) {
-      options = new Function(
-        `return ${el.getAttribute("wire:clipboard.options")};`
-      )();
-    }
+  init: ({ el, directive, component, cleanup, options }) => {
     el.$sokeio_clipboard = new window.Clipboard(el, options);
   },
 };

@@ -17,6 +17,25 @@ document.addEventListener("livewire:init", () => {
     let setting = directive[key];
     ///{ el, directive, component }
     window.Livewire.directive(key, (items) => {
+      if (items.length === 0) return;
+      // Only fire this handler on the "root" directive.
+      if (
+        items.directive.modifiers.length > 0 ||
+        items.el[
+          `$$sokeio_${key
+            .replace(/\./g, "_")
+            .replace(/\//g, "_")
+            .replace(/-/g, "_")}`
+        ]
+      ) {
+        return;
+      }
+      let options = {};
+      if (items.el.hasAttribute(`wire:${key}.options`)) {
+        options = new Function(
+          `return ${items.el.getAttribute(`wire:${key}.options`)};`
+        )();
+      }
       if (setting.checkFirst && !setting.checkFirst()) {
         if (
           setting?.cdn?.js &&
@@ -37,7 +56,7 @@ document.addEventListener("livewire:init", () => {
           Utils.addStyleToWindow(setting?.local?.css);
         }
       }
-      waitLoader(setting, items, 0);
+      waitLoader(setting, { ...items, options }, 0);
     });
   });
 });

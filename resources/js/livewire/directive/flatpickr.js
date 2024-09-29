@@ -11,16 +11,7 @@ export default {
     js: [],
     css: [],
   },
-  init: ({ el, directive, component, cleanup }) => {
-    if (el.$sokeio_flatpickr) return;
-    let options = {};
-
-    if (el.hasAttribute("wire:flatpickr.options")) {
-      options = new Function(
-        `return ${el.getAttribute("wire:flatpickr.options")};`
-      )();
-    }
-
+  init: ({ el, directive, component, cleanup, options }) => {
     let modelKey = el.getAttribute("wire:model");
     let dateFormat =
       options.dateFormat ?? (options.enableTime ? "Y/m/d H:i:S" : "Y/m/d");

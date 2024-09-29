@@ -9,9 +9,7 @@ export default {
     css: [],
   },
   init: ({ el, directive, component, cleanup }) => {
-    if (directive.modifiers.length > 0 ) {
-        return;
-      }
+   
     let options = {
         icon:'<i class="ti ti-alarm"></i>',
     };
