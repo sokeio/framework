@@ -15,6 +15,7 @@ class ThemeManager
     private $title = '';
     private $description = '';
     private $keywords = '';
+    private $arrTemplate = [];
     private $arrJavascript = [];
     private $arrStyle = [];
     private $arrLinkCss = [];
@@ -75,6 +76,23 @@ class ThemeManager
     public function disableCdn()
     {
         $this->useCdn = false;
+        return $this;
+    }
+    public function templateFromPath($path, $id = null)
+    {
+        if (file_exists($path)) {
+            return $this->template(file_get_contents($path), $id);
+        }
+        return $this;
+    }
+    public function template($content, $id = null)
+    {
+        $content = trim($content);
+        $key = md5($content);
+        $this->arrTemplate[$key] = [
+            'content' => $content,
+            'id' => $id
+        ];
         return $this;
     }
     public function jsFromPath($path, $id = null)
@@ -193,7 +211,13 @@ class ThemeManager
                 echo '<script type="text/javascript" id="' . $key . '">' . $value['content'] . '</script>';
             }
         }
-
+        foreach ($this->arrTemplate as $key => $value) {
+            if ($value['id']) {
+                echo '<template id="' . $value['id'] . '">' . $value['content'] . '</template>';
+            } else {
+                echo '<template id="' . $key . '">' . $value['content'] . '</template>';
+            }
+        }
         foreach ($this->bodyAfter as $callback) {
             $callback();
         }

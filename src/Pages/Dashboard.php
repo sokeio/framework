@@ -25,7 +25,7 @@ class Dashboard extends \Sokeio\Page
         // }
 
         // },"#test-app");');
-        Theme::js('');
+        Theme::templateFromPath(__DIR__ . '/test.js','demo-test');
         return <<<html
         <div>
             <button class="btn btn-primary" wire:modal wire:modal.title="Choà mọig nừo" >demo</button>

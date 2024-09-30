@@ -1,17 +1,13 @@
-export default{
-    state: {
-        title: "",
-    },
-    methods: {
-        setTitle(title) {
-            this.title = title
-        }
-    },
-    render() {
-        return (
-            <div>
-                <h1>{this.title}</h1>
-            </div>
-        )
-    }
-}
+export default {
+  test(){
+    alert(123);
+  },
+  render() {
+    return `
+        <div>
+            <h1>test</h1>
+            <button so-on:click="this.test()">test</button>
+        </div>
+        `;
+  },
+};

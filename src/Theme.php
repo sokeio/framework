@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static string getNamespace($isAdmin = false)
  * @method static Sokeio\Theme\ThemeManager enableCdn();
  * @method static Sokeio\Theme\ThemeManager disableCdn();
+ * @method static Sokeio\Theme\ThemeManager template($content, $id = null);
+ * @method static Sokeio\Theme\ThemeManager templateFromPath($path, $id = null);
  * @method static Sokeio\Theme\ThemeManager js($content, $id = null);
  * @method static Sokeio\Theme\ThemeManager jsFromPath($path, $id = null);
  * @method static Sokeio\Theme\ThemeManager style($content, $id = null);

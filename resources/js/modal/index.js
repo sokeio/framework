@@ -1,35 +1,48 @@
-import modal, { getModalHtmlRender } from "./modal";
+import modal, { getModalHtmlRender, getModalOverlay } from "./modal";
 
 window.showModal = function (
   title = "",
   options = {
     url: "",
     template: "",
-    templateId: "",
+    templateId: "demo-test",
     component: undefined,
     data: {},
     callback: () => {},
   }
 ) {
+  if (options.templateId) {
+    options.template = document
+      .getElementById(options.templateId)
+      .innerHTML.replace("export default", "return ");
+    delete options.templateId;
+    options.component = new Function(options.template)();
+    delete options.template;
+  }
   if (options.component) {
-    window.sokeioUI.run(
-      {
-        ...options.component,
-        render: function () {
-          return getModalHtmlRender(
-            options.component.render(),
-            options.component.footer?.(),
-            options.component.header?.(),
-            options.component.icon
-          );
+    let html = getModalOverlay();
+    window.sokeioUI
+      .run(
+        {
+          ...options.component,
+          render: function () {
+            return getModalHtmlRender(
+              options.component.render?.(),
+              options.component.footer?.(),
+              options.component.header?.(),
+              options.component.icon
+            );
+          },
         },
-      },
-      {
-        props: { title, ...options },
-      }
-    );
+        {
+          props: { title, ...options },
+        }
+      )
+      .cleanup(function () {
+        document.body.removeChild(html);
+      });
     return;
   }
-console.log('----mdoel');
+  console.log("----mdoel");
   window.sokeioUI.run(modal, { props: { title, ...options } });
 };

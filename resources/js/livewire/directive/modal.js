@@ -12,6 +12,7 @@ export default {
    
     let options = {
         icon:'<i class="ti ti-alarm"></i>',
+        templateId: "demo-test",
     };
     let modalTitle = el.getAttribute("wire:modal.title");
     let eventClick = function () {
