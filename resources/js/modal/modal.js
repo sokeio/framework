@@ -11,7 +11,7 @@ export function getModalHtmlRender(
     icon = `<i class="${icon}"></i>`;
   }
   icon = icon.replace('class="', 'class="so-modal-icon ');
-  if (!header) {
+  if (header === undefined) {
     header = ` <div class="so-modal-header">${icon}
                           <h3 class="so-modal-title" so-text="title"></h3>
                       </div>`;

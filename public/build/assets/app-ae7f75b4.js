@@ -7,7 +7,7 @@ var R=Object.defineProperty;var D=(e,t,r)=>t in e?R(e,t,{enumerable:!0,configura
         <div class="so-fm-application">
           [so-filemanager::header /]
         </div>
-    </div>`}};window.showFileManager=function(e,t="file"){window.sokeioUI.run(we).showFileManager(e,t)};function M(e="",t="",r="",n=""){return n.indexOf("<")===-1&&(n=`<i class="${n}"></i>`),n=n.replace('class="','class="so-modal-icon '),r||(r=` <div class="so-modal-header">${n}
+    </div>`}};window.showFileManager=function(e,t="file"){window.sokeioUI.run(we).showFileManager(e,t)};function M(e="",t="",r="",n=""){return n.indexOf("<")===-1&&(n=`<i class="${n}"></i>`),n=n.replace('class="','class="so-modal-icon '),r===void 0&&(r=` <div class="so-modal-header">${n}
                           <h3 class="so-modal-title" so-text="title"></h3>
                       </div>`),`<div class="so-modal" tabindex="-1" aria-modal="true" so-on:click="this.delete()" so-on:ignore=".so-modal-dialog">
               <div class="so-modal-dialog">
