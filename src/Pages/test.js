@@ -6,12 +6,12 @@ export default {
     return ``;
   },
   footer() {
-    return `<button so-on:click="this.test()">test</button>`;
+    return `<button so-on:click="test()">test</button>`;
   },
   render() {
     return `
         <div>
-            <h1>test</h1>
+           Chào mọi người abcdđff
         </div>
         `;
   },

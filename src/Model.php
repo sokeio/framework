@@ -4,7 +4,14 @@ namespace Sokeio;
 
 use Sokeio\Concerns\WithModelHook;
 
-class Model extends \Illuminate\Database\Eloquent\Model
-{
-    use WithModelHook;
+if (class_exists('\MongoDB\Laravel\Eloquent\Model')) {
+    class Model extends \MongoDB\Laravel\Eloquent\Model
+    {
+        use WithModelHook;
+    }
+} else {
+    class Model extends \Illuminate\Database\Eloquent\Model
+    {
+        use WithModelHook;
+    }
 }
