@@ -2,6 +2,7 @@
 
 namespace Sokeio\Support\Livewire\Concerns;
 
+use Illuminate\Support\Facades\Request;
 use Livewire\Features\SupportPageComponents\PageComponentConfig;
 use Livewire\Features\SupportPageComponents\SupportPageComponents;
 use Sokeio\Theme;
@@ -45,6 +46,10 @@ trait WithLivewirePage
     {
         return null;
     }
+    public static function skipHtmlAjax()
+    {
+        return false;
+    }
     protected function themePage()
     {
         return 'sokeio::layouts.none';
@@ -65,8 +70,11 @@ trait WithLivewirePage
         $layoutConfig = $layoutConfig ?: new PageComponentConfig();
 
         $layoutConfig->normalizeViewNameAndParamsForBladeComponents();
-
-        $layoutConfig->view = Theme::getLayout($this->themePage());
+        if (!static::skipHtmlAjax() && (Request::ajax() || Request::wantsJson())) {
+            $layoutConfig->view = "sokeio::html";
+        } else {
+            $layoutConfig->view = Theme::getLayout($this->themePage());
+        }
         $layoutConfig->slotOrSection = 'content';
         $layoutConfig->type = 'themeLayout';
         Theme::title($this->pageTitle());

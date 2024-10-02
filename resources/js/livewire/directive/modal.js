@@ -11,9 +11,10 @@ export default {
   init: ({ el, directive, component, cleanup }) => {
     let options = {
       icon: '<i class="ti ti-alarm"></i>',
-      templateId: "demo-test",
-      template:'',
-      url:'',
+      templateId: "",
+      template: "",
+      url: "",
+      elTarget: el,
     };
     let modalTitle = el.getAttribute("wire:modal.title");
     if (el.hasAttribute("wire:modal.url")) {

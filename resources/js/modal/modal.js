@@ -43,15 +43,36 @@ export function getModalOverlay() {
   return html;
 }
 export default {
-  state: {},
+  state: { html: "", loading: true },
   boot() {
-    let html = getModalOverlay();
-    this.cleanup(function () {
-      document.body.removeChild(html);
+    if (!this.skipLoading || !this.loading) {
+      let html = getModalOverlay();
+      this.cleanup(function () {
+        document.body.removeChild(html);
+      });
+    }
+
+    if (this.html) {
+      return;
+    }
+    this.$request.get(this.url).then(async (res) => {
+      this.html = await res.text();
+      this.loading = false;
+      this.reRender();
     });
   },
   ready() {},
+
   render() {
-    return getModalHtmlRender("", "", "", this.icon);
+    if (this.skipLoading && this.loading) {
+      return "<template></template>";
+    }
+    return getModalHtmlRender(
+      this.html ||
+        '<div class="so-modal-loader"><span class="loader"></span></div>',
+      "",
+      "",
+      this.icon
+    );
   },
 };

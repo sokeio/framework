@@ -3,10 +3,11 @@ import modal, { getModalHtmlRender, getModalOverlay } from "./modal";
 window.showModal = function (
   title = "",
   options = {
-    url: "",
-    template: "",
-    templateId: "demo-test",
+    url: undefined,
+    template: undefined,
+    templateId: undefined,
     component: undefined,
+    elTarget: undefined,
     data: {},
     callback: () => {},
   }

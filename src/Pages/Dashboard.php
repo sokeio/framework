@@ -22,7 +22,7 @@ class Dashboard extends \Sokeio\Page
     }
     public function mount()
     {
-        $this->users =    Role::all();
+        
     }
     public function render()
     {

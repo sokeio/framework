@@ -1,6 +1,8 @@
 import feature from "../feature/_index";
+import request from "../request";
 import { DataValue } from "./DataValue";
 import { Utils } from "./Uitls";
+export const $request = request;
 
 let number = new Date().getTime();
 let components = {};
@@ -139,6 +141,7 @@ export function Component($options, $props, $parent = null) {
       "reRender",
       "querySelectorAll",
       "on",
+      "$request",
       "__data__",
       "__props__",
     ])
@@ -146,6 +149,10 @@ export function Component($options, $props, $parent = null) {
       return self.indexOf(item) === index;
     });
   console.log({ keys });
+  //
+  Object.defineProperty(component, "$request", {
+    value: $request,
+  });
   Object.defineProperty(component, "getId", {
     value: function () {
       if (!this.$id) {
@@ -220,10 +227,17 @@ export function Component($options, $props, $parent = null) {
 
   Object.defineProperty(component, "reRender", {
     value: function () {
+      let elParent = this.$el.parentNode;
+      let elNext = this.$el.nextSibling;
       doDestroy(this);
       doBoot(this);
       doRender(this);
       doReady(this);
+      if (elNext) {
+        elParent.insertBefore(this.$el, elNext);
+      } else {
+        elParent.appendChild(this.$el);
+      }
     },
   });
 

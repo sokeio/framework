@@ -46,6 +46,20 @@
             box-shadow: #1f596837 0 2px 4px 0;
             outline: 0;
             overflow: hidden;
+            min-height: 38px;
+
+            .so-modal-loader {
+                height: 100%;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #eee;
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 999;
+            }
 
             .so-modal-close {
                 text-decoration: none;

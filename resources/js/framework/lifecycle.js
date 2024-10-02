@@ -5,11 +5,12 @@ import {
   doRender as componentDoRender,
   doDestroy as componentDoDestroy,
   doReady as componentDoReady,
+  $request as componentRequest,
 } from "./common/Component";
 
 let isReady = false;
 let isRegister = false;
-
+export const $request = componentRequest;
 export function onRegister(callback) {
   document.addEventListener("sokeio::register", callback);
 }
