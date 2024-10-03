@@ -28,7 +28,10 @@ export function getModalHtmlRender(
   let closeOverlay =
     'so-on:click="this.delete()" so-on:ignore=".so-modal-dialog"';
   let elHtml = Utils.convertHtmlToElement(html);
-  if (elHtml.querySelector(".skip-show-close")) {
+  if (
+    elHtml.querySelector(".skip-show-close") ||
+    elHtml.getAttribute("data-hide-close")
+  ) {
     htmlClose = "";
   }
   // attribute data-modal-size
@@ -102,7 +105,7 @@ export default {
     }
     return getModalHtmlRender(
       this.html ||
-        '<div class="so-modal-loader"><span class="loader"></span></div>',
+        '<div class="so-modal-loader" data-hide-close="true"><span class="loader"></span></div>',
       "",
       "",
       this.icon

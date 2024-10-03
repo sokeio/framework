@@ -43,7 +43,7 @@ abstract class PageApi  implements IPage
     public static function runLoad(ItemInfo $itemInfo)
     {
         $classMe = static::class;
-        $namespacePage = $itemInfo->namespace . '\\Pages\\';
+        $namespacePage = $itemInfo->namespace . '\\Page\\';
         // do nothing
         $url = str($classMe)->after($namespacePage);
         $urlRoute = static::pageUrl() ?? str($url)->split('/\\\\/', -1, PREG_SPLIT_NO_EMPTY)
