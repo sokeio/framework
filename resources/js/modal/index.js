@@ -44,6 +44,5 @@ window.showModal = function (
       });
     return;
   }
-  console.log("----mdoel");
   window.sokeioUI.run(modal, { props: { title, ...options } });
 };

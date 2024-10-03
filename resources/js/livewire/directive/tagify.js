@@ -45,7 +45,7 @@ export default {
         });
     };
     const onChange = (e) => {
-      self.getManager().dataSet(component.$wire, modelKey, e.detail.value);
+      Utils.dataSet(component.$wire, modelKey, e.detail.value);
     };
     el.$sokeio_tagify = new window.Tagify(el, options);
     if (options.whitelistAction) {
