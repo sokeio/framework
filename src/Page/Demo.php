@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Pages;
+namespace Sokeio\Page;
 
 
 class Demo extends \Sokeio\PageApi

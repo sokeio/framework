@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Pages;
+namespace Sokeio\Page;
 
 use Sokeio\Concerns\WithPageAdmin;
 use Sokeio\Concerns\WithPageAdminGuest;

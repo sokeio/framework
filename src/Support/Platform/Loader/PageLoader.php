@@ -13,9 +13,9 @@ class PageLoader implements IPipeLoader
     {
         Platform::runLoader(
             $item,
-            $item->getPackage()->basePath('Pages'),
-            $item->namespace . '\\Pages',
-            $item->getPackage()->shortName() . '::pages'
+            $item->getPackage()->basePath('Page'),
+            $item->namespace . '\\Page',
+            $item->getPackage()->shortName() . '::page'
         );
         return $next($item);
     }

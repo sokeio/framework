@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Pages\SystemAdmin;
+namespace Sokeio\Page\SystemAdmin;
 
 use Livewire\Livewire;
 use Sokeio\Concerns\WithPageAdmin;

@@ -13,7 +13,7 @@ class ObjectJson implements \ArrayAccess, \JsonSerializable
     }
     public function CloneData()
     {
-        return new self(json_decode(json_encode($this->data ?? []), true), $this->parent);
+        return static::create(json_decode(json_encode($this->data ?? []), true));
     }
     public function __construct($data = null)
     {
@@ -40,9 +40,7 @@ class ObjectJson implements \ArrayAccess, \JsonSerializable
     private function setDataByKey($key, $value)
     {
         if (is_array($value)) {
-            $value2 = new self();
-            $value2->setData($value);
-            $value = $value2;
+            $value = static::create($value);
         }
         if (property_exists($this, $key)) {
             $this->{$key} = $value;
