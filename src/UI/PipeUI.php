@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Components;
+namespace Sokeio\UI;
 
 class PipeUI
 {
