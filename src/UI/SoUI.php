@@ -2,12 +2,15 @@
 
 namespace Sokeio\UI;
 
-use PhpParser\Node\Expr\FuncCall;
-
 class SoUI
 {
     private $ui = [];
     private $actions = [];
+    private $wire = null;
+    public function getWire()
+    {
+        return $this->wire;
+    }
     public function action($name, $callback, $ui = null)
     {
         $this->actions[$name] = [
@@ -15,8 +18,9 @@ class SoUI
             'ui' => $ui
         ];
     }
-    public function __construct($ui = [])
+    public function __construct($ui = [], $wire = null)
     {
+        $this->wire = $wire;
         if (!$ui) {
             return;
         }
@@ -24,18 +28,26 @@ class SoUI
             $ui = [$ui];
         }
         $this->ui = $ui;
+        $this->register();
     }
-    public function render()
+    public function register()
     {
         //register
         foreach ($this->ui as $ui) {
             $ui->setManager($this);
             $ui->runRegister();
         }
+    }
+    public function boot()
+    {
         //boot
         foreach ($this->ui as $ui) {
+            $ui->setManager($this);
             $ui->runBoot();
         }
+    }
+    public function render()
+    {
         //ready
         foreach ($this->ui as $ui) {
             $ui->runReady();
@@ -65,8 +77,12 @@ class SoUI
     {
         return BaseUI::toUI($arr);
     }
-    public static function init($ui)
+    public static function init($ui, $wire = null)
     {
-        return new SoUI($ui);
+        return new SoUI($ui, $wire);
+    }
+    public static function renderUI($ui, $wire = null)
+    {
+        return static::init($ui, $wire)->render();
     }
 }

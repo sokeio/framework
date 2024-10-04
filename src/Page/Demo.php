@@ -2,11 +2,17 @@
 
 namespace Sokeio\Page;
 
+use Sokeio\page;
+use Sokeio\UI\Field\FieldUI;
+use Sokeio\UI\WithUI;
 
-class Demo extends \Sokeio\PageApi
+class Demo extends page
 {
-    public function action()
+    use WithUI;
+    public function setupUI()
     {
-        return static::Json('Hello World');
+        return [
+            FieldUI::init()->className('error')->id('error'),
+        ];
     }
 }

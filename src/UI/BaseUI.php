@@ -59,6 +59,14 @@ class BaseUI
         }
         return $this;
     }
+    public function className($className)
+    {
+        return $this->attr('class', $className);
+    }
+    public function id($id)
+    {
+        return $this->attr('id', $id);
+    }
     public function attr($key, $value = null)
     {
         if (is_array($key)) {
@@ -113,8 +121,9 @@ class BaseUI
     }
     public function view()
     {
+        $attr = $this->getAttr();
         return <<<HTML
-        <div></div>
+        <div {$attr}></div>
         HTML;
     }
     public function toArray()
@@ -138,6 +147,9 @@ class BaseUI
 
     public static function toUI($arr)
     {
+        if (!$arr) {
+            return [];
+        }
         [
             'ui' => $ui,
             'data' => $data,
@@ -163,5 +175,9 @@ class BaseUI
         }
 
         return $instance;
+    }
+    public static function init()
+    {
+        return new static();
     }
 }
