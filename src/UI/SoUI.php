@@ -47,4 +47,26 @@ class SoUI
         }
         return $html;
     }
+    public function toArray()
+    {
+        $ui = [];
+        foreach ($this->ui as $key => $value) {
+            if (is_array($value)) {
+                foreach ($value as $k => $v) {
+                    $ui[$key][$k] = $v->toArray();
+                }
+            } else {
+                $ui[$key] = $value->toArray();
+            }
+        }
+        return $ui;
+    }
+    public function toUI($arr)
+    {
+        return BaseUI::toUI($arr);
+    }
+    public static function init($ui)
+    {
+        return new SoUI($ui);
+    }
 }
