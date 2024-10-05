@@ -2,7 +2,6 @@
 
 namespace Sokeio\UI\Common;
 
-use Illuminate\Support\Facades\Log;
 use Sokeio\UI\BaseUI;
 
 class Button extends BaseUI

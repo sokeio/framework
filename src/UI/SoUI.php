@@ -41,7 +41,6 @@ class SoUI
     }
     public function register()
     {
-        Log::info('UI: register');
         //register
         foreach ($this->ui as $ui) {
             $ui->setManager($this);
@@ -50,13 +49,11 @@ class SoUI
     }
     public function boot()
     {
-        Log::info('UI: boot');
         //boot
         foreach ($this->ui as $ui) {
             $ui->setManager($this);
             $ui->runBoot();
         }
-        Log::info('UI: ready');
         //ready
         foreach ($this->ui as $ui) {
             $ui->runReady();
@@ -64,7 +61,6 @@ class SoUI
     }
     public function render()
     {
-        Log::info('UI: render');
         //render
         $html = '';
         foreach ($this->ui as $ui) {
