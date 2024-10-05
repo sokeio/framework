@@ -2,6 +2,7 @@
 
 namespace Sokeio\UI;
 
+use Illuminate\Support\Facades\Log;
 use Sokeio\FormData;
 
 trait WithUI
@@ -24,8 +25,8 @@ trait WithUI
     {
         return view('sokeio::ui', ['ui' => $this->getUI()]);
     }
-    public function actionUI($name, $params)
+    public function actionUI($name, $params = [])
     {
-        return $this->getUI()->action($name, $params);
+        return $this->getUI()->callAction($name, $params);
     }
 }

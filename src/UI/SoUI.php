@@ -2,6 +2,8 @@
 
 namespace Sokeio\UI;
 
+use Illuminate\Support\Facades\Log;
+
 class SoUI
 {
     private $ui = [];
@@ -18,6 +20,13 @@ class SoUI
             'ui' => $ui
         ];
     }
+    public function callAction($name, $params = [])
+    {
+        $action = $this->actions[$name];
+        if ($action['callback']) {
+            call_user_func($action['callback'], $params);
+        }
+    }
     public function __construct($ui = [], $wire = null)
     {
         $this->wire = $wire;
@@ -32,6 +41,7 @@ class SoUI
     }
     public function register()
     {
+        Log::info('UI: register');
         //register
         foreach ($this->ui as $ui) {
             $ui->setManager($this);
@@ -40,18 +50,21 @@ class SoUI
     }
     public function boot()
     {
+        Log::info('UI: boot');
         //boot
         foreach ($this->ui as $ui) {
             $ui->setManager($this);
             $ui->runBoot();
         }
-    }
-    public function render()
-    {
+        Log::info('UI: ready');
         //ready
         foreach ($this->ui as $ui) {
             $ui->runReady();
         }
+    }
+    public function render()
+    {
+        Log::info('UI: render');
         //render
         $html = '';
         foreach ($this->ui as $ui) {

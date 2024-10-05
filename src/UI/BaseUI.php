@@ -2,16 +2,19 @@
 
 namespace Sokeio\UI;
 
+use Sokeio\ObjectJson;
+
 class BaseUI
 {
     private $childs = [];
     private $data = [];
-    private $callbacks = [];
+    private HookUI $hook;
     private SoUI $manager;
     private BaseUI $parent;
 
     protected function __construct()
     {
+        $this->hook = new HookUI();
         $this->initUI();
     }
     protected function initUI()
@@ -44,27 +47,12 @@ class BaseUI
     }
     private function callbackWithKey($key, $callback)
     {
-        if (!is_callable($callback)) {
-            return $this;
-        }
-        if (!isset($this->callbacks[$key])) {
-            $this->callbacks[$key] = [];
-        }
-        $this->callbacks[$key][] = $callback;
+        $this->hook->group($key)->callback($callback);
         return $this;
     }
     public function runCallbacks($key)
     {
-        foreach ($this->childs as $child) {
-            $child->runCallbacks($key);
-        }
-        if (!isset($this->callbacks[$key])) {
-            return $this;
-        }
-        foreach ($this->callbacks[$key] as $callback) {
-            // remove args first
-            call_user_func($callback, $this, ...array_shift(func_get_args()));
-        }
+        $this->hook->group($key)->run($this, func_get_args());
         return $this;
     }
     public function className($className)

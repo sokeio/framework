@@ -2,6 +2,7 @@
 
 namespace Sokeio\UI\Common;
 
+use Illuminate\Support\Facades\Log;
 use Sokeio\UI\BaseUI;
 
 class Button extends BaseUI
@@ -24,6 +25,13 @@ class Button extends BaseUI
         if ($params) {
             $paraText = ',' . json_encode($params);
         }
+        $this->action($wireClick, function () use ($callback, $params) {
+            if (is_array($params) && count($params) > 0) {
+                call_user_func($callback, ...$params);
+            } else {
+                call_user_func($callback);
+            }
+        });
         return $this->attr('wire:click',  'actionUI("' . $wireClick . '"' . $paraText . ')');
     }
     public function view()
