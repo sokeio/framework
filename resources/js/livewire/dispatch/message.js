@@ -9,7 +9,11 @@ const messageComponent = {
   },
   ready() {},
   render() {
-    return Utils.getModalHtmlRender("<div>demo</div>", "", this.icon);
+    return Utils.getModalHtmlRender(
+      "<div style='min-height:100px' so-html='message'></div>",
+      "",
+      this.icon
+    );
   },
 };
 

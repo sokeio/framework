@@ -118,7 +118,7 @@ export function doDestroy(component) {
       fn.bind(component)();
     });
   }
-  component.$el.remove();
+  component.$el?.remove();
   component.$hookDestroy = [];
   component.$hookReady = [];
   component.$children = [];
