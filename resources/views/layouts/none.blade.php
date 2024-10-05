@@ -3,7 +3,7 @@
 
 <head>
     @themeHead
-    @csrf
+    <meta name="csrf_token" value="{{ csrf_token() }}"/>
 </head>
 
 <body>

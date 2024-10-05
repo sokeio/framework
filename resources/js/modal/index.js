@@ -1,5 +1,5 @@
-import modal, { getModalHtmlRender, getModalOverlay } from "./modal";
-
+import modal from "./modal";
+import * as Utils from "./utils";
 window.showModal = function (
   title = "",
   options = {
@@ -21,13 +21,13 @@ window.showModal = function (
     delete options.template;
   }
   if (options.component) {
-    let html = getModalOverlay();
+    let html = Utils.getModalOverlay();
     window.sokeioUI
       .run(
         {
           ...options.component,
           render: function () {
-            return getModalHtmlRender(
+            return Utils.getModalHtmlRender(
               options.component.render?.(),
               options.component.footer?.(),
               options.component.header?.(),

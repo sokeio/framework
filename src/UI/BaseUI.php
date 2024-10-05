@@ -6,10 +6,18 @@ class BaseUI
 {
     private $childs = [];
     private $data = [];
-    private $attributes = [];
     private $callbacks = [];
     private SoUI $manager;
     private BaseUI $parent;
+
+    protected function __construct()
+    {
+        $this->initUI();
+    }
+    protected function initUI()
+    {
+        // TODO: Implement initUI() method.
+    }
     public function getParent()
     {
         return $this->parent;
@@ -61,29 +69,72 @@ class BaseUI
     }
     public function className($className)
     {
-        return $this->attr('class', $className);
+        return $this->attrAdd('class', $className);
     }
     public function id($id)
     {
         return $this->attr('id', $id);
     }
-    public function attr($key, $value = null)
+    public function getId()
     {
-        if (is_array($key)) {
-            $this->attributes = array_merge($this->attributes, $key);
+        return $this->getAttrKey('id');
+    }
+    public function vars($key, $value = null)
+    {
+        $value = is_array($value) ? $value : [$value];
+        if ($this->data['vars'] ?? null) {
+            $this->data['vars'][$key] = $value;
         } else {
-            $this->attributes[$key] = $value;
+            $this->data['vars'] = [$key => $value];
         }
         return $this;
+    }
+    public function getVar($key, $default = null)
+    {
+        if (!isset($this->data['vars'])) {
+            $this->data['vars'] = [];
+        }
+        if (!isset($this->data['vars'][$key])) {
+            return $default;
+        }
+        return trim(implode(' ', $this->data['vars'][$key]));
+    }
+    public function attr($key, $value = null)
+    {
+        $value = is_array($value) ? $value : [$value];
+        if ($this->data['attributes'] ?? null) {
+            $this->data['attributes'][$key] = $value;
+        } else {
+            $this->data['attributes'] = [$key => $value];
+        }
+        return $this;
+    }
+    public function attrAdd($key, $value = null)
+    {
+        $value = is_array($value) ? $value : [$value];
+        if ($this->data['attributes'] ?? null) {
+            $this->data['attributes'][$key] = array_merge($this->data['attributes'][$key] ?? [], $value);
+        } else {
+            $this->data['attributes'] = [$key => $value];
+        }
+
+        return $this;
+    }
+    protected function getAttrKey($key, $default = null)
+    {
+        return $this->data['attributes'][$key] ?? $default;
     }
     public function getAttr()
     {
         $attr = '';
-        foreach ($this->attributes as $key => $value) {
+        if (!isset($this->data['attributes'])) {
+            $this->data['attributes'] = [];
+        }
+        foreach ($this->data['attributes'] as $key => $value) {
             if (is_array($value)) {
                 $value = implode(' ', $value);
             }
-            $attr .= ' ' . $key . '="' . $value . '"';
+            $attr .= ' ' . $key . '="' . htmlentities($value, ENT_QUOTES, 'UTF-8') . '"';
         }
         return $attr;
     }

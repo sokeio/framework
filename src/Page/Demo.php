@@ -3,16 +3,20 @@
 namespace Sokeio\Page;
 
 use Sokeio\page;
-use Sokeio\UI\Field\FieldUI;
+use Sokeio\UI\Common\Button;
 use Sokeio\UI\WithUI;
 
 class Demo extends page
 {
     use WithUI;
+    public function alert($message)
+    {
+        $this->sendMessage($message);
+    }
     public function setupUI()
     {
         return [
-            FieldUI::init()->className('error')->id('error'),
+            Button::init()->text('Click Me')->wireClick('alert("Hello World")'),
         ];
     }
 }

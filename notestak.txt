@@ -1,5 +1,6 @@
-- Xử lý menu:admin <= đang xử lý
-- xử lý widget + dashboard
+- Xử lý menu:admin <= done
+- xử lý table + modal + ui <= đang xử lý
+- xử lý widget + dashboard 
 - quản lý module 
 - quản lý theme
 - cmd tạo module + theme + file

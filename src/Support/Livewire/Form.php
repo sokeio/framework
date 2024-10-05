@@ -3,7 +3,7 @@
 namespace Sokeio\Support\Livewire;
 
 use Illuminate\Support\Traits\Macroable;
-use Sokeio\Livewire\Support\SupportFormObjects\Form as SupportFormObjectsForm;
+use Sokeio\Support\Livewire\Support\SupportFormObjects\Form as SupportFormObjectsForm;
 
 class Form extends SupportFormObjectsForm implements \JsonSerializable
 {
