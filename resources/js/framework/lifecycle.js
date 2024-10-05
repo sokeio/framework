@@ -58,7 +58,13 @@ export function run(template = {}, options = {}) {
   let querySelectorOrEl = options.selector;
   let init = options.init === undefined ? true : options.init;
   document.dispatchEvent(new CustomEvent("sokeio::run"));
-  console.log(options.props);
+  if (options?.props?.wireId) {
+    options.props = {
+      ...options.props,
+      wireId: options.props.wireId,
+      $wire: window.Livewire.find(options.props.wireId),
+    };
+  }
   let appComponent = new Component(template, options.props ?? {});
   if (init) {
     boot(appComponent);

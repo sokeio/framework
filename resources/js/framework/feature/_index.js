@@ -41,6 +41,7 @@ const componentFeature = (el, component) => {
 };
 export default function (component) {
   setTimeout(() => {
+    if (!component.$el) return;
     component.$el.querySelectorAll("*").forEach((el) => {
       componentFeature(el, component);
     });

@@ -6,6 +6,7 @@ const messageComponent = {
     this.cleanup(function () {
       document.body.removeChild(html);
     });
+    console.log(this.$wire);
   },
   ready() {},
   render() {
@@ -18,6 +19,5 @@ const messageComponent = {
 };
 
 export default function (payload) {
-  console.log(payload);
   window.sokeioUI.run(messageComponent, { props: { ...payload } });
 }

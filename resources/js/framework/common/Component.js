@@ -158,7 +158,6 @@ export function Component($options, $props, $parent = null) {
     .filter(function (item, index, self) {
       return self.indexOf(item) === index;
     });
-  console.log({ keys });
   //
   Object.defineProperty(component, "$request", {
     value: $request,
