@@ -9,6 +9,7 @@ class BaseUI
 {
     use LifecycleUI, CommonUI;
     private $childs = [];
+    private $callbackView = null;
     private SoUI|null $manager;
     private BaseUI  $parent;
     protected function __construct()
@@ -53,9 +54,17 @@ class BaseUI
         });
         return $this;
     }
-
+    public function setView($callback)
+    {
+        $this->callbackView = $callback;
+        return $this;
+    }
     public function view()
     {
+
+        if ($this->callbackView) {
+            return call_user_func($this->callbackView, $this);
+        }
         $attr = $this->getAttr();
         return <<<HTML
         <div {$attr}></div>
