@@ -5,10 +5,10 @@ namespace Sokeio;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \Sokeio\Theme
- * @method static Sokeio\Theme\ThemeManager title($title);
- * @method static Sokeio\Theme\ThemeManager description($description);
- * @method static Sokeio\Theme\ThemeManager keywords($keywords);
+ * @see \Sokeio\Support\Theme
+ * @method static Sokeio\Support\Theme\ThemeManager title($title);
+ * @method static Sokeio\Support\Theme\ThemeManager description($description);
+ * @method static Sokeio\Support\Theme\ThemeManager keywords($keywords);
  * @method static mixed getSiteInfo();
  * @method static mixed getTheme();
  * @method static mixed getThemeAdmin();
@@ -19,20 +19,20 @@ use Illuminate\Support\Facades\Facade;
  * @method static void setLayout(string $layout='none', $isAdmin = null)
  * @method static string getLayout($default=null)
  * @method static string getNamespace($isAdmin = false)
- * @method static Sokeio\Theme\ThemeManager enableCdn();
- * @method static Sokeio\Theme\ThemeManager disableCdn();
- * @method static Sokeio\Theme\ThemeManager template($content, $id = null);
- * @method static Sokeio\Theme\ThemeManager templateFromPath($path, $id = null);
- * @method static Sokeio\Theme\ThemeManager js($content, $id = null);
- * @method static Sokeio\Theme\ThemeManager jsFromPath($path, $id = null);
- * @method static Sokeio\Theme\ThemeManager style($content, $id = null);
- * @method static Sokeio\Theme\ThemeManager styleFromPath($path, $id = null);
- * @method static Sokeio\Theme\ThemeManager linkCss($link, $cdn = null);
- * @method static Sokeio\Theme\ThemeManager linkJs($link, $cdn = null);
- * @method static Sokeio\Theme\ThemeManager bodyBefore($callback);
- * @method static Sokeio\Theme\ThemeManager bodyAfter($callback);
- * @method static Sokeio\Theme\ThemeManager headBefore($callback);
- * @method static Sokeio\Theme\ThemeManager headAfter($callback);
+ * @method static Sokeio\Support\Theme\ThemeManager enableCdn();
+ * @method static Sokeio\Support\Theme\ThemeManager disableCdn();
+ * @method static Sokeio\Support\Theme\ThemeManager template($content, $id = null);
+ * @method static Sokeio\Support\Theme\ThemeManager templateFromPath($path, $id = null);
+ * @method static Sokeio\Support\Theme\ThemeManager js($content, $id = null);
+ * @method static Sokeio\Support\Theme\ThemeManager jsFromPath($path, $id = null);
+ * @method static Sokeio\Support\Theme\ThemeManager style($content, $id = null);
+ * @method static Sokeio\Support\Theme\ThemeManager styleFromPath($path, $id = null);
+ * @method static Sokeio\Support\Theme\ThemeManager linkCss($link, $cdn = null);
+ * @method static Sokeio\Support\Theme\ThemeManager linkJs($link, $cdn = null);
+ * @method static Sokeio\Support\Theme\ThemeManager bodyBefore($callback);
+ * @method static Sokeio\Support\Theme\ThemeManager bodyAfter($callback);
+ * @method static Sokeio\Support\Theme\ThemeManager headBefore($callback);
+ * @method static Sokeio\Support\Theme\ThemeManager headAfter($callback);
  * @method static void headRender()
  * @method static void bodyRender()
  * @method static void bodyEndRender()

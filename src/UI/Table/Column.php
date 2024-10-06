@@ -15,9 +15,12 @@ class Column
     }
     public function getHeaderView()
     {
+        $name = $this->getField();
         return <<<html
         <th>
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center table-sort"
+            x-bind:class="{'asc': typeSort === 'asc'&&fieldSort === '{$name}', 'desc': typeSort === 'desc'&&fieldSort === '{$name}'}"
+            data-field="{$name}" x-on:click="sortField(\$el)">
                {$this->getLabel()}
             </div>
         </th>

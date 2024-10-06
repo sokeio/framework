@@ -9,8 +9,18 @@ class Table extends BaseUI
 {
     private $rows = [];
     private $query = null;
+    private $pageIndex = null;
+    private $pageSize = null;
+    private $pageName = null;
     private $colums = [];
     private $index = -1;
+    public function page($pageIndex, $pageSize = 20, $pageName = 'page')
+    {
+        $this->pageIndex = $pageIndex;
+        $this->pageSize = $pageSize;
+        $this->pageName = $pageName;
+        return $this;
+    }
     public function query($query)
     {
         $this->query = $query;
@@ -18,9 +28,10 @@ class Table extends BaseUI
     }
     public function getRows()
     {
-        if ($this->query) {
+        if ($this->pageIndex && $this->pageSize) {
+            $this->rows = $this->query->paginate($this->pageSize, ['*'], $this->pageName ?? 'page', $this->pageIndex);
+        } else {
             $this->rows = $this->query->get();
-            // dd($this->rows);
         }
         return $this->rows;
     }
@@ -70,14 +81,28 @@ class Table extends BaseUI
     {
         $attr = $this->getAttr();
         return <<<HTML
-        <table {$attr}>
-            <thead>
-                {$this->headerRender()}
-            </thead>
-            <tbody>
-                {$this->bodyRender()}
-            </tbody>
-        </table>
+        <div class="table-responsive" x-data="{
+            fieldSort: '',
+            typeSort: '',
+            sortField(el) {
+                let field = el.getAttribute('data-field');
+                if(field !== this.fieldSort) {
+                    this.fieldSort = field;
+                    typeSort = 'asc';
+                } else {
+                    this.typeSort = this.typeSort === 'asc' ? 'desc' : 'asc';
+                }
+            }
+        }">
+            <table {$attr} >
+                <thead>
+                    {$this->headerRender()}
+                </thead>
+                <tbody>
+                    {$this->bodyRender()}
+                </tbody>
+            </table>
+        </div>
         HTML;
     }
 }
