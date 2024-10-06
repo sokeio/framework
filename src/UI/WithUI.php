@@ -2,7 +2,6 @@
 
 namespace Sokeio\UI;
 
-use Illuminate\Support\Facades\Log;
 use Sokeio\FormData;
 
 trait WithUI

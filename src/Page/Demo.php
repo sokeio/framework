@@ -2,24 +2,20 @@
 
 namespace Sokeio\Page;
 
-use Illuminate\Support\Facades\Log;
-use Sokeio\page;
+use Sokeio\Concerns\ThemeNone;
+use Sokeio\Concerns\WithPageAdminGuest;
+use Sokeio\Page;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\WithUI;
 
-class Demo extends page
+class Demo extends Page
 {
-    use WithUI;
-    public function alert($message)
-    {
-        $this->sendMessage($message);
-    }
+    use WithUI, ThemeNone;
+    use WithPageAdminGuest;
     public function setupUI()
     {
         return [
-            Button::init()->text('Click Me')->wireClick(function () {
-                $this->alert('Hello sdsdsdWorld');
-            }, 'demo_click'),
+            Button::init()->text('Click Me')->wireClick('alert("Nội dung alert")'),
         ];
     }
 }

@@ -2,21 +2,36 @@
 
 namespace Sokeio\UI;
 
-use Sokeio\ObjectJson;
+use Sokeio\UI\Concerns\CommonUI;
+use Sokeio\UI\Concerns\LifecycleUI;
 
 class BaseUI
 {
+    use LifecycleUI, CommonUI;
     private $childs = [];
-    private $data = [];
-    private HookUI $hook;
-    private SoUI $manager;
-    private BaseUI $parent;
-
+    private SoUI|null $manager;
+    private BaseUI  $parent;
     protected function __construct()
     {
-        $this->hook = new HookUI();
-        $this->initUI();
+        $this->initLifecycleUI();
+        $this->initCommonUI();
     }
+    public function when($condition, $callback)
+    {
+        $this->register(function () use ($condition, $callback) {
+            $this->manager->when($condition, $callback, $this);
+        });
+        return $this;
+    }
+    public function registerManager(SoUI $manager)
+    {
+        $this->manager = $manager;
+        $this->register(function () {
+            $this->initUI();
+        });
+        return $this;
+    }
+
     protected function initUI()
     {
         // TODO: Implement initUI() method.
@@ -30,14 +45,7 @@ class BaseUI
         $this->parent = $parent;
         return $this;
     }
-    public function setManager(SoUI $manager)
-    {
-        $this->manager = $manager;
-        foreach ($this->childs as $child) {
-            $child->setManager($manager);
-        }
-        return $this;
-    }
+
     public function action($key, $callback)
     {
         $this->ready(function () use ($key, $callback) {
@@ -45,119 +53,7 @@ class BaseUI
         });
         return $this;
     }
-    private function callbackWithKey($key, $callback)
-    {
-        $this->hook->group($key)->callback($callback);
-        return $this;
-    }
-    public function runCallbacks($key)
-    {
-        $this->hook->group($key)->run($this, func_get_args());
-        return $this;
-    }
-    public function className($className)
-    {
-        return $this->attrAdd('class', $className);
-    }
-    public function id($id)
-    {
-        return $this->attr('id', $id);
-    }
-    public function getId()
-    {
-        return $this->getAttrKey('id');
-    }
-    public function vars($key, $value = null)
-    {
-        $value = is_array($value) ? $value : [$value];
-        if ($this->data['vars'] ?? null) {
-            $this->data['vars'][$key] = $value;
-        } else {
-            $this->data['vars'] = [$key => $value];
-        }
-        return $this;
-    }
-    public function getVar($key, $default = null)
-    {
-        if (!isset($this->data['vars'])) {
-            $this->data['vars'] = [];
-        }
-        if (!isset($this->data['vars'][$key])) {
-            return $default;
-        }
-        return trim(implode(' ', $this->data['vars'][$key]));
-    }
-    public function attr($key, $value = null)
-    {
-        $value = is_array($value) ? $value : [$value];
-        if ($this->data['attributes'] ?? null) {
-            $this->data['attributes'][$key] = $value;
-        } else {
-            $this->data['attributes'] = [$key => $value];
-        }
-        return $this;
-    }
-    public function attrAdd($key, $value = null)
-    {
-        $value = is_array($value) ? $value : [$value];
-        if ($this->data['attributes'] ?? null) {
-            $this->data['attributes'][$key] = array_merge($this->data['attributes'][$key] ?? [], $value);
-        } else {
-            $this->data['attributes'] = [$key => $value];
-        }
 
-        return $this;
-    }
-    protected function getAttrKey($key, $default = null)
-    {
-        return $this->data['attributes'][$key] ?? $default;
-    }
-    public function getAttr()
-    {
-        $attr = '';
-        if (!isset($this->data['attributes'])) {
-            $this->data['attributes'] = [];
-        }
-        foreach ($this->data['attributes'] as $key => $value) {
-            if (is_array($value)) {
-                $value = implode(' ', $value);
-            }
-            $attr .= ' ' . $key . '="' . htmlentities($value, ENT_QUOTES, 'UTF-8') . '"';
-        }
-        return $attr;
-    }
-    public function runReady()
-    {
-        return $this->runCallbacks('ready');
-    }
-    public function ready($callback)
-    {
-        return $this->callbackWithKey('ready', $callback);
-    }
-    public function runRegister()
-    {
-        return $this->runCallbacks('register');
-    }
-    public function register($callback)
-    {
-        return $this->callbackWithKey('register', $callback);
-    }
-    public function runBoot()
-    {
-        return $this->runCallbacks('boot');
-    }
-    public function boot($callback)
-    {
-        return $this->callbackWithKey('boot', $callback);
-    }
-    public function runRender()
-    {
-        return $this->runCallbacks('render')->view();
-    }
-    public function render($callback)
-    {
-        return $this->callbackWithKey('render', $callback);
-    }
     public function view()
     {
         $attr = $this->getAttr();

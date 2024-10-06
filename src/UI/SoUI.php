@@ -3,15 +3,44 @@
 namespace Sokeio\UI;
 
 use Illuminate\Support\Facades\Log;
+use Sokeio\UI\Support\HookUI;
 
 class SoUI
 {
+    protected HookUI $hook;
     private $ui = [];
     private $actions = [];
     private $wire = null;
+    private function lifecycleWithKey($key, $callback = null, $params = null)
+    {
+        if ($callback) {
+            $this->hook->group($key)->callback($callback);
+        } else {
+            if (count($params) > 1) {
+                $this->hook->group($key)->run([$this, ...array_shift($params)]);
+            } else {
+                $this->hook->group($key)->run([$this]);
+            }
+        }
+        return $this;
+    }
     public function getWire()
     {
         return $this->wire;
+    }
+    public function when($condition, $callback, $ui = null)
+    {
+        if (is_callable($condition)) {
+            $condition = $condition();
+        }
+        if ($condition) {
+            if ($ui) {
+                $callback($ui);
+            } else {
+                $callback();
+            }
+        }
+        return $this;
     }
     public function action($name, $callback, $ui = null)
     {
@@ -36,35 +65,73 @@ class SoUI
         if (!is_array($ui)) {
             $ui = [$ui];
         }
+        $this->hook = new HookUI();
         $this->ui = $ui;
+        $this->initManager();
         $this->register();
     }
-    public function register()
+    public function initManager()
     {
+        foreach ($this->ui as $ui) {
+            $ui->registerManager($this);
+        }
+    }
+    public function register($callback = null)
+    {
+        if ($callback) {
+            $this->lifecycleWithKey('register', $callback);
+            return $this;
+        }
+        $this->lifecycleWithKey('register', $callback, (func_get_args()));
+
         //register
         foreach ($this->ui as $ui) {
-            $ui->setManager($this);
-            $ui->runRegister();
+            $ui->register();
         }
+        return $this;
     }
-    public function boot()
+    public function boot($callback = null)
     {
+        if ($callback) {
+            $this->lifecycleWithKey('boot', $callback);
+            return $this;
+        }
+        $this->lifecycleWithKey('boot', $callback, (func_get_args()));
+
         //boot
         foreach ($this->ui as $ui) {
-            $ui->setManager($this);
-            $ui->runBoot();
+            $ui->boot();
         }
+        return $this;
+    }
+    public function ready($callback = null)
+    {
+        if ($callback) {
+            $this->lifecycleWithKey('ready', $callback);
+            return $this;
+        }
+        $this->lifecycleWithKey('ready', $callback, (func_get_args()));
         //ready
         foreach ($this->ui as $ui) {
-            $ui->runReady();
+            $ui->ready();
         }
+        return $this;
     }
-    public function render()
+    public function render($callback = null)
     {
+        if ($callback) {
+            $this->lifecycleWithKey('render', $callback);
+            return $this;
+        }
+        $this->lifecycleWithKey('render', $callback, (func_get_args()));
+        //render
+        foreach ($this->ui as $ui) {
+            $ui->render();
+        }
         //render
         $html = '';
         foreach ($this->ui as $ui) {
-            $html .= $ui->runRender();
+            $html .= $ui->view();
         }
         return $html;
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\UI;
+namespace Sokeio\UI\Support;
 
 
 class HookUI

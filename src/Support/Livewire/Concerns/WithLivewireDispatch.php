@@ -13,6 +13,10 @@ trait WithLivewireDispatch
             'payload' => $payload
         ]);
     }
+    public function alert($message)
+    {
+        $this->sendMessage($message);
+    }
     public function sendMessage(
         $message,
         $option = []
