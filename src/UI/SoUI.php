@@ -133,6 +133,9 @@ class SoUI
         foreach ($this->ui as $ui) {
             $html .= $ui->view();
         }
+        if (count($this->ui) > 1) {
+            return '<div >' . $html . '</div>';
+        }
         return $html;
     }
     public function toArray()
