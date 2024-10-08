@@ -29,11 +29,10 @@ class Demo extends Page
             ->className('container p-2')
             ->warp([
                 Button::init()->text('Click Me')->wireClick('alertTest("Nội dung alert")')->className('p-2 mb-2'),
-                Input::init()->fieldName('demoName'),
+                Input::init()->fieldName('demoName')->date(),
                 Table::init()
                     ->column('username')
                     ->column('email')
-                    ->className('table table-bordered')
                     ->query(User::query()),
             ]);
     }

@@ -1,8 +1,8 @@
 export default {
   checkFirst: () => window.Tagify !== undefined,
   local: {
-    js: ["platform/modules/sokeio/tagify/dist/tagify.min.js"],
-    css: ["platform/modules/sokeio/tagify/dist/tagify.css"],
+    js: ["/platform/modules/sokeio/tagify/dist/tagify.min.js"],
+    css: ["/platform/modules/sokeio/tagify/dist/tagify.css"],
   },
   cdn: {
     js: [],

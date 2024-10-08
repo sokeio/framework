@@ -42,7 +42,7 @@ class Input extends FieldUI
 
     public function date()
     {
-        return $this->attr('type', 'date');
+        return $this->attr('type', 'text')->attr('wire:flatpickr');
     }
 
     public function time()

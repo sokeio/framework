@@ -1,7 +1,7 @@
 export default {
   checkFirst: () => window.Masonry !== undefined,
   local: {
-    js: ["platform/modules/sokeio/masonry/dist/masonry.min.js"],
+    js: ["/platform/modules/sokeio/masonry/dist/masonry.min.js"],
     css: [],
   },
   cdn: {

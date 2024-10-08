@@ -1,7 +1,7 @@
 export default {
   checkFirst: () => window.Sortable !== undefined,
   local: {
-    js: ["platform/modules/sokeio/sortable/sortable.min.js"],
+    js: ["/platform/modules/sokeio/sortable/sortable.min.js"],
     css: [],
   },
   cdn: {

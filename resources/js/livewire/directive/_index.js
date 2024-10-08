@@ -59,10 +59,8 @@ function install(app) {
         return;
       }
       let options = {};
-      if (items.el.hasAttribute(`wire:${key}.options`)) {
-        options = new Function(
-          `return ${items.el.getAttribute(`wire:${key}.options`)};`
-        )();
+      if ((options = items.el.getAttribute(`wire:${key}.options`))) {
+        options = new Function(`return ${options};`)();
       }
       if (setting.checkFirst && !setting.checkFirst()) {
         if (

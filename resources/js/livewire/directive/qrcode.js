@@ -1,7 +1,7 @@
 export default {
   checkFirst: () => window.QRCode !== undefined,
   local: {
-    js: ["platform/modules/sokeio/easyqrcodejs/dist/easy.qrcode.min.js"],
+    js: ["/platform/modules/sokeio/easyqrcodejs/dist/easy.qrcode.min.js"],
     css: [],
   },
   cdn: {

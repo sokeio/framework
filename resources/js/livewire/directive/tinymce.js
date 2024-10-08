@@ -3,7 +3,7 @@ import { Utils } from "../../framework/common/Uitls";
 export default {
   checkFirst: () => window.tinymce !== undefined,
   local: {
-    js: ["platform/modules/sokeio/tinymce/tinymce.min.js"],
+    js: ["/platform/modules/sokeio/tinymce/tinymce.min.js"],
     css: [],
   },
   cdn: {

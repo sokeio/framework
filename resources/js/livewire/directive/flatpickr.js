@@ -4,8 +4,8 @@ import { convertDateTimeFormatToMask } from "../util";
 export default {
   checkFirst: () => window.flatpickr !== undefined,
   local: {
-    js: ["platform/modules/sokeio/flatpickr/dist/flatpickr.min.js"],
-    css: ["platform/modules/sokeio/flatpickr/dist/flatpickr.min.css"],
+    js: ["/platform/modules/sokeio/flatpickr/dist/flatpickr.min.js"],
+    css: ["/platform/modules/sokeio/flatpickr/dist/flatpickr.min.css"],
   },
   cdn: {
     js: [],
@@ -14,7 +14,7 @@ export default {
   init: ({ el, directive, component, cleanup, options }) => {
     let modelKey = el.getAttribute("wire:model");
     let dateFormat =
-      options.dateFormat ?? (options.enableTime ? "Y/m/d H:i:S" : "Y/m/d");
+      options?.dateFormat ?? (options?.enableTime ? "Y/m/d H:i:S" : "Y/m/d");
     let maskFormat = convertDateTimeFormatToMask(dateFormat);
     el.$sokeio_flatpickr = new window.flatpickr(el, {
       allowInput: true,

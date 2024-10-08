@@ -14,6 +14,10 @@ class Table extends BaseUI
     private $pageName = null;
     private $colums = [];
     private $index = -1;
+    protected function initUI()
+    {
+        $this->className('table table-bordered');
+    }
     public function page($pageIndex, $pageSize = 20, $pageName = 'page')
     {
         $this->pageIndex = $pageIndex;
@@ -86,9 +90,9 @@ class Table extends BaseUI
             typeSort: '',
             sortField(el) {
                 let field = el.getAttribute('data-field');
-                if(field !== this.fieldSort) {
+                if(field != this.fieldSort) {
                     this.fieldSort = field;
-                    typeSort = 'asc';
+                    this.typeSort = 'asc';
                 } else {
                     this.typeSort = this.typeSort === 'asc' ? 'desc' : 'asc';
                 }

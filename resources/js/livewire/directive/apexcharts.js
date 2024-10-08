@@ -1,8 +1,8 @@
 export default {
   checkFirst: () => window.ApexCharts !== undefined,
   local: {
-    js: ["platform/modules/sokeio/apexcharts/dist/apexcharts.min.js"],
-    css: ["platform/modules/sokeio/apexcharts/dist/apexcharts.css"],
+    js: ["/platform/modules/sokeio/apexcharts/dist/apexcharts.min.js"],
+    css: ["/platform/modules/sokeio/apexcharts/dist/apexcharts.css"],
   },
   cdn: {
     js: [
