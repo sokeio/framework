@@ -14,6 +14,9 @@ class Table extends BaseUI
     private $pageName = null;
     private $colums = [];
     private $index = -1;
+    public function checkPage(){
+        return $this->pageIndex && $this->pageSize;
+    }
     protected function initUI()
     {
         $this->className('table table-bordered');
@@ -32,7 +35,7 @@ class Table extends BaseUI
     }
     public function getRows()
     {
-        if ($this->pageIndex && $this->pageSize) {
+        if ($this->checkPage()) {
             $this->rows = $this->query->paginate($this->pageSize, ['*'], $this->pageName ?? 'page', $this->pageIndex);
         } else {
             $this->rows = $this->query->get();

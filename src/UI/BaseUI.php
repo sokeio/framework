@@ -8,14 +8,25 @@ use Sokeio\UI\Concerns\LifecycleUI;
 class BaseUI
 {
     use LifecycleUI, CommonUI;
+
     private $callbackView = null;
     private SoUI|null $manager;
     private BaseUI  $parent;
 
-    protected function __construct()
+    protected function __construct($childs = [])
     {
         $this->initLifecycleUI();
         $this->initCommonUI();
+        $this->child($childs);
+    }
+    public function getUI($callback = null)
+    {
+        if ($callback) {
+            return $this->ready(function () use ($callback) {
+                call_user_func($callback, $this);
+            });
+        }
+        return $this->manager;
     }
     public function when($condition, $callback)
     {
@@ -126,8 +137,8 @@ class BaseUI
 
         return $instance;
     }
-    public static function init()
+    public static function init($childs = [])
     {
-        return new static();
+        return new static($childs);
     }
 }

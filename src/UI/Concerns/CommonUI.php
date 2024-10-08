@@ -42,20 +42,24 @@ trait CommonUI
     {
         return $this->data('vars')->get($key, $default, $isText);
     }
-    public function attr($key, $value = null): static
+    protected function getAttributeByGroup($group = 'default')
     {
-        return $this->data('attributes')->set($key, $value);
+        return $this->data('attributes_' . $group);
     }
-    public function attrAdd($key, $value = null): static
+    public function attr($key, $value = null, $group = 'default'): static
     {
-        return $this->data('attributes')->append($key, $value);
+        return $this->getAttributeByGroup($group)->set($key, $value);
     }
-    protected function getAttrKey($key, $default = null)
+    public function attrAdd($key, $value = null, $group = 'default'): static
     {
-        return $this->data('attributes')->get($key, $default);
+        return $this->getAttributeByGroup($group)->append($key, $value);
     }
-    protected function getAttr()
+    protected function getAttrKey($key, $default = null, $group = 'default')
     {
-        return $this->data('attributes')->getAttributeText();
+        return $this->getAttributeByGroup($group)->get($key, $default);
+    }
+    protected function getAttr($group = 'default')
+    {
+        return $this->getAttributeByGroup($group)->getAttributeText();
     }
 }
