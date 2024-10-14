@@ -25,29 +25,24 @@ class Demo extends Page
     }
     public function setupUI()
     {
-        return  Div::init(
+        return  PageUI::init(
             [
-                PageUI::init(
-                    [
-                        Button::init()
-                            ->text('Click Me')
-                            ->wireClick('alertTest("Nội dung alert")')
-                            ->className('p-2 mb-2'),
-                        Input::init('demoName')->date()->label('xin chào'),
-                        Table::init()
-                            ->column('username')
-                            ->column('email')
-                            ->query(User::query()),
+                Button::init()
+                    ->text('Click Me')
+                    ->wireClick('alertTest("Nội dung alert")')
+                    ->className('p-2 mb-2'),
+                Input::init('demoName')->date()->label('xin chào'),
+                Table::init()
+                    ->column('username')
+                    ->column('email')
+                    ->query(User::query()),
 
-                    ]
-                )
-                    ->title($this->getPageConfig()->getTitle())
-                    ->rightUI([
-                        Input::init('demoName')->date()->classNameWrapper('me-2'),
-                        Button::init()->text('Đăng nhập')->wireClick('alert("Đăng nhập")'),
-                    ])
             ]
         )
-            ->className('container p-2');
+            ->title($this->getPageConfig()->getTitle())
+            ->rightUI([
+                Input::init('demoName')->date()->classNameWrapper('me-2'),
+                Button::init()->text('Đăng nhập')->wireClick('alert("Đăng nhập")'),
+            ])->className('container-xl');
     }
 }
