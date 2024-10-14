@@ -68,17 +68,6 @@ class ItemManager
             if (!$this->checkItemActive($itemInfo)) {
                 continue;
             }
-
-            if ($this->isTheme()) {
-                $isAdmin = Arr::get($itemInfo, 'admin');
-                if (Platform::isUrlAdmin() && !$isAdmin) {
-                    continue;
-                }
-
-                if (!Platform::isUrlAdmin() && $isAdmin) {
-                    continue;
-                }
-            }
             $itemInfo->loader();
         }
     }

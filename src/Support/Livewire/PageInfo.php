@@ -9,7 +9,7 @@ class PageInfo
 {
     public function __construct(
         public $title = null,
-        public $layout = 'none',
+        public $layout = 'default',
         public $url = null,
         public $icon = null,
         public $target = null,

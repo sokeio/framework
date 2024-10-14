@@ -15,7 +15,7 @@ class PageConfig
     public function __construct(protected $component = null) {}
     private $config = [
         'title' => '',
-        'layout' => 'theme::layout.default',
+        'layout' => 'default',
         'url' => null,
         'route' => null,
         'icon' => null,
@@ -30,6 +30,9 @@ class PageConfig
     public function setInfo(PageInfo $info)
     {
         foreach ($this->config as $key => $value) {
+            if (!$info->{$key}) {
+                continue;
+            }
             $this->config[$key] = $info->{$key};
         }
     }
@@ -56,7 +59,7 @@ class PageConfig
     public static function setupLayout($target, &$layoutConfig)
     {
         $config = $target->getPageConfig();
-        if ($config->skipHtmlAjax() && (Request::ajax() || Request::wantsJson())) {
+        if (!$config->skipHtmlAjax() && (Request::ajax() || Request::wantsJson())) {
             $layoutConfig->view = "sokeio::html";
         } else {
             $layoutConfig->view = Theme::getLayout($config->getLayout());
@@ -71,7 +74,7 @@ class PageConfig
         $url = str($pageClass)->after($namespacePage);
         $urlRoute = $config->getUrl() ?? str($url)->split('/\\\\/', -1, PREG_SPLIT_NO_EMPTY)
             ->map([Str::class, 'kebab'])->join('/');
-        $nameRoute = $config->getRouteName()
+        $nameRoute = $config->getRoute()
             ??  ($shortName . '-page.' . str($url)->split('/\\\\/', -1)->map([Str::class, 'kebab'])->join('.'));
 
         if ($config->getAdmin()) {

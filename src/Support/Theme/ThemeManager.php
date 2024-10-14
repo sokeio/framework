@@ -258,6 +258,13 @@ class ThemeManager
     {
         return $this->getNamespace(Platform::isUrlAdmin());
     }
+    public function getLayoutName($name, $isAdmin = null)
+    {
+        if ($isAdmin === null) {
+            $isAdmin = Platform::isUrlAdmin();
+        }
+        return $this->getNamespace($isAdmin) . '::layouts.' . $name;
+    }
     public function view(string $view, array $data = [], array $mergeData = [])
     {
         $viewParts = explode('::', $view);
@@ -289,11 +296,10 @@ class ThemeManager
     public function setLayout(string $layout = 'none', $isAdmin = null)
     {
         if (!View::exists($layout)) {
-            if ($isAdmin === null) {
-                $isAdmin = Platform::isUrlAdmin();
-            }
-            if (View::exists($this->getNamespace($isAdmin) . '::layouts.' . $layout)) {
-                $layout = $this->getNamespace($isAdmin) . '::layouts.' . $layout;
+            $temp = $this->getLayoutName($layout, $isAdmin);
+
+            if (View::exists($temp)) {
+                $layout = $temp;
             }
         }
         $this->layout = $layout;
@@ -301,17 +307,16 @@ class ThemeManager
     public function getLayout(string $default = null): string
     {
         $arrs = [
+            $default,
+            $default ?  $this->getLayoutName($default) : '',
             $this->layout,
-            $this->namespaceTheme() . '::layouts.default',
-            $default
+            $this->getLayoutName('default'),
         ];
         foreach ($arrs as $layout) {
             if ($layout && View::exists($layout)) {
                 return $layout;
             }
         }
-
-
         return 'sokeio::layouts.none';
     }
 }

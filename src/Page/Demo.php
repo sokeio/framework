@@ -6,7 +6,6 @@ use App\Models\User;
 use Sokeio\Page;
 use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\UI\Common\Button;
-use Sokeio\UI\Div;
 use Sokeio\UI\Field\Input;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\Table\Table;
