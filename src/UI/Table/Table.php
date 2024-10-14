@@ -14,14 +14,15 @@ class Table extends BaseUI
     private $pageName = null;
     private $colums = [];
     private $index = -1;
-    public function checkPage(){
+    public function checkPage()
+    {
         return $this->pageIndex && $this->pageSize;
     }
     protected function initUI()
     {
         $this->className('table table-bordered');
     }
-    public function page($pageIndex, $pageSize = 20, $pageName = 'page')
+    public function page($pageIndex = 1, $pageSize = 20, $pageName = 'page')
     {
         $this->pageIndex = $pageIndex;
         $this->pageSize = $pageSize;

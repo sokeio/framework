@@ -16,7 +16,7 @@ trait WithUI
     {
         return $this->ui ?? ($this->ui = SoUI::init($this->setupUI(), $this));
     }
-    public function setupUI()
+    protected function setupUI()
     {
         return [];
     }

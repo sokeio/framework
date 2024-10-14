@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
-    use SoftDeletes;
     use WithPermission;
     use WithModelHook;
     protected $fillable = ["*"];

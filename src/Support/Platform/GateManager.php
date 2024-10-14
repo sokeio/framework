@@ -36,6 +36,7 @@ class GateManager
     }
     public function check($permssion)
     {
+        return true;
         //TODO: check user permission
     }
     public function role($role)

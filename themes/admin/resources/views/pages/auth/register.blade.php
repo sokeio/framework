@@ -13,25 +13,43 @@
                 </svg>
             </a>
         </div>
-        <form class="card card-md" action="./" method="get" autocomplete="off" novalidate="">
+        <form class="card card-md" autocomplete="off" novalidate="" wire:submit.prevent="register()">
             <div class="card-body">
                 <h2 class="card-title text-center mb-4">Create new account</h2>
                 <div class="mb-3">
                     <label class="form-label">Name</label>
-                    <input type="text" class="form-control" placeholder="Enter name">
+                    <input type="text" class="form-control" placeholder="Enter name" wire:model='name'>
+                    @error('name')
+                        <span class="error">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Email address</label>
-                    <input type="email" class="form-control" placeholder="Enter email">
+                    <input type="email" class="form-control" placeholder="Enter email" wire:model='email'>
+                    @error('email')
+                        <span class="error">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Password</label>
-                    <div class="input-group input-group-flat">
-                        <input type="password" class="form-control" placeholder="Password" autocomplete="off">
+                    <div class="input-group input-group-flat" x-data="{ showPass: false }">
+                        <input type="password" :type="showPass ? 'text' : 'password'" class="form-control"
+                            placeholder="Your password" autocomplete="off" wire:model='password'>
                         <span class="input-group-text">
-                            <a href="#" class="link-secondary" data-bs-toggle="tooltip" aria-label="Show password"
-                                data-bs-original-title="Show password"><!-- Download SVG icon from http://tabler-icons.io/i/eye -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            <a href="#" @click=" showPass = !showPass " class="link-secondary"
+                                data-bs-toggle="tooltip" :title="showPass ? 'Hide password' : 'Show password'">
+                                <svg style="display: none" x-show="showPass" xmlns="http://www.w3.org/2000/svg"
+                                    width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="icon">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M10.585 10.587a2 2 0 0 0 2.829 2.828" />
+                                    <path
+                                        d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87" />
+                                    <path d="M3 3l18 18" />
+                                </svg>
+
+                                <svg x-show="!showPass" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round" class="icon">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -41,8 +59,12 @@
                                     </path>
                                 </svg>
                             </a>
+
                         </span>
                     </div>
+                    @error('password')
+                        <span class="error">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <label class="form-check">
@@ -51,13 +73,16 @@
                                 and policy</a>.</span>
                     </label>
                 </div>
+                @error('account_error')
+                    <span class="error">{{ $message }}</span>
+                @enderror
                 <div class="form-footer">
                     <button type="submit" class="btn btn-primary w-100">Create new account</button>
                 </div>
             </div>
         </form>
         <div class="text-center text-secondary mt-3">
-            Already have account? <a href="{{ route('admin.login') }}" tabindex="-1">Sign in</a>
+            Already have account? <a href="{{ route('admin.login') }}" tabindex="-1" wire:navigate>Sign in</a>
         </div>
     </div>
 </div>

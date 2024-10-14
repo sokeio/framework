@@ -30,7 +30,7 @@ class PlatformManager
     }
     public function isUrlAdmin()
     {
-        return str($this->currentUrl())->startsWith($this->adminUrl());
+        return str($this->currentUrl())->startsWith($this->adminUrl()) || $this->adminUrl() === '/';
     }
     public function gate()
     {
