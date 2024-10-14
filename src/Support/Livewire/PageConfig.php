@@ -21,7 +21,7 @@ class PageConfig
         'icon' => null,
         'target' => null,
         'admin' => false,
-        'auth' => false,
+        'auth' => true,
         'menu' => false,
         'menuTitle' => null,
         'menuTarget' => null,
@@ -30,7 +30,7 @@ class PageConfig
     public function setInfo(PageInfo $info)
     {
         foreach ($this->config as $key => $value) {
-            if (!$info->{$key}) {
+            if ($info->{$key} === null) {
                 continue;
             }
             $this->config[$key] = $info->{$key};
