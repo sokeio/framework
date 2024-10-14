@@ -2,57 +2,31 @@
 
 namespace Sokeio\Support\Livewire\Concerns;
 
-use Illuminate\Support\Facades\Request;
 use Livewire\Features\SupportPageComponents\PageComponentConfig;
 use Livewire\Features\SupportPageComponents\SupportPageComponents;
-use Sokeio\Theme;
-
+use Sokeio\Support\Livewire\PageConfig;
+use Sokeio\Support\Livewire\PageInfo;
 trait WithLivewirePage
 {
-    public static function menuEnabled()
+    private $pageConfig = null;
+    public function getPageConfig()
     {
-        return true;
+        if (!$this->pageConfig) {
+            $this->pageConfig = new PageConfig($this);
+            // use ReflectionClass
+            $reflection = new \ReflectionClass(get_class($this));
+            // getAttributes  PageInfo::class
+            $attributes = $reflection->getAttributes(PageInfo::class, \ReflectionAttribute::IS_INSTANCEOF);
+            foreach ($attributes as $attribute) {
+                $this->pageConfig->setInfo($attribute->newInstance());
+            }
+            $this->pageSetup($this->pageConfig);
+        }
+        return $this->pageConfig;
     }
-    public static function menuTitle()
+    public static function pageSetup(PageConfig $pageConfig)
     {
-        return null;
-    }
-    public static function menuTarget()
-    {
-        return null;
-    }
-    public static function pageUrl()
-    {
-        return null;
-    }
-    public static function pageName()
-    {
-        return null;
-    }
-    public static function pageAdmin()
-    {
-        return false;
-    }
-
-    public static function pageAuth()
-    {
-        return false;
-    }
-    protected function pageTitle()
-    {
-        return null;
-    }
-    public static function pageIcon()
-    {
-        return null;
-    }
-    public static function skipHtmlAjax()
-    {
-        return false;
-    }
-    protected function themePage()
-    {
-        return 'sokeio::layouts.none';
+        //TODO: Implement pageSetup
     }
     public function __invoke()
     {
@@ -70,14 +44,9 @@ trait WithLivewirePage
         $layoutConfig = $layoutConfig ?: new PageComponentConfig();
 
         $layoutConfig->normalizeViewNameAndParamsForBladeComponents();
-        if (!static::skipHtmlAjax() && (Request::ajax() || Request::wantsJson())) {
-            $layoutConfig->view = "sokeio::html";
-        } else {
-            $layoutConfig->view = Theme::getLayout($this->themePage());
-        }
         $layoutConfig->slotOrSection = 'content';
         $layoutConfig->type = 'themeLayout';
-        Theme::title($this->pageTitle());
+        PageConfig::setupLayout($this, $layoutConfig);
         return SupportPageComponents::renderContentsIntoLayout($html, $layoutConfig);
     }
 }

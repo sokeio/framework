@@ -2,27 +2,18 @@
 
 namespace Sokeio\Page;
 
-use Sokeio\Concerns\WithPageAdminGuest;
-use Sokeio\Models\Role;
-use Sokeio\Models\User;
+use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\Theme;
 
+#[PageInfo(route: 'admin.dashboard', url: '/', admin: true, title: 'Dashboard', icon: 'fas fa-home')]
 class Dashboard extends \Sokeio\Page
 {
-    use WithPageAdminGuest;
     public $test = "abc";
     public $users = [];
-    public static function pageUrl()
-    {
-        return '/';
-    }
+
     public function change()
     {
         $this->test = 'changed';
-    }
-    public function mount()
-    {
-        
     }
     public function render()
     {
@@ -34,12 +25,12 @@ class Dashboard extends \Sokeio\Page
 
         // },"#test-app");');
         Theme::templateFromPath(__DIR__ . '/test.js', 'demo-test');
-        return <<<html
+        return <<<blade
         <div>
         @json(\$users)
-            <button class="btn btn-primary" wire:modal wire:modal.title="Choà mọig nừo" wire:modal.url="{{route('admin.sokeio-page.demo1')}}">demo</button>
+            <button class="btn btn-primary" wire:modal wire:modal.title="Choà mọig nừo" wire:modal.url="{{route('sokeio-page.demo1')}}">demo</button>
             
         </div>
-html;
+blade;
     }
 }

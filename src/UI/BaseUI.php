@@ -19,12 +19,10 @@ class BaseUI
         $this->initCommonUI();
         $this->child($childs);
     }
-    public function getUI($callback = null)
+    public function refUI($callback = null)
     {
         if ($callback) {
-            return $this->ready(function () use ($callback) {
-                call_user_func($callback, $this);
-            });
+            call_user_func($callback, $this);
         }
         return $this->manager;
     }

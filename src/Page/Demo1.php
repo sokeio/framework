@@ -2,17 +2,15 @@
 
 namespace Sokeio\Page;
 
-use Sokeio\Concerns\WithPageAdmin;
-use Sokeio\Concerns\WithPageAdminGuest;
 
 class Demo1 extends \Sokeio\Page
 {
-    use WithPageAdminGuest;
     public $test = 'test';
     public function change()
     {
         $this->test = 'changed_' . time();
     }
+
     public function render()
     {
         return <<<html
