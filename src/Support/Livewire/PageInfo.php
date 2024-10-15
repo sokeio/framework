@@ -10,6 +10,7 @@ class PageInfo
     public function __construct(
         public $title = null,
         public $layout = 'default',
+        public $route = null,
         public $url = null,
         public $icon = null,
         public $target = null,
@@ -17,8 +18,11 @@ class PageInfo
         public $auth = null,
         public $menu = null,
         public $menuTitle = null,
-        public $menuTarget = null,
-        public $route = null,
+        public $menuIcon = null,
+        public $menuTargetTitle = null,
+        public $menuTargetIcon = null,
+        public $menuTargetId = null,
+        public $menuTargetClass = null,
         public $skipHtmlAjax = null
     ) {}
 }

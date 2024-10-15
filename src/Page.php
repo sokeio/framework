@@ -11,6 +11,10 @@ class Page extends Component implements IPage
     use WithLivewirePage;
     public static function runLoad(ItemInfo $itemInfo)
     {
-        PageConfig::setupRoute(static::class, $itemInfo->namespace, $itemInfo->getPackage()->shortName());
+        PageConfig::setupRoute(
+            static::class,
+            $itemInfo->namespace,
+            str($itemInfo->getPackage()->shortName())->replace('\\', '.')
+        );
     }
 }

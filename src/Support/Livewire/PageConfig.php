@@ -13,18 +13,23 @@ use Sokeio\Theme;
 class PageConfig
 {
     public function __construct(protected $component = null) {}
+
     private $config = [
-        'title' => '',
         'layout' => 'default',
+        'title' => '',
         'url' => null,
-        'route' => null,
         'icon' => null,
+        'route' => null,
         'target' => null,
         'admin' => false,
         'auth' => true,
         'menu' => false,
         'menuTitle' => null,
-        'menuTarget' => null,
+        'menuIcon' => null,
+        'menuTargetTitle' => null,
+        'menuTargetIcon' => null,
+        'menuTargetId' => null,
+        'menuTargetClass' => null,
         'skipHtmlAjax' => false
     ];
     public function setInfo(PageInfo $info)
