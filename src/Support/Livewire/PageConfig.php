@@ -20,12 +20,12 @@ class PageConfig
         'url' => null,
         'icon' => null,
         'route' => null,
-        'target' => null,
         'admin' => false,
         'auth' => true,
         'menu' => false,
         'menuTitle' => null,
         'menuIcon' => null,
+        'menuTarget' => null,
         'menuTargetTitle' => null,
         'menuTargetIcon' => null,
         'menuTargetId' => null,
@@ -98,6 +98,23 @@ class PageConfig
                             }
                         })
                 );
+                if($target){
+                    MenuManager::targetSetup($target, function (MenuItem $item) use ($config) {
+                        dd($config);
+                        if($config->getMenuTargetClass()){
+                            // $item-> = $config->getMenuTargetClass();
+                        }
+                        if($config->getMenuTargetId()){
+                            $item->id = $config->getMenuTargetId();
+                        }
+                        if($config->getMenuTargetIcon()){
+                            $item->icon = $config->getMenuTargetIcon();
+                        }
+                        if($config->getMenuTargetTitle()){
+                            $item->title = $config->getMenuTargetTitle();
+                        }
+                    });
+                }
             }
             Platform::routeAdmin(function () use ($pageClass, $urlRoute, $nameRoute) {
                 Route::get($urlRoute, $pageClass)->name($nameRoute);

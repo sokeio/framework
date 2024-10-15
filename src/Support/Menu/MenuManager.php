@@ -36,12 +36,27 @@ class MenuManager implements Arrayable
         }
         return static::site()->render($position);
     }
+    public static function targetSetup($target, $callback)
+    {
+        return static::admin()->target($target, $callback);
+    }
     private function __construct(private $isAdmin = false)
     {
         $this->menuItems = collect([]);
     }
     private $menuItems;
     private $isBeforeRender = false;
+    private $hookTarget = [];
+    public function target($target, $callback)
+    {
+        $this->hookTarget[] = function () use ($target, $callback) {
+            $item = $this->getItemsByKey($target);
+            if ($item->count() > 0) {
+                $item = $item->first();
+                $callback($item);
+            }
+        };
+    }
     public function register($menu)
     {
         $this->menuItems->push($menu);
@@ -95,6 +110,16 @@ class MenuManager implements Arrayable
             }
         }
         $this->menuItems = $items;
+        foreach ($this->hookTarget as $callback) {
+            if (!is_callable($callback)) {
+                continue;
+            }
+            $callback();
+        }
+    }
+    private function getItemsByKey($key)
+    {
+        return $this->menuItems->where('key', $key);
     }
     private function getItemsByPosition($position)
     {

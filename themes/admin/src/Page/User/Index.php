@@ -8,7 +8,7 @@ use Sokeio\UI\PageUI;
 use Sokeio\UI\Table\Table;
 use Sokeio\UI\WithUI;
 
-#[PageInfo(admin: true, auth: true,  title: 'Users', menu: true)]
+#[PageInfo(admin: true, auth: true,  title: 'Users', menu: true, menuTitle: 'Users',menuTargetTitle:'Users')]
 class Index extends \Sokeio\Page
 {
     use WithUI;

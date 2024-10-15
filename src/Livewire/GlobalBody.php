@@ -12,15 +12,10 @@ class GlobalBody extends Component
     public function logout()
     {
         Auth::logout();
-        return redirect('/');
+        return $this->redirectCurrent();
     }
-    public $timer = 0;
     public function render()
     {
         return view('sokeio::livewire.global-body');
-    }
-    public function test()
-    {
-        $this->timer += 1;
     }
 }
