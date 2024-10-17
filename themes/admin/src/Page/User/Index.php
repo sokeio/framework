@@ -15,7 +15,13 @@ class Index extends \Sokeio\Page
     protected function setupUI()
     {
         return [
-            PageUI::init([Table::init()->column('name')->column('email')->column('phone_number')->query(User::query())])
+            PageUI::init([
+                Table::init()
+                    ->column('name')
+                    ->column('email')
+                    ->column('phone_number')
+                    ->query(User::query())
+            ])
                 ->title(__('Users'))
                 ->className('container')
         ];

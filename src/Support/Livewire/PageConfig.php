@@ -82,6 +82,10 @@ class PageConfig
         $url = str($pageClass)->after($namespacePage);
         $urlRoute = $config->getUrl() ?? str($url)->split('/\\\\/', -1, PREG_SPLIT_NO_EMPTY)
             ->map([Str::class, 'kebab'])->join('/');
+        // if $urlRoute last character is '/index' , it will not work
+        if (str($urlRoute)->endsWith('/index')) {
+            $urlRoute = str($urlRoute)->replace('/index', '');
+        }
         $nameRoute = $config->getRoute()
             ??  ($shortName . '-page.' . str($url)->split('/\\\\/', -1)->map([Str::class, 'kebab'])->join('.'));
 
