@@ -75,6 +75,9 @@ class PageConfig
     {
         $config = app($pageClass)->getPageConfig();
         $namespacePage = $namespaceRoot . '\\Page\\';
+        if (str($shortName)->startsWith('theme.')) {
+            $shortName = str($shortName)->replace('.', '-');
+        }
         // do nothing
         $url = str($pageClass)->after($namespacePage);
         $urlRoute = $config->getUrl() ?? str($url)->split('/\\\\/', -1, PREG_SPLIT_NO_EMPTY)
@@ -86,7 +89,8 @@ class PageConfig
             if ($config->getAuth() && $config->getMenu()) {
                 $menuTitle = $config->getMenuTitle() ?? str(str($nameRoute)->afterLast('.'))->replace('-', ' ');
                 $target = $config->getMenuTarget();
-                if (!$target && count(str($nameRoute)->split('/\./', -1, PREG_SPLIT_NO_EMPTY)) > 2) {
+                $level = count(str($nameRoute)->split('/\./', -1, PREG_SPLIT_NO_EMPTY));
+                if (!$target && $level > 2) {
                     $target = str($nameRoute)->beforeLast('.');
                 }
                 MenuManager::registerItem(
@@ -98,19 +102,18 @@ class PageConfig
                             }
                         })
                 );
-                if($target){
+                if ($target) {
                     MenuManager::targetSetup($target, function (MenuItem $item) use ($config) {
-                        dd($config);
-                        if($config->getMenuTargetClass()){
+                        if ($config->getMenuTargetClass()) {
                             // $item-> = $config->getMenuTargetClass();
                         }
-                        if($config->getMenuTargetId()){
-                            $item->id = $config->getMenuTargetId();
-                        }
-                        if($config->getMenuTargetIcon()){
+                        // if($config->getMenuTargetId()){
+                        //     $item->id = $config->getMenuTargetId();
+                        // }
+                        if ($config->getMenuTargetIcon()) {
                             $item->icon = $config->getMenuTargetIcon();
                         }
-                        if($config->getMenuTargetTitle()){
+                        if ($config->getMenuTargetTitle()) {
                             $item->title = $config->getMenuTargetTitle();
                         }
                     });

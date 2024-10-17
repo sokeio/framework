@@ -8,15 +8,15 @@ use Sokeio\UI\PageUI;
 use Sokeio\UI\Table\Table;
 use Sokeio\UI\WithUI;
 
-#[PageInfo(admin: true, auth: true,  title: 'Users', menu: true, menuTitle: 'Users', menuTargetTitle: 'Access Control')]
-class Index extends \Sokeio\Page
+#[PageInfo(admin: true, auth: true,  title: 'Roles', menu: true, menuTitle: 'Roles')]
+class Role extends \Sokeio\Page
 {
     use WithUI;
     protected function setupUI()
     {
         return [
             PageUI::init([Table::init()->column('name')->column('email')->column('phone_number')->query(User::query())])
-                ->title(__('Users'))
+                ->title(__('Roles'))
                 ->className('container')
         ];
     }
