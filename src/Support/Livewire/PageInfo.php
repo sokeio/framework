@@ -12,6 +12,7 @@ class PageInfo
         public $layout = 'default',
         public $route = null,
         public $url = null,
+        public $sort = 99999,
         public $icon = null,
         public $admin = null,
         public $auth = null,

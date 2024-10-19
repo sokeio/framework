@@ -20,6 +20,7 @@ class PageConfig
         'url' => null,
         'icon' => null,
         'route' => null,
+        'sort' => 99999,
         'admin' => false,
         'auth' => true,
         'menu' => false,
@@ -88,11 +89,14 @@ class PageConfig
         }
         $nameRoute = $config->getRoute()
             ??  ($shortName . '-page.' . str($url)->split('/\\\\/', -1)->map([Str::class, 'kebab'])->join('.'));
-
+        if (str($nameRoute)->endsWith('.index')) {
+            $nameRoute = str($nameRoute)->replace('.index', '');
+        }
         if ($config->getAdmin()) {
             if ($config->getAuth() && $config->getMenu()) {
                 $menuTitle = $config->getMenuTitle() ?? str(str($nameRoute)->afterLast('.'))->replace('-', ' ');
                 $target = $config->getMenuTarget();
+                $sort = $config->getSort();
                 $level = count(str($nameRoute)->split('/\./', -1, PREG_SPLIT_NO_EMPTY));
                 if (!$target && $level > 2) {
                     $target = str($nameRoute)->beforeLast('.');
@@ -100,10 +104,11 @@ class PageConfig
                 MenuManager::registerItem(
                     MenuItem::make($nameRoute, str($menuTitle)->title()->replace('-', ' '), null)
                         ->route('admin.' . $nameRoute)
-                        ->setup(function (MenuItem $item) use ($target) {
+                        ->setup(function (MenuItem $item) use ($target, $sort) {
                             if ($target) {
                                 $item->target =  $target;
                             }
+                            $item->sort = $sort;
                         })
                 );
                 if ($target) {

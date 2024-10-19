@@ -74,7 +74,7 @@ class MenuItem implements Arrayable
     {
         return $this->menuManager->getItems()->where(function (MenuItem $item) {
             return $item->target == $this->key && $item->position == $this->position;
-        });
+        })->sortBy('sort');
     }
     public function render($level = 0)
     {

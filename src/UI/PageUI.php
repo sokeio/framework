@@ -12,6 +12,14 @@ class PageUI extends BaseUI
     {
         return $this->child($ui, 'right');
     }
+    public function beforeUI($ui)
+    {
+        return $this->child($ui, 'before');
+    }
+    public function afterUI($ui)
+    {
+        return $this->child($ui, 'after');
+    }
 
     public function view()
     {
@@ -32,7 +40,9 @@ class PageUI extends BaseUI
             </div>
         </div>
         <div class="page-body">
+            {$this->renderChilds('before')}
             {$this->renderChilds()}
+            {$this->renderChilds('after')}
         </div>
     </div>
     HTML;

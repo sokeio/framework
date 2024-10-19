@@ -193,7 +193,7 @@ class ThemeManager
         if (!$script) {
             return;
         }
-        echo '<script type="text/javascript" id="' . md5($script) . '" src="' . ($script) . '"></script>';
+        echo '<script data-navigate-once type="text/javascript" id="' . md5($script) . '" src="' . ($script) . '"></script>';
     }
     public function bodyEndRender()
     {
@@ -206,9 +206,9 @@ class ThemeManager
         }
         foreach ($this->arrJavascript as $key => $value) {
             if ($value['id']) {
-                echo '<script type="text/javascript" id="' . $value['id'] . '">' . $value['content'] . '</script>';
+                echo '<script data-navigate-once type="text/javascript" id="' . $value['id'] . '">' . $value['content'] . '</script>';
             } else {
-                echo '<script type="text/javascript" id="' . $key . '">' . $value['content'] . '</script>';
+                echo '<script data-navigate-once type="text/javascript" id="' . $key . '">' . $value['content'] . '</script>';
             }
         }
         foreach ($this->arrTemplate as $key => $value) {
