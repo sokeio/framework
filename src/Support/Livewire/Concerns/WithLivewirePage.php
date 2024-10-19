@@ -42,7 +42,6 @@ trait WithLivewirePage
                 $html = app('livewire')->mount($this::class, [
                     ...$params,
                     'soData' => [
-                        'isLivewire' => true,
                         'isPage' => request()->isMethod('get'),
                         'routeName' => request()->route()->getName(),
                     ]

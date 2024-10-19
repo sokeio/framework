@@ -2,6 +2,7 @@
 
 namespace Sokeio\UI\Table;
 
+use Sokeio\Theme;
 use Sokeio\UI\BaseUI;
 
 class Table extends BaseUI
@@ -17,19 +18,25 @@ class Table extends BaseUI
     {
         return data_get($this->context, $name, $default);
     }
-
+    protected function setValueByName($name, $value)
+    {
+        data_set($this->context, $name, $value);
+        $this->getWire()->data($name, $value);
+        return $this;
+    }
     protected function initUI()
     {
         $this->className('table table-bordered');
-        $this->action('paginate', function () {
-            $this->getWire()->alert('test');
+        $this->action('paginate', function ($page) {
+            $this->setValueByName('page.index', $page);
         });
     }
-    public function context($context)
+    public function context(&$context)
     {
         $this->context = $context;
         return $this;
     }
+
     public function showAll()
     {
         $this->showAll = true;
@@ -50,7 +57,7 @@ class Table extends BaseUI
         if ($this->showAll) {
             $this->rows = $this->query->get();
         } else {
-            $pageSize = $this->getValueByName('page.ize', 20);
+            $pageSize = $this->getValueByName('page.size', 10);
             $pageIndex = $this->getValueByName('page.index', 1);
             $this->rows = $this->query->paginate($pageSize, ['*'], $this->tableKey ?? 'page', $pageIndex);
         }
@@ -79,7 +86,7 @@ class Table extends BaseUI
                 if ($callback) {
                     return $callback($row, $column, $index);
                 }
-                return $index + 1;
+                return $this->getRows()->firstItem() + $index;
             });
         return $this;
     }
@@ -113,18 +120,97 @@ class Table extends BaseUI
     }
     private function pagitateRender()
     {
+        $html = '';
         $data = $this->getRows();
         if (method_exists($data, 'links')) {
-            return '<div class="d-flex justify-content-center"><button  wire:click="callActionUI(\'paginate\')" class="btn btn-primary">Test</button> ' . $data->links() . '</div>';
+            $current = $data->currentPage();
+            $total = $data->total();
+            $html .= '<div class="d-flex justify-content-center py-3">';
+            $html .= '  <p class="m-0 text-secondary">Showing <span>' . (($current - 1) * $data->perPage() + 1) . '</span> to <span>' . ($current * $data->perPage()) . '</span> of <span>' . $total . '</span> entries</p>';
+
+            // <li class="page-item"><a class="page-link" href="#">1</a></li>
+            $startPage = $current - 2;
+            $endPage = $current + 2;
+            if ($startPage < 1) {
+                $startPage = 1;
+            }
+            if ($startPage === 1) {
+                $endPage = 5;
+            }
+            if ($current === $data->lastPage()) {
+                $startPage = $data->lastPage() - 4;
+            }
+            if ($startPage < 1) {
+                $startPage = 1;
+            }
+            if ($endPage > $data->lastPage()) {
+                $endPage = $data->lastPage();
+            }
+            $nextPage = $current + 1;
+            if ($nextPage > $endPage) {
+                $nextPage = $endPage;
+            }
+            $backPage = $current - 1;
+            if ($backPage < 1) {
+                $backPage = 1;
+            }
+            $html .= <<<html
+            <ul class="pagination m-0 ms-auto">
+            
+       <li class="page-item me-1" wire:click="callActionUI('paginate','{$backPage}')">
+           <a class="page-link  bg-azure text-white" >
+               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                   class="icon">
+                   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                   <path d="M15 6l-6 6l6 6"></path>
+               </svg>
+           </a>
+       </li>
+       html;
+
+            for ($i = $startPage; $i <= $endPage; $i++) {
+                if ($i === $current) {
+                    $html .= <<<html
+                            <li class="page-item active" wire:click="callActionUI('paginate','{$i}')">
+                                <a class="page-link" >
+                                    {$i}
+                                </a>
+                            </li>
+                            html;
+                    continue;
+                }
+                $html .= <<<html
+         <li class="page-item" wire:click="callActionUI('paginate','{$i}')">
+            <a class="page-link" >
+                {$i}
+            </a>
+        </li>
+        html;
+            }
+            $html .= <<<html
+         <li class="page-item ms-1" wire:click="callActionUI('paginate','{$nextPage}')">
+            <a class="page-link bg-azure text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="icon">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M9 6l6 6l-6 6"></path>
+                </svg>
+            </a>
+        </li>
+    </ul>
+    html;
+            $html .= '</div>';
         }
-        return  '';
+        return   $html;
     }
     public function view()
     {
         ksort($this->columns);
         $attr = $this->getAttr();
         return <<<HTML
-        <div class="table-responsive" x-data="{
+        <div class="table-responsive position-relative" x-data="{
             fieldSort: '',
             typeSort: '',
             sortField(el) {
@@ -137,6 +223,9 @@ class Table extends BaseUI
                 }
             }
         }">
+        <div wire:loading class="position-absolute top-50 start-50 translate-middle">
+        <span  class="spinner-border  text-blue  " role="status"></span>
+        </div>
             <table {$attr} >
                 <thead>
                     {$this->headerRender()}

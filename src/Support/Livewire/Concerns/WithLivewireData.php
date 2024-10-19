@@ -2,18 +2,25 @@
 
 namespace Sokeio\Support\Livewire\Concerns;
 
+use Livewire\Attributes\Url;
 
 trait WithLivewireData
 {
-    public $soData = [];
-    protected function data($key, $value = null)
+    protected function queryStringWithLivewireData()
     {
-        $this->soData[$key] = $value;
+        return [
+            'soData' => ['as' => 'so'],
+        ];
+    }
+    public $soData = [];
+    public function data($key, $value = null)
+    {
+        data_set($this->soData, $key, $value);
         return $this;
     }
     protected function getDataKey($key, $default = null)
     {
-        return $this->soData[$key] ?? $default;
+        return data_get($this->soData, $key, $default);
     }
     protected function getRefId()
     {

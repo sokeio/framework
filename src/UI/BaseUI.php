@@ -73,7 +73,7 @@ class BaseUI
 
     public function action($key, $callback)
     {
-        $this->ready(function () use ($key, $callback) {
+        $this->boot(function () use ($key, $callback) {
             $this->manager->action($key, $callback, $this);
         });
         return $this;

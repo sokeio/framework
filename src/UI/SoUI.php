@@ -51,6 +51,10 @@ class SoUI
     }
     public function callActionUI($name, $params = [])
     {
+        if(!array_key_exists($name, $this->actions)) {
+            $this->getWire()->alert('Action ' . $name . ' not found'); 
+            return;
+        }
         $action = $this->actions[$name];
         if ($action['callback']) {
             call_user_func($action['callback'], $params);
