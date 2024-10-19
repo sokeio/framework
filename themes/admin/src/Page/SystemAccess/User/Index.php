@@ -2,6 +2,7 @@
 
 namespace SokeioTheme\Admin\Page\SystemAccess\User;
 
+use Illuminate\Support\Facades\Hash;
 use Sokeio\Models\User;
 use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\UI\Common\Button;
@@ -13,26 +14,31 @@ use Sokeio\UI\WithUI;
 class Index extends \Sokeio\Page
 {
     use WithUI;
-    public function createUser()
-    {
-        $this->alert('test');
-    }
     protected function setupUI()
     {
         return [
             PageUI::init(
                 [
                     Table::init()
+                        ->context($this->soData)
                         ->column('name')
                         ->column('email')
                         ->column('phone_number')
                         ->query(User::query())
+                        ->page()
+                        ->enableIndex()
                 ]
             )->rightUI([
-                Button::init()->text(__('Create User'))->wireClick('createUser()')
+                Button::init()
+                    ->text(__('Create User'))
+                    ->modalRoute($this->getRouteName('edit'), __('Create User'), 'lg', 'ti ti-plus')
             ])
                 ->title(__('Users'))
                 ->className('container')
         ];
+    }
+    public function createUser()
+    {
+        $this->alert($this->getRouteName('edit'));
     }
 }

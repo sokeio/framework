@@ -10,6 +10,7 @@ use Sokeio\Support\Livewire\PageInfo;
 trait WithLivewirePage
 {
     private $pageConfig = null;
+
     public function getPageConfig()
     {
         if (!$this->pageConfig) {
@@ -38,7 +39,14 @@ trait WithLivewirePage
         $layoutConfig = SupportPageComponents::interceptTheRenderOfTheComponentAndRetreiveTheLayoutConfiguration(
             function () use (&$html) {
                 $params = SupportPageComponents::gatherMountMethodParamsFromRouteParameters($this);
-                $html = app('livewire')->mount($this::class, [...$params, 'soIsPage' => request()->isMethod('get')]);
+                $html = app('livewire')->mount($this::class, [
+                    ...$params,
+                    'soData' => [
+                        'isLivewire' => true,
+                        'isPage' => request()->isMethod('get'),
+                        'routeName' => request()->route()->getName(),
+                    ]
+                ]);
             }
         );
 

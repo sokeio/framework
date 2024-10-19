@@ -18,6 +18,18 @@ trait ColumnData
     {
         return $this->setData('field', $field);
     }
+    public function disableSort()
+    {
+        return $this->setData('disableSort', true);
+    }
+    public function enableSort()
+    {
+        return $this->setData('disableSort', false);
+    }
+    public function getDisableSort($default = null)
+    {
+        return $this->getData('disableSort', $default);
+    }
     public function getField($default = null)
     {
         return $this->getData('field', $default);
@@ -29,5 +41,13 @@ trait ColumnData
     public function getLabel($default = null)
     {
         return $this->getData('label', $default);
+    }
+    public function renderCell($callback)
+    {
+        return $this->setData('renderCell', $callback);
+    }
+    public function getRenderCell($default = null)
+    {
+        return $this->getData('renderCell', $default);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Sokeio\Support\Livewire\Concerns;
 
+
 trait WithLivewireData
 {
     public $soData = [];
@@ -21,6 +22,10 @@ trait WithLivewireData
     protected function getIsPage()
     {
         return $this->getDataKey('isPage', false);
+    }
+    public function getRouteName($prefix = null)
+    {
+        return $this->getDataKey('routeName') . ($prefix ? '.' . $prefix : '');
     }
     protected function getIsAdmin()
     {

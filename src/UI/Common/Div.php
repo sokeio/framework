@@ -1,9 +1,15 @@
 <?php
 
-namespace Sokeio\UI;
+namespace Sokeio\UI\Common;
+
+use Sokeio\UI\BaseUI;
 
 class Div extends BaseUI
 {
+    public function text($text)
+    {
+        return $this->vars('text', $text);
+    }
     public function container($size = '')
     {
         return $this->className('container' . ($size ? '-' . $size : ''));
@@ -17,7 +23,7 @@ class Div extends BaseUI
     {
         $attr = $this->getAttr();
         return <<<HTML
-    <div {$attr}>{$this->renderChilds()}</div>
+    <div {$attr}>{$this->getVar('text', '', true)}{$this->renderChilds()}</div>
     HTML;
     }
 }

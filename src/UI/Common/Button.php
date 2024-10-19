@@ -45,6 +45,58 @@ class Button extends BaseUI
             return $this->attr('wire:click',  'actionUI("' . $wireClick . '"' . $paraText . ')');
         });
     }
+    protected function registerModal($modal = [])
+    {
+        return $this->register(function () use ($modal) {
+            $title = data_get($modal, 'title');
+            $url = data_get($modal, 'url');
+            $size = data_get($modal, 'size');
+            $icon = data_get($modal, 'icon');
+            $templateId = data_get($modal, 'template-id');
+            $template = data_get($modal, 'template');
+
+            $this->attr('wire:modal', '');
+            if ($title) {
+                $this->attr('wire:modal.title', $title);
+            }
+            if ($url) {
+                $this->attr('wire:modal.url', $url);
+            }
+            if ($size) {
+                $this->attr('wire:modal.size', $size);
+            }
+            if ($icon) {
+                $this->attr('wire:modal.icon', $icon);
+            }
+            if ($templateId) {
+                $this->attr('wire:modal.template-id', $templateId);
+            }
+            if ($template) {
+                $this->attr('wire:modal.template', $template);
+            }
+        });
+    }
+    public function modal(
+        $url,
+        $title = '',
+        $size = 'lg',
+        $icon = 'ti ti-dashboard'
+    ) {
+        return $this->registerModal(compact('url', 'title', 'size', 'icon'));
+    }
+    public function modalTemplate($template, $title = '', $size = 'lg', $icon = 'ti ti-dashboard')
+    {
+        return $this->registerModal(compact('template', 'title', 'size', 'icon'));
+    }
+    public function modalTemplateId($templateId, $title = '', $size = 'lg', $icon = 'ti ti-dashboard')
+    {
+        return $this->registerModal(compact('templateId', 'title', 'size', 'icon'));
+    }
+    public function modalRoute($route, $title = '', $size = 'lg', $icon = 'ti ti-dashboard')
+    {
+        $url = route($route);
+        return $this->registerModal(compact('url', 'title', 'size', 'icon'));
+    }
     public function view()
     {
         $attr = $this->getAttr();

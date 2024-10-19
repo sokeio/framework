@@ -3,17 +3,18 @@
 namespace Sokeio\UI\Table;
 
 use Sokeio\UI\BaseUI;
-
+use Symfony\Component\Console\Messenger\RunCommandContext;
 
 class Table extends BaseUI
 {
-    private $rows = [];
+    private $rows = null;
     private $query = null;
     private $pageIndex = null;
     private $pageSize = null;
     private $pageName = null;
-    private $colums = [];
-    private $index = -1;
+    private $columns = [];
+    private $context = null;
+    private $index = 1;
     public function checkPage()
     {
         return $this->pageIndex && $this->pageSize;
@@ -29,6 +30,11 @@ class Table extends BaseUI
         $this->pageName = $pageName;
         return $this;
     }
+    public function context($context)
+    {
+        $this->context = $context;
+        return $this;
+    }
     public function query($query)
     {
         $this->query = $query;
@@ -41,52 +47,74 @@ class Table extends BaseUI
         } else {
             $this->rows = $this->query->get();
         }
-        return $this->rows;
+        return $this->rows ?? [];
     }
     private function current()
     {
-        return $this->colums[$this->index];
+        return $this->columns[$this->index];
     }
     public function column($name, $callback = null)
     {
         $this->index++;
-        $this->colums[$this->index] = (new Column($this))->setField($name)->setLabel($name);
+        $this->columns[$this->index] = (new Column($this))->setField($name)->setLabel($name);
 
         if ($callback) {
             $callback($this->current());
         }
         return $this;
     }
+    public function enableIndex($callback = null)
+    {
+        $this->columns[0] = (new Column($this))
+            ->setField('index')->setLabel('#')
+            ->disableSort()
+            ->renderCell(function ($row, $column, $index) use ($callback) {
+                if ($callback) {
+                    return $callback($row, $column, $index);
+                }
+                return $index + 1;
+            });
+        return $this;
+    }
     private function headerRender()
     {
         $html = '';
-        foreach ($this->colums as $column) {
+        foreach ($this->columns as $column) {
             $html .= $column->getHeaderView();
         }
         return $html;
     }
-    private function cellRender($row)
+    private function cellRender($row, $index = 0)
     {
         $html = '';
-        foreach ($this->colums as $column) {
-            $html .= $column->getCellView($row);
+        foreach ($this->columns as $column) {
+            $html .= $column->getCellView($row, $index);
         }
         return $html;
     }
     private function bodyRender()
     {
         $html = '';
-        foreach ($this->getRows() as $row) {
+        foreach ($this->getRows() as $key => $row) {
             $html .= <<<html
-            <tr>
-                {$this->cellRender($row)}
+            <tr row-index="{$key}">
+                {$this->cellRender($row,$key)}
             </tr>
             html;
         }
         return $html;
     }
+    private function pagitateRender()
+    {
+        $data = $this->getRows();
+        if (method_exists($data, 'links')) {
+            return $data->links();
+        }
+        return  '';
+    }
     public function view()
     {
+        ksort($this->columns);
         $attr = $this->getAttr();
         return <<<HTML
         <div class="table-responsive" x-data="{
@@ -110,6 +138,7 @@ class Table extends BaseUI
                     {$this->bodyRender()}
                 </tbody>
             </table>
+            {$this->pagitateRender()}
         </div>
         HTML;
     }

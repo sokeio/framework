@@ -41,6 +41,5 @@ export default {
     cleanup(() => {
       el.removeEventListener("click", eventClick);
     });
-    console.log("init");
   },
 };

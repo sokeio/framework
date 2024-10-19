@@ -8,8 +8,7 @@ export default {
     js: [],
     css: [],
   },
-  init: ({ el, directive, component, cleanup ,options}) => {
-
+  init: ({ el, directive, component, cleanup, options }) => {
     if (options.templates) {
       options.templates = new Function(`return ${options.templates};`)();
     }
@@ -38,7 +37,7 @@ export default {
       let value = e.detail.value;
       el.$sokeio_tagify.loading(true);
       component.$wire
-        .callActionUI(options.whitelistAction, value)
+        .actionUI(options.whitelistAction, value)
         .then(function (rs) {
           el.$sokeio_tagify.whitelist = rs;
           el.$sokeio_tagify.loading(false).dropdown.show(value);

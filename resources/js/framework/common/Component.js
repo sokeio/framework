@@ -123,10 +123,14 @@ export function doDestroy(component) {
   component.$hookReady = [];
   component.$children = [];
   component.$el = null;
+  component.state = {
+    ...component.$initState,
+  };
 }
 export function Component($options, $props, $parent = null) {
   let component = {
     ...$options,
+    $initState: { ...$options.state },
     $parent: $parent,
     $children: [],
     $id: 0,
