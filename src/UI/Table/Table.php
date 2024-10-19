@@ -3,36 +3,38 @@
 namespace Sokeio\UI\Table;
 
 use Sokeio\UI\BaseUI;
-use Symfony\Component\Console\Messenger\RunCommandContext;
 
 class Table extends BaseUI
 {
+    private $tableKey = '';
     private $rows = null;
     private $query = null;
-    private $pageIndex = null;
-    private $pageSize = null;
-    private $pageName = null;
+    private $showAll = false;
     private $columns = [];
     private $context = null;
     private $index = 1;
-    public function checkPage()
+    protected function getValueByName($name, $default = null)
     {
-        return $this->pageIndex && $this->pageSize;
+        return data_get($this->context, $name, $default);
     }
+
     protected function initUI()
     {
         $this->className('table table-bordered');
     }
-    public function page($pageIndex = 1, $pageSize = 20, $pageName = 'page')
-    {
-        $this->pageIndex = $pageIndex;
-        $this->pageSize = $pageSize;
-        $this->pageName = $pageName;
-        return $this;
-    }
     public function context($context)
     {
         $this->context = $context;
+        return $this;
+    }
+    public function showAll()
+    {
+        $this->showAll = true;
+        return $this;
+    }
+    public function key($key)
+    {
+        $this->tableKey = $key;
         return $this;
     }
     public function query($query)
@@ -42,10 +44,12 @@ class Table extends BaseUI
     }
     public function getRows()
     {
-        if ($this->checkPage()) {
-            $this->rows = $this->query->paginate($this->pageSize, ['*'], $this->pageName ?? 'page', $this->pageIndex);
-        } else {
+        if ($this->showAll) {
             $this->rows = $this->query->get();
+        } else {
+            $pageSize = $this->getValueByName('page.ize', 20);
+            $pageIndex = $this->getValueByName('page.index', 1);
+            $this->rows = $this->query->paginate($pageSize, ['*'], $this->tableKey ?? 'page', $pageIndex);
         }
         return $this->rows ?? [];
     }

@@ -2,7 +2,6 @@
 
 namespace SokeioTheme\Admin\Page\SystemAccess\User;
 
-use Illuminate\Support\Facades\Hash;
 use Sokeio\Models\User;
 use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\UI\Common\Button;
