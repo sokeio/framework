@@ -11,8 +11,16 @@ class BaseUI
 
     private $callbackView = null;
     private SoUI|null $manager;
-    private BaseUI  $parent;
 
+    private BaseUI  $parent;
+    public function getManager()
+    {
+        return $this->manager;
+    }
+    public function getWire()
+    {
+        return $this->manager?->getWire();
+    }
     protected function __construct($childs = [])
     {
         $this->initLifecycleUI();

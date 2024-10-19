@@ -21,6 +21,9 @@ class Table extends BaseUI
     protected function initUI()
     {
         $this->className('table table-bordered');
+        $this->action('paginate', function () {
+            $this->getWire()->alert('test');
+        });
     }
     public function context($context)
     {
@@ -112,7 +115,7 @@ class Table extends BaseUI
     {
         $data = $this->getRows();
         if (method_exists($data, 'links')) {
-            return $data->links();
+            return '<div class="d-flex justify-content-center"><button  wire:click="callActionUI(\'paginate\')" class="btn btn-primary">Test</button> ' . $data->links() . '</div>';
         }
         return  '';
     }

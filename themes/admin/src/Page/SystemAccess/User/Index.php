@@ -9,7 +9,15 @@ use Sokeio\UI\PageUI;
 use Sokeio\UI\Table\Table;
 use Sokeio\UI\WithUI;
 
-#[PageInfo(admin: true, auth: true,  title: 'Users', menu: true, menuTitle: 'Users', menuTargetTitle: 'System Access', sort: 0)]
+#[PageInfo(
+    admin: true,
+    auth: true,
+    title: 'Users',
+    menu: true,
+    menuTitle: 'Users',
+    menuTargetTitle: 'System Access',
+    sort: 0
+)]
 class Index extends \Sokeio\Page
 {
     use WithUI;
@@ -24,7 +32,6 @@ class Index extends \Sokeio\Page
                         ->column('email')
                         ->column('phone_number')
                         ->query(User::query())
-                        ->page()
                         ->enableIndex()
                 ]
             )->rightUI([

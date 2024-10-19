@@ -49,7 +49,7 @@ class SoUI
             'ui' => $ui
         ];
     }
-    public function callAction($name, $params = [])
+    public function callActionUI($name, $params = [])
     {
         $action = $this->actions[$name];
         if ($action['callback']) {
