@@ -37,7 +37,7 @@ export default {
       let value = e.detail.value;
       el.$sokeio_tagify.loading(true);
       component.$wire
-        .actionUI(options.whitelistAction, value)
+        .callActionUI(options.whitelistAction, value)
         .then(function (rs) {
           el.$sokeio_tagify.whitelist = rs;
           el.$sokeio_tagify.loading(false).dropdown.show(value);

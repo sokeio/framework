@@ -8,7 +8,12 @@ class Button extends BaseUI
 {
     protected function initUI()
     {
-        return $this->attr('type', 'button')->className('btn btn-primary');
+        $this->render(function () {
+            if (!$this->containsAttr('class', 'btn-')) {
+                $this->className('btn btn-primary');
+            }
+        });
+        return $this->attr('type', 'button');
     }
     public function text($text)
     {
@@ -31,30 +36,53 @@ class Button extends BaseUI
                 return $this->attr('wire:click', $callback);
             }
             $wireClick = $this->getId() . $actionName;
-            $paraText = '';
-            if ($params) {
-                $paraText = ',' . json_encode($params);
-            }
-            $this->action($wireClick, function () use ($callback, $params) {
-                if (is_array($params) && count($params) > 0) {
-                    call_user_func($callback, ...$params);
+
+            $this->action($wireClick, function ($_params) use ($callback) {
+                if (is_array($_params) && count($_params) > 0) {
+                    call_user_func($callback, ...$_params);
+                } elseif ($_params) {
+                    call_user_func($callback, $_params);
                 } else {
                     call_user_func($callback);
                 }
             });
-            return $this->attr('wire:click',  'actionUI("' . $wireClick . '"' . $paraText . ')');
+
+            return $this->render(function () use ($wireClick, $params) {
+                $paraText = '';
+                if (is_callable($params)) {
+                    $params = call_user_func($params, $this);
+                }
+                if ($params) {
+                    $paraText = ',' . json_encode($params);
+                }
+                return $this->attr('wire:click',  'callActionUI("' . $wireClick . '"' . $paraText . ')');
+            });
         });
     }
     protected function registerModal($modal = [])
     {
-        return $this->register(function () use ($modal) {
+        return $this->render(function () use ($modal) {
             $title = data_get($modal, 'title');
+            $route = data_get($modal, 'route');
             $url = data_get($modal, 'url');
             $size = data_get($modal, 'size');
             $icon = data_get($modal, 'icon');
             $templateId = data_get($modal, 'template-id');
             $template = data_get($modal, 'template');
+            if ($route) {
+                if (is_callable($route)) {
+                    $route = call_user_func($route, $this);
+                }
+                if (is_array($route) && count($route) > 1) {
+                    $url = route($route[0], $route[1]);
+                } else {
+                    $url = route($route);
+                }
+            }
 
+            if ($url && is_callable($url)) {
+                $url = call_user_func($url, $this);
+            }
             $this->attr('wire:modal', '');
             if ($title) {
                 $this->attr('wire:modal.title', $title);
@@ -94,8 +122,7 @@ class Button extends BaseUI
     }
     public function modalRoute($route, $title = '', $size = 'lg', $icon = 'ti ti-dashboard')
     {
-        $url = route($route);
-        return $this->registerModal(compact('url', 'title', 'size', 'icon'));
+        return $this->registerModal(compact('route', 'title', 'size', 'icon'));
     }
     public function view()
     {

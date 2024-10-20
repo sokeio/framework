@@ -8,6 +8,7 @@ use Sokeio\UI\Support\HookUI;
 trait LifecycleUI
 {
     private $childs = [];
+    private $params = [];
     protected HookUI $hook;
     public function initLifecycleUI()
     {
@@ -23,6 +24,9 @@ trait LifecycleUI
             } else {
                 $this->hook->group($key)->run([$this]);
             }
+            if ($key == 'render') {
+                return $this;
+            }
             foreach ($this->childs as  $childs) {
                 if (is_array($childs)) {
                     foreach ($childs as $c) {
@@ -32,6 +36,23 @@ trait LifecycleUI
             }
         }
         return $this;
+    }
+    public function setParams($params)
+    {
+        $this->params = $params;
+        return $this;
+    }
+    public function clearParams()
+    {
+        $this->params = [];
+        return $this;
+    }
+    public function getParams($key = null)
+    {
+        if ($key) {
+            return $this->params[$key] ?? null;
+        }
+        return $this->params;
     }
     public function ready($callback = null)
     {
@@ -59,12 +80,15 @@ trait LifecycleUI
         $this->childs[$group] = array_merge($this->childs[$group] ?? [], $childs);
         return $this;
     }
-    protected function renderChilds($group = 'default')
+    protected function renderChilds($group = 'default', $params = null)
     {
         $html = '';
         foreach ($this->childs[$group] ?? [] as $child) {
             if ($child instanceof BaseUI) {
+                $child->setParams($params);
+                $child->render();
                 $html .= $child->view();
+                $child->clearParams();
             } elseif (is_string($child)) {
                 $html .= $child;
             } elseif (is_array($child)) {
@@ -75,5 +99,9 @@ trait LifecycleUI
         }
 
         return $html;
+    }
+    public function hasChilds($group = 'default')
+    {
+        return count($this->childs[$group] ?? []) > 0;
     }
 }

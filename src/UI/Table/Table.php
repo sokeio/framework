@@ -14,14 +14,48 @@ class Table extends BaseUI
     private $columns = [];
     private $context = null;
     private $index = 1;
-    protected function getValueByName($name, $default = null)
+    private $pageSizes = [
+        10,
+        25,
+        50,
+        100,
+        200,
+        500,
+        1000,
+        2000
+    ];
+    public function pageSizes($sizes)
     {
-        return data_get($this->context, $name, $default);
+        if (!is_array($sizes)) {
+            $sizes = [$sizes];
+        }
+        $this->pageSizes = $sizes;
+        return $this;
     }
-    protected function setValueByName($name, $value)
+    private function getKeyWithTable($name, $withKey = true)
     {
-        data_set($this->context, $name, $value);
-        $this->getWire()->data($name, $value);
+        if ($this->tableKey && $withKey) {
+            return 'table.' . $this->tableKey . '.' . $name;
+        }
+        return 'table.' . $name;
+    }
+    public function columnAction($array)
+    {
+        return $this->child($array, 'columnAction');
+    }
+    protected function getValueByName($name, $default = null, $withKey = true)
+    {
+        if (!$this->context) {
+            return $this->getWire()->getValueQuery($this->getKeyWithTable($name, $withKey), $default);
+        }
+        return data_get($this->context, $this->getKeyWithTable($name, $withKey), $default);
+    }
+    protected function setValueByName($name, $value, $withKey = true)
+    {
+        $this->getWire()->query($this->getKeyWithTable($name, $withKey), $value);
+        if ($this->context) {
+            data_set($this->context, $this->getKeyWithTable($name, $withKey), $value);
+        }
         return $this;
     }
     protected function initUI()
@@ -42,7 +76,7 @@ class Table extends BaseUI
         $this->showAll = true;
         return $this;
     }
-    public function key($key)
+    public function tableKey($key)
     {
         $this->tableKey = $key;
         return $this;
@@ -121,14 +155,28 @@ class Table extends BaseUI
     private function pagitateRender()
     {
         $html = '';
+
         $data = $this->getRows();
+
         if (method_exists($data, 'links')) {
+            $keyModel = $this->getKeyWithTable('page.size');
             $current = $data->currentPage();
             $total = $data->total();
-            $html .= '<div class="d-flex justify-content-center py-3">';
-            $html .= '  <p class="m-0 text-secondary">Showing <span>' . (($current - 1) * $data->perPage() + 1) . '</span> to <span>' . ($current * $data->perPage()) . '</span> of <span>' . $total . '</span> entries</p>';
 
-            // <li class="page-item"><a class="page-link" href="#">1</a></li>
+            $pageSize = $this->getValueByName('page.size', 10);
+            $html .= '<div class="d-flex justify-content-center py-3">';
+            $html .= '  <p class="m-0 text-secondary">Showing <span>' . (($current - 1) * $data->perPage() + 1)
+                . '</span> to <span>' . ($current * $data->perPage())
+                . '</span> of <span>' . $total . '</span> entries</p>';
+
+            $html .= '<div class="ms-auto m-1">';
+            $html .= '    <select class="form-select p-1 px-3" wire:model.live="soQuery.' . $keyModel . '">';
+            foreach ($this->pageSizes as $item) {
+                $att = ($item == $pageSize ? 'selected' : '');
+                $html .= '<option value="' . $item . '" ' . $att . '>' . $item . '</option>';
+            }
+            $html .= '   </select>';
+            $html .= ' </div>';
             $startPage = $current - 2;
             $endPage = $current + 2;
             if ($startPage < 1) {
@@ -155,7 +203,7 @@ class Table extends BaseUI
                 $backPage = 1;
             }
             $html .= <<<html
-            <ul class="pagination m-0 ms-auto">
+            <ul class="pagination m-1 ">
             
        <li class="page-item me-1" wire:click="callActionUI('paginate','{$backPage}')">
            <a class="page-link  bg-azure text-white" >
@@ -207,6 +255,16 @@ class Table extends BaseUI
     }
     public function view()
     {
+        $this->columns[++$this->index] = (new Column($this))
+            ->setLabel('Actions')
+            ->disableSort()
+            ->renderCell(function ($row, $column, $index) {
+                return $this->renderChilds('columnAction', [
+                    'row' => $row,
+                    'column' => $column,
+                    'index' => $index
+                ]);
+            });
         ksort($this->columns);
         $attr = $this->getAttr();
         return <<<HTML

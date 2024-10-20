@@ -54,9 +54,19 @@ trait CommonUI
     {
         return $this->getAttributeByGroup($group)->append($key, $value);
     }
-    protected function getAttrKey($key, $default = null, $group = 'default')
+    protected function getAttrKey($key, $default = null, $group = 'default', $isText = false)
     {
-        return $this->getAttributeByGroup($group)->get($key, $default);
+        return $this->getAttributeByGroup($group)->get($key, $default, $isText);
+    }
+    public function checkAttr($key, $value = null, $group = 'default')
+    {
+        $attrValue = $this->getAttrKey($key, null, $group, true);
+        return $attrValue !== null && $attrValue === $value;
+    }
+    public function containsAttr($key, $value = null, $group = 'default')
+    {
+        $attrValue = $this->getAttrKey($key, null, $group, true);
+        return $attrValue !== null && str($attrValue)->contains($value);
     }
     protected function getAttr($group = 'default')
     {

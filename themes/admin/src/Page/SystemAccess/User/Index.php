@@ -27,12 +27,22 @@ class Index extends \Sokeio\Page
             PageUI::init(
                 [
                     Table::init()
-                        ->context($this->soData)
+                        ->tableKey('users')
                         ->column('name')
                         ->column('email')
                         ->column('phone_number')
                         ->query(User::query())
                         ->enableIndex()
+                        ->columnAction([
+                            Button::init()->text(__('Edit'))->modal(function (Button $button) {
+                                return route($this->getRouteName('edit'), ['dataId' => $button->getParams('row')->id]);
+                            }),
+                            Button::init()->text(__('Delete'))->wireClick(function ($params) {
+                                $this->alert('test' . $params);
+                            }, 'table_users_delete', function (Button $button) {
+                                return $button->getParams('row')->id;
+                            })->className('btn btn-danger ms-1'),
+                        ])
                 ]
             )->rightUI([
                 Button::init()
