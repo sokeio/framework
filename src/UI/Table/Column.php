@@ -65,7 +65,10 @@ class Column
     {
         return <<<html
         <td>
-            <div class="d-flex align-items-center cell-value">
+            <div class="d-flex align-items-center cell-value"
+            data-row-field="{$this->getField()}"
+            data-row-index="{$index}"
+            data-row-id="{$row->id}">
              {$this->getValue($row,$index)}
             </div>
         </td>

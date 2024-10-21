@@ -132,7 +132,7 @@ class Table extends BaseUI
     }
     public function columnAction($array, $title = 'Actions', $callback = null)
     {
-        return $this->child($array, 'columnAction')->render(function () use ($title, $callback) {
+        return $this->child($array, 'columnAction')->boot(function () use ($title, $callback) {
             $actionColumn = (new Column($this))
                 ->setLabel($title)
                 ->classNameHeader('w-1')
@@ -153,37 +153,41 @@ class Table extends BaseUI
     }
     public function enableIndex($callback = null)
     {
-        $this->columns[-1] = (new Column($this))
-            ->setField('index')->setLabel('#')
-            ->disableSort()
-            ->classNameHeader('w-1')
-            ->renderCell(function ($row, $column, $index) use ($callback) {
-                if ($callback) {
-                    return $callback($row, $column, $index);
-                }
-                return $this->getRows()->firstItem() + $index;
-            });
-        return $this;
+
+        return $this->boot(function () use ($callback) {
+            $this->columns[-1] = (new Column($this))
+                ->setField('index')->setLabel('#')
+                ->disableSort()
+                ->classNameHeader('w-1')
+                ->renderCell(function ($row, $column, $index) {
+                    return $this->getRows()->firstItem() + $index;
+                });
+
+            if ($callback) {
+                $callback($this->columns[-1]);
+            }
+        });
     }
     public function enableCheckBox($callback = null, $isAfterIndex = true)
     {
-        $this->columns[$isAfterIndex ? -2 : 0] = (new Column($this))
-            ->setField('index')->setLabel('#')
-            ->disableSort()
-            ->classNameHeader('w-1')
-            ->renderHeader(function () {
-                return '<input type="checkbox" @change="checkboxAll" x-model="statusCheckAll" name="select-all"
+        return $this->boot(function () use ($callback, $isAfterIndex) {
+            $this->columns[$isAfterIndex ? -2 : 0] = (new Column($this))
+                ->setField('index')->setLabel('#')
+                ->disableSort()
+                ->classNameHeader('w-1')
+                ->renderHeader(function () {
+                    return '<input type="checkbox" @change="checkboxAll" x-model="statusCheckAll" name="select-all"
                  class="form-check-input sokeio-checkbox-all">';
-            })
-            ->renderCell(function ($row, $column, $index) use ($callback) {
-                if ($callback) {
-                    return $callback($row, $column, $index);
-                }
-                return '<input type="checkbox" wire:key="sokeio-checkbox-' . $index . '-' . $row->id . '"
+                })
+                ->renderCell(function ($row, $column, $index) {
+                    return '<input type="checkbox" wire:key="sokeio-checkbox-' . $index . '-' . $row->id . '"
                  name="selected[]" class="form-check-input sokeio-checkbox-one"
                  wire:model="dataSelecteds" value="' . $row->id . '">';
-            });
-        return $this;
+                });
+            if ($callback) {
+                $callback($this->columns[$isAfterIndex ? -2 : 0]);
+            }
+        });
     }
     private function headerRender()
     {

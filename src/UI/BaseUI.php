@@ -45,13 +45,6 @@ class BaseUI
         }
         return $this->manager;
     }
-    public function when($condition, $callback)
-    {
-        $this->register(function () use ($condition, $callback) {
-            $this->manager->when($condition, $callback, $this);
-        });
-        return $this;
-    }
     public function registerManager(SoUI $manager)
     {
         $this->manager = $manager;

@@ -47,7 +47,9 @@ class Index extends \Sokeio\Page
                                     User::find($params)->delete();
                                 }, 'table_users_delete', function (Button $button) {
                                     return $button->getParams('row')->id;
-                                })->className('btn btn-danger ms-1 btn-sm'),
+                                })->className('btn btn-danger ms-1 btn-sm')->when(function (Button $button) {
+                                    return $button->getParams('row')->id > 10;
+                                }),
 
                         ])
                 ]

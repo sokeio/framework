@@ -51,8 +51,8 @@ class SoUI
     }
     public function callActionUI($name, $params = [])
     {
-        if(!array_key_exists($name, $this->actions)) {
-            $this->getWire()->alert('Action ' . $name . ' not found'); 
+        if (!array_key_exists($name, $this->actions)) {
+            $this->getWire()->alert('Action ' . $name . ' not found');
             return;
         }
         $action = $this->actions[$name];
@@ -135,7 +135,9 @@ class SoUI
         //render
         $html = '';
         foreach ($this->ui as $ui) {
-            $html .= $ui->view();
+            if ($ui->checkWhen()) {
+                $html .= $ui->view();
+            }
         }
         if (count($this->ui) > 1) {
             return '<div >' . $html . '</div>';

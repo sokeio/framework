@@ -11,6 +11,27 @@ trait LifecycleUI
     private $params = [];
     private $prefix = '';
     protected HookUI $hook;
+    private $whenCallbacks = [];
+    public function when($callback, $group = 'default')
+    {
+        if (!isset($this->whenCallbacks[$group])) {
+            $this->whenCallbacks[$group] = [];
+        }
+        $this->whenCallbacks[$group][] = $callback;
+        return $this;
+    }
+    public function checkWhen($group = 'default')
+    {
+        if (!isset($this->whenCallbacks[$group])) {
+            return true;
+        }
+        foreach ($this->whenCallbacks[$group] as $callback) {
+            if (!call_user_func($callback, $this)) {
+                return false;
+            }
+        }
+        return true;
+    }
     public function initLifecycleUI()
     {
         $this->hook = new HookUI();
@@ -68,6 +89,10 @@ trait LifecycleUI
         }
         return $this;
     }
+    public function getPrefix()
+    {
+        return $this->prefix;
+    }
     public function setParams($params)
     {
         $this->params = $params;
@@ -82,10 +107,7 @@ trait LifecycleUI
         }
         return $this;
     }
-    public function getPrefix()
-    {
-        return $this->prefix;
-    }
+
     public function clearParams()
     {
         $this->params = [];
@@ -140,7 +162,9 @@ trait LifecycleUI
             if ($child instanceof BaseUI) {
                 $child->setParams($params);
                 $child->render();
-                $html .= $child->view();
+                if ($child->checkWhen()) {
+                    $html .= $child->view();
+                }
                 $child->clearParams();
             } elseif (is_array($child)) {
                 $html .= implode('', $child);

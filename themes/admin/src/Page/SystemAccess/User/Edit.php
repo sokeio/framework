@@ -30,7 +30,10 @@ class Edit extends \Sokeio\Page
                 Input::init('name')->label(__('Name')),
                 Input::init('email')->label(__('Email')),
                 Input::init('phone_number')->label(__('Phone')),
-                Input::init('password')->label(__('Password'))->password(),
+                Input::init('password')->label(__('Password'))->password()
+                    ->when(function () {
+                        return !$this->dataId;
+                    }),
             ])->title($this->dataId ? __('Edit User') : __('Create User'))
                 ->className('p-2')->setPrefix('formData')
                 ->afterUI([
