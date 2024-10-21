@@ -2,11 +2,16 @@
 
 namespace Sokeio\UI;
 
-use Sokeio\FormData;
 
 trait WithUI
 {
     private SoUI|null $ui = null;
+    public function queryStringWithUI()
+    {
+        return [
+            'dataId' => ['except' => null]
+        ];
+    }
     public $dataId;
     public function boot()
     {

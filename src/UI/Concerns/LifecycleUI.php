@@ -91,12 +91,12 @@ trait LifecycleUI
                 $child->render();
                 $html .= $child->view();
                 $child->clearParams();
-            } elseif (is_string($child)) {
-                $html .= $child;
             } elseif (is_array($child)) {
                 $html .= implode('', $child);
             } elseif (is_callable($child)) {
                 $html .= call_user_func($child, $this);
+            } else {
+                $html .= $child;
             }
         }
 

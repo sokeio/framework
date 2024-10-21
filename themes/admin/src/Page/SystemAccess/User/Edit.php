@@ -15,8 +15,7 @@ class Edit extends \Sokeio\Page
     {
         return [
             Div::init([
-               "ac"
-
+                $this->dataId
             ])
                 ->attr('style', 'padding:10px')
 
