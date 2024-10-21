@@ -2,11 +2,13 @@
 
 namespace Sokeio\Support\Livewire\Concerns;
 
+
 trait WithLivewireDispatch
 {
     private const LIVEWIRE_MESSAGE = 'sokeio_message';
     private const LIVEWIRE_CLOSE = 'sokeio_close';
     private const LIVEWIRE_FUNCTION = 'sokeio_function';
+    private const LIVEWIRE_REFRESH = 'sokeio_refresh';
     protected function sendMessageToClient($type, $payload = [])
     {
         $this->dispatch('sokeio::dispatch', [
@@ -26,6 +28,15 @@ trait WithLivewireDispatch
             'message' => $message,
             'option' => $option
         ]);
+    }
+    public function refreshToId($id)
+    {
+        $this->sendMessageToClient(self::LIVEWIRE_REFRESH, [
+            'wireTargetId' => $id,
+        ]);
+    }
+    public function refreshRef(){
+        $this->refreshToId($this->getRefId());
     }
     public function callFunc($func, $option = [])
     {

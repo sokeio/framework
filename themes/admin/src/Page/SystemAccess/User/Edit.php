@@ -22,9 +22,10 @@ class Edit extends \Sokeio\Page
     public function saveUser()
     {
         $data =  $this->dataId ? User::find($this->dataId) : new User();
-        $this->sokeioClose();
         $this->formData->parseModel($data, $this->formData->keys());
         $data->save();
+        $this->refreshRef();
+        $this->sokeioClose();
     }
     protected function setupUI()
     {
