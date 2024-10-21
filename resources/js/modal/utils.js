@@ -64,13 +64,3 @@ export function getModalHtmlRender(
                 </div>
             </div>`;
 }
-export function getModalOverlay() {
-  let html = Utils.convertHtmlToElement('<div class="so-modal-overlay"></div>');
-  let elOverlay = document.body.querySelector(".so-modal-overlay");
-  if (elOverlay) {
-    elOverlay.parentNode.insertBefore(html, elOverlay);
-  } else {
-    document.body.appendChild(html);
-  }
-  return html;
-}

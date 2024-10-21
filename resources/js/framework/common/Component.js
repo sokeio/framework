@@ -1,7 +1,7 @@
 import feature from "../feature/_index";
 import request from "../request";
 import { DataValue } from "./DataValue";
-import { Utils, logDebug } from "./Uitls";
+import { Utils, logDebug, getModalOverlay } from "./Uitls";
 export const $request = request;
 
 let number = new Date().getTime();
@@ -154,6 +154,7 @@ export function Component($component, $props, $parent = null) {
       "getId",
       "watch",
       "cleanup",
+      "show",
       "boot",
       "ready",
       "delete",
@@ -187,6 +188,22 @@ export function Component($component, $props, $parent = null) {
   Object.defineProperty(component, "__props__", {
     value: new DataValue($props),
   });
+  if (component.sokeAppSelector) {
+    Object.defineProperty(component, "show", {
+      value: function () {
+        if (this.$el) {
+          if (this.overlay) {
+            let html = getModalOverlay();
+            document.body.appendChild(html);
+            this.cleanup(() => {
+              document.body.removeChild(html);
+            });
+          }
+          component.sokeAppSelector.appendChild(this.$el);
+        }
+      },
+    });
+  }
 
   Object.defineProperty(component, "querySelectorAll", {
     value: function (selector, callback) {
@@ -222,6 +239,7 @@ export function Component($component, $props, $parent = null) {
       if (this.__props__.check(property)) {
         this.__props__.watch(property, callback);
       }
+      return this;
     },
   });
 
@@ -235,6 +253,7 @@ export function Component($component, $props, $parent = null) {
       if ($callback) {
         this.$hookDestroy.push($callback);
       }
+      return this;
     },
   });
   Object.defineProperty(component, "onReady", {
@@ -242,6 +261,7 @@ export function Component($component, $props, $parent = null) {
       if ($callback) {
         this.$hookReady.push($callback);
       }
+      return this;
     },
   });
 
@@ -258,6 +278,7 @@ export function Component($component, $props, $parent = null) {
       } else {
         elParent.appendChild(this.$el);
       }
+      return this;
     },
   });
 

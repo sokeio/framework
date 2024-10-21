@@ -3,13 +3,6 @@ import * as Utils from "./utils";
 export default {
   state: { html: "", loading: true },
   boot() {
-    if (!this.skipLoading || !this.loading) {
-      let html = Utils.getModalOverlay();
-      this.cleanup(function () {
-        document.body.removeChild(html);
-        // this.html = "";
-      });
-    }
 
     if (this.html) {
       return;

@@ -55,12 +55,19 @@ export function destroy(component) {
   );
 }
 export function run(template = {}, options = {}) {
+  let querySelectorOrEl = options.selector;
+  if (!querySelectorOrEl) {
+    querySelectorOrEl = document.body;
+  }
+  if (typeof querySelectorOrEl === "string") {
+    querySelectorOrEl = document.querySelector(querySelectorOrEl);
+  }
   let templateCopy = {
     ...template,
+    sokeAppSelector: querySelectorOrEl,
     state: JSON.parse(JSON.stringify(template.state ?? {})),
   };
   logDebug("templateCopy", templateCopy);
-  let querySelectorOrEl = options.selector;
   let init = options.init === undefined ? true : options.init;
   document.dispatchEvent(new CustomEvent("sokeio::run"));
   if (options?.props?.wireId) {
@@ -72,20 +79,13 @@ export function run(template = {}, options = {}) {
   }
   let appComponent = new Component(templateCopy, options.props ?? {});
   register(appComponent);
-  if (init) {
-    logDebug("run", appComponent);
-    boot(appComponent);
-    render(appComponent);
-    ready(appComponent);
-    if (!querySelectorOrEl) {
-      querySelectorOrEl = document.body;
-    }
-    if (typeof querySelectorOrEl === "string") {
-      querySelectorOrEl = document.querySelector(querySelectorOrEl);
-    }
-    if (querySelectorOrEl) {
-      querySelectorOrEl.appendChild(appComponent.$el);
-    }
+
+  logDebug("run", appComponent);
+  boot(appComponent);
+  render(appComponent);
+  ready(appComponent);
+  if (!appComponent.hide) {
+    appComponent.show();
   }
   return appComponent;
 }

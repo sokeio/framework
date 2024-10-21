@@ -44,7 +44,7 @@ class Index extends \Sokeio\Page
                                 }),
                             Button::init()->text(__('Delete'))
                                 ->wireClick(function ($params) {
-                                    $this->alert('test' . $params);
+                                    User::find($params)->delete();
                                 }, 'table_users_delete', function (Button $button) {
                                     return $button->getParams('row')->id;
                                 })->className('btn btn-danger ms-1 btn-sm'),

@@ -10,6 +10,8 @@ window.showModal = function (
     elTarget: undefined,
     data: {},
     callback: () => {},
+    hide: false,
+    overlay: true,
   }
 ) {
   if (options.templateId) {
@@ -21,8 +23,7 @@ window.showModal = function (
     delete options.template;
   }
   if (options.component) {
-    let html = Utils.getModalOverlay();
-    window.sokeioUI
+    return window.sokeioUI
       .run(
         {
           ...options.component,
@@ -36,13 +37,16 @@ window.showModal = function (
           },
         },
         {
-          props: { title, ...options },
+          props: { title, overlay: true, ...options },
         }
       )
       .cleanup(function () {
-        document.body.removeChild(html);
+        if (!options.hide) {
+          document.body.removeChild(html);
+        }
       });
-    return;
   }
-  window.sokeioUI.run(modal, { props: { title, ...options } });
+  return window.sokeioUI.run(modal, {
+    props: { title, overlay: true, ...options },
+  });
 };
