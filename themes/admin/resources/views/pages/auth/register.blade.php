@@ -82,7 +82,7 @@
             </div>
         </form>
         <div class="text-center text-secondary mt-3">
-            Already have account? <a href="{{ route('admin.login') }}" tabindex="-1" wire:navigate>Sign in</a>
+            Already have account? <a href="{{ route('admin.login') }}" tabindex="-1" wire:navigate.hover>Sign in</a>
         </div>
     </div>
 </div>

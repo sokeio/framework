@@ -5,7 +5,7 @@
 @if ($isChildren)
     <div class="dropend">
         <a class="dropdown-item dropdown-toggle" href="{{ $item->url() }}" data-bs-toggle="dropdown"
-            data-bs-auto-close="outside" role="button" aria-expanded="false" wire:navigate>
+            data-bs-auto-close="outside" role="button" aria-expanded="false" wire:navigate.hover>
             {{ $item->title }}
         </a>
         <div class="dropdown-menu">
@@ -15,7 +15,7 @@
         </div>
     </div>
 @else
-    <a class="dropdown-item" href="{{ $item->url() }}" wire:navigate>
+    <a class="dropdown-item" href="{{ $item->url() }}" wire:navigate.hover>
         {{ $item->title }}
     </a>
 @endif

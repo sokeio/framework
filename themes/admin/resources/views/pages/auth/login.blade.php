@@ -21,7 +21,7 @@
                         <label class="form-label">
                             Password
                             <span class="form-label-description">
-                                <a href="./forgot-password.html" wire:navigate>I forgot password</a>
+                                <a href="./forgot-password.html" wire:navigate.hover>I forgot password</a>
                             </span>
                         </label>
                         <div class="input-group input-group-flat" x-data="{ showPass: false }">
@@ -102,7 +102,7 @@
             </div>
         </div>
         <div class="text-center text-secondary mt-3">
-            Don't have account yet? <a href="{{ route('admin.register') }}" tabindex="-1" wire:navigate>Sign up</a>
+            Don't have account yet? <a href="{{ route('admin.register') }}" tabindex="-1" wire:navigate.hover>Sign up</a>
         </div>
     </div>
 </div>

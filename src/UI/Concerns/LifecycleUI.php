@@ -30,7 +30,9 @@ trait LifecycleUI
             foreach ($this->childs as  $childs) {
                 if (is_array($childs)) {
                     foreach ($childs as $c) {
-                        $c->lifecycleWithKey($key);
+                        if ($c instanceof BaseUI) {
+                            $c->lifecycleWithKey($key);
+                        }
                     }
                 }
             }

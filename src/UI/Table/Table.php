@@ -24,6 +24,14 @@ class Table extends BaseUI
         1000,
         2000
     ];
+    public function attrWrapper($name, $value)
+    {
+        return $this->attr($name, $value, 'wrapper');
+    }
+    public function classWrapper($class)
+    {
+        return $this->attrWrapper('class', $class);
+    }
     public function pageSizes($sizes)
     {
         if (!is_array($sizes)) {
@@ -60,9 +68,15 @@ class Table extends BaseUI
     }
     protected function initUI()
     {
-        $this->className('table table-bordered');
+        $this->className('table');
         $this->action('paginate', function ($page) {
             $this->setValueByName('page.index', $page);
+        });
+        $this->action($this->getKeyWithTable('orderBy'), function ($order) {
+            $field = $order['field'];
+            $type = $order['type'] ?? 'asc';
+            $this->setValueByName('order.field', $field);
+            $this->setValueByName('order.type', $type);
         });
     }
     public function context(&$context)
@@ -86,14 +100,24 @@ class Table extends BaseUI
         $this->query = $query;
         return $this;
     }
+    public function applyQuery()
+    {
+        $query = $this->query;
+        $orderBy = $this->getValueByName('order.field');
+        $type = $this->getValueByName('order.type', 'asc');
+        if ($orderBy) {
+            $query = $query->orderBy($orderBy, $type);
+        }
+        return $query;
+    }
     public function getRows()
     {
         if ($this->showAll) {
-            $this->rows = $this->query->get();
+            $this->rows = $this->applyQuery()->get();
         } else {
             $pageSize = $this->getValueByName('page.size', 10);
             $pageIndex = $this->getValueByName('page.index', 1);
-            $this->rows = $this->query->paginate($pageSize, ['*'], $this->tableKey ?? 'page', $pageIndex);
+            $this->rows = $this->applyQuery()->paginate($pageSize, ['*'], $this->tableKey ?? 'page', $pageIndex);
         }
         return $this->rows ?? [];
     }
@@ -267,7 +291,13 @@ class Table extends BaseUI
             });
         ksort($this->columns);
         $attr = $this->getAttr();
+        $attrWrapper = trim($this->getAttr('wrapper'));
+        if ($attrWrapper == '') {
+            $attrWrapper = 'class="mb-3 card p-2"';
+        }
+        $orderBy = $this->getKeyWithTable('orderBy');
         return <<<HTML
+        <div {$attrWrapper}>
         <div class="table-responsive position-relative" x-data="{
             fieldSort: '',
             typeSort: '',
@@ -279,6 +309,10 @@ class Table extends BaseUI
                 } else {
                     this.typeSort = this.typeSort === 'asc' ? 'desc' : 'asc';
                 }
+                    \$wire.callActionUI('{$orderBy}', {
+                        'field': this.fieldSort,
+                        'type': this.typeSort
+                    });
             }
         }">
         <div wire:loading class="position-absolute top-50 start-50 translate-middle">
@@ -292,7 +326,8 @@ class Table extends BaseUI
                     {$this->bodyRender()}
                 </tbody>
             </table>
-            {$this->pagitateRender()}
+        </div>
+        {$this->pagitateRender()}
         </div>
         HTML;
     }

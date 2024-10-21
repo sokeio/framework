@@ -119,6 +119,12 @@ let addStyleToWindow = function (source) {
     prior.parentNode.insertBefore(script, prior);
   });
 };
+
+export const logDebug = (...args) => {
+  if (window.SOKEIO_DEBUG) {
+    console.log(...args);
+  }
+};
 export const Utils = {
   getComponentsFromText,
   LOG,

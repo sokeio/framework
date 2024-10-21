@@ -1,3 +1,4 @@
+import { logDebug } from "../framework/common/Uitls";
 import * as Utils from "./utils";
 export default {
   state: { html: "", loading: true },
@@ -28,7 +29,7 @@ export default {
       this.url =
         this.url + "?refId=" + refId + "&_time=" + new Date().getTime();
     }
-    console.log(this.url);
+    logDebug("modal.url", this.url);
     this.$request.get(this.url).then(async (res) => {
       if (!res.ok) {
         this.html = `<div class="so-modal-content-error"><h3>${res.statusText}</h3><button class="btn btn-primary" so-on:click="this.delete()">Close</button></div>`;

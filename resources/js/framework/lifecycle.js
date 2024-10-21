@@ -7,9 +7,8 @@ import {
   doReady as componentDoReady,
   $request as componentRequest,
 } from "./common/Component";
+import { logDebug } from "./common/Uitls";
 
-let isReady = false;
-let isRegister = false;
 export const $request = componentRequest;
 export function onRegister(callback) {
   document.addEventListener("sokeio::register", callback);
@@ -18,43 +17,49 @@ export function onBoot(callback) {
   document.addEventListener("sokeio::boot", callback);
 }
 export function onReady(callback) {
-  if (isReady) {
-    callback();
-  } else {
-    document.addEventListener("sokeio::ready", callback);
-  }
+  document.addEventListener("sokeio::ready", callback);
 }
 export function onDestroy(callback) {
   document.addEventListener("sokeio::destroy", callback);
 }
 
-export function register() {
+export function register(component) {
   document.dispatchEvent(
-    new CustomEvent("sokeio::register", { detail: { registerComponent } })
+    new CustomEvent("sokeio::register", {
+      detail: { registerComponent, component },
+    })
   );
 }
 export function boot(component) {
   componentDoBoot(component);
-  document.dispatchEvent(new CustomEvent("sokeio::boot"));
+  document.dispatchEvent(
+    new CustomEvent("sokeio::boot", { detail: { component } })
+  );
 }
 export function render(component) {
   componentDoRender(component);
-  document.dispatchEvent(new CustomEvent("sokeio::render"));
+  document.dispatchEvent(
+    new CustomEvent("sokeio::render", { detail: { component } })
+  );
 }
 export function ready(component) {
   componentDoReady(component);
-  document.dispatchEvent(new CustomEvent("sokeio::ready"));
-  isReady = true;
+  document.dispatchEvent(
+    new CustomEvent("sokeio::ready", { detail: { component } })
+  );
 }
 export function destroy(component) {
   componentDoDestroy(component);
-  document.dispatchEvent(new CustomEvent("sokeio::destroy"));
+  document.dispatchEvent(
+    new CustomEvent("sokeio::destroy", { detail: { component } })
+  );
 }
 export function run(template = {}, options = {}) {
-  if (!isRegister) {
-    register();
-    isRegister = true;
-  }
+  let templateCopy = {
+    ...template,
+    state: JSON.parse(JSON.stringify(template.state ?? {})),
+  };
+  logDebug("templateCopy", templateCopy);
   let querySelectorOrEl = options.selector;
   let init = options.init === undefined ? true : options.init;
   document.dispatchEvent(new CustomEvent("sokeio::run"));
@@ -65,8 +70,10 @@ export function run(template = {}, options = {}) {
       $wire: window.Livewire.find(options.props.wireId),
     };
   }
-  let appComponent = new Component(template, options.props ?? {});
+  let appComponent = new Component(templateCopy, options.props ?? {});
+  register(appComponent);
   if (init) {
+    logDebug("run", appComponent);
     boot(appComponent);
     render(appComponent);
     ready(appComponent);

@@ -1,3 +1,5 @@
+import { logDebug } from "../framework/common/Uitls";
+
 export function onEventListenerFromDom(
   event,
   selector,
@@ -26,7 +28,7 @@ export function getShortcodeObjectFromText(shortcode) {
 
   // Extract the root shortcode match
   const match = shortcode.match(window.shortcodePattern);
-  console.log(match);
+  logDebug("getShortcodeObjectFromText", match);
   if (match) {
     const shortcodeName = match[1];
     const attributesString = match[2];

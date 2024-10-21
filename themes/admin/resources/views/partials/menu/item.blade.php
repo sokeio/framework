@@ -23,7 +23,7 @@
     </li>
 @else
     <li class="nav-item" wire:key="menu-{{ $item->key }}" menu-sort="{{ $item->sort }}">
-        <a class="nav-link " href="{{ $item->url() }}" wire:navigate>
+        <a class="nav-link " href="{{ $item->url() }}" wire:navigate.hover>
             @if ($item->icon)
                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                     {!! $item->icon() !!}

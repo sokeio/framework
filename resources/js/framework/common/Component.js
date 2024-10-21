@@ -1,7 +1,7 @@
 import feature from "../feature/_index";
 import request from "../request";
 import { DataValue } from "./DataValue";
-import { Utils } from "./Uitls";
+import { Utils, logDebug } from "./Uitls";
 export const $request = request;
 
 let number = new Date().getTime();
@@ -55,9 +55,14 @@ function getChildComponent(component) {
   return component;
 }
 export function doBoot(component) {
+  logDebug("doBoot", component);
   let html = component.render ? component.render() : "<div></div>";
   html = html.trim();
-  component.$el = Utils.convertHtmlToElement(html);
+  if (component.$el) {
+    component.$el.innerHTML = html;
+  } else {
+    component.$el = Utils.convertHtmlToElement(html);
+  }
   getChildComponent(component);
   feature(component);
   if (component.$children) {
@@ -68,6 +73,7 @@ export function doBoot(component) {
   component.boot && component.boot();
 }
 export function doRender(component) {
+  logDebug("doRender", component);
   if (component.$children) {
     component.$children.forEach((item) => {
       let elTemp = component.$el.querySelector(
@@ -94,6 +100,7 @@ export function doRender(component) {
   }
 }
 export function doReady(component) {
+  logDebug("doReady", component);
   if (component.$children) {
     component.$children.forEach((item) => {
       doReady(item);
@@ -107,6 +114,7 @@ export function doReady(component) {
   }
 }
 export function doDestroy(component) {
+  logDebug("doDestroy", component);
   if (component.$children) {
     component.$children.forEach((item) => {
       doDestroy(item);
@@ -123,14 +131,13 @@ export function doDestroy(component) {
   component.$hookReady = [];
   component.$children = [];
   component.$el = null;
-  component.state = {
-    ...component.$initState,
-  };
+  component.state = {};
+  component = undefined;
 }
-export function Component($options, $props, $parent = null) {
+export function Component($component, $props, $parent = null) {
   let component = {
-    ...$options,
-    $initState: { ...$options.state },
+    ...$component,
+    $initState: { ...JSON.parse(JSON.stringify($component.state)) },
     $parent: $parent,
     $children: [],
     $id: 0,
@@ -139,7 +146,7 @@ export function Component($options, $props, $parent = null) {
     $hookReady: [],
   };
   let keys = Object.keys(component)
-    .concat(Object.keys($options.state ?? {}))
+    .concat(Object.keys($component.state))
     .concat(Object.keys($props))
     .concat(Utils.getMethods(component))
     .filter(fnFilter)
@@ -175,7 +182,7 @@ export function Component($options, $props, $parent = null) {
     },
   });
   Object.defineProperty(component, "__data__", {
-    value: new DataValue($options.state ?? {}),
+    value: new DataValue($component.state ?? {}),
   });
   Object.defineProperty(component, "__props__", {
     value: new DataValue($props),
@@ -198,7 +205,7 @@ export function Component($options, $props, $parent = null) {
     value: function (selector, event, callback) {
       this.querySelectorAll(selector, (arr) => {
         arr.forEach((item) => {
-          console.log(event, item, callback);
+          logDebug(event, item, callback);
           item.addEventListener(event, callback);
           this.$hookDestroy.push(() => {
             item.removeEventListener(event, callback);
@@ -242,7 +249,7 @@ export function Component($options, $props, $parent = null) {
     value: function () {
       let elParent = this.$el.parentNode;
       let elNext = this.$el.nextSibling;
-      doDestroy(this);
+      logDebug("reRender", this);
       doBoot(this);
       doRender(this);
       doReady(this);
