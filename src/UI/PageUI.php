@@ -4,6 +4,10 @@ namespace Sokeio\UI;
 
 class PageUI extends BaseUI
 {
+    public function initUI()
+    {
+        $this->className('sokeio-page-ui');
+    }
     public function title($title)
     {
         return $this->vars('title', $title);

@@ -42,11 +42,29 @@ trait LifecycleUI
     public function setParams($params)
     {
         $this->params = $params;
+        foreach ($this->childs as  $childs) {
+            if (is_array($childs)) {
+                foreach ($childs as $c) {
+                    if (is_subclass_of($c, BaseUI::class)) {
+                        $c->setParams($params);
+                    }
+                }
+            }
+        }
         return $this;
     }
     public function clearParams()
     {
         $this->params = [];
+        foreach ($this->childs as  $childs) {
+            if (is_array($childs)) {
+                foreach ($childs as $c) {
+                    if (is_subclass_of($c, BaseUI::class)) {
+                        $c->clearParams();
+                    }
+                }
+            }
+        }
         return $this;
     }
     public function getParams($key = null)
