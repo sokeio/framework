@@ -29,8 +29,16 @@ class Index extends \Sokeio\Page
                 [
                     Table::init()
                         // ->tableKey('users')
-                        ->column('name')
-                        ->column('email')
+                        ->column('name', function (Column $column) {
+                            $column->classNameCell(function ($row) {
+                                return $row->id>5 ? 'bg-success' : 'bg-warning';
+                            });
+                        })
+                        ->column('email', function (Column $column) {
+                            $column->classNameCell(function ($row) {
+                                return $row->id<5 ? 'bg-blue text-bg-blue' : 'bg-warning';
+                            });
+                        })
                         ->column('phone_number')
                         ->query(User::query())
                         ->enableIndex()

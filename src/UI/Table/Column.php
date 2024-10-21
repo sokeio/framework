@@ -68,8 +68,8 @@ class Column
             $classCell = call_user_func($classCell, $row, $this, $index);
         }
         return <<<html
-        <td>
-            <div class="d-flex align-items-center cell-value {$classCell}"
+        <td class="{$classCell}">
+            <div class="d-flex align-items-center cell-value "
             data-row-field="{$this->getField()}"
             data-row-index="{$index}"
             data-row-id="{$row->id}">
