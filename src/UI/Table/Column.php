@@ -48,13 +48,12 @@ class Column
         }
         return <<<html
         <th class="{$class}">
-            <div class="d-flex align-items-center cell-header" data-field="{$name}">
+            <div class="d-flex align-items-center cell-header" data-field="{$name}"  x-on:click="sortField(\$el)">
                 <div class="table-sort"
                 x-bind:class="{
                     'asc': typeSort === 'asc'&&fieldSort === '{$name}',
                     'desc': typeSort === 'desc'&&fieldSort === '{$name}'
-                }"
-                 x-on:click="sortField(\$el)">
+                }">
                 {$this->getHeaderContent()}
                 </div>
             </div>
