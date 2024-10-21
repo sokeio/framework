@@ -51,8 +51,9 @@ class Index extends \Sokeio\Page
                 ]
             )->rightUI([
                 Button::init()
-                    ->text(__('Create User'))
-                    ->modalRoute($this->getRouteName('edit'), __('Create User'), 'lg', 'ti ti-plus')
+                    ->text(__('Add User'))
+                    ->icon('ti ti-plus')
+                    ->modalRoute($this->getRouteName('edit'), __('Add User'), 'lg', 'ti ti-plus')
             ])
                 ->title(__('Users'))
                 ->className('container')
