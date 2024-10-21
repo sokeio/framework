@@ -23,10 +23,7 @@ class Button extends BaseUI
     {
         return $this->attr('type', 'submit')->attr('value', $text)->vars('text', $text);
     }
-    public function icon($icon)
-    {
-        return $this->vars('icon', $icon);
-    }
+
     public function click($callback, $actionName = 'button::click', $params = null)
     {
         if (is_string($callback) && strpos($callback, '::') === false && !class_exists($callback)) {
@@ -134,10 +131,7 @@ class Button extends BaseUI
     public function view()
     {
         $attr = $this->getAttr();
-        $icon = $this->getVar('icon', null, true);
-        if ($icon && !str($icon)->trim()->startsWith('<i')) {
-            $icon = '<i class=" ' . $icon . '"></i>';
-        }
+        $icon = $this->getIcon();
         return <<<HTML
         <button {$attr}>{$icon} <span>{$this->getVar('text', '', true)}</span></button>
         HTML;

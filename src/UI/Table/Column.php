@@ -40,7 +40,7 @@ class Column
         if ($this->getDisableSort()) {
             return <<<html
             <th class="{$class}">
-                <div class="d-flex align-items-center" data-field="{$name}">
+                <div class="d-flex align-items-center cell-header" data-field="{$name}">
                    {$this->getHeaderContent()}
                 </div>
             </th>
@@ -48,13 +48,15 @@ class Column
         }
         return <<<html
         <th class="{$class}">
-            <div class="d-flex align-items-center table-sort"
-            x-bind:class="{
-                'asc': typeSort === 'asc'&&fieldSort === '{$name}',
-                'desc': typeSort === 'desc'&&fieldSort === '{$name}'
-            }"
-            data-field="{$name}" x-on:click="sortField(\$el)">
-               {$this->getHeaderContent()}
+            <div class="d-flex align-items-center cell-header" data-field="{$name}">
+                <div class="table-sort"
+                x-bind:class="{
+                    'asc': typeSort === 'asc'&&fieldSort === '{$name}',
+                    'desc': typeSort === 'desc'&&fieldSort === '{$name}'
+                }"
+                 x-on:click="sortField(\$el)">
+                {$this->getHeaderContent()}
+                </div>
             </div>
         </th>
         html;
@@ -64,7 +66,7 @@ class Column
     {
         return <<<html
         <td>
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center cell-value">
              {$this->getValue($row,$index)}
             </div>
         </td>

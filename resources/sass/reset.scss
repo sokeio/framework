@@ -18,3 +18,44 @@ button {
         margin-left: 5px;
     }
 }
+
+.sokeio-table {
+    background-color: #fff;
+    border-radius: 2px;
+    padding: 2px;
+    border: 1px solid #e6e6e6;
+
+    table th,
+    table td {
+        padding: 0px !important;
+    }
+
+    table th .cell-header {
+        padding: 7px !important;
+    }
+
+    table td .cell-value {
+        padding: 7px !important;
+    }
+}
+
+.sokeio-modal-ui {
+    .sokeio-modal-header {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        padding-left: 5px;
+
+        i {
+            font-size: 20px;
+        }
+
+        i~span {
+            margin-left: 3px;
+            font-size: 20px;
+        }
+    }
+
+    .sokeio-modal-body {
+        min-height: 50px;
+    }
+}

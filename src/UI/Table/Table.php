@@ -46,27 +46,6 @@ class Table extends BaseUI
         }
         return 'table.' . $name;
     }
-    public function columnAction($array, $title = 'Actions', $callback = null)
-    {
-        return $this->child($array, 'columnAction')->render(function () use ($title, $callback) {
-            $actionColumn = (new Column($this))
-                ->setLabel($title)
-
-                ->disableSort()
-                ->renderCell(function ($row, $column, $index) {
-                    return $this->renderChilds('columnAction', [
-                        'row' => $row,
-                        'column' => $column,
-                        'index' => $index
-                    ]);
-                });
-
-            if ($callback) {
-                $callback($actionColumn);
-            }
-            $this->columns[++$this->index] = $actionColumn;
-        });
-    }
     protected function getValueByName($name, $default = null, $withKey = true)
     {
         if (!$this->context) {
@@ -151,11 +130,33 @@ class Table extends BaseUI
         }
         return $this;
     }
+    public function columnAction($array, $title = 'Actions', $callback = null)
+    {
+        return $this->child($array, 'columnAction')->render(function () use ($title, $callback) {
+            $actionColumn = (new Column($this))
+                ->setLabel($title)
+                ->classNameHeader('w-1')
+                ->disableSort()
+                ->renderCell(function ($row, $column, $index) {
+                    return $this->renderChilds('columnAction', [
+                        'row' => $row,
+                        'column' => $column,
+                        'index' => $index
+                    ]);
+                });
+
+            if ($callback) {
+                $callback($actionColumn);
+            }
+            $this->columns[++$this->index] = $actionColumn;
+        });
+    }
     public function enableIndex($callback = null)
     {
         $this->columns[-1] = (new Column($this))
             ->setField('index')->setLabel('#')
             ->disableSort()
+            ->classNameHeader('w-1')
             ->renderCell(function ($row, $column, $index) use ($callback) {
                 if ($callback) {
                     return $callback($row, $column, $index);
@@ -169,6 +170,7 @@ class Table extends BaseUI
         $this->columns[$isAfterIndex ? -2 : 0] = (new Column($this))
             ->setField('index')->setLabel('#')
             ->disableSort()
+            ->classNameHeader('w-1')
             ->renderHeader(function () {
                 return '<input type="checkbox" @change="checkboxAll" name="select-all" class="form-check-input">';
             })
@@ -220,12 +222,13 @@ class Table extends BaseUI
             $total = $data->total();
 
             $pageSize = $this->getValueByName('page.size', 10);
-            $html .= '<div class="d-flex justify-content-center py-3">';
-            $html .= '  <p class="m-0 text-secondary">Showing <span>' . (($current - 1) * $data->perPage() + 1)
+            $html .= '<div class="d-flex justify-content-center py-1">';
+            $html .= '  <div class="m-0 text-secondary p-2">Showing <span>'
+                . (($current - 1) * $data->perPage() + 1)
                 . '</span> to <span>' . ($current * $data->perPage())
-                . '</span> of <span>' . $total . '</span> entries</p>';
+                . '</span> of <span>' . $total . '</span> entries</div>';
 
-            $html .= '<div class="ms-auto m-1">';
+            $html .= '<div class=" ms-auto m-1">';
             $html .= '    <select class="form-select p-1 px-3" wire:model.live="soQuery.' . $keyModel . '">';
             foreach ($this->pageSizes as $item) {
                 $att = ($item == $pageSize ? 'selected' : '');
@@ -313,10 +316,9 @@ class Table extends BaseUI
 
         ksort($this->columns);
         $attr = $this->getAttr();
+        $this->classWrapper('sokeio-table');
         $attrWrapper = trim($this->getAttr('wrapper'));
-        if ($attrWrapper == '') {
-            $attrWrapper = 'class="mb-3 card p-2"';
-        }
+
         $orderBy = $this->getKeyWithTable('orderBy');
         return <<<HTML
         <div {$attrWrapper}>

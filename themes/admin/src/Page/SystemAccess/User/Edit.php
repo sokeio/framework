@@ -3,8 +3,7 @@
 namespace SokeioTheme\Admin\Page\SystemAccess\User;
 
 use Sokeio\Support\Livewire\PageInfo;
-use Sokeio\UI\Common\Button;
-use Sokeio\UI\Common\Div;
+use Sokeio\UI\ModalUI;
 use Sokeio\UI\WithUI;
 
 #[PageInfo(admin: true, auth: true,  title: 'User Form')]
@@ -14,11 +13,7 @@ class Edit extends \Sokeio\Page
     protected function setupUI()
     {
         return [
-            Div::init([
-                $this->dataId
-            ])
-                ->attr('style', 'padding:10px')
-
+            ModalUI::init()->title($this->dataId ? __('Edit User') : __('Create User'))
         ];
     }
 }

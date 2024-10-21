@@ -8,7 +8,18 @@ use Sokeio\UI\Concerns\LifecycleUI;
 class BaseUI
 {
     use LifecycleUI, CommonUI;
-
+    public function icon($icon)
+    {
+        return $this->vars('icon', $icon);
+    }
+    public function getIcon()
+    {
+        $icon = $this->getVar('icon', null, true);
+        if ($icon && !str($icon)->trim()->startsWith('<i')) {
+            $icon = '<i class=" ' . $icon . '"></i>';
+        }
+        return $icon;
+    }
     private $callbackView = null;
     private SoUI|null $manager;
 
