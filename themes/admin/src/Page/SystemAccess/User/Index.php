@@ -27,12 +27,13 @@ class Index extends \Sokeio\Page
             PageUI::init(
                 [
                     Table::init()
-                        ->tableKey('users')
+                        // ->tableKey('users')
                         ->column('name')
                         ->column('email')
                         ->column('phone_number')
                         ->query(User::query())
                         ->enableIndex()
+                        ->enableCheckBox()
                         ->columnAction([
                             Button::init()->text(__('Edit'))->className('btn btn-primary btn-sm ')
                                 ->modal(function (Button $button) {

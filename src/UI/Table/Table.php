@@ -2,7 +2,6 @@
 
 namespace Sokeio\UI\Table;
 
-use Sokeio\Theme;
 use Sokeio\UI\BaseUI;
 
 class Table extends BaseUI
@@ -47,9 +46,26 @@ class Table extends BaseUI
         }
         return 'table.' . $name;
     }
-    public function columnAction($array)
+    public function columnAction($array, $title = 'Actions', $callback = null)
     {
-        return $this->child($array, 'columnAction');
+        return $this->child($array, 'columnAction')->render(function () use ($title, $callback) {
+            $actionColumn = (new Column($this))
+                ->setLabel($title)
+
+                ->disableSort()
+                ->renderCell(function ($row, $column, $index) {
+                    return $this->renderChilds('columnAction', [
+                        'row' => $row,
+                        'column' => $column,
+                        'index' => $index
+                    ]);
+                });
+
+            if ($callback) {
+                $callback($actionColumn);
+            }
+            $this->columns[++$this->index] = $actionColumn;
+        });
     }
     protected function getValueByName($name, $default = null, $withKey = true)
     {
@@ -137,7 +153,7 @@ class Table extends BaseUI
     }
     public function enableIndex($callback = null)
     {
-        $this->columns[0] = (new Column($this))
+        $this->columns[-1] = (new Column($this))
             ->setField('index')->setLabel('#')
             ->disableSort()
             ->renderCell(function ($row, $column, $index) use ($callback) {
@@ -145,6 +161,22 @@ class Table extends BaseUI
                     return $callback($row, $column, $index);
                 }
                 return $this->getRows()->firstItem() + $index;
+            });
+        return $this;
+    }
+    public function enableCheckBox($callback = null, $isAfterIndex = true)
+    {
+        $this->columns[$isAfterIndex ? -2 : 0] = (new Column($this))
+            ->setField('index')->setLabel('#')
+            ->disableSort()
+            ->renderHeader(function () {
+                return '<input type="checkbox" @change="checkboxAll" name="select-all" class="form-check-input">';
+            })
+            ->renderCell(function ($row, $column, $index) use ($callback) {
+                if ($callback) {
+                    return $callback($row, $column, $index);
+                }
+                return '<input type="checkbox" name="selected[]" class="form-check-input" value="' . $row->id . '">';
             });
         return $this;
     }
@@ -228,7 +260,6 @@ class Table extends BaseUI
             }
             $html .= <<<html
             <ul class="pagination m-1 ">
-            
        <li class="page-item me-1" wire:click="callActionUI('paginate','{$backPage}')">
            <a class="page-link  bg-azure text-white" >
                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -279,16 +310,7 @@ class Table extends BaseUI
     }
     public function view()
     {
-        $this->columns[++$this->index] = (new Column($this))
-            ->setLabel('Actions')
-            ->disableSort()
-            ->renderCell(function ($row, $column, $index) {
-                return $this->renderChilds('columnAction', [
-                    'row' => $row,
-                    'column' => $column,
-                    'index' => $index
-                ]);
-            });
+
         ksort($this->columns);
         $attr = $this->getAttr();
         $attrWrapper = trim($this->getAttr('wrapper'));
@@ -313,6 +335,9 @@ class Table extends BaseUI
                         'field': this.fieldSort,
                         'type': this.typeSort
                     });
+            },
+            checkboxAll() {
+                alert('checkboxAll');
             }
         }">
         <div wire:loading class="position-absolute top-50 start-50 translate-middle">

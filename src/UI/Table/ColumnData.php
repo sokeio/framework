@@ -42,6 +42,14 @@ trait ColumnData
     {
         return $this->getData('label', $default);
     }
+    public function renderHeader($callback)
+    {
+        return $this->setData('renderHeader', $callback);
+    }
+    public function getRenderHeader($default = null)
+    {
+        return $this->getData('renderHeader', $default);
+    }
     public function renderCell($callback)
     {
         return $this->setData('renderCell', $callback);

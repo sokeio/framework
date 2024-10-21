@@ -13,6 +13,10 @@ class Column
     {
         return $this->table;
     }
+    public function classNameHeader($class)
+    {
+        return $this->setData('classNameHeader', $class);
+    }
     public function getValue($row, $index = 0)
     {
         $callback = $this->getRenderCell();
@@ -21,27 +25,36 @@ class Column
         }
         return data_get($row, $this->getField());
     }
+    protected function getHeaderContent()
+    {
+        $callback = $this->getRenderHeader();
+        if ($callback && is_callable($callback)) {
+            return call_user_func($callback, $this);
+        }
+        return $this->getLabel();
+    }
     public function getHeaderView()
     {
         $name = $this->getField();
+        $class = $this->getData('classNameHeader');
         if ($this->getDisableSort()) {
             return <<<html
-            <th>
+            <th class="{$class}">
                 <div class="d-flex align-items-center" data-field="{$name}">
-                   {$this->getLabel()}
+                   {$this->getHeaderContent()}
                 </div>
             </th>
             html;
         }
         return <<<html
-        <th>
+        <th class="{$class}">
             <div class="d-flex align-items-center table-sort"
             x-bind:class="{
                 'asc': typeSort === 'asc'&&fieldSort === '{$name}',
                 'desc': typeSort === 'desc'&&fieldSort === '{$name}'
             }"
             data-field="{$name}" x-on:click="sortField(\$el)">
-               {$this->getLabel()}
+               {$this->getHeaderContent()}
             </div>
         </th>
         html;
