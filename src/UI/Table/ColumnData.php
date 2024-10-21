@@ -58,4 +58,20 @@ trait ColumnData
     {
         return $this->getData('renderCell', $default);
     }
+    public function classNameHeader($callback)
+    {
+        return $this->setData('classNameHeader', $callback);
+    }
+    public function getClassNameHeader($default = null)
+    {
+        return $this->getData('classNameHeader', $default);
+    }
+    public function classNameCell($callback)
+    {
+        return $this->setData('classNameCell', $callback);
+    }
+    public function getClassNameCell($default = null)
+    {
+        return $this->getData('classNameCell', $default);
+    }
 }

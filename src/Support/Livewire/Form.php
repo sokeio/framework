@@ -28,6 +28,15 @@ class Form extends SupportFormObjectsForm implements \JsonSerializable
             data_set($this->soTemplateData, $key, $value);
         }
     }
+    public function parseModel(&$data, $fill = null)
+    {
+        if (!$data) {
+            return;
+        }
+        foreach ($fill as $key) {
+            data_set($data, $key, data_get($this->soTemplateData, $key));
+        }
+    }
     public function __isset($name)
     {
         return isset($this->soTemplateData[$name]);
@@ -117,6 +126,10 @@ class Form extends SupportFormObjectsForm implements \JsonSerializable
     public function jsonSerialize()
     {
         return $this->soTemplateData;
+    }
+    public function keys()
+    {
+        return array_keys($this->soTemplateData);
     }
     public function toArray()
     {

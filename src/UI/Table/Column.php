@@ -63,9 +63,13 @@ class Column
 
     public function getCellView($row, $index = 0)
     {
+        $classCell = $this->getClassNameCell() ?? '';
+        if ($classCell && is_callable($classCell)) {
+            $classCell = call_user_func($classCell, $row, $this, $index);
+        }
         return <<<html
         <td>
-            <div class="d-flex align-items-center cell-value"
+            <div class="d-flex align-items-center cell-value {$classCell}"
             data-row-field="{$this->getField()}"
             data-row-index="{$index}"
             data-row-id="{$row->id}">

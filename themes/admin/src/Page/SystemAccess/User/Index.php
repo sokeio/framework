@@ -6,6 +6,7 @@ use Sokeio\Models\User;
 use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\PageUI;
+use Sokeio\UI\Table\Column;
 use Sokeio\UI\Table\Table;
 use Sokeio\UI\WithUI;
 
@@ -47,8 +48,9 @@ class Index extends \Sokeio\Page
                                     User::find($params)->delete();
                                 }, 'table_users_delete', function (Button $button) {
                                     return $button->getParams('row')->id;
-                                })->className('btn btn-danger ms-1 btn-sm')->when(function (Button $button) {
-                                    return $button->getParams('row')->id > 10;
+                                })->className('btn btn-danger ms-1 btn-sm')
+                                ->when(function (Button $button) {
+                                    return $button->getParams('row')->id > 1;
                                 }),
 
                         ])

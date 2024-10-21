@@ -12,6 +12,7 @@ class Table extends BaseUI
     private $showAll = false;
     private $columns = [];
     private $context = null;
+    private $classNameRow = null;
     private $index = 1;
     private $pageSizes = [
         15,
@@ -23,6 +24,14 @@ class Table extends BaseUI
         1000,
         2000
     ];
+    public function classNameRow($callback)
+    {
+        if ($callback) {
+            $this->classNameRow = $callback;
+        }
+        return $this;
+    }
+
     public function attrWrapper($name, $value)
     {
         return $this->attr($name, $value, 'wrapper');
@@ -209,8 +218,15 @@ class Table extends BaseUI
     {
         $html = '';
         foreach ($this->getRows() as $key => $row) {
+            $classNameRow = '';
+            if ($this->classNameRow) {
+                $classNameRow = call_user_func($this->classNameRow, $row, $this, $key);
+            }
+            if ($classNameRow) {
+                $classNameRow = ' class="' . $classNameRow . '"';
+            }
             $html .= <<<html
-            <tr wire:key="sokeio-row-{$row->id}" row-index="{$row->id}">
+            <tr {$classNameRow} wire:key="sokeio-row-{$row->id}" row-index="{$row->id}">
                 {$this->cellRender($row,$key)}
             </tr>
             html;
