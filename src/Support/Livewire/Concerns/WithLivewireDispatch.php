@@ -5,6 +5,7 @@ namespace Sokeio\Support\Livewire\Concerns;
 trait WithLivewireDispatch
 {
     private const LIVEWIRE_MESSAGE = 'sokeio_message';
+    private const LIVEWIRE_CLOSE = 'sokeio_close';
     private const LIVEWIRE_FUNCTION = 'sokeio_function';
     protected function sendMessageToClient($type, $payload = [])
     {
@@ -32,5 +33,9 @@ trait WithLivewireDispatch
             'func' => $func,
             'option' => $option
         ]);
+    }
+    public function sokeioClose()
+    {
+        $this->sendMessageToClient(self::LIVEWIRE_CLOSE, []);
     }
 }

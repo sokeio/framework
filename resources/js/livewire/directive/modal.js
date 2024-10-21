@@ -52,7 +52,12 @@ export default {
       el.modalInstance.show();
     };
     let modalInterval = undefined;
+    let modalIntervalLeave = undefined;
     let eventHover = function () {
+      if (modalIntervalLeave) {
+        clearTimeout(modalIntervalLeave);
+        modalIntervalLeave = undefined;
+      }
       if (isFocus) {
         return;
       }
@@ -65,15 +70,17 @@ export default {
       }, 40);
     };
     let eventLeave = function () {
-      isFocus = false;
-      console.log("eventLeave");
-      if (modalInterval) {
-        clearTimeout(modalInterval);
-        modalInterval = undefined;
-        if (el.modalInstance && !isShow) {
-          el.modalInstance = undefined;
+      modalIntervalLeave = setTimeout(() => {
+        modalIntervalLeave = undefined;
+        isFocus = false;
+        if (modalInterval) {
+          clearTimeout(modalInterval);
+          modalInterval = undefined;
+          if (el.modalInstance && !isShow) {
+            el.modalInstance = undefined;
+          }
         }
-      }
+      }, 2000);
     };
     el.addEventListener("click", eventClick);
     el.addEventListener("mouseover", eventHover);

@@ -1,6 +1,8 @@
+import close from "./close";
 import message from "./message";
 const dispatch = {
   sokeio_message: message,
+  sokeio_close: close,
 };
 
 function install(app) {

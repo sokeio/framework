@@ -19,6 +19,10 @@ class Edit extends \Sokeio\Page
         $data =  $this->dataId ? User::find($this->dataId) : new User();
         $this->formData->fill($data);
     }
+    public function saveUser()
+    {
+        $this->sokeioClose();
+    }
     protected function setupUI()
     {
         return [
@@ -26,16 +30,15 @@ class Edit extends \Sokeio\Page
                 Input::init('name')->label(__('Name')),
                 Input::init('email')->label(__('Email')),
                 Input::init('phone_number')->label(__('Phone')),
+                Input::init('password')->label(__('Password'))->password(),
             ])->title($this->dataId ? __('Edit User') : __('Create User'))
                 ->className('p-2')->setPrefix('formData')
                 ->afterUI([
                     Div::init([
                         Button::init()->text(__('Cancel'))->className('btn btn-warning me-2')->modalClose(),
-                        Button::init()->text(__('Save'))->wireClick(function () {
-                            $this->alert('test');
-                        })
+                        Button::init()->text(__('Save'))->wireClick('saveUser')
                     ])
-                        ->className('p-2 d-flex justify-content-end')
+                        ->className('px-2 pt-2 d-flex justify-content-end')
                 ])
         ];
     }

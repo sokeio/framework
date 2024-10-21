@@ -32,11 +32,15 @@ class ModalUI extends BaseUI
 
     public function view()
     {
+        $this->className('position-relative');
         $attr = $this->getAttr();
         $title = $this->getVar('title', '', true);
         $icon = $this->getIcon();
         return <<<HTML
         <div {$attr}>
+            <div wire:loading class="position-absolute top-50 start-50 translate-middle">
+                <span  class="spinner-border  text-blue  " role="status"></span>
+            </div>
             <div class="row align-items-center sokeio-modal-header">
                 <div class="col">
                     {$icon}

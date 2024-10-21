@@ -206,7 +206,7 @@ class Table extends BaseUI
         $html = '';
         foreach ($this->getRows() as $key => $row) {
             $html .= <<<html
-            <tr row-index="{$key}">
+            <tr wire:key="sokeio-row-{$row->id}" row-index="{$row->id}">
                 {$this->cellRender($row,$key)}
             </tr>
             html;
@@ -381,9 +381,9 @@ class Table extends BaseUI
                 }
             }
         }">
-        <div wire:loading class="position-absolute top-50 start-50 translate-middle">
-        <span  class="spinner-border  text-blue  " role="status"></span>
-        </div>
+            <div wire:loading class="position-absolute top-50 start-50 translate-middle">
+                <span  class="spinner-border  text-blue  " role="status"></span>
+            </div>
             <table {$attr} >
                 <thead>
                     {$this->headerRender()}
