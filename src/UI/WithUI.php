@@ -12,6 +12,7 @@ trait WithUI
             'dataId' => ['except' => null]
         ];
     }
+    public $dataSelecteds = [];
     public $dataId;
     public function boot()
     {

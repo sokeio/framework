@@ -14,7 +14,7 @@ class Table extends BaseUI
     private $context = null;
     private $index = 1;
     private $pageSizes = [
-        10,
+        15,
         25,
         50,
         100,
@@ -110,7 +110,7 @@ class Table extends BaseUI
         if ($this->showAll) {
             $this->rows = $this->applyQuery()->get();
         } else {
-            $pageSize = $this->getValueByName('page.size', 10);
+            $pageSize = $this->getValueByName('page.size', 15);
             $pageIndex = $this->getValueByName('page.index', 1);
             $this->rows = $this->applyQuery()->paginate($pageSize, ['*'], $this->tableKey ?? 'page', $pageIndex);
         }
@@ -172,13 +172,16 @@ class Table extends BaseUI
             ->disableSort()
             ->classNameHeader('w-1')
             ->renderHeader(function () {
-                return '<input type="checkbox" @change="checkboxAll" name="select-all" class="form-check-input">';
+                return '<input type="checkbox" @change="checkboxAll" x-model="statusCheckAll" name="select-all"
+                 class="form-check-input sokeio-checkbox-all">';
             })
             ->renderCell(function ($row, $column, $index) use ($callback) {
                 if ($callback) {
                     return $callback($row, $column, $index);
                 }
-                return '<input type="checkbox" name="selected[]" class="form-check-input" value="' . $row->id . '">';
+                return '<input type="checkbox" wire:key="sokeio-checkbox-' . $index . '-' . $row->id . '"
+                 name="selected[]" class="form-check-input sokeio-checkbox-one"
+                 wire:model="dataSelecteds" value="' . $row->id . '">';
             });
         return $this;
     }
@@ -322,9 +325,20 @@ class Table extends BaseUI
         $orderBy = $this->getKeyWithTable('orderBy');
         return <<<HTML
         <div {$attrWrapper}>
-        <div class="table-responsive position-relative" x-data="{
+        <template  x-if="\$wire.dataSelecteds?.length>0">
+                <div class="d-flex align-items-center p-2">
+                    Selected:
+                    <span x-text="\$wire.dataSelecteds.length" 
+                    class="fw-bold badge bg-primary text-bg-primary"
+                    title="Selected items"></span>
+                    <a class="btn btn-danger btn-sm ms-1" @click="\$wire.dataSelecteds = []">Clear</a>
+
+                </div>
+            </template>
+        <div class="table-responsive position-relative" x-init="watchData" x-data="{
             fieldSort: '',
             typeSort: '',
+            statusCheckAll: false,
             sortField(el) {
                 let field = el.getAttribute('data-field');
                 if(field != this.fieldSort) {
@@ -338,8 +352,33 @@ class Table extends BaseUI
                         'type': this.typeSort
                     });
             },
-            checkboxAll() {
-                alert('checkboxAll');
+            watchData() {
+            \$watch('\$wire.dataSelecteds', () => {
+             let checkedValues = [...\$el.querySelectorAll('.sokeio-checkbox-one')]
+                .map(el=>el.value);
+                this.statusCheckAll = checkedValues.length === checkedValues.filter(el =>
+                \$wire.dataSelecteds.includes(el)).length;
+            });
+            Livewire.hook('request', ({ component, commit, respond, succeed, fail }) => {
+                succeed(({ snapshot, effect }) => {
+                    setTimeout(() => {
+                        let checkedValues = [...\$el.querySelectorAll('.sokeio-checkbox-one')]
+                    .map(el=>el.value);
+                    this.statusCheckAll = checkedValues.length === checkedValues.filter(el =>
+                    \$wire.dataSelecteds.includes(el)).length;
+                    }, 0);
+                })
+            })
+            },
+            checkboxAll(ev) {
+                let isChecked = ev.target.checked;
+                let checkedValues = [...this.\$el.closest('table').querySelectorAll('.sokeio-checkbox-one')]
+                .map(el=>el.value);
+                if(isChecked) {
+                    \$wire.dataSelecteds = \$wire.dataSelecteds.concat(checkedValues);
+                } else {
+                     \$wire.dataSelecteds= \$wire.dataSelecteds.filter(el=> !checkedValues.includes(el));
+                }
             }
         }">
         <div wire:loading class="position-absolute top-50 start-50 translate-middle">
