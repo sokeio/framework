@@ -63,6 +63,10 @@ class Button extends BaseUI
             });
         });
     }
+    public function modalClose()
+    {
+        return $this->attr('so-on:click', 'this.delete()');
+    }
     protected function registerModal($modal = [])
     {
         return $this->render(function () use ($modal) {

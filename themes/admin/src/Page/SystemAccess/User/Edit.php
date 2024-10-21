@@ -4,6 +4,8 @@ namespace SokeioTheme\Admin\Page\SystemAccess\User;
 
 use Sokeio\Models\User;
 use Sokeio\Support\Livewire\PageInfo;
+use Sokeio\UI\Common\Button;
+use Sokeio\UI\Common\Div;
 use Sokeio\UI\Field\Input;
 use Sokeio\UI\ModalUI;
 use Sokeio\UI\WithUI;
@@ -26,6 +28,15 @@ class Edit extends \Sokeio\Page
                 Input::init('phone_number')->label(__('Phone')),
             ])->title($this->dataId ? __('Edit User') : __('Create User'))
                 ->className('p-2')->setPrefix('formData')
+                ->afterUI([
+                    Div::init([
+                        Button::init()->text(__('Cancel'))->className('btn btn-warning me-2')->modalClose(),
+                        Button::init()->text(__('Save'))->wireClick(function () {
+                            $this->alert('test');
+                        })
+                    ])
+                        ->className('p-2 d-flex justify-content-end')
+                ])
         ];
     }
 }
