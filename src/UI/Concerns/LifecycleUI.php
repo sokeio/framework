@@ -18,21 +18,21 @@ trait LifecycleUI
     {
         if ($callback) {
             $this->hook->group($key)->callback($callback);
+            return $this;
+        }
+        if ($params && count($params) > 1) {
+            $this->hook->group($key)->run([$this, ...array_shift($params)]);
         } else {
-            if ($params && count($params) > 1) {
-                $this->hook->group($key)->run([$this, ...array_shift($params)]);
-            } else {
-                $this->hook->group($key)->run([$this]);
-            }
-            if ($key == 'render') {
-                return $this;
-            }
-            foreach ($this->childs as  $childs) {
-                if (is_array($childs)) {
-                    foreach ($childs as $c) {
-                        if ($c instanceof BaseUI) {
-                            $c->lifecycleWithKey($key);
-                        }
+            $this->hook->group($key)->run([$this]);
+        }
+        if ($key == 'render') {
+            return $this;
+        }
+        foreach ($this->childs as  $childs) {
+            if (is_array($childs)) {
+                foreach ($childs as $c) {
+                    if (is_subclass_of($c, BaseUI::class)) {
+                        $c->lifecycleWithKey($key);
                     }
                 }
             }

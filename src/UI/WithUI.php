@@ -7,6 +7,7 @@ use Sokeio\FormData;
 trait WithUI
 {
     private SoUI|null $ui = null;
+    public $dataId;
     public function boot()
     {
         $this->getUI()->boot();
