@@ -48,7 +48,7 @@ class ModalUI extends BaseUI
                     </div>
                 </div>
             </div>
-            <div class="sokeio-modal-body">
+            <div class="sokeio-modal-body p-1">
                 {$this->renderChilds('before')}
                 {$this->renderChilds()}
                 {$this->renderChilds('after')}

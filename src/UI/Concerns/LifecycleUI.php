@@ -9,6 +9,7 @@ trait LifecycleUI
 {
     private $childs = [];
     private $params = [];
+    private $prefix = '';
     protected HookUI $hook;
     public function initLifecycleUI()
     {
@@ -39,6 +40,34 @@ trait LifecycleUI
         }
         return $this;
     }
+    public function setPrefix($prefix)
+    {
+        $this->prefix = $prefix;
+        foreach ($this->childs as  $childs) {
+            if (is_array($childs)) {
+                foreach ($childs as $c) {
+                    if (is_subclass_of($c, BaseUI::class)) {
+                        $c->setPrefix($prefix);
+                    }
+                }
+            }
+        }
+        return $this;
+    }
+    public function clearPrefix()
+    {
+        $this->prefix = '';
+        foreach ($this->childs as  $childs) {
+            if (is_array($childs)) {
+                foreach ($childs as $c) {
+                    if (is_subclass_of($c, BaseUI::class)) {
+                        $c->clearPrefix();
+                    }
+                }
+            }
+        }
+        return $this;
+    }
     public function setParams($params)
     {
         $this->params = $params;
@@ -52,6 +81,10 @@ trait LifecycleUI
             }
         }
         return $this;
+    }
+    public function getPrefix()
+    {
+        return $this->prefix;
     }
     public function clearParams()
     {

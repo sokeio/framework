@@ -2,6 +2,7 @@
 
 namespace Sokeio\UI;
 
+use Sokeio\FormData;
 
 trait WithUI
 {
@@ -13,6 +14,7 @@ trait WithUI
         ];
     }
     public $dataSelecteds = [];
+    public FormData $formData;
     public $dataId;
     public function boot()
     {

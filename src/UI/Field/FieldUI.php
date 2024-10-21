@@ -14,9 +14,16 @@ class FieldUI extends BaseUI
     {
         return $this->attrAdd('class', $className, 'wrapper');
     }
+    protected function getNameWithPrefix($name)
+    {
+        return $this->getPrefix() ? $this->getPrefix() . '.' . $name : $name;
+    }
     public function fieldName($name)
     {
-        return $this->attr('wire:model', $name)->vars('name', $name)->className('form-control');
+        return $this->render(function () use ($name) {
+            $this->attr('wire:model', $this->getNameWithPrefix($name))
+                ->vars('name', $name)->className('form-control');
+        });
     }
     public function view()
     {
