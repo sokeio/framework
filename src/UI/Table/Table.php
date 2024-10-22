@@ -10,6 +10,7 @@ class Table extends BaseUI
     private $rows = null;
     private $query = null;
     private $showAll = false;
+    private $showCheckBox = false;
     private $columns = [];
     private $context = null;
     private $classNameRow = null;
@@ -180,6 +181,7 @@ class Table extends BaseUI
     public function enableCheckBox($callback = null, $isAfterIndex = true)
     {
         return $this->boot(function () use ($callback, $isAfterIndex) {
+            $this->showCheckBox = true;
             $this->columns[$isAfterIndex ? -2 : 0] = (new Column($this))
                 ->setField('index')->setLabel('#')
                 ->disableSort()
@@ -343,9 +345,10 @@ class Table extends BaseUI
         $attrWrapper = trim($this->getAttr('wrapper'));
 
         $orderBy = $this->getKeyWithTable('orderBy');
-        return <<<HTML
-        <div {$attrWrapper}>
-        <template  x-if="\$wire.dataSelecteds?.length>0">
+        $templateDataSelected = '';
+        if ($this->showCheckBox) {
+            $templateDataSelected = <<<HTML
+            <template x-if="\$wire.dataSelecteds?.length>0">
                 <div class="d-flex align-items-center p-2">
                     Selected:
                     <span x-text="\$wire.dataSelecteds.length" 
@@ -355,6 +358,11 @@ class Table extends BaseUI
 
                 </div>
             </template>
+            HTML;
+        }
+        return <<<HTML
+        <div {$attrWrapper}>
+        {$templateDataSelected}
         <div class="table-responsive position-relative" x-init="watchData" x-data="{
             fieldSort: '',
             typeSort: '',
