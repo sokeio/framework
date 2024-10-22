@@ -57,7 +57,7 @@ export function getModalHtmlRender(
   }
   return `<div class="so-modal so-modal-size-${modalSize}" tabindex="-1" aria-modal="true" ${closeOverlay} >
                 <div class="so-modal-dialog">
-                    <div class="so-modal-content">
+                    <div class="so-modal-content card">
                         ${$content}
                     </div>
                     ${htmlClose}

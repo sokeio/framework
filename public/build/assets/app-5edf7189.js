@@ -11,7 +11,7 @@ var N=Object.defineProperty;var B=(e,t,i)=>t in e?N(e,t,{enumerable:!0,configura
                             <h3 class="so-modal-title" so-text="title"></h3>
                         </div>`),$content=i,!t&&!$content?$content=e:$content=`${$conten}<div class="so-modal-body">${e}</div> ${t?`<div class="so-modal-footer">${t}</div>`:""}`;let r='<a class="so-modal-close" so-on:click="this.delete()"></a>',o='so-on:click="this.delete()" so-on:ignore=".so-modal-dialog"',s=c.convertHtmlToElement(e);(s.querySelector(".skip-show-close")||s.getAttribute("data-hide-close"))&&(r="");let a=s.getAttribute("data-modal-size");!a&&s.querySelector("[data-modal-size]")&&(a=s.querySelector("[data-modal-size]").getAttribute("data-modal-size"));let l=s.getAttribute("data-skip-overlay");return!l&&s.querySelector("[data-skip-overlay]")&&(l=s.querySelector("[data-skip-overlay]").getAttribute("data-skip-overlay")),l&&(o=""),a||(a="lg"),`<div class="so-modal so-modal-size-${a}" tabindex="-1" aria-modal="true" ${o} >
                 <div class="so-modal-dialog">
-                    <div class="so-modal-content">
+                    <div class="so-modal-content card">
                         ${$content}
                     </div>
                     ${r}

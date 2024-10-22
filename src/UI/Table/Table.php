@@ -341,7 +341,7 @@ class Table extends BaseUI
 
         ksort($this->columns);
         $attr = $this->getAttr();
-        $this->classWrapper('sokeio-table');
+        $this->classWrapper('sokeio-table card');
         $attrWrapper = trim($this->getAttr('wrapper'));
 
         $orderBy = $this->getKeyWithTable('orderBy');
