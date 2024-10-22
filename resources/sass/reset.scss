@@ -62,25 +62,34 @@ button {
     .sokeio-modal-body {
         min-height: 50px;
     }
-    .sokeio-field-input{
+
+    .sokeio-field-input {
         margin-bottom: 0.2rem !important;
     }
-    .form-label{
+
+    .form-label {
         margin-bottom: 0.2rem !important;
-        
+
     }
-    .form-control{
+
+    .form-control {
         padding: 0.3rem 0.6rem !important;
     }
-    .btn{
+
+    .btn {
         padding: 0.3rem 0.6rem !important;
+    }
+
+    .tagify {
+        padding: 0.01rem 0.01rem !important;
     }
 }
 
 .sokeio-page-ui {
     .page-header {
         margin-top: 10px !important;
-        .btn{
+
+        .btn {
             padding: 5px 10px !important;
         }
     }

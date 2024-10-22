@@ -32,18 +32,25 @@ export default {
       options.hooks = new Function(`return ${options.hooks};`)();
     }
     let modelKey = el.getAttribute("wire:model");
+    let inputTimeout = null;
     const onInput = (e) => {
       if (!el.$sokeio_tagify) {
         return;
       }
-      let value = e.detail.value;
-      el.$sokeio_tagify.loading(true);
-      component.$wire
-        .callActionUI(options.whitelistAction, value)
-        .then(function (rs) {
-          el.$sokeio_tagify.whitelist = rs;
-          el.$sokeio_tagify.loading(false).dropdown.show(value);
-        });
+      if (inputTimeout) {
+        clearTimeout(inputTimeout);
+      }
+      inputTimeout = setTimeout(() => {
+        inputTimeout = null;
+        let value = e.detail.value;
+        el.$sokeio_tagify.loading(true);
+        component.$wire
+          .callActionUI(options.whitelistAction, value)
+          .then(function (rs) {
+            el.$sokeio_tagify.whitelist = rs;
+            el.$sokeio_tagify.loading(false).dropdown.show(value);
+          });
+      }, 100);
     };
     const onChange = (e) => {
       Utils.dataSet(component.$wire, modelKey, e.detail.value);
