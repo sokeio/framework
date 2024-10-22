@@ -118,11 +118,11 @@ class Table extends BaseUI
     public function getRows()
     {
         if ($this->showAll) {
-            $this->rows = $this->applyQuery()->get();
+            $this->rows = $this->applyQuery()?->get();
         } else {
             $pageSize = $this->getValueByName('page.size', 15);
             $pageIndex = $this->getValueByName('page.index', 1);
-            $this->rows = $this->applyQuery()->paginate($pageSize, ['*'], $this->tableKey ?? 'page', $pageIndex);
+            $this->rows = $this->applyQuery()?->paginate($pageSize, ['*'], $this->tableKey ?? 'page', $pageIndex);
         }
         return $this->rows ?? [];
     }
@@ -241,7 +241,7 @@ class Table extends BaseUI
 
         $data = $this->getRows();
 
-        if (method_exists($data, 'links')) {
+        if ($data && method_exists($data, 'links')) {
             $keyModel = $this->getKeyWithTable('page.size');
             $current = $data->currentPage();
             $total = $data->total();

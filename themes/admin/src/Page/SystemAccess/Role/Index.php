@@ -9,7 +9,15 @@ use Sokeio\UI\PageUI;
 use Sokeio\UI\Table\Table;
 use Sokeio\UI\WithUI;
 
-#[PageInfo(admin: true, auth: true,  title: 'Roles', menu: true, menuTitle: 'Roles', sort: 1)]
+#[PageInfo(
+    admin: true,
+    auth: true,
+    title: 'Role',
+    menu: true,
+    menuTitle: 'Roles',
+    sort: 1,
+    model: Role::class,
+)]
 class Index extends \Sokeio\Page
 {
     use WithUI;
@@ -21,9 +29,9 @@ class Index extends \Sokeio\Page
                     Table::init()
                         ->column('name')
                         ->column('slug')
-                        ->query(Role::query())
+                        ->column('description')
+                        ->query($this->getQuery())
                         ->enableIndex()
-                        ->enableCheckBox()
                         ->columnAction([
                             Button::init()->text(__('Edit'))->className('btn btn-primary btn-sm ')
                                 ->modal(function (Button $button) {
@@ -34,21 +42,30 @@ class Index extends \Sokeio\Page
                                 }),
                             Button::init()->text(__('Delete'))
                                 ->wireClick(function ($params) {
-                                    $this->alert('test' . $params);
-                                }, 'table_roles_delete', function (Button $button) {
+                                    ($this->getModel())::find($params)->delete();
+                                }, 'table_delete', function (Button $button) {
                                     return $button->getParams('row')->id;
-                                })->className('btn btn-danger ms-1 btn-sm'),
-
+                                })->className('btn btn-danger ms-1 btn-sm')
+                                ->confirm(__('Are you sure?'))
+                                ->when(function (Button $button) {
+                                    return $button->getParams('row')->id > 1;
+                                }),
                         ])
                 ]
-            )
-                ->title(__('Roles'))
-                ->className('container')->rightUI([
-                    Button::init()
-                        ->text(__('Add Role'))
-                        ->icon('ti ti-plus')
-                        ->modalRoute($this->getRouteName('edit'), __('Add Role'), 'lg', 'ti ti-plus')
-                ])
+            )->rightUI([
+                Button::init()
+                    ->text(__('Add ' . $this->getPageConfig()->getTitle()))
+                    ->icon('ti ti-plus')
+                    ->modalRoute(
+                        $this->getRouteName('edit'),
+                        __('Add ' . $this->getPageConfig()->getTitle()),
+                        'lg',
+                        'ti ti-plus'
+                    )
+            ])
+                ->title($this->getPageConfig()->getTitle())
+                ->className('container')
+
         ];
     }
 }

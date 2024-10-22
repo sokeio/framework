@@ -59,5 +59,4 @@ class Input extends FieldUI
     {
         return $this->attr('type', 'week');
     }
-   
 }

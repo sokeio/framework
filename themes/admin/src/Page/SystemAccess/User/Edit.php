@@ -25,12 +25,12 @@ class Edit extends \Sokeio\Page
                     ->when(function () {
                         return !$this->dataId;
                     }),
-            ])->title(($this->dataId ? __('Edit') : __('Create')) .' '. $this->getPageConfig()->getTitle())
+            ])->title(($this->dataId ? __('Edit') : __('Create')) . ' ' . $this->getPageConfig()->getTitle())
                 ->className('p-2')->setPrefix('formData')
                 ->afterUI([
                     Div::init([
                         Button::init()->text(__('Cancel'))->className('btn btn-warning me-2')->modalClose(),
-                        Button::init()->text(__('Save'))->wireClick('saveUser')
+                        Button::init()->text(__('Save'))->wireClick('saveData')
                     ])
                         ->className('px-2 pt-2 d-flex justify-content-end')
                 ])

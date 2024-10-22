@@ -31,14 +31,9 @@ class Index extends \Sokeio\Page
                     Table::init()
                         ->column('name')
                         ->column('email')
-                        ->column('phone_number', function (Column $column) {
-                            $column->classNameCell(function ($row) {
-                                return $row->phone_number ? '' : 'bg-warning';
-                            });
-                        })
+                        ->column('phone_number')
                         ->query($this->getQuery())
                         ->enableIndex()
-                        ->enableCheckBox()
                         ->columnAction([
                             Button::init()->text(__('Edit'))->className('btn btn-primary btn-sm ')
                                 ->modal(function (Button $button) {
@@ -57,7 +52,6 @@ class Index extends \Sokeio\Page
                                 ->when(function (Button $button) {
                                     return $button->getParams('row')->id > 1;
                                 }),
-
                         ])
                 ]
             )->rightUI([
