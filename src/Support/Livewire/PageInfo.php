@@ -24,6 +24,7 @@ class PageInfo
         public $menuTargetIcon = null,
         public $menuTargetId = null,
         public $menuTargetClass = null,
-        public $skipHtmlAjax = null
+        public $skipHtmlAjax = null,
+        public $model = null
     ) {}
 }

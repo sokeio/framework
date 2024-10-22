@@ -31,7 +31,8 @@ class PageConfig
         'menuTargetIcon' => null,
         'menuTargetId' => null,
         'menuTargetClass' => null,
-        'skipHtmlAjax' => false
+        'skipHtmlAjax' => false,
+        'model' => null
     ];
     public function setInfo(PageInfo $info)
     {

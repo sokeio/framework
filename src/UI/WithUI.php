@@ -7,15 +7,18 @@ use Sokeio\FormData;
 trait WithUI
 {
     private SoUI|null $ui = null;
-    public function queryStringWithUI()
-    {
-        return [
-            'dataId' => ['except' => null]
-        ];
-    }
     public $dataSelecteds = [];
-    public FormData $formData;
-    public $dataId;
+    public function getModel()
+    {
+        return $this->getPageConfig()->getModel();
+    }
+    public function getQuery()
+    {
+        if ($model = $this->getModel()) {
+            return ($model)::query();
+        }
+        return null;
+    }
     public function boot()
     {
         $this->getUI()->boot();

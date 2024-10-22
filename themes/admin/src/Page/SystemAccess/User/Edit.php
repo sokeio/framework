@@ -8,25 +8,12 @@ use Sokeio\UI\Common\Button;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Field\Input;
 use Sokeio\UI\ModalUI;
-use Sokeio\UI\WithUI;
+use Sokeio\UI\WithEditUI;
 
-#[PageInfo(admin: true, auth: true,  title: 'User Form')]
+#[PageInfo(admin: true, auth: true,  title: 'User', model: User::class)]
 class Edit extends \Sokeio\Page
 {
-    use WithUI;
-    public function mount()
-    {
-        $data =  $this->dataId ? User::find($this->dataId) : new User();
-        $this->formData->fill($data);
-    }
-    public function saveUser()
-    {
-        $data =  $this->dataId ? User::find($this->dataId) : new User();
-        $this->formData->parseModel($data, $this->formData->keys());
-        $data->save();
-        $this->refreshRef();
-        $this->sokeioClose();
-    }
+    use WithEditUI;
     protected function setupUI()
     {
         return [
@@ -38,7 +25,7 @@ class Edit extends \Sokeio\Page
                     ->when(function () {
                         return !$this->dataId;
                     }),
-            ])->title($this->dataId ? __('Edit User') : __('Create User'))
+            ])->title(($this->dataId ? __('Edit') : __('Create')) .' '. $this->getPageConfig()->getTitle())
                 ->className('p-2')->setPrefix('formData')
                 ->afterUI([
                     Div::init([

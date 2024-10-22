@@ -13,11 +13,12 @@ use Sokeio\UI\WithUI;
 #[PageInfo(
     admin: true,
     auth: true,
-    title: 'Users',
+    title: 'User',
     menu: true,
     menuTitle: 'Users',
     menuTargetTitle: 'System Access',
-    sort: 0
+    sort: 0,
+    model: User::class
 )]
 class Index extends \Sokeio\Page
 {
@@ -28,18 +29,14 @@ class Index extends \Sokeio\Page
             PageUI::init(
                 [
                     Table::init()
-                        // ->tableKey('users')
-                        ->column('name', function (Column $column) {
-                            // $column->classNameCell(function ($row) {
-                            // });
-                        })
+                        ->column('name')
                         ->column('email')
                         ->column('phone_number', function (Column $column) {
                             $column->classNameCell(function ($row) {
                                 return $row->phone_number ? '' : 'bg-warning';
                             });
                         })
-                        ->query(User::query())
+                        ->query($this->getQuery())
                         ->enableIndex()
                         ->enableCheckBox()
                         ->columnAction([
@@ -52,8 +49,8 @@ class Index extends \Sokeio\Page
                                 }),
                             Button::init()->text(__('Delete'))
                                 ->wireClick(function ($params) {
-                                    User::find($params)->delete();
-                                }, 'table_users_delete', function (Button $button) {
+                                    ($this->getModel())::find($params)->delete();
+                                }, 'table_delete', function (Button $button) {
                                     return $button->getParams('row')->id;
                                 })->className('btn btn-danger ms-1 btn-sm')
                                 ->confirm(__('Are you sure?'))
@@ -65,16 +62,17 @@ class Index extends \Sokeio\Page
                 ]
             )->rightUI([
                 Button::init()
-                    ->text(__('Add User'))
+                    ->text(__('Add ' . $this->getPageConfig()->getTitle()))
                     ->icon('ti ti-plus')
-                    ->modalRoute($this->getRouteName('edit'), __('Add User'), 'lg', 'ti ti-plus')
+                    ->modalRoute(
+                        $this->getRouteName('edit'),
+                        __('Add ' . $this->getPageConfig()->getTitle()),
+                        'lg',
+                        'ti ti-plus'
+                    )
             ])
-                ->title(__('Users'))
+                ->title($this->getPageConfig()->getTitle())
                 ->className('container')
         ];
-    }
-    public function createUser()
-    {
-        $this->alert($this->getRouteName('edit'));
     }
 }
