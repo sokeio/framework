@@ -13,11 +13,15 @@ class Checkbox extends FieldUI
     }
     protected function initUI()
     {
+        parent::initUI();
         $this->render(function () {
             if (!$this->containsAttr('class', 'form-check-input')) {
                 $this->className('form-check-input');
             }
             $this->attr('type', 'checkbox');
+            if ($this->containsAttr('value')) {
+                $this->attr('value', '1');
+            }
         });
     }
     public function view()

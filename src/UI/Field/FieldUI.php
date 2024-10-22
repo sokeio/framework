@@ -6,6 +6,15 @@ use Sokeio\UI\BaseUI;
 
 class FieldUI extends BaseUI
 {
+    protected function initUI()
+    {
+        parent::initUI();
+        $this->render(function () {
+            if (!$this->containsAttr('class', 'sokeio-field-input', 'wrapper')) {
+                $this->classNameWrapper('sokeio-field-input');
+            }
+        });
+    }
     public function label($label)
     {
         return $this->vars('label', $label);
@@ -20,9 +29,9 @@ class FieldUI extends BaseUI
     }
     public function fieldName($name)
     {
-        return $this->render(function () use ($name) {
+        return $this->vars('name', $name)->render(function () use ($name) {
             $this->attr('wire:model', $this->getNameWithPrefix($name))
-                ->vars('name', $name)->className('form-control');
+                ->className('form-control');
         });
     }
     public function view()

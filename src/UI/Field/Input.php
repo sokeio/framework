@@ -59,4 +59,8 @@ class Input extends FieldUI
     {
         return $this->attr('type', 'week');
     }
+    public function hidden()
+    {
+        return $this->attr('type', 'hidden');
+    }
 }

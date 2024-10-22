@@ -71,7 +71,7 @@ trait CommonUI
     public function containsAttr($key, $value = null, $group = 'default')
     {
         $attrValue = $this->getAttrKey($key, null, $group, true);
-        return $attrValue !== null && str($attrValue)->contains($value);
+        return $attrValue !== null && ($value === null || str($attrValue)->contains($value));
     }
     protected function getAttr($group = 'default')
     {

@@ -18,7 +18,6 @@ class Edit extends \Sokeio\Page
     use WithEditUI;
     protected function setupUI()
     {
-
         return [
             ModalUI::init([
                 Input::init('name')->label(__('Name')),
