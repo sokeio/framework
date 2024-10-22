@@ -56,6 +56,7 @@ class Index extends \Sokeio\Page
                                 }, 'table_users_delete', function (Button $button) {
                                     return $button->getParams('row')->id;
                                 })->className('btn btn-danger ms-1 btn-sm')
+                                ->confirm(__('Are you sure?'))
                                 ->when(function (Button $button) {
                                     return $button->getParams('row')->id > 1;
                                 }),

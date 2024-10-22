@@ -9,7 +9,7 @@ trait CommonUI
 {
     private DataUI|null $data;
     private AlpineUI|null  $alpine;
-   
+
     public function initCommonUI()
     {
         $this->data = DataUI::create($this);
@@ -26,6 +26,10 @@ trait CommonUI
     public function className($className)
     {
         return $this->attrAdd('class', $className);
+    }
+    public function confirm($message)
+    {
+        return $this->attr('wire:confirm', $message);
     }
     public function id($id): self
     {
