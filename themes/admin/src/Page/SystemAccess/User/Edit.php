@@ -8,6 +8,7 @@ use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Field\Input;
+use Sokeio\UI\Field\Select;
 use Sokeio\UI\Field\Tagify;
 use Sokeio\UI\ModalUI;
 use Sokeio\UI\WithEditUI;
@@ -27,8 +28,12 @@ class Edit extends \Sokeio\Page
                     ->when(function () {
                         return !$this->dataId;
                     }),
+                Select::init('role_id')->label(__('Role'))
+                ->multiple()->remoteAction(function ($query) {
+                    return Role::query()->get()->map(fn($role) => ['value' => $role->id, 'text' => $role->name]);
+                }),
                 Tagify::init('roles')->label(__('Roles'))->options([])->whitelistAction(function ($value) {
-                   return Role::query()->get()->map(fn ($role) => ['value' => $role->id, 'label' => $role->name]);
+                    return Role::query()->get()->map(fn($role) => ['value' => $role->id, 'label' => $role->name]);
                 }),
             ])->title(($this->dataId ? __('Edit') : __('Create')) . ' ' . $this->getPageConfig()->getTitle())
                 ->className('p-2')->setPrefix('formData')

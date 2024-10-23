@@ -11,11 +11,17 @@ class Select extends FieldUI
         $this->datasource = $datasource;
         return $this;
     }
+    public function fieldName($name)
+    {
+        return $this->vars('name', $name)->render(function () use ($name) {
+            $this->attr('wire:model', $this->getNameWithPrefix($name));
+        });
+    }
     public function remoteAction($action, $name = null)
     {
         return $this->register(function () use ($action, $name) {
             if (!$name) {
-                $name = $this->getVar('name', null, true) . '_remote';
+                $name = $this->getVar('name', null, true) . '_' . (class_basename(($this))) . '_remote_action';
             }
             $this->attr('wire:tom-select.remote-action', $name);
             $this->action($name, $action);
@@ -28,6 +34,10 @@ class Select extends FieldUI
     }
     public function view()
     {
+        $this->attr('wire:tom-select');
+        if ($this->datasource) {
+            $this->attr('wire:tom-select.data-source', json_encode($this->datasource));
+        }
         $attr = $this->getAttr();
         $attrWrapper = $this->getAttr('wrapper') ?? 'class="mb-3"';
         if ($label = $this->getVar('label', '', true)) {

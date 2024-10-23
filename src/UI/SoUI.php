@@ -49,16 +49,18 @@ class SoUI
             'ui' => $ui
         ];
     }
-    public function callActionUI($name, $params = [])
+    public function callActionUI($name, $params = []): mixed
     {
         if (!array_key_exists($name, $this->actions)) {
             $this->getWire()->alert('Action ' . $name . ' not found');
-            return;
+            return null;
         }
         $action = $this->actions[$name];
         if ($action['callback']) {
-            call_user_func($action['callback'], $params);
+            return  call_user_func($action['callback'], $params);
         }
+        $this->getWire()->alert('Action ' . $name . ' not called');
+        return null;
     }
     public function __construct($ui = [], $wire = null)
     {

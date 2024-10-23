@@ -71,7 +71,8 @@ button {
 
     }
 
-    .form-control {
+    .form-control,
+    .ts-control {
         padding: 0.3rem 0.6rem !important;
     }
 
@@ -80,7 +81,11 @@ button {
     }
 
     .tagify {
-        padding: 0.01rem 0.01rem !important;
+        padding: 0.1rem 0.2rem !important;
+
+        .tagify__input {
+            margin: 0 !important;
+        }
     }
 }
 
