@@ -269,6 +269,8 @@ export function Component($component, $props, $parent = null) {
     value: function () {
       let elParent = this.$el.parentNode;
       let elNext = this.$el.nextSibling;
+      this.$el.remove();
+      this.$el = null;
       logDebug("reRender", this);
       doBoot(this);
       doRender(this);

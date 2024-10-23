@@ -25,12 +25,13 @@
     height: 100%;
     z-index: 1056 !important;
     animation: fadein 0.5s;
-
     .so-modal-dialog {
+        width: 100%;
+        flex: none;
         position: relative;
         width: auto;
         padding: 3px;
-        margin: 0.5rem auto;
+        margin: 65px auto 0 auto;
         pointer-events: auto;
         min-height: 50px;
 
