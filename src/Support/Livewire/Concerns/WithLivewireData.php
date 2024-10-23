@@ -8,13 +8,17 @@ trait WithLivewireData
     protected function queryStringWithLivewireData()
     {
         return [
-            'soQuery' => ['as' => 'so', 'rules' => 'array'],
+            'soQuery' => ['as' => 'so', 'rules' => 'array', 'default' => [], 'except' => ''],
         ];
     }
     public $soData = [];
     public $soQuery = [];
     public function query($key, $value = null)
     {
+        if ($value === null || $value === '') {
+            data_forget($this->soQuery, $key);
+            return $this;
+        }
         data_set($this->soQuery, $key, $value);
         return $this;
     }
@@ -24,6 +28,10 @@ trait WithLivewireData
     }
     public function data($key, $value = null)
     {
+        if ($value === null || $value === '') {
+            data_forget($this->soData, $key);
+            return $this;
+        }
         data_set($this->soData, $key, $value);
         return $this;
     }

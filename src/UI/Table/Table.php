@@ -374,6 +374,10 @@ class Table extends BaseUI
                     this.typeSort = 'asc';
                 } else {
                     this.typeSort = this.typeSort === 'asc' ? 'desc' : 'asc';
+                    if(this.typeSort === 'asc') {
+                        this.fieldSort = '';
+                        this.typeSort = '';
+                    }
                 }
                     \$wire.callActionUI('{$orderBy}', {
                         'field': this.fieldSort,
