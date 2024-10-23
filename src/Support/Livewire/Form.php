@@ -123,7 +123,7 @@ class Form extends SupportFormObjectsForm implements \JsonSerializable
         }
         return null;
     }
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return $this->soTemplateData;
     }

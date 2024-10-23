@@ -1,7 +1,7 @@
 .so-modal-overlay {
     --tblr-backdrop-zindex: 1050;
     --tblr-backdrop-bg: #182433;
-    --tblr-backdrop-opacity: 0.85;
+    --tblr-backdrop-opacity: 0.75;
     position: fixed;
     top: 0;
     left: 0;
@@ -29,6 +29,7 @@
     .so-modal-dialog {
         position: relative;
         width: auto;
+        padding: 3px;
         margin: 0.5rem auto;
         pointer-events: auto;
         min-height: 50px;
