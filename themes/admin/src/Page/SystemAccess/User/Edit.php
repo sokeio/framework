@@ -2,6 +2,7 @@
 
 namespace SokeioTheme\Admin\Page\SystemAccess\User;
 
+use Sokeio\Models\Role;
 use Sokeio\Models\User;
 use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\UI\Common\Button;
@@ -27,7 +28,7 @@ class Edit extends \Sokeio\Page
                         return !$this->dataId;
                     }),
                 Tagify::init('roles')->label(__('Roles'))->options([])->whitelistAction(function ($value) {
-                    $this->alert($value);
+                   return Role::query()->get()->map(fn ($role) => ['value' => $role->id, 'label' => $role->name]);
                 }),
             ])->title(($this->dataId ? __('Edit') : __('Create')) . ' ' . $this->getPageConfig()->getTitle())
                 ->className('p-2')->setPrefix('formData')

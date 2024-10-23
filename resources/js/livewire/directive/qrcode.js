@@ -9,6 +9,7 @@ export default {
     css: [],
   },
   init: ({ el, directive, component, cleanup, options }) => {
+    if (el.$sokeio_qrcode) return;
     let options2 = {
       titleFont: "normal normal bold 18px Arial", //font. default is "bold 16px Arial"
       titleColor: "#004284", // color. default is "#000"
@@ -31,7 +32,6 @@ export default {
     if (el.hasAttribute("wire:qrcode.title")) {
       options2.title = el.getAttribute("wire:qrcode.title");
     }
-    if (el.$sokeio_qrcode) return;
     el.$sokeio_qrcode = new window.QRCode(el, options2);
   },
 };

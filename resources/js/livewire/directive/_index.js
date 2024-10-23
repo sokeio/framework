@@ -12,6 +12,7 @@ import sortable from "./sortable";
 import sortableGroup from "./sortable-group";
 import tagify from "./tagify";
 import tinymce from "./tinymce";
+import tomSelect from "./tom-select";
 const directive = {
   apexcharts,
   "get-value": getValue,
@@ -26,6 +27,7 @@ const directive = {
   tagify,
   tinymce,
   modal,
+  "tom-select": tomSelect,
 };
 
 let waitLoader = (setting, items, level) => {
