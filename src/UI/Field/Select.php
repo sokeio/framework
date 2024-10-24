@@ -5,18 +5,59 @@ namespace Sokeio\UI\Field;
 
 class Select extends FieldUI
 {
-    private $datasource;
+    protected $datasource;
     public function dataSource($datasource)
     {
         $this->datasource = $datasource;
         return $this;
     }
-    // public function fieldName($name)
-    // {
-    //     return $this->vars('name', $name)->render(function () use ($name) {
-    //         $this->attr('wire:model', $this->getNameWithPrefix($name));
-    //     });
-    // }
+    private $options = [];
+    public function options($options)
+    {
+        $this->options = array_merge($this->options, $options);
+        return $this;
+    }
+    public function createItem()
+    {
+        return $this->options([
+            'create' => true
+        ]);
+    }
+    public function createItemOnBlur()
+    {
+        return $this->options([
+            'createOnBlur' => true
+        ]);
+    }
+    public function initUI()
+    {
+        parent::initUI();
+        $this->render(function () {
+            $this->attr('wire:tom-select');
+            if ($this->datasource) {
+                $this->attr('wire:tom-select.data-source', json_encode($this->datasource));
+            }
+            $this->attr('wire:tom-select.options', json_encode($this->options));
+        });
+    }
+    public function remoteActionWithModel(
+        $model,
+        $fieldSearch = ['name'],
+        $fillable = ['id', 'name'],
+        $mapData = null,
+        $limit = 20,
+        $name = null
+    ) {
+        if (!$mapData || !is_callable($mapData)) {
+            $mapData = fn($item) => ['value' => $item->id, 'text' => $item->name, 'item' => $item];
+        }
+        return $this->remoteAction(function ($value) use ($model, $fieldSearch, $mapData, $fillable, $limit) {
+            return ($model)::query()
+                ->when($value, fn($query) => $query->whereAny($fieldSearch, 'like', '%' . $value . '%'))
+                ->limit($limit)
+                ->get($fillable)->map($mapData);
+        }, $name);
+    }
     public function remoteAction($action, $name = null)
     {
         return $this->register(function () use ($action, $name) {
@@ -26,32 +67,28 @@ class Select extends FieldUI
             $this->attr('wire:tom-select.remote-action', $name);
             $this->action($name, $action);
             $this->attr('wire:ignore', null, 'wrapper');
+            $this->render(function () use ($name) {
+                if (empty($this->dataSource)) {
+                    $this->dataSource($this->getManager()->callActionUI($name));
+                }
+            });
         });
     }
     public function multiple()
     {
         return $this->attr('multiple');
     }
-    public function view()
+    protected function fieldView()
     {
-        $this->attr('wire:tom-select');
-        if ($this->datasource) {
-            $this->attr('wire:tom-select.data-source', json_encode($this->datasource));
-        }
         $attr = $this->getAttr();
-        $attrWrapper = $this->getAttr('wrapper') ?? 'class="mb-3"';
         if ($label = $this->getVar('label', '', true)) {
             return <<<HTML
-            <div {$attrWrapper}>
-                <label class="form-label">{$label}</label>
-                <select {$attr} ></select>
-            </div>
+             <label class="form-label">{$label}</label>
+             <select {$attr} ></select>
             HTML;
         }
         return <<<HTML
-        <div {$attrWrapper}>
         <select {$attr} ></select>
-        </div>
         HTML;
     }
 }

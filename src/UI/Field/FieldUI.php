@@ -13,6 +13,7 @@ class FieldUI extends BaseUI
             if (!$this->containsAttr('class', 'sokeio-field-input', 'wrapper')) {
                 $this->classNameWrapper('sokeio-field-input');
             }
+            $this->attr('wire:model', $this->getFieldName());
         });
     }
     public function label($label)
@@ -27,28 +28,46 @@ class FieldUI extends BaseUI
     {
         return $this->getPrefix() ? $this->getPrefix() . '.' . $name : $name;
     }
+    public function getFieldName()
+    {
+        return $this->getNameWithPrefix($this->getVar('name', null, true));
+    }
     public function fieldName($name)
     {
-        return $this->vars('name', $name)->render(function () use ($name) {
-            $this->attr('wire:model', $this->getNameWithPrefix($name))
-                ->className('form-control');
-        });
+        return $this->vars('name', $name)->className('form-control');
     }
-    public function view()
+    public function valueDefault($value)
+    {
+        return $this->vars('valueDefault', $value);
+    }
+    public function getValueDefault()
+    {
+        return $this->getVar('valueDefault', 'null', true);
+    }
+    protected function fieldView()
     {
         $attr = $this->getAttr();
-        $attrWrapper = $this->getAttr('wrapper') ?? 'class="mb-3"';
         if ($label = $this->getVar('label', '', true)) {
             return <<<HTML
-            <div {$attrWrapper}>
-                <label class="form-label">{$label}</label>
-                <input {$attr} />
-            </div>
+            <label class="form-label">{$label}</label>
+            <input {$attr} />
             HTML;
         }
         return <<<HTML
-        <div {$attrWrapper}>
-            <input {$attr} />
+        <input {$attr} />
+        HTML;
+    }
+    public function view()
+    {
+        $attrWrapper = $this->getAttr('wrapper') ?? 'class="mb-3"';
+        $attrModel = $this->getFieldName();
+       $valueDefault = $this->getValueDefault();
+        return <<<HTML
+        <div {$attrWrapper} x-data="{
+            get FieldValue(){ return \$wire.{$attrModel}; },
+            set FieldValue(value){\$wire.{$attrModel} = value;}
+        }" x-init="if(!FieldValue){FieldValue = {$valueDefault} }">
+        {$this->fieldView()}
         </div>
         HTML;
     }

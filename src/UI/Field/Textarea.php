@@ -5,7 +5,7 @@ namespace Sokeio\UI\Field;
 
 class Textarea extends FieldUI
 {
-    public function view()
+    protected function fieldView()
     {
         $attr = $this->getAttr();
         $attrWrapper = $this->getAttr('wrapper') ?? 'class="mb-3"';

@@ -10,7 +10,6 @@ import modal from "./modal";
 import qrcode from "./qrcode";
 import sortable from "./sortable";
 import sortableGroup from "./sortable-group";
-import tagify from "./tagify";
 import tinymce from "./tinymce";
 import tomSelect from "./tom-select";
 const directive = {
@@ -24,7 +23,6 @@ const directive = {
   masonry,
   sortable,
   "sortable-group": sortableGroup,
-  tagify,
   tinymce,
   modal,
   "tom-select": tomSelect,

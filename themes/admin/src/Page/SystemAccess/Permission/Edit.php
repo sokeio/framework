@@ -33,6 +33,7 @@ class Edit extends \Sokeio\Page
                     ])
                         ->className('px-2 pt-2 d-flex justify-content-end')
                 ])
+               
         ];
     }
 }

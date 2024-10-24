@@ -112,3 +112,32 @@ button {
         margin-bottom: 10px !important;
     }
 }
+
+.range-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: end;
+
+
+    .range-body {
+        flex: auto;
+
+        .range-text {
+            display: flex;
+            position: relative;
+
+            .range-min-text {
+                flex: auto;
+            }
+
+            .range-value {
+                position: absolute;
+            }
+
+            .range-max-text {
+                flex: none;
+            }
+        }
+    }
+}

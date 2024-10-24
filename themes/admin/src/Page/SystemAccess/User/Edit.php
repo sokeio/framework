@@ -8,8 +8,8 @@ use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Field\Input;
+use Sokeio\UI\Field\RangeNumber;
 use Sokeio\UI\Field\Select;
-use Sokeio\UI\Field\Tagify;
 use Sokeio\UI\ModalUI;
 use Sokeio\UI\WithEditUI;
 
@@ -28,18 +28,9 @@ class Edit extends \Sokeio\Page
                     ->when(function () {
                         return !$this->dataId;
                     }),
-                Select::init('role_id')->label(__('Role'))
-                    ->multiple()->remoteAction(function ($value) {
-                        return Role::query()
-                            ->when($value, fn($query) => $query->whereAny('name', 'like', '%' . $value . '%'))
-                            ->limit(20)
-                            ->get()->map(fn($role) => ['value' => $role->id, 'text' => $role->name]);
-                    }),
-                Tagify::init('roles')->label(__('Roles'))->options([])->whitelistAction(function ($value) {
-                    return Role::query()
-                        ->when($value, fn($query) => $query->whereAny('name', 'like', '%' . $value . '%'))
-                        ->get()->map(fn($role) => ['value' => $role->id, 'label' => $role->name]);
-                }),
+                Select::init('role_id')->label(__('Role'))->createItem()
+                    ->multiple()->remoteActionWithModel(Role::class),
+                RangeNumber::init('balance')->label(__('Balance'))->range(0, 100, 5)->valueDefault(0)
             ])->title(($this->dataId ? __('Edit') : __('Create')) . ' ' . $this->getPageConfig()->getTitle())
                 ->className('p-2')->setPrefix('formData')
                 ->afterUI([
@@ -49,6 +40,7 @@ class Edit extends \Sokeio\Page
                     ])
                         ->className('px-2 pt-2 d-flex justify-content-end')
                 ])
+                ->icon('ti ti-users')
         ];
     }
 }

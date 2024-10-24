@@ -32,7 +32,6 @@ export default {
     if (remoteAction) {
       optionBase64 = {
         ...optionBase64,
-        preload: true,
         load: function (query, callback) {
           component.$wire.callActionUI(remoteAction, query).then(function (rs) {
             callback(rs);
@@ -40,6 +39,7 @@ export default {
         },
       };
     }
+    
     if (dataSource) {
       optionBase64 = {
         ...optionBase64,
