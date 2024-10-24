@@ -11,12 +11,12 @@ class Select extends FieldUI
         $this->datasource = $datasource;
         return $this;
     }
-    public function fieldName($name)
-    {
-        return $this->vars('name', $name)->render(function () use ($name) {
-            $this->attr('wire:model', $this->getNameWithPrefix($name));
-        });
-    }
+    // public function fieldName($name)
+    // {
+    //     return $this->vars('name', $name)->render(function () use ($name) {
+    //         $this->attr('wire:model', $this->getNameWithPrefix($name));
+    //     });
+    // }
     public function remoteAction($action, $name = null)
     {
         return $this->register(function () use ($action, $name) {

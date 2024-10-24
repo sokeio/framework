@@ -29,11 +29,16 @@ class Edit extends \Sokeio\Page
                         return !$this->dataId;
                     }),
                 Select::init('role_id')->label(__('Role'))
-                ->multiple()->remoteAction(function ($query) {
-                    return Role::query()->get()->map(fn($role) => ['value' => $role->id, 'text' => $role->name]);
-                }),
+                    ->multiple()->remoteAction(function ($value) {
+                        return Role::query()
+                            ->when($value, fn($query) => $query->whereAny('name', 'like', '%' . $value . '%'))
+                            ->limit(20)
+                            ->get()->map(fn($role) => ['value' => $role->id, 'text' => $role->name]);
+                    }),
                 Tagify::init('roles')->label(__('Roles'))->options([])->whitelistAction(function ($value) {
-                    return Role::query()->get()->map(fn($role) => ['value' => $role->id, 'label' => $role->name]);
+                    return Role::query()
+                        ->when($value, fn($query) => $query->whereAny('name', 'like', '%' . $value . '%'))
+                        ->get()->map(fn($role) => ['value' => $role->id, 'label' => $role->name]);
                 }),
             ])->title(($this->dataId ? __('Edit') : __('Create')) . ' ' . $this->getPageConfig()->getTitle())
                 ->className('p-2')->setPrefix('formData')

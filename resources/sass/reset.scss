@@ -71,9 +71,18 @@ button {
 
     }
 
-    .form-control,
-    .ts-control {
+    .form-control {
         padding: 0.3rem 0.6rem !important;
+
+        &.ts-wrapper {
+            padding: 0 !important;
+
+            .ts-control {
+                padding: 0.3rem 0.6rem !important;
+                background: unset !important;
+                border: unset !important;
+            }
+        }
     }
 
     .btn {
