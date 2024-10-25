@@ -7,7 +7,7 @@ use Livewire\Attributes\Rule;
 use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\Theme;
 
-#[PageInfo(admin: true, auth: false, url: '/login', route: 'login', title: 'Login', layout: 'none')]
+#[PageInfo(admin: true, auth: false, url: '/login', route: 'login', title: 'Login', layout: 'conver')]
 class Login extends \Sokeio\Page
 {
     #[Rule('required')]

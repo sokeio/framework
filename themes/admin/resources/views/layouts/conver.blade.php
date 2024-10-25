@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="{{ app()->getLocale() }}">
+
+<head>
+    @themeHead
+    <meta name="csrf_token" value="{{ csrf_token() }}" />
+</head>
+
+<body :data-bs-theme="themeDark && 'dark'" x-data="{ themeDark: false, toggleTheme() { this.themeDark = !this.themeDark } }">
+    @themeBody
+    <div class=" d-flex flex-column bg-white">
+        <div class="row g-0 flex-fill">
+            <div
+                class="col-12 col-lg-6 col-xl-4 border-top-wide border-primary d-flex flex-column justify-content-center">
+                <div class="container container-tight mt-4 px-lg-5">
+                    <div class="text-center mb-6">
+                        <a href="{{ url('/') }}" class="navbar-brand navbar-brand-autodark"><img
+                                src="{{ asset('platform/modules/sokeio/sokeio.webp') }}" class="rounded-2"
+                                height="100" alt=""></a>
+                    </div>
+                    @yield('content')
+                </div>
+                <div class="text-center text-muted mb-2">
+                    <div class=" mb-2">
+                        <a href="https://sokeio.com" class="text-reset" title="Sokeio Technology">
+                            Sokeio Technology
+                        </a> V1.0
+                    </div>
+                    Copyright &copy; {{ date('Y') }}. All rights reserved.
+                </div>
+               
+            </div>
+            <div class="col-12 col-lg-6 col-xl-8 d-none d-lg-block">
+                <!-- Photo -->
+                <div class="bg-cover h-100 min-vh-100"
+                    style="background-image: url({{ asset('platform/modules/sokeio/cover.jpg') }})">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @themeBodyEnd
+</body>
+
+</html>

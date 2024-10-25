@@ -191,4 +191,7 @@ class ItemManager
         }
         return $this->arrItems[$pathFileJson];
     }
+    public function generate($name){
+        // TODO: Implement generate() method.
+    }
 }

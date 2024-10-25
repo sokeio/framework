@@ -8,7 +8,7 @@ use Livewire\Attributes\Rule;
 use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\Theme;
 
-#[PageInfo(admin: true, auth: false, url: '/register', route: 'register', layout: 'none', title: 'Register')]
+#[PageInfo(admin: true, auth: false, url: '/register', route: 'register', layout: 'conver', title: 'Register')]
 class Register extends \Sokeio\Page
 {
     #[Rule('required')]
