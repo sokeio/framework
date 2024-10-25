@@ -10,8 +10,8 @@ use Sokeio\UI\Field\UploadFile;
 use Sokeio\UI\ModalUI;
 use Sokeio\UI\WithUI;
 
-#[PageInfo(admin: true, auth: true,  title: 'Upload Theme ')]
-class Upload extends \Sokeio\Page
+#[PageInfo(admin: true, auth: true,  title: 'Marketplace Theme ')]
+class Marketplace extends \Sokeio\Page
 {
     use WithUI;
     public function saveData()
@@ -21,9 +21,7 @@ class Upload extends \Sokeio\Page
     protected function setupUI()
     {
         return [
-            ModalUI::init([
-                UploadFile::init('name'),
-            ])->title($this->getPageConfig()->getTitle())
+            ModalUI::init([])->title($this->getPageConfig()->getTitle())
                 ->className('p-2')
                 ->afterUI([
                     Div::init([
