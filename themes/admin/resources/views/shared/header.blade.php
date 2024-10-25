@@ -6,9 +6,8 @@
         </button>
         <div class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
             <a href=".">
-                <img
-                src="{{ asset('platform/modules/sokeio/sokeio.webp') }}" class="rounded-2"
-                height="40" alt="">
+                <img src="{{ asset('platform/modules/sokeio/sokeio.webp') }}" class="rounded-2" height="40"
+                    alt="">
             </a>
         </div>
         <div class="navbar-nav flex-row order-md-last" x-data="{}">
@@ -151,10 +150,11 @@
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" data-bs-theme="light">
-                    <a href="#" class="dropdown-item">Profile</a>
+                    <a href="{{ route('admin.theme-admin-page.account') }}" class="dropdown-item">Profile</a>
                     <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">Settings</a>
-                    <a @click="$dispatch('logout')" href="#" class="dropdown-item">Logout</a>
+                    <a href="{{ route('admin.theme-admin-page.account.setting') }}" class="dropdown-item">Settings</a>
+                    <a @click="$dispatch('logout'); setTimeout(() => window.location.reload(), 1000);" href="#"
+                        class="dropdown-item">Logout</a>
                 </div>
             </div>
         </div>

@@ -3,6 +3,7 @@
 
 <head>
     @themeHead
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf_token" value="{{ csrf_token() }}" />
 </head>
 
@@ -13,15 +14,15 @@
             <div
                 class="col-12 col-lg-6 col-xl-4 border-top-wide border-primary d-flex flex-column justify-content-center">
                 <div class="container container-tight mt-4 px-lg-5">
-                    <div class="text-center mb-6">
+                    <div class="text-center mt-3 mb-6">
                         <a href="{{ url('/') }}" class="navbar-brand navbar-brand-autodark"><img
                                 src="{{ asset('platform/modules/sokeio/sokeio.webp') }}" class="rounded-2"
                                 height="100" alt=""></a>
                     </div>
                     @yield('content')
                 </div>
-                <div class="text-center text-muted mb-2">
-                    <div class=" mb-2">
+                <div class="text-center text-muted mt-auto mb-2">
+                    <div class=mb-2">
                         <a href="https://sokeio.com" class="text-reset" title="Sokeio Technology">
                             Sokeio Technology
                         </a> V1.0
