@@ -11,6 +11,9 @@ h6 {
 
 .btn {
     border-radius: 2px !important;
+    i {
+        font-size: 1.25rem !important
+    }
 }
 
 button {
@@ -99,11 +102,30 @@ button {
 }
 
 .sokeio-page-ui {
+    .form-control {
+        padding: 0.3rem 0.6rem !important;
+
+        &.ts-wrapper {
+            padding: 0 !important;
+
+            .ts-control {
+                padding: 0.3rem 0.6rem !important;
+                background: unset !important;
+                border: unset !important;
+            }
+        }
+    }
+
     .page-header {
         margin-top: 10px !important;
 
         .btn {
             padding: 5px 10px !important;
+            margin-left: 5px !important;
+
+            i {
+                font-size: 1.25rem !important
+            }
         }
     }
 

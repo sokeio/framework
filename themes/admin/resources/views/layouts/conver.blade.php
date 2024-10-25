@@ -9,7 +9,7 @@
 
 <body :data-bs-theme="themeDark && 'dark'" x-data="{ themeDark: false, toggleTheme() { this.themeDark = !this.themeDark } }">
     @themeBody
-    <div class=" d-flex flex-column bg-white">
+    <div class=" vh-100 d-flex flex-column bg-white">
         <div class="row g-0 flex-fill">
             <div
                 class="col-12 col-lg-6 col-xl-4 border-top-wide border-primary d-flex flex-column justify-content-center">

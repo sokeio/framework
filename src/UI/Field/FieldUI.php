@@ -13,8 +13,17 @@ class FieldUI extends BaseUI
             if (!$this->containsAttr('class', 'sokeio-field-input', 'wrapper')) {
                 $this->classNameWrapper('sokeio-field-input');
             }
-            $this->attr('wire:model', $this->getFieldName());
+            $debounce = $this->getVar('wire:debounce', null, true);
+            if ($debounce && $debounce > 0) {
+                $this->attr('wire:model.live.debounce.' . $debounce . 'ms', $this->getFieldName());
+            } else {
+                $this->attr('wire:model', $this->getFieldName());
+            }
         });
+    }
+    public function debounce($debounce = 250)
+    {
+        return $this->vars('wire:debounce', $debounce);
     }
     public function label($label)
     {
@@ -35,6 +44,10 @@ class FieldUI extends BaseUI
     public function fieldName($name)
     {
         return $this->vars('name', $name)->className('form-control');
+    }
+    public function placeholder($placeholder)
+    {
+        return $this->attr('placeholder', $placeholder);
     }
     public function valueDefault($value)
     {
@@ -61,7 +74,7 @@ class FieldUI extends BaseUI
     {
         $attrWrapper = $this->getAttr('wrapper') ?? 'class="mb-3"';
         $attrModel = $this->getFieldName();
-       $valueDefault = $this->getValueDefault();
+        $valueDefault = $this->getValueDefault();
         return <<<HTML
         <div {$attrWrapper} x-data="{
             get FieldValue(){ return \$wire.{$attrModel}; },

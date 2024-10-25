@@ -11,6 +11,7 @@ use Sokeio\Theme;
     title: 'Option Theme',
     menu: true,
     menuTitle: 'Option Theme',
+    menuTargetSort: 99991
 )]
 class OptionTheme extends \Sokeio\Page
 {

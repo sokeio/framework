@@ -13,7 +13,9 @@ x-data="{ themeDark: false, toggleTheme() {  this.themeDark = !this.themeDark; }
     <div class="page">
         @themeInclude('shared.header')
         <div class="page-wrapper">
+            <div class="container-xxl">
             @yield('content')
+            </div>
         </div>
         @themeInclude('shared.footer')
     </div>

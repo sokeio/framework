@@ -1,5 +1,5 @@
 <header class="navbar navbar-expand-md d-print-none">
-    <div class="container-xl">
+    <div class="container-xxl">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu"
             aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -7,7 +7,7 @@
         <div class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
             <a href=".">
                 <img src="{{ asset('platform/modules/sokeio/sokeio.webp') }}" class="rounded-2" height="40"
-                    alt="">
+                    alt="Sokeio Technology">
             </a>
         </div>
         <div class="navbar-nav flex-row order-md-last" x-data="{}">

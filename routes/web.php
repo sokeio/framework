@@ -25,7 +25,11 @@ Route::get('routes', function () {
     echo "</table>";
 });
 Platform::routeAdmin(function () {
-    Route::get('/', function () {
+    Route::get('/test', function () {
         return   Theme::getTheme()->getLayouts();
     });
+    Route::get('/test2', function () {
+        return   Platform::getLivewireComponents();
+    });
 }, true);
+//

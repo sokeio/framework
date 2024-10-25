@@ -66,7 +66,6 @@ class Index extends \Sokeio\Page
                     )
             ])
                 ->title($this->getPageConfig()->getTitle())
-                ->className('container')
         ];
     }
 }

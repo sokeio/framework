@@ -31,6 +31,7 @@ class PageConfig
         'menuTargetIcon' => null,
         'menuTargetId' => null,
         'menuTargetClass' => null,
+        'menuTargetSort' => null,
         'skipHtmlAjax' => false,
         'model' => null
     ];
@@ -115,11 +116,11 @@ class PageConfig
                 if ($target) {
                     MenuManager::targetSetup($target, function (MenuItem $item) use ($config) {
                         if ($config->getMenuTargetClass()) {
-                            // $item-> = $config->getMenuTargetClass();
+                            $item->classItem = $config->getMenuTargetClass();
                         }
-                        // if($config->getMenuTargetId()){
-                        //     $item->id = $config->getMenuTargetId();
-                        // }
+                        if ($config->getMenuTargetSort()) {
+                            $item->sort = $config->getMenuTargetSort();
+                        }
                         if ($config->getMenuTargetIcon()) {
                             $item->icon = $config->getMenuTargetIcon();
                         }
