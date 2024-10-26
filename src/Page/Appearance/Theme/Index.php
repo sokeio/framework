@@ -28,8 +28,12 @@ class Index extends \Sokeio\Page
     protected function setupUI()
     {
         return [
-            PageUI::init([])->rightUI([
-                Input::init()->fieldName('search')->debounce(500)->placeholder(__('Search'))->className('form-control'),
+            PageUI::init([
+                Input::init()->fieldName('search')->debounce(500)->placeholder(__('Search'))->className('form-control')
+            ])->rightUI([
+                Button::init()->text(__('Create'))->icon('ti ti-table-plus')
+                    ->className('btn btn-warning')
+                    ->modalRoute($this->getRouteName('create')),
                 Button::init()->text(__('Upload'))->icon('ti ti-upload')
                     ->className('btn btn-primary')
                     ->modalRoute($this->getRouteName('upload')),

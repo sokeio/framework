@@ -10,6 +10,7 @@ trait LifecycleUI
     private $childs = [];
     private $params = [];
     private $prefix = '';
+    protected $context = null;
     protected HookUI $hook;
     private $whenCallbacks = [];
     public function when($callback, $group = 'default')
@@ -75,6 +76,7 @@ trait LifecycleUI
         }
         return $this;
     }
+
     public function clearPrefix()
     {
         $this->prefix = '';
@@ -92,6 +94,38 @@ trait LifecycleUI
     public function getPrefix()
     {
         return $this->prefix;
+    }
+    public function getContext()
+    {
+        return $this->context;
+    }
+    public function setContext($context)
+    {
+        $this->context = $context;
+        foreach ($this->childs as  $childs) {
+            if (is_array($childs)) {
+                foreach ($childs as $c) {
+                    if (is_subclass_of($c, BaseUI::class)) {
+                        $c->setContext($context);
+                    }
+                }
+            }
+        }
+        return $this;
+    }
+    public function clearContext()
+    {
+        $this->context = null;
+        foreach ($this->childs as  $childs) {
+            if (is_array($childs)) {
+                foreach ($childs as $c) {
+                    if (is_subclass_of($c, BaseUI::class)) {
+                        $c->clearContext();
+                    }
+                }
+            }
+        }
+        return $this;
     }
     public function setParams($params)
     {

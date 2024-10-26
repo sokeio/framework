@@ -81,6 +81,15 @@ class FieldUI extends BaseUI
             set FieldValue(value){\$wire.{$attrModel} = value;}
         }" x-init="if(!FieldValue){FieldValue = {$valueDefault} }">
         {$this->fieldView()}
+        {$this->errorView()}
+        </div>
+        HTML;
+    }
+    public function errorView()
+    {
+        return <<<HTML
+        <div class="invalid-feedback">
+            <span x-text="FieldValue"></span>
         </div>
         HTML;
     }

@@ -193,10 +193,19 @@ export function Component($component, $props, $parent = null) {
       value: function () {
         if (this.$el) {
           if (this.overlay) {
+            if (!document.querySelector(".so-modal-overlay")) {
+              document.body.classList.add("so-modal-open");
+              document.body.style.overflow = "hidden";
+            }
+
             let html = getModalOverlay();
             document.body.appendChild(html);
             this.cleanup(() => {
               document.body.removeChild(html);
+              if (!document.querySelector(".so-modal-overlay")) {
+                document.body.classList.remove("so-modal-open");
+                document.body.style.overflow = "auto";
+              }
             });
           }
           component.sokeAppSelector.appendChild(this.$el);

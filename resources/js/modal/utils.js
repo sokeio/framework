@@ -30,8 +30,8 @@ export function getModalHtmlRender(
     'so-on:click="this.delete()" so-on:ignore=".so-modal-dialog"';
   let elHtml = Utils.convertHtmlToElement(html);
   if (
-    elHtml.querySelector(".skip-show-close") ||
-    elHtml.getAttribute("data-hide-close")
+    elHtml.querySelector(".hide-show-button-close") ||
+    elHtml.getAttribute("data-hide-button-close")
   ) {
     htmlClose = "";
   }
@@ -42,11 +42,11 @@ export function getModalHtmlRender(
       .querySelector("[data-modal-size]")
       .getAttribute("data-modal-size");
   }
-  let skipOverlay = elHtml.getAttribute("data-skip-overlay");
-  if (!skipOverlay && elHtml.querySelector("[data-skip-overlay]")) {
+  let skipOverlay = elHtml.getAttribute("data-skip-overlay-close");
+  if (!skipOverlay && elHtml.querySelector("[data-skip-overlay-close]")) {
     skipOverlay = elHtml
-      .querySelector("[data-skip-overlay]")
-      .getAttribute("data-skip-overlay");
+      .querySelector("[data-skip-overlay-close]")
+      .getAttribute("data-skip-overlay-close");
   }
   if (skipOverlay) {
     closeOverlay = "";
