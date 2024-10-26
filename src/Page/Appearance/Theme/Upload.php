@@ -14,6 +14,7 @@ use Sokeio\UI\WithUI;
 class Upload extends \Sokeio\Page
 {
     use WithUI;
+    public $fileUpload;
     public function saveData()
     {
         $this->sokeioClose();
@@ -22,7 +23,7 @@ class Upload extends \Sokeio\Page
     {
         return [
             ModalUI::init([
-                UploadFile::init('name'),
+                UploadFile::init('fileUpload'),
             ])->title($this->getPageConfig()->getTitle())
                 ->className('p-2')
                 ->afterUI([
