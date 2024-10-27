@@ -2,9 +2,5 @@
 
 return [
     'name' => '$STUDLY_NAME$',
-    'commands' => [],
-    'fields' => [],
-    'shortcodes' => [],
-    'actions' => [],
-    'widgets' => [],
+    'commands' => []
 ];

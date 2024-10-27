@@ -5,6 +5,7 @@ namespace Sokeio\Concerns;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
@@ -44,8 +45,9 @@ trait WithServiceProvider
         }
 
         foreach ($this->package->configFileNames as $configFileName) {
+            Log::info($this->getPackagePath("/../config/{$configFileName}.php"));
             if (File::exists($this->getPackagePath("/../config/{$configFileName}.php"))) {
-
+                Log::info("Load config file: {$configFileName}.php");
                 $this->mergeConfigFrom($this->getPackagePath("/../config/{$configFileName}.php"), $configFileName);
             }
         }

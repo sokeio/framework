@@ -3,11 +3,11 @@
 namespace Sokeio\Page\Appearance\Theme;
 
 use Livewire\Attributes\Rule;
+use Sokeio\Platform;
 use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Field\Input;
-use Sokeio\UI\Field\UploadFile;
 use Sokeio\UI\ModalUI;
 use Sokeio\UI\WithUI;
 
@@ -19,17 +19,16 @@ class Create extends \Sokeio\Page
     public $themeName = '';
     public function saveData()
     {
-        
         $this->validate();
-        $this->sokeioClose();
-        $this->alert('Theme created successfully.');
+        // $this->sokeioClose();
+        Platform::theme()->generate($this->themeName);
+        $this->alert('dmoe');
     }
     protected function setupUI()
     {
         return [
             ModalUI::init([
                 Input::init('themeName')->label(__('Name')),
-                json_encode(session('errors')),
             ])->title($this->getPageConfig()->getTitle())
                 ->className('p-2')
                 ->smSize()

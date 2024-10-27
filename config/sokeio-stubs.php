@@ -6,7 +6,6 @@ return [
         'base' => ['path' => '', 'namespace' => '', 'generate' => false],
         'src' => ['path' => 'src', 'namespace' => '', 'generate' => false],
         'module-theme' => ['path' => 'themes', 'generate' => true, 'only' => ['module']],
-        'module-plugin' => ['path' => 'plugins', 'generate' => false, 'only' => ['module']],
         'config' => ['path' => 'config', 'generate' => true, 'only' => ['module']],
         'command' => ['path' => 'src/Console', 'namespace' => 'Console', 'generate' => true, 'only' => ['module']],
         'migration' => [
@@ -55,7 +54,8 @@ return [
             'generate' => true,
             'only' => ['module']
         ],
-        'livewire' => ['path' => 'src/Livewire', 'namespace' => 'Livewire', 'generate' => true, 'only' => ['module']],
+        'page' => ['path' => 'src/Page', 'namespace' => 'Page', 'generate' => true],
+        'livewire' => ['path' => 'src/Livewire', 'namespace' => 'Livewire', 'generate' => true],
         'provider' => ['path' => 'src/Providers', 'namespace' => 'Providers', 'generate' => true, 'only' => ['module']],
         'helpers' => ['path' => 'helpers', 'generate' => true],
         'assets' => ['path' => 'resources', 'generate' => true],
@@ -162,16 +162,7 @@ return [
             "middleware",
             "factory",
         ],
-        'theme' => [],
-        'plugin' => [
-            "migration-create",
-            "migration-add",
-            "migration-delete",
-            "migration-drop",
-            "migration",
-            "middleware",
-            "factory",
-        ]
+        'theme' => []
     ],
     'templates' => [
         'index-html' => [

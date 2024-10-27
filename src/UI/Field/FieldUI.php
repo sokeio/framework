@@ -2,6 +2,7 @@
 
 namespace Sokeio\UI\Field;
 
+use Illuminate\Contracts\Support\MessageProvider;
 use Sokeio\UI\BaseUI;
 
 class FieldUI extends BaseUI
@@ -87,9 +88,16 @@ class FieldUI extends BaseUI
     }
     public function errorView()
     {
+
+        $errorHtml = view('sokeio::error', [
+            'field' => $this->getFieldName()
+        ])->render();
+        if (empty($errorHtml)) {
+            return '';
+        }
         return <<<HTML
-        <div class="invalid-feedback">
-            <span x-text="FieldValue"></span>
+        <div class="field-error">
+           {$errorHtml}
         </div>
         HTML;
     }

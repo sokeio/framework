@@ -20,6 +20,7 @@ class ItemManager
      * ]
      */
     private $arrItems = [];
+    protected $itemGenerate;
     private function __construct(private $type) {}
     public function getItemType()
     {
@@ -71,7 +72,13 @@ class ItemManager
             $itemInfo->loader();
         }
     }
-
+    public function getPath($path = ''): string
+    {
+        if ($path) {
+            $path = '/' . $path;
+        }
+        return config("sokeio.platform.$this->type.path", '') . $path;
+    }
     private function getItem(array| ItemInfo|string $id)
     {
         if (is_string($id)) {
@@ -144,6 +151,40 @@ class ItemManager
             return $item->id == $id;
         })->first();
     }
+    public function has($id): bool
+    {
+        return $this->find($id) !== null;
+    }
+    public function delete($id): bool
+    {
+        $item = $this->find($id);
+        if (!$item) {
+            return false;
+        }
+        File::deleteDirectories($item->getPath());
+        unset($this->arrItems[$id]);
+        return true;
+    }
+    public function findByName($name): ?ItemInfo
+    {
+        return collect($this->arrItems)->where(function ($item) use ($name) {
+            return $item->name == $name;
+        })->first();
+    }
+    public function hasByName($name): bool
+    {
+        return $this->findByName($name) !== null;
+    }
+    public function deleteByName($name): bool
+    {
+        $item = $this->findByName($name);
+        if (!$item) {
+            return false;
+        }
+        File::deleteDirectories($item->getPath());
+        unset($this->arrItems[$item->id]);
+        return true;
+    }
     public function getAll()
     {
         return collect($this->arrItems);
@@ -191,7 +232,11 @@ class ItemManager
         }
         return $this->arrItems[$pathFileJson];
     }
-    public function generate($name){
-        // TODO: Implement generate() method.
+    public function generate($name)
+    {
+        if (!$this->itemGenerate) {
+            $this->itemGenerate = new ItemGenerate($this);
+        }
+        return $this->itemGenerate->generate($name);
     }
 }

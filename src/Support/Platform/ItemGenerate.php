@@ -5,6 +5,7 @@ namespace Sokeio\Support\Platform;
 use Carbon\Carbon;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\Inspiring;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 
@@ -12,15 +13,24 @@ class ItemGenerate
 {
     protected $configStubName = 'sokeio-stubs';
     protected $generatorConfig;
+    protected $filesystem;
     protected $files;
     protected $pathStub;
-    protected $_folders;
+    protected $folders;
     protected $templateFiles;
-    protected 
+    protected $baseName;
+    protected $fileName;
+    protected $namespace;
     public function __construct(
         protected ItemManager $itemManager
     ) {
         $this->generatorConfig = config($this->configStubName);
+
+        $this->filesystem = app('files');
+    }
+    public function getBaseType()
+    {
+        return $this->itemManager->getItemType();
     }
     public function getValueConfig($key, $default = '')
     {
@@ -29,21 +39,21 @@ class ItemGenerate
     public function getFiles()
     {
         return $this->files ?? ($this->files = array_merge(
-            $this->getValueConfig('stubs.files.common', []),
-            $this->getValueConfig('stubs.files.' . $this->getBaseTypeName(), [])
+            $this->getValueConfig('files.common', []),
+            $this->getValueConfig('files.' . $this->getBaseType(), [])
         ));
     }
     public function getStub()
     {
-        return $this->pathStub ?? ($this->pathStub = $this->getValueConfig('stubs.path', ''));
+        return $this->pathStub ?? ($this->pathStub = $this->getValueConfig('path', ''));
     }
     public function getFolders()
     {
-        return $this->_folders ?? ($this->_folders = $this->getValueConfig('paths', []));
+        return $this->folders ?? ($this->folders = $this->getValueConfig('paths', []));
     }
     public function getTemplates()
     {
-        return $this->templateFiles ?? ($this->templateFiles = $this->getValueConfig('stubs.templates', []));
+        return $this->templateFiles ?? ($this->templateFiles = $this->getValueConfig('templates', []));
     }
     protected function getReplacements($keys)
     {
@@ -92,17 +102,19 @@ class ItemGenerate
     }
     public function getPath($_path)
     {
-        return $this->getSystemBase()->getPath($this->getStudlyNameReplacement()) . ($_path ? ('/' . $_path) : '');
+        return $this->itemManager->getPath($this->getStudlyNameReplacement()) . ($_path ? ('/' . $_path) : '');
     }
-    public function generate($name = null)
+    public function getBaseName()
     {
-        $this->resetCache();
+        return $this->baseName;
+    }
+    public function generate($name = null, $force = false)
+    {
         $this->baseName = Str::studly($name);
-        if ($this->getSystemBase()->has($this->baseName)) {
-            if ($this->force) {
-                $this->getSystemBase()->delete($this->baseName);
+        if ($this->itemManager->hasByName($this->baseName)) {
+            if ($force) {
+                $this->itemManager->deleteByName($this->baseName);
             } else {
-                $this->console->error("{$this->getBaseType()} [{ $this->baseName}] already exist!");
                 return E_ERROR;
             }
         }
@@ -126,6 +138,14 @@ class ItemGenerate
 
         $class = Str::studly($pars[$len]);
         return ['CLASS' => $class, 'NAMESPACE' => $namespace];
+    }
+    public function getDataInfo()
+    {
+        return $this->itemManager->findByName($this->baseName);
+    }
+    public function getFileName()
+    {
+        return $this->fileName;
     }
     public function generatorFileByStub($stub, $name = '')
     {
@@ -172,9 +192,7 @@ class ItemGenerate
             }
             $doblue = isset($template['doblue']) && $template['doblue'];
             $content = $this->getContentWithReplace($content, $replacements,  $doblue);
-            if (isset($this->components) && $this->components) {
-                $this->components->info($path);
-            }
+
             if (!$this->filesystem->isDirectory($dir = dirname($path))) {
                 $this->filesystem->makeDirectory($dir, 0775, true);
             }
@@ -191,16 +209,14 @@ class ItemGenerate
     {
         foreach ($this->getFolders() as $folder) {
             $only = data_get($folder, 'only', []);
-            $checkOnly = !empty($only) && !in_array($this->getBaseTypeName(), $only);
+            $checkOnly = !empty($only) && !in_array($this->getBaseType(), $only);
             if (!data_get($folder, 'generate', false) || $checkOnly) {
                 continue;
             }
             $path =  $this->getPath(data_get($folder, 'path', ''));
-            if (isset($this->components) && $this->components) {
-                $this->components->info($path);
-            }
+
             $this->filesystem->makeDirectory($path, 0775, true);
-            if ($this->getValueConfig('stubs.gitkeep', false)) {
+            if ($this->getValueConfig('gitkeep', false)) {
                 $this->generateGitKeep($path);
             }
         }
@@ -248,10 +264,9 @@ class ItemGenerate
             if ($dataInfo) {
                 $this->namespace =  $dataInfo->getValue('namespace');
             } else {
-                $baseTypeName = $this->getBaseTypeName();
-                $namespaceRoot = config('sokeio.namespace.root', config('sokeio.appdir.root', 'sokeio'));
-                $namespace = config('sokeio.namespace.' . $baseTypeName, config('sokeio.appdir.' . $baseTypeName));
-                $this->namespace = $namespaceRoot . $namespace . "\\" . $this->getStudlyNameReplacement();
+                $baseTypeName = $this->getBaseType();
+                $namespace = config('sokeio.platform.' . $baseTypeName . '.namespace');
+                $this->namespace =  $namespace . "\\" . $this->getStudlyNameReplacement();
             }
         }
         return $this->namespace;
@@ -263,7 +278,7 @@ class ItemGenerate
      */
     public function getBaseTypeLowerNameReplacement()
     {
-        return Str::lower($this->getBaseTypeName());
+        return Str::lower($this->getBaseType());
     }
     /**
      * Get replacement for $BASE_TYPE$.
@@ -272,7 +287,7 @@ class ItemGenerate
      */
     public function getBaseTypeReplacement()
     {
-        return Str::studly($this->getBaseTypeName());
+        return Str::studly($this->getBaseType());
     }
     /**
      * Get replacement for $VENDOR$.

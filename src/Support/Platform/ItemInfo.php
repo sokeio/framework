@@ -71,7 +71,7 @@ class ItemInfo extends ObjectJson
     public function autoAssets(): void
     {
         $pathPublic = $this->path . '/public/';
-       
+
         if (file_exists($pathPublic . 'build/manifest.json')) {
             $manifest = json_decode(file_get_contents($pathPublic . 'build/manifest.json'), true);
             $url = url('platform/' . $this->getManager()->getItemType() . 's/' . $this->name . '/build');
@@ -107,5 +107,9 @@ class ItemInfo extends ObjectJson
             }
         }
         return $this;
+    }
+    public function delete(): void
+    {
+        $this->manager->delete($this->id);
     }
 }

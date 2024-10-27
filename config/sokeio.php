@@ -11,6 +11,7 @@ return [
         'url' =>  env('PLATFORM_UPDATOR_URL', 'https://updator.sokeio.com/'),
         'temps' => env('PLATFORM_UPDATOR_TEMP', 'temps')
     ],
+
     'model' => [
         'user' => Sokeio\Models\User::class,
         'role' => Sokeio\Models\Role::class,
@@ -18,5 +19,23 @@ return [
     ],
     'commands' => [
         DebugCommand::class
-    ]
+    ],
+    'platform' => [
+        'module' => [
+            'path' => base_path('platform/module'),
+            'namespace' => 'Sokeio\\Module'
+        ],
+        'theme' => [
+            'path' => base_path('platform/theme'),
+            'namespace' => 'Sokeio\\Theme'
+        ],
+    ],
+    'composer' => [
+        'vendor' => env('PLATFORM_VENDOR', 'sokeio'),
+        'author' => [
+            'name' => env('PLATFORM_AUTHOR_NAME', 'Nguyen Van Hau'),
+            'email' => env('PLATFORM_AUTHOR_EMAIL', 'nguyenvanhaudev@gmail.com'),
+        ],
+        'composer-output' => false,
+    ],
 ];

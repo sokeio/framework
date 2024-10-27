@@ -5,18 +5,18 @@ namespace Sokeio;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \Sokeio\Platform
+ * @see \Sokeio\Support\Platform
  *
  * @method static mixed version()
  * @method static void loadFromPath($path)
  * @method static void loadFromServicePackage($package)
  * @method static void addLoader($loader)
- * @method static void applyLoader(\Sokeio\Platform\ItemInfo $item)
+ * @method static void applyLoader(\Sokeio\Support\Platform\ItemInfo $item)
  * @method static void booting($callback)
  * @method static void boot()
  * @method static void booted($callback)
- * @method static \Sokeio\Platform\ItemManager module()
- * @method static \Sokeio\Platform\ItemManager theme()
+ * @method static \Sokeio\Support\Platform\ItemManager module()
+ * @method static \Sokeio\Support\Platform\ItemManager theme()
  * @method static string adminUrl()
  * @method static bool isUrlAdmin()
  * @method static bool isVendor($path)
@@ -25,9 +25,9 @@ use Illuminate\Support\Facades\Facade;
  * @method static void routeWeb($group,$isAuth=false)
  * @method static void routeAdmin($group,$isGuest = false)
  * @method static void routeApi($group,$isGuest = false)
- * @method static \Sokeio\Platform\GateManager gate()
+ * @method static \Sokeio\Support\Platform\GateManager gate()
  * @method static void scanAllClass($directory, $namespace, callable $callback = null, callable $filter = null)
- * @method static void runLoader(\Sokeio\Platform\ItemInfo $item, $path, $namespace, $aliasPrefix = '')
+ * @method static void runLoader(\Sokeio\Support\Platform\ItemInfo $item, $path, $namespace, $aliasPrefix = '')
  * @method static string logoFull()
  * @method static string logo()
  */

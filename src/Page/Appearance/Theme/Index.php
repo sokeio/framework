@@ -13,7 +13,7 @@ use Sokeio\UI\WithUI;
 #[PageInfo(
     admin: true,
     auth: true,
-    title: 'Theme Management',
+    title: 'Theme System',
     menu: true,
     menuTitle: 'Theme',
     sort: 0
