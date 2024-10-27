@@ -23,10 +23,12 @@ return [
     'platform' => [
         'module' => [
             'path' => base_path('platform/module'),
+            'public' => base_path('public/platform/module'),
             'namespace' => 'Sokeio\\Module'
         ],
         'theme' => [
             'path' => base_path('platform/theme'),
+            'public' => base_path('public/platform/theme'),
             'namespace' => 'Sokeio\\Theme'
         ],
     ],

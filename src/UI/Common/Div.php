@@ -19,11 +19,14 @@ class Div extends BaseUI
     {
         return $this->className('alert alert-' . $type)->attr('role', 'alert');
     }
-    public function viewBlade($blade)
+    public function viewBlade($blade, $params = [])
     {
         return $this->child([
-            function () use ($blade) {
-                return view($blade)->render();
+            function () use ($blade, $params) {
+                if (is_callable($params)) {
+                    $params = $params();
+                }
+                return view($blade, $params)->render();
             }
         ]);
     }

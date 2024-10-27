@@ -4,8 +4,8 @@ import { convertDateTimeFormatToMask } from "../util";
 export default {
   checkFirst: () => window.flatpickr !== undefined,
   local: {
-    js: ["/platform/modules/sokeio/flatpickr/dist/flatpickr.min.js"],
-    css: ["/platform/modules/sokeio/flatpickr/dist/flatpickr.min.css"],
+    js: ["/platform/module/sokeio/flatpickr/dist/flatpickr.min.js"],
+    css: ["/platform/module/sokeio/flatpickr/dist/flatpickr.min.css"],
   },
   cdn: {
     js: [],

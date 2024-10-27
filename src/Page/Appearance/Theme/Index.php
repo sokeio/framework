@@ -3,9 +3,11 @@
 namespace Sokeio\Page\Appearance\Theme;
 
 use Livewire\Attributes\Url;
+use Sokeio\Platform;
 use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\Theme;
 use Sokeio\UI\Common\Button;
+use Sokeio\UI\Common\Div;
 use Sokeio\UI\Field\Input;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\WithUI;
@@ -29,7 +31,10 @@ class Index extends \Sokeio\Page
     {
         return [
             PageUI::init([
-                Input::init()->fieldName('search')->debounce(500)->placeholder(__('Search'))->className('form-control')
+                Input::init()->fieldName('search')->debounce(500)->placeholder(__('Search'))->className('form-control'),
+                Div::init()->viewBlade('sokeio::pages.appearance.theme.index', [
+                    'themes' => Platform::theme()->getAll()
+                ])->className('mt-3'),
             ])->rightUI([
                 Button::init()->text(__('Create'))->icon('ti ti-table-plus')
                     ->className('btn btn-warning')

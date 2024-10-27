@@ -1,3 +1,6 @@
 export default function (payload) {
-  window.Livewire.find(payload.wireTargetId)?.soLoadData();
+  setTimeout(() => {
+    console.log(payload);
+    window.Livewire.find(payload.wireTargetId)?.soLoadData();
+  });
 }

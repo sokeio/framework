@@ -11,7 +11,6 @@ class PageUI extends BaseUI
             if (!$this->getIcon()) {
                 $this->icon('ti ti-wallpaper');
             }
-            $this->attr('wire:key', 'modal-' . $this->getVar('id') . '-' . $this->getWire()->soNumberLoading);
         });
     }
     public function title($title)

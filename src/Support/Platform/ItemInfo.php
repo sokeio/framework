@@ -74,7 +74,7 @@ class ItemInfo extends ObjectJson
 
         if (file_exists($pathPublic . 'build/manifest.json')) {
             $manifest = json_decode(file_get_contents($pathPublic . 'build/manifest.json'), true);
-            $url = url('platform/' . $this->getManager()->getItemType() . 's/' . $this->name . '/build');
+            $url = $this->getManager()->getUrl($this->name . '/build');
             if (isset($manifest['resources/js/app.js']['file'])) {
                 Theme::linkJs($url . '/' . $manifest['resources/js/app.js']['file']);
             }
@@ -93,15 +93,23 @@ class ItemInfo extends ObjectJson
     {
         $pathPublic = $this->path . '/public';
         if (file_exists($pathPublic)) {
-            $path = public_path('platform/' . $this->getManager()->getItemType() . 's/');
-            if (!file_exists($path)) {
-                File::makeDirectory($path, 0775, true);
+            $pathTarget = $this->getManager()->getPathPublic();
+            if (!file_exists($pathTarget)) {
+                File::makeDirectory($pathTarget, 0775, true);
             }
-            $pathTarget = "{$path}/{$this->name}";
+            $pathTarget = $this->getManager()->getPathPublic($this->name);
             if (!file_exists($pathTarget)) {
                 if (env('SOKEIO_PUBLIC_COPY')) {
                     File::copyDirectory($pathPublic, $pathTarget);
                 } else {
+                    // symlink
+                    if (file_exists($pathTarget)) {
+                        if (is_link($pathTarget)) {
+                            unlink($pathTarget);
+                        } else {
+                            File::deleteDirectories($pathTarget);
+                        }
+                    }
                     app('files')->link($pathPublic, $pathTarget);
                 }
             }

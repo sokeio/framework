@@ -79,6 +79,20 @@ class ItemManager
         }
         return config("sokeio.platform.$this->type.path", '') . $path;
     }
+    public function getPathPublic($path = ''): string
+    {
+        if ($path) {
+            $path = '/' . $path;
+        }
+        return config("sokeio.platform.$this->type.public", '') . $path;
+    }
+    public function getUrl($path = ''): string
+    {
+        if ($path) {
+            $path = '/' . $path;
+        }
+        return url('platform/' . $this->type . $path, [], config('app.secure', false) ? 'https' : 'http');
+    }
     private function getItem(array| ItemInfo|string $id)
     {
         if (is_string($id)) {
@@ -197,7 +211,7 @@ class ItemManager
     }
     public function loadFromPath(string $path)
     {
-        $pathDir = realpath("{$path}/{$this->type}s");
+        $pathDir = realpath("{$path}/{$this->type}");
         if (!File::exists($pathDir)) {
             return;
         }

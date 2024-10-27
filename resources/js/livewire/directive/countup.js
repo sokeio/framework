@@ -3,7 +3,7 @@ import { Utils } from "../../framework/common/Uitls";
 export default {
   checkFirst: () => window.CountUp !== undefined,
   local: {
-    js: ["/platform/modules/sokeio/count-up/dist/count-up.min.js"],
+    js: ["/platform/module/sokeio/count-up/dist/count-up.min.js"],
     css: [],
   },
   cdn: {

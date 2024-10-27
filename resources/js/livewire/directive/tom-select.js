@@ -1,8 +1,8 @@
 export default {
   checkFirst: () => window["TomSelect"] !== undefined,
   local: {
-    js: ["/platform/modules/sokeio/tom-select/tom-select.min.js"],
-    css: ["/platform/modules/sokeio/tom-select/tom-select.css"],
+    js: ["/platform/module/sokeio/tom-select/tom-select.min.js"],
+    css: ["/platform/module/sokeio/tom-select/tom-select.css"],
   },
   cdn: {
     js: [

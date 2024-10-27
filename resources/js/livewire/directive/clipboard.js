@@ -1,7 +1,7 @@
 export default {
   checkFirst: () => window.Clipboard !== undefined,
   local: {
-    js: ["/platform/modules/sokeio/clipboard/dist/clipboard.min.js"],
+    js: ["/platform/module/sokeio/clipboard/dist/clipboard.min.js"],
     css: [],
   },
   cdn: {

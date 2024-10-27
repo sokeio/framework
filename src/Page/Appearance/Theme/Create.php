@@ -20,9 +20,9 @@ class Create extends \Sokeio\Page
     public function saveData()
     {
         $this->validate();
-        // $this->sokeioClose();
         Platform::theme()->generate($this->themeName);
-        $this->alert('dmoe');
+        $this->sokeioClose();
+        $this->refreshRef();
     }
     protected function setupUI()
     {
