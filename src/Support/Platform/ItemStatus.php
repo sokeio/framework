@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\File;
 
 class ItemStatus
 {
-    private const PATH_STATUS = 'platform/sokeio_status.json';
+    private const PATH_STATUS = 'platform/sokeio.json';
     private function __construct(private $key) {}
     private function getKeyStatus($id)
     {
