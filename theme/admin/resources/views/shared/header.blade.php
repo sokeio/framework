@@ -6,7 +6,7 @@
         </button>
         <div class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
             <a href=".">
-                <img src="{{ asset('platform/modules/sokeio/sokeio.webp') }}" class="rounded-2" height="40"
+                <img src="{{ asset('platform/module/sokeio/sokeio.webp') }}" class="rounded-2" height="40"
                     alt="Sokeio Technology">
             </a>
         </div>

@@ -16,7 +16,7 @@
                 <div class="container container-tight mt-4 px-lg-5">
                     <div class="text-center mt-3 mb-6">
                         <a href="{{ url('/') }}" class="navbar-brand navbar-brand-autodark"><img
-                                src="{{ asset('platform/modules/sokeio/sokeio.webp') }}" class="rounded-2"
+                                src="{{ asset('platform/module/sokeio/sokeio.webp') }}" class="rounded-2"
                                 height="100" alt=""></a>
                     </div>
                     @yield('content')
@@ -34,7 +34,7 @@
             <div class="col-12 col-lg-6 col-xl-8 d-none d-lg-block">
                 <!-- Photo -->
                 <div class="bg-cover h-100 min-vh-100"
-                    style="background-image: url({{ asset('platform/modules/sokeio/cover.jpg') }})">
+                    style="background-image: url({{ asset('platform/module/sokeio/cover.jpg') }})">
                 </div>
             </div>
         </div>

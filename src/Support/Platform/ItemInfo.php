@@ -103,13 +103,6 @@ class ItemInfo extends ObjectJson
                     File::copyDirectory($pathPublic, $pathTarget);
                 } else {
                     // symlink
-                    if (file_exists($pathTarget)) {
-                        if (is_link($pathTarget)) {
-                            unlink($pathTarget);
-                        } else {
-                            File::deleteDirectories($pathTarget);
-                        }
-                    }
                     app('files')->link($pathPublic, $pathTarget);
                 }
             }
