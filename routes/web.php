@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Sokeio\Controllers\PlatformController;
 use Sokeio\Platform;
 use Sokeio\Theme;
 
@@ -32,4 +33,9 @@ Platform::routeAdmin(function () {
         return   Platform::getLivewireComponents();
     });
 }, true);
-//
+//id is slug
+// id= abc/xyz/abc
+
+Route::get('platform/{type}/screenshot/{id}', [PlatformController::class, 'bannerScreenshot'])
+    ->where('id', '.*')
+    ->name('platform.screenshot');

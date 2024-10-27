@@ -8,6 +8,7 @@
     "priority": 200,
     "aliases": {},
     "namespace":"$NAMESPACE$",
+    "templates":[],
     "locations": [],
     "layout":"",
     "requires": []

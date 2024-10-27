@@ -171,3 +171,13 @@ button {
         }
     }
 }
+
+.sokeio-screenshot-banner {
+    height: 200px;
+    background-color: #253447;
+    color: white;
+
+    &.sokeio-screenshot-banner-large {
+        height: 300px;
+    }
+}

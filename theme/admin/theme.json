@@ -8,6 +8,7 @@
   "keywords": [],
   "priority": 100,
   "namespace": "SokeioTheme\\Admin",
+  "templates": [],
   "aliases": {},
   "files": [],
   "requires": []

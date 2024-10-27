@@ -8,6 +8,7 @@ use Sokeio\Platform;
 use Sokeio\Support\Platform\Concerns\WithRegisterItemInfo;
 use Sokeio\ServicePackage;
 use Sokeio\Theme;
+use Illuminate\Support\Str;
 
 class ItemInfo extends ObjectJson
 {
@@ -38,6 +39,13 @@ class ItemInfo extends ObjectJson
     public function getPath()
     {
         return $this->path;
+    }
+    public function getScreenshot(): string
+    {
+        return route('platform.screenshot', [
+            'type' => $this->manager->getItemType(),
+            'id' => $this->id
+        ]);
     }
     public function isVendor(): bool
     {
@@ -112,5 +120,14 @@ class ItemInfo extends ObjectJson
     public function delete(): void
     {
         $this->manager->delete($this->id);
+    }
+    public function getReadme(): string
+    {
+        $path = $this->path . '/README.md';
+
+        if (file_exists($path)) {
+            return Str::markdown(file_get_contents($path));
+        }
+        return '';
     }
 }
