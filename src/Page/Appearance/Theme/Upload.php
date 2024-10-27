@@ -5,12 +5,11 @@ namespace Sokeio\Page\Appearance\Theme;
 use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Common\Button;
-use Sokeio\UI\Field\Input;
 use Sokeio\UI\Field\UploadFile;
 use Sokeio\UI\ModalUI;
 use Sokeio\UI\WithUI;
 
-#[PageInfo(admin: true, auth: true,  title: 'Upload Theme ')]
+#[PageInfo(admin: true, auth: true,  title: 'Upload Theme (Not Implemented)')]
 class Upload extends \Sokeio\Page
 {
     use WithUI;

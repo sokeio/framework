@@ -12,7 +12,6 @@ class Table extends BaseUI
     private $showAll = false;
     private $showCheckBox = false;
     private $columns = [];
-    private $context = null;
     private $classNameRow = null;
     private $index = 1;
     private $pageSizes = [
@@ -83,11 +82,6 @@ class Table extends BaseUI
             $this->setValueByName('order.field', $field);
             $this->setValueByName('order.type', $type);
         });
-    }
-    public function context(&$context)
-    {
-        $this->context = $context;
-        return $this;
     }
 
     public function showAll()

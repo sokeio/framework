@@ -19,16 +19,20 @@ class Create extends \Sokeio\Page
     public $themeName = '';
     public function saveData()
     {
-        $this->validate(['themeName' => 'required']);
+        
+        $this->validate();
         $this->sokeioClose();
+        $this->alert('Theme created successfully.');
     }
     protected function setupUI()
     {
         return [
             ModalUI::init([
                 Input::init('themeName')->label(__('Name')),
+                json_encode(session('errors')),
             ])->title($this->getPageConfig()->getTitle())
                 ->className('p-2')
+                ->smSize()
                 ->afterUI([
                     Div::init([
                         Button::init()->text(__('Cancel'))->className('btn btn-warning me-2')

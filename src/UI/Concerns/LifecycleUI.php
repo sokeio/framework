@@ -37,6 +37,21 @@ trait LifecycleUI
     {
         $this->hook = new HookUI();
     }
+    protected function setupChild($callback = null)
+    {
+        if (!$callback || !is_callable($callback) || empty($this->childs)) {
+            return;
+        }
+        foreach ($this->childs as  $childs) {
+            if (is_array($childs) && !empty($childs)) {
+                foreach ($childs as $c) {
+                    if ($c && is_subclass_of($c, BaseUI::class)) {
+                        $callback($c);
+                    }
+                }
+            }
+        }
+    }
     private function lifecycleWithKey($key, $callback = null, $params = null): static
     {
         if ($callback) {
@@ -51,44 +66,20 @@ trait LifecycleUI
         if ($key == 'render') {
             return $this;
         }
-        foreach ($this->childs as  $childs) {
-            if (is_array($childs)) {
-                foreach ($childs as $c) {
-                    if (is_subclass_of($c, BaseUI::class)) {
-                        $c->lifecycleWithKey($key);
-                    }
-                }
-            }
-        }
+        $this->setupChild(fn($c) => $c->lifecycleWithKey($key));
         return $this;
     }
     public function setPrefix($prefix)
     {
         $this->prefix = $prefix;
-        foreach ($this->childs as  $childs) {
-            if (is_array($childs)) {
-                foreach ($childs as $c) {
-                    if (is_subclass_of($c, BaseUI::class)) {
-                        $c->setPrefix($prefix);
-                    }
-                }
-            }
-        }
+        $this->setupChild(fn($c) => $c->setPrefix($prefix));
         return $this;
     }
 
     public function clearPrefix()
     {
         $this->prefix = '';
-        foreach ($this->childs as  $childs) {
-            if (is_array($childs)) {
-                foreach ($childs as $c) {
-                    if (is_subclass_of($c, BaseUI::class)) {
-                        $c->clearPrefix();
-                    }
-                }
-            }
-        }
+        $this->setupChild(fn($c) => $c->clearPrefix());
         return $this;
     }
     public function getPrefix()
@@ -102,58 +93,27 @@ trait LifecycleUI
     public function setContext($context)
     {
         $this->context = $context;
-        foreach ($this->childs as  $childs) {
-            if (is_array($childs)) {
-                foreach ($childs as $c) {
-                    if (is_subclass_of($c, BaseUI::class)) {
-                        $c->setContext($context);
-                    }
-                }
-            }
-        }
+        $this->setupChild(fn($c) => $c->setContext($context));
+
         return $this;
     }
     public function clearContext()
     {
         $this->context = null;
-        foreach ($this->childs as  $childs) {
-            if (is_array($childs)) {
-                foreach ($childs as $c) {
-                    if (is_subclass_of($c, BaseUI::class)) {
-                        $c->clearContext();
-                    }
-                }
-            }
-        }
+        $this->setupChild((fn($c) => $c->clearContext()));
         return $this;
     }
     public function setParams($params)
     {
         $this->params = $params;
-        foreach ($this->childs as  $childs) {
-            if (is_array($childs)) {
-                foreach ($childs as $c) {
-                    if (is_subclass_of($c, BaseUI::class)) {
-                        $c->setParams($params);
-                    }
-                }
-            }
-        }
+        $this->setupChild(fn($c) => $c->setParams($params));
         return $this;
     }
 
     public function clearParams()
     {
         $this->params = [];
-        foreach ($this->childs as  $childs) {
-            if (is_array($childs)) {
-                foreach ($childs as $c) {
-                    if (is_subclass_of($c, BaseUI::class)) {
-                        $c->clearParams();
-                    }
-                }
-            }
-        }
+        $this->setupChild(fn($c) => $c->clearParams());
         return $this;
     }
     public function getParams($key = null)

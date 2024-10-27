@@ -11,6 +11,7 @@ h6 {
 
 .btn {
     border-radius: 2px !important;
+
     i {
         font-size: 1.25rem !important
     }
@@ -125,6 +126,13 @@ button {
 
             i {
                 font-size: 1.25rem !important
+            }
+        }
+
+        .page-title {
+            i {
+                font-size: 1.25rem !important;
+                margin-right: 5px !important;
             }
         }
     }

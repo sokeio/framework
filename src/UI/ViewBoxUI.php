@@ -42,56 +42,12 @@ class ViewBoxUI extends BaseUI
         $this->pageSizes = $sizes;
         return $this;
     }
-    private function getKeyWithTable($name, $withKey = true)
-    {
-        if ($this->tableKey && $withKey) {
-            return 'table.' . $this->tableKey . '.' . $name;
-        }
-        return 'table.' . $name;
-    }
-    protected function getValueByName($name, $default = null, $withKey = true)
-    {
-        if (!$this->context) {
-            return $this->getWire()->getValueQuery($this->getKeyWithTable($name, $withKey), $default);
-        }
-        return data_get($this->context, $this->getKeyWithTable($name, $withKey), $default);
-    }
-    protected function setValueByName($name, $value, $withKey = true)
-    {
-        $this->getWire()->query($this->getKeyWithTable($name, $withKey), $value);
-        if ($this->context) {
-            data_set($this->context, $this->getKeyWithTable($name, $withKey), $value);
-        }
-        return $this;
-    }
+  
+    
     protected function initUI()
     {
         $this->className('table');
-        $this->action('paginate', function ($page) {
-            $this->setValueByName('page.index', $page);
-        });
-        $this->action($this->getKeyWithTable('orderBy'), function ($order) {
-            $field = $order['field'];
-            $type = $order['type'] ?? 'asc';
-            $this->setValueByName('order.field', $field);
-            $this->setValueByName('order.type', $type);
-        });
-    }
-    public function context(&$context)
-    {
-        $this->context = $context;
-        return $this;
-    }
-
-    public function showAll()
-    {
-        $this->showAll = true;
-        return $this;
-    }
-    public function tableKey($key)
-    {
-        $this->tableKey = $key;
-        return $this;
+      
     }
     public function query($query)
     {
@@ -119,115 +75,7 @@ class ViewBoxUI extends BaseUI
         }
         return $this->rows ?? [];
     }
-    private function current()
-    {
-        return $this->columns[$this->index];
-    }
-    public function column($name, $callback = null)
-    {
-        $this->index++;
-        $this->columns[$this->index] = (new Column($this))->setField($name)->setLabel($name);
-
-        if ($callback) {
-            $callback($this->current());
-        }
-        return $this;
-    }
-    public function columnAction($array, $title = 'Actions', $callback = null)
-    {
-        return $this->child($array, 'columnAction')->boot(function () use ($title, $callback) {
-            $actionColumn = (new Column($this))
-                ->setLabel($title)
-                ->classNameHeader('w-1')
-                ->disableSort()
-                ->renderCell(function ($row, $column, $index) {
-                    return $this->renderChilds('columnAction', [
-                        'row' => $row,
-                        'column' => $column,
-                        'index' => $index
-                    ]);
-                });
-
-            if ($callback) {
-                $callback($actionColumn);
-            }
-            $this->columns[++$this->index] = $actionColumn;
-        });
-    }
-    public function enableIndex($callback = null)
-    {
-
-        return $this->boot(function () use ($callback) {
-            $this->columns[-1] = (new Column($this))
-                ->setField('index')->setLabel('#')
-                ->disableSort()
-                ->classNameHeader('w-1')
-                ->renderCell(function ($row, $column, $index) {
-                    return $this->getRows()->firstItem() + $index;
-                });
-
-            if ($callback) {
-                $callback($this->columns[-1]);
-            }
-        });
-    }
-    public function enableCheckBox($callback = null, $isAfterIndex = true)
-    {
-        return $this->boot(function () use ($callback, $isAfterIndex) {
-            $this->showCheckBox = true;
-            $this->columns[$isAfterIndex ? -2 : 0] = (new Column($this))
-                ->setField('index')->setLabel('#')
-                ->disableSort()
-                ->classNameHeader('w-1')
-                ->renderHeader(function () {
-                    return '<input type="checkbox" @change="checkboxAll" x-model="statusCheckAll" name="select-all"
-                 class="form-check-input sokeio-checkbox-all">';
-                })
-                ->renderCell(function ($row, $column, $index) {
-                    return '<input type="checkbox" wire:key="sokeio-checkbox-' . $index . '-' . $row->id . '"
-                 name="selected[]" class="form-check-input sokeio-checkbox-one"
-                 wire:model="dataSelecteds" value="' . $row->id . '">';
-                });
-            if ($callback) {
-                $callback($this->columns[$isAfterIndex ? -2 : 0]);
-            }
-        });
-    }
-    private function headerRender()
-    {
-        $html = '';
-        foreach ($this->columns as $column) {
-            $html .= $column->getHeaderView();
-        }
-        return $html;
-    }
-    private function cellRender($row, $index = 0)
-    {
-        $html = '';
-        foreach ($this->columns as $column) {
-            $html .= $column->getCellView($row, $index);
-        }
-        return $html;
-    }
-    private function bodyRender()
-    {
-        $html = '';
-        foreach ($this->getRows() as $key => $row) {
-            $classNameRow = '';
-            if ($this->classNameRow) {
-                $classNameRow = call_user_func($this->classNameRow, $row, $this, $key);
-            }
-            if ($classNameRow) {
-                $classNameRow = ' class="' . $classNameRow . '"';
-            }
-            $html .= <<<html
-            <tr {$classNameRow} wire:key="sokeio-row-{$row->id}" row-index="{$row->id}">
-                {$this->cellRender($row,$key)}
-            </tr>
-            html;
-        }
-        return $html;
-    }
+   
     private function pagitateRender()
     {
         $html = '';

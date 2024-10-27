@@ -7,6 +7,12 @@ class PageUI extends BaseUI
     public function initUI()
     {
         $this->className('sokeio-page-ui');
+        $this->render(function () {
+            if (!$this->getIcon()) {
+                $this->icon('ti ti-wallpaper');
+            }
+            $this->attr('wire:key', 'modal-' . $this->getVar('id') . '-' . $this->getWire()->soNumberLoading);
+        });
     }
     public function title($title)
     {
@@ -29,14 +35,15 @@ class PageUI extends BaseUI
     {
         $attr = $this->getAttr();
         $title = $this->getVar('title', '', true);
+        $icon = $this->getIcon();
         return <<<HTML
     <div {$attr}>
         <div class="page-header d-print-none">
             <div class="row align-items-center">
-                <div class="col">
-                    <h2 class="page-title">{$title}</h2>
+                <div class="col-md col-sm-12 mb-1">
+                    <h2 class="page-title">{$icon}{$title}</h2>
                 </div>
-                <div class="col-auto ms-auto d-print-none">
+                <div class="col-md-auto mb-1 col-sm-12 d-print-none">
                     <div class="d-flex align-items-center">
                     {$this->renderChilds('right')}
                     </div>
