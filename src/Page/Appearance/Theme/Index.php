@@ -33,7 +33,7 @@ class Index extends \Sokeio\Page
             PageUI::init([
                 Input::init()->fieldName('search')->debounce(500)->placeholder(__('Search'))->className('form-control'),
                 Div::init()->viewBlade('sokeio::pages.appearance.theme.index', [
-                    'themes' => Platform::theme()->getAll(),
+                    'themes' => Platform::getThemeSite(),
                     'routeName' => $this->getRouteName('info'),
                 ])->className('mt-3'),
             ])->rightUI([

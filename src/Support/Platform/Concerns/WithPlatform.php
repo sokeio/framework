@@ -77,10 +77,13 @@ trait WithPlatform
         $this->callbackBooted = [];
     }
 
-
     public function theme()
     {
         return ItemManager::getInstance('theme');
+    }
+    public function getThemeSite()
+    {
+        return ItemManager::getInstance('theme')->getAll()->where('admin', false);
     }
     public function module()
     {

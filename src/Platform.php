@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static void runLoader(\Sokeio\Support\Platform\ItemInfo $item, $path, $namespace, $aliasPrefix = '')
  * @method static string logoFull()
  * @method static string logo()
+ * @method static mixed getThemeSite()
  */
 class Platform extends Facade
 {
