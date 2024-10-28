@@ -5,7 +5,7 @@
                 <div class="card card-sm">
                     <a class="d-block cursor-pointer sokeio-screenshot-banner" wire:modal
                         wire:modal.url='{{ route($routeName, ['id' => $theme->id]) }}'>
-                        <img src="{{ $theme->getScreenshot() }}" class="card-img-top" alt="{{ $theme->name }}">
+                        <img src="{{ $theme->getScreenshot() }}" alt="{{ $theme->name }}">
                     </a>
                     <div class="card-body">
                         <div class="d-flex align-items-center">

@@ -3,6 +3,7 @@
 namespace Sokeio\Page\Appearance\Theme;
 
 use Livewire\Attributes\Rule;
+use Livewire\Attributes\Url;
 use Sokeio\Platform;
 use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\UI\Common\Div;
@@ -14,13 +15,19 @@ use Sokeio\UI\WithUI;
 #[PageInfo(admin: true, auth: true,  title: ' Theme Info')]
 class Info extends \Sokeio\Page
 {
-
     use WithUI;
+    #[Url(as: 'id')]
+    public $dataId;
     protected function setupUI()
     {
         return [
             ModalUI::init([
-                Input::init('themeName')->label(__('Name')),
+                Div::init()->className('mt-auto')->viewBlade(
+                    'sokeio::pages.appearance.theme.info',
+                    [
+                        'theme' => Platform::theme()->find($this->dataId)
+                    ]
+                )
             ])->title($this->getPageConfig()->getTitle())
                 ->className('p-2')
                 ->xlSize()

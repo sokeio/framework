@@ -181,11 +181,14 @@ button {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
+    border-radius: 4px  4px 0 0;
     img{
         // max-width: 100%;
         max-height: 100%;
     }
     &.sokeio-screenshot-banner-large {
         height: 300px;
+        width: auto;
     }
 }
