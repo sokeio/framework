@@ -1,4 +1,4 @@
-<div class="row row-cards">
+<div class="row row-cards row-deck">
     @if ($themes)
         @foreach ($themes as $theme)
             <div class="col-6 col-md-4 col-lg-3">

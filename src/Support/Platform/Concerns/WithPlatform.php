@@ -32,6 +32,18 @@ trait WithPlatform
         }
         return str($this->logo ?? '')->replace('width="100%"', 'width="' . $with . '"')->toString();
     }
+    public function screenshot($type, $id)
+    {
+        if (!$item = ItemManager::getInstance($type)->find($id)) {
+            return null;
+        }
+
+        if (File::exists($item->getPath('screenshot.png'))) {
+
+            return response()->file($item->getPath('screenshot.png'));
+        }
+        return response()->file(__DIR__ . '/../../../../public/sokeio.jpg');
+    }
     public function adminUrl()
     {
         return $this->urlAdmin ?? ($this->urlAdmin = config('sokeio.admin_url'));

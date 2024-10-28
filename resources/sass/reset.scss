@@ -176,7 +176,15 @@ button {
     height: 200px;
     background-color: #253447;
     color: white;
-
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    img{
+        // max-width: 100%;
+        max-height: 100%;
+    }
     &.sokeio-screenshot-banner-large {
         height: 300px;
     }

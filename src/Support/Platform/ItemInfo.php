@@ -36,8 +36,11 @@ class ItemInfo extends ObjectJson
         return $this->manager;
     }
 
-    public function getPath()
+    public function getPath($path = '')
     {
+        if ($path) {
+            return $this->path . '/' . $path;
+        }
         return $this->path;
     }
     public function getScreenshot(): string
