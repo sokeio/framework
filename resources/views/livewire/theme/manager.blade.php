@@ -1,3 +1,0 @@
-<div>
-    Theme Manager
-</div>
