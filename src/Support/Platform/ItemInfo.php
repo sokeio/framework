@@ -133,4 +133,12 @@ class ItemInfo extends ObjectJson
         }
         return '';
     }
+    public function getVersion(): string
+    {
+        return '1.0.0';
+    }
+    public function getLastVersion(): string
+    {
+        return '1.0.2';
+    }
 }

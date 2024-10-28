@@ -25,7 +25,7 @@ class Info extends \Sokeio\Page
                 Div::init()->className('mt-auto')->viewBlade(
                     'sokeio::pages.appearance.theme.info',
                     [
-                        'theme' => Platform::theme()->find($this->dataId)
+                        'item' => Platform::theme()->find($this->dataId)
                     ]
                 )
             ])->title($this->getPageConfig()->getTitle())
@@ -33,9 +33,12 @@ class Info extends \Sokeio\Page
                 ->xlSize()
                 ->afterUI([
                     Div::init([
-                        Button::init()->text(__('Cancel'))->className('btn btn-warning me-2')
-                            ->modalClose()->icon('ti ti-x'),
-                        Button::init()->text(__('Activate'))->icon('ti ti-create')
+                        Button::init()->text(__('Activate'))->icon('ti ti-checks')
+                            ->wireClick(function () {
+                                Platform::theme()->setActive($this->dataId);
+                                $this->sokeioClose();
+                                $this->refreshRef();
+                            }, 'btn_theme_activate')
                     ])
                         ->className('px-2 pt-2 d-flex justify-content-end')
                 ])

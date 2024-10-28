@@ -35,8 +35,8 @@ class SokeioServiceProvider extends \Illuminate\Support\ServiceProvider
     public function registeringPackage()
     {
         WatchTime::start();
-        $this->app->register(PlatformServiceProvider::class);
         $this->app->register(ThemeServiceProvider::class);
+        $this->app->register(PlatformServiceProvider::class);
         $this->app->register(LivewireServiceProvider::class);
     }
 }

@@ -22,6 +22,11 @@ class ItemManager
     private $arrItems = [];
     protected $itemGenerate;
     private function __construct(private $type) {}
+    protected $platformInfo;
+    public function getPlatformInfo(): PlatformInfo
+    {
+        return $this->platformInfo ??= PlatformInfo::key($this->type);
+    }
     public function getItemType()
     {
         return $this->type;

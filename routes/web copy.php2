@@ -37,7 +37,7 @@ Route::group(['prefix' => '__sokeio__'], function () {
                 Artisan::call('event:clear');
                 Artisan::call('route:clear');
                 //composer dump-autoload
-                \Sokeio\Facades\Platform::makeLink();
+                \Sokeio\Platform::makeLink();
             }
             return $key;
         })->name('sokeio.git-pull');

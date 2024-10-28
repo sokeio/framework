@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Page\Appearance\Theme;
+namespace Sokeio\Page\Setting\Module;
 
 use Livewire\Attributes\Url;
 use Sokeio\Platform;
@@ -15,9 +15,9 @@ use Sokeio\UI\WithUI;
 #[PageInfo(
     admin: true,
     auth: true,
-    title: 'Theme System',
+    title: 'Module System',
     menu: true,
-    menuTitle: 'Theme',
+    menuTitle: 'Module',
     sort: 0
 )]
 class Index extends \Sokeio\Page
@@ -32,8 +32,8 @@ class Index extends \Sokeio\Page
         return [
             PageUI::init([
                 Input::init()->fieldName('search')->debounce(500)->placeholder(__('Search'))->className('form-control'),
-                Div::init()->viewBlade('sokeio::pages.appearance.theme.index', [
-                    'datas' => Platform::getThemeSite(),
+                Div::init()->viewBlade('sokeio::pages.setting.module.index', [
+                    'datas' => Platform::module()->getAll(),
                     'routeName' => $this->getRouteName('info'),
                 ])->className('mt-3'),
             ])->rightUI([

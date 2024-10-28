@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Page\Appearance\Theme;
+namespace Sokeio\Page\Setting\Module;
 
 use Livewire\Attributes\Rule;
 use Sokeio\Platform;
@@ -20,7 +20,7 @@ class Create extends \Sokeio\Page
     public function saveData()
     {
         $this->validate();
-        Platform::theme()->generate($this->name);
+        Platform::module()->generate($this->name);
         $this->sokeioClose();
         $this->refreshRef();
     }
