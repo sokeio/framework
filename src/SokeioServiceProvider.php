@@ -6,6 +6,7 @@ use Sokeio\Concerns\WithServiceProvider;
 use Sokeio\Support\Livewire\LivewireServiceProvider;
 use Sokeio\Support\Platform\PlatformServiceProvider;
 use Sokeio\Support\Theme\ThemeServiceProvider;
+use Sokeio\Support\Widget\WidgetServiceProvider;
 
 class SokeioServiceProvider extends \Illuminate\Support\ServiceProvider
 {
@@ -38,5 +39,6 @@ class SokeioServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->app->register(ThemeServiceProvider::class);
         $this->app->register(PlatformServiceProvider::class);
         $this->app->register(LivewireServiceProvider::class);
+        $this->app->register(WidgetServiceProvider::class);
     }
 }
