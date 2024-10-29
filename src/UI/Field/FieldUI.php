@@ -76,11 +76,15 @@ class FieldUI extends BaseUI
         $attrWrapper = $this->getAttr('wrapper') ?? 'class="mb-3"';
         $attrModel = $this->getFieldName();
         $valueDefault = $this->getValueDefault();
+        if ($valueDefault) {
+            $wire = $this->getWire();
+            data_set($wire, $attrModel, $valueDefault);
+        }
         return <<<HTML
         <div {$attrWrapper} x-data="{
             get FieldValue(){ return \$wire.{$attrModel}; },
             set FieldValue(value){\$wire.{$attrModel} = value;}
-        }" x-init="if(!FieldValue){FieldValue = {$valueDefault} }">
+        }" x-init="if(!FieldValue){FieldValue = '{$valueDefault}'; }">
         {$this->fieldView()}
         {$this->errorView()}
         </div>

@@ -19,16 +19,18 @@
             .nav-link {
                 border: 1px solid #dee2e6;
                 border-radius: 0 !important;
+
                 &:hover {
                     background-color: #7f8183;
                     color: #fff;
                 }
+
                 &.active {
                     background-color: #253447;
                     color: #fff;
                 }
 
-              
+
             }
         }
     }
