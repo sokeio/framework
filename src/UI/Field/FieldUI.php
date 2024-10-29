@@ -56,7 +56,7 @@ class FieldUI extends BaseUI
     }
     public function getValueDefault()
     {
-        return $this->getVar('valueDefault', 'null', true);
+        return $this->getVar('valueDefault', null, true);
     }
     protected function fieldView()
     {
@@ -75,7 +75,7 @@ class FieldUI extends BaseUI
     {
         $attrWrapper = $this->getAttr('wrapper') ?? 'class="mb-3"';
         $attrModel = $this->getFieldName();
-        $valueDefault = $this->getValueDefault();
+        $valueDefault = $this->getValueDefault() ?? '';
         if ($valueDefault) {
             $wire = $this->getWire();
             data_set($wire, $attrModel, $valueDefault);
