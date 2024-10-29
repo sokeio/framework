@@ -12,32 +12,51 @@ class TabItem
     public $title;
     public $component;
     public $view;
+    public $params;
     public $content;
-    public $active = false;
+    public function __construct(protected TabControl $tabControl) {}
+    private function getKey()
+    {
+        return  $this->name ?? $this->id;
+    }
     public function renderHeader()
     {
         $icon = $this->icon;
         if (!$icon) {
             $icon = 'ti ti-home';
         }
-        $active = $this->active ? 'active' : '';
+        $active = $this->isActive() ? 'active' : '';
         return <<<HTML
         <li class="nav-item">
-            <a class="nav-link {$active}" data-bs-toggle="tab" href="#{$this->id}"
-             role="tab" aria-controls="{$this->id}" aria-selected="{$this->active}">
+            <a class="nav-link {$active}" data-bs-toggle="tab" href="#{$this->getKey()}"
+             role="tab" aria-controls="{$this->id}" aria-selected="{$active}">
                 <i class="{$icon}  fs-3 me-1"></i> <span>{$this->title}</span>
             </a>
         </li>
 HTML;
     }
-    public function renderContent()
+    private function renderBody()
     {
         if ($this->component) {
             return Livewire::mount($this->component);
         }
         if ($this->view) {
-            return view($this->view);
+            return view($this->view, $this->params);
         }
-        return $this->content ?? '';
+        return $this->content ?? $this->title;
+    }
+    public function isActive()
+    {
+        return $this->id === $this->tabControl->getTabActive();
+    }
+    public function renderContent()
+    {
+        $active = $this->isActive() ? 'show' : '';
+        return <<<HTML
+        <div class="tab-pane fade {$active}" id="{$this->getKey()}"
+         role="tabpanel" aria-labelledby="{$this->id}" data-tab-title="{$this->title}">
+            {$this->renderBody()}
+        </div>
+HTML;
     }
 }

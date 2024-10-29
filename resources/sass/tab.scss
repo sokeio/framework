@@ -1,0 +1,62 @@
+.sokeio-tab {
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 5px;
+
+
+    &-header {
+        display: flex;
+        flex-wrap: wrap;
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style: none;
+        border-bottom: 1px solid #dee2e6;
+
+        li {
+            margin-bottom: -1px;
+
+            .nav-link {
+                border: 1px solid #dee2e6;
+                border-radius: 0 !important;
+
+                &.active {
+                    border-color: #253447;
+                    background-color: #253447;
+                    color: #fff;
+                }
+            }
+        }
+    }
+
+    &-content {
+        min-height: 50px;
+        .tab-pane{
+            display: none;
+
+            &.show{
+                display: block;
+            }
+        }
+    }
+
+    @media screen and (min-width: 768px) {
+        &-vertical {
+            display: flex;
+            flex-direction: row;
+
+            .sokeio-tab-header {
+                width: 200px;
+                display: flex;
+                flex-direction: column;
+
+            }
+
+            .sokeio-tab-content {
+                flex: auto;
+            }
+
+        }
+    }
+
+}

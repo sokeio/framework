@@ -10,6 +10,7 @@ use Sokeio\UI\Common\Div;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Field\Input;
 use Sokeio\UI\PageUI;
+use Sokeio\UI\Tab\TabControl;
 use Sokeio\UI\WithUI;
 
 #[PageInfo(admin: true, auth: true,  title: 'System Information', menuTitle: 'System', menu: true)]
@@ -29,15 +30,11 @@ class System extends \Sokeio\Page
     {
         return [
             PageUI::init([
-                
+                TabControl::init()
+                    ->tabItemView('demo')
+                    ->tabItemView('demo2')
             ])->title($this->getPageConfig()->getTitle())
                 ->className('p-2')
-                ->rightUI([
-                    Div::init([
-                        Button::init()->text(__('Save Changes'))->wireClick('saveData')->icon('ti ti-device-floppy')
-                    ])
-                        ->className('px-2 pt-2 d-flex justify-content-end')
-                ])
 
         ];
     }

@@ -8,63 +8,64 @@ class TabControl extends BaseUI
 {
     private $tabItems = [];
     private $index = -1;
+    private $tabActive = null;
+    public function getTabActive()
+    {
+        return $this->tabActive ?? 0;
+    }
     public function tabItem(
         $title,
         $icon = null,
-        $component = null,
-        $view = null,
-        $content = null,
-        $active = false
+        $fnSetup = null,
     ) {
-        $tab = new TabItem();
+        $tab = new TabItem($this);
         $tab->title = $title;
         $tab->icon = $icon;
-        $tab->component = $component;
-        $tab->view = $view;
-        $tab->content = $content;
-        $tab->active = $active;
-        $this->tabItems[++$this->index] = $tab;
-        $tab->id = $this->index;
+        if ($fnSetup) {
+            call_user_func($fnSetup, $tab);
+        }
+        $tab->id = ++$this->index;
+        $this->tabItems[$tab->id] = $tab;
         return $this;
     }
     public function tabItemComponent(
         $title,
         $icon = null,
         $component = null,
-        $active = false
+        $params = null,
     ) {
 
-        return $this->tabItem($title, $icon, $component, null, null, $active);
+        return $this->tabItem($title, $icon, function ($tab) use ($component, $params) {
+            $tab->component = $component;
+            $tab->params = $params;
+        });
     }
     public function tabItemView(
         $title,
         $icon = null,
         $view = null,
-        $active = false
+        $params = null
     ) {
 
-        return $this->tabItem($title, $icon, null, $view, null, $active);
+        return $this->tabItem($title, $icon, function ($tab) use ($view, $params) {
+            $tab->view = $view;
+            $tab->params = $params;
+        });
     }
     public function tabItemContent(
         $title,
         $icon = null,
-        $content = null,
-        $active = false
+        $content = null
     ) {
 
-        return $this->tabItem($title, $icon, null, null, $content, $active);
+        return $this->tabItem($title, $icon, function ($tab) use ($content) {
+            $tab->content = $content;
+        });
     }
     public function activeTabIndex($index)
     {
-
-        return $this->render(function () use ($index) {
-            $this->tabItems[$index]->active = true;
-            foreach ($this->tabItems as $i => $tab) {
-                if ($i !== $index) {
-                    $tab->active = false;
-                }
-            }
-        });
+        $this->tabActive = $index;
+        return $this;
     }
     public function activeTab($callback)
     {
@@ -73,8 +74,7 @@ class TabControl extends BaseUI
         }
         foreach ($this->tabItems as $index => $tab) {
             if ($callback($tab)) {
-                $this->activeTabIndex($index);
-                break;
+                return  $this->activeTabIndex($index);
             }
         }
         return $this;
@@ -83,7 +83,13 @@ class TabControl extends BaseUI
     {
         parent::initUI();
         $this->render(function () {
-            $this->className('card');
+            $this->className('sokeio-tab');
+        });
+    }
+    public function vertical()
+    {
+        return $this->render(function () {
+            $this->className('sokeio-tab-vertical');
         });
     }
     protected function headerView()
@@ -99,6 +105,7 @@ class TabControl extends BaseUI
     {
         $html = '';
         foreach ($this->tabItems as $tab) {
+
             $html .= $tab->renderContent();
         }
         return $html;
@@ -109,15 +116,11 @@ class TabControl extends BaseUI
         $attr = $this->getAttr();
         return <<<HTML
         <div {$attr}>
-            <div class="card-header">
-            <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs" role="tablist">
+            <ul class="nav nav-tabs sokeio-tab-header" data-bs-toggle="tabs" role="tablist">
                 {$this->headerView()}
             </ul>
-            </div>
-            <div class="card-body">
-            <div class="tab-content">
+            <div class="sokeio-tab-content">
                 {$this->contentView()}
-            </div>
             </div>
         </div>
     HTML;
