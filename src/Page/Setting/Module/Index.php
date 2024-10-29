@@ -18,6 +18,7 @@ use Sokeio\UI\WithUI;
     title: 'Module System',
     menu: true,
     menuTitle: 'Module',
+    menuTargetSort: 99999,
     sort: 0
 )]
 class Index extends \Sokeio\Page

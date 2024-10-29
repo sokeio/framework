@@ -37,7 +37,9 @@ class PlatformInfo
     }
     protected static function set($key, $value)
     {
-        Arr::set(self::loadData(), $key, $value);
+        self::loadData();
+
+        Arr::set(self::$data, $key, $value);
         if (!self::$skipSave) {
             self::saveData();
         }

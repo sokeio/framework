@@ -23,8 +23,13 @@ class ItemManager
     protected $itemGenerate;
     private function __construct(private $type) {}
     protected $platformInfo;
-    public function getPlatformInfo(): PlatformInfo
+    protected $platformInfoThemeAdmin;
+    public function getPlatformInfo($isThemeAdmin = false): PlatformInfo
     {
+        if ($this->isTheme() && $isThemeAdmin) {
+            return $this->platformInfoThemeAdmin ??= PlatformInfo::key('theme_admin');
+        }
+
         return $this->platformInfo ??= PlatformInfo::key($this->type);
     }
     public function getItemType()
@@ -114,15 +119,9 @@ class ItemManager
             return false;
         }
 
-        $statusKey = $this->type;
+        $isActive = $this->getPlatformInfo(Arr::get($item, 'admin'))->check($item['id']);
 
-        if ($this->isTheme() && Arr::get($item, 'admin')) {
-            $statusKey = 'theme_admin';
-        }
-
-        $isActive = ItemStatus::key($statusKey)->check($item['id']);
-
-        if (!$isActive && $this->isTheme() && ItemStatus::key($statusKey)->empty()) {
+        if (!$isActive && $this->isTheme() && $this->getPlatformInfo(Arr::get($item, 'admin'))->empty()) {
             $themeConfigKey = Arr::get($item, 'admin') ? 'admin_theme' : 'site_theme';
             $isActive = $item->id === config("sokeio.$themeConfigKey");
         }
@@ -136,19 +135,7 @@ class ItemManager
         if (!$item) {
             return false;
         }
-
-        $statusKey = $this->type;
-        $onlyOne = false;
-
-        if ($this->isTheme()) {
-            if (Arr::get($item, 'admin')) {
-                $statusKey = 'theme_admin';
-            }
-
-            $onlyOne = true;
-        }
-
-        ItemStatus::key($statusKey)->active($item['id'], $onlyOne);
+        $this->getPlatformInfo(Arr::get($item, 'admin'))->active($item['id'], $this->isTheme());
 
         return true;
     }
@@ -160,9 +147,7 @@ class ItemManager
             return;
         }
 
-        $statusKey = $this->type;
-
-        ItemStatus::key($statusKey)->block($item['id']);
+        $this->getPlatformInfo()->block($item['id']);
     }
     public function find($id): ?ItemInfo
     {
