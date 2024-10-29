@@ -32,7 +32,8 @@ class System extends \Sokeio\Page
             PageUI::init([
                 TabControl::init()
                     ->tabItemView('demo')
-                    ->tabItemView('demo2')
+                    ->tabItemComponent('demo2', 'ti ti-dashboard', 'sokeio::demo1.index')
+                    ->vertical()
             ])->title($this->getPageConfig()->getTitle())
                 ->className('p-2')
 

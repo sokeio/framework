@@ -3,9 +3,7 @@
 namespace Sokeio\Page;
 
 use Sokeio\Support\Livewire\PageInfo;
-use Sokeio\Theme;
 use Sokeio\UI\PageUI;
-use Sokeio\UI\Tab\TabControl;
 use Sokeio\UI\WithUI;
 
 #[PageInfo(
@@ -26,7 +24,7 @@ class Dashboard extends \Sokeio\Page
         return [
             PageUI::init([])->title($this->getPageConfig()->getTitle())
                 ->className('p-2')
-            ->icon('ti ti-dashboard')
+                ->icon('ti ti-dashboard')
         ];
     }
 }

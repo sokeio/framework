@@ -19,22 +19,27 @@
             .nav-link {
                 border: 1px solid #dee2e6;
                 border-radius: 0 !important;
-
+                &:hover {
+                    background-color: #7f8183;
+                    color: #fff;
+                }
                 &.active {
-                    border-color: #253447;
                     background-color: #253447;
                     color: #fff;
                 }
+
+              
             }
         }
     }
 
     &-content {
         min-height: 50px;
-        .tab-pane{
+
+        .tab-pane {
             display: none;
 
-            &.show{
+            &.show {
                 display: block;
             }
         }
@@ -53,6 +58,7 @@
             }
 
             .sokeio-tab-content {
+                margin-left: 5px;
                 flex: auto;
             }
 
