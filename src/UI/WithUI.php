@@ -2,7 +2,6 @@
 
 namespace Sokeio\UI;
 
-use Sokeio\FormData;
 
 trait WithUI
 {

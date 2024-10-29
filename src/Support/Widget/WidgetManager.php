@@ -24,4 +24,48 @@ class WidgetManager
             'icon' => $info->icon,
         ];
     }
+    public function getWidgets()
+    {
+        return $this->widgets;
+    }
+    public function getWidget($key)
+    {
+        return $this->widgets[$key] ?? null;
+    }
+    private $widgetSettings = [
+        [
+            'key' => 'sokeio:count-model',
+            'id' => 'widget-1',
+            'group' => 'top',
+            'column' => 'col-lg-4 col-md-6 col-sm-12 col-xs-12',
+            'params' => [
+                'model' => null,
+                'title' => 'Data 1'
+            ]
+        ],
+        [
+            'key' => 'sokeio:count-model',
+            'id' => 'widget-1',
+            'group' => 'top',
+            'column' => 'col-lg-4 col-md-6 col-sm-12 col-xs-12',
+            'params' => [
+                'model' => null,
+                'title' => 'Data 2'
+            ]
+        ],
+        [
+            'key' => 'sokeio:count-model',
+            'id' => 'widget-2',
+            'group' => 'top',
+            'column' => 'col-lg-4 col-md-6 col-sm-12 col-xs-12',
+            'params' => [
+                'model' => null,
+                'title' => 'Data 3'
+            ]
+        ]
+    ];
+    public function getListWidgets()
+    {
+        return $this->widgetSettings;
+    }
 }

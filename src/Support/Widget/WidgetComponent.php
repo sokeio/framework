@@ -1,17 +1,22 @@
 <?php
 
-namespace Sokeio\Support\Livewire;
+namespace Sokeio\Support\Widget;
 
-use Attribute;
 use Sokeio\Component;
+use Sokeio\UI\Common\Div;
 use Sokeio\UI\WithUI;
 
-#[Attribute(Attribute::TARGET_CLASS)]
 class WidgetComponent extends Component
 {
     use WithUI;
+    public $widgetId;
+    public $dashboardKey;
     protected function setupUI()
     {
-        return [];
+        return [
+            Div::init([
+                $this->dashboardKey
+            ])
+        ];
     }
 }
