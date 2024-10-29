@@ -136,8 +136,12 @@ class Button extends BaseUI
     {
         $attr = $this->getAttr();
         $icon = $this->getIcon();
+        $title = $this->getVar('text', '', true);
+        if ($title) {
+            $title = '<span>' . $title . '</span>';
+        }
         return <<<HTML
-        <button {$attr}>{$icon} <span>{$this->getVar('text', '', true)}</span></button>
+        <button {$attr}>{$icon} {$title}</button>
         HTML;
     }
 }

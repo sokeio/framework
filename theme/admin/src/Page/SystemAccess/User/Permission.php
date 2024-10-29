@@ -13,8 +13,8 @@ use Sokeio\UI\Field\Select;
 use Sokeio\UI\ModalUI;
 use Sokeio\UI\WithEditUI;
 
-#[PageInfo(admin: true, auth: true,  title: 'User', model: User::class)]
-class Edit extends \Sokeio\Page
+#[PageInfo(admin: true, auth: true,  title: 'User Permission', model: User::class)]
+class Permission extends \Sokeio\Page
 {
     use WithEditUI;
     protected function setupUI()
@@ -28,7 +28,7 @@ class Edit extends \Sokeio\Page
                     ->when(function () {
                         return !$this->dataId;
                     }),
-            ])->title(($this->dataId ? __('Edit') : __('Create')) . ' ' . $this->getPageConfig()->getTitle())
+            ])->title($this->getPageConfig()->getTitle())
                 ->className('p-2')->setPrefix('formData')
                 ->afterUI([
                     Div::init([
@@ -37,7 +37,7 @@ class Edit extends \Sokeio\Page
                     ])
                         ->className('px-2 pt-2 d-flex justify-content-end')
                 ])
-                ->icon('ti ti-users')
+                ->icon('ti ti-shield-half')
         ];
     }
 }

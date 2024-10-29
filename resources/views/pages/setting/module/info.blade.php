@@ -6,7 +6,7 @@
         <div class="d-flex align-items-center">
             <div>
                 <div> {{ $item->name }}</div>
-                <div class="text-secondary">{{ $item->description }}</div>
+                <div class="text-secondary">{!! $item->description !!}</div>
             </div>
         </div>
         <div class="mt-3 border-top">
