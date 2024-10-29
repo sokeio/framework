@@ -20,6 +20,7 @@ class WidgetManager
             'key' => $key,
             'class' => $widget,
             'info' => $info,
+            'name' => $info->name,
             'icon' => $info->icon,
         ];
     }

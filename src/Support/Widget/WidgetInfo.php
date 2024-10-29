@@ -8,7 +8,7 @@ use Attribute;
 class WidgetInfo
 {
     public function __construct(
-        public $key = null,
+        public $key,
         public $name = '',
         public $icon = null
     ) {}
