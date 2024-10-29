@@ -3,7 +3,7 @@
 namespace Sokeio\Page;
 
 use Carbon\Carbon;
-
+use Illuminate\Support\Facades\Session;
 use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Common\Div;
@@ -27,6 +27,10 @@ class Dashboard extends \Sokeio\Page
     use WithUI;
     public array $dataSearch = [];
     public $dashboardKey = '';
+    public function updatedDataSearch()
+    {
+        Session::put($this->dashboardKey, $this->dataSearch);
+    }
 
     public function getWidgets(): array
     {
@@ -51,8 +55,13 @@ class Dashboard extends \Sokeio\Page
                         ->valueDefault(Carbon::now()->subDays(30)),
                     DatePicker::init('to_date')->placeholder(__('End Date'))
                         ->valueDefault(Carbon::now()),
-                    Button::init()->text(__('Search'))->icon('ti ti-search')
+                    Button::init()->text(__('Search'))->icon('ti ti-search')->wireClick(function(){
+                        $this->alert(json_encode($this->dataSearch));
+                    })
                 ])->setPrefix('dataSearch')
+                ->render(function () {
+                    $this->updatedDataSearch();
+                })
         ];
     }
 }
