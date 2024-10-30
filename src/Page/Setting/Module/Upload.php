@@ -9,7 +9,7 @@ use Sokeio\UI\Field\UploadFile;
 use Sokeio\UI\ModalUI;
 use Sokeio\UI\WithUI;
 
-#[PageInfo(admin: true, auth: true,  title: 'Upload Theme (Not Implemented)')]
+#[PageInfo(admin: true, auth: true,  title: 'Upload Module (Not Implemented)')]
 class Upload extends \Sokeio\Page
 {
     use WithUI;

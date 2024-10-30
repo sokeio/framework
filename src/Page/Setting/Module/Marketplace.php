@@ -5,12 +5,10 @@ namespace Sokeio\Page\Setting\Module;
 use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Common\Button;
-use Sokeio\UI\Field\Input;
-use Sokeio\UI\Field\UploadFile;
 use Sokeio\UI\ModalUI;
 use Sokeio\UI\WithUI;
 
-#[PageInfo(admin: true, auth: true,  title: 'Marketplace Theme (Not Implemented)')]
+#[PageInfo(admin: true, auth: true,  title: 'Marketplace Module (Not Implemented)')]
 class Marketplace extends \Sokeio\Page
 {
     use WithUI;

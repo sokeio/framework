@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Page;
+namespace Sokeio\Page\Dashboard;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
@@ -22,7 +22,7 @@ use Sokeio\Widget;
     menu: true,
     sort: 0
 )]
-class Dashboard extends \Sokeio\Page
+class Index extends \Sokeio\Page
 {
     use WithUI;
     public array $dataSearch = [];
@@ -57,7 +57,12 @@ class Dashboard extends \Sokeio\Page
                         ->valueDefault(Carbon::now()),
                     Button::init()->text(__('Search'))->icon('ti ti-search')->wireClick(function () {
                         $this->alert(json_encode($this->dataSearch));
-                    })
+                    }),
+                    Button::init()
+                        ->text(__('Settings'))
+                        ->icon('ti ti-settings')
+                        ->className('btn btn-danger')
+                        ->modalRoute($this->getRouteName('setting')),
                 ])->setPrefix('dataSearch')
                 ->render(function () {
                     $this->updatedDataSearch();

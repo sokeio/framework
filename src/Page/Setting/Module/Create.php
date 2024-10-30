@@ -11,7 +11,7 @@ use Sokeio\UI\Field\Input;
 use Sokeio\UI\ModalUI;
 use Sokeio\UI\WithUI;
 
-#[PageInfo(admin: true, auth: true,  title: 'Create Theme ')]
+#[PageInfo(admin: true, auth: true,  title: 'Create Module ')]
 class Create extends \Sokeio\Page
 {
     use WithUI;
