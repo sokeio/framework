@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('dashboards', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('name');
             $table->string('description')->nullable();
             $table->json('widgets')->nullable();
             $table->boolean('is_default')->default(false);
@@ -24,13 +24,16 @@ return new class extends Migration
             $table->bigInteger('user_id')->nullable();
             $table->timestamps();
         });
-        Schema::table('dashboard_roles', function (Blueprint $table) {
-            $table->foreign('dashboard_id')->references('id')->on('dashboards')->onDelete('cascade');
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
+
+        Schema::create('dashboard_roles', function (Blueprint $table) {
+            $table->integer('dashboard_id');
+            $table->integer('role_id');
+            $table->primary(['dashboard_id', 'role_id']);
         });
-        Schema::table('dashboard_users', function (Blueprint $table) {
-            $table->foreign('dashboard_id')->references('id')->on('dashboards')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        Schema::create('dashboard_users', function (Blueprint $table) {
+            $table->integer('dashboard_id');
+            $table->integer('user_id');
+            $table->primary(['dashboard_id', 'user_id']);
         });
     }
 

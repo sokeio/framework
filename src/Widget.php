@@ -11,6 +11,7 @@ use Sokeio\Support\Widget\WidgetSetting;
  *
  * @method static WidgetManager registerClass($widget)
  * @method static array getListWidgets()
+ * @method static array getWidgets()
  * @method static array getWidget($key)
  * @method static string getColumnClass($column)
  * @method static WidgetSetting getWidgetById()

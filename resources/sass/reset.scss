@@ -78,6 +78,10 @@ button {
     .form-control {
         padding: 0.3rem 0.6rem !important;
 
+        &:focus {
+            box-shadow: unset !important;
+        }
+
         &.ts-wrapper {
             padding: 0 !important;
 
@@ -182,11 +186,13 @@ button {
     justify-content: center;
     align-items: center;
     text-align: center;
-    border-radius: 4px  4px 0 0;
-    img{
+    border-radius: 4px 4px 0 0;
+
+    img {
         // max-width: 100%;
         max-height: 100%;
     }
+
     &.sokeio-screenshot-banner-large {
         height: 300px;
         width: auto;

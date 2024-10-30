@@ -38,6 +38,9 @@ trait WithLivewireDispatch
     public function refreshRef(){
         $this->refreshToId($this->getRefId());
     }
+    public function refreshMe(){
+        $this->refreshToId($this->getId());
+    }
     public function callFunc($func, $option = [])
     {
         $this->sendMessageToClient(self::LIVEWIRE_FUNCTION, [

@@ -4,10 +4,12 @@ namespace Sokeio\Page\Dashboard;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
+use Sokeio\Models\Dashboard;
 use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Field\DatePicker;
+use Sokeio\UI\Field\Select;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\WithUI;
 use Sokeio\Widget;
@@ -50,6 +52,9 @@ class Index extends \Sokeio\Page
             ])->title($this->getPageConfig()->getTitle())
                 ->className('p-2')
                 ->icon('ti ti-dashboard')->rightUI([
+                    Select::init('dashboard_id')->placeholder('Dashboard')
+                        ->remoteActionWithModel(Dashboard::class)
+                        ->classNameWrapper('me-2'),
                     DatePicker::init('from_date')->placeholder(__('Start Date'))
                         ->classNameWrapper('me-2')
                         ->valueDefault(Carbon::now()->subDays(30)),
