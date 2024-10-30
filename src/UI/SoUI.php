@@ -2,7 +2,6 @@
 
 namespace Sokeio\UI;
 
-use Illuminate\Support\Facades\Log;
 use Sokeio\UI\Support\HookUI;
 
 class SoUI
@@ -11,6 +10,8 @@ class SoUI
     private $ui = [];
     private $actions = [];
     private $wire = null;
+    private $fields = [];
+
     private function lifecycleWithKey($key, $callback = null, $params = null)
     {
         if ($callback) {
@@ -23,6 +24,20 @@ class SoUI
             }
         }
         return $this;
+    }
+    public function registerField($field)
+    {
+        $this->fields[] = $field;
+    }
+    public function getFields()
+    {
+        return $this->fields;
+    }
+    public function fill($model)
+    {
+        foreach ($this->fields as $field) {
+            $field->fillToModel($model);
+        }
     }
     public function getWire()
     {

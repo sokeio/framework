@@ -21,7 +21,7 @@ class CountModelWidget extends WidgetUI
         return <<<HTML
         <div>
             <div class="text-center">
-                <h1 class="display-1">{$this->getDataParam('title',)}</h1>
+                <h5 class="">{$this->getDataParam('title', '')}</h5>
         </div>
         </div>
         HTML;

@@ -2,7 +2,6 @@
 
 namespace Sokeio\UI\Field;
 
-use Illuminate\Contracts\Support\MessageProvider;
 use Sokeio\UI\BaseUI;
 
 class FieldUI extends BaseUI
@@ -10,6 +9,9 @@ class FieldUI extends BaseUI
     protected function initUI()
     {
         parent::initUI();
+        $this->register(function () {
+            $this->getManager()->registerField($this);
+        });
         $this->render(function () {
             if (!$this->containsAttr('class', 'sokeio-field-input', 'wrapper')) {
                 $this->classNameWrapper('sokeio-field-input');
@@ -21,6 +23,19 @@ class FieldUI extends BaseUI
                 $this->attr('wire:model', $this->getFieldName());
             }
         });
+    }
+    private $fillCallback = null;
+    public function fill($callback)
+    {
+        $this->fillCallback = $callback;
+    }
+    public function fillToModel($model)
+    {
+        if ($this->fillCallback && is_callable($this->fillCallback)) {
+            call_user_func($this->fillCallback, $model, $this);
+        } else {
+            $model->{$this->getFieldName()} = $this->getValue();
+        }
     }
     public function debounce($debounce = 250)
     {
@@ -38,9 +53,13 @@ class FieldUI extends BaseUI
     {
         return $this->getPrefix() ? $this->getPrefix() . '.' . $name : $name;
     }
+    public function getFieldNameWithoutPrefix()
+    {
+        return $this->getVar('name', null, true);
+    }
     public function getFieldName()
     {
-        return $this->getNameWithPrefix($this->getVar('name', null, true));
+        return $this->getNameWithPrefix($this->getFieldNameWithoutPrefix());
     }
     public function fieldName($name)
     {
@@ -71,12 +90,18 @@ class FieldUI extends BaseUI
         <input {$attr} />
         HTML;
     }
+    public function getValue()
+    {
+        $wire = $this->getWire();
+        return data_get($wire, $this->getFieldName());
+    }
     public function view()
     {
         $attrWrapper = $this->getAttr('wrapper') ?? 'class="mb-3"';
         $attrModel = $this->getFieldName();
         $valueDefault = $this->getValueDefault() ?? '';
-        if ($valueDefault) {
+        $value = $this->getValue() ?? '';
+        if ($valueDefault && !$value) {
             $wire = $this->getWire();
             data_set($wire, $attrModel, $valueDefault);
         }
@@ -84,7 +109,7 @@ class FieldUI extends BaseUI
         <div {$attrWrapper} x-data="{
             get FieldValue(){ return \$wire.{$attrModel}; },
             set FieldValue(value){\$wire.{$attrModel} = value;}
-        }" x-init="if(!FieldValue){FieldValue = '{$valueDefault}'; }">
+        }" >
         {$this->fieldView()}
         {$this->errorView()}
         </div>

@@ -43,7 +43,7 @@ class Dashboard extends \Sokeio\Page
         }
         return [
             PageUI::init([
-                Div::init()->viewBlade('sokeio::pages.dashboard', [
+                Div::init()->viewBlade('sokeio::pages.dashboard.index', [
                     'widgets' => $this->getWidgets(),
                     'dashboardKey' => $this->dashboardKey
                 ])
@@ -55,7 +55,7 @@ class Dashboard extends \Sokeio\Page
                         ->valueDefault(Carbon::now()->subDays(30)),
                     DatePicker::init('to_date')->placeholder(__('End Date'))
                         ->valueDefault(Carbon::now()),
-                    Button::init()->text(__('Search'))->icon('ti ti-search')->wireClick(function(){
+                    Button::init()->text(__('Search'))->icon('ti ti-search')->wireClick(function () {
                         $this->alert(json_encode($this->dataSearch));
                     })
                 ])->setPrefix('dataSearch')
