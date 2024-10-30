@@ -39,3 +39,7 @@ Platform::routeAdmin(function () {
 Route::get('platform/{type}/screenshot/{id}', [PlatformController::class, 'bannerScreenshot'])
     ->where('id', '.*')
     ->name('platform.screenshot');
+
+Route::get('models', function () {
+    return Platform::getAllModel();
+});

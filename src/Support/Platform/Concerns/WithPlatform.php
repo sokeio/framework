@@ -3,6 +3,7 @@
 namespace Sokeio\Support\Platform\Concerns;
 
 use Illuminate\Support\Facades\File;
+use Sokeio\Support\Platform\ItemInfo;
 use Sokeio\Support\Platform\ItemManager;
 
 trait WithPlatform
@@ -12,8 +13,27 @@ trait WithPlatform
     private $pathPlatform;
     private $callbackBooting = [];
     private $callbackBooted = [];
+    private $models = [];
     private $logoFull;
     private $logo;
+    public function registerModel($class, ItemInfo $itemInfo)
+    {
+        $this->booted(function () use ($class, $itemInfo) {
+            $this->models[] = [
+                'class' => $class,
+                'name' => class_basename($class),
+                // 'table_name' => ($class)::query()->getModel()->getTable(),
+                'item_id' => $itemInfo->id,
+                'item_name' => $itemInfo->name,
+                'is_theme' => $itemInfo->isTheme()
+            ];
+        });
+        return $this;
+    }
+    public function getAllModel()
+    {
+        return $this->models;
+    }
     public function version()
     {
         return $this->version ?? ($this->version = config('sokeio.version'));

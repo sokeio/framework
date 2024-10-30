@@ -35,6 +35,10 @@ class ItemInfo extends ObjectJson
     {
         return $this->manager;
     }
+    public function isTheme()
+    {
+        return $this->getManager()->isTheme();
+    }
 
     public function getPath($path = '')
     {

@@ -31,6 +31,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static string logoFull()
  * @method static string logo()
  * @method static mixed getThemeSite()
+ * @method static \Sokeio\Support\Platform\PlatformManager registerModel($class, ItemInfo $itemInfo)
+ * @method static array getAllModel()
  */
 class Platform extends Facade
 {
