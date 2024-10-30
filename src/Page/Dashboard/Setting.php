@@ -23,7 +23,7 @@ class Setting extends \Sokeio\Page
         return ModalUI::init([])->title($this->getPageConfig()->getTitle())
             ->icon('ti ti-settings')
             ->className('p-2')
-            ->lgSize()
+            ->fullscreenSize()
             ->afterUI([
                 Div::init([
                     Button::init()->text(__('Cancel'))->className('btn btn-warning me-2')

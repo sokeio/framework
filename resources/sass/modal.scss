@@ -1,3 +1,29 @@
+@mixin so-modal-dialog-fullscreen {
+    width: 100vw;
+    max-width: none;
+    height: 100vh;
+    margin: 0;
+    transform: unset;
+    border-radius: 0;
+    padding: 0;
+
+    .so-modal-content {
+        border-radius: 0;
+        box-shadow: unset;
+        border: 0;
+
+        .sokeio-modal-ui {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+
+            .sokeio-modal-body {
+                flex: auto;
+            }
+        }
+    }
+}
+
 .so-modal-overlay {
     --tblr-backdrop-zindex: 1050;
     --tblr-backdrop-bg: #182433;
@@ -153,22 +179,18 @@
         }
     }
 
+
+
     &.so-modal-size-fullscreen {
         .so-modal-dialog {
-            width: 100vw;
-            max-width: none;
-            height: 100%;
-            margin: 0;
+            @include so-modal-dialog-fullscreen;
         }
     }
 
     &.so-modal-size-fullscreen-xxl-down {
         @media (max-width: 1400px) {
             .so-modal-dialog {
-                width: 100vw;
-                max-width: none;
-                height: 100%;
-                margin: 0;
+                @include so-modal-dialog-fullscreen;
             }
         }
     }
@@ -176,10 +198,7 @@
     &.so-modal-size-fullscreen-xl-down {
         @media (max-width: 1200px) {
             .so-modal-dialog {
-                width: 100vw;
-                max-width: none;
-                height: 100%;
-                margin: 0;
+                @include so-modal-dialog-fullscreen;
             }
         }
     }
@@ -187,10 +206,7 @@
     &.so-modal-size-fullscreen-lg-down {
         @media (max-width: 992px) {
             .so-modal-dialog {
-                width: 100vw;
-                max-width: none;
-                height: 100%;
-                margin: 0;
+                @include so-modal-dialog-fullscreen;
             }
         }
     }
@@ -198,10 +214,7 @@
     &.so-modal-size-fullscreen-md-down {
         @media (max-width: 768px) {
             .so-modal-dialog {
-                width: 100vw;
-                max-width: none;
-                height: 100%;
-                margin: 0;
+                @include so-modal-dialog-fullscreen;
             }
         }
     }
@@ -209,10 +222,7 @@
     &.so-modal-size-fullscreen-sm-down {
         @media (max-width: 576px) {
             .so-modal-dialog {
-                width: 100vw;
-                max-width: none;
-                height: 100%;
-                margin: 0;
+                @include so-modal-dialog-fullscreen;
             }
         }
     }

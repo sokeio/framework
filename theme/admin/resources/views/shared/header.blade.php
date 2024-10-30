@@ -5,7 +5,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
-            <a href=".">
+            <a href="{{ url('/') }}">
                 <img src="{{ asset('platform/module/sokeio/sokeio.webp') }}" class="rounded-2" height="40"
                     alt="Sokeio Technology">
             </a>
@@ -153,7 +153,7 @@
                     <a href="{{ route('admin.theme-admin-page.account') }}" class="dropdown-item">Profile</a>
                     <div class="dropdown-divider"></div>
                     <a href="{{ route('admin.theme-admin-page.account.setting') }}" class="dropdown-item">Settings</a>
-                    <a @click="$dispatch('logout'); setTimeout(() => window.location.reload(), 1000);" href="#"
+                    <a @click="$dispatch('logout'); setTimeout(() => window.location.reload(), 1000);"
                         class="dropdown-item">Logout</a>
                 </div>
             </div>

@@ -28,6 +28,9 @@ class BaseUI
     {
         return $this->manager;
     }
+    public function style($style){
+        return $this->vars('style', $style);
+    }
     public function getWire()
     {
         return $this->manager?->getWire();

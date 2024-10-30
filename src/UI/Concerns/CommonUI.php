@@ -43,9 +43,9 @@ trait CommonUI
     {
         return $this->data('vars')->set($key, $value);
     }
-    public function getVar($key, $default = null, $isText = false)
+    public function getVar($key, $default = null, $isText = false, $separator = ' ')
     {
-        return $this->data('vars')->get($key, $default, $isText);
+        return $this->data('vars')->get($key, $default, $isText, $separator);
     }
     protected function getAttributeByGroup($group = 'default')
     {
@@ -59,9 +59,9 @@ trait CommonUI
     {
         return $this->getAttributeByGroup($group)->append($key, $value);
     }
-    protected function getAttrKey($key, $default = null, $group = 'default', $isText = false)
+    protected function getAttrKey($key, $default = null, $group = 'default', $isText = false, $separator = ' ')
     {
-        return $this->getAttributeByGroup($group)->get($key, $default, $isText);
+        return $this->getAttributeByGroup($group)->get($key, $default, $isText, $separator);
     }
     public function checkAttr($key, $value = null, $group = 'default')
     {

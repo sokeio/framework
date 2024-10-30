@@ -23,10 +23,10 @@ class DataUI
         $this->data[$key] = array_merge($this->data[$key], $value);
         return $this->ui;
     }
-    public function get($key, $default = null, $isText = false)
+    public function get($key, $default = null, $isText = false, $separator = ' ')
     {
         if (isset($this->data[$key]) && $isText) {
-            return trim(implode(' ', $this->data[$key]));
+            return trim(implode($separator, $this->data[$key]));
         }
         return $this->data[$key] ?? $default;
     }
