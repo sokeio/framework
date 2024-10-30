@@ -37,7 +37,7 @@ class WidgetComponent extends Component
                 Div::init([
                     $this->getWidget()->getWidgetUI()
                 ])->className('card')
-            ])->className($this->getWidget()->getColumnClass())->className('p-3'),
+            ])->className($this->getWidget()->getColumnClass()),
 
         ];
     }

@@ -20,7 +20,9 @@ class Setting extends \Sokeio\Page
 
     protected function setupUI()
     {
-        return ModalUI::init([])->title($this->getPageConfig()->getTitle())
+        return ModalUI::init([
+            Div::init()->className('h-100')->viewBlade('sokeio::pages.dashboard.setting')
+        ])->title($this->getPageConfig()->getTitle())
             ->icon('ti ti-settings')
             ->className('p-2')
             ->fullscreenSize()

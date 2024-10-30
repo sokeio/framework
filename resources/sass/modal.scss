@@ -18,6 +18,8 @@
             flex-direction: column;
 
             .sokeio-modal-body {
+                overflow: auto;
+                position: relative;
                 flex: auto;
             }
         }
