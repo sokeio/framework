@@ -39,6 +39,14 @@ class SoUI
             $field->fillToModel($model);
         }
     }
+    public function getRuleForm()
+    {
+        $rules = [];
+        foreach ($this->fields as $field) {
+            $rules = array_merge($rules, $field->getRules());
+        }
+        return $rules;
+    }
     public function getWire()
     {
         return $this->wire;

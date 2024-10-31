@@ -3,9 +3,11 @@
 namespace Sokeio\UI\Field;
 
 use Sokeio\UI\BaseUI;
+use Sokeio\UI\Rule\WithRule;
 
 class FieldUI extends BaseUI
 {
+    use WithRule;
     protected function initUI()
     {
         parent::initUI();
