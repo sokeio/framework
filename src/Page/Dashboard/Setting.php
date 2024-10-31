@@ -37,6 +37,9 @@ class Setting extends \Sokeio\Page
 
     protected function setupUI()
     {
+        if (!Dashboard::query()->where('id', $this->dashboardId)->exists()) {
+            $this->dashboardId = 0;
+        }
         $dashboards = Dashboard::query()->orderBy('id', 'desc')->get(['id', 'name']);
         if ($this->dashboardId <= 0 && $dashboards->count() > 0) {
             $this->dashboardId = $dashboards->first()?->id ?? 0;

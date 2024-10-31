@@ -32,10 +32,9 @@
             </div>
         </div>
         <div class="pt-2 " x-data="{
-            dashboard: 0,
             selectDashboard(id) {
-                $wire.selectDashboard(id)
-                this.dashboard = id
+                $wire.dashboardId = id;
+                $wire.selectDashboard(id);
             },
         }" wire:ignore.self x-init="dashboard = {{ $dashboardId }}">
             <input type="text" class="form-control" placeholder="Search…" aria-label="Search">
@@ -44,7 +43,7 @@
                 @foreach ($dashboards as $item)
                     <a wire:key="dashboard-{{ $item->id }}" @click="selectDashboard({{ $item->id }})"
                         class="nav-link text-start mw-100 rounded-0 p-1 cursor-pointer "
-                        :class="dashboard == {{ $item->id }} ? 'bg-blue text-bg-blue' : ''">
+                        :class="$wire.dashboardId == {{ $item->id }} ? 'bg-blue text-bg-blue' : ''">
                         {{ $item->name }}
                     </a>
                 @endforeach
