@@ -47,14 +47,6 @@ export default {
         options: dataSource,
       };
     }
-    console.log(el.value);
-    el.$sokeio_tomselect = new TomSelect(el, {
-      ...optionBase64,
-      onChange: function (value) {
-        Utils.dataSet(component.$wire, el.getAttribute("wire:model"), value);
-        el.value = value;
-        console.log(el.getAttribute("wire:model"));
-      },
-    });
+    el.$sokeio_tomselect = new TomSelect(el, optionBase64);
   },
 };

@@ -84,8 +84,11 @@ class Select extends FieldUI
     protected function fieldView()
     {
         $attr = $this->getAttr();
+        $value= $this->getValue();
         return <<<HTML
-        <select {$attr} ></select>
+        <select {$attr} >
+            <option value="{$value}"></option>
+        </select>
         HTML;
     }
 }
