@@ -175,4 +175,10 @@ trait LifecycleUI
     {
         return count($this->childs[$group] ?? []) > 0;
     }
+    public function tap($callback)
+    {
+        $callback($this);
+
+        return $this;
+    }
 }

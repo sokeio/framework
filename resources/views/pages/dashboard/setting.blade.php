@@ -1,4 +1,4 @@
-    <div class="col-lg-3 col-md-4 col-sm-12 sokeio-modal-body-max-height overflow-auto p-0 m-0">
+    <div class="col-lg-2 col-md-3 col-sm-12 sokeio-modal-body-max-height overflow-auto p-0 m-0">
         <div class="text-center" x-data="{
             open: false,
             name: '',
@@ -51,7 +51,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-9 col-md-8 col-sm-12 sokeio-modal-body-max-height overflow-auto  p-0 m-0">
+    <div class="col-lg-10 col-md-9 col-sm-12 sokeio-modal-body-max-height overflow-auto  p-0 m-0">
         <livewire:sokeio::dashboard-setting wire:key="dashboard-{{ $dashboardId }}"
             dashboardId="{{ $dashboardId }}" />
     </div>

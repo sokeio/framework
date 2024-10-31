@@ -81,7 +81,7 @@ class SoUI
     {
         $this->wire = $wire;
         if (!$ui) {
-            return;
+            $ui = [];
         }
         if (!is_array($ui)) {
             $ui = [$ui];
@@ -91,11 +91,18 @@ class SoUI
         $this->initManager();
         $this->register();
     }
-    public function initManager()
+    public function tapUI($callback)
     {
         foreach ($this->ui as $ui) {
-            $ui->registerManager($this);
+            if ($ui instanceof BaseUI) {
+                $callback($ui);
+            }
         }
+        return $this;
+    }
+    public function initManager()
+    {
+        return $this->tapUI(fn($ui) => $ui->registerManager($this));
     }
     public function register($callback = null)
     {
@@ -106,10 +113,7 @@ class SoUI
         $this->lifecycleWithKey('register', $callback, (func_get_args()));
 
         //register
-        foreach ($this->ui as $ui) {
-            $ui->register();
-        }
-        return $this;
+        return $this->tapUI(fn($ui) => $ui->register());
     }
     public function boot($callback = null)
     {
@@ -120,10 +124,7 @@ class SoUI
         $this->lifecycleWithKey('boot', $callback, (func_get_args()));
 
         //boot
-        foreach ($this->ui as $ui) {
-            $ui->boot();
-        }
-        return $this;
+        return $this->tapUI(fn($ui) => $ui->boot());
     }
     public function ready($callback = null)
     {
@@ -133,10 +134,7 @@ class SoUI
         }
         $this->lifecycleWithKey('ready', $callback, (func_get_args()));
         //ready
-        foreach ($this->ui as $ui) {
-            $ui->ready();
-        }
-        return $this;
+        return $this->tapUI(fn($ui) => $ui->ready());
     }
     public function render($callback = null)
     {
@@ -146,14 +144,17 @@ class SoUI
         }
         $this->lifecycleWithKey('render', $callback, (func_get_args()));
         //render
-        foreach ($this->ui as $ui) {
-            $ui->render();
-        }
-        //render
+        $this->tapUI(fn($ui) => $ui->render());
         $html = '';
         foreach ($this->ui as $ui) {
-            if ($ui->checkWhen()) {
+            if ($ui instanceof BaseUI) {
                 $html .= $ui->view();
+            } elseif (is_array($ui)) {
+                $html .= implode('', $ui);
+            } elseif (is_callable($ui)) {
+                $html .= call_user_func($ui, $this);
+            } else {
+                $html .= $ui;
             }
         }
         if (count($this->ui) > 1) {
@@ -161,6 +162,7 @@ class SoUI
         }
         return $html;
     }
+
     public function toArray()
     {
         $ui = [];
@@ -174,6 +176,12 @@ class SoUI
             }
         }
         return $ui;
+    }
+    public function toHtml()
+    {
+        $this->boot();
+        $this->ready();
+        return $this->render();
     }
     public function toUI($arr)
     {
