@@ -4,7 +4,7 @@ namespace Sokeio\Livewire\DashboardSetting;
 
 use Sokeio\Component;
 use Sokeio\Models\Dashboard;
-use Sokeio\UI\SoUI;
+use Sokeio\UI\Common\Div;
 use Sokeio\UI\WithUI;
 use Sokeio\Widget;
 
@@ -13,19 +13,33 @@ class Index extends Component
     use WithUI;
     public $dashboardId = 0;
     public $widgets = [];
+    public $widgetParams = [];
     public $widgetId = "";
     public $dashboardName = "";
     public $dashboardDescription = "";
+    private function paramFillToWidget()
+    {
+        if ($this->widgetId) {
+            foreach ($this->widgets as $key => $item) {
+                if ($item['id'] === $this->widgetId) {
+                    $item['params'] = $this->widgetParams;
+                    $this->widgets[$key] = $item;
+                    break;
+                }
+            }
+        }
+    }
     public function chooseWidget($widgetId)
     {
+        $this->paramFillToWidget();
         $this->widgetId = $widgetId;
-        // $this->skipRender();
-        // $widget = Widget::getWidget($widgetKey);
-        // $class = data_get($widget, 'class');
-        // if ($widget && $class && class_exists($class)) {
-        //     return SoUI::init(($class)::paramUI(), $this)->toHtml();
-        // }
-        // return "NOK";
+        foreach ($this->widgets as  $item) {
+            if ($item['id'] === $this->widgetId) {
+                $this->widgetParams = $item['params'];
+                break;
+            }
+        }
+        $this->reUI();
     }
     protected function setupUI()
     {
@@ -36,26 +50,17 @@ class Index extends Component
             $key = $widget['key'];
             $class = data_get(Widget::getWidget($key), 'class');
             if ($class && class_exists($class)) {
-                return SoUI::init(($class)::paramUI(), $this)->toHtml();
+                return Div::init(($class)::paramUI())->setPrefix('widgetParams');
             }
         }
         return [];
     }
     public function addWidget($key, $group, $column = 'column3', $params = [])
     {
-        // [
-        //     'key' => 'sokeio:count-model',
-        //     'id' => 'widget-1',
-        //     'group' => 'top',
-        //     'column' => 'column3',
-        //     'params' => [
-        //         'model' => null,
-        //         'title' => 'Data 1'
-        //     ]
-        // ],
         if ($wire = Widget::getWidget($key)) {
+            $id = uniqid('widget-');
             $this->widgets[] = [
-                'id' => uniqid('widget-'),
+                'id' => $id,
                 'key' => $key,
                 'group' => $group,
                 'column' => $column,
@@ -67,7 +72,22 @@ class Index extends Component
 
     public function mount()
     {
-        $this->widgets = Dashboard::find($this->dashboardId)?->widgets ?? [];
+        $dashboard = Dashboard::find($this->dashboardId);
+        if ($dashboard) {
+            $this->dashboardName = $dashboard->name;
+            $this->dashboardDescription = $dashboard->description;
+        }
+        $this->widgets = $dashboard?->widgets ?? [];
+    }
+    public function save()
+    {
+        $this->paramFillToWidget();
+        $dashboard = Dashboard::find($this->dashboardId);
+        $dashboard->name = $this->dashboardName;
+        $dashboard->description = $this->dashboardDescription;
+        $dashboard->widgets = $this->widgets;
+        $dashboard->save();
+        $this->refreshParentMe();
     }
     public function render()
     {

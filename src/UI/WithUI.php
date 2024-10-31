@@ -22,6 +22,11 @@ trait WithUI
     {
         $this->getUI()->boot();
     }
+    public function reUI()
+    {
+        $this->ui = null;
+        $this->getUI()->boot();
+    }
     public function getUI(): SoUI
     {
         return $this->ui ?? ($this->ui = SoUI::init($this->setupUI(), $this));

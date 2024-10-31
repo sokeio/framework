@@ -4,9 +4,11 @@
     group: 'top',
     groups: ['top', 'center', 'bottom'],
     widgets: [],
-    changeGroup() {
+    changeGroup(skip = false) {
         this.widgets = $wire.widgets.filter((item) => item.group == this.group);
-        this.widgetId = '';
+        if (!skip) {
+            this.widgetId = '';
+        }
     },
     updateSortable(items) {
         let widgetTemps = $wire.widgets.filter((item) => item.group != this.group);
@@ -20,11 +22,26 @@
     async addWidget() {
         if (this.widgetKey) {
             await $wire.addWidget(this.widgetKey, this.group, 'column3', []);
-            this.changeGroup();
+            this.changeGroup(true);
         }
     }
 }" x-init="changeGroup();
 $watch('group', value => changeGroup());">
+    <div>
+        <div class="mb-2">
+            <label class="form-label">Name</label>
+            <input wire:model='dashboardName' type="text" class="form-control" placeholder="Enter dashboard name">
+        </div>
+        <div class="mb-2">
+            <label class="form-label">Description <span class="form-label-description"
+                    x-text="$wire.dashboardDescription.length"></span></label>
+            <textarea wire:model="dashboardDescription" class="form-control" rows="3" placeholder="Enter description">
+            </textarea>
+        </div>
+        <button class="btn btn-primary" type="button" wire:click="save">
+            <i class="bi bi-device-floppy"></i> <span>Save</span>
+        </button>
+    </div>
     <div class="row">
         <div class="col-12 col-md-4 col-lg-4">
             <div class="mb-3">
@@ -61,14 +78,14 @@ $watch('group', value => changeGroup());">
                 }
             }">
                 <template x-for="widget in widgets" x-key="widget&&widget['id']">
-                    <div wire:sortable.item :data-sortable-id="widget['id']" class="p-1 border mb-1"
+                    <div wire:sortable.item :data-sortable-id="widget['id']" class="p-1 border mb-1 cursor-pointer"
                         :class="widgetId == widget['id'] ? 'bg-primary text-bg-primary' : ''" x-text="widget['id']"
                         @click="chooseWidget(widget['id'])"></div>
                 </template>
             </div>
         </div>
         <div class="col-12 col-md-4 col-lg-4">
-            <div class="mb-3">
+            <div class="mb-3" x-show="widgetId">
                 <label class="form-label">Widget Settings</label>
                 <div wire:key='{{ $widgetId }}'>
                     {!! $widgetSettings !!}

@@ -50,6 +50,13 @@
     }
 }
 
+[data-bs-theme=dark],
+body[data-bs-theme=dark] [data-bs-theme=light] {
+    .so-modal-overlay {
+        --tblr-backdrop-bg: #99a6b5;
+    }
+}
+
 .so-modal {
     position: fixed;
     top: 0;

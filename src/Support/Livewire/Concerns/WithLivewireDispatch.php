@@ -9,6 +9,7 @@ trait WithLivewireDispatch
     private const LIVEWIRE_CLOSE = 'sokeio_close';
     private const LIVEWIRE_FUNCTION = 'sokeio_function';
     private const LIVEWIRE_REFRESH = 'sokeio_refresh';
+    private const LIVEWIRE_REFRESH_PARENT = 'sokeio_refresh_parent';
     protected function sendMessageToClient($type, $payload = [])
     {
         $this->dispatch('sokeio::dispatch', [
@@ -35,11 +36,23 @@ trait WithLivewireDispatch
             'wireTargetId' => $id,
         ]);
     }
-    public function refreshRef(){
+    public function refreshParentToChildId($id)
+    {
+        $this->sendMessageToClient(self::LIVEWIRE_REFRESH_PARENT, [
+            'wireTargetId' => $id,
+        ]);
+    }
+    public function refreshRef()
+    {
         $this->refreshToId($this->getRefId());
     }
-    public function refreshMe(){
+    public function refreshMe()
+    {
         $this->refreshToId($this->getId());
+    }
+    public function refreshParentMe()
+    {
+        $this->refreshParentToChildId($this->getId());
     }
     public function callFunc($func, $option = [])
     {
