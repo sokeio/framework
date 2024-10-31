@@ -35,6 +35,9 @@ class Select extends FieldUI
         $this->render(function () {
             $this->attr('wire:tom-select');
             if ($this->datasource) {
+                if (is_callable($this->datasource)) {
+                    $this->datasource = call_user_func($this->datasource, $this);
+                }
                 $this->attr('wire:tom-select.data-source', json_encode($this->datasource));
             }
             $this->attr('wire:tom-select.options', json_encode($this->options));
@@ -81,12 +84,6 @@ class Select extends FieldUI
     protected function fieldView()
     {
         $attr = $this->getAttr();
-        if ($label = $this->getVar('label', '', true)) {
-            return <<<HTML
-             <label class="form-label">{$label}</label>
-             <select {$attr} ></select>
-            HTML;
-        }
         return <<<HTML
         <select {$attr} ></select>
         HTML;

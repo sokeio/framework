@@ -7,20 +7,22 @@ use Livewire\Attributes\Locked;
 use Sokeio\Component;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\WithUI;
-use Sokeio\Widget;
 
 class WidgetComponent extends Component
 {
     use WithUI;
     #[Locked]
-    public $widgetId;
+    public $widgetData;
     #[Locked]
     public $dashboardKey;
+    #[Locked]
+    public $dashboardId;
+
     private WidgetSetting|null $widget = null;
     public function getWidget()
     {
         if (!$this->widget) {
-            $this->widget =  Widget::getWidgetById($this->widgetId);
+            $this->widget = WidgetSetting::parse($this->widgetData);
         }
         return $this->widget;
     }
@@ -34,9 +36,7 @@ class WidgetComponent extends Component
     {
         return [
             Div::init([
-                Div::init([
-                    $this->getWidget()->getWidgetUI()
-                ])->className('card')
+                Div::init([$this->getWidget()?->getWidgetUI()])->className('card')
             ])->className($this->getWidget()->getColumnClass()),
 
         ];

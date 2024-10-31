@@ -101,6 +101,7 @@ class Index extends Component
         $dashboard->widgets = $this->widgets;
         $dashboard->save();
         $this->refreshParentMe();
+        $this->refreshRef();
     }
     public function remove()
     {

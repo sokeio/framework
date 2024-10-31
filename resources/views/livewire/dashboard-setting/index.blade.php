@@ -126,6 +126,7 @@ $watch('group', value => changeGroup());">
                 </div>
             </div>
             <div class="col-12 col-md-4 col-lg-4">
+                @json($widgetParams)
                 <div class="mb-3" x-show="widgetId">
                     <label class="form-label">Widget Settings</label>
                     <div wire:key='{{ $widgetId }}'>

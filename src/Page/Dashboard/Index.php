@@ -36,7 +36,22 @@ class Index extends \Sokeio\Page
 
     public function getWidgets(): array
     {
-        return Widget::getListWidgets();
+        $dashboardId = data_get($this->dataSearch, 'dashboard_id');
+        $dashboard = null;
+        if ($dashboardId) {
+            $dashboard = Dashboard::find($dashboardId);
+        }
+        if (!$dashboard) {
+            $dashboard = Dashboard::query()->where('is_default', true)->first();
+        }
+        if (!$dashboard) {
+            return  Widget::getListWidgets();
+        }
+        if ($dashboard && (!$dashboardId || ($dashboard->id != $dashboardId))) {
+            data_set($this->dataSearch, 'dashboard_id', $dashboard->id);
+            $this->updatedDataSearch();
+        }
+        return $dashboard->widgets ?? [];
     }
     protected function setupUI()
     {
@@ -47,13 +62,16 @@ class Index extends \Sokeio\Page
             PageUI::init([
                 Div::init()->viewBlade('sokeio::pages.dashboard.index', [
                     'widgets' => $this->getWidgets(),
-                    'dashboardKey' => $this->dashboardKey
+                    'dashboardKey' => $this->dashboardKey,
+                    'dashboard_id' => data_get($this->dataSearch, 'dashboard_id')
                 ])
             ])->title($this->getPageConfig()->getTitle())
                 ->className('p-2')
                 ->icon('ti ti-dashboard')->rightUI([
                     Select::init('dashboard_id')->placeholder('Dashboard')
                         ->remoteActionWithModel(Dashboard::class)
+                        ->debounce(60)
+                        ->valueDefault(data_get($this->dataSearch, 'dashboard_id'))
                         ->classNameWrapper('me-2'),
                     DatePicker::init('from_date')->placeholder(__('Start Date'))
                         ->classNameWrapper('me-2')

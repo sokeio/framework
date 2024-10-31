@@ -82,12 +82,6 @@ class FieldUI extends BaseUI
     protected function fieldView()
     {
         $attr = $this->getAttr();
-        if ($label = $this->getVar('label', '', true)) {
-            return <<<HTML
-            <label class="form-label">{$label}</label>
-            <input {$attr} />
-            HTML;
-        }
         return <<<HTML
         <input {$attr} />
         HTML;
@@ -106,6 +100,13 @@ class FieldUI extends BaseUI
         if ($valueDefault && !$value) {
             $wire = $this->getWire();
             data_set($wire, $attrModel, $valueDefault);
+        }
+        $fieldView = $this->fieldView();
+        if ($label = $this->getVar('label', '', true)) {
+            $fieldView = <<<HTML
+            <label class="form-label">{$label}</label>
+            {$fieldView}
+            HTML;
         }
         return <<<HTML
         <div {$attrWrapper} x-data="{

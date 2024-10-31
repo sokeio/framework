@@ -24,10 +24,9 @@ class RangeNumber extends FieldUI
             return $this->attr('type', 'range')->className('form-range');
         });
     }
-    private function inputView()
+    protected function fieldView()
     {
         $attr = $this->getAttr();
-
         return <<<HTML
             <div class="range-wrapper"
              x-data="{min:{$this->getVar('min', 0, true)}, max:{$this->getVar('max', 100, true)}}">
@@ -44,15 +43,5 @@ class RangeNumber extends FieldUI
                 </div>
             </div>
         HTML;
-    }
-    protected function fieldView()
-    {
-        if ($label = $this->getVar('label', '', true)) {
-            return <<<HTML
-                <label class="form-label">{$label}</label>
-                {$this->inputView()}
-            HTML;
-        }
-        return $this->inputView();
     }
 }

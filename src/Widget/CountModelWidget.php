@@ -2,9 +2,12 @@
 
 namespace Sokeio\Widget;
 
+use Sokeio\Platform;
 use Sokeio\Support\Widget\WidgetInfo;
 use Sokeio\Support\Widget\WidgetUI;
 use Sokeio\UI\Field\Input;
+use Sokeio\UI\Field\Select;
+
 
 #[WidgetInfo('sokeio:count-model', 'Count Of Model', 'ti ti-bar-chart-2')]
 class CountModelWidget extends WidgetUI
@@ -13,7 +16,14 @@ class CountModelWidget extends WidgetUI
     {
         return [
             Input::init('title')->label(__('Title')),
-            Input::init('model')->label(__('Model')),
+            Select::init('model')->label(__('Model'))->dataSource(function () {
+                return collect(Platform::getAllModel())->map(function ($item, $key) {
+                    return [
+                        'value' => $key,
+                        'text' => $item['name']
+                    ];
+                });
+            }),
         ];
     }
     public function view()

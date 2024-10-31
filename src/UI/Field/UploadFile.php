@@ -25,17 +25,6 @@ class UploadFile extends FieldUI
         $attr = $this->getAttr();
         $title = $this->getVar('title', 'Upload File', true);
         $description = $this->getVar('description', 'This is description', true);
-        if ($label = $this->getVar('label', '', true)) {
-            return <<<HTML
-                <label class="form-label">{$label}</label>
-                <div {$attr} >
-                <div class="dz-message  py-4">
-                <h3 class="dropzone-msg-title">{$title}</h3>
-                <span class="dropzone-msg-desc">{$description}</span>
-                </div>
-            </div>
-            HTML;
-        }
         return <<<HTML
             <div {$attr} >
                 <div class="dz-message  py-4">

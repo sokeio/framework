@@ -29,17 +29,6 @@ class Checkbox extends FieldUI
         $attr = $this->getAttr();
         $attrWrapper = $this->getAttr('wrapper') ?? 'class="mb-3"';
         $labelCheckbox = $this->getVar('labelCheckbox', '', true);
-        if ($label = $this->getVar('label', '', true)) {
-            return <<<HTML
-            <div {$attrWrapper}>
-                <label class="form-label">{$label}</label>
-                <label class="form-check">
-                    <input {$attr} >
-                    <span class="form-check-label">{$labelCheckbox}</span>
-                </label>
-            </div>
-            HTML;
-        }
         return <<<HTML
         <div {$attrWrapper}>
             <label class="form-check">

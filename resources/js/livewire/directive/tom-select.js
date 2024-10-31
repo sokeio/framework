@@ -1,3 +1,4 @@
+import { Utils } from "../../framework/common/Uitls";
 export default {
   checkFirst: () => window["TomSelect"] !== undefined,
   local: {
@@ -39,13 +40,21 @@ export default {
         },
       };
     }
-    
+
     if (dataSource) {
       optionBase64 = {
         ...optionBase64,
         options: dataSource,
       };
     }
-    el.$sokeio_tomselect = new TomSelect(el, optionBase64);
+    console.log(el.value);
+    el.$sokeio_tomselect = new TomSelect(el, {
+      ...optionBase64,
+      onChange: function (value) {
+        Utils.dataSet(component.$wire, el.getAttribute("wire:model"), value);
+        el.value = value;
+        console.log(el.getAttribute("wire:model"));
+      },
+    });
   },
 };

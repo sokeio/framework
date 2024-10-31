@@ -19,7 +19,9 @@ trait WithPlatform
     public function registerModel($class, ItemInfo $itemInfo)
     {
         $this->booted(function () use ($class, $itemInfo) {
-            $this->models[] = [
+            $key = md5($class);
+            $this->models[$key] = [
+                'key' => $key,
                 'class' => $class,
                 'name' => class_basename($class),
                 // 'table_name' => ($class)::query()->getModel()->getTable(),
@@ -33,6 +35,13 @@ trait WithPlatform
     public function getAllModel()
     {
         return $this->models;
+    }
+    public function getModelByKey($key)
+    {
+        if (!isset($this->models[$key])) {
+            return null;
+        }
+        return $this->models[$key];
     }
     public function version()
     {
