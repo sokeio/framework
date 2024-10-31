@@ -1,5 +1,4 @@
 <div dashboard-key="{{ $dashboard_id }}" wire:key='dashboard-{{ $dashboard_id }}'>
-    @json($widgets)
     @include('sokeio::pages.dashboard.group', [
         'group' => 'top',
         'widgets' => $widgets,

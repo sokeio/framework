@@ -21,11 +21,11 @@ class Index extends Component
     public $isActive = false;
     public $isPrivate = false;
 
-    private function paramFillToWidget()
+    private function paramFillToWidget($widgetId = null)
     {
-        if ($this->widgetId) {
+        if ($widgetId) {
             foreach ($this->widgets as $key => $item) {
-                if ($item['id'] === $this->widgetId) {
+                if ($item['id'] === $widgetId) {
                     $item['params'] = $this->widgetParams;
                     $this->widgets[$key] = $item;
                     break;
@@ -33,10 +33,9 @@ class Index extends Component
             }
         }
     }
-    public function chooseWidget($widgetId)
+    public function chooseWidget($widgetOldId)
     {
-        $this->paramFillToWidget();
-        $this->widgetId = $widgetId;
+        $this->paramFillToWidget($widgetOldId);
         foreach ($this->widgets as  $item) {
             if ($item['id'] === $this->widgetId) {
                 $this->widgetParams = $item['params'];
@@ -44,6 +43,17 @@ class Index extends Component
             }
         }
         $this->reUI();
+    }
+    public function removeWidget()
+    {
+        $widgets = collect($this->widgets)->filter(function ($item) {
+            return $item['id'] !== $this->widgetId;
+        });
+        $this->widgets = $widgets->toArray();
+        foreach ($this->widgets as $key => $item) {
+            $this->chooseWidget($item['id']);
+            return;
+        }
     }
     protected function setupUI()
     {
@@ -88,7 +98,7 @@ class Index extends Component
     }
     public function save()
     {
-        $this->paramFillToWidget();
+        $this->paramFillToWidget($this->widgetId);
         if ($this->isDefault) {
             Dashboard::query()->update(['is_default' => false]);
         }
@@ -106,6 +116,9 @@ class Index extends Component
     public function remove()
     {
         $dashboard = Dashboard::find($this->dashboardId);
+        if($dashboard->is_default){
+            return;
+        }
         $dashboard->delete();
         $this->refreshParentMe();
     }

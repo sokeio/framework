@@ -1,13 +1,12 @@
 <div class="p-3" x-data="{
     widgetKey: '',
-    widgetId: '',
     group: 'top',
     groups: ['top', 'center', 'bottom'],
     widgets: [],
     changeGroup(skip = false) {
         this.widgets = $wire.widgets.filter((item) => item.group == this.group);
         if (!skip) {
-            this.widgetId = '';
+            $wire.widgetId = '';
         }
     },
     updateSortable(items) {
@@ -16,14 +15,21 @@
         $wire.widgets = widgets;
     },
     async chooseWidget(widgetId) {
-        this.widgetId = widgetId;
-        await $wire.chooseWidget(widgetId);
+        let widgetOld = $wire.widgetId;
+        $wire.widgetId = widgetId;
+        await $wire.chooseWidget(widgetOld);
     },
     async addWidget() {
         if (this.widgetKey) {
             await $wire.addWidget(this.widgetKey, this.group, 'column3', []);
             this.changeGroup(true);
         }
+    },
+    async removeWidget() {
+        await $wire.removeWidget();
+        setTimeout(() => {
+            this.changeGroup(true);
+        }, 30);
     }
 }" x-init="changeGroup();
 $watch('group', value => changeGroup());">
@@ -68,7 +74,7 @@ $watch('group', value => changeGroup());">
         </div>
         <div class="mb-1 mt-1">
             <label class="form-label">Description <span class="form-label-description"
-                    x-text="$wire.description.length"></span></label>
+                    x-text="$wire.description?.length??0"></span></label>
             <textarea wire:model="description" class="form-control" rows="3" placeholder="Enter description">
             </textarea>
         </div>
@@ -76,7 +82,7 @@ $watch('group', value => changeGroup());">
             <i class="ti ti-device-floppy"></i> <span>Save</span>
         </button>
         <button class="btn btn-danger" type="button" wire:click="remove" wire:confirm='Are you sure want to remove?'>
-            <i class="ti ti-close"></i> <span>Remove</span>
+            <i class="ti ti-trash"></i> <span>Remove</span>
         </button>
     </div>
     <div class="border border-dashed p-2 rounded-1">
@@ -110,15 +116,20 @@ $watch('group', value => changeGroup());">
                         </template>
                     </div>
                 </div>
-                <div class="" wire:sortable x-data="{
+                <div wire:sortable x-data="{
                     onSortable(el, items) {
-                        updateSortable([...el]);
-                    }
+                            updateSortable([...el]);
+                        },
+                        checkWidget(widget) {
+                            if (widget['id'] == $wire.widgetId) {
+                                return 'bg-primary text-bg-primary';
+                            }
+                            return '';
+                        }
                 }">
-                    <template x-for="widget in widgets" x-key="widget&&widget['id']">
+                    <template x-for="widget in widgets">
                         <div wire:sortable.item :data-sortable-id="widget['id']" class="p-1 border mb-1 cursor-pointer"
-                            :class="widgetId == widget['id'] ? 'bg-primary text-bg-primary' : ''"
-                            @click="chooseWidget(widget['id'])">
+                            :class="checkWidget(widget)" @click="chooseWidget(widget['id'])">
                             <div x-text="widget['name']"></div>
                             <div x-text="widget['id']"></div>
                         </div>
@@ -126,13 +137,15 @@ $watch('group', value => changeGroup());">
                 </div>
             </div>
             <div class="col-12 col-md-4 col-lg-4">
-                @json($widgetParams)
-                <div class="mb-3" x-show="widgetId">
+                <div class="mb-3" x-show="$wire.widgetId">
                     <label class="form-label">Widget Settings</label>
+                    <button class="btn btn-danger btn-sm mb-2" type="button" @click="removeWidget()"
+                        wire:confirm='Are you sure want to remove?'>
+                        <i class="ti ti-trash"></i> <span>Remove Widget</span>
+                    </button>
                     <div wire:key='{{ $widgetId }}'>
                         {!! $widgetSettings !!}
                     </div>
-
                 </div>
             </div>
         </div>

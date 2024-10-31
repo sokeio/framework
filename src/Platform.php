@@ -33,7 +33,9 @@ use Illuminate\Support\Facades\Facade;
  * @method static mixed getThemeSite()
  * @method static \Sokeio\Support\Platform\PlatformManager registerModel($class, ItemInfo $itemInfo)
  * @method static array getAllModel()
+ * @method static array getModelByKey($modelKey, $paramKey = null)
  */
+
 class Platform extends Facade
 {
     protected static function getFacadeAccessor()

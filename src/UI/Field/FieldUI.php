@@ -113,7 +113,7 @@ class FieldUI extends BaseUI
             get FieldValue(){ return \$wire.{$attrModel}; },
             set FieldValue(value){\$wire.{$attrModel} = value;}
         }" >
-        {$this->fieldView()}
+        {$fieldView}
         {$this->errorView()}
         </div>
         HTML;

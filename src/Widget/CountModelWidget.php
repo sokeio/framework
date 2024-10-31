@@ -28,12 +28,31 @@ class CountModelWidget extends WidgetUI
     }
     public function view()
     {
+        $value = 0;
+        $model = $this->getDataParam('model');
+        if ($model) {
+            $model = Platform::getModelByKey($model, 'class');
+        }
+        if ($model && class_exists($model)) {
+            $value = $model::query()->count();
+        }
+
         return <<<HTML
-        <div>
-            <div class="text-center">
-                <h5 class="">{$this->getDataParam('title', '')}</h5>
-        </div>
-        </div>
+                <div class="row align-items-center p-1">
+                    <div class="col-auto">
+                        <span class="bg-primary text-white avatar">
+                            <i class="ti ti-currency-dollar fs-2"></i>
+                        </span>
+                    </div>
+                    <div class="col">
+                        <div class="font-weight-medium">
+                        {$this->getDataParam('title', '')}
+                        </div>
+                        <div class="text-secondary ">
+                        {$value}
+                        </div>
+                    </div>
+                </div>
         HTML;
     }
 }

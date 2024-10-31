@@ -36,12 +36,15 @@ trait WithPlatform
     {
         return $this->models;
     }
-    public function getModelByKey($key)
+    public function getModelByKey($modelKey, $paramKey = null)
     {
-        if (!isset($this->models[$key])) {
+        if (!isset($this->models[$modelKey])) {
             return null;
         }
-        return $this->models[$key];
+        if ($paramKey) {
+            return data_get($this->models[$modelKey], $paramKey);
+        }
+        return $this->models[$modelKey];
     }
     public function version()
     {
