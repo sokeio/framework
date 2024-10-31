@@ -3,6 +3,7 @@
 namespace Sokeio;
 
 use Illuminate\Support\Facades\Facade;
+use Sokeio\Support\Platform\PlatformManager;
 
 /**
  * @see \Sokeio\Support\Platform
@@ -40,6 +41,6 @@ class Platform extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'sokeio_platform';
+        return PlatformManager::class;
     }
 }

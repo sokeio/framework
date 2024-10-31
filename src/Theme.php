@@ -3,6 +3,7 @@
 namespace Sokeio;
 
 use Illuminate\Support\Facades\Facade;
+use Sokeio\Support\Theme\ThemeManager;
 
 /**
  * @see \Sokeio\Support\Theme
@@ -42,6 +43,6 @@ class Theme extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'sokeio_theme';
+        return ThemeManager::class;
     }
 }

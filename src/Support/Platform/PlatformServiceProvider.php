@@ -21,7 +21,7 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
         Route::pushMiddlewareToGroup('sokeio.admin', 'web');
         Route::pushMiddlewareToGroup('sokeio.admin', Authenticate::class);
         Route::pushMiddlewareToGroup('sokeio.admin.guest', 'web');
-        $this->app->singleton('sokeio_platform', PlatformManager::class);
+        // $this->app->singleton('sokeio_platform', PlatformManager::class);
         Platform::loadFromPath(Platform::getPlatformPath());
         $this->app->booting(function () {
             Platform::boot();
