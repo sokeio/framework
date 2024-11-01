@@ -130,10 +130,10 @@ class MenuManager implements Arrayable
     private function render($position = 'default')
     {
         $this->beforRender();
-        return Theme::view('partials.menu.index', [
+        return Theme::view('sokeio::partials.menu.index', [
             'items' => $this->getItemsByPosition($position),
             'position' => $position
-        ])->render();
+        ], [], true)->render();
     }
 
     public function toArray()

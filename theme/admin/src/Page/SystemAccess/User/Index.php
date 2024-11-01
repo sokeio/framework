@@ -17,6 +17,7 @@ use Sokeio\UI\WithUI;
     menu: true,
     menuTitle: 'Users',
     menuTargetTitle: 'System Access',
+    menuTargetSort:1000,
     sort: 0,
     model: User::class
 )]

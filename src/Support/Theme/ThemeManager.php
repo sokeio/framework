@@ -4,25 +4,19 @@ namespace Sokeio\Support\Theme;
 
 use Illuminate\Support\Facades\View;
 use Sokeio\Platform;
+use Sokeio\Support\Theme\Concerns\ThemeData;
+use Sokeio\Support\Theme\Concerns\ThemeHook;
+use Sokeio\Support\Theme\Concerns\ThemeMeta;
 
 class ThemeManager
 {
-    private $headBefore = [];
-    private $headAfter = [];
-    private $bodyBefore = [];
-    private $bodyAfter = [];
+    use ThemeHook, ThemeData, ThemeMeta;
     private $useCdn = false;
-    private $title = '';
-    private $description = '';
-    private $keywords = '';
-    private $arrTemplate = [];
-    private $arrJavascript = [];
-    private $arrStyle = [];
-    private $arrLinkCss = [];
-    private $arrLinkJs = [];
     private $layout;
     private $themeSite = null;
     private $themeAdmin = null;
+
+
     public function getThemeAdmin()
     {
         if (!$this->themeAdmin) {
@@ -45,29 +39,7 @@ class ThemeManager
 
         return $this->getThemeSite();
     }
-    public function getSiteInfo()
-    {
-        return [
-            'title' => $this->title,
-            'description' => $this->description,
-            'keywords' => $this->keywords,
-        ];
-    }
-    public function title($title)
-    {
-        $this->title = $title;
-        return $this;
-    }
-    public function description($description)
-    {
-        $this->description = $description;
-        return $this;
-    }
-    public function keywords($keywords)
-    {
-        $this->keywords = $keywords;
-        return $this;
-    }
+
     public function enableCdn()
     {
         $this->useCdn = true;
@@ -78,178 +50,66 @@ class ThemeManager
         $this->useCdn = false;
         return $this;
     }
-    public function templateFromPath($path, $id = null)
-    {
-        if (file_exists($path)) {
-            return $this->template(file_get_contents($path), $id);
-        }
-        return $this;
-    }
-    public function template($content, $id = null)
-    {
-        $content = trim($content);
-        $key = md5($content);
-        $this->arrTemplate[$key] = [
-            'content' => $content,
-            'id' => $id
-        ];
-        return $this;
-    }
-    public function jsFromPath($path, $id = null)
-    {
-        if (file_exists($path)) {
-            return $this->js(file_get_contents($path), $id);
-        }
-        return $this;
-    }
-    public function js($content, $id = null)
-    {
-        $content = trim($content);
-        $key = md5($content);
-        $this->arrJavascript[$key] = [
-            'content' => $content,
-            'id' => $id
-        ];
-        return $this;
-    }
-    public function styleFromPath($path, $id = null)
-    {
-        if (file_exists($path)) {
-            return $this->style(file_get_contents($path), $id);
-        }
-        return $this;
-    }
-    public function style($content, $id = null)
-    {
-        $content = trim($content);
-        $key = md5($content);
-        $this->arrStyle[$key] = [
-            'content' => $content,
-            'id' => $id
-        ];
-        return $this;
-    }
-    public function linkCss($link, $cdn = null)
-    {
-        $this->arrLinkCss[] = ['link' => trim($link), 'cdn' => $cdn];
-        return $this;
-    }
-    public function linkJs($link, $cdn = null)
-    {
-        $this->arrLinkJs[] = ['link' => trim($link), 'cdn' => $cdn];
-        return $this;
-    }
-    private function linkRender($link)
-    {
-        if (!$link) {
-            return;
-        }
-        echo '<link rel="stylesheet"  href="' . ($link) . '"/>';
-    }
+
     public function headRender()
     {
-        if ($this->title) {
-            echo '<title>' . $this->title . '</title>';
-        }
-        if ($this->description) {
-            echo '<meta name="description" content="' . $this->description . '">';
-        }
-        if ($this->keywords) {
-            echo '<meta name="keywords" content="' . $this->keywords . '">';
-        }
-        foreach ($this->headBefore as $callback) {
-            $callback();
-        }
-        foreach ($this->arrLinkCss as ['link' => $link, 'cdn' => $cdn]) {
-            if ($cdn && $this->useCdn || !$link) {
-                $this->linkRender($cdn);
-            } else {
-                $this->linkRender($link);
+        $this->metaRender();
+        $this->callhook('headBefore');
+        $this->renderData('linkCss', function ($value) {
+            ['contentOrLink' => $contentOrLink, 'cdn' => $cdn] = $value;
+            $link = $contentOrLink;
+            if ($cdn && $this->useCdn || !$contentOrLink) {
+                $link = $cdn;
             }
-        }
-
-        foreach ($this->arrStyle as $key => $value) {
-            if ($value['id']) {
-                echo '<style type="text/css" id="' . $value['id'] . '">' . $value['content'] . '</style>';
-            } else {
-                echo '<style type="text/css" id="' . $key . '">' . $value['content'] . '</style>';
-            }
-        }
-
-
-        foreach ($this->headAfter as $callback) {
-            $callback();
-        }
+            echo "<link rel='stylesheet'  href='{$link}'/>";
+        });
+        $this->renderData('style', function ($value) {
+            ['contentOrLink' => $contentOrLink, 'id' => $id] = $value;
+            echo "<style type='text/css' id='{$id}'>{$contentOrLink}</style>";
+        });
+        $this->callhook('headAfter');
     }
     public function bodyRender()
     {
-        foreach ($this->bodyBefore as $callback) {
-            $callback();
-        }
+        $this->callhook('bodyBefore');
     }
-
-    private function jsRender($script)
+    public function bodyAttrRender()
     {
-        if (!$script) {
-            return;
-        }
-        echo '<script data-navigate-once type="text/javascript" id="' . md5($script) . '" src="' . ($script) . '"></script>';
+        $this->callhook('bodyAttr');
     }
     public function bodyEndRender()
     {
-        foreach ($this->arrLinkJs as ['link' => $link, 'cdn' => $cdn]) {
-            if ($cdn && $this->useCdn || !$link) {
-                $this->jsRender($cdn);
-            } else {
-                $this->jsRender($link);
+        $this->renderData('linkJs', function ($value) {
+            ['contentOrLink' => $contentOrLink, 'cdn' => $cdn, 'id' => $id] = $value;
+            $link = $contentOrLink;
+
+            if ($cdn && $this->useCdn || !$contentOrLink) {
+                $link = $cdn;
             }
-        }
-        foreach ($this->arrJavascript as $key => $value) {
-            if ($value['id']) {
-                echo '<script data-navigate-once type="text/javascript" id="' . $value['id'] . '">' . $value['content'] . '</script>';
-            } else {
-                echo '<script data-navigate-once type="text/javascript" id="' . $key . '">' . $value['content'] . '</script>';
+            if (!$id) {
+                $id = md5($link);
             }
-        }
-        foreach ($this->arrTemplate as $key => $value) {
-            if ($value['id']) {
-                echo '<template id="' . $value['id'] . '">' . $value['content'] . '</template>';
-            } else {
-                echo '<template id="' . $key . '">' . $value['content'] . '</template>';
+
+            echo "<script data-navigate-once type='text/javascript' id='{$id}' src='{$link}'></script>";
+        });
+        $this->renderData('js', function ($value) {
+            ['contentOrLink' => $contentOrLink, 'id' => $id] = $value;
+            $script = $contentOrLink;
+            if (!$id) {
+                $id = md5($script);
             }
-        }
-        foreach ($this->bodyAfter as $callback) {
-            $callback();
-        }
+            echo "<script data-navigate-once type='text/javascript' id='{$id}' >{$script}</script>";
+        });
+        $this->renderData('template', function ($value) {
+            ['contentOrLink' => $contentOrLink, 'id' => $id] = $value;
+            if (!$id) {
+                $id = md5($contentOrLink);
+            }
+            echo "<template id='{$id}'>{$contentOrLink}</{template>";
+        });
+        $this->callhook('bodyAfter');
     }
-    public function bodyBefore($callback)
-    {
-        if (!is_callable($callback)) {
-            return;
-        }
-        $this->bodyBefore[] = $callback;
-    }
-    public function bodyAfter($callback)
-    {
-        if (!is_callable($callback)) {
-            return;
-        }
-        $this->bodyAfter[] = $callback;
-    }
-    public function headBefore($callback)
-    {
-        if (!is_callable($callback)) {
-            return;
-        }
-        $this->headBefore[] = $callback;
-    }
-    public function headAfter($callback)
-    {
-        if (!is_callable($callback)) {
-            return;
-        }
-        $this->headAfter[] = $callback;
-    }
+
     public function getNamespace($isAdmin = false)
     {
         return $isAdmin ? 'theme\\admin' : 'theme\\site';
@@ -265,7 +125,7 @@ class ThemeManager
         }
         return $this->getNamespace($isAdmin) . '::layouts.' . $name;
     }
-    public function view(string $view, array $data = [], array $mergeData = [])
+    public function view(string $view, array $data = [], array $mergeData = [], $noScope = false)
     {
         $viewParts = explode('::', $view);
 
@@ -278,8 +138,15 @@ class ThemeManager
 
         if (!str_starts_with($namespace, 'theme\\')) {
             $themeNamespace = $this->namespaceTheme();
+            if ($noScope) {
+                if (View::exists("{$themeNamespace}::{$viewName}")) {
+                    return view("{$themeNamespace}::{$viewName}", $data, $mergeData);
+                }
+                return view($view, $data, $mergeData);
+            }
             $scopeView = "{$themeNamespace}::scope.{$namespace}.{$viewName}";
             $viewWithoutScope = "{$themeNamespace}::scope.{$viewName}";
+
 
             if (View::exists($scopeView)) {
                 return view($scopeView, $data, $mergeData);

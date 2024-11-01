@@ -20,6 +20,14 @@ class ThemeBladeDirectives
         ?>
         EOT;
     }
+    public static function themeBodyAttr()
+    {
+        return <<<EOT
+        <?php
+            \Sokeio\Theme::bodyAttrRender();
+        ?>
+        EOT;
+    }
 
     public static function themeHead()
     {

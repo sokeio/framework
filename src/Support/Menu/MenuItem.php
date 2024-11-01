@@ -79,10 +79,16 @@ class MenuItem implements Arrayable
     public function render($level = 0)
     {
         if ($level > 0) {
-            return Theme::view('partials.menu.dropdown-item', ['item' => $this, 'level' => $level])->render();
+            return Theme::view('sokeio::partials.menu.dropdown-item', [
+                'item' => $this,
+                'level' => $level
+            ], [], true)->render();
         }
 
-        return Theme::view('partials.menu.item', ['item' => $this, 'level' => $level])->render();
+        return Theme::view('sokeio::partials.menu.item', [
+            'item' => $this,
+            'level' => $level
+        ], [], true)->render();
     }
 
     public function toArray()

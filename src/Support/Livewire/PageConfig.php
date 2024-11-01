@@ -95,7 +95,7 @@ class PageConfig
             $nameRoute = str($nameRoute)->replace('.index', '');
         }
         if ($config->getAdmin()) {
-            if ($config->getAuth() && $config->getMenu()) {
+            if ($config->getAuth() && $config->getMenu() && Platform::isUrlAdmin()) {
                 $menuTitle = $config->getMenuTitle() ?? str(str($nameRoute)->afterLast('.'))->replace('-', ' ');
                 $target = $config->getMenuTarget();
                 $sort = $config->getSort();

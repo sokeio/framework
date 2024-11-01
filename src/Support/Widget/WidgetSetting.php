@@ -4,16 +4,6 @@ namespace Sokeio\Support\Widget;
 
 use Sokeio\Widget;
 
-// [
-//     'key' => 'sokeio:count-model',
-//     'id' => 'widget-1',
-//     'group' => 'top',
-//     'column' => 'column3',
-//     'params' => [
-//         'model' => null,
-//         'title' => 'Data 1'
-//     ]
-// ],
 class WidgetSetting implements \Serializable
 {
     public $key;

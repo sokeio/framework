@@ -14,8 +14,7 @@ use Sokeio\Support\Theme\ThemeManager;
  * @method static mixed getTheme();
  * @method static mixed getThemeAdmin();
  * @method static mixed getThemeSite();
- * 
- * @method static mixed view($view, $data = [], $mergeData = [])
+ * @method static mixed view($view, $data = [], $mergeData = [], $noScope = false)
  * @method static void include($view, $data = [], $mergeData = [])
  * @method static void setLayout(string $layout='none', $isAdmin = null)
  * @method static string getLayout($default=null)

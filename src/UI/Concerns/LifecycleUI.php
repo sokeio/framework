@@ -116,12 +116,15 @@ trait LifecycleUI
         $this->setupChild(fn($c) => $c->clearParams());
         return $this;
     }
-    public function getParams($key = null)
+    public function getParams($key = null, $keyParam = null, $default = null)
     {
-        if ($key) {
-            return $this->params[$key] ?? null;
+        if (!$key) {
+            return $this->params;
         }
-        return $this->params;
+        if (!$keyParam) {
+            return $this->params[$key] ?? $default;
+        }
+        return data_get($this->params[$key], $keyParam, $default);
     }
     public function ready($callback = null)
     {

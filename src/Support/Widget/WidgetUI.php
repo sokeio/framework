@@ -13,7 +13,7 @@ class WidgetUI extends BaseUI implements ILoader
     {
         Widget::registerClass(static::class);
     }
-    private $widgetInfo;
+    private $info;
     private $dataParam = [];
     public function setDataParam($data)
     {
@@ -24,10 +24,12 @@ class WidgetUI extends BaseUI implements ILoader
     {
         return data_get($this->dataParam, $key, $default);
     }
-    public function getWidgetInfo(): WidgetInfo
+    public function getInfo(): WidgetInfo
     {
-        return $this->widgetInfo ?? ($this->widgetInfo = WidgetInfo::getWidgetInfoFromUI(self::class));
+        return $this->info ?? ($this->info = WidgetInfo::getInfoFromUI(self::class));
     }
+
+
     public static function paramUI()
     {
         return [];

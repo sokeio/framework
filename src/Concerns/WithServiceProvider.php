@@ -191,7 +191,8 @@ trait WithServiceProvider
                 if ($seedFiles && count($seedFiles) > 0) {
                     foreach ($seedFiles  as $file) {
                         if ($file->getExtension() == "php") {
-                            includeFile($file->getRealPath());
+                            
+                            // includeFile($file->getRealPath());
                         }
                     }
                 }
