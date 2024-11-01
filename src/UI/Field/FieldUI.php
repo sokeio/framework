@@ -120,7 +120,6 @@ class FieldUI extends BaseUI
     }
     public function errorView()
     {
-
         $errorHtml = view('sokeio::error', [
             'field' => $this->getFieldName()
         ])->render();

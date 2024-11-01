@@ -144,6 +144,47 @@ class SoUI
         //ready
         return $this->tapUI(fn($ui) => $ui->ready());
     }
+    public function getHtml($uis, $params = null, $callback = null)
+    {
+        if (!$uis) {
+            return '';
+        }
+        $html = '';
+        foreach ($uis as $child) {
+            if ($child instanceof BaseUI) {
+                $rs = null;
+                if ($callback) {
+                    $rs = call_user_func($callback, $child);
+                }
+                if ($params) {
+                    $child->setParams($params);
+                    $child->render();
+                } else {
+                    $child->clearParams();
+                }
+                if ($child->checkWhen()) {
+                    $html .= $child->view();
+                }
+                if ($params) {
+                    $child->clearParams();
+                }
+                if ($rs && is_callable($rs)) {
+                    call_user_func($rs, $child);
+                }
+                continue;
+            }
+            if (is_array($child)) {
+                $html .= implode('', $child);
+                continue;
+            }
+            if (is_callable($child)) {
+                $html .= call_user_func($child, $this);
+                continue;
+            }
+            $html .= $child;
+        }
+        return $html;
+    }
     public function render($callback = null)
     {
         if ($callback) {

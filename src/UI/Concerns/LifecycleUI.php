@@ -144,6 +144,12 @@ trait LifecycleUI
     }
     protected function child($childs = [], $group = 'default')
     {
+        if (!$childs) {
+            return $this;
+        }
+        if (!is_array($childs)) {
+            $childs = [$childs];
+        }
         foreach ($childs as  $child) {
             if ($child instanceof BaseUI) {
                 $child->setParent($this);
@@ -152,24 +158,35 @@ trait LifecycleUI
         $this->childs[$group] = array_merge($this->childs[$group] ?? [], $childs);
         return $this;
     }
-    protected function renderChilds($group = 'default', $params = null)
+    protected function renderChilds($group = 'default', $params = null, $callback = null)
     {
         $html = '';
         foreach ($this->childs[$group] ?? [] as $child) {
             if ($child instanceof BaseUI) {
+                $rs = null;
+                if ($callback) {
+                    $rs = call_user_func($callback, $child);
+                }
                 $child->setParams($params);
                 $child->render();
                 if ($child->checkWhen()) {
                     $html .= $child->view();
                 }
                 $child->clearParams();
-            } elseif (is_array($child)) {
-                $html .= implode('', $child);
-            } elseif (is_callable($child)) {
-                $html .= call_user_func($child, $this);
-            } else {
-                $html .= $child;
+                if ($rs && is_callable($rs)) {
+                    call_user_func($rs, $child);
+                }
+                continue;
             }
+            if (is_array($child)) {
+                $html .= implode('', $child);
+                continue;
+            }
+            if (is_callable($child)) {
+                $html .= call_user_func($child, $this);
+                continue;
+            }
+            $html .= $child;
         }
 
         return $html;

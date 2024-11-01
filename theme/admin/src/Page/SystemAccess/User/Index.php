@@ -5,6 +5,7 @@ namespace SokeioTheme\Admin\Page\SystemAccess\User;
 use Sokeio\Models\User;
 use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\UI\Common\Button;
+use Sokeio\UI\Field\Input;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\Table\Column;
 use Sokeio\UI\Table\Table;
@@ -17,7 +18,7 @@ use Sokeio\UI\WithUI;
     menu: true,
     menuTitle: 'Users',
     menuTargetTitle: 'Users',
-    menuTargetSort:1000,
+    menuTargetSort: 1000,
     sort: 0,
     model: User::class
 )]
@@ -35,6 +36,9 @@ class Index extends \Sokeio\Page
                         ->column('phone_number')
                         ->query($this->getQuery())
                         ->enableIndex()
+                        ->formSearch([
+                            Input::init('q')->label(__('Search')),
+                        ])
                         ->columnAction([
                             Button::init()
                                 ->modal(function (Button $button) {

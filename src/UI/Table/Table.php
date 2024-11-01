@@ -155,9 +155,13 @@ class Table extends BaseUI
             $this->columns[++$this->index] = $actionColumn;
         });
     }
+    public function formSearch($fields, $fieldExtra = null)
+    {
+        return $this->child($fields, 'formSearch')
+            ->child($fieldExtra, 'formSearchExtra');
+    }
     public function enableIndex($callback = null)
     {
-
         return $this->boot(function () use ($callback) {
             $this->columns[-1] = (new Column($this))
                 ->setField('index')->setLabel('#')
@@ -330,6 +334,19 @@ class Table extends BaseUI
         }
         return   $html;
     }
+    public function formSearchRender()
+    {
+        return <<<html
+        <div class="d-flex align-items-center p-2 sokeio-form-search-wrapper">
+            <div class="sokeio-form-search">
+                {$this->renderChilds('formSearch')}
+            </div>
+            <div class="sokeio-form-search-extra">
+                {$this->renderChilds('formSearchExtra')}
+            </div>
+        </div>
+        html;
+    }
     public function view()
     {
 
@@ -356,6 +373,7 @@ class Table extends BaseUI
         }
         return <<<HTML
         <div {$attrWrapper}>
+        {$this->formSearchRender()}
         {$templateDataSelected}
         <div class="table-responsive position-relative" x-init="watchData" x-data="{
             fieldSort: '',
