@@ -110,8 +110,7 @@ class Index extends Component
         $dashboard->is_private = $this->isPrivate;
         $dashboard->widgets = $this->widgets;
         $dashboard->save();
-        $this->refreshParentMe();
-        $this->dispatch('sokeio:refresh-dashboard');
+        $this->refreshDashboard();
     }
     public function remove()
     {
@@ -121,6 +120,7 @@ class Index extends Component
         }
         $dashboard->delete();
         $this->refreshParentMe();
+        $this->refreshDashboard();
     }
     public function render()
     {

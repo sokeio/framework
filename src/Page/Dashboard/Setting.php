@@ -27,12 +27,14 @@ class Setting extends \Sokeio\Page
     {
         Dashboard::create(['name' => $name]);
         $this->refreshMe();
+        $this->refreshDashboard();
     }
     public function deleteDashboard($id)
     {
         $dashboard = Dashboard::query()->find($id);
         $dashboard->delete();
         $this->refreshMe();
+        $this->refreshDashboard();
     }
 
     protected function setupUI()

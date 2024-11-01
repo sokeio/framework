@@ -65,4 +65,8 @@ trait WithLivewireDispatch
     {
         $this->sendMessageToClient(self::LIVEWIRE_CLOSE, []);
     }
+    public function refreshDashboard()
+    {
+        $this->dispatch('sokeio:refresh-dashboard');
+    }
 }
