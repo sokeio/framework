@@ -67,8 +67,11 @@ class Column
         if ($classCell && is_callable($classCell)) {
             $classCell = call_user_func($classCell, $row, $this, $index);
         }
+        if ($classCell) {
+            $classCell = ' class="' . $classCell . '"';
+        }
         return <<<html
-        <td class="{$classCell}">
+        <td {$classCell}>
             <div class="d-flex align-items-center cell-value "
             data-row-field="{$this->getField()}"
             data-row-index="{$index}"
