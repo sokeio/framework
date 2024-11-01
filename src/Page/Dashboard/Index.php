@@ -4,6 +4,7 @@ namespace Sokeio\Page\Dashboard;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
+use Livewire\Attributes\On;
 use Sokeio\Models\Dashboard;
 use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\UI\Common\Button;
@@ -29,6 +30,11 @@ class Index extends \Sokeio\Page
     use WithUI;
     public array $dataSearch = [];
     public $dashboardKey = '';
+    #[On('sokeio:refresh-dashboard')]
+    public function refreshDashboard()
+    {
+        $this->soLoadData();
+    }
     public function updatedDataSearch()
     {
         Session::put($this->dashboardKey, $this->dataSearch);

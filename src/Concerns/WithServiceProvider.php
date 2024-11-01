@@ -74,6 +74,7 @@ trait WithServiceProvider
     {
         return new ServicePackage();
     }
+
     private function publishesVerdor($name, $source, $target)
     {
         if ($this->checkPackageExists($source)) {

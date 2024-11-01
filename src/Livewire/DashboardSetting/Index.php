@@ -111,12 +111,12 @@ class Index extends Component
         $dashboard->widgets = $this->widgets;
         $dashboard->save();
         $this->refreshParentMe();
-        $this->refreshRef();
+        $this->dispatch('sokeio:refresh-dashboard');
     }
     public function remove()
     {
         $dashboard = Dashboard::find($this->dashboardId);
-        if($dashboard->is_default){
+        if ($dashboard->is_default) {
             return;
         }
         $dashboard->delete();
