@@ -46,6 +46,42 @@ button {
     }
 }
 
+.sokeio-field-input {
+    margin-bottom: 0.2rem !important;
+
+    .form-label {
+        margin-bottom: 0.2rem !important;
+    }
+
+    .form-control {
+        padding: 0.3rem 0.6rem !important;
+
+        &:focus {
+            box-shadow: unset !important;
+        }
+
+        &.ts-wrapper {
+            padding: 0 !important;
+
+            .ts-control {
+                padding: 0.3rem 0.6rem !important;
+                background: unset !important;
+                border: unset !important;
+            }
+        }
+    }
+}
+
+.sokeio-field-input-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .form-control {
+        padding: 0.3rem 0.6rem !important;
+    }
+}
+
 .sokeio-modal-ui {
     .sokeio-modal-header {
         margin-top: 5px;
@@ -66,33 +102,6 @@ button {
         min-height: 50px;
     }
 
-    .sokeio-field-input {
-        margin-bottom: 0.2rem !important;
-    }
-
-    .form-label {
-        margin-bottom: 0.2rem !important;
-
-    }
-
-    .form-control {
-        padding: 0.3rem 0.6rem !important;
-
-        &:focus {
-            box-shadow: unset !important;
-        }
-
-        &.ts-wrapper {
-            padding: 0 !important;
-
-            .ts-control {
-                padding: 0.3rem 0.6rem !important;
-                background: unset !important;
-                border: unset !important;
-            }
-        }
-    }
-
     .btn {
         padding: 0.3rem 0.6rem !important;
     }
@@ -107,20 +116,6 @@ button {
 }
 
 .sokeio-page-ui {
-    .form-control {
-        padding: 0.3rem 0.6rem !important;
-
-        &.ts-wrapper {
-            padding: 0 !important;
-
-            .ts-control {
-                padding: 0.3rem 0.6rem !important;
-                background: unset !important;
-                border: unset !important;
-            }
-        }
-    }
-
     .page-header {
         margin-top: 10px !important;
 

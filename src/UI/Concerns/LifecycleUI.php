@@ -160,36 +160,7 @@ trait LifecycleUI
     }
     protected function renderChilds($group = 'default', $params = null, $callback = null)
     {
-        $html = '';
-        foreach ($this->childs[$group] ?? [] as $child) {
-            if ($child instanceof BaseUI) {
-                $rs = null;
-                if ($callback) {
-                    $rs = call_user_func($callback, $child);
-                }
-                $child->setParams($params);
-                $child->render();
-                if ($child->checkWhen()) {
-                    $html .= $child->view();
-                }
-                $child->clearParams();
-                if ($rs && is_callable($rs)) {
-                    call_user_func($rs, $child);
-                }
-                continue;
-            }
-            if (is_array($child)) {
-                $html .= implode('', $child);
-                continue;
-            }
-            if (is_callable($child)) {
-                $html .= call_user_func($child, $this);
-                continue;
-            }
-            $html .= $child;
-        }
-
-        return $html;
+        return $this->getManager()->getHtml($this->childs[$group] ?? [],  $params, $callback);
     }
     public function hasChilds($group = 'default')
     {

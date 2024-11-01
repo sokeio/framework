@@ -337,12 +337,21 @@ class Table extends BaseUI
     public function formSearchRender()
     {
         return <<<html
-        <div class="d-flex align-items-center p-2 sokeio-form-search-wrapper">
+        <div class="sokeio-form-search-wrapper "
+        x-data="{
+            extra: false
+        }">
             <div class="sokeio-form-search">
+            
                 {$this->renderChilds('formSearch')}
+               <div class="sokeio-form-search-btn">
+               </div>
             </div>
             <div class="sokeio-form-search-extra">
-                {$this->renderChilds('formSearchExtra')}
+                <div class="sokeio-form-search-extra-header"  x-show="extra" style="display: none">
+                    {$this->renderChilds('formSearchExtra')}
+                </div>
+                    <button class="btn btn-secondary btn-sm" x-on:click="extra = !extra">Advanced Filter</button>
             </div>
         </div>
         html;

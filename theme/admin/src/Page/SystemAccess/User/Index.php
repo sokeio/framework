@@ -2,10 +2,12 @@
 
 namespace SokeioTheme\Admin\Page\SystemAccess\User;
 
+use Sokeio\Models\Role;
 use Sokeio\Models\User;
 use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Field\Input;
+use Sokeio\UI\Field\Select;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\Table\Column;
 use Sokeio\UI\Table\Table;
@@ -36,9 +38,14 @@ class Index extends \Sokeio\Page
                         ->column('phone_number')
                         ->query($this->getQuery())
                         ->enableIndex()
-                        ->formSearch([
-                            Input::init('q')->label(__('Search')),
-                        ])
+                        ->formSearch(
+                            [
+                                Input::init('q')->label(__('Search')),
+                            ],
+                            [
+                                Select::init('role_id')->label(__('Role'))->remoteActionWithModel(Role::class),
+                            ]
+                        )
                         ->columnAction([
                             Button::init()
                                 ->modal(function (Button $button) {
