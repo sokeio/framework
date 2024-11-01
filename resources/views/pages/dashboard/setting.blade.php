@@ -26,7 +26,7 @@
                 Add Dashboard
             </button>
             <div x-show="open" style="display: none" class="input-group mb-2">
-                <input type="text" x-model="name" class="form-control border-light" aria-label="Dashboard"
+                <input type="text" x-model="name" class="form-control" aria-label="Dashboard"
                     placeholder="Dashboard">
                 <button class="btn btn-primary" type="button" @click="save">Save</button>
             </div>
