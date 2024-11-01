@@ -21,7 +21,7 @@
 
         .four_zero_four_bg {
 
-            background-image: url({{ url('platform/modules/sokeio/er404.gif') }});
+            background-image: url({{ url('platform/module/sokeio/er404.gif') }});
             height: 400px;
             background-position: center;
         }
