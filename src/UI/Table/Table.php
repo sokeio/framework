@@ -342,17 +342,18 @@ class Table extends BaseUI
             extra: false
         }">
             <div class="sokeio-form-search">
-            
-                {$this->renderChilds('formSearch')}
-               <div class="sokeio-form-search-btn">
-               </div>
-            </div>
-            <div class="sokeio-form-search-extra">
-                <div class="sokeio-form-search-extra-header"  x-show="extra" style="display: none">
+                <div>
+                    {$this->renderChilds('formSearch')}
+                </div>
+                <div class="sokeio-form-search-extra"  x-show="extra" style="display: none">
                     {$this->renderChilds('formSearchExtra')}
                 </div>
-                    <button class="btn btn-secondary btn-sm" x-on:click="extra = !extra">Advanced Filter</button>
+                <div class="sokeio-form-search-action">
+                    <button class="btn btn-primary" x-on:click="extra = !extra">Advanced Filter</button>
+                    <button class="btn btn-secondary">Search</button>
+                </div>
             </div>
+
         </div>
         html;
     }

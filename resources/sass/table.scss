@@ -1,6 +1,15 @@
 .sokeio-form-search-wrapper {
     padding: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
+    margin: 5px 0;
+    .sokeio-field-input{
+        display: inline-block;
+    }
+
+    .btn {
+        border-radius: 2px !important;
+        padding: 5px 10px;
+    }
+    .sokeio-form-search-action{
+        margin-top: 10px;
+    }
 }
