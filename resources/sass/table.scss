@@ -1,7 +1,32 @@
 .sokeio-form-search-wrapper {
     padding: 5px;
     margin: 5px 0;
-    .sokeio-field-input{
+
+    .sokeio-form-search {
+        display: inline-block;
+        float: right;
+
+        .sokeio-form-search-main {
+            display: flex;
+            align-items: end;
+
+            .sokeio-field-input {
+                display: flex;
+                align-items: center;
+
+                .form-label {
+                    margin-right: 10px;
+                    margin-bottom: 0 !important;
+                }
+            }
+
+            .sokeio-form-search-action {
+                margin-left: 10px;
+            }
+        }
+    }
+
+    .sokeio-field-input {
         display: inline-block;
     }
 
@@ -9,7 +34,6 @@
         border-radius: 2px !important;
         padding: 5px 10px;
     }
-    .sokeio-form-search-action{
-        margin-top: 10px;
-    }
+
+
 }

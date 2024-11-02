@@ -10,6 +10,7 @@ trait LifecycleUI
     private $childs = [];
     private $params = [];
     private $prefix = '';
+    private $group = '';
     protected $context = null;
     protected HookUI $hook;
     private $whenCallbacks = [];
@@ -68,6 +69,16 @@ trait LifecycleUI
         }
         $this->setupChild(fn($c) => $c->lifecycleWithKey($key));
         return $this;
+    }
+    public function setGroup($group)
+    {
+        $this->group = $group;
+        $this->setupChild(fn($c) => $c->setGroup($group));
+        return $this;
+    }
+    public function getGroup()
+    {
+        return $this->group;
     }
     public function setPrefix($prefix)
     {
@@ -152,6 +163,7 @@ trait LifecycleUI
         }
         foreach ($childs as  $child) {
             if ($child instanceof BaseUI) {
+                $child->setGroup($group);
                 $child->setParent($this);
             }
         }

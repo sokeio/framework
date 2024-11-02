@@ -33,6 +33,16 @@ class SoUI
     {
         return $this->fields;
     }
+    public function getFieldsByGroup($group)
+    {
+        $fields = [];
+        foreach ($this->fields as $field) {
+            if ($field->getGroup() == $group) {
+                $fields[] = $field;
+            }
+        }
+        return $fields;
+    }
     public function fill($model)
     {
         foreach ($this->fields as $field) {
