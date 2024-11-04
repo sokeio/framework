@@ -11,6 +11,16 @@ class SettingManager
     const CACHE_KEY = 'sokeio_settings';
     private $values = [];
     private $changed = [];
+    private $tabUIs = [];
+    public function tabUI($key, $ui)
+    {
+        $this->tabUIs[$key] = $ui;
+        return $this;
+    }
+    public function getTabUIs()
+    {
+        return $this->tabUIs;
+    }
     public function __construct()
     {
         $this->values =  Cache::rememberForever(self::CACHE_KEY, function () {

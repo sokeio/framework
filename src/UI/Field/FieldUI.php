@@ -39,10 +39,6 @@ class FieldUI extends BaseUI
             $model->{$this->getFieldName()} = $this->getValue();
         }
     }
-    public function debounce($debounce = 250)
-    {
-        return $this->vars('wire:debounce', $debounce);
-    }
     public function label($label)
     {
         return $this->vars('label', $label);

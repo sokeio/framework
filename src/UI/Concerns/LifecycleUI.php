@@ -14,6 +14,11 @@ trait LifecycleUI
     protected $context = null;
     protected HookUI $hook;
     private $whenCallbacks = [];
+
+    public function debounce($debounce = 250)
+    {
+        return $this->vars('wire:debounce', $debounce)->setupChild(fn($c) => $c->debounce($debounce));
+    }
     public function when($callback, $group = 'default')
     {
         if (!isset($this->whenCallbacks[$group])) {
@@ -41,7 +46,7 @@ trait LifecycleUI
     protected function setupChild($callback = null)
     {
         if (!$callback || !is_callable($callback) || empty($this->childs)) {
-            return;
+            return $this;
         }
         foreach ($this->childs as  $childs) {
             if (is_array($childs) && !empty($childs)) {
@@ -52,6 +57,8 @@ trait LifecycleUI
                 }
             }
         }
+
+        return $this;
     }
     private function lifecycleWithKey($key, $callback = null, $params = null): static
     {
@@ -67,14 +74,12 @@ trait LifecycleUI
         if ($key == 'render') {
             return $this;
         }
-        $this->setupChild(fn($c) => $c->lifecycleWithKey($key));
-        return $this;
+        return  $this->setupChild(fn($c) => $c->lifecycleWithKey($key));
     }
     public function setGroup($group)
     {
         $this->group = $group;
-        $this->setupChild(fn($c) => $c->setGroup($group));
-        return $this;
+        return  $this->setupChild(fn($c) => $c->setGroup($group));
     }
     public function getGroup()
     {
@@ -83,15 +88,13 @@ trait LifecycleUI
     public function setPrefix($prefix)
     {
         $this->prefix = $prefix;
-        $this->setupChild(fn($c) => $c->setPrefix($prefix));
-        return $this;
+        return $this->setupChild(fn($c) => $c->setPrefix($prefix));
     }
 
     public function clearPrefix()
     {
         $this->prefix = '';
-        $this->setupChild(fn($c) => $c->clearPrefix());
-        return $this;
+        return $this->setupChild(fn($c) => $c->clearPrefix());
     }
     public function getPrefix()
     {
@@ -104,28 +107,23 @@ trait LifecycleUI
     public function setContext($context)
     {
         $this->context = $context;
-        $this->setupChild(fn($c) => $c->setContext($context));
-
-        return $this;
+        return $this->setupChild(fn($c) => $c->setContext($context));
     }
     public function clearContext()
     {
         $this->context = null;
-        $this->setupChild((fn($c) => $c->clearContext()));
-        return $this;
+        return $this->setupChild((fn($c) => $c->clearContext()));
     }
     public function setParams($params)
     {
         $this->params = $params;
-        $this->setupChild(fn($c) => $c->setParams($params));
-        return $this;
+        return $this->setupChild(fn($c) => $c->setParams($params));
     }
 
     public function clearParams()
     {
         $this->params = [];
-        $this->setupChild(fn($c) => $c->clearParams());
-        return $this;
+        return $this->setupChild(fn($c) => $c->clearParams());
     }
     public function getParams($key = null, $keyParam = null, $default = null)
     {

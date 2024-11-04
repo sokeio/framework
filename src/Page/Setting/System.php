@@ -4,6 +4,7 @@ namespace Sokeio\Page\Setting;
 
 use Livewire\Attributes\Rule;
 use Sokeio\Platform;
+use Sokeio\Setting;
 use Sokeio\Support\Livewire\PageConfig;
 use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\UI\Common\Div;
@@ -31,12 +32,15 @@ class System extends \Sokeio\Page
     {
         return [
             PageUI::init([
-                TabControl::init()
-                    ->tabItemView('demo')
-                    ->tabItemComponent('demo2', 'ti ti-dashboard', 'sokeio::demo1.index')
-                    ->vertical()
+                // TabControl::init()
+                //     ->tap(function (TabControl $tabControl) {
+                //         foreach (Setting::getTabUIs() as $key => $ui) {
+                //             $tabControl->tabItem($key);
+                //         }
+                //     })
+                //     ->vertical()
             ])->title($this->getPageConfig()->getTitle())
-                
+
                 ->className('p-2')
 
         ];

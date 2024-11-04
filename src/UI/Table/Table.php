@@ -163,11 +163,6 @@ class Table extends BaseUI
             $this->columns[++$this->index] = $actionColumn;
         });
     }
-    public function formSearch($fields, $fieldExtra = null)
-    {
-        return $this->child($fields, 'formSearch')
-            ->child($fieldExtra, 'formSearchExtra');
-    }
     public function enableIndex($callback = null)
     {
         return $this->boot(function () use ($callback) {

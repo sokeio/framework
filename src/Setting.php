@@ -13,9 +13,10 @@ use Sokeio\Support\Platform\SettingManager;
  * @method static SettingManager save()
  * @method static SettingManager clear()
  * @method static SettingManager load()
+ * @method static SettingManager tabUI($key, $ui)
+ * @method static array getTabUIs()
  *
  */
-
 class Setting extends Facade
 {
     protected static function getFacadeAccessor()

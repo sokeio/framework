@@ -2,8 +2,15 @@
 
 namespace Sokeio\UI\Table;
 
+use Sokeio\UI\Field\Input;
+
 trait TableRender
 {
+    public function formSearch($fields, $fieldExtra = null)
+    {
+        return $this->child($fields, 'formSearch')
+            ->child($fieldExtra, 'formSearchExtra');
+    }
     private function headerRender()
     {
         $html = '';
@@ -142,15 +149,17 @@ trait TableRender
     }
     public function formSearchRender()
     {
+        if (!$this->hasChilds('formSearch')) {
+            return '';
+        }
         return <<<html
         <div class="sokeio-form-search-wrapper ">
             <div class="sokeio-form-search">
                 <div class="sokeio-form-search-main">
                     {$this->renderChilds('formSearch')}
                      <div class="sokeio-form-search-action" x-show="!searchExtra" style="display: none">
-                        <button class="btn btn-secondary">Search</button>
                         <button class="btn btn-primary" x-on:click="searchExtra = !searchExtra">
-                            Advanced Filter
+                            Show Filter
                         </button>
                     </div>
                 </div>
@@ -160,8 +169,8 @@ trait TableRender
                 <div class="sokeio-form-search-action" x-show="searchExtra" style="display: none">
                     <button class="btn btn-secondary">Search</button>
                     <button class="btn btn-primary" x-on:click="searchExtra = !searchExtra">
-                        Hide Advanced Filte
-                    r</button>
+                        Hide Filter
+                        </button>
                 </div>
             </div>
 
