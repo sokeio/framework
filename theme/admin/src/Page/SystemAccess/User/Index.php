@@ -38,6 +38,7 @@ class Index extends \Sokeio\Page
                         ->column('phone_number')
                         ->query($this->getQuery())
                         ->enableIndex()
+                        ->enableCheckBox()
                         ->formSearch(
                             [
                                 Input::init('q')->label(__('Search')),

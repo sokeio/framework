@@ -376,7 +376,7 @@ class Table extends BaseUI
             <template x-if="\$wire.dataSelecteds?.length>0">
                 <div class="d-flex align-items-center p-2">
                     Selected:
-                    <span x-text="\$wire.dataSelecteds.length" 
+                    <span x-text="\$wire.dataSelecteds.length"
                     class="fw-bold badge bg-primary text-bg-primary"
                     title="Selected items"></span>
                     <a class="btn btn-danger btn-sm ms-1" @click="\$wire.dataSelecteds = []">Clear</a>
@@ -389,56 +389,9 @@ class Table extends BaseUI
         <div {$attrWrapper}>
         {$this->formSearchRender()}
         {$templateDataSelected}
-        <div class="table-responsive position-relative" x-init="watchData" x-data="{
-            fieldSort: '',
-            typeSort: '',
-            statusCheckAll: false,
-            sortField(el) {
-                let field = el.getAttribute('data-field');
-                if(field != this.fieldSort) {
-                    this.fieldSort = field;
-                    this.typeSort = 'asc';
-                } else {
-                    this.typeSort = this.typeSort === 'asc' ? 'desc' : 'asc';
-                    if(this.typeSort === 'asc') {
-                        this.fieldSort = '';
-                        this.typeSort = '';
-                    }
-                }
-                    \$wire.callActionUI('{$orderBy}', {
-                        'field': this.fieldSort,
-                        'type': this.typeSort
-                    });
-            },
-            watchData() {
-            \$watch('\$wire.dataSelecteds', () => {
-             let checkedValues = [...\$el.querySelectorAll('.sokeio-checkbox-one')]
-                .map(el=>el.value);
-                this.statusCheckAll = checkedValues.length === checkedValues.filter(el =>
-                \$wire.dataSelecteds.includes(el)).length;
-            });
-            Livewire.hook('request', ({ component, commit, respond, succeed, fail }) => {
-                succeed(({ snapshot, effect }) => {
-                    setTimeout(() => {
-                        let checkedValues = [...\$el.querySelectorAll('.sokeio-checkbox-one')]
-                    .map(el=>el.value);
-                    this.statusCheckAll = checkedValues.length === checkedValues.filter(el =>
-                    \$wire.dataSelecteds.includes(el)).length;
-                    }, 0);
-                })
-            })
-            },
-            checkboxAll(ev) {
-                let isChecked = ev.target.checked;
-                let checkedValues = [...this.\$el.closest('table').querySelectorAll('.sokeio-checkbox-one')]
-                .map(el=>el.value);
-                if(isChecked) {
-                    \$wire.dataSelecteds = \$wire.dataSelecteds.concat(checkedValues);
-                } else {
-                     \$wire.dataSelecteds= \$wire.dataSelecteds.filter(el=> !checkedValues.includes(el));
-                }
-            }
-        }">
+        <div class="table-responsive position-relative"
+         x-init="tableInit" x-data="sokeioTable()"
+          data-sokeio-table-order-by="{$orderBy}">
             <div wire:loading class="position-absolute top-50 start-50 translate-middle">
                 <span  class="spinner-border  text-blue  " role="status"></span>
             </div>

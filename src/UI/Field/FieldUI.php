@@ -110,7 +110,6 @@ class FieldUI extends BaseUI
         }
         return <<<HTML
         <div {$attrWrapper} x-data="sokeioField('{$attrModel}')" >
-        FieldValue: <span x-text="FieldValue"></span>
         {$fieldView}
         {$this->errorView()}
         </div>
