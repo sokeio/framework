@@ -1,6 +1,8 @@
 <?php
 
 use Sokeio\Platform;
+use Sokeio\Setting;
+use Sokeio\Support\Platform\SettingManager;
 use Sokeio\Theme;
 
 if (!function_exists('theme')) {
@@ -13,5 +15,14 @@ if (!function_exists('platform')) {
     function platform()
     {
         return Platform::getFacadeRoot();
+    }
+}
+if (!function_exists('setting')) {
+    function setting($key = null, $default = null)
+    {
+        if ($key === null) {
+            return Setting::getFacadeRoot();
+        }
+        return Setting::get($key, $default);
     }
 }

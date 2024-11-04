@@ -2,13 +2,19 @@
 
 namespace Sokeio\UI\Table;
 
+use Sokeio\Pattern\Singleton;
+
 class Column
 {
-    use ColumnData;
+    use ColumnData, Singleton;
 
-    public function __construct(
-        protected Table $table
-    ) {}
+    protected $table;
+
+    public function setTable(Table $table)
+    {
+        $this->table = $table;
+        return $this;
+    }
     public function getTable()
     {
         return $this->table;

@@ -10,9 +10,13 @@ document.addEventListener("alpine:init", () => {
     },
   }));
   Alpine.data("sokeioTable", () => ({
+    searchExtra: false,
     fieldSort: "",
     typeSort: "",
     statusCheckAll: false,
+    get dataSelecteds() {
+      return this.$wire.dataSelecteds ?? [];
+    },
     sortField(el) {
       let field = el.getAttribute("data-field");
       if (field != this.fieldSort) {
@@ -52,7 +56,7 @@ document.addEventListener("alpine:init", () => {
               this.statusCheckAll =
                 checkedValues.length ===
                 checkedValues.filter((el) =>
-                    this.$wire.dataSelecteds.includes(el)
+                  this.$wire.dataSelecteds.includes(el)
                 ).length;
             }, 0);
           });

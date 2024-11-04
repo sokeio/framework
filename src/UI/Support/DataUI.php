@@ -39,6 +39,11 @@ class DataUI
         $attr = '';
         foreach ($this->getData() as $key => $value) {
             if (is_array($value)) {
+                foreach ($value as $k => $v) {
+                    if (is_callable($v)) {
+                        dd(['key' => $key, 'value' => $v]);
+                    }
+                }
                 $value = implode(' ', $value);
             }
             $attr .= ' ' . $key . '="' . htmlentities($value, ENT_QUOTES, 'UTF-8') . '"';

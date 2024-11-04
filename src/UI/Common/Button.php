@@ -67,48 +67,38 @@ class Button extends BaseUI
     {
         return $this->attr('so-on:click', 'this.delete()');
     }
+    private function getUrlFromModal($modal)
+    {
+        $route = data_get($modal, 'route');
+        $url = data_get($modal, 'url');
+        if ($route) {
+            if (is_callable($route)) {
+                $route = call_user_func($route, $this);
+            }
+            if (is_array($route) && count($route) > 1) {
+                $url = route($route[0], $route[1]);
+            } else {
+                $url = route($route);
+            }
+        }
+
+        if ($url && is_callable($url)) {
+            $url = call_user_func($url, $this);
+        }
+        return $url;
+    }
     protected function registerModal($modal = [])
     {
         return $this->render(function () use ($modal) {
-            $title = data_get($modal, 'title');
-            $route = data_get($modal, 'route');
-            $url = data_get($modal, 'url');
-            $size = data_get($modal, 'size');
-            $icon = data_get($modal, 'icon');
-            $templateId = data_get($modal, 'template-id');
-            $template = data_get($modal, 'template');
-            if ($route) {
-                if (is_callable($route)) {
-                    $route = call_user_func($route, $this);
-                }
-                if (is_array($route) && count($route) > 1) {
-                    $url = route($route[0], $route[1]);
-                } else {
-                    $url = route($route);
-                }
-            }
-
-            if ($url && is_callable($url)) {
-                $url = call_user_func($url, $this);
-            }
-            $this->attr('wire:modal', '');
-            if ($title) {
-                $this->attr('wire:modal.title', $title);
-            }
+            $url = $this->getUrlFromModal($modal);
             if ($url) {
                 $this->attr('wire:modal.url', $url);
             }
-            if ($size) {
-                $this->attr('wire:modal.size', $size);
-            }
-            if ($icon) {
-                $this->attr('wire:modal.icon', $icon);
-            }
-            if ($templateId) {
-                $this->attr('wire:modal.template-id', $templateId);
-            }
-            if ($template) {
-                $this->attr('wire:modal.template', $template);
+            $this->attr('wire:modal', '');
+            foreach (['title',  'size', 'icon', 'template-id', 'template'] as $item) {
+                if ($valueItem = data_get($modal, $item)) {
+                    $this->attr('wire:modal.' . $item, $valueItem);
+                }
             }
         });
     }
