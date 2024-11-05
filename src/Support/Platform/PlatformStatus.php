@@ -5,9 +5,9 @@ namespace Sokeio\Support\Platform;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 
-class PlatformInfo
+class PlatformStatus
 {
-    private const FILE_PATH = 'platform/sokeio.json';
+    private const FILE_PATH = 'platform/status.json';
     private static $data = [];
     private static $skipSave = false;
     public static function skipSave()

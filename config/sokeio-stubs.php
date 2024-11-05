@@ -26,21 +26,19 @@ return [
             'generate' => true,
             'only' => ['module']
         ],
-        'model' => ['path' => 'src/Models', 'namespace' => 'Models', 'generate' => true, 'only' => ['module']],
-        'routes' => ['path' => 'routes', 'generate' => true, 'only' => ['module']],
+        'model' => ['path' => 'src/Models', 'namespace' => 'Models', 'generate' => true],
+        'routes' => ['path' => 'routes', 'generate' => true],
         'routes-admin' => ['path' => 'routes/admin', 'generate' => true],
         'routes-web' => ['path' => 'routes/web', 'generate' => true],
         'controller' => [
             'path' => 'src/Http/Controllers',
             'namespace' => 'Http\\Controllers',
-            'generate' => true,
-            'only' => ['module']
+            'generate' => true
         ],
         'middleware' => [
             'path' => 'src/Http/Middleware',
             'namespace' => 'Http\\Middleware',
-            'generate' => true,
-            'only' => ['module']
+            'generate' => true
         ],
         'action' => [
             'path' => 'src/Actions',
@@ -51,12 +49,11 @@ return [
         'request' => [
             'path' => 'src/Http/Requests',
             'namespace' => 'Http\\Requests',
-            'generate' => true,
-            'only' => ['module']
+            'generate' => true
         ],
         'page' => ['path' => 'src/Page', 'namespace' => 'Page', 'generate' => true],
         'livewire' => ['path' => 'src/Livewire', 'namespace' => 'Livewire', 'generate' => true],
-        'provider' => ['path' => 'src/Providers', 'namespace' => 'Providers', 'generate' => true, 'only' => ['module']],
+        'provider' => ['path' => 'src/Providers', 'namespace' => 'Providers', 'generate' => true],
         'helpers' => ['path' => 'helpers', 'generate' => true],
         'assets' => ['path' => 'resources', 'generate' => true],
         'lang' => ['path' => 'resources/lang', 'generate' => true],

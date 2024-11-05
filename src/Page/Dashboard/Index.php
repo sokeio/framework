@@ -38,6 +38,7 @@ class Index extends \Sokeio\Page
     public function updatedDataSearch()
     {
         Session::put($this->dashboardKey, $this->dataSearch);
+        $this->reUI();
     }
 
     public function getWidgets(): array
@@ -76,17 +77,13 @@ class Index extends \Sokeio\Page
                 ->icon('ti ti-dashboard')->rightUI([
                     Select::init('dashboard_id')->placeholder('Dashboard')
                         ->remoteActionWithModel(Dashboard::class)
-                        ->debounce(60)
                         ->valueDefault(data_get($this->dataSearch, 'dashboard_id'))
-                        ->classNameWrapper('me-2'),
+                        ->classNameWrapper('me-2')->debounce(10),
                     DatePicker::init('from_date')->placeholder(__('Start Date'))
                         ->classNameWrapper('me-2')
-                        ->valueDefault(Carbon::now()->subDays(30)),
+                        ->valueDefault(Carbon::now()->subDays(30))->debounce(10),
                     DatePicker::init('to_date')->placeholder(__('End Date'))
-                        ->valueDefault(Carbon::now()),
-                    Button::init()->text(__('Search'))->icon('ti ti-search')->wireClick(function () {
-                        $this->alert(json_encode($this->dataSearch));
-                    }),
+                        ->valueDefault(Carbon::now())->debounce(10),
                     Button::init()
                         ->text(__('Settings'))
                         ->icon('ti ti-settings')

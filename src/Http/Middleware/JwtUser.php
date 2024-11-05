@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Middleware;
+namespace Sokeio\Http\Middleware;
 
 
 use Closure;

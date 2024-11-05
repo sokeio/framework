@@ -3,8 +3,8 @@
 namespace Sokeio\Support\Platform;
 
 use Illuminate\Support\Facades\Route;
-use Sokeio\Middleware\Authenticate;
-use Sokeio\Middleware\JwtUser;
+use Sokeio\Http\Middleware\Authenticate;
+use Sokeio\Http\Middleware\JwtUser;
 use Sokeio\Platform;
 
 class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider

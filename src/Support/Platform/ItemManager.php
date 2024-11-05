@@ -22,15 +22,15 @@ class ItemManager
     private $arrItems = [];
     protected $itemGenerate;
     private function __construct(private $type) {}
-    protected $platformInfo;
-    protected $platformInfoThemeAdmin;
-    public function getPlatformInfo($isThemeAdmin = false): PlatformInfo
+    protected $platformStatus;
+    protected $platformStatusThemeAdmin;
+    public function getPlatformStatus($isThemeAdmin = false): PlatformStatus
     {
         if ($this->isTheme() && $isThemeAdmin) {
-            return $this->platformInfoThemeAdmin ??= PlatformInfo::key('theme_admin');
+            return $this->platformStatusThemeAdmin ??= PlatformStatus::key('theme_admin');
         }
 
-        return $this->platformInfo ??= PlatformInfo::key($this->type);
+        return $this->platformStatus ??= PlatformStatus::key($this->type);
     }
     public function getItemType()
     {
@@ -119,9 +119,9 @@ class ItemManager
             return false;
         }
 
-        $isActive = $this->getPlatformInfo(Arr::get($item, 'admin'))->check($item['id']);
+        $isActive = $this->getPlatformStatus(Arr::get($item, 'admin'))->check($item['id']);
 
-        if (!$isActive && $this->isTheme() && $this->getPlatformInfo(Arr::get($item, 'admin'))->empty()) {
+        if (!$isActive && $this->isTheme() && $this->getPlatformStatus(Arr::get($item, 'admin'))->empty()) {
             $themeConfigKey = Arr::get($item, 'admin') ? 'admin_theme' : 'site_theme';
             $isActive = $item->id === config("sokeio.$themeConfigKey");
         }
@@ -135,7 +135,7 @@ class ItemManager
         if (!$item) {
             return false;
         }
-        $this->getPlatformInfo(Arr::get($item, 'admin'))->active($item['id'], $this->isTheme());
+        $this->getPlatformStatus(Arr::get($item, 'admin'))->active($item['id'], $this->isTheme());
 
         return true;
     }
@@ -147,7 +147,7 @@ class ItemManager
             return;
         }
 
-        $this->getPlatformInfo()->block($item['id']);
+        $this->getPlatformStatus()->block($item['id']);
     }
     public function find($id): ?ItemInfo
     {

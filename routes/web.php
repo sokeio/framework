@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Sokeio\Controllers\PlatformController;
+use Sokeio\Http\Controllers\PlatformController;
 use Sokeio\Platform;
 use Sokeio\Theme;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Controllers;
+namespace Sokeio\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Sokeio\Platform;
