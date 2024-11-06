@@ -6,6 +6,11 @@
     <div class="dropend">
         <a class="dropdown-item dropdown-toggle" href="{{ $item->url() }}" data-bs-toggle="dropdown"
             data-bs-auto-close="outside" role="button" aria-expanded="false" wire:navigate.hover>
+            @if ($item->icon)
+                <span class="nav-link-icon d-md-none d-lg-inline-block">
+                    {!! $item->getIcon() !!}
+                </span>
+            @endif
             {{ $item->title }}
         </a>
         <div class="dropdown-menu">

@@ -6,9 +6,10 @@
     <li class="nav-item dropdown " wire:key="menu-{{ $item->key }}" menu-sort="{{ $item->sort }}">
         <a class="nav-link dropdown-toggle" href="{{ $item->url() }}" data-bs-toggle="dropdown"
             data-bs-auto-close="outside" role="button" aria-expanded="false">
+           
             @if ($item->icon)
                 <span class="nav-link-icon d-md-none d-lg-inline-block">
-                    {!! $item->icon() !!}
+                    {!! $item->getIcon() !!}
                 </span>
             @endif
             <span class="nav-link-title">
@@ -25,13 +26,13 @@
     <li class="nav-item" wire:key="menu-{{ $item->key }}" menu-sort="{{ $item->sort }}">
         <a class="nav-link " href="{{ $item->url() }}" wire:navigate.hover>
             @if ($item->icon)
-                <span class="nav-link-icon d-md-none d-lg-inline-block">
-                    {!! $item->icon() !!}
-                </span>
-            @endif
-            <span class="nav-link-title">
-                {{ $item->title }}
+            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                {!! $item->getIcon() !!}
             </span>
+        @endif
+        <span class="nav-link-title">
+            {{ $item->title }}
+        </span>
         </a>
     </li>
 @endif

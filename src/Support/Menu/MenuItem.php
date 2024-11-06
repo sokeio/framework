@@ -55,7 +55,7 @@ class MenuItem implements Arrayable
 
         return $this->url;
     }
-    public function icon()
+    public function getIcon()
     {
         if ($this->icon === null || $this->icon === '') {
             return '';

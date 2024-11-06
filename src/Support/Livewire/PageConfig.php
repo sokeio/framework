@@ -18,7 +18,7 @@ class PageConfig
         'layout' => 'default',
         'title' => '',
         'url' => null,
-        'icon' => null,
+        'icon' => 'fs-2 ti ti-brand-databricks',
         'route' => null,
         'sort' => 99999,
         'admin' => false,
@@ -28,7 +28,7 @@ class PageConfig
         'menuIcon' => null,
         'menuTarget' => null,
         'menuTargetTitle' => null,
-        'menuTargetIcon' => null,
+        'menuTargetIcon' => 'fs-2 ti ti-brand-databricks',
         'menuTargetId' => null,
         'menuTargetClass' => null,
         'menuTargetSort' => null,
@@ -99,6 +99,7 @@ class PageConfig
                 $menuTitle = $config->getMenuTitle() ?? str(str($nameRoute)->afterLast('.'))->replace('-', ' ');
                 $target = $config->getMenuTarget();
                 $sort = $config->getSort();
+                $icon = $config->getIcon();
                 $level = count(str($nameRoute)->split('/\./', -1, PREG_SPLIT_NO_EMPTY));
                 if (!$target && $level > 2) {
                     $target = str($nameRoute)->beforeLast('.');
@@ -106,9 +107,12 @@ class PageConfig
                 MenuManager::registerItem(
                     MenuItem::make($nameRoute, str($menuTitle)->title()->replace('-', ' '), null)
                         ->route('admin.' . $nameRoute)
-                        ->setup(function (MenuItem $item) use ($target, $sort) {
+                        ->setup(function (MenuItem $item) use ($target, $sort, $icon) {
                             if ($target) {
                                 $item->target =  $target;
+                            }
+                            if ($icon) {
+                                $item->icon = $icon;
                             }
                             $item->sort = $sort;
                         })

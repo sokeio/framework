@@ -8,7 +8,7 @@
             data-bs-auto-close="outside" role="button" aria-expanded="false">
             @if ($item->icon)
                 <span class="nav-link-icon d-md-none d-lg-inline-block">
-                    {!! $item->icon() !!}
+                    {!! $item->getIcon() !!}
                 </span>
             @endif
             <span class="nav-link-title">
@@ -26,7 +26,7 @@
         <a class="nav-link " href="{{ $item->url() }}" wire:navigate.hover>
             @if ($item->icon)
                 <span class="nav-link-icon d-md-none d-lg-inline-block">
-                    {!! $item->icon() !!}
+                    {!! $item->getIcon() !!}
                 </span>
             @endif
             <span class="nav-link-title">
