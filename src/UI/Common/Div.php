@@ -3,22 +3,17 @@
 namespace Sokeio\UI\Common;
 
 use Sokeio\UI\BaseUI;
+use Sokeio\UI\Common\Concerns\DivAlert;
+use Sokeio\UI\Common\Concerns\DivGrid;
 
 class Div extends BaseUI
 {
+    use DivGrid, DivAlert;
     public function text($text)
     {
         return $this->vars('text', $text);
     }
-    public function container($size = '')
-    {
-        return $this->className('container' . ($size ? '-' . $size : ''));
-    }
-    //success,warning,danger,info
-    public function alert($type = 'success')
-    {
-        return $this->className('alert alert-' . $type)->attr('role', 'alert');
-    }
+
     public function viewBlade($blade, $params = [])
     {
         return $this->child([
