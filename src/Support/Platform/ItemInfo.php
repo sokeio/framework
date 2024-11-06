@@ -139,7 +139,11 @@ class ItemInfo extends ObjectJson
     }
     public function getVersion(): string
     {
-        return '1.0.0';
+        return $this->version ?? '1.0.0';
+    }
+    public function getTitle(): string
+    {
+        return $this->title ?? $this->name;
     }
     public function getLastVersion(): string
     {

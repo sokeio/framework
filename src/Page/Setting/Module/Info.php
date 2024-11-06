@@ -21,6 +21,10 @@ class Info extends \Sokeio\Page
     protected function setupUI()
     {
         $item = Platform::module()->find($this->dataId);
+        $title = $item->getTitle();
+        if ($item->isVendor()) {
+            $title =  $title . '(Vendor)';
+        }
         return [
             ModalUI::init([
                 Div::init()->className('mt-auto')->viewBlade(
@@ -29,7 +33,7 @@ class Info extends \Sokeio\Page
                         'item' => $item
                     ]
                 )
-            ])->title($this->getPageConfig()->getTitle())
+            ])->title($title)
                 ->className('p-2')
                 ->xlSize()
                 ->afterUI([
@@ -55,6 +59,9 @@ class Info extends \Sokeio\Page
                             })
                     ])
                         ->className('px-2 pt-2 d-flex justify-content-end')
+                        ->when(function () use ($item) {
+                            return !$item->isVendor();
+                        })
                 ])
 
         ];
