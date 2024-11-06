@@ -97,7 +97,7 @@ class BaseUI
             }
         }
         return [
-            'ui' => self::class,
+            'ui' => static::class,
             'data' => ($this->data),
             'childs' => $childs
         ];
