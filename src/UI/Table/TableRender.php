@@ -2,6 +2,7 @@
 
 namespace Sokeio\UI\Table;
 
+use Sokeio\UI\BaseUI;
 use Sokeio\UI\Field\Input;
 
 trait TableRender
@@ -152,28 +153,28 @@ trait TableRender
         if (!$this->hasChilds('formSearch')) {
             return '';
         }
+        $formSearch = $this->renderChilds('formSearch', null, function (BaseUI $child) {
+            $child->debounce();
+            $child->setPrefix('soQuery.filter');
+        });
+        $formSearchExtra = $this->renderChilds('formSearchExtra', null, function (BaseUI $child) {
+            $child->debounce();
+            $child->setPrefix('soQuery.filter');
+        });
         return <<<html
         <div class="sokeio-form-search-wrapper ">
-            <div class="sokeio-form-search">
-                <div class="sokeio-form-search-main">
-                    {$this->renderChilds('formSearch')}
-                     <div class="sokeio-form-search-action" x-show="!searchExtra" style="display: none">
-                        <button class="btn btn-primary" x-on:click="searchExtra = !searchExtra">
-                            Show Filter
-                        </button>
-                    </div>
-                </div>
-                <div class="sokeio-form-search-extra"  x-show="searchExtra" style="display: none">
-                    {$this->renderChilds('formSearchExtra')}
-                </div>
-                <div class="sokeio-form-search-action" x-show="searchExtra" style="display: none">
-                    <button class="btn btn-secondary">Search</button>
-                    <button class="btn btn-primary" x-on:click="searchExtra = !searchExtra">
-                        Hide Filter
-                        </button>
+            <div class="sokeio-form-search-main">
+                {$formSearch}
+                    <div class="sokeio-form-search-action">
+                    <button class="btn btn-primary btn-icon btn-sm" x-on:click="searchExtra = !searchExtra">
+                        <i class="ti ti-filter" x-show="!searchExtra" ></i>
+                        <i class="ti ti-filter-off" x-show="searchExtra" style="display: none" ></i>
+                    </button>
                 </div>
             </div>
-
+            <div class="sokeio-form-search-extra"  x-show="searchExtra" style="display: none">
+                {$formSearchExtra}
+            </div>
         </div>
         html;
     }

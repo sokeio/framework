@@ -154,6 +154,6 @@ class SoUI
     }
     public static function renderUI($ui, $wire = null)
     {
-        return static::init($ui, $wire)->render();
+        return static::init($ui, $wire)->toHtml();
     }
 }
