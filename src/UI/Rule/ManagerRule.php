@@ -41,4 +41,14 @@ class ManagerRule
                 })->toArray()
         ];
     }
+    public function getRuleMessages()
+    {
+        return [
+            $this->field->getFieldName() => collect($this->rules)
+                ->reduce(function ($rs, FieldRule $rule) {
+                    $rs[$rule->getRule()] = $rule->getMessage();
+                    return $rs;
+                }, [])
+        ];
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace Sokeio\UI;
 
+use Illuminate\Support\Facades\Validator;
 use Sokeio\UI\Concerns\LifecycleUI;
 
 class SoUI
@@ -10,6 +11,7 @@ class SoUI
     private $actions = [];
     private $wire = null;
     private $fields = [];
+
 
     public function registerField($field)
     {
@@ -35,17 +37,41 @@ class SoUI
             $field->fillToModel($model);
         }
     }
-    public function getRuleForm()
+    public function getRuleForm($group = null)
     {
+        $messages = [];
         $rules = [];
+        $labels = [];
         foreach ($this->fields as $field) {
+            if ($group && $field->getGroup() != $group) {
+                continue;
+            }
+            $messages = array_merge($messages, $field->getRuleMessages());
             $rules = array_merge($rules, $field->getRules());
+            $labels[$field->getFieldName()] = $field->getLabel();
         }
-        return $rules;
+        return [
+            'rules' => $rules,
+            'messages' => $messages,
+            'labels' => $labels
+        ];
     }
     public function getWire()
     {
         return $this->wire;
+    }
+    public function validate($field = 'formData', $group = null, $excute = true)
+    {
+        $rule = $this->getRuleForm($group);
+        $data = data_get($this->getWire(), $field);
+        if ($data instanceof \Sokeio\FormData) {
+            $data = $data->toArray();
+        }
+        $validator = Validator::make([$field => $data], $rule['rules'], $rule['messages'], $rule['labels']);
+        if ($excute) {
+            return $validator->validate();
+        }
+        return $validator;
     }
     public function when($condition, $callback, $ui = null)
     {
@@ -87,6 +113,7 @@ class SoUI
         $this->initLifecycleUI();
         $this->child($ui);
         $this->setupChild(fn($ui) => $ui->registerManager($this));
+        $this->setupChild(fn($ui) => $ui->register());
         $this->register();
     }
     public function toArray()

@@ -20,6 +20,13 @@ trait WithRule
         }
         return $this->managerRule->getRules();
     }
+    public function getRuleMessages()
+    {
+        if (!$this->managerRule) {
+            return [];
+        }
+        return $this->managerRule->getRuleMessages();
+    }
     public function getManagerRule(): ManagerRule|null
     {
         return $this->managerRule;
@@ -35,5 +42,69 @@ trait WithRule
     public function rule($rule, $message = null, $params = [], $callback = null)
     {
         return $this->tapRule(fn(ManagerRule $managerRule) => $managerRule->rule($rule, $message, $params, $callback));
+    }
+    public function ruleRequired($message = null, $params = [], $callback = null)
+    {
+        return $this->rule('required', $message, $params, $callback);
+    }
+    public function ruleEmail($message = null, $params = [], $callback = null)
+    {
+        return $this->rule('email', $message, $params, $callback);
+    }
+    public function ruleMax($max, $message = null, $params = [], $callback = null)
+    {
+        return $this->rule('max:' . $max, $message, $params, $callback);
+    }
+    public function ruleMin($min, $message = null, $params = [], $callback = null)
+    {
+        return $this->rule('min:' . $min, $message, $params, $callback);
+    }
+    public function ruleBetween($min, $max, $message = null, $params = [], $callback = null)
+    {
+        return $this->rule('between:' . $min . ',' . $max, $message, $params, $callback);
+    }
+    public function ruleInteger($message = null, $params = [], $callback = null)
+    {
+        return $this->rule('integer', $message, $params, $callback);
+    }
+    public function ruleBoolean($message = null, $params = [], $callback = null)
+    {
+        return $this->rule('boolean', $message, $params, $callback);
+    }
+    public function ruleDate($message = null, $params = [], $callback = null)
+    {
+        return $this->rule('date', $message, $params, $callback);
+    }
+    public function ruleDateTime($message = null, $params = [], $callback = null)
+    {
+        return $this->rule('datetime', $message, $params, $callback);
+    }
+    public function ruleNumeric($message = null, $params = [], $callback = null)
+    {
+        return $this->rule('numeric', $message, $params, $callback);
+    }
+    public function ruleAlpha($message = null, $params = [], $callback = null)
+    {
+        return $this->rule('alpha', $message, $params, $callback);
+    }
+    public function ruleAlphaNum($message = null, $params = [], $callback = null)
+    {
+        return $this->rule('alpha_num', $message, $params, $callback);
+    }
+    public function ruleAlphaDash($message = null, $params = [], $callback = null)
+    {
+        return $this->rule('alpha_dash', $message, $params, $callback);
+    }
+    public function ruleAlphaNumDash($message = null, $params = [], $callback = null)
+    {
+        return $this->rule('alpha_num_dash', $message, $params, $callback);
+    }
+    public function ruleAlphaNumSpace($message = null, $params = [], $callback = null)
+    {
+        return $this->rule('alpha_num_space', $message, $params, $callback);
+    }
+    public function rulePhone($message = null, $regex = '/^1[3456789]\d{9}$/', $params = [], $callback = null)
+    {
+        return $this->rule('regex:' . $regex, $message, $params, $callback);
     }
 }

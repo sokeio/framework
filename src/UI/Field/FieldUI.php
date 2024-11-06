@@ -87,6 +87,10 @@ class FieldUI extends BaseUI
         $wire = $this->getWire();
         return data_get($wire, $this->getFieldName());
     }
+    public function getLabel()
+    {
+        return $this->getVar('label', null, true);
+    }
     public function view()
     {
         $attrWrapper = $this->getAttr('wrapper') ?? 'class="mb-3"';
@@ -98,7 +102,8 @@ class FieldUI extends BaseUI
             data_set($wire, $attrModel, $valueDefault);
         }
         $fieldView = $this->fieldView();
-        if ($label = $this->getVar('label', '', true)) {
+        if ($this->checkVar('label')) {
+            $label = $this->getLabel();
             $fieldView = <<<HTML
             <label class="form-label">{$label}</label>
             {$fieldView}
@@ -113,14 +118,15 @@ class FieldUI extends BaseUI
     }
     public function errorView()
     {
+        $field = $this->getFieldName();
         $errorHtml = view('sokeio::error', [
-            'field' => $this->getFieldName()
+            'field' =>  $field
         ])->render();
         if (empty($errorHtml)) {
             return '';
         }
         return <<<HTML
-        <div class="field-error">
+        <div class="field-error" field-name="{$field}" >
            {$errorHtml}
         </div>
         HTML;

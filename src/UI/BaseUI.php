@@ -52,10 +52,9 @@ class BaseUI
     {
         $this->manager = $manager;
         $this->setupChild(fn($c) => $c->registerManager($manager));
-        $this->register(function () {
+        return $this->register(function () {
             $this->initUI();
         });
-        return $this;
     }
 
     protected function initUI()

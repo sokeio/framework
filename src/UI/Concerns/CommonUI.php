@@ -68,6 +68,11 @@ trait CommonUI
         $attrValue = $this->getAttrKey($key, null, $group, true);
         return $attrValue !== null && $attrValue === $value;
     }
+    public function checkVar($key, $value = null, $group = 'default')
+    {
+        $attrValue = $this->getVar($key, null, $group, true);
+        return $attrValue !== null && ($value === null || str($attrValue)->contains($value));
+    }
     public function containsAttr($key, $value = null, $group = 'default')
     {
         $attrValue = $this->getAttrKey($key, null, $group, true);

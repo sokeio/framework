@@ -2,14 +2,11 @@
 
 namespace SokeioTheme\Admin\Page\SystemAccess\User;
 
-use Sokeio\Models\Role;
 use Sokeio\Models\User;
 use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Field\Input;
-use Sokeio\UI\Field\RangeNumber;
-use Sokeio\UI\Field\Select;
 use Sokeio\UI\ModalUI;
 use Sokeio\UI\WithEditUI;
 
@@ -21,9 +18,9 @@ class Edit extends \Sokeio\Page
     {
         return [
             ModalUI::init([
-                Input::init('name')->label(__('Name')),
-                Input::init('email')->label(__('Email')),
-                Input::init('phone_number')->label(__('Phone')),
+                Input::init('name')->label(__('Name'))->ruleRequired('Please enter name'),
+                Input::init('email')->label(__('Email'))->ruleRequired()->ruleEmail(),
+                Input::init('phone_number')->label(__('Phone'))->ruleRequired()->rulePhone(),
                 Input::init('password')->label(__('Password'))->password()
                     ->when(function () {
                         return !$this->dataId;

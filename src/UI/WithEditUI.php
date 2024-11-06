@@ -22,6 +22,7 @@ trait WithEditUI
     }
     public function saveData()
     {
+        $this->getUI()->validate();
         $data =  $this->dataId ? ($this->getModel())::find($this->dataId) : new ($this->getModel())();
         $this->formData->parseModel($data, $this->formData->keys());
         $data->save();
