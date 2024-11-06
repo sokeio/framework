@@ -8,6 +8,7 @@ use Sokeio\UI\Concerns\LifecycleUI;
 class BaseUI
 {
     use LifecycleUI, CommonUI;
+    
     public function icon($icon)
     {
         return $this->vars('icon', $icon);
@@ -40,6 +41,9 @@ class BaseUI
         $this->initLifecycleUI();
         $this->initCommonUI();
         $this->child($childs);
+        $this->boot(function () {
+            $this->attr('sokeio-group', $this->getGroup());
+        });
     }
     public function refUI($callback = null)
     {

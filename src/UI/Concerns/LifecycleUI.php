@@ -16,6 +16,18 @@ trait LifecycleUI
     protected $context = null;
     protected HookUI $hook;
     private $whenCallbacks = [];
+    private $callbackDebug = null;
+    public function debug($callback)
+    {
+        $this->callbackDebug = $callback;
+        return $this;
+    }
+    private function checkDebug($key)
+    {
+        if ($this->callbackDebug) {
+            call_user_func($this->callbackDebug, $this, $key);
+        }
+    }
     public function getParent()
     {
         return $this->parent;
@@ -82,6 +94,7 @@ trait LifecycleUI
         } else {
             $this->hook->group($key)->run([$this]);
         }
+        $this->checkDebug($key);
         if ($key == 'render') {
             return $this;
         }
@@ -89,8 +102,12 @@ trait LifecycleUI
     }
     public function setGroup($group)
     {
+        if ($this->group) {
+            return $this;
+        }
         $this->group = $group;
-        return  $this->setupChild(fn($c) => $c->setGroup($group));
+        $this->checkDebug('setGroup');
+        return $this->setupChild(fn($c) => $c->setGroup($group));
     }
     public function getGroup()
     {
@@ -99,6 +116,7 @@ trait LifecycleUI
     public function setPrefix($prefix)
     {
         $this->prefix = $prefix;
+        $this->checkDebug('setPrefix');
         return $this->setupChild(fn($c) => $c->setPrefix($prefix));
     }
 
@@ -118,6 +136,7 @@ trait LifecycleUI
     public function setContext($context)
     {
         $this->context = $context;
+        $this->checkDebug('setContext');
         return $this->setupChild(fn($c) => $c->setContext($context));
     }
     public function clearContext()
@@ -128,6 +147,7 @@ trait LifecycleUI
     public function setParams($params)
     {
         $this->params = $params;
+        $this->checkDebug('setParams');
         return $this->setupChild(fn($c) => $c->setParams($params));
     }
 
@@ -176,7 +196,7 @@ trait LifecycleUI
                 $child->setParent($this);
             }
         }
-        $this->childs[$group] = array_merge($this->childs[$group] ?? [], $childs);
+        $this->childs[$group] = array_merge($this->childs[$group] ?? [],  $childs);
         return $this;
     }
     private function getHtmlItem($ui, $params = null, $callback = null)

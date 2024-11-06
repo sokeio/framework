@@ -49,12 +49,15 @@ class Table extends BaseUI
         $this->pageSizes = $sizes;
         return $this;
     }
-    private function getKeyWithTable($name, $withKey = true)
+    private function getKeyWithTable($name = '', $withKey = true)
     {
-        if ($this->tableKey && $withKey) {
-            return 'table.' . $this->tableKey . '.' . $name;
+        if ($name) {
+            $name = '.' . $name;
         }
-        return 'table.' . $name;
+        if ($this->tableKey && $withKey) {
+            return 'table.' . $this->tableKey . $name;
+        }
+        return 'table' . $name;
     }
     protected function getValueByName($name, $default = null, $withKey = true)
     {
@@ -95,6 +98,27 @@ class Table extends BaseUI
         $this->tableKey = $key;
         return $this;
     }
+    private $arrQuery = [];
+    public function withQuery($key, $value = null, $match = null)
+    {
+        if (!$key) {
+            return $this;
+        }
+        if (is_string($key)) {
+            $this->arrQuery[] = function ($query) use ($key, $match, $value) {
+                if ($match) {
+                    $query->where($key, $match, $value);
+                } else {
+
+                    $query->where($key, $value);
+                }
+                return $query;
+            };
+        } elseif (is_callable($key)) {
+            $this->arrQuery[] = $key;
+        }
+        return $this;
+    }
     public function query($query)
     {
         $this->query = $query;
@@ -107,6 +131,13 @@ class Table extends BaseUI
         $type = $this->getValueByName('order.type', 'asc');
         if ($orderBy) {
             $query = $query->orderBy($orderBy, $type);
+        }
+        $fields = $this->getManager()->getFieldsByGroup(['formSearch', 'formSearchExtra']);
+        foreach ($fields as $field) {
+            $field->applyQuery($query);
+        }
+        foreach ($this->arrQuery as $q) {
+            $q($query);
         }
         return $query;
     }
@@ -165,7 +196,7 @@ class Table extends BaseUI
     }
     public function enableIndex($callback = null)
     {
-        return $this->boot(function () use ($callback) {
+        return $this->render(function () use ($callback) {
             $this->columns[-1] = (new Column($this))
                 ->setField('index')->setLabel('#')
                 ->disableSort()
@@ -181,7 +212,7 @@ class Table extends BaseUI
     }
     public function enableCheckBox($callback = null, $isAfterIndex = true)
     {
-        return $this->boot(function () use ($callback, $isAfterIndex) {
+        return $this->render(function () use ($callback, $isAfterIndex) {
             $this->showCheckBox = true;
             $this->columns[$isAfterIndex ? -2 : 0] = (new Column($this))
                 ->setField('index')->setLabel('#')

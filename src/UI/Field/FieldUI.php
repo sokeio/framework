@@ -8,10 +8,36 @@ use Sokeio\UI\Rule\WithRule;
 class FieldUI extends BaseUI
 {
     use WithRule;
+    private $arrQuery = [];
+    public function withQuery($key, $match = null)
+    {
+        if (is_string($key)) {
+            $this->arrQuery[] = function ($query, $value) use ($key, $match) {
+                if ($match) {
+                    $query->where($key, $match, $value);
+                } else {
+
+                    $query->where($key, $value);
+                }
+                return $query;
+            };
+        } elseif (is_callable($key)) {
+            $this->arrQuery[] = $key;
+        }
+        return $this;
+    }
+    public function applyQuery($query)
+    {
+        $value = $this->getValue();
+        foreach ($this->arrQuery as $q) {
+            $q($query, $value);
+        }
+        return $query;
+    }
     protected function initUI()
     {
         parent::initUI();
-        $this->register(function () {
+        $this->boot(function () {
             $this->getManager()->registerField($this);
         });
         $this->render(function () {

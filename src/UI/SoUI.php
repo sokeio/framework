@@ -23,9 +23,13 @@ class SoUI
     }
     public function getFieldsByGroup($group)
     {
+        if (!is_array($group)) {
+            $group = [$group];
+        }
         $fields = [];
         foreach ($this->fields as $field) {
-            if ($field->getGroup() == $group) {
+
+            if (in_array($field->getGroup(), $group)) {
                 $fields[] = $field;
             }
         }

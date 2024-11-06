@@ -2,6 +2,7 @@
 
 namespace SokeioTheme\Admin\Page\SystemAccess\User;
 
+use Illuminate\Support\Facades\Log;
 use Sokeio\Models\Role;
 use Sokeio\Models\User;
 use Sokeio\Support\Livewire\PageInfo;
@@ -41,7 +42,11 @@ class Index extends \Sokeio\Page
                         ->enableCheckBox()
                         ->formSearch(
                             [
-                                Input::init('q')->label(__('Search')),
+                                Input::init('keyword')
+                                    ->placeholder(__('Keyword'))
+                                    ->withQuery(function ($query, $value) {
+                                        $query->whereAny(['name', 'email', 'phone_number'], 'like', '%' . $value . '%');
+                                    }),
                             ],
                             [
                                 Select::init('role_id')->label(__('Role'))->remoteActionWithModel(Role::class),

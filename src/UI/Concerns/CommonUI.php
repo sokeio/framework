@@ -9,7 +9,6 @@ trait CommonUI
 {
     private DataUI|null $data;
     private AlpineUI|null  $alpine;
-
     public function initCommonUI()
     {
         $this->data = DataUI::create($this);
