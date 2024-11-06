@@ -23,12 +23,12 @@ class BaseUI
     private $callbackView = null;
     private SoUI|null $manager;
 
-    private BaseUI  $parent;
     public function getManager()
     {
         return $this->manager;
     }
-    public function style($style){
+    public function style($style)
+    {
         return $this->vars('style', $style);
     }
     public function getWire()
@@ -51,13 +51,7 @@ class BaseUI
     public function registerManager(SoUI $manager)
     {
         $this->manager = $manager;
-        foreach ($this->childs as $childs) {
-            foreach ($childs as $child) {
-                if ($child instanceof BaseUI) {
-                    $child->registerManager($manager);
-                }
-            }
-        }
+        $this->setupChild(fn($c) => $c->registerManager($manager));
         $this->register(function () {
             $this->initUI();
         });
@@ -67,15 +61,6 @@ class BaseUI
     protected function initUI()
     {
         // TODO: Implement initUI() method.
-    }
-    public function getParent()
-    {
-        return $this->parent;
-    }
-    public function setParent(BaseUI $parent)
-    {
-        $this->parent = $parent;
-        return $this;
     }
 
     public function action($key, $callback)

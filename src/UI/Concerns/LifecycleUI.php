@@ -3,10 +3,12 @@
 namespace Sokeio\UI\Concerns;
 
 use Sokeio\UI\BaseUI;
+use Sokeio\UI\SoUI;
 use Sokeio\UI\Support\HookUI;
 
 trait LifecycleUI
 {
+    private BaseUI|SoUI  $parent;
     private $childs = [];
     private $params = [];
     private $prefix = '';
@@ -14,6 +16,15 @@ trait LifecycleUI
     protected $context = null;
     protected HookUI $hook;
     private $whenCallbacks = [];
+    public function getParent()
+    {
+        return $this->parent;
+    }
+    public function setParent(BaseUI|SoUI $parent)
+    {
+        $this->parent = $parent;
+        return $this;
+    }
 
     public function debounce($debounce = 250)
     {
@@ -60,7 +71,7 @@ trait LifecycleUI
 
         return $this;
     }
-    private function lifecycleWithKey($key, $callback = null, $params = null): static
+    public function lifecycleWithKey($key, $callback = null, $params = null): static
     {
         if ($callback) {
             $this->hook->group($key)->callback($callback);
@@ -168,9 +179,40 @@ trait LifecycleUI
         $this->childs[$group] = array_merge($this->childs[$group] ?? [], $childs);
         return $this;
     }
+    private function getHtmlItem($ui, $params = null, $callback = null)
+    {
+        $html = '';
+        if (is_array($ui)) {
+            $html = implode('', $ui);
+        }
+        if (is_callable($ui)) {
+            $html = call_user_func($ui);
+        }
+        if ($ui instanceof BaseUI) {
+            $rs = null;
+            if ($callback) {
+                $rs = call_user_func($callback, $ui);
+            }
+            $ui->setParams($params);
+            $ui->render();
+            if ($ui->checkWhen()) {
+                $html = $ui->view();
+            }
+            $ui->clearParams();
+            if ($rs && is_callable($rs)) {
+                call_user_func($rs, $ui);
+            }
+        }
+
+        return $html;
+    }
     protected function renderChilds($group = 'default', $params = null, $callback = null)
     {
-        return $this->getManager()->getHtml($this->childs[$group] ?? [],  $params, $callback);
+        $html = '';
+        foreach ($this->childs[$group] ?? [] as $child) {
+            $html .= $this->getHtmlItem($child, $params, $callback);
+        }
+        return $html;
     }
     public function hasChilds($group = 'default')
     {
