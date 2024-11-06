@@ -42,6 +42,7 @@ class Index extends \Sokeio\Page
                         ->enableCheckBox()
                         ->formSearch(
                             [
+                                Select::init('role_id')->label(__('Role'))->remoteActionWithModel(Role::class),
                                 Input::init('keyword')
                                     ->placeholder(__('Keyword'))
                                     ->withQuery(function ($query, $value) {
@@ -49,7 +50,6 @@ class Index extends \Sokeio\Page
                                     }),
                             ],
                             [
-                                Select::init('role_id')->label(__('Role'))->remoteActionWithModel(Role::class),
                             ]
                         )
                         ->columnAction([
