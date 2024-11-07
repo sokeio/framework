@@ -3,7 +3,7 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/sokeio/framework.svg?style=flat-square)](https://packagist.org/packages/sokeio/framework)
 [![Total Downloads](https://img.shields.io/packagist/dt/sokeio/framework.svg?style=flat-square)](https://packagist.org/packages/sokeio/framework)
 
-**Sokeio** is a Laravel-based web application development package that provides support for developing modules, themes, livewire, and shortcodes. With Sokeio, users can develop web applications faster and easier than ever before. The package provides flexible features and utilities to help users optimize the development process and accelerate the development speed of their web applications.
+**Sokeio** is a Laravel-based web application development package that provides support for developing modules, themes. With Sokeio, users can develop web applications faster and easier than ever before. The package provides flexible features and utilities to help users optimize the development process and accelerate the development speed of their web applications.
 
 ## Quick tutorial
 
@@ -16,19 +16,6 @@ $ composer require sokeio/framework
 ```bash
 $ php artisan migrate
 ```
-
-- Create user admin or reset password for account supper-admin
-
-set .env
-
-```bash
-SOKEIO_MAKE_USER_ADMIN=true
-```
-
-```bash
-$ php artisan so:make-user-admin --e "admin@sokeio.com" --f "Nguyen Van Hau"
-```
-
 ## Template boilerplate
 
 Link [https://github.com/sokeio/sokeio](https://github.com/sokeio/sokeio)
@@ -37,8 +24,6 @@ Link [https://github.com/sokeio/sokeio](https://github.com/sokeio/sokeio)
 
 - Modules
 - Themes
-- Actions
-- ShortCodes
 
 ## Technology used:
 
@@ -63,20 +48,6 @@ $ composer require sokeio/framework
 account: admin@hau.xyz
 password: AdMin@123
 
-```
-
-## Usage
-
-Make module:
-
-```bash
-$ php artisan so:make-module Demo3 -a true -f true
-```
-
-Make theme:
-
-```bash
-$ php artisan so:make-theme Demo3 -a true -t theme -f true
 ```
 
 ## Contributing
