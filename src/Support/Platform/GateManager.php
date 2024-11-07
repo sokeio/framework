@@ -18,7 +18,7 @@ class GateManager
     }
     private $user;
     private function __construct(protected PlatformManager $manager) {}
-    private $ignores = [];
+    private $ignores = ['admin.dashboard', 'admin.dashboard.setting'];
     private $customes = [];
     public function setIgnores($ignores)
     {
@@ -63,8 +63,7 @@ class GateManager
     {
         return $permssion
             && !str_starts_with($permssion, '_')
-            && count($this->ignores) == 0
-            && !in_array($permssion, $this->ignores);
+            && (count($this->ignores) == 0 || !in_array($permssion, $this->ignores));
     }
     public function updatePermission()
     {
@@ -82,9 +81,14 @@ class GateManager
                 continue;
             }
             if (in_array('sokeio.admin', $middlewares)) {
+                $group = explode('.', $name)[1];
+                $group = str($group)->replace('-page', '')->replace('theme-admin', 'sokeio')->value();
+                if ($group == 'sokeio') {
+                    $group = 'sokeio-system';
+                }
                 Permission::query()->create([
                     'name' => $name,
-                    'group' => $name,
+                    'group' => $group,
                     'slug' => $name
                 ]);
             }

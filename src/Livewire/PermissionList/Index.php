@@ -13,7 +13,7 @@ class Index extends Component
     public function render()
     {
         return view('sokeio::livewire.permission-list.index', [
-            'allPermissions' => Permission::query()->get(),
+            'allPermissions' => Permission::query()->get()->groupBy('group'),
         ]);
     }
 }
