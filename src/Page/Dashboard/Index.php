@@ -80,11 +80,11 @@ class Index extends \Sokeio\Page
                         ->remoteActionWithModel(Dashboard::class)
                         ->valueDefault(data_get($this->dataSearch, 'dashboard_id'))
                         ->classNameWrapper('me-2')->debounce(10),
-                    DatePicker::init('from_date')->placeholder(__('Start Date'))
-                        ->classNameWrapper('me-2')
-                        ->valueDefault(Carbon::now()->subDays(30))->debounce(10),
-                    DatePicker::init('to_date')->placeholder(__('End Date'))
-                        ->valueDefault(Carbon::now())->debounce(10),
+                    // DatePicker::init('from_date')->placeholder(__('Start Date'))
+                    //     ->classNameWrapper('me-2')
+                    //     ->valueDefault(Carbon::now()->subDays(30))->debounce(10),
+                    // DatePicker::init('to_date')->placeholder(__('End Date'))
+                    //     ->valueDefault(Carbon::now())->debounce(10),
                     Button::init()
                         ->text(__('Settings'))
                         ->icon('ti ti-settings')

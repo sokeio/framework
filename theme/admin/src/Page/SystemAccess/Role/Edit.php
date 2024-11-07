@@ -20,8 +20,8 @@ class Edit extends \Sokeio\Page
     {
         return [
             ModalUI::init([
-                Input::init('name')->label(__('Name')),
-                Input::init('slug')->label(__('Slug')),
+                Input::init('name')->label(__('Name'))->ruleRequired(),
+                Input::init('slug')->label(__('Slug'))->ruleRequired(),
                 Textarea::init('description')->label(__('Description')),
                 Checkbox::init('is_active')->label(__('Status'))->labelCheckbox(__('Active')),
             ])->title(($this->dataId ? __('Edit') : __('Create')) . ' ' . $this->getPageConfig()->getTitle())

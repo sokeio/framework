@@ -42,8 +42,8 @@ class PageUI extends BaseUI
                 <div class="col-md col-sm-12 mb-1">
                     <h2 class="page-title">{$icon}{$title}</h2>
                 </div>
-                <div class="col-md-auto mb-1 col-sm-12 d-print-none">
-                    <div class="d-flex align-items-center">
+                <div class="col-md-auto mb-1 col-sm-12 d-print-none page-header-actions">
+                    <div class="d-flex ">
                     {$this->renderChilds('right')}
                     </div>
                 </div>

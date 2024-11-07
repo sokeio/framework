@@ -2,6 +2,10 @@
 
 namespace Sokeio\Support\Platform;
 
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Schema;
+use Sokeio\Models\Permission;
+
 class GateManager
 {
     private static $instance;
@@ -14,6 +18,18 @@ class GateManager
     }
     private $user;
     private function __construct(protected PlatformManager $manager) {}
+    private $ignores = [];
+    private $customes = [];
+    public function setIgnores($ignores)
+    {
+        $this->ignores = array_merge($this->ignores, $ignores);
+        return $this;
+    }
+    public function setCustomes($customes)
+    {
+        $this->customes = array_merge($this->customes, $customes);
+        return $this;
+    }
     public function getUserInfo()
     {
         return $this->user;
@@ -42,5 +58,47 @@ class GateManager
     public function role($role)
     {
         //TODO: check user role
+    }
+    private function checkPermissionName($permssion)
+    {
+        return $permssion
+            && !str_starts_with($permssion, '_')
+            && count($this->ignores) == 0
+            && !in_array($permssion, $this->ignores);
+    }
+    public function updatePermission()
+    {
+        Schema::disableForeignKeyConstraints();
+        Permission::truncate();
+        Schema::enableForeignKeyConstraints();
+        $listRoutes = Route::getRoutes()->getRoutes();
+        foreach ($listRoutes as $item) {
+            $name = $item->getName();
+            $middlewares = $item->gatherMiddleware();
+            if (
+                !$middlewares ||
+                !$this->checkPermissionName($name)
+            ) {
+                continue;
+            }
+            foreach ($middlewares as $mid) {
+                if (is_a($mid, \Illuminate\Auth\Middleware\Authenticate::class, true)) {
+                    Permission::query()->create([
+                        'name' => $name,
+                        'group' => $name,
+                        'slug' => $name
+                    ]);
+                }
+            }
+        }
+        foreach ($this->customes as $name) {
+            if ($this->checkPermissionName($name)) {
+                Permission::query()->create([
+                    'name' => $name,
+                    'group' => $name,
+                    'slug' => $name
+                ]);
+            }
+        }
     }
 }
