@@ -18,6 +18,8 @@ use Sokeio\UI\WithUI;
     title: 'Theme System',
     menu: true,
     menuTitle: 'Theme',
+    menuTargetSort: 99999,
+    menuTargetIcon: 'ti ti-palette fs-2',
     sort: 0
 )]
 class Index extends \Sokeio\Page

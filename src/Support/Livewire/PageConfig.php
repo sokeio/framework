@@ -89,23 +89,25 @@ class PageConfig
         if (str($urlRoute)->endsWith('/index')) {
             $urlRoute = str($urlRoute)->replace('/index', '');
         }
-        $nameRoute = $config->getRoute()
-            ??  ($shortName . '-page.' . str($url)->split('/\\\\/', -1)->map([Str::class, 'kebab'])->join('.'));
-        if (str($nameRoute)->endsWith('.index')) {
-            $nameRoute = str($nameRoute)->replace('.index', '');
+        $key = str($url)->split('/\\\\/', -1)->map([Str::class, 'kebab'])->join('.');
+        if (str($key)->endsWith('.index')) {
+            $key = str($key)->replace('.index', '');
         }
+        $nameRoute = $config->getRoute()
+            ??  ($shortName . '-page.' . $key);
+        $key = 'sokeio-menu.' . $key;
         if ($config->getAdmin()) {
             if ($config->getAuth() && $config->getMenu() && Platform::isUrlAdmin()) {
                 $menuTitle = $config->getMenuTitle() ?? str(str($nameRoute)->afterLast('.'))->replace('-', ' ');
                 $target = $config->getMenuTarget();
                 $sort = $config->getSort();
                 $icon = $config->getIcon();
-                $level = count(str($nameRoute)->split('/\./', -1, PREG_SPLIT_NO_EMPTY));
+                $level = count(str($key)->split('/\./', -1, PREG_SPLIT_NO_EMPTY));
                 if (!$target && $level > 2) {
-                    $target = str($nameRoute)->beforeLast('.');
+                    $target = str($key)->beforeLast('.');
                 }
                 MenuManager::registerItem(
-                    MenuItem::make($nameRoute, str($menuTitle)->title()->replace('-', ' '), null)
+                    MenuItem::make($key, str($menuTitle)->title()->replace('-', ' '), null)
                         ->route('admin.' . $nameRoute)
                         ->setup(function (MenuItem $item) use ($target, $sort, $icon) {
                             if ($target) {
