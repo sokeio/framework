@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Livewire\Livewire;
 use Sokeio\Http\Controllers\PlatformController;
 use Sokeio\Platform;
 use Sokeio\Theme;
@@ -42,4 +43,8 @@ Route::get('platform/{type}/screenshot/{id}', [PlatformController::class, 'banne
 
 Route::get('models', function () {
     return Platform::getAllModel();
+});
+
+Route::get('livewires', function () {
+    return Platform::getLivewireComponents();
 });

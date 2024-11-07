@@ -4,6 +4,7 @@ namespace SokeioTheme\Admin\Page\SystemAccess\Permission;
 
 use Sokeio\Models\Permission;
 use Sokeio\Models\User;
+use Sokeio\Platform;
 use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\PageUI;
@@ -21,6 +22,10 @@ use Sokeio\UI\WithUI;
 class Index extends \Sokeio\Page
 {
     use WithUI;
+    public function updatePermissions()
+    {
+        Platform::gate()->updatePermission();
+    }
     protected function setupUI()
     {
         return [
@@ -28,8 +33,8 @@ class Index extends \Sokeio\Page
                 [
                     Table::init()
                         ->column('name')
-                        ->column('email')
-                        ->column('phone_number')
+                        ->column('slug')
+                        ->column('group')
                         ->query($this->getQuery())
                         ->enableIndex()
                         ->columnAction([
@@ -53,6 +58,11 @@ class Index extends \Sokeio\Page
                         ])
                 ]
             )->rightUI([
+                Button::init()
+                    ->text(__('Upadate Permissions'))
+                    ->wireClick('updatePermissions')
+                    ->className('btn btn-success')
+                    ->icon('ti ti-refresh'),
                 Button::init()
                     ->text(__('Add ' . $this->getPageConfig()->getTitle()))
                     ->icon('ti ti-plus')

@@ -81,4 +81,8 @@ trait CommonUI
     {
         return $this->getAttributeByGroup($group)->getAttributeText();
     }
+    protected function getAttrValue($group = 'default')
+    {
+        return $this->getAttributeByGroup($group)->getData();
+    }
 }

@@ -81,14 +81,12 @@ class GateManager
             ) {
                 continue;
             }
-            foreach ($middlewares as $mid) {
-                if (is_a($mid, \Illuminate\Auth\Middleware\Authenticate::class, true)) {
-                    Permission::query()->create([
-                        'name' => $name,
-                        'group' => $name,
-                        'slug' => $name
-                    ]);
-                }
+            if (in_array('sokeio.admin', $middlewares)) {
+                Permission::query()->create([
+                    'name' => $name,
+                    'group' => $name,
+                    'slug' => $name
+                ]);
             }
         }
         foreach ($this->customes as $name) {

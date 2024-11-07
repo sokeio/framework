@@ -6,7 +6,6 @@ use Sokeio\Models\Permission;
 use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Common\Button;
-use Sokeio\UI\Field\Checkbox;
 use Sokeio\UI\Field\Input;
 use Sokeio\UI\Field\Textarea;
 use Sokeio\UI\ModalUI;
@@ -20,10 +19,10 @@ class Edit extends \Sokeio\Page
     {
         return [
             ModalUI::init([
-                Input::init('name')->label(__('Name')),
-                Input::init('slug')->label(__('Slug')),
+                Input::init('name')->label(__('Name'))->ruleRequired(),
+                Input::init('slug')->label(__('Slug'))->ruleRequired(),
+                Input::init('group')->label(__('Group'))->ruleRequired(),
                 Textarea::init('description')->label(__('Description')),
-                Checkbox::init('is_active')->label(__('Status'))->labelCheckbox(__('Active')),
             ])->title(($this->dataId ? __('Edit') : __('Create')) . ' ' . $this->getPageConfig()->getTitle())
                 ->className('p-2')->setPrefix('formData')
                 ->afterUI([
@@ -33,7 +32,7 @@ class Edit extends \Sokeio\Page
                     ])
                         ->className('px-2 pt-2 d-flex justify-content-end')
                 ])
-               
+
         ];
     }
 }

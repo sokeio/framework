@@ -8,6 +8,7 @@ use Sokeio\UI\Common\Div;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Field\Checkbox;
 use Sokeio\UI\Field\Input;
+use Sokeio\UI\Field\LivewireField;
 use Sokeio\UI\Field\Textarea;
 use Sokeio\UI\ModalUI;
 use Sokeio\UI\WithEditUI;
@@ -24,6 +25,8 @@ class Edit extends \Sokeio\Page
                 Input::init('slug')->label(__('Slug'))->ruleRequired(),
                 Textarea::init('description')->label(__('Description')),
                 Checkbox::init('is_active')->label(__('Status'))->labelCheckbox(__('Active')),
+                LivewireField::init('permissions')
+                    ->component('sokeio::permission-list.index')->label(__('Permissions')),
             ])->title(($this->dataId ? __('Edit') : __('Create')) . ' ' . $this->getPageConfig()->getTitle())
                 ->className('p-2')->setPrefix('formData')
                 ->afterUI([
