@@ -5,7 +5,7 @@ return [
     'paths' => [
         'base' => ['path' => '', 'namespace' => '', 'generate' => false],
         'src' => ['path' => 'src', 'namespace' => '', 'generate' => false],
-        'module-theme' => ['path' => 'themes', 'generate' => true, 'only' => ['module']],
+        'module-theme' => ['path' => 'theme', 'generate' => true, 'only' => ['module']],
         'config' => ['path' => 'config', 'generate' => true, 'only' => ['module']],
         'command' => ['path' => 'src/Console', 'namespace' => 'Console', 'generate' => true, 'only' => ['module']],
         'migration' => [
