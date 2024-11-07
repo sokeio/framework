@@ -67,7 +67,7 @@ class MenuManager implements Arrayable
     {
         return $this->menuItems;
     }
-    private function beforRender()
+    private function beforeRender()
     {
         if ($this->isBeforeRender) {
             return;
@@ -129,7 +129,7 @@ class MenuManager implements Arrayable
     }
     private function render($position = 'default')
     {
-        $this->beforRender();
+        $this->beforeRender();
         return Theme::view('sokeio::partials.menu.index', [
             'items' => $this->getItemsByPosition($position),
             'position' => $position

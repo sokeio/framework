@@ -28,7 +28,7 @@ class PageConfig
         'menuIcon' => null,
         'menuTarget' => null,
         'menuTargetTitle' => null,
-        'menuTargetIcon' => 'fs-2 ti ti-brand-databricks',
+        'menuTargetIcon' => 'fs-2 ti ti-table-down',
         'menuTargetId' => null,
         'menuTargetClass' => null,
         'menuTargetSort' => null,
