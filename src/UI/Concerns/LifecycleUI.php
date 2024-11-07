@@ -2,12 +2,14 @@
 
 namespace Sokeio\UI\Concerns;
 
+use Sokeio\Pattern\Tap;
 use Sokeio\UI\BaseUI;
 use Sokeio\UI\SoUI;
 use Sokeio\UI\Support\HookUI;
 
 trait LifecycleUI
 {
+    use Tap;
     private BaseUI|SoUI  $parent;
     private $childs = [];
     private $params = [];
@@ -237,11 +239,5 @@ trait LifecycleUI
     public function hasChilds($group = 'default')
     {
         return count($this->childs[$group] ?? []) > 0;
-    }
-    public function tap($callback)
-    {
-        $callback($this);
-
-        return $this;
     }
 }

@@ -2,10 +2,12 @@
 
 namespace Sokeio\UI\Rule;
 
+use Sokeio\Pattern\Tap;
 use Sokeio\UI\Field\FieldUI;
 
 class ManagerRule
 {
+    use Tap;
     private $rules = [];
     public function __construct(private FieldUI $field) {}
     public function rule($rule, $message = null, $params = [], $callback = null)
@@ -20,13 +22,6 @@ class ManagerRule
     public function required($message = null, $params = [],)
     {
         return $this->rule('required', $message, $params);
-    }
-    public function tap($callback)
-    {
-        if ($callback && is_callable($callback)) {
-            $callback($this);
-        }
-        return $this;
     }
     public function check()
     {
