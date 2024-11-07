@@ -28,8 +28,8 @@ return [
         ],
         'model' => ['path' => 'src/Models', 'namespace' => 'Models', 'generate' => true],
         'routes' => ['path' => 'routes', 'generate' => true],
-        'routes-admin' => ['path' => 'routes/admin', 'generate' => true],
-        'routes-web' => ['path' => 'routes/web', 'generate' => true],
+        // 'routes-admin' => ['path' => 'routes/admin', 'generate' => true],
+        // 'routes-web' => ['path' => 'routes/web', 'generate' => true],
         'controller' => [
             'path' => 'src/Http/Controllers',
             'namespace' => 'Http\\Controllers',
@@ -117,7 +117,7 @@ return [
         'common' => [
             "view",
             "route",
-            "api",
+            // "api",
             "admin",
             "function",
             "command",
