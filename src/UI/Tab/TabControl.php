@@ -12,6 +12,7 @@ class TabControl extends BaseUI
     private $iconSize = 2;
     public function iconSize($size =2){
         $this->iconSize = $size;
+        return $this;
     }
     public function getIconSize(){
         return $this->iconSize;
