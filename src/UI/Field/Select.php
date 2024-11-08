@@ -17,7 +17,19 @@ class Select extends FieldUI
         $this->options = array_merge($this->options, $options);
         return $this;
     }
-    public function createItem()
+    public function optionsWithEnum($enum)
+    {
+        return $this->options(collect($enum::cases())
+            ->map(fn($item) => ['value' => $item->value, 'text' => $item->label($item->value)])
+            ->values()->toArray());
+    }
+    /*************  ✨ Codeium Command ⭐  *************/
+    /**
+     * Create new item on select input if not exists.
+     *
+     * @return $this
+     */
+    /******  d9825501-2eaa-45b8-ac7f-47884bc5ba3f  *******/    public function createItem()
     {
         return $this->options([
             'create' => true
@@ -35,12 +47,17 @@ class Select extends FieldUI
         $this->render(function () {
             $this->attr('wire:tom-select');
             if ($this->datasource) {
+                $this->options = [];
                 if (is_callable($this->datasource)) {
                     $this->datasource = call_user_func($this->datasource, $this);
                 }
-                $this->attr('wire:tom-select.data-source', json_encode($this->datasource));
+                if ($this->datasource) {
+                    $this->options = $this->datasource;
+                }
             }
-            $this->attr('wire:tom-select.options', json_encode($this->options));
+            if ($this->options) {
+                $this->attr('wire:tom-select.options', json_encode($this->options));
+            }
         });
     }
     public function remoteActionWithModel(
@@ -84,7 +101,7 @@ class Select extends FieldUI
     protected function fieldView()
     {
         $attr = $this->getAttr();
-        $value= $this->getValue();
+        $value = $this->getValue();
         return <<<HTML
         <select {$attr} >
             <option value="{$value}"></option>

@@ -41,7 +41,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('roles');
         Schema::dropIfExists('users_roles');
+        Schema::dropIfExists('roles');
     }
 };

@@ -15,7 +15,7 @@ export default {
     if (el.$sokeio_tomselect) return;
     let remoteAction = el.getAttribute("wire:tom-select.remote-action");
     let optionBase64 = el.getAttribute("wire:tom-select.base64");
-    let dataSource = el.getAttribute("wire:tom-select.data-source");
+    let dataSource = el.getAttribute("wire:tom-select.options");
     if (dataSource) {
       dataSource = JSON.parse(dataSource) ?? {};
     }

@@ -3,36 +3,16 @@
 namespace Sokeio\UI\Field;
 
 use Sokeio\UI\BaseUI;
+use Sokeio\UI\Common\Concerns\WithCol;
+use Sokeio\UI\Field\Concerns\WithFieldData;
 use Sokeio\UI\Rule\WithRule;
 
 class FieldUI extends BaseUI
 {
-    use WithRule;
-    private $arrQuery = [];
-    public function withQuery($key, $match = null)
+    use WithRule, WithCol, WithFieldData;
+    protected function classNameCol($class)
     {
-        if (is_string($key)) {
-            $this->arrQuery[] = function ($query, $value) use ($key, $match) {
-                if ($match) {
-                    $query->where($key, $match, $value);
-                } else {
-
-                    $query->where($key, $value);
-                }
-                return $query;
-            };
-        } elseif (is_callable($key)) {
-            $this->arrQuery[] = $key;
-        }
-        return $this;
-    }
-    public function applyQuery($query)
-    {
-        $value = $this->getValue();
-        foreach ($this->arrQuery as $q) {
-            $q($query, $value);
-        }
-        return $query;
+        return $this->attrAdd('class', $class, 'col');
     }
     protected function initUI()
     {
@@ -52,28 +32,7 @@ class FieldUI extends BaseUI
             }
         });
     }
-    private $fillCallback = null;
-    private $skipFill = false;
-    public function skipFill()
-    {
-        $this->skipFill = true;
-        return $this;
-    }
-    public function fill($callback)
-    {
-        $this->fillCallback = $callback;
-    }
-    public function fillToModel($model)
-    {
-        if ($this->skipFill) {
-            return;
-        }
-        if ($this->fillCallback && is_callable($this->fillCallback)) {
-            call_user_func($this->fillCallback, $model, $this);
-        } else {
-            data_set($model, $this->getFieldNameWithoutPrefix(), $this->getValue());
-        }
-    }
+
     public function label($label)
     {
         return $this->vars('label', $label);
@@ -130,9 +89,9 @@ class FieldUI extends BaseUI
     {
         $attrWrapper = $this->getAttr('wrapper') ?? 'class="mb-3"';
         $attrModel = $this->getFieldName();
-        $valueDefault = $this->getValueDefault() ?? '';
-        $value = $this->getValue() ?? '';
-        if ($valueDefault && !$value) {
+        $valueDefault = $this->getValueDefault();
+        $value = $this->getValue();
+        if ($valueDefault !== null && $value === null) {
             $wire = $this->getWire();
             data_set($wire, $attrModel, $valueDefault);
         }
@@ -144,12 +103,21 @@ class FieldUI extends BaseUI
             {$fieldView}
             HTML;
         }
-        return <<<HTML
+        $view = <<<HTML
         <div {$attrWrapper} x-data="sokeioField('{$attrModel}')" >
         {$fieldView}
         {$this->errorView()}
         </div>
         HTML;
+        if ($this->containsAttr('class', null, 'col')) {
+            $attrCol = $this->getAttr('col');
+            $view = <<<HTML
+            <div {$attrCol}>
+            {$view}
+            </div>
+            HTML;
+        }
+        return $view;
     }
     public function errorView()
     {

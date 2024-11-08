@@ -156,7 +156,7 @@ class Table extends BaseUI
     {
         return $this->columns[$this->index];
     }
-    public function column($nameOrColumn, $callback = null)
+    public function column($nameOrColumn, $callback = null, $label = null)
     {
         $this->index++;
         if ($nameOrColumn instanceof Column) {
@@ -171,6 +171,7 @@ class Table extends BaseUI
         if ($callback) {
             $callback($this->current());
         }
+        $label && $this->current()->setLabel($label);
         return $this;
     }
     public function columnAction($array, $title = 'Actions', $callback = null)
