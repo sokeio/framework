@@ -54,9 +54,17 @@ trait WithServiceProvider
             $this->mergeConfigFrom($fileConfig, $this->package->shortName());
         }
         self::$itemInfo = Platform::loadFromServicePackage($this->package);
-        if ((static::itemInfo()->isActive() || static::itemInfo()->isVendor()) && $this->package->hasRouteWeb) {
-            Route::middleware('web')
-                ->group($this->getPackagePath('/../routes/web.php'));
+        if ((static::itemInfo()->isActiveOrVendor())) {
+            if ($this->package->hasRouteWeb) {
+                Route::middleware('web')
+                    ->group($this->getPackagePath('/../routes/web.php'));
+            }
+
+            if ($this->package->hasRouteApi) {
+                Route::prefix('api')
+                    ->middleware('api')
+                    ->group($this->getPackagePath('/../routes/api.php'));
+            }
         }
 
         if (!$this->extendPackage) {
@@ -191,7 +199,7 @@ trait WithServiceProvider
                 if ($seedFiles && count($seedFiles) > 0) {
                     foreach ($seedFiles  as $file) {
                         if ($file->getExtension() == "php") {
-                            
+
                             // includeFile($file->getRealPath());
                         }
                     }

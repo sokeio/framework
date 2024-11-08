@@ -68,6 +68,10 @@ class ItemInfo extends ObjectJson
         }
         return $this->flgActive;
     }
+    public function isActiveOrVendor(): bool
+    {
+        return $this->isActive() || $this->isVendor();
+    }
     public function setActive(): bool
     {
         return $this->manager->setActive($this);

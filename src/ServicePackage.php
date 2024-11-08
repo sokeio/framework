@@ -14,6 +14,8 @@ class ServicePackage
 
     public bool $hasRouteWeb = false;
 
+    public bool $hasRouteApi = false;
+
     public bool $hasHelpers = false;
 
     public string $pathHelper = '';
@@ -75,6 +77,12 @@ class ServicePackage
     public function routeWeb(bool $hasRouteWeb = true): self
     {
         $this->hasRouteWeb = $hasRouteWeb;
+
+        return $this;
+    }
+    public function routeApi(bool $hasRouteApi = true): self
+    {
+        $this->hasRouteApi = $hasRouteApi;
 
         return $this;
     }
