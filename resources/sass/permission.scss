@@ -1,0 +1,58 @@
+.permission-container {
+    .permission-card {
+        margin-bottom: 2rem;
+        border: 1px solid #1F5968;
+        border-radius: 2px;
+        display: flex;
+        flex-direction: column;
+
+        input~span {
+            margin-left: 0.5rem;
+        }
+
+        .permission-card-header {
+            flex: none;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #1F5968;
+            padding: 0.5rem 1rem;
+            color: #ffffff;
+            background-color: #1F5968;
+        }
+
+        .permission-card-body {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            min-height: 100px;
+            padding: 0.5rem 1rem;
+
+            .permission-box {
+                width: calc(20% - 0.5rem);
+                border: 1px solid #1F5968;
+                border-radius: 2px;
+                margin: 0.25rem;
+                display: flex;
+                flex-direction: column;
+                transition: all 0.3s ease-in-out;
+
+                .permission-box-header {
+                    display: flex;
+                    margin-bottom: 8px;
+                    padding: 5px;
+                    border-bottom: 1px solid #1F5968;
+                }
+
+                .permission-box {
+                    width: 100%;
+                    border: unset;
+
+                    .permission-box-header {
+                        display: flex;
+                        border-bottom: unset;
+                    }
+                }
+            }
+        }
+    }
+}

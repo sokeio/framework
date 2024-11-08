@@ -1,25 +1,18 @@
-<div x-data="{}">
+<div x-data="{}" class="permission-container">
+    <h2>(Not Implemented)</h2>
     @foreach ($allPermissions as $key => $item)
-        <div class="card mb-4">
-            <div class="card-header bg-azure text-azure-fg  p-2 px-3">
-                <h3 class="card-title"> {{ str($key)->replace('-', ' ')->title() }}</h3>
+        <div class="permission-card">
+            <div class="permission-card-header">
+                <input class="form-check-input m-0" type="checkbox" id="permission-card-{{ $key }}">
+                <span class="form-check-label" for="permission-card-{{ $key }}">
+                    {{ str($key)->replace('-', ' ')->title() }}
+                </span>
             </div>
-            <div class="card-body p-2">
-                @php
-                    $groups = $item->groupBy(function ($item) {
-                        return explode('.', $item->name)[2];
-                    });
-                @endphp
-                <div class="row">
-                    @foreach ($groups as $keyBox => $box)
-                        <div class="col-6 col-md-4 col-lg-3">
-                            @include('sokeio::livewire.permission-list.tree', [
-                                'items' => $box,
-                                'level' => 3,
-                            ])
-                        </div>
-                    @endforeach
-                </div>
+            <div class="permission-card-body">
+                @include('sokeio::livewire.permission-list.tree', [
+                    'items' => $item,
+                    'level' => 3,
+                ])
             </div>
         </div>
     @endforeach
