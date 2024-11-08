@@ -25,12 +25,19 @@ class TabItem
         if (!$icon) {
             $icon = 'ti ti-home';
         }
+        $iconSize = $this->tabControl->getIconSize();
+        if ($iconSize < 2) {
+            $iconSize = 2;
+        }
+        if ($iconSize) {
+            $icon .= ' fs-' . $iconSize;
+        }
         $active = $this->isActive() ? 'active' : '';
         return <<<HTML
         <li class="nav-item">
             <a class="nav-link {$active}" data-bs-toggle="tab" href="#{$this->getKey()}"
              role="tab" aria-controls="{$this->id}" aria-selected="{$active}">
-                <i class="{$icon}  fs-3 me-1"></i> <span>{$this->title}</span>
+                <i class="{$icon} me-1"></i> <span>{$this->title}</span>
             </a>
         </li>
 HTML;

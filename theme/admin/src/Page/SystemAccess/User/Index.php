@@ -41,14 +41,9 @@ class Index extends \Sokeio\Page
                         ->query($this->getQuery())
                         ->enableIndex()
                         ->enableCheckBox()
+                        ->searchbox(['name', 'email', 'phone_number'])
                         ->formSearch(
-                            [
-                                Input::init('keyword')
-                                    ->placeholder(__('Keyword'))
-                                    ->withQuery(function ($query, $value) {
-                                        $query->whereAny(['name', 'email', 'phone_number'], 'like', '%' . $value . '%');
-                                    }),
-                            ],
+                            [],
                             [
                                 Select::init('role_id')->label(__('Role'))->remoteActionWithModel(Role::class),
                             ]

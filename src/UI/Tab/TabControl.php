@@ -9,6 +9,13 @@ class TabControl extends BaseUI
     private $tabItems = [];
     private $index = -1;
     private $tabActive = null;
+    private $iconSize = 2;
+    public function iconSize($size =2){
+        $this->iconSize = $size;
+    }
+    public function getIconSize(){
+        return $this->iconSize;
+    }
     public function getTabActive()
     {
         return $this->tabActive ?? 0;
