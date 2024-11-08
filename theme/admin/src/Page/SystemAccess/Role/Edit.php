@@ -26,6 +26,7 @@ class Edit extends \Sokeio\Page
                 Textarea::init('description')->label(__('Description')),
                 Checkbox::init('is_active')->label(__('Status'))->labelCheckbox(__('Active')),
                 LivewireField::init('permissions')
+                    ->skipFill()
                     ->component('sokeio::permission-list.index')->label(__('Permissions')),
             ])->title(($this->dataId ? __('Edit') : __('Create')) . ' ' . $this->getPageConfig()->getTitle())
                 ->className('p-2')->setPrefix('formData')

@@ -20,13 +20,28 @@ trait WithEditUI
         $data =  $this->dataId ? ($this->getModel())::find($this->dataId) : new ($this->getModel());
         $this->formData->fill($data);
     }
+    protected function afterSaveData($data)
+    {
+        return $data;
+    }
+    protected function beforeSaveData($data)
+    {
+        return $data;
+    }
+    protected function formMessage()
+    {
+        $this->alert(__('Saved successfully'));
+    }
     public function saveData()
     {
 
         $this->getUI()->validate();
         $data =  $this->dataId ? ($this->getModel())::find($this->dataId) : new ($this->getModel())();
-        $this->formData->parseModel($data, $this->formData->keys());
+        $this->getUI()->fill($data);
+        $this->beforeSaveData($data);
         $data->save();
+        $this->afterSaveData($data);
+        $this->formMessage();
         $this->refreshRef();
         $this->sokeioClose();
     }

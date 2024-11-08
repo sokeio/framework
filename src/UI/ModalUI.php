@@ -4,6 +4,7 @@ namespace Sokeio\UI;
 
 class ModalUI extends BaseUI
 {
+    private $overlayClose = false;
     public function initUI()
     {
         $this->className('sokeio-modal-ui');
@@ -11,7 +12,15 @@ class ModalUI extends BaseUI
             if (!$this->getIcon()) {
                 $this->icon('ti ti-dashboard');
             }
+            if (!$this->overlayClose) {
+                $this->attr('data-skip-overlay-close', true);
+            }
         });
+    }
+    public function overlayClose()
+    {
+        $this->overlayClose = true;
+        return $this;
     }
     public function title($title)
     {
@@ -81,10 +90,8 @@ class ModalUI extends BaseUI
     {
         return $this->size('fullscreen-sm-down');
     }
-    public function skipOverlayClose()
-    {
-        return $this->attr('data-skip-overlay-close', true);
-    }
+
+
     public function hideButtonClose()
     {
         return $this->attr('data-hide-button-close', true);

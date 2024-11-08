@@ -2,11 +2,13 @@
 
 namespace SokeioTheme\Admin\Page\SystemAccess\User;
 
+use Sokeio\Models\Role;
 use Sokeio\Models\User;
 use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Field\Input;
+use Sokeio\UI\Field\Select;
 use Sokeio\UI\ModalUI;
 use Sokeio\UI\WithEditUI;
 
@@ -25,6 +27,9 @@ class Edit extends \Sokeio\Page
                     ->when(function () {
                         return !$this->dataId;
                     }),
+                Select::init('role_id')->label(__('Role'))->remoteActionWithModel(Role::class)->when(function () {
+                    return !$this->dataId;
+                }),
             ])->title(($this->dataId ? __('Edit') : __('Create')) . ' ' . $this->getPageConfig()->getTitle())
                 ->className('p-2')->setPrefix('formData')
                 ->afterUI([

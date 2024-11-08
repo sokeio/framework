@@ -53,16 +53,25 @@ class FieldUI extends BaseUI
         });
     }
     private $fillCallback = null;
+    private $skipFill = false;
+    public function skipFill()
+    {
+        $this->skipFill = true;
+        return $this;
+    }
     public function fill($callback)
     {
         $this->fillCallback = $callback;
     }
     public function fillToModel($model)
     {
+        if ($this->skipFill) {
+            return;
+        }
         if ($this->fillCallback && is_callable($this->fillCallback)) {
             call_user_func($this->fillCallback, $model, $this);
         } else {
-            $model->{$this->getFieldName()} = $this->getValue();
+            data_set($model, $this->getFieldNameWithoutPrefix(), $this->getValue());
         }
     }
     public function label($label)
