@@ -33,12 +33,13 @@ class PageConfig
         'menuTargetClass' => null,
         'menuTargetSort' => null,
         'skipHtmlAjax' => false,
-        'model' => null
+        'model' => null,
+        'skip' => false
     ];
     public function setInfo(PageInfo $info)
     {
         foreach ($this->config as $key => $value) {
-            if ($info->{$key} === null) {
+            if (!isset($info->{$key}) || $info->{$key} === null) {
                 continue;
             }
             $this->config[$key] = $info->{$key};
@@ -77,6 +78,9 @@ class PageConfig
     public static function setupRoute($pageClass, $namespaceRoot = null, $shortName = null)
     {
         $config = app($pageClass)->getPageConfig();
+        if ($config->getSkip()) {
+            return;
+        }
         $namespacePage = $namespaceRoot . '\\Page\\';
         if (str($shortName)->startsWith('theme.')) {
             $shortName = str($shortName)->replace('.', '-');
