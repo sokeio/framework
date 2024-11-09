@@ -24,6 +24,11 @@ class ItemManager
     private function __construct(private $type) {}
     protected $platformStatus;
     protected $platformStatusThemeAdmin;
+    private $marketplate;
+    public function getMarketplate(): Marketplate
+    {
+        return $this->marketplate ??= new Marketplate($this);
+    }
     public function getPlatformStatus($isThemeAdmin = false): PlatformStatus
     {
         if ($this->isTheme() && $isThemeAdmin) {

@@ -62,7 +62,7 @@ trait WithServiceProvider
 
             if ($this->package->hasRouteApi) {
                 Route::prefix('api')
-                    ->middleware('api')
+                    // ->middleware('sokeio.api.guest')
                     ->group($this->getPackagePath('/../routes/api.php'));
             }
         }
