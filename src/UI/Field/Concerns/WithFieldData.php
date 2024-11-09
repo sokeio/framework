@@ -16,7 +16,7 @@ trait WithFieldData
                 if ($fnValue && is_callable($fnValue)) {
                     $value = $fnValue($value);
                 }
-                if ($value === '') {
+                if ($value === ''||$value === null) {
                     return $query;
                 }
                 if ($match) {

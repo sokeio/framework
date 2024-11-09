@@ -34,14 +34,24 @@ class Marketplate
             'version' => $version,
             'type' => $this->manager->getItemType()
         ]);
-        file_put_contents($pathFile, $rs->body());
-        if (file_exists($pathFile)) {
-            $this->installFromPath($pathFile);
+        if ($rs->ok()) {
+
+            file_put_contents($pathFile, $rs->body());
+            sleep(3);
+            if (file_exists($pathFile)) {
+                $this->installFromPath($pathFile);
+            }
+            return true;
         }
+        return false;
     }
     public function installFromPath($path)
     {
-        //TODO : implement installFromPath
+        $zip = new \ZipArchive();
+        $zip->open($path, \ZipArchive::CHECKCONS);
+        $zip->extractTo(base_path($this->pathTemps));
+        $zip->close();
+        return true;
     }
     public function uninstall($id)
     {

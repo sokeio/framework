@@ -106,7 +106,7 @@ class ItemManager
         if ($path) {
             $path = '/' . $path;
         }
-        return url('platform/' . $this->type . $path, [], config('app.secure', false) ? 'https' : 'http');
+        return '/platform/' . $this->type . $path;
     }
     private function getItem(array| ItemInfo|string $id)
     {
