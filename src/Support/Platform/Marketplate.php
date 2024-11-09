@@ -2,6 +2,7 @@
 
 namespace Sokeio\Support\Platform;
 
+use Directory;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 
@@ -37,7 +38,6 @@ class Marketplate
         if ($rs->ok()) {
 
             file_put_contents($pathFile, $rs->body());
-            sleep(3);
             if (file_exists($pathFile)) {
                 $this->installFromPath($pathFile);
             }
@@ -47,9 +47,11 @@ class Marketplate
     }
     public function installFromPath($path)
     {
+        $folder = $path . '-folder';
+        File::makeDirectory($folder);
         $zip = new \ZipArchive();
         $zip->open($path, \ZipArchive::CHECKCONS);
-        $zip->extractTo(base_path($this->pathTemps));
+        $zip->extractTo($folder);
         $zip->close();
         return true;
     }
