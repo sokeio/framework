@@ -170,7 +170,9 @@ class ItemManager
         if (!$item) {
             return false;
         }
-        File::deleteDirectories($item->getPath());
+        if (File::exists($item->getPath())) {
+            File::deleteDirectory($item->getPath());
+        }
         unset($this->arrItems[$id]);
         return true;
     }

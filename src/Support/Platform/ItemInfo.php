@@ -3,6 +3,7 @@
 namespace Sokeio\Support\Platform;
 
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Sokeio\ObjectJson;
 use Sokeio\Platform;
 use Sokeio\Support\Platform\Concerns\WithRegisterItemInfo;
@@ -87,13 +88,23 @@ class ItemInfo extends ObjectJson
             return str_replace('.blade.php', '', $file->getRelativePathname());
         })->toArray();
     }
+    private function getPublicName()
+    {
+        if ($this->isTheme()) {
+            if ($this['admin']) {
+                return 'admin';
+            }
+            return 'site';
+        }
+        return $this->name;
+    }
     public function autoAssets(): void
     {
         $pathPublic = $this->path . '/public/';
 
         if (file_exists($pathPublic . 'build/manifest.json')) {
             $manifest = json_decode(file_get_contents($pathPublic . 'build/manifest.json'), true);
-            $url = $this->getManager()->getUrl($this->name . '/build');
+            $url = $this->getManager()->getUrl($this->getPublicName() . '/build');
             if (isset($manifest['resources/js/app.js']['file'])) {
                 Theme::linkJs($url . '/' . $manifest['resources/js/app.js']['file']);
             }
@@ -116,13 +127,26 @@ class ItemInfo extends ObjectJson
             if (!file_exists($pathTarget)) {
                 File::makeDirectory($pathTarget, 0775, true);
             }
-            $pathTarget = $this->getManager()->getPathPublic($this->name);
+            $pathTarget = $this->getManager()->getPathPublic($this->getPublicName());
             if (!file_exists($pathTarget)) {
                 if (env('SOKEIO_PUBLIC_COPY')) {
                     File::copyDirectory($pathPublic, $pathTarget);
                 } else {
+                    if (File::exists($pathTarget)) {
+                        if (File::isDirectory($pathTarget)) {
+                            File::deleteDirectory($pathTarget);
+                        } else {
+                            File::delete($pathTarget);
+                        }
+                    }
                     // symlink
                     app('files')->link($pathPublic, $pathTarget);
+                    // try {
+
+                    // } catch (\Throwable $th) {
+                    //     Log::info('symlink error:' . $pathPublic . ' => ' . $pathTarget);
+                    //     Log::error($th);
+                    // }
                 }
             }
         }

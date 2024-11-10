@@ -5,6 +5,7 @@ namespace Sokeio\Support\Platform;
 use Directory;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
+use Sokeio\Platform;
 
 class Marketplate
 {
@@ -53,6 +54,26 @@ class Marketplate
         $zip->open($path, \ZipArchive::CHECKCONS);
         $zip->extractTo($folder);
         $zip->close();
+        $type = $this->manager->getItemType() . '.json';
+        $file = collect(File::allFiles($folder))->filter(function ($file) use ($type) {
+            // CHeck File Type
+            return $file->getFilename() == $type;
+        })->first();
+        $folder_main = $file->getPath();
+        $json = json_decode($file->getContents(), true);
+        $id = $json['id'];
+        $version = str($json['version'])->replace('.', '-');
+        // move $id(sokeio/cms) => $folder_target(sokeio-cms-{version})
+        $folder_target = str($id)->replace('/', '-') . '-' . $version;
+        $path_folder_target = $this->manager->getPath($folder_target);
+        if (file_exists($path_folder_target)) {
+            File::deleteDirectory($path_folder_target);
+        }
+        $old = $this->manager->find($id);
+        if ($old) {
+            $this->manager->delete($id);
+        }
+        File::copyDirectory($folder_main, $path_folder_target);
         return true;
     }
     public function uninstall($id)
