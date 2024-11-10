@@ -5,12 +5,12 @@ window.showFileManager = function (callback, type = "file") {
     type: type,
     callback: callback,
     template: manager,
-    modalSize:'xxl',
-    skipOverlayClose: true
+    modalSize: "xxl",
+    skipOverlayClose: true,
   });
 };
-setTimeout(() => {
-  window.showFileManager(function (file) {
-    console.log(file);
-  });
-}, 100);
+// setTimeout(() => {
+//   window.showFileManager(function (file) {
+//     console.log(file);
+//   });
+// }, 100);

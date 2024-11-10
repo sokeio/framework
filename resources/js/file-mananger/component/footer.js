@@ -1,8 +1,8 @@
 export default {
     render() {
         return `
-                <div class="so-fm-header">
-                       demo
+                <div class="so-fm-footer">
+                        Footer
                 </div>
         `;
     },
