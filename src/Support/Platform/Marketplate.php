@@ -69,19 +69,30 @@ class Marketplate
         if (file_exists($path_folder_target)) {
             File::deleteDirectory($path_folder_target);
         }
-        $old = $this->manager->find($id);
-        if ($old) {
-            $this->manager->delete($id);
-        }
+        $this->uninstall($id);
         File::copyDirectory($folder_main, $path_folder_target);
+        //Remove temps
+        File::delete($path);
+        File::deleteDirectory($folder);
         return true;
     }
     public function uninstall($id)
     {
-        //TODO : implement uninstall
+        $old = $this->manager->find($id);
+        if ($old) {
+            $old->block();
+            $old->delete();
+        }
     }
     public function search($query)
     {
-        //TODO : implement search
+        $rs = $this->makeRequest('platform/search', [
+            'query' => $query,
+            'type' => $this->manager->getItemType()
+        ]);
+        if ($rs->ok()) {
+            return $rs->json();
+        }
+        return [];
     }
 }

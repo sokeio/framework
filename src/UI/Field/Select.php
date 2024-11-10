@@ -23,13 +23,7 @@ class Select extends FieldUI
             ->map(fn($item) => ['value' => $item->value, 'text' => $item->label($item->value)])
             ->values()->toArray());
     }
-    /*************  ✨ Codeium Command ⭐  *************/
-    /**
-     * Create new item on select input if not exists.
-     *
-     * @return $this
-     */
-    /******  d9825501-2eaa-45b8-ac7f-47884bc5ba3f  *******/    public function createItem()
+    public function createItem()
     {
         return $this->options([
             'create' => true
@@ -86,7 +80,6 @@ class Select extends FieldUI
             }
             $this->attr('wire:tom-select.remote-action', $name);
             $this->action($name, $action);
-            $this->attr('wire:ignore', null, 'wrapper');
             $this->render(function () use ($name) {
                 if (empty($this->dataSource)) {
                     $this->dataSource($this->getManager()->callActionUI($name));
@@ -103,9 +96,11 @@ class Select extends FieldUI
         $attr = $this->getAttr();
         $value = $this->getValue();
         return <<<HTML
-        <select {$attr} >
-            <option value="{$value}"></option>
-        </select>
+        <div wire:ignore>
+            <select {$attr} >
+                <option value="{$value}"></option>
+            </select>
+        </div>
         HTML;
     }
 }

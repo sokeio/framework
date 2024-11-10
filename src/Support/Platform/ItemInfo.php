@@ -128,26 +128,18 @@ class ItemInfo extends ObjectJson
                 File::makeDirectory($pathTarget, 0775, true);
             }
             $pathTarget = $this->getManager()->getPathPublic($this->getPublicName());
-            if (!file_exists($pathTarget)) {
-                if (env('SOKEIO_PUBLIC_COPY')) {
-                    File::copyDirectory($pathPublic, $pathTarget);
-                } else {
-                    if (File::exists($pathTarget)) {
-                        if (File::isDirectory($pathTarget)) {
-                            File::deleteDirectory($pathTarget);
-                        } else {
-                            File::delete($pathTarget);
-                        }
-                    }
-                    // symlink
-                    app('files')->link($pathPublic, $pathTarget);
-                    // try {
-
-                    // } catch (\Throwable $th) {
-                    //     Log::info('symlink error:' . $pathPublic . ' => ' . $pathTarget);
-                    //     Log::error($th);
-                    // }
-                }
+            if (file_exists($pathTarget)) {
+                return $this;
+            }
+            if (env('SOKEIO_PUBLIC_COPY')) {
+                File::copyDirectory($pathPublic, $pathTarget);
+                return $this;
+            }
+            try {
+                // symlink
+                app('files')->link($pathPublic, $pathTarget);
+            } catch (\Exception $e) {
+                Log::error($e);
             }
         }
         return $this;

@@ -8,7 +8,7 @@ use Sokeio\UI\Concerns\LifecycleUI;
 class BaseUI
 {
     use LifecycleUI, CommonUI;
-    
+
     public function icon($icon)
     {
         return $this->vars('icon', $icon);
@@ -22,7 +22,7 @@ class BaseUI
         return $icon;
     }
     private $callbackView = null;
-    private SoUI|null $manager;
+    private SoUI|null $manager=null;
 
     public function getManager()
     {
@@ -34,7 +34,7 @@ class BaseUI
     }
     public function getWire()
     {
-        return $this->manager?->getWire();
+        return $this->getManager()?->getWire();
     }
     protected function __construct($childs = [])
     {

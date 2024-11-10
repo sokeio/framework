@@ -8,7 +8,7 @@ trait WithCol
     {
         return $this->attrAdd('class', $class);
     }
-    public function col($xxl = 12, $xl = 12, $lg = 12, $md = 12, $sm = 12)
+    public function col($xxl = 12, $xl = 12, $lg = 12, $md = 12, $sm = 12): static
     {
         return $this->classNameCol('col-sm-' . $sm)
             ->classNameCol('col-md-' . $md)
