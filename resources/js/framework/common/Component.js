@@ -16,12 +16,19 @@ export function getComponents() {
   return components;
 }
 export function getComponent($name, $props, $parent = null) {
-  if (!components[$name] && !$parent?.components[$name]) {
+  if (
+    !components[$name] &&
+    !$parent?.components[$name] &&
+    !$parent?.$root?.components[$name]
+  ) {
     console.error("Component not found: " + $name);
     return null;
   }
   if ($parent?.components[$name]) {
     return Component($parent?.components[$name], $props, $parent);
+  }
+  if ($parent?.$root?.components[$name]) {
+    return Component($parent?.$root?.components[$name], $props, $parent);
   }
   return Component(components[$name], $props, $parent);
 }
@@ -56,6 +63,7 @@ function getChildComponent(component) {
 }
 export function doBoot(component) {
   logDebug("doBoot", component);
+  component.boot && component.boot();
   let html = component.render ? component.render() : "<div></div>";
   html = html.trim();
   if (component.$el) {
@@ -70,7 +78,6 @@ export function doBoot(component) {
       doBoot(item);
     });
   }
-  component.boot && component.boot();
 }
 export function doRender(component) {
   logDebug("doRender", component);
@@ -135,10 +142,14 @@ export function doDestroy(component) {
   component = undefined;
 }
 export function Component($component, $props, $parent = null) {
+  if (!$component.state) {
+    $component.state = {};
+  }
   let component = {
     ...$component,
     $initState: { ...JSON.parse(JSON.stringify($component.state)) },
     $parent: $parent,
+
     $children: [],
     $id: 0,
     $el: null,
@@ -164,6 +175,7 @@ export function Component($component, $props, $parent = null) {
       "querySelectorAll",
       "on",
       "$request",
+      "$root",
       "__data__",
       "__props__",
     ])
@@ -171,6 +183,9 @@ export function Component($component, $props, $parent = null) {
       return self.indexOf(item) === index;
     });
   //
+  Object.defineProperty(component, "$root", {
+    value: $parent?.$root ?? component,
+  });
   Object.defineProperty(component, "$request", {
     value: $request,
   });

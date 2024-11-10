@@ -67,6 +67,16 @@ export function run(template = {}, options = {}) {
     sokeAppSelector: querySelectorOrEl,
     state: JSON.parse(JSON.stringify(template.state ?? {})),
   };
+  if (options.components) {
+    if (typeof options.components === "string") {
+      options.components = JSON.parse(options.components);
+    }
+    templateCopy.components = templateCopy.components ?? {};
+    templateCopy.components = {
+      ...templateCopy.components,
+      ...options.components,
+    };
+  }
   logDebug("templateCopy", templateCopy);
   let init = options.init === undefined ? true : options.init;
   document.dispatchEvent(new CustomEvent("sokeio::run"));

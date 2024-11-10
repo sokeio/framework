@@ -1,1 +1,2 @@
-<div style="display: inline;"></div>
+<div style="display: inline;" x-data="sokeioGlobal()">
+</div>

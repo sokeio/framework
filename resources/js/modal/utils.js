@@ -4,7 +4,8 @@ export function getModalHtmlRender(
   html = "",
   footer = "",
   header = "",
-  icon = ""
+  icon = "",
+  component = ""
 ) {
   // check icon with tags or class
   if (icon.indexOf("<") === -1) {
@@ -29,26 +30,31 @@ export function getModalHtmlRender(
   let closeOverlay =
     'so-on:click="this.delete()" so-on:ignore=".so-modal-dialog"';
   let elHtml = Utils.convertHtmlToElement(html);
-  if (
-    elHtml.querySelector(".hide-show-button-close") ||
-    elHtml.getAttribute("data-hide-button-close")
-  ) {
-    htmlClose = "";
+  let skipOverlayClose = component?.skipOverlayClose ?? false;
+  let modalSize = component?.modalSize ?? "lg";
+  if (elHtml && elHtml.getAttribute && elHtml.querySelector) {
+    if (
+      elHtml.querySelector?.(".hide-show-button-close") ||
+      elHtml.getAttribute("data-hide-button-close")
+    ) {
+      htmlClose = "";
+    }
+    // attribute data-modal-size
+    modalSize = elHtml.getAttribute("data-modal-size");
+    if (!modalSize && elHtml.querySelector?.("[data-modal-size]")) {
+      modalSize = elHtml
+        .querySelector("[data-modal-size]")
+        .getAttribute("data-modal-size");
+    }
+    skipOverlayClose = elHtml.getAttribute("data-skip-overlay-close");
+    if (!skipOverlayClose && elHtml.querySelector?.("[data-skip-overlay-close]")) {
+      skipOverlayClose = elHtml
+        .querySelector("[data-skip-overlay-close]")
+        .getAttribute("data-skip-overlay-close");
+    }
   }
-  // attribute data-modal-size
-  let modalSize = elHtml.getAttribute("data-modal-size");
-  if (!modalSize && elHtml.querySelector("[data-modal-size]")) {
-    modalSize = elHtml
-      .querySelector("[data-modal-size]")
-      .getAttribute("data-modal-size");
-  }
-  let skipOverlay = elHtml.getAttribute("data-skip-overlay-close");
-  if (!skipOverlay && elHtml.querySelector("[data-skip-overlay-close]")) {
-    skipOverlay = elHtml
-      .querySelector("[data-skip-overlay-close]")
-      .getAttribute("data-skip-overlay-close");
-  }
-  if (skipOverlay) {
+
+  if (skipOverlayClose) {
     closeOverlay = "";
   }
   //

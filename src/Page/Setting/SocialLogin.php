@@ -18,11 +18,12 @@ use Sokeio\UI\WithUI;
 class SocialLogin extends \Sokeio\Page
 {
     use WithUI;
+
     protected function setupUI()
     {
         return [
             PageUI::init([])->rightUI([])
-            ->icon('ti ti-social')
+                ->icon('ti ti-social')
                 ->title($this->getPageConfig()->getTitle())
 
         ];

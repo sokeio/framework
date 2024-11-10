@@ -6,7 +6,6 @@ window.showModal = function (
     url: undefined,
     template: undefined,
     templateId: undefined,
-    component: undefined,
     elTarget: undefined,
     data: {},
     callback: () => {},
@@ -19,32 +18,20 @@ window.showModal = function (
       .getElementById(options.templateId)
       .innerHTML.replace("export default", "return ");
     delete options.templateId;
-    options.component = new Function(options.template)();
-    delete options.template;
   }
-  if (options.component) {
-    return window.sokeioUI
-      .run(
-        {
-          ...options.component,
-          render: function () {
-            return Utils.getModalHtmlRender(
-              options.component.render?.(),
-              options.component.footer?.(),
-              options.component.header?.(),
-              options.component.icon
-            );
-          },
-        },
-        {
-          props: { title, overlay: true, ...options },
-        }
-      )
-      .cleanup(function () {
-        if (!options.hide) {
-          document.body.removeChild(html);
-        }
-      });
+  if (options.template) {
+    let template = options.template;
+    if (typeof template === "string") {
+      template = new Function(template)();
+    }
+    options = {
+      ...options,
+      components: {
+        "sokeio::modal::template": template,
+      },
+      htmlComponent: "[sokeio::modal::template][/sokeio::modal::template]",
+    };
+    delete options.template;
   }
   return window.sokeioUI.run(modal, {
     props: { title, overlay: true, ...options },

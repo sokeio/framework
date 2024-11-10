@@ -4,7 +4,7 @@ const messageComponent = {
   ready() {},
   render() {
     return Utils.getModalHtmlRender(
-      "<div style='min-height:100px' so-html='message'></div>",
+      "<div style='min-height:100px' so-html='message'></div>1",
       "",
       this.icon
     );

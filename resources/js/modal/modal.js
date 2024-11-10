@@ -3,7 +3,12 @@ import * as Utils from "./utils";
 export default {
   state: { html: "", loading: true },
   boot() {
-
+    logDebug("modal.components", this.components);
+    if (this.htmlComponent) {
+      logDebug("modal.htmlComponent", this.htmlComponent);
+      this.loading = false;
+      this.html = this.htmlComponent;
+    }
     if (this.html) {
       return;
     }
@@ -14,6 +19,9 @@ export default {
       } else {
         refId = this.elTarget.closest("[wire\\:id]")?.getAttribute("wire:id");
       }
+    }
+    if (!this.url) {
+      return;
     }
     if (this.url.includes("?")) {
       this.url =
@@ -37,6 +45,7 @@ export default {
   ready() {},
 
   render() {
+    logDebug("modal.render", this.html);
     if (this.skipLoading && this.loading) {
       return "<template></template>";
     }
@@ -45,7 +54,8 @@ export default {
         '<div class="so-modal-loader" data-hide-close="true"><span class="loader"></span></div>',
       "",
       "",
-      this.icon
+      this.icon,
+      this
     );
   },
 };

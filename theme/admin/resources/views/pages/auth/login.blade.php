@@ -46,6 +46,7 @@
         <div class="form-footer">
             <button type="submit" class="btn btn-primary w-100">Sign in</button>
         </div>
+        <span x-text="window.sokeioGlobal?.isAuth?'true':'false'"></span>
     </form>
     <div class="text-center text-secondary mt-3">
         Don't have account yet?

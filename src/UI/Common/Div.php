@@ -19,7 +19,7 @@ class Div extends BaseUI
         return $this->child([
             function () use ($blade, $params) {
                 if (is_callable($params)) {
-                    $params = $params();
+                    $params = call_user_func($params, $this);
                 }
                 return view($blade, $params)->render();
             }

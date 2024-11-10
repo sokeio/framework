@@ -7,7 +7,7 @@
     <meta name="csrf_token" value="{{ csrf_token() }}" />
 </head>
 
-<body :data-bs-theme="themeDark && 'dark'" x-data="{ themeDark: false, toggleTheme() { this.themeDark = !this.themeDark } }">
+<body x-data="sokeioBody()">
     @themeBody
     <div class=" vh-100 d-flex flex-column bg-white">
         <div class="row g-0 flex-fill">
@@ -16,8 +16,8 @@
                 <div class="container container-tight mt-4 px-lg-5">
                     <div class="text-center mt-3 mb-6">
                         <a href="{{ url('/') }}" class="navbar-brand navbar-brand-autodark"><img
-                                src="{{ asset('platform/module/sokeio/sokeio.webp') }}" class="rounded-2"
-                                height="100" alt=""></a>
+                                src="{{ asset('platform/module/sokeio/sokeio.webp') }}" class="rounded-2" height="100"
+                                alt=""></a>
                     </div>
                     @yield('content')
                 </div>
@@ -29,7 +29,7 @@
                     </div>
                     Copyright &copy; {{ date('Y') }}. All rights reserved.
                 </div>
-               
+
             </div>
             <div class="col-12 col-lg-6 col-xl-8 d-none d-lg-block">
                 <!-- Photo -->
