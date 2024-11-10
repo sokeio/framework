@@ -34,7 +34,6 @@ class Marketplace extends \Sokeio\Page
                 ])
                 ->icon('ti ti-building-store')
                 ->xxlSize()
-                ->skipOverlayClose()
 
         ];
     }
