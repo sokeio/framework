@@ -44,23 +44,11 @@ You can install package via composer
 $ composer require sokeio/framework
 ```
 
-```bash
-account: admin@hau.xyz
-password: AdMin@123
-
-```
-
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 Please make sure to update tests as appropriate.
-
-## Product list:
-
-[Free Online Tutorials](https://tutorialaz.com/)
-
-[Discover The Best AI Websites & Tools](https://hau.xyz/)
 
 ## License
 
