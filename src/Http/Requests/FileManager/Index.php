@@ -9,7 +9,8 @@ class Index extends FormRequest
     public function rules()
     {
         return [
-            'path' => ['required'],
+            'path' => ['nullable', 'string'],
+            'disk' => ['nullable'],
             'search' => ['nullable']
         ];
     }
