@@ -1,8 +1,11 @@
+import { getKeyAndComponent } from "../common/Uitls";
+
 export default function ({ component, el, name, method, value }) {
   if (value) {
-    component.watch(value, () => {
-      el.innerText = component[value];
+    let [$key, $component] = getKeyAndComponent(component, value);
+    $component.watch($key, () => {
+      el.innerText = $component[$key];
     });
-    el.innerText = component[value];
+    el.innerText = $component[$key];
   }
 }

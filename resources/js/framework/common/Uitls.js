@@ -136,6 +136,21 @@ export function getModalOverlay() {
   }
   return html;
 }
+export function getKeyAndComponent($component, $key) {
+  let key2 = $key;
+  $key.split(".").forEach((key) => {
+    //check key start $
+    if (key.startsWith("$")) {
+      if ($component[key] === undefined|| $component[key] === null) {
+        return;
+      }
+      $component = $component[key];
+    } else {
+      key2 = key;
+    }
+  });
+  return [key2, $component];
+}
 export const Utils = {
   getComponentsFromText,
   LOG,

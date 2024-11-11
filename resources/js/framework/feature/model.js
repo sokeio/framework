@@ -1,12 +1,15 @@
+import { getKeyAndComponent } from "../common/Uitls";
+
 export default function ({ component, el, name, method, value }) {
   if (value) {
-    component.watch(value, () => {
-      el.value = component[value];
+    let [$key, $component] = getKeyAndComponent(component, value);
+    $component.watch($key, () => {
+      el.value = $component[$key];
     });
-    el.value = component[value];
+    el.value = $component[$key];
 
     el.addEventListener("input", (e) => {
-      component[value] = e.target.value;
+      $component[$key] = e.target.value;
     });
   }
 }

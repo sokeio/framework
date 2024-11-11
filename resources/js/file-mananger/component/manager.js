@@ -1,7 +1,7 @@
 import folderBox from "./folder-box";
 import header from "./header";
 import footer from "./footer";
-import newFolder from "./newFolder";
+import newFolder from "./new-folder";
 import upload from "./upload";
 import gridFile from "./grid-file";
 export default {
@@ -18,12 +18,16 @@ export default {
     path: "/",
     files: [],
     folders: [],
+    disks: [],
+    disk: "public",
     $modalNewFolder: null,
     $modalUpload: null,
   },
+  register() {
+    this.refreshSelected();
+  },
   boot() {
     this.cleanup(function () {});
-    this.refreshSelected();
   },
 
   createFolder() {
@@ -40,12 +44,25 @@ export default {
   renameSelected() {
     alert("rename selected");
   },
+  setInfoData(res) {
+    this.files = res.files;
+    this.folders = res.folders;
+    this.disks = res.disks;
+    this.disk = res.disk;
+    this.path = res.path;
+    this.reRender();
+  },
+  getInfoData() {
+    return {
+      disk: this.disk,
+      path: this.path,
+    };
+  },
   refreshSelected() {
     this.$request
-      .post("/platform/file-manager", { path: this.path })
-      .then((res) => {
-        console.log(res);
-      });
+      .post("/platform/file-manager", this.getInfoData())
+      .then((res) => res.json())
+      .then((res) => this.setInfoData(res));
   },
   render() {
     return ` <div class="so-fm-wrapper">
