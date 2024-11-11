@@ -121,7 +121,7 @@ let addStyleToWindow = function (source) {
 };
 
 export const logDebug = (...args) => {
-  if (window.SOKEIO_DEBUG||true) {
+  if (window.SOKEIO_DEBUG) {
     console.log(...args);
   }
 };

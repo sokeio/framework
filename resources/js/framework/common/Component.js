@@ -71,8 +71,8 @@ export function doBoot(component) {
   } else {
     component.$el = Utils.convertHtmlToElement(html);
   }
-  getChildComponent(component);
   feature(component);
+  getChildComponent(component);
   if (component.$children) {
     component.$children.forEach((item) => {
       doBoot(item);
@@ -94,16 +94,16 @@ export function doRender(component) {
   if (component.$el) {
     component.$el.setAttribute("data-sokeio-id", component.getId());
     component.$el._sokeio = component;
-    var mutationObserver = new MutationObserver(function (mutations) {
-      feature(component);
-    });
-    mutationObserver.observe(document.documentElement, {
-      childList: true,
-      subtree: true,
-    });
-    component.cleanup(() => {
-      mutationObserver.disconnect();
-    });
+    // var mutationObserver = new MutationObserver(function (mutations) {
+    //   feature(component);
+    // });
+    // mutationObserver.observe(document.documentElement, {
+    //   childList: true,
+    //   subtree: true,
+    // });
+    // component.cleanup(() => {
+    //   mutationObserver.disconnect();
+    // });
   }
 }
 export function doReady(component) {

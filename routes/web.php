@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
+use Sokeio\Http\Controllers\FileManagerController;
 use Sokeio\Http\Controllers\PlatformController;
 use Sokeio\Platform;
 use Sokeio\Theme;
@@ -47,4 +48,11 @@ Route::get('models', function () {
 
 Route::get('livewires', function () {
     return Platform::getLivewireComponents();
+});
+Route::group([
+    'prefix' => 'platform/file-manager',
+    'as' => 'platform.file-manager.',
+    'controller' => FileManagerController::class
+], function () {
+    Route::post('/', 'index')->name('index');
 });

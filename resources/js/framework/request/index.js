@@ -1,8 +1,15 @@
+import { logDebug } from "../common/Uitls";
+
 export function getToken() {
+  if (document.querySelector('meta[name="csrf_token"]')) {
+    return document
+      .querySelector('meta[name="csrf_token"]')
+      .getAttribute("value");
+  }
   if (document.querySelector('meta[name="csrf-token"]')) {
     return document
       .querySelector('meta[name="csrf-token"]')
-      .getAttribute("content");
+      .getAttribute("value");
   }
   if (document.querySelector('input[name="_token"]')) {
     return document.querySelector('input[name="_token"]').getAttribute("value");
@@ -15,16 +22,19 @@ export function commonFetch(
   options = {},
   method = "GET"
 ) {
+  console.log(url, body, options, method);
+  let content = getToken();
+  logDebug("fetch::content", content);
   return fetch(url, {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      "X-CSRF-TOKEN": getToken(),
+      "X-CSRF-TOKEN": content,
       "X-SOKEIO": "",
     },
     ...options,
     method,
-    body,
+    body: JSON.stringify(body),
   });
 }
 export default {

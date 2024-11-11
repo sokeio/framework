@@ -1,9 +1,9 @@
 export default {
-    render() {
-        return `
+  render() {
+    return `
                 <div class="so-fm-footer">
                         Footer
                 </div>
         `;
-    },
-}
+  },
+};

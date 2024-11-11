@@ -8,19 +8,109 @@
         height: 40px;
         background-color: #7ea8e3;
         color: rgb(238, 236, 236);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 10px;
+
+
+        .so-fm-header-title {
+            flex: none;
+
+            a {
+                font-weight: bold;
+                font-size: 14px;
+                background-color: #253447;
+                border-radius: 2px;
+
+                padding: 5px 10px;
+                text-decoration: none;
+                color: #fff;
+
+                &.logo-large {
+                    display: inline-block;
+                }
+
+                &.logo-small {
+                    display: none;
+                }
+
+                @media (max-width: 768px) {
+                    &.logo-large {
+                        display: none;
+                    }
+
+                    &.logo-small {
+                        display: inline-block;
+                    }
+                }
+            }
+        }
+
+        .so-fm-header-control {
+            flex: auto;
+            display: flex;
+            align-items: center;
+
+            .so-fm-header-control-item {
+                border: 1px solid #4a5e7a;
+                background-color: #4a5e7a;
+                border-radius: 2px;
+                display: flex;
+                align-items: center;
+                padding: 3px 7px;
+                margin-left: 7px;
+                font-weight: bold;
+                color: #fff;
+
+
+                .so-fm-header-control-item-icon {
+
+                    color: #fff;
+                    font-size: 14px;
+                }
+
+                .so-fm-header-control-item-text {
+                    margin-left: 5px;
+                    font-size: 14px;
+                }
+
+                &:hover {
+                    background-color: #b9bec5;
+                    cursor: pointer;
+                    color: #4a5e7a;
+                    font-weight: bold;
+                }
+
+                @media screen and (max-width: 768px) {
+                    .so-fm-header-control-item-text {
+                        display: none;
+                    }
+                }
+            }
+        }
     }
 
     .so-fm-body {
         flex: auto;
+
     }
 
     .so-fm-footer {
         height: 30px;
         background-color: #7ea8e3;
         color: rgb(238, 236, 236);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 10px;
     }
 }
 
 .so-modal .so-fm-wrapper {
-    border-radius: 2px;
+    border-radius: 3px;
+
+    .so-fm-body {
+        min-height: calc(100vh - 90px - 30px - 40px);
+    }
 }
