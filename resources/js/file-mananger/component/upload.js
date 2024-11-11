@@ -3,32 +3,21 @@ export default {
     title: "abc",
     name: "abc",
     current: "",
-    path: "",
     isHide: true,
   },
   register() {
-    this.$parent.$modalNewFolder = this;
+    this.$parent.$modalUpload = this;
   },
   cancel() {
     this.isHide = true;
     this.reRender();
   },
-  open(name, title, current, path) {
+  open(name, title, current) {
     this.name = name;
     this.title = title;
     this.current = current;
-    this.path = path;
     this.isHide = false;
     this.reRender();
-  },
-  ok() {
-    this.isHide = true;
-    this.reRender();
-    this.$parent.changeFolder({
-      name: this.name,
-      current: this.current,
-      path: this.path,
-    });
   },
   render() {
     if (this.isHide) return "<div style='display:none'></div>";
@@ -37,10 +26,13 @@ export default {
                       <div class="so-fm-modal-dialog">
                           <div class="so-fm-modal-content">
                               <div class="so-fm-modal-header">
-                                  <h3 so-text="title">New Folder</h3>
+                                  <h3 so-text="title">Upload</h3>
                               </div>
                               <div class="so-fm-modal-body">
-                                  <input type="text" so-model="name"  class="form-control">
+                                  <input type="file"   style="display:none"/>
+                              <div class="so-dropzone">
+                              Upload file
+                                  </div>
                               </div>
                               <div class="so-fm-modal-footer pt-1">
                                   <button class="btn btn-danger" so-on:click="cancel()">Cancel</button>

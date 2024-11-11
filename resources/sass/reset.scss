@@ -201,3 +201,14 @@ button {
         width: auto;
     }
 }
+
+.so-dropzone {
+    min-height: 150px;
+    border: 1px dashed #dce1e7;
+    color: #6c7a91;
+    border-radius: 5px;
+    padding: 20px 20px;
+    width: 100%;
+    justify-content: center;
+    justify-items: center;
+}

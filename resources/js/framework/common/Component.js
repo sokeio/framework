@@ -38,7 +38,11 @@ function getChildComponent(component) {
   let components = Utils.getComponentsFromText(html);
   let tempComponents = components.map((item) => {
     html = html.split(item.component).join(Utils.tagSplit);
-    return getComponent(item.tag, item.attrs, component);
+    let childComponent = getComponent(item.tag, item.attrs, component);
+    if (childComponent) {
+      doRegister(childComponent);
+    }
+    return childComponent;
   });
   if (tempComponents.length) {
     let templHtml = "";
@@ -60,6 +64,10 @@ function getChildComponent(component) {
   component.$el.innerHTML = html;
 
   return component;
+}
+export function doRegister(component) {
+  logDebug("doRegister", component);
+  component.register && component.register();
 }
 export function doBoot(component) {
   logDebug("doBoot", component);

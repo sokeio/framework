@@ -162,10 +162,26 @@
         background-color: rgba(0, 0, 0, 0.5);
 
         .so-fm-modal-dialog {
-            margin: 10px auto;
+            margin: 20px auto;
             width: 300px;
             min-height: 100px;
             background-color: #fff;
+            padding: 5px;
+            border-radius: 2px;
+            justify-items: center;
+            justify-content: center;
+            text-align: center;
+            .so-fm-modal-content{
+                width: 100%;
+            }
+            .btn{
+                padding: 3px 5px;
+
+            }
+            .form-control{
+                padding: 3px 5px;
+
+            }
         }
     }
 }
