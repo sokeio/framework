@@ -7,7 +7,6 @@ export default function ({ component, el, name, method, value }) {
       el.removeEventListener(method, el["__SOKEIO_ON__" + method]);
     }
     el["__SOKEIO_ON__" + method] = (e) => {
-      console.log(component);
       if ((ignore = el.getAttribute("so-on:ignore"))) {
         if (e.target.closest(ignore)) return;
       }

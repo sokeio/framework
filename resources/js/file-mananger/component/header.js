@@ -3,10 +3,10 @@ export default {
     return `
         <div class="so-fm-header">
             <div class="so-fm-header-title">
-                <a href="https://sokeio.com" class="logo-large">
+                <a href="https://sokeio.com" class="logo-large" target="_blank">
                     Sokeio FM V1.0
                 </a>
-                <a href="https://sokeio.com" class="logo-small">
+                <a href="https://sokeio.com" class="logo-small" target="_blank">
                     SFM1.0
                 </a>
             </div>

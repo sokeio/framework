@@ -88,6 +88,7 @@ export function run(template = {}, options = {}) {
     };
   }
   let appComponent = new Component(templateCopy, options.props ?? {});
+  appComponent.$root = appComponent;
   register(appComponent);
 
   logDebug("run", appComponent);

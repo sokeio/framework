@@ -176,7 +176,12 @@ body[data-bs-theme=dark] [data-bs-theme=light] {
 
         }
     }
-
+    @media screen and (max-width: 768px) {
+        
+        .so-modal-dialog{
+            margin: 15px auto 0 auto;
+        }
+    }
     &.so-modal-size-full {
         .so-modal-dialog {
             width: 100%;

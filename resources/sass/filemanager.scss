@@ -93,6 +93,52 @@
 
     .so-fm-body {
         flex: auto;
+        display: flex;
+
+        .so-fm-folder-box {
+            height: calc(100vh - 160px);
+            width: 250px;
+            background-color: #f9f9f9;
+            border-right: 1px solid #d6d6d6;
+        }
+
+        .so-fm-body-list {
+            flex: auto;
+            padding: 7px;
+            height: calc(100vh - 160px);
+            overflow-y: auto;
+
+            .so-fm-body-grid {
+
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 7px;
+
+                /* Enable vertical scrolling */
+                .so-fm-item-box {
+                    border: 1px solid #473131;
+                    background-color: #ccc;
+                    border-radius: 3px;
+                    height: 200px;
+                    /* Set a fixed height */
+                }
+            }
+
+        }
+
+        @media screen and (max-width: 768px) {
+            flex-direction: column;
+
+            .so-fm-folder-box {
+                flex: none;
+                height: 200px;
+                width: unset;
+            }
+
+            .so-fm-body-list {
+                height: calc(100vh - 280px);
+            }
+        }
 
     }
 
@@ -104,13 +150,34 @@
         align-items: center;
         justify-content: space-between;
         padding: 0 10px;
+
+    }
+
+    .so-fm-modal {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+
+        .so-fm-modal-dialog {
+            margin: 10px auto;
+            width: 300px;
+            min-height: 100px;
+            background-color: #fff;
+        }
     }
 }
 
-.so-modal .so-fm-wrapper {
-    border-radius: 3px;
+.so-modal {
+    .so-fm-wrapper {
+        border-radius: 3px;
 
-    .so-fm-body {
-        min-height: calc(100vh - 90px - 30px - 40px);
+        .so-fm-body {
+            min-height: calc(100vh - 90px - 30px - 40px);
+        }
+
     }
+
 }

@@ -155,6 +155,7 @@ export function Component($component, $props, $parent = null) {
     $el: null,
     $hookDestroy: [],
     $hookReady: [],
+    $root: $parent ? $parent.$root : $parent,
   };
   let keys = Object.keys(component)
     .concat(Object.keys($component.state))
@@ -182,10 +183,6 @@ export function Component($component, $props, $parent = null) {
     .filter(function (item, index, self) {
       return self.indexOf(item) === index;
     });
-  //
-  Object.defineProperty(component, "$root", {
-    value: $parent?.$root ?? component,
-  });
   Object.defineProperty(component, "$request", {
     value: $request,
   });

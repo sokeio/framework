@@ -1,12 +1,13 @@
 import body from "./body";
 import header from "./header";
 import footer from "./footer";
-
+import newFolder from "./newFolder";
 export default {
   components: {
     "so-fm::header": header,
     "so-fm::body": body,
     "so-fm::footer": footer,
+    "so-fm::new-folder": newFolder,
   },
   state: {
     path: "/",
@@ -19,7 +20,8 @@ export default {
   },
 
   createFolder() {
-    alert("create folder");
+    console.log(this.$root);
+    this.$root.fnCallback("createFolder");
   },
   uploadFile() {
     alert("upload file");
@@ -42,7 +44,7 @@ export default {
           [so-fm::header /]
           [so-fm::body /]
           [so-fm::footer /]
-        
+          [so-fm::new-folder /]
         </div>`;
   },
 };
