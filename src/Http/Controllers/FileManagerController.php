@@ -3,12 +3,12 @@
 namespace Sokeio\Http\Controllers;
 
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Log;
 use Sokeio\Http\Requests\FileManager\ActionRequest;
 
 class FileManagerController extends Controller
 {
     use FileManager;
-    //list,upload,delete,rename,download,move
     private $action = [
         'list' => 'listAction',
         'upload' => 'uploadAction',
@@ -19,10 +19,15 @@ class FileManagerController extends Controller
     ];
     public function index(ActionRequest $request)
     {
-        if (array_key_exists($request['action'], $this->action)) {
-            $method = $this->action[$request['action']];
-            $this->$method($request);
+        try {
+            if (array_key_exists($request['action'], $this->action)) {
+                $method = $this->action[$request['action']];
+                $this->$method($request);
+            }
+        } catch (\Exception $ex) {
+            Log::error($ex->getMessage());
         }
+
         return response()->json($this->getInfoByPath($request->path ?? '/', $request->disk ?? 'public'));
     }
     private function listAction($request)

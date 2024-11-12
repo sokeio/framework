@@ -48,8 +48,6 @@ export default {
   },
 
   createFolder() {
-    console.log(this.$root);
-    this.$root.fnCallback("createFolder");
     this.$modalNewFolder.open("New Folder", "New Folder", this.path);
   },
   uploadFile() {
@@ -59,7 +57,7 @@ export default {
     alert("delete selected");
   },
   renameSelected() {
-    alert("rename selected");
+    this.$modalNewFolder.open("New Folder", "New Folder", this.path);
   },
   refreshSelected() {
     this.fmAction("list");

@@ -48,7 +48,6 @@ trait FileManager
                     'name' => $name,
                     'icon' => $this->getIcon($disk),
                     'title' => isset($disk['title']) ? $disk['title'] : $name,
-                    // 'path' => $disk['root'],
                 ];
             }),
         ];
