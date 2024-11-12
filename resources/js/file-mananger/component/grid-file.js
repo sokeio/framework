@@ -2,14 +2,16 @@ export default {
   itemRender(item) {
     return `
            <div class="so-fm-item-box">
+                ${item.name}
                               </div>
           `;
   },
   bodyGridRender() {
     let html = "";
-    for (let i = 0; i < 600; i++) {
-      html += this.itemRender();
-    }
+    this.$parent.files.forEach((item) => {
+      html += this.itemRender(item);
+    });
+
     return html;
   },
   render() {

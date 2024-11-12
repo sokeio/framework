@@ -14,7 +14,7 @@ export default {
     "so-fm::upload": upload,
   },
   state: {
-    path: "/demo1",
+    path: "/",
     files: [],
     folders: [],
     disks: [],
@@ -43,6 +43,7 @@ export default {
         this.disks = res.disks ?? this.disks;
         this.disk = res.disk ?? this.disk;
         this.path = res.path ?? this.path;
+        if (this.path == "") this.path = "/";
         this.reRender();
       });
   },
@@ -60,6 +61,11 @@ export default {
     this.$modalNewFolder.open("New Folder", "New Folder", this.path);
   },
   refreshSelected() {
+    this.fmAction("list");
+  },
+  openFolder(path) {
+    this.path = path;
+    this.reRender();
     this.fmAction("list");
   },
   render() {

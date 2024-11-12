@@ -14,21 +14,42 @@ export default {
       `<div class="col">${html}</div></div>`
     );
   },
+  checkItemActive(item) {
+    return item.path == this.$parent.path;
+  },
+
+  openFolder(path) {
+    this.$parent.openFolder(path);
+    this.reRender();
+  },
   itemRender(item) {
-    console.log(item);
+    let html = `<li > <div so-on:click="openFolder('${
+      item.path
+    }')" class="so-fm-folder-item ${
+      this.checkItemActive(item) ? "active" : ""
+    }" style="padding-left:${item.level * 20}px">${item.name}</div>`;
+
     if (item?.children && item?.children?.length > 0) {
-      return `<li class="so-fm-item">${item.title} ${this.treeRender(item.children)}</li>`;
+      html += this.treeRender(item.children);
     }
-    return `<li class="so-fm-item">${item.title} </li>`;
+    return `${html}</li>`;
   },
   treeRender(items) {
     let html = "";
-    items.forEach((item) => {
-      html += this.itemRender(item);
-    });
-    return `<ul class="so-fm-tree-list">${html}</ul>`;
+    if (Array.isArray(items)) {
+      items.forEach((item) => {
+        html += this.itemRender(item);
+      });
+    } else {
+      html += this.itemRender(items);
+    }
+
+    return `<ul class="so-fm-folder-list">${html}</ul>`;
   },
   render() {
-    return `<div class="so-fm-folder-box>${this.diskRender()} <div class="so-fm-tree">${this.itemRender(this.$parent.folders)}</div></div>`;
+    return `<div class="so-fm-folder-box-wrapper">${this.diskRender()} <div class="so-fm-folder-wrapper"> ${this.treeRender(
+      this.$parent.folders
+    )}
+    </div></div>`;
   },
 };

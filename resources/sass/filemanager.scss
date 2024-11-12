@@ -100,6 +100,36 @@
             width: 250px;
             background-color: #f9f9f9;
             border-right: 1px solid #d6d6d6;
+
+            .so-fm-folder-wrapper {
+                padding: 10px;
+                .so-fm-folder-list {
+                    overflow-y: auto;
+                    width: 100%;
+                    list-style: none;
+                    padding: 0;
+
+                    li {
+                        width: 100%;
+                    }
+
+                    .so-fm-folder-item {
+                        width: 100%;
+                        border-bottom: 1px solid #d6d6d6;
+                        padding: 5px 10px;
+                        cursor: pointer;
+
+                        &:hover {
+                            background-color: #d6d6d6;
+                        }
+
+                        &.active {
+                            background-color: #aea2a2;
+                        }
+                    }
+                }
+            }
+
         }
 
         .so-fm-body-list {
@@ -171,14 +201,17 @@
             justify-items: center;
             justify-content: center;
             text-align: center;
-            .so-fm-modal-content{
+
+            .so-fm-modal-content {
                 width: 100%;
             }
-            .btn{
+
+            .btn {
                 padding: 3px 5px;
 
             }
-            .form-control{
+
+            .form-control {
                 padding: 3px 5px;
 
             }

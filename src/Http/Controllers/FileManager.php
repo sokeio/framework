@@ -34,12 +34,13 @@ trait FileManager
     private function getInfoByPath($path, $disk = 'public')
     {
         $storage = Storage::disk($disk);
-        $files =  $storage->files($path);
         $path = str($path)->trim('/');
         $arrPath = explode('/', $path);
         $folders = $this->getFolders($arrPath, $storage, '/', 'Root', 0, $path);
         return [
-            'files' => $this->mapInfoFile($files),
+            'files' => collect($storage->files($path))
+                ->map(fn($file) => $this->mapInfoFile($file, $storage))
+                ->toArray(),
             'folders' => $folders,
             'path' => $path,
             'disk' => $disk,
@@ -52,9 +53,13 @@ trait FileManager
             }),
         ];
     }
-    private function mapInfoFile($file)
+    private function mapInfoFile($file, $storage)
     {
-        return $file;
+        return [
+            'name' => basename($file),
+            'path' => $file,
+            'extension' => $storage->mimeType($file),
+        ];
     }
     private function mapInfoFolder($folder)
     {
