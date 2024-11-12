@@ -17,7 +17,9 @@ export default {
     path: "/",
     files: [],
     folders: [],
+    fileCount: 0,
     disks: [],
+
     disk: "public",
     $modalNewFolder: null,
     $modalUpload: null,
@@ -49,6 +51,7 @@ export default {
         this.disks = res.disks ?? this.disks;
         this.disk = res.disk ?? this.disk;
         this.path = res.path ?? this.path;
+        this.fileCount =  this.files?.length ?? 0;
         if (this.path == "") this.path = "/";
         this.reRender();
       });
