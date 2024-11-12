@@ -1,9 +1,10 @@
-import folderBox from "./folder-box";
-import header from "./header";
-import footer from "./footer";
-import newFolder from "./new-folder";
-import upload from "./upload";
-import gridFile from "./grid-file";
+import folderBox from "./component/folder-box";
+import header from "./component/header";
+import footer from "./component/footer";
+import newFolder from "./modal/new-folder";
+import upload from "./modal/upload";
+import gridFile from "./component/grid-file";
+import loading from "./component/loading";
 export default {
   components: {
     "so-fm::header": header,
@@ -12,6 +13,7 @@ export default {
     "so-fm::footer": footer,
     "so-fm::new-folder": newFolder,
     "so-fm::upload": upload,
+    "so-fm::loading": loading,
   },
   state: {
     path: "/",
@@ -23,6 +25,7 @@ export default {
     disk: "public",
     $modalNewFolder: null,
     $modalUpload: null,
+    $loading: null,
   },
   register() {
     this.refreshSelected();
@@ -37,6 +40,7 @@ export default {
     this.cleanup(function () {});
   },
   fmAction(action, payload = {}) {
+    this.$loading?.showLoading();
     this.$request
       .post("/platform/file-manager", {
         action,
@@ -51,8 +55,9 @@ export default {
         this.disks = res.disks ?? this.disks;
         this.disk = res.disk ?? this.disk;
         this.path = res.path ?? this.path;
-        this.fileCount =  this.files?.length ?? 0;
+        this.fileCount = this.files?.length ?? 0;
         if (this.path == "") this.path = "/";
+        this.$loading?.hideLoading();
         this.reRender();
       });
   },
@@ -85,6 +90,7 @@ export default {
               [so-fm::folder-box /]
               </div>
               <div class="so-fm-body-list">
+                  [so-fm::loading /]
                   [so-fm::grid-file /]
               </div>
           </div>

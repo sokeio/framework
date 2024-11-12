@@ -1,4 +1,4 @@
-import manager from "../../file-mananger/component/manager";
+import manager from "../../file-mananger/file-manager";
 
 export default {
   checkFirst: () => true,

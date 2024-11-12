@@ -1,11 +1,16 @@
 {
   "resources/js/app.js": {
-    "file": "assets/app-9830a26e.js",
+    "file": "assets/app-997de244.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   },
+  "resources/js/file-mananger/component/loading.js": {
+    "file": "assets/loading-de814f23.js",
+    "isDynamicEntry": true,
+    "src": "resources/js/file-mananger/component/loading.js"
+  },
   "resources/sass/app.scss": {
-    "file": "assets/app-c4f44a5a.css",
+    "file": "assets/app-89771c56.css",
     "isEntry": true,
     "src": "resources/sass/app.scss"
   }

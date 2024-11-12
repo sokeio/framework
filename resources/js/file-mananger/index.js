@@ -1,4 +1,4 @@
-import manager from "./component/manager";
+import manager from "./file-manager";
 
 window.showFileManager = function (callback, type = "file") {
   window.showModal("File Manager", {

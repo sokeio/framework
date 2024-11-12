@@ -6,7 +6,7 @@
 
     .so-fm-header {
         height: 40px;
-        background-color: #7ea8e3;
+        background-color: #4472b3;
         color: rgb(238, 236, 236);
         display: flex;
         align-items: center;
@@ -53,7 +53,7 @@
             align-items: center;
 
             .so-fm-header-control-item {
-                border: 1px solid #4a5e7a;
+                border: 1px solid #263445;
                 background-color: #4a5e7a;
                 border-radius: 2px;
                 display: flex;
@@ -138,6 +138,15 @@
             padding: 7px;
             height: calc(100vh - 160px);
             overflow-y: auto;
+            position: relative;
+
+            .so-fm-loading {
+                position: absolute;
+                left: calc(100% / 2 - 20px);
+                top: calc(100% / 2 - 10px);
+                width: 40px;
+                z-index: 9999;
+            }
 
             .so-fm-body-grid {
 
@@ -175,7 +184,7 @@
 
     .so-fm-footer {
         height: 30px;
-        background-color: #7ea8e3;
+        background-color: #4472b3;
         color: rgb(238, 236, 236);
         display: flex;
         align-items: center;
