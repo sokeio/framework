@@ -63,7 +63,6 @@ body[data-bs-theme=dark] [data-bs-theme=light] {
     left: 0;
     width: 100%;
     height: 100vh;
-    overflow: auto;
     z-index: 1056 !important;
 
     .so-modal-dialog {
@@ -176,12 +175,14 @@ body[data-bs-theme=dark] [data-bs-theme=light] {
 
         }
     }
+
     @media screen and (max-width: 768px) {
-        
-        .so-modal-dialog{
+
+        .so-modal-dialog {
             margin: 15px auto 0 auto;
         }
     }
+
     &.so-modal-size-full {
         .so-modal-dialog {
             width: 100%;
@@ -277,4 +278,8 @@ body[data-bs-theme=dark] [data-bs-theme=light] {
             max-width: 500px;
         }
     }
+}
+
+.so-modal-open {
+    overflow: hidden;
 }

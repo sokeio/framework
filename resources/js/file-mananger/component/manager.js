@@ -9,13 +9,12 @@ export default {
     "so-fm::header": header,
     "so-fm::folder-box": folderBox,
     "so-fm::grid-file": gridFile,
-
     "so-fm::footer": footer,
     "so-fm::new-folder": newFolder,
     "so-fm::upload": upload,
   },
   state: {
-    path: "/",
+    path: "/demo1",
     files: [],
     folders: [],
     disks: [],
@@ -28,6 +27,24 @@ export default {
   },
   boot() {
     this.cleanup(function () {});
+  },
+  fmAction(action, payload = {}) {
+    this.$request
+      .post("/platform/file-manager", {
+        action,
+        payload,
+        disk: this.disk,
+        path: this.path,
+      })
+      .then((res) => res.json())
+      .then((res) => {
+        this.files = res.files ?? this.files;
+        this.folders = res.folders ?? this.folders;
+        this.disks = res.disks ?? this.disks;
+        this.disk = res.disk ?? this.disk;
+        this.path = res.path ?? this.path;
+        this.reRender();
+      });
   },
 
   createFolder() {
@@ -44,25 +61,8 @@ export default {
   renameSelected() {
     alert("rename selected");
   },
-  setInfoData(res) {
-    this.files = res.files;
-    this.folders = res.folders;
-    this.disks = res.disks;
-    this.disk = res.disk;
-    this.path = res.path;
-    this.reRender();
-  },
-  getInfoData() {
-    return {
-      disk: this.disk,
-      path: this.path,
-    };
-  },
   refreshSelected() {
-    this.$request
-      .post("/platform/file-manager", this.getInfoData())
-      .then((res) => res.json())
-      .then((res) => this.setInfoData(res));
+    this.fmAction("list");
   },
   render() {
     return ` <div class="so-fm-wrapper">

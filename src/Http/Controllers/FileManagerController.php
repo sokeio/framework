@@ -3,44 +3,61 @@
 namespace Sokeio\Http\Controllers;
 
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Storage;
-use Sokeio\Http\Requests\FileManager\Index;
+use Sokeio\Http\Requests\FileManager\ActionRequest;
 
 class FileManagerController extends Controller
 {
-    private function getInfoByPath($path, $disk = 'public')
+    use FileManager;
+    //list,upload,delete,rename,download,move
+    private $action = [
+        'list' => 'listAction',
+        'upload' => 'uploadAction',
+        'delete' => 'deleteAction',
+        'rename' => 'renameAction',
+        'download' => 'downloadAction',
+        'move' => 'moveAction',
+    ];
+    public function index(ActionRequest $request)
     {
-        $storage = Storage::disk($disk);
-        $files =  $storage->allFiles($path);
-        $folders =  $storage->directories($path);
-        // $treeFolders =str($path)->split('/')->map(function ($folder) {
-            
-        // });
-        return [
-            'files' => $this->mapInfoFile($files),
-            'folders' => $this->mapInfoFolder($folders),
-            'path' => $path,
-            'disk' => $disk,
-            'disks' => collect(config('filesystems.disks'))->map(function ($disk, $name) {
-                return [
-                    'name' => $name,
-                    'icon' => isset($disk['icon']) ? $disk['icon'] : '<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-onedrive"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18.456 10.45a6.45 6.45 0 0 0 -12 -2.151a4.857 4.857 0 0 0 -4.44 5.241a4.856 4.856 0 0 0 5.236 4.444h10.751a3.771 3.771 0 0 0 3.99 -3.54a3.772 3.772 0 0 0 -3.538 -3.992z" /></svg>',
-                    'title' => isset($disk['title']) ? $disk['title'] : $name,
-                    // 'path' => $disk['root'],
-                ];
-            }),
-        ];
-    }
-    private function mapInfoFile($file)
-    {
-        return $file;
-    }
-    private function mapInfoFolder($folder)
-    {
-        return $folder;
-    }
-    public function index(Index $request)
-    {
+        if (array_key_exists($request['action'], $this->action)) {
+            $method = $this->action[$request['action']];
+            $this->$method($request);
+        }
         return response()->json($this->getInfoByPath($request->path ?? '/', $request->disk ?? 'public'));
+    }
+    private function listAction($request)
+    {
+        // Code to list files
+        // Implement file listing logic here
+    }
+
+    private function uploadAction($request)
+    {
+        // Code to upload files
+        // Implement file upload logic here
+    }
+
+    private function deleteAction($request)
+    {
+        // Code to delete files
+        // Implement file deletion logic here
+    }
+
+    private function renameAction($request)
+    {
+        // Code to rename files
+        // Implement file renaming logic here
+    }
+
+    private function downloadAction($request)
+    {
+        // Code to download files
+        // Implement file download logic here
+    }
+
+    private function moveAction($request)
+    {
+        // Code to move files
+        // Implement file moving logic here
     }
 }
