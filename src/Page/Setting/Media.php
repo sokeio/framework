@@ -10,18 +10,20 @@ use Sokeio\UI\WithUI;
 #[PageInfo(
     admin: true,
     auth: true,
-    title: 'Cache System',
+    title: 'Media System',
     menu: true,
-    menuTitle: 'Cache System',
+    menuTitle: 'Media System',
     sort: 999999999,
 )]
-class Cache extends \Sokeio\Page
+class Media extends \Sokeio\Page
 {
     use WithUI;
     protected function setupUI()
     {
         return [
-            PageUI::init([])->rightUI([])
+            PageUI::init([
+                Div::init()->attr('wire:media')->className('border border-gray-200 so-page-media')
+            ])->rightUI([])
                 ->title($this->getPageConfig()->getTitle())
 
         ];

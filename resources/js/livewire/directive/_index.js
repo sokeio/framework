@@ -13,6 +13,7 @@ import sortableGroup from "./sortable-group";
 import tinymce from "./tinymce";
 import tomSelect from "./tom-select";
 import plyr from "./plyr";
+import media from "./media";
 const directive = {
   apexcharts,
   "get-value": getValue,
@@ -28,6 +29,7 @@ const directive = {
   modal,
   "tom-select": tomSelect,
   plyr,
+  media,
 };
 
 let waitLoader = (setting, items, level) => {

@@ -24,6 +24,12 @@ export default {
   },
   register() {
     this.refreshSelected();
+    this.watch("disk", function (value, oldValue) {
+      if (value != oldValue) {
+        this.path = "/";
+        this.refreshSelected();
+      }
+    });
   },
   boot() {
     this.cleanup(function () {});

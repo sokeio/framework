@@ -6,8 +6,6 @@ use Illuminate\Support\Facades\Storage;
 
 trait FileManager
 {
-
-
     private function getFolders($arrPath, $storage, $path, $name, $level, $pathCurrent)
     {
         $folders = [
@@ -33,6 +31,7 @@ trait FileManager
     }
     private function getInfoByPath($path, $disk = 'public')
     {
+        try {
         $storage = Storage::disk($disk);
         $path = str($path)->trim('/');
         $arrPath = explode('/', $path);
@@ -52,6 +51,21 @@ trait FileManager
                 ];
             }),
         ];
+        } catch (\Throwable $th) {
+            return [
+                'files' => [],
+                'folders' => [],
+                'path' => $path,
+                'disk' => $disk,
+                'disks' => collect(config('filesystems.disks'))->map(function ($disk, $name) {
+                    return [
+                        'name' => $name,
+                        'icon' => $this->getIcon($disk),
+                        'title' => isset($disk['title']) ? $disk['title'] : $name,
+                    ];
+                }),
+            ];
+        }
     }
     private function mapInfoFile($file, $storage)
     {

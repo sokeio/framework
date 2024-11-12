@@ -263,10 +263,10 @@ export function Component($component, $props, $parent = null) {
   Object.defineProperty(component, "watch", {
     value: function (property, callback) {
       if (this.__data__.check(property)) {
-        this.__data__.watch(property, callback);
+        this.__data__.watch(property, callback.bind(this));
       }
       if (this.__props__.check(property)) {
-        this.__props__.watch(property, callback);
+        this.__props__.watch(property, callback.bind(this));
       }
       return this;
     },

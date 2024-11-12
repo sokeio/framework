@@ -103,6 +103,7 @@
 
             .so-fm-folder-wrapper {
                 padding: 10px;
+
                 .so-fm-folder-list {
                     overflow-y: auto;
                     width: 100%;
@@ -229,4 +230,12 @@
 
     }
 
+}
+
+.so-page-media {
+
+    .so-fm-wrapper .so-fm-body .so-fm-folder-box,
+    .so-fm-wrapper .so-fm-body .so-fm-body-list {
+        max-height: calc(100vh - 220px);
+    }
 }

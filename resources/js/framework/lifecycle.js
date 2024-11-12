@@ -6,6 +6,7 @@ import {
   doDestroy as componentDoDestroy,
   doReady as componentDoReady,
   $request as componentRequest,
+  doRegister,
 } from "./common/Component";
 import { logDebug } from "./common/Uitls";
 
@@ -24,6 +25,7 @@ export function onDestroy(callback) {
 }
 
 export function register(component) {
+  doRegister(component);
   document.dispatchEvent(
     new CustomEvent("sokeio::register", {
       detail: { registerComponent, component },
