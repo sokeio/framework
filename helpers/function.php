@@ -18,7 +18,7 @@ if (!function_exists('platform')) {
     }
 }
 if (!function_exists('setting')) {
-    function setting($key = null, $default = null)
+    function setting($key = null, $default = null): SettingManager|string
     {
         if ($key === null) {
             return Setting::getFacadeRoot();

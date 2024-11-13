@@ -96,6 +96,22 @@ class ModalUI extends BaseUI
     {
         return $this->attr('data-hide-button-close', true);
     }
+    public function  row()
+    {
+        return $this->vars('row', 'row');
+    }
+    private function contentChildrenRender()
+    {
+        if ($this->checkVar('row')) {
+            return <<<HTML
+            <div class="row">
+                {$this->renderChilds()}
+            </div>
+            HTML;
+        }
+        return $this->renderChilds();
+    }
+
     public function view()
     {
         $this->className('position-relative');
@@ -120,7 +136,7 @@ class ModalUI extends BaseUI
             </div>
             <div class="sokeio-modal-body p-1">
                 {$this->renderChilds('before')}
-                {$this->renderChilds()}
+                {$this->contentChildrenRender()}
             </div>
             <div class="sokeio-modal-footer d-print-none">
             {$this->renderChilds('after')}

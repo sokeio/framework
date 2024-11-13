@@ -11,15 +11,24 @@ class SettingManager
     const CACHE_KEY = 'sokeio_settings';
     private $values = [];
     private $changed = [];
-    private $tabUIs = [];
-    public function tabUI($key, $ui)
+    private $uis = [];
+    public function ui($key, $ui)
     {
-        $this->tabUIs[$key] = $ui;
+        if (!isset($this->uis[$key])) {
+            $this->uis[$key] = [];
+        }
+        if (!is_array($ui)) {
+            $ui = [$ui];
+        }
+        $this->uis[$key] = array_merge($this->uis[$key], $ui);
         return $this;
     }
-    public function getTabUIs()
+    public function getUI($key = null)
     {
-        return $this->tabUIs;
+        if ($key) {
+            return Arr::get($this->uis, $key, []);
+        }
+        return $this->uis;
     }
     public function __construct()
     {

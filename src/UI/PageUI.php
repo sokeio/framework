@@ -29,7 +29,21 @@ class PageUI extends BaseUI
     {
         return $this->child($ui, 'after');
     }
-
+    public function  row()
+    {
+        return $this->vars('row', 'row');
+    }
+    private function contentChildrenRender()
+    {
+        if ($this->checkVar('row')) {
+            return <<<HTML
+            <div class="row">
+                {$this->renderChilds()}
+            </div>
+            HTML;
+        }
+        return $this->renderChilds();
+    }
     public function view()
     {
         $attr = $this->getAttr();
@@ -51,7 +65,7 @@ class PageUI extends BaseUI
         </div>
         <div class="page-body">
             {$this->renderChilds('before')}
-            {$this->renderChilds()}
+            {$this->contentChildrenRender()}
             {$this->renderChilds('after')}
         </div>
     </div>

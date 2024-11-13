@@ -5,11 +5,12 @@ namespace Sokeio\UI\Field;
 use Sokeio\UI\BaseUI;
 use Sokeio\UI\Common\Concerns\WithCol;
 use Sokeio\UI\Field\Concerns\WithFieldData;
+use Sokeio\UI\Field\Concerns\WithFieldInSetting;
 use Sokeio\UI\Rule\WithRule;
 
 class FieldUI extends BaseUI
 {
-    use WithRule, WithCol, WithFieldData;
+    use WithRule, WithCol, WithFieldData, WithFieldInSetting;
     protected function classNameCol($class)
     {
         return $this->attrAdd('class', $class, 'col');
@@ -80,6 +81,12 @@ class FieldUI extends BaseUI
     {
         $wire = $this->getWire();
         return data_get($wire, $this->getFieldName());
+    }
+    public function setValue($value)
+    {
+        $wire = $this->getWire();
+        data_set($wire, $this->getFieldName(), $value);
+        return $this;
     }
     public function getLabel()
     {

@@ -6,6 +6,7 @@ namespace Sokeio\UI\Rule;
 trait WithRule
 {
     protected $managerRule = null;
+    protected $whenRuleCallbacks = null;
     public function checkRuleField()
     {
         if (!$this->managerRule) {
@@ -13,16 +14,28 @@ trait WithRule
         }
         return $this->managerRule->check();
     }
+    public function whenRule($callback)
+    {
+        $this->whenRuleCallbacks = $callback;
+        return $this;
+    }
+    private function checkWhenRule()
+    {
+        if ($this->whenRuleCallbacks) {
+            return call_user_func($this->whenRuleCallbacks, $this);
+        }
+        return true;
+    }
     public function getRules()
     {
-        if (!$this->managerRule) {
+        if (!$this->managerRule || !$this->checkWhenRule()) {
             return [];
         }
         return $this->managerRule->getRules();
     }
     public function getRuleMessages()
     {
-        if (!$this->managerRule) {
+        if (!$this->managerRule || !$this->checkWhenRule()) {
             return [];
         }
         return $this->managerRule->getRuleMessages();

@@ -3,6 +3,7 @@
 namespace Sokeio\UI;
 
 use Illuminate\Support\Facades\Validator;
+use Sokeio\Setting;
 use Sokeio\UI\Concerns\LifecycleUI;
 
 class SoUI
@@ -59,6 +60,24 @@ class SoUI
             'messages' => $messages,
             'labels' => $labels
         ];
+    }
+    public function loadInSetting()
+    {
+        foreach ($this->fields as $field) {
+            $field->loadInSetting();
+        }
+        return $this;
+    }
+    public function saveInSetting($validate = true)
+    {
+        if ($validate) {
+            $this->validate();
+        }
+        foreach ($this->fields as $field) {
+            $field->saveInSetting();
+        }
+        Setting::save();
+        return $this;
     }
     public function getWire()
     {

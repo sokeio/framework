@@ -20,7 +20,7 @@ use Sokeio\UI\WithUI;
     menuTitle: 'Module',
     menuTargetSort: 99999,
     menuTargetIcon: 'ti ti-apps fs-2',
-    sort: 0
+    sort: 200
 )]
 class Index extends \Sokeio\Page
 {

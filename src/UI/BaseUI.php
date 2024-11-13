@@ -22,7 +22,7 @@ class BaseUI
         return $icon;
     }
     private $callbackView = null;
-    private SoUI|null $manager=null;
+    private SoUI|null $manager = null;
 
     public function getManager()
     {
@@ -35,6 +35,11 @@ class BaseUI
     public function getWire()
     {
         return $this->getManager()?->getWire();
+    }
+    public function getWireValue($key, $default = null)
+    {
+        $wire = $this->getWire();
+        return data_get($wire, $key, $default);
     }
     protected function __construct($childs = [])
     {
