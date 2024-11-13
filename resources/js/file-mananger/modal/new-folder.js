@@ -13,21 +13,20 @@ export default {
     this.isHide = true;
     this.reRender();
   },
-  open(name, title, current, path) {
+  open(name, title, current) {
     this.name = name;
     this.title = title;
     this.current = current;
-    this.path = path;
     this.isHide = false;
     this.reRender();
   },
   ok() {
+    if(!this.name) return;
     this.isHide = true;
     this.reRender();
-    this.$parent.changeFolder({
+    this.$parent.fmAction("create-folder", {
       name: this.name,
       current: this.current,
-      path: this.path,
     });
   },
   render() {
@@ -37,14 +36,14 @@ export default {
                       <div class="so-fm-modal-dialog">
                           <div class="so-fm-modal-content">
                               <div class="so-fm-modal-header">
-                                  <h3 so-text="title">New Folder</h3>
+                                  <h3 ><i class="ti ti-folder-plus fs-2"></i> <span class="fw-bold" so-text="title"></span></h3>
                               </div>
-                              <div class="so-fm-modal-body">
-                                  <input type="text" so-model="name"  class="form-control">
+                              <div class="so-fm-modal-body px-2">
+                                  <input type="text" so-model="name" placeholder="Enter folder name"  class="form-control">
                               </div>
-                              <div class="so-fm-modal-footer pt-1">
+                              <div class="so-fm-modal-footer pt-2">
                                   <button class="btn btn-danger" so-on:click="cancel()">Cancel</button>
-                                  <button class="btn btn-primary">OK</button>
+                                  <button class="btn btn-primary" so-on:click="ok()">OK</button>
                               </div>
                           </div>
                       </div>

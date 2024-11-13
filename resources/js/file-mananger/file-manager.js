@@ -21,7 +21,6 @@ export default {
     folders: [],
     fileCount: 0,
     disks: [],
-
     disk: "public",
     $modalNewFolder: null,
     $modalUpload: null,
@@ -63,7 +62,7 @@ export default {
   },
 
   createFolder() {
-    this.$modalNewFolder.open("New Folder", "New Folder", this.path);
+    this.$modalNewFolder.open("", "New Folder",'');
   },
   uploadFile() {
     this.$modalUpload.open("Upload", "Upload", this.path);

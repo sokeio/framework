@@ -27,7 +27,7 @@ export default {
       item.path
     }')" class="so-fm-folder-item ${
       this.checkItemActive(item) ? "active" : ""
-    }" style="padding-left:${item.level * 20}px">${item.name}</div>`;
+    }" style="padding-left:${item.level * 7+5}px">${item.name}</div>`;
 
     if (item?.children && item?.children?.length > 0) {
       html += this.treeRender(item.children);
