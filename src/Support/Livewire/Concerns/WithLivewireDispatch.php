@@ -17,9 +17,12 @@ trait WithLivewireDispatch
             'payload' => $payload
         ]);
     }
-    public function alert($message)
+    public function alert($message, $title = null, $type = 'success')
     {
-        $this->sendMessage($message);
+        $this->sendMessage($message, [
+            'type' => $type,
+            'title' => $title
+        ]);
     }
     public function sendMessage(
         $message,
