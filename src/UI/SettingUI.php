@@ -51,7 +51,7 @@ class SettingUI extends BaseUI
         <div {$this->getAttr()}>
             <div class="card">
                 <div class="card-header p-2">
-                    <h3 class="card-title">{$this->getVar('title', '', true)}</h3>
+                    <h3 class="card-title">{$this->getIcon()} {$this->getVar('title', '', true)}</h3>
                     <div class="card-actions pt-2 pe-2">
                         {$this->renderChilds('switcher')}
                     </div>

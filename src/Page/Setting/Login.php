@@ -73,6 +73,7 @@ class Login extends \Sokeio\Page
                 ->keyInSetting('SOKEIO_LOGIN_MESSAGE'),
         ])
             ->title('Login Setting')
+            ->icon('ti ti-settings-up')
             ->subtitle('')
             ->column(self::COLUMN_GROUP)
             ->showSwitcher('SOKEIO_LOGIN_ENABLE')
@@ -105,6 +106,7 @@ class Login extends \Sokeio\Page
                 }),
         ])
             ->title('Login With Google Setting')
+            ->icon('ti ti-brand-google')
             ->subtitle('')
             ->column(self::COLUMN_GROUP2)
             ->showSwitcher('SOKEIO_GOOGLE_ENABLE', false)
@@ -137,6 +139,7 @@ class Login extends \Sokeio\Page
                 }),
         ])
             ->title('Login With Facebook Setting')
+            ->icon('ti ti-brand-facebook')
             ->subtitle('')
             ->column(self::COLUMN_GROUP2)
             ->showSwitcher('SOKEIO_FACEBOOK_ENABLE', false)
@@ -169,6 +172,7 @@ class Login extends \Sokeio\Page
                 }),
         ])
             ->title('Login With Github Setting')
+            ->icon('ti ti-brand-github')
             ->subtitle('')
             ->column(self::COLUMN_GROUP2)
             ->showSwitcher('SOKEIO_GITHUB_ENABLE', false)
