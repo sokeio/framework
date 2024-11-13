@@ -28,6 +28,11 @@ class WatchTime
     {
         return microtime(true) - self::$startTime;
     }
+    public static function showSeconds()
+    {
+        $time = self::end() / 1000;
+        return round($time, 4);
+    }
     public static function reset()
     {
         self::$startTime = 0;

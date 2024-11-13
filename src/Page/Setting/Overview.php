@@ -7,6 +7,7 @@ use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Field\ContentEditor;
 use Sokeio\UI\Field\Input;
+use Sokeio\UI\Field\SwitchField;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\SettingUI;
 use Sokeio\UI\WithUI;
@@ -51,6 +52,11 @@ class Overview extends \Sokeio\Page
                 // ->ruleRequired('Please enter system description')
                 ->placeholder('System Description')
                 ->keyInSetting('SOKEIO_SYSTEM_DESCRIPTION'),
+            SwitchField::init('show_progress_timer')
+                ->labelTrue('Enable')
+                ->labelFalse('Disable')
+                ->label('Show Progress Timer')
+                ->keyInSetting('SOKEIO_SHOW_PROGRESS_TIMER'),
 
         ])
             ->title('Overview Setting')

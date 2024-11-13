@@ -42,5 +42,10 @@ class SokeioServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->app->register(LivewireServiceProvider::class);
         $this->app->register(WidgetServiceProvider::class);
         $this->app->register(MediaSignedServiceProvider::class);
+        Theme::bodyAfter(function () {
+            if(setting('SOKEIO_SHOW_PROGRESS_TIMER')){
+                echo '<p class="p-1 text-center"> Process Time: ' . WatchTime::showSeconds() . 's</p>';
+            }
+        });
     }
 }
