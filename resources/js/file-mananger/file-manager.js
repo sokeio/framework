@@ -46,6 +46,7 @@ export default {
       this.selected = [];
     }
     this.selected.push(path);
+    this.$el.querySelector(".so-fm-footer-action button").disabled = false;
   },
   checkItemActive(path) {
     return this.selected.includes(path);
@@ -117,14 +118,24 @@ export default {
     this.fmAction("list");
   },
   footerRender() {
-    if(!this.$root.fnCallback){
-      
+    if (!this.$root.fnCallback) {
       return "";
     }
     let html = `<div class="so-fm-footer-action">`;
-    html += `<button so-on:click="chooseFile()" class="btn btn-primary"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M9 15l2 2l4 -4" /></svg> Choose File</button>`;
+    html += `<button so-on:click="chooseFileAction()" ${
+      this.selected.length == 0 ? "disabled" : ""
+    } class="btn btn-primary"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M9 15l2 2l4 -4" /></svg> Choose File</button>`;
     html += `</div>`;
     return html;
+  },
+  chooseFileAction() {
+    if (this.selected.length == 0) return;
+    let files = [];
+    this.selected.forEach((item) => {
+      this.files.filter((i) => i.path == item).forEach((i) => files.push(i));
+    });
+    this.$root.fnCallback(files, this.path);
+    this.$root.delete();
   },
   render() {
     return ` <div class="so-fm-wrapper">
