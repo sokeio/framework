@@ -23,6 +23,7 @@ export default {
     fileCount: 0,
     disks: [],
     disk: "public",
+    boxFolderScrollTop: 0,
     $modalNewFolder: null,
     $modalUpload: null,
     $loading: null,

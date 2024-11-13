@@ -101,32 +101,35 @@
             width: 250px;
             background-color: #f9f9f9;
             border-right: 1px solid #d6d6d6;
-
-            .so-fm-folder-wrapper {
-                padding: 10px;
-
-                .so-fm-folder-list {
-                    overflow-y: auto;
-                    width: 100%;
-                    list-style: none;
-                    padding: 0;
-
-                    li {
+            .so-fm-folder-box-wrapper{
+                height: 100%;
+                .so-fm-folder-wrapper {
+                    padding: 10px;
+                    overflow: auto;
+                    height: calc(100% - 42px);
+                    .so-fm-folder-list {
+                        overflow-y: auto;
                         width: 100%;
-                    }
-
-                    .so-fm-folder-item {
-                        width: 100%;
-                        border-bottom: 1px solid #d6d6d6;
-                        padding: 5px 10px;
-                        cursor: pointer;
-
-                        &:hover {
-                            background-color: #d6d6d6;
+                        list-style: none;
+                        padding: 0;
+    
+                        li {
+                            width: 100%;
                         }
-
-                        &.active {
-                            background-color: #aea2a2;
+    
+                        .so-fm-folder-item {
+                            width: 100%;
+                            border-bottom: 1px solid #d6d6d6;
+                            padding: 5px 10px;
+                            cursor: pointer;
+    
+                            &:hover {
+                                background-color: #d6d6d6;
+                            }
+    
+                            &.active {
+                                background-color: #aea2a2;
+                            }
                         }
                     }
                 }
@@ -191,11 +194,13 @@
                         height: 45px;
                         overflow: hidden;
                     }
-                    &:hover{
+
+                    &:hover {
                         cursor: pointer;
                     }
-                    &.active{
-                       box-shadow: 0 0 5px 2px #4472b3;
+
+                    &.active {
+                        box-shadow: 0 0 5px 2px #4472b3;
                     }
                 }
             }
@@ -331,5 +336,16 @@
     .so-fm-wrapper .so-fm-body .so-fm-folder-box,
     .so-fm-wrapper .so-fm-body .so-fm-body-list {
         max-height: calc(100vh - 220px);
+    }
+
+    .so-fm-wrapper .so-fm-modal .so-fm-modal-dialog {
+        margin-top: 100px;
+        margin: 100px auto 0 auto;
+        max-width: 400px;
+        width: 90%;
+
+        .btn {
+            width: 100px;
+        }
     }
 }

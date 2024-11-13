@@ -29,6 +29,19 @@ trait FileManager
         }
         return '<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-onedrive"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18.456 10.45a6.45 6.45 0 0 0 -12 -2.151a4.857 4.857 0 0 0 -4.44 5.241a4.856 4.856 0 0 0 5.236 4.444h10.751a3.771 3.771 0 0 0 3.99 -3.54a3.772 3.772 0 0 0 -3.538 -3.992z" /></svg>';
     }
+    private function getDiskList()
+    {
+        return collect(config('filesystems.disks'))
+            ->filter(fn($disk) => ($disk['driver'] == 'local') || ($disk['driver'] !== 's3' && $disk['key']))
+            ->map(function ($disk, $name) {
+                return [
+                    'name' => $name,
+                    'icon' => $this->getIcon($disk),
+                    'title' => isset($disk['title']) ? $disk['title'] : $name,
+
+                ];
+            });
+    }
     private function getInfoByPath($path, $storage, $disk)
     {
         try {
@@ -37,19 +50,12 @@ trait FileManager
             $folders = $this->getFolders($arrPath, $storage, '/', 'Home', 0, $path);
             return [
                 'files' => collect($storage->files($path))
-                    ->map(fn($file) => $this->mapInfoFile($file, $storage))
+                    ->map(fn($file) => $this->mapInfoFile($file, $storage, $disk))
                     ->toArray(),
                 'folders' => $folders,
                 'path' => $path,
                 'disk' => $disk,
-                'disks' => collect(config('filesystems.disks'))->map(function ($disk, $name) {
-                    return [
-                        'name' => $name,
-                        'icon' => $this->getIcon($disk),
-                        'title' => isset($disk['title']) ? $disk['title'] : $name,
-
-                    ];
-                }),
+                'disks' => $this->getDiskList(),
             ];
         } catch (\Throwable $th) {
             return [
@@ -57,23 +63,17 @@ trait FileManager
                 'folders' => [],
                 'path' => $path,
                 'disk' => $disk,
-                'disks' => collect(config('filesystems.disks'))->map(function ($disk, $name) {
-                    return [
-                        'name' => $name,
-                        'icon' => $this->getIcon($disk),
-                        'title' => isset($disk['title']) ? $disk['title'] : $name,
-                    ];
-                }),
+                'disks' => $this->getDiskList(),
             ];
         }
     }
-    private function mapInfoFile($file, $storage)
+    private function mapInfoFile($file, $storage, $disk)
     {
         return [
             'name' => basename($file),
             'path' => $file,
             'extension' => $storage->mimeType($file),
-            'preview_url' => $storage->url($file),
+            'preview_url' => Storage::temporaryUrl($file, now()->addSeconds(15), ['disk' => $disk]),
         ];
     }
     private function mapInfoFolder($folder)

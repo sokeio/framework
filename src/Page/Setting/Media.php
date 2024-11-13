@@ -10,9 +10,9 @@ use Sokeio\UI\WithUI;
 #[PageInfo(
     admin: true,
     auth: true,
-    title: 'Media System',
+    title: 'Media Library',
     menu: true,
-    menuTitle: 'Media System',
+    menuTitle: 'Media Library',
     sort: 999999999,
 )]
 class Media extends \Sokeio\Page

@@ -17,8 +17,16 @@ export default {
   checkItemActive(item) {
     return item.path == this.$parent.path;
   },
-
+  ready() {
+    setTimeout(() => {
+      this.$el.querySelector(".so-fm-folder-wrapper").scrollTop =
+        this.$parent.boxFolderScrollTop;
+    });
+  },
   openFolder(path) {
+    this.$parent.boxFolderScrollTop = this.$el.querySelector(
+      ".so-fm-folder-wrapper"
+    ).scrollTop;
     this.$parent.openFolder(path);
     this.reRender();
   },
@@ -27,7 +35,7 @@ export default {
       item.path
     }')" class="so-fm-folder-item ${
       this.checkItemActive(item) ? "active" : ""
-    }" style="padding-left:${item.level * 7+5}px">${item.name}</div>`;
+    }" style="padding-left:${item.level * 7 + 5}px">${item.name}</div>`;
 
     if (item?.children && item?.children?.length > 0) {
       html += this.treeRender(item.children);
@@ -46,6 +54,7 @@ export default {
 
     return `<ul class="so-fm-folder-list">${html}</ul>`;
   },
+
   render() {
     return `<div class="so-fm-folder-box-wrapper">${this.diskRender()} <div class="so-fm-folder-wrapper"> ${this.treeRender(
       this.$parent.folders

@@ -90,7 +90,7 @@ export default {
     if (this.isHide) return "<div style='display:none'></div>";
     return `
                   <div class="so-fm-modal">
-                      <div class="so-fm-modal-dialog" style="width:500px">
+                      <div class="so-fm-modal-dialog">
                           <div class="so-fm-modal-content">
                               <div class="so-fm-modal-header">
                                   <h3 so-text="title">Upload</h3>

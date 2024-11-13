@@ -3,6 +3,7 @@
 namespace Sokeio;
 
 use Sokeio\Concerns\WithServiceProvider;
+use Sokeio\Providers\MediaSignedServiceProvider;
 use Sokeio\Support\Livewire\LivewireServiceProvider;
 use Sokeio\Support\Platform\PlatformServiceProvider;
 use Sokeio\Support\Theme\ThemeServiceProvider;
@@ -40,5 +41,6 @@ class SokeioServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->app->register(PlatformServiceProvider::class);
         $this->app->register(LivewireServiceProvider::class);
         $this->app->register(WidgetServiceProvider::class);
+        $this->app->register(MediaSignedServiceProvider::class);
     }
 }
