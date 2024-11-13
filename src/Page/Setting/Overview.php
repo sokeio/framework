@@ -32,7 +32,7 @@ class Overview extends \Sokeio\Page
     public function saveData()
     {
         $this->getUI()->saveInSetting();
-        $this->alert('Setting has been saved!');
+        $this->alert('Setting has been saved!'.time(),'Setting','success',self::MESSAGE_POSITION_TOP_CENTER,500000);
     }
     public function mount()
     {
@@ -56,7 +56,13 @@ class Overview extends \Sokeio\Page
                 ->labelTrue('Enable')
                 ->labelFalse('Disable')
                 ->label('Show Progress Timer')
+                
                 ->keyInSetting('SOKEIO_SHOW_PROGRESS_TIMER'),
+                SwitchField::init('show_position_debug')
+                    ->labelTrue('Enable')
+                    ->labelFalse('Disable')
+                    ->label('Show Position Debug(Only Admin)')
+                    ->keyInSetting('SOKEIO_SHOW_POSITION_DEBUG'),
 
         ])
             ->title('Overview Setting')

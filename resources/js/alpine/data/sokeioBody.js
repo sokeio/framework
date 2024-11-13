@@ -13,7 +13,6 @@ document.addEventListener("alpine:init", () => {
     sendAuth({ detail: { isAuth, authUser } }) {
       this.isAuth = isAuth;
       this.authUser = authUser;
-      console.log(authUser);
     },
     toggleTheme() {
       this.themeDark = !this.themeDark;

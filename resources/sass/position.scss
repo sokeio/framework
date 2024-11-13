@@ -1,0 +1,106 @@
+$so-position-padding: 10px;
+
+.so-position {
+    position: fixed;
+    z-index: 9999999999999999999999999 !important;
+}
+
+.so-position-top-left {
+    top: $so-position-padding;
+    left: $so-position-padding;
+
+}
+
+.so-position-top-center {
+    top: $so-position-padding;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.so-position-top-right {
+    top: $so-position-padding;
+    right: $so-position-padding;
+}
+
+.so-position-middle-left {
+    top: 50%;
+    left: $so-position-padding;
+    transform: translateY(-50%);
+}
+
+.so-position-center-center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.so-position-middle-right {
+    top: 50%;
+    right: $so-position-padding;
+    transform: translateY(-50%);
+}
+
+.so-position-bottom-left {
+    bottom: $so-position-padding;
+    left: $so-position-padding;
+}
+
+.so-position-bottom-center {
+    bottom: $so-position-padding;
+    left: 50%;
+}
+
+.so-position-bottom-right {
+    bottom: $so-position-padding;
+    right: $so-position-padding;
+}
+
+.so-position-show-debug {
+    .so-position-top-left {
+        background-color: #ffcc00;
+    }
+
+    .so-position-top-center {
+        background-color: #00ccff;
+    }
+
+
+    .so-position-top-right {
+        background-color: #ff6699;
+    }
+
+    .so-position-middle-left {
+        background-color: #66ccff;
+    }
+
+    .so-position-center-center {
+        background-color: #99cc66;
+    }
+
+    .so-position-middle-right {
+        background-color: #cc66ff;
+    }
+
+    .so-position-bottom-left {
+        background-color: #ffcc66;
+    }
+
+    .so-position-bottom-center {
+        background-color: #ff9966;
+    }
+
+    .so-position-bottom-right {
+        background-color: #ff6699;
+    }
+
+    .so-position {
+        content: 'Show Debug';
+        padding: $so-position-padding;
+        text-align: center;
+    }
+
+}
+.so-alert{
+    background-color: #ffffff !important;
+    
+}

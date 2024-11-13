@@ -10,6 +10,23 @@ trait WithLivewireDispatch
     private const LIVEWIRE_FUNCTION = 'sokeio_function';
     private const LIVEWIRE_REFRESH = 'sokeio_refresh';
     private const LIVEWIRE_REFRESH_PARENT = 'sokeio_refresh_parent';
+
+
+    public const MESSAGE_TYPE_SUCCESS = 'success';
+    public const MESSAGE_TYPE_INFO = 'info';
+    public const MESSAGE_TYPE_WARNING = 'warning';
+    public const MESSAGE_TYPE_DANGER = 'text-bg-danger';
+
+    public const MESSAGE_POSITION_TOP_RIGHT = 'top-right';
+    public const MESSAGE_POSITION_TOP_CENTER = 'top-center';
+    public const MESSAGE_POSITION_TOP_LEFT = 'top-left';
+    public const MESSAGE_POSITION_MIDDLE_RIGHT = 'middle-right';
+    public const MESSAGE_POSITION_MIDDLE_CENTER = 'middle-center';
+    public const MESSAGE_POSITION_MIDDLE_LEFT = 'middle-left';
+    public const MESSAGE_POSITION_BOTTOM_RIGHT = 'bottom-right';
+    public const MESSAGE_POSITION_BOTTOM_CENTER = 'bottom-center';
+    public const MESSAGE_POSITION_BOTTOM_LEFT = 'bottom-left';
+
     protected function sendMessageToClient($type, $payload = [])
     {
         $this->dispatch('sokeio::dispatch', [
@@ -17,11 +34,18 @@ trait WithLivewireDispatch
             'payload' => $payload
         ]);
     }
-    public function alert($message, $title = null, $type = 'success')
-    {
+    public function alert(
+        $message,
+        $title = null,
+        $messageType = 'success',
+        $position = self::MESSAGE_POSITION_TOP_CENTER,
+        $timeout = 5000
+    ) {
         $this->sendMessage($message, [
-            'type' => $type,
-            'title' => $title
+            'messageType' => $messageType,
+            'title' => $title,
+            'position' => $position,
+            'timeout' => $timeout
         ]);
     }
     public function sendMessage(
@@ -30,7 +54,7 @@ trait WithLivewireDispatch
     ) {
         $this->sendMessageToClient(self::LIVEWIRE_MESSAGE, [
             'message' => $message,
-            'option' => $option
+            ...$option
         ]);
     }
     public function refreshToId($id)

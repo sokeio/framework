@@ -101,7 +101,7 @@ export function doRender(component) {
   }
   if (component.$el) {
     component.$el.setAttribute("data-sokeio-id", component.getId());
-    component.$el._sokeio = component;
+    component.$el.__sokeio = component;
     // var mutationObserver = new MutationObserver(function (mutations) {
     //   feature(component);
     // });
