@@ -30,8 +30,11 @@ class WatchTime
     }
     public static function showSeconds()
     {
-        $time = self::end() / 1000;
-        return round($time, 4);
+        $time = self::end();
+        if ($time > 1000) {
+            return round($time / 1000, 4) . 's';
+        }
+        return round($time, 4) . 'ms';
     }
     public static function reset()
     {
