@@ -96,6 +96,7 @@
         display: flex;
 
         .so-fm-folder-box {
+            flex: none;
             height: calc(100vh - 160px);
             width: 250px;
             background-color: #f9f9f9;
@@ -151,16 +152,51 @@
             .so-fm-body-grid {
 
                 display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
                 gap: 7px;
 
                 /* Enable vertical scrolling */
                 .so-fm-item-box {
                     border: 1px solid #473131;
+                    overflow: hidden;
                     background-color: #ccc;
                     border-radius: 3px;
-                    height: 200px;
+                    height: 230px;
                     /* Set a fixed height */
+                    display: flex;
+                    flex-direction: column;
+
+                    .so-fm-item-box-preview {
+                        flex: auto;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        overflow: hidden;
+                        background-color: #fff;
+
+                        img {
+                            max-width: 100%;
+                            max-height: 100%;
+                        }
+                    }
+
+                    .so-fm-item-box-name {
+                        flex: none;
+                        padding: 0px 3px;
+                        border-top: 1px solid #473131;
+                        background-color: #473131;
+                        color: #fff;
+                        text-align: center;
+                        font-weight: bold;
+                        height: 45px;
+                        overflow: hidden;
+                    }
+                    &:hover{
+                        cursor: pointer;
+                    }
+                    &.active{
+                       box-shadow: 0 0 5px 2px #4472b3;
+                    }
                 }
             }
 
@@ -170,7 +206,7 @@
             flex-direction: column;
 
             .so-fm-folder-box {
-                flex: none;
+
                 height: 200px;
                 width: unset;
             }
@@ -225,6 +261,55 @@
                 padding: 3px 5px;
 
             }
+        }
+    }
+}
+
+.so-fm-modal-file-list-title {
+    padding: 10px;
+    border-bottom: 1px solid #d6d6d6;
+
+    span {
+        margin-left: 10px;
+        cursor: pointer;
+        padding: 2px 5px;
+        border-radius: 2px;
+        background-color: #d6d6d6;
+    }
+}
+
+.so-fm-modal-file-list {
+    max-height: 300px;
+    overflow-y: auto;
+
+    .so-fm-modal-upload-file-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #d6d6d6;
+        padding: 5px 10px;
+
+        .so-fm-modal-file-name {
+            flex: auto;
+        }
+
+        .so-fm-modal-file-size {
+            flex: none;
+            margin-left: 10px;
+            padding: 2px 5px;
+            border-radius: 2px;
+            background-color: #d6d6d6;
+            width: 80px;
+            text-align: center;
+        }
+
+        .so-fm-modal-file-remove {
+            flex: none;
+            margin-left: 10px;
+            padding: 2px 10px;
+            border-radius: 2px;
+            background-color: #d6d6d6;
+            cursor: pointer;
         }
     }
 }

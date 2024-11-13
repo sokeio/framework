@@ -17,6 +17,7 @@ export default {
   },
   state: {
     path: "/",
+    selected: [],
     files: [],
     folders: [],
     fileCount: 0,
@@ -26,6 +27,7 @@ export default {
     $modalUpload: null,
     $loading: null,
   },
+
   register() {
     this.refreshSelected();
     this.watch("disk", function (value, oldValue) {
@@ -38,31 +40,62 @@ export default {
   boot() {
     this.cleanup(function () {});
   },
-  fmAction(action, payload = {}) {
+  chooseFile(path, multiple = false) {
+    if (!multiple) {
+      this.selected = [];
+    }
+    this.selected.push(path);
+  },
+  checkItemActive(path) {
+    return this.selected.includes(path);
+  },
+  fmAction(action, payload = {}, files = [], progress = null) {
     this.$loading?.showLoading();
-    this.$request
-      .post("/platform/file-manager", {
+    let request = null;
+    if (files.length > 0) {
+      let formData = this.$request.convertJsonToFormData({
         action,
-        payload,
         disk: this.disk,
         path: this.path,
-      })
-      .then((res) => res.json())
-      .then((res) => {
-        this.files = res.files ?? this.files;
-        this.folders = res.folders ?? this.folders;
-        this.disks = res.disks ?? this.disks;
-        this.disk = res.disk ?? this.disk;
-        this.path = res.path ?? this.path;
-        this.fileCount = this.files?.length ?? 0;
-        if (this.path == "") this.path = "/";
-        this.$loading?.hideLoading();
-        this.reRender();
       });
+      for (let item in files) {
+        formData.append("files[]", files[item]);
+
+        console.log("files[]", files[item]);
+      }
+      request = this.$request
+        .upload("/platform/file-manager", formData, {
+          progress: progress,
+        })
+        .then((res) => {
+          return JSON.parse(res);
+        });
+    } else {
+      request = this.$request
+        .post("/platform/file-manager", {
+          action,
+          payload,
+          disk: this.disk,
+          path: this.path,
+        })
+        .then((res) => res.json());
+    }
+
+    request.then((res) => {
+      this.files = res.files ?? this.files;
+      this.folders = res.folders ?? this.folders;
+      this.disks = res.disks ?? this.disks;
+      this.disk = res.disk ?? this.disk;
+      this.path = res.path ?? this.path;
+      this.fileCount = this.files?.length ?? 0;
+      if (this.path == "") this.path = "/";
+      this.$loading?.hideLoading();
+      this.reRender();
+    });
   },
 
   createFolder() {
-    this.$modalNewFolder.open("", "New Folder",'');
+    this.$modalNewFolder.open("", "New Folder", "");
   },
   uploadFile() {
     this.$modalUpload.open("Upload", "Upload", this.path);
@@ -78,6 +111,7 @@ export default {
   },
   openFolder(path) {
     this.path = path;
+    this.selected = [];
     this.reRender();
     this.fmAction("list");
   },

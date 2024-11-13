@@ -203,12 +203,20 @@ button {
 }
 
 .so-dropzone {
-    min-height: 150px;
-    border: 1px dashed #dce1e7;
+    min-height: 120px;
+    border: 2px dashed #babcc0;
     color: #6c7a91;
     border-radius: 5px;
     padding: 20px 20px;
     width: 100%;
     justify-content: center;
     justify-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &:hover {
+        background-color: #e5e9ec;
+        cursor: pointer;
+    }
 }

@@ -1,5 +1,3 @@
-import { ready } from "../../framework/lifecycle";
-
 export default {
   state: {
     title: "abc",
@@ -13,17 +11,30 @@ export default {
   },
   cancel() {
     this.isHide = true;
+    this.files = [];
     this.reRender();
+  },
+  ok() {
+    // convert this.files To FileList
+    this.$parent.fmAction("upload", {}, this.files, (function (progress) {
+      if (progress.progress == 100) {
+        this.cancel();
+      }
+      console.log(progress);
+    }).bind(this));
+    // this.isHide = true;
+    // this.reRender();
+    // this.files = [];
   },
   ready() {
     setTimeout(() => {
       this.$el
         .querySelector('input[type="file"]')
         ?.addEventListener("change", (e) => {
-          const files = e.target.files;
-          for (let i = 0; i < files.length; i++) {
-            this.files.push(files[i]);
+          for (const element of e.target.files) {
+            this.files.push(element);
           }
+          console.log(this.files);
           this.reRender();
         });
     });
@@ -32,6 +43,7 @@ export default {
     this.name = name;
     this.title = title;
     this.current = current;
+    this.files = [];
     this.isHide = false;
     this.reRender();
   },
@@ -52,16 +64,26 @@ export default {
     this.files.splice(index, 1);
     this.reRender();
   },
+  removeAll() {
+    this.files = null;
+    this.reRender();
+  },
   fileListRender() {
-    let html = "";
+    if (!this.files || this.files.length == 0) return "";
+    let html = `<div class="so-fm-modal-file-list-title">Files (${this.files.length}) <span so-on:click="removeAll()">Remove all</span></div>`;
+    html += `<div class="so-fm-modal-file-list">`;
+    console.log(this.files);
     for (let i = 0; i < this.files.length; i++) {
       const file = this.files[i];
-      html += `
-                        <ul class="so-fm-modal-file" style="text-align:left;list-style-type:none">
-                            <li class="so-fm-modal-file-name" style="text-align:left">${file.name} <span class="so-fm-modal-file-size">${this.fileSize(file.size)}</span> <span class="so-fm-modal-file-remove" so-on:click="removeFile(${i})">x</span></li>
-                        </ul>
-                    `;
+      html += `<div class="so-fm-modal-upload-file-item" style="text-align:left">
+                  <span class="so-fm-modal-file-name">${file.name}</span>
+                  <span class="so-fm-modal-file-size">${this.fileSize(
+                    file.size
+                  )}</span> 
+                  <span class="so-fm-modal-file-remove" so-on:click="removeFile(${i})">x</span>
+              </div>`;
     }
+    html += `</div>`;
     return html;
   },
   render() {
@@ -78,13 +100,13 @@ export default {
                                 <div class="so-dropzone" so-on:click="chooseFile()">
                                   <span>Upload file</span>
                                 </div>
-                                <div class="so-fm-modal-file-list">
+                                
                                   ${this.fileListRender()}
-                                </div>
+                                
                               </div>
                               <div class="so-fm-modal-footer pt-1">
                                   <button class="btn btn-danger" so-on:click="cancel()">Cancel</button>
-                                  <button class="btn btn-primary">OK</button>
+                                  <button class="btn btn-primary" so-on:click="ok()">OK</button>
                               </div>
                           </div>
                       </div>

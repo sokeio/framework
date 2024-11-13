@@ -38,6 +38,20 @@ export function commonFetch(
   });
 }
 export default {
+  convertJsonToFormData(data) {
+    let formData = new FormData();
+    for (let key in data) {
+      if (typeof data[key] === "object") {
+        if (JSON.stringify(data[key]) !== "{}") {
+          formData.append(key, JSON.stringify(data[key]));
+        }
+      } else {
+        formData.append(key, data[key]);
+      }
+      console.log(key, data[key]);
+    }
+    return formData;
+  },
   fetch(url, data = undefined, options = {}, method = "GET") {
     return commonFetch(url, data, options, method);
   },
@@ -63,17 +77,27 @@ export default {
     // to process response
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
+      // processData: false,
+      xhr.withCredentials = true;
+
       xhr.open("POST", url);
       Object.entries(headers).forEach(([key, value]) => {
         xhr.setRequestHeader(key, value);
       });
-      xhr.responseType = "json";
+      //multipart/form-data
+      //'application/x-www-form-urlencoded'
+      xhr.setRequestHeader("Accept", "application/json");
+      xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+      xhr.responseType = "application/json";
       xhr.setRequestHeader("X-SOKEIO", "");
       xhr.setRequestHeader("X-CSRF-TOKEN", getToken());
       xhr.upload.addEventListener("progress", (e) => {
-        e.detail = {};
-        e.detail.progress = Math.floor((e.loaded * 100) / e.total);
-        progress && progress(e);
+        progress &&
+          progress({
+            progress: Math.floor((e.loaded * 100) / e.total),
+            loaded: e.loaded,
+            total: e.total,
+          });
       });
       xhr.onload = () => {
         if (xhr.status === 200) {

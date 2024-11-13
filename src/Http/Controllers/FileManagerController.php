@@ -11,7 +11,6 @@ class FileManagerController extends Controller
 {
     use FileManager;
     private $action = [
-        'list' => 'listAction',
         'create-folder' => 'createFolderAction',
         'upload' => 'uploadAction',
         'delete' => 'deleteAction',
@@ -26,7 +25,8 @@ class FileManagerController extends Controller
             'payload' => $request['payload'],
             'path' => $request['path'],
             'disk' => $request['disk'],
-            'search' => $request['search']
+            'search' => $request['search'],
+            'request' => $request
         ];
     }
     public function index(ActionRequest $request)
@@ -49,16 +49,8 @@ class FileManagerController extends Controller
 
         return response()->json($this->getInfoByPath($request->path ?? '/', $storage, $disk));
     }
-    private function listAction($data)
-    {
-        // Code to list files
-        // Implement file listing logic here
-    }
     private function createFolderAction($data, $storage)
     {
-        // Code to create folders
-        // Implement folder creation logic here
-
         $name = data_get($data, 'payload.name');
         $path = data_get($data, 'path');
         if ($path == '/') {
@@ -71,10 +63,20 @@ class FileManagerController extends Controller
         $folderName = trim($folderName, '/');
         $storage->makeDirectory('/' . $folderName);
     }
-    private function uploadAction($data)
+    private function uploadAction($data, $storage)
     {
-        // Code to upload files
-        // Implement file upload logic here
+        $path = data_get($data, 'path');
+        if ($path == '/') {
+            $path = '';
+        }
+        $request = data_get($data, 'request');
+        if (!$request->hasFile('files')) {
+            return;
+        }
+        $files = $request->file('files');
+        foreach ($files as $file) {
+            $storage->putFileAs($path, $file, $file->getClientOriginalName());
+        }
     }
 
     private function deleteAction($data)

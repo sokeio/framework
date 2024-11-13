@@ -34,7 +34,7 @@ trait FileManager
         try {
             $path = str($path)->trim('/');
             $arrPath = explode('/', $path);
-            $folders = $this->getFolders($arrPath, $storage, '/', 'Root', 0, $path);
+            $folders = $this->getFolders($arrPath, $storage, '/', 'Home', 0, $path);
             return [
                 'files' => collect($storage->files($path))
                     ->map(fn($file) => $this->mapInfoFile($file, $storage))
@@ -47,7 +47,7 @@ trait FileManager
                         'name' => $name,
                         'icon' => $this->getIcon($disk),
                         'title' => isset($disk['title']) ? $disk['title'] : $name,
-                        
+
                     ];
                 }),
             ];
@@ -73,6 +73,7 @@ trait FileManager
             'name' => basename($file),
             'path' => $file,
             'extension' => $storage->mimeType($file),
+            'preview_url' => $storage->url($file),
         ];
     }
     private function mapInfoFolder($folder)
