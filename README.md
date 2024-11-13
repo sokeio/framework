@@ -16,6 +16,15 @@ $ composer require sokeio/framework
 ```bash
 $ php artisan migrate
 ```
+
+- Enable Mode DEV
+
+In file .env:
+
+```bash
+SOKEIO_MODE_DEV=true
+```
+
 ## Template boilerplate
 
 Link [https://github.com/sokeio/sokeio](https://github.com/sokeio/sokeio)
