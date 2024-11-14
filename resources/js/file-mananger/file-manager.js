@@ -30,6 +30,9 @@ export default {
   },
 
   register() {
+    this.path = "/";
+    this.disk = "public";
+    this.selected = [];
     this.refreshSelected();
     this.watch("disk", function (value, oldValue) {
       if (value != oldValue) {
@@ -137,11 +140,7 @@ export default {
     this.selected.forEach((item) => {
       this.files.filter((i) => i.path == item).forEach((i) => files.push(i));
     });
-    if (this.$root.multiple) {
-      this.$root.fnCallback(files, this.path);
-    } else {
-      this.$root.fnCallback(files[0], this.path);
-    }
+    this.$root.fnCallback(this.$root.multiple?files:files[0], this.path);
     this.$root.delete();
   },
   render() {

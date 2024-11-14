@@ -33,7 +33,7 @@ class Overview extends \Sokeio\Page
     public function saveData()
     {
         $this->getUI()->saveInSetting();
-        $this->alert('Setting has been saved!' . time(), 'Setting', 'success', self::MESSAGE_POSITION_TOP_CENTER, 500000);
+        $this->alert('Setting has been saved!', 'Setting', 'success');
     }
     public function mount()
     {
@@ -43,36 +43,56 @@ class Overview extends \Sokeio\Page
     {
         return SettingUI::init([
             Input::init('system_name')
+                ->col6()
                 ->label('System Name')
                 ->ruleRequired('Please enter system name')
                 ->placeholder('System Name')
                 ->valueDefault('Sokeio Technology')
                 ->keyInSetting('SOKEIO_SYSTEM_NAME'),
+            MediaFile::init('system_logo')
+                ->col6()
+                ->label('System Logo')
+                ->keyInSetting('SOKEIO_SYSTEM_LOGO'),
             ContentEditor::init('system_description')
+                ->col12()
                 ->label('System Description')
                 // ->ruleRequired('Please enter system description')
                 ->placeholder('System Description')
                 ->keyInSetting('SOKEIO_SYSTEM_DESCRIPTION'),
+
+        ])
+            ->bodyRow()
+            ->title('Overview Setting')
+            ->subtitle('')
+            ->column(self::COLUMN_GROUP)
+            ->setPrefix('formData.overview')
+            ->className('mb-3');
+    }
+    private function settingUtility()
+    {
+        return SettingUI::init([
+            MediaFile::init('system_admin_login_cover_image')
+                ->col4()
+                ->label('System Admin Login Cover Image')
+                ->ruleRequired('Please enter system admin login cover image')
+                ->keyInSetting('SOKEIO_SYSTEM_ADMIN_LOGIN_COVER_IMAGE'),
             SwitchField::init('show_progress_timer')
+                ->col4()
                 ->labelTrue('Enable')
                 ->labelFalse('Disable')
                 ->label('Show Progress Timer')
                 ->keyInSetting('SOKEIO_SHOW_PROGRESS_TIMER'),
             SwitchField::init('show_position_debug')
+                ->col4()
                 ->labelTrue('Enable')
                 ->labelFalse('Disable')
                 ->label('Show Position Debug(Only Admin)')
                 ->keyInSetting('SOKEIO_SHOW_POSITION_DEBUG'),
-            MediaFile::init('cover_login_image')
-                ->multiple()
-                ->label('Cover Login Image')
-                ->keyInSetting('SOKEIO_LOGIN_IMAGE'),
-
-        ])
-            ->title('Overview Setting')
+        ])->title('Utility Setting')
+            ->bodyRow()
             ->subtitle('')
             ->column(self::COLUMN_GROUP)
-            ->setPrefix('formData.overview')
+            ->setPrefix('formData.utility')
             ->className('mb-3');
     }
     protected function setupUI()
@@ -80,6 +100,7 @@ class Overview extends \Sokeio\Page
         return [
             PageUI::init([
                 $this->settingOverview(),
+                $this->settingUtility(),
                 ...Setting::getUI(self::KEY_UI)
             ])->row()->rightUI([
                 Button::init()

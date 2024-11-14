@@ -38,6 +38,10 @@ class SettingUI extends BaseUI
         }
         return '';
     }
+    public function bodyRow($class = '')
+    {
+        return $this->vars('bodyRow', 'row ' . $class);
+    }
     public function view()
     {
         $htmlBodyCard = '';
@@ -47,6 +51,11 @@ class SettingUI extends BaseUI
                 $htmlBodyCard .= ' style="display: none;"';
             }
         }
+        $classBody = $this->getVar('bodyRow', '', true);
+        if (!$classBody) {
+            $classBody = 'p-2';
+        }
+
         $html = <<<HTML
         <div {$this->getAttr()}>
             <div class="card">
@@ -57,7 +66,7 @@ class SettingUI extends BaseUI
                     </div>
                 </div>
                 {$this->subTitleRender()}
-                <div class="card-body p-2" {$htmlBodyCard}>
+                <div class="card-body {$classBody}" {$htmlBodyCard}>
                     {$this->renderChilds()}
                 </div>
             </div>

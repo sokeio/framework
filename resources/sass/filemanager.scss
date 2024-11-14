@@ -164,6 +164,7 @@
                 @media screen and (max-width: 768px) {
                     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
                 }
+
                 /* Enable vertical scrolling */
                 .so-fm-item-box {
                     border: 1px solid #473131;
@@ -244,6 +245,7 @@
         padding: 5px 10px;
         text-align: end;
         background-color: #ccc;
+
         .btn {
             margin: 0 5px;
             padding: 3px 5px;
@@ -363,6 +365,28 @@
 
         .btn {
             width: 100px;
+        }
+    }
+}
+
+.sokeio-media-file {
+    .btn{
+        padding: 4px 10px;
+    }
+    .sokeio-media-preview {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: row;
+        max-width: 100%;
+        overflow: auto;
+
+        .sokeio-media-preview-item {
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            max-width: 200px;
+            max-height: 200px;
+            cursor: pointer;
         }
     }
 }

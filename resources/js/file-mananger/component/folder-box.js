@@ -10,7 +10,7 @@ export default {
     html += `</select>`;
     return (
       `<div class="row justify-content-center align-items-center">` +
-      `<div class="col-auto ps-4 fw-bold">Disks</div>` +
+      `<div class="col-auto ps-4 fw-bold">Disk:</div>` +
       `<div class="col">${html}</div></div>`
     );
   },

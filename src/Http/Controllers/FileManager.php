@@ -74,7 +74,7 @@ trait FileManager
             'path' => $file,
             'extension' => $storage->mimeType($file),
             'size' => $storage->size($file),
-            'public_url' => url($file),
+            'public_url' => url('storage/' . $file),
             'preview_url' => Storage::temporaryUrl($file, now()->addSeconds(15), ['disk' => $disk]),
         ];
     }
