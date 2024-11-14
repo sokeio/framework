@@ -20,7 +20,6 @@ export default {
       if (progress.progress == 100) {
         this.cancel();
       }
-      console.log(progress);
     }).bind(this));
     // this.isHide = true;
     // this.reRender();
@@ -34,7 +33,6 @@ export default {
           for (const element of e.target.files) {
             this.files.push(element);
           }
-          console.log(this.files);
           this.reRender();
         });
     });

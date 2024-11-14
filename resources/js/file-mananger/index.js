@@ -1,12 +1,13 @@
 import manager from "./file-manager";
 
-window.showFileManager = function (callback, type = "file") {
+window.showFileManager = function (callback, type = "file", multiple = false) {
   window.showModal("File Manager", {
     type: type,
     fnCallback: callback,
     template: manager,
     modalSize: "xxl",
     skipOverlayClose: true,
+    multiple: multiple,
   });
 };
 // setTimeout(() => {

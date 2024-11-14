@@ -153,9 +153,16 @@ export function Component($component, $props, $parent = null) {
   if (!$component.state) {
     $component.state = {};
   }
+  let initState = {};
+  try {
+    initState = { ...$component.state };
+  } catch (err) {
+    console.error(err);
+  }
   let component = {
     ...$component,
-    $initState: { ...JSON.parse(JSON.stringify($component.state)) },
+    $initState: { ...initState },
+
     $parent: $parent,
 
     $children: [],
@@ -166,7 +173,7 @@ export function Component($component, $props, $parent = null) {
     $root: $parent ? $parent.$root : $parent,
   };
   let keys = Object.keys(component)
-    .concat(Object.keys($component.state))
+    .concat(Object.keys(initState))
     .concat(Object.keys($props))
     .concat(Utils.getMethods(component))
     .filter(fnFilter)
@@ -203,10 +210,14 @@ export function Component($component, $props, $parent = null) {
     },
   });
   Object.defineProperty(component, "__data__", {
-    value: new DataValue($component.state ?? {}),
+    value: new DataValue({
+      ...component.$initState,
+    }),
   });
   Object.defineProperty(component, "__props__", {
-    value: new DataValue($props),
+    value: new DataValue({
+      ...$props,
+    }),
   });
   if (component.sokeAppSelector) {
     Object.defineProperty(component, "show", {

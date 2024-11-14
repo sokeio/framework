@@ -41,12 +41,17 @@ export default {
   boot() {
     this.cleanup(function () {});
   },
-  chooseFile(path, multiple = false) {
-    if (!multiple) {
+  chooseFile(path) {
+    if (!this.$root.multiple) {
       this.selected = [];
     }
-    this.selected.push(path);
-    this.$el.querySelector(".so-fm-footer-action button").disabled = false;
+    if (this.selected.includes(path)) {
+      this.selected = this.selected.filter((item) => item != path);
+    } else {
+      this.selected.push(path);
+    }
+    this.$el.querySelector(".so-fm-footer-action button").disabled =
+      this.selected.length == 0;
   },
   checkItemActive(path) {
     return this.selected.includes(path);
@@ -62,8 +67,6 @@ export default {
       });
       for (let item in files) {
         formData.append("files[]", files[item]);
-
-        console.log("files[]", files[item]);
       }
       request = this.$request
         .upload("/platform/file-manager", formData, {
@@ -134,7 +137,11 @@ export default {
     this.selected.forEach((item) => {
       this.files.filter((i) => i.path == item).forEach((i) => files.push(i));
     });
-    this.$root.fnCallback(files, this.path);
+    if (this.$root.multiple) {
+      this.$root.fnCallback(files, this.path);
+    } else {
+      this.$root.fnCallback(files[0], this.path);
+    }
     this.$root.delete();
   },
   render() {

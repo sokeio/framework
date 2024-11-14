@@ -22,7 +22,6 @@ export function commonFetch(
   options = {},
   method = "GET"
 ) {
-  console.log(url, body, options, method);
   let content = getToken();
   logDebug("fetch::content", content);
   return fetch(url, {
@@ -48,7 +47,6 @@ export default {
       } else {
         formData.append(key, data[key]);
       }
-      console.log(key, data[key]);
     }
     return formData;
   },

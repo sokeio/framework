@@ -57,7 +57,6 @@ class Overview extends \Sokeio\Page
                 ->labelTrue('Enable')
                 ->labelFalse('Disable')
                 ->label('Show Progress Timer')
-
                 ->keyInSetting('SOKEIO_SHOW_PROGRESS_TIMER'),
             SwitchField::init('show_position_debug')
                 ->labelTrue('Enable')
@@ -65,6 +64,7 @@ class Overview extends \Sokeio\Page
                 ->label('Show Position Debug(Only Admin)')
                 ->keyInSetting('SOKEIO_SHOW_POSITION_DEBUG'),
             MediaFile::init('cover_login_image')
+                ->multiple()
                 ->label('Cover Login Image')
                 ->keyInSetting('SOKEIO_LOGIN_IMAGE'),
 
