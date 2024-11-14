@@ -7,6 +7,7 @@ use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Field\ContentEditor;
 use Sokeio\UI\Field\Input;
+use Sokeio\UI\Field\MediaFile;
 use Sokeio\UI\Field\SwitchField;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\SettingUI;
@@ -32,7 +33,7 @@ class Overview extends \Sokeio\Page
     public function saveData()
     {
         $this->getUI()->saveInSetting();
-        $this->alert('Setting has been saved!'.time(),'Setting','success',self::MESSAGE_POSITION_TOP_CENTER,500000);
+        $this->alert('Setting has been saved!' . time(), 'Setting', 'success', self::MESSAGE_POSITION_TOP_CENTER, 500000);
     }
     public function mount()
     {
@@ -56,13 +57,16 @@ class Overview extends \Sokeio\Page
                 ->labelTrue('Enable')
                 ->labelFalse('Disable')
                 ->label('Show Progress Timer')
-                
+
                 ->keyInSetting('SOKEIO_SHOW_PROGRESS_TIMER'),
-                SwitchField::init('show_position_debug')
-                    ->labelTrue('Enable')
-                    ->labelFalse('Disable')
-                    ->label('Show Position Debug(Only Admin)')
-                    ->keyInSetting('SOKEIO_SHOW_POSITION_DEBUG'),
+            SwitchField::init('show_position_debug')
+                ->labelTrue('Enable')
+                ->labelFalse('Disable')
+                ->label('Show Position Debug(Only Admin)')
+                ->keyInSetting('SOKEIO_SHOW_POSITION_DEBUG'),
+            MediaFile::init('cover_login_image')
+                ->label('Cover Login Image')
+                ->keyInSetting('SOKEIO_LOGIN_IMAGE'),
 
         ])
             ->title('Overview Setting')

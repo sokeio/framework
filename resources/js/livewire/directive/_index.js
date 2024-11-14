@@ -14,6 +14,7 @@ import tinymce from "./tinymce";
 import tomSelect from "./tom-select";
 import plyr from "./plyr";
 import media from "./media";
+import mediaFile from "./media-file";
 const directive = {
   apexcharts,
   "get-value": getValue,
@@ -30,6 +31,7 @@ const directive = {
   "tom-select": tomSelect,
   plyr,
   media,
+  "media-file": mediaFile,
 };
 
 let waitLoader = (setting, items, level) => {
