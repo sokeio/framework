@@ -148,7 +148,10 @@ trait LifecycleUI
     }
     public function setParams($params)
     {
-        $this->params = $params;
+        if (!is_array($params)) {
+            $params = [$params];
+        }
+        $this->params = array_merge($this->params, $params);
         $this->checkDebug('setParams');
         return $this->setupChild(fn($c) => $c->setParams($params));
     }

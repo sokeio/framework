@@ -6,31 +6,35 @@ use Sokeio\Setting;
 
 trait WithFieldInSetting
 {
-    private $__loadInSettingCallback;
-    private $__saveInSettingCallback;
+    private $loadInSettingCallback;
+    private $saveInSettingCallback;
 
     public function loadInSetting($callback = null)
     {
         if ($callback) {
-            $this->__loadInSettingCallback = $callback;
-        } elseif ($this->__loadInSettingCallback) {
-            call_user_func($this->__loadInSettingCallback, $this);
+            $this->loadInSettingCallback = $callback;
+        } elseif ($this->loadInSettingCallback) {
+            call_user_func($this->loadInSettingCallback, $this);
+        } else {
+            $this->setValue(Setting::get($this->getFieldNameWithoutPrefix()));
         }
         return $this;
     }
     public function saveInSetting($callback = null)
     {
         if ($callback) {
-            $this->__saveInSettingCallback = $callback;
-        } elseif ($this->__saveInSettingCallback) {
-            call_user_func($this->__saveInSettingCallback, $this);
+            $this->saveInSettingCallback = $callback;
+        } elseif ($this->saveInSettingCallback) {
+            call_user_func($this->saveInSettingCallback, $this);
+        } else {
+            Setting::set($this->getFieldNameWithoutPrefix(), $this->getValue());
         }
         return $this;
     }
-    public function keyInSetting($key)
+    public function keyInSetting($key = null)
     {
         if (!$key) {
-            return $this;
+            $key = $this->getFieldNameWithoutPrefix();
         }
         return $this->loadInSetting(function () use ($key) {
             $this->setValue(Setting::get($key));

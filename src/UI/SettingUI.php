@@ -2,6 +2,7 @@
 
 namespace Sokeio\UI;
 
+use Illuminate\Support\Facades\Log;
 use Sokeio\UI\Field\SwitchField;
 
 class SettingUI extends BaseUI
@@ -15,12 +16,22 @@ class SettingUI extends BaseUI
     public function showSwitcher($key = null, $default = true)
     {
         return $this->child([
-            SwitchField::init('enable')
+            SwitchField::init($key)
                 ->labelTrue('Enable')
-                ->labelFalse('Disable')->boot(function (SwitchField $item) {
+                ->labelFalse('Disable')
+                ->valueDefault($default)
+                ->boot(function (SwitchField $item) {
                     $this->keyEnable = $item->getFieldName();
                     $this->valueEnable = $item->getValue();
-                })->valueDefault($default)->keyInSetting($key)
+                    $this->setParams(['setting_enable' => $this->valueEnable]);
+                })
+                ->boot(function () {
+                    $this->setupChild(function ($item) {
+                        $item->whenRule(function ($item) {
+                            return $item->getParams('setting_enable') === true;
+                        });
+                    });
+                })
         ], 'switcher');
     }
     public function subtitle($subtitle)
