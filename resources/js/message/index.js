@@ -5,7 +5,7 @@ const messageComponent = {
       this.timeout = 7000;
     }
     setTimeout(() => {
-      this.delete();
+      this.closeApp();
     }, this.timeout ?? 5000);
   },
   render() {

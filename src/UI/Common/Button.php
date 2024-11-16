@@ -65,7 +65,7 @@ class Button extends BaseUI
     }
     public function modalClose()
     {
-        return $this->attr('so-on:click', 'this.delete()');
+        return $this->attr('so-on:click', 'this.closeApp()');
     }
     private function getUrlFromModal($modal)
     {

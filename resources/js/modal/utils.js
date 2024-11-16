@@ -26,9 +26,9 @@ export function getModalHtmlRender(
       footer ? `<div class="so-modal-footer">${footer}</div>` : ""
     }`;
   }
-  let htmlClose = `<a class="so-modal-close" so-on:click="this.delete()"></a>`;
+  let htmlClose = `<a class="so-modal-close" so-on:click="this.closeApp()"></a>`;
   let closeOverlay =
-    'so-on:click="this.delete()" so-on:ignore=".so-modal-dialog"';
+    'so-on:click="this.closeApp()" so-on:ignore=".so-modal-dialog"';
   let elHtml = Utils.convertHtmlToElement(html);
   let skipOverlayClose = component?.skipOverlayClose ?? false;
   let modalSize = component?.modalSize ?? "lg";

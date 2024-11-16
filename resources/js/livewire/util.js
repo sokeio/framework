@@ -118,10 +118,10 @@ export function convertDateTimeFormatToMask(dateTimeFormat) {
   return convertTimeFormatToMask(convertDateFormatToMask(dateTimeFormat));
 }
 export function getWireIdFromElement(element) {
-  return (
-    element.getAttribute("wire:id") ??
-    element.closest("[wire\\:id]").getAttribute("wire:id")
-  );
+  if (element.getAttribute("wire:id")) return element.getAttribute("wire:id");
+  if (element.closest("[wire\\:id]"))
+    return element.closest("[wire\\:id]").getAttribute("wire:id");
+  return null;
 }
 export function getWireComponentFromElement(element) {
   return window.Livewire.find(getWireIdFromElement(element));

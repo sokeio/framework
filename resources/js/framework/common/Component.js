@@ -171,7 +171,7 @@ export function Component($component, $props, $parent = null) {
     $hookDestroy: [],
     $hookReady: [],
     $root: $parent ? $parent.$root : $parent,
-    $wire: $parent ? $parent.$wire : $props.$wire,
+    $wire: $parent ? $parent.$wire : $props?.$wire,
   };
   let keys = Object.keys(component)
     .concat(Object.keys(initState))
@@ -186,6 +186,7 @@ export function Component($component, $props, $parent = null) {
       "boot",
       "ready",
       "delete",
+      "closeApp",
       "destroy",
       "onReady",
       "reRender",
@@ -289,6 +290,12 @@ export function Component($component, $props, $parent = null) {
       doDestroy(this);
     },
   });
+  Object.defineProperty(component, "closeApp", {
+    value: function () {
+      console.log("closeApp");
+      this.$root.delete();
+    },
+  });
   Object.defineProperty(component, "cleanup", {
     value: function ($callback) {
       if ($callback) {
@@ -345,6 +352,7 @@ export function Component($component, $props, $parent = null) {
       return false;
     },
     get: (target, property) => {
+      console.log(property);
       if (target.__data__.check(property)) {
         return target.__data__.getValue(property);
       }

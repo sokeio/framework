@@ -42,11 +42,17 @@ const componentFeature = (el, component) => {
 export default function (component) {
   setTimeout(() => {
     if (!component.$el) return;
-    component.$el
-      .querySelectorAll(":scope > *:not([data-sokeio-id])")
-      .forEach((el) => {
-        componentFeature(el, component);
-      });
+    component.$el.querySelectorAll("*").forEach((el) => {
+      if (
+        el.closest("[data-sokeio-id]").getAttribute("data-sokeio-id") !=
+          component.getId() ||
+        (el.hasAttribute("data-sokeio-id") &&
+          el.getAttribute("data-sokeio-id") != component.getId())
+      ) {
+        return;
+      }
+      componentFeature(el, component);
+    });
     componentFeature(component.$el, component);
   });
 }
