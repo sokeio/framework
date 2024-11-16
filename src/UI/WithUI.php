@@ -18,8 +18,9 @@ trait WithUI
         }
         return null;
     }
-    public function boot()
+    public function booted()
     {
+        parent::booted();
         $this->getUI()->boot();
     }
     public function reUI()

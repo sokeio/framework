@@ -31,7 +31,7 @@ class Edit extends \Sokeio\Page
                     return !$this->dataId;
                 }),
             ])
-                ->card('p-2')
+                ->onlyModal()
                 ->title($this->getTitleForm())
                 ->className('p-2')->setPrefix('formData')
                 ->afterUI([

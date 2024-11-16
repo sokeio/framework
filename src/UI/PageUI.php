@@ -30,6 +30,11 @@ class PageUI extends BaseUI
     }
     public function initUI()
     {
+        $this->boot(function () {
+            if ($this->onlyModal && !$this->isModal()) {
+                abort(404);
+            }
+        });
         $this->render(function () {
             if ($this->isModal()) {
                 $this->className('sokeio-modal-ui');
@@ -40,9 +45,7 @@ class PageUI extends BaseUI
                     $this->attr('data-skip-overlay-close', true);
                 }
             } else {
-                if ($this->onlyModal) {
-                    abort(404);
-                }
+
                 $this->className('sokeio-page-ui');
                 if (!$this->getIcon()) {
                     $this->icon('ti ti-wallpaper');
