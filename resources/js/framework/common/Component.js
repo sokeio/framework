@@ -81,11 +81,11 @@ export function doBoot(component) {
   }
   feature(component);
   getChildComponent(component);
-    if (component.$children) {
-      component.$children.forEach((item) => {
-        doBoot(item);
-      });
-    }
+  if (component.$children) {
+    component.$children.forEach((item) => {
+      doBoot(item);
+    });
+  }
 }
 export function doRender(component) {
   logDebug("doRender", component);
@@ -171,6 +171,7 @@ export function Component($component, $props, $parent = null) {
     $hookDestroy: [],
     $hookReady: [],
     $root: $parent ? $parent.$root : $parent,
+    $wire: $parent ? $parent.$wire : $props.$wire,
   };
   let keys = Object.keys(component)
     .concat(Object.keys(initState))

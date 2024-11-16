@@ -35,4 +35,7 @@ class SystemUpdater extends \Sokeio\Page
 
         ];
     }
+    public function saveDemo(){
+        $this->wireTest="duwx dieux:".rand(1, 100);
+    }
 }
