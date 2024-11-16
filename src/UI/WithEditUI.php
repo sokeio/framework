@@ -28,6 +28,10 @@ trait WithEditUI
     {
         return $data;
     }
+    protected function getTitleForm()
+    {
+        return ($this->dataId ? __('Edit') : __('Create')) . ' ' . $this->getPageConfig()->getTitle();
+    }
     protected function formMessage()
     {
         $this->alert(__('Saved successfully'));

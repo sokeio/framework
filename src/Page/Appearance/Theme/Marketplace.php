@@ -7,7 +7,7 @@ use Sokeio\UI\Common\Div;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Field\Input;
 use Sokeio\UI\Field\UploadFile;
-use Sokeio\UI\ModalUI;
+use Sokeio\UI\PageUI;
 use Sokeio\UI\WithUI;
 
 #[PageInfo(admin: true, auth: true,  title: 'Marketplace Theme (Not Implemented)')]
@@ -21,7 +21,7 @@ class Marketplace extends \Sokeio\Page
     protected function setupUI()
     {
         return [
-            ModalUI::init([
+            PageUI::init([
                 Div::init()->className('mt-auto')->viewBlade('sokeio::pages.appearance.theme.marketplace')
             ])->title($this->getPageConfig()->getTitle())
                 ->className('p-2')

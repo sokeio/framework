@@ -5,7 +5,7 @@ namespace Sokeio\Page\Dashboard;
 use Sokeio\Models\Dashboard;
 use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\UI\Common\Div;
-use Sokeio\UI\ModalUI;
+use Sokeio\UI\PageUI;
 use Sokeio\UI\WithUI;
 
 #[PageInfo(
@@ -46,7 +46,7 @@ class Setting extends \Sokeio\Page
         if ($this->dashboardId <= 0 && $dashboards->count() > 0) {
             $this->dashboardId = $dashboards->first()?->id ?? 0;
         }
-        return ModalUI::init([
+        return PageUI::init([
             Div::init()->className('row g-0')->viewBlade('sokeio::pages.dashboard.setting', [
                 'dashboards' => $dashboards,
                 'dashboardId' => $this->dashboardId,

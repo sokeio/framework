@@ -173,6 +173,11 @@ body[data-bs-theme=dark] [data-bs-theme=light] {
                 justify-content: space-between;
             }
 
+            .so-modal-button-right {
+                display: flex;
+                align-items: flex-start;
+                justify-content: flex-end;
+            }
         }
     }
 
@@ -282,4 +287,37 @@ body[data-bs-theme=dark] [data-bs-theme=light] {
 
 .so-modal-open {
     overflow: hidden;
+}
+
+.sokeio-modal-ui {
+    .sokeio-modal-header {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        padding-left: 5px;
+
+        i {
+            font-size: 24px;
+        }
+
+        i~span {
+            margin-left: 3px;
+            font-size: 20px;
+        }
+    }
+
+    .sokeio-modal-body {
+        min-height: 50px;
+    }
+
+    .btn {
+        padding: 0.3rem 0.6rem !important;
+    }
+
+    .tagify {
+        padding: 0.1rem 0.2rem !important;
+
+        .tagify__input {
+            margin: 0 !important;
+        }
+    }
 }

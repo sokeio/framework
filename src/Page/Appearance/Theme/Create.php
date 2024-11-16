@@ -8,7 +8,7 @@ use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Field\Input;
-use Sokeio\UI\ModalUI;
+use Sokeio\UI\PageUI;
 use Sokeio\UI\WithUI;
 
 #[PageInfo(admin: true, auth: true,  title: 'Create Theme ')]
@@ -27,7 +27,7 @@ class Create extends \Sokeio\Page
     protected function setupUI()
     {
         return [
-            ModalUI::init([
+            PageUI::init([
                 Input::init('name')->label(__('Name')),
             ])->title($this->getPageConfig()->getTitle())
                 ->className('p-2')

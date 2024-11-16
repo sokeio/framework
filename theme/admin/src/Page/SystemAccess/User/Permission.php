@@ -10,7 +10,7 @@ use Sokeio\UI\Common\Div;
 use Sokeio\UI\Field\Input;
 use Sokeio\UI\Field\RangeNumber;
 use Sokeio\UI\Field\Select;
-use Sokeio\UI\ModalUI;
+use Sokeio\UI\PageUI;
 use Sokeio\UI\WithEditUI;
 
 #[PageInfo(admin: true, auth: true,  title: 'User Permission', model: User::class)]
@@ -20,7 +20,7 @@ class Permission extends \Sokeio\Page
     protected function setupUI()
     {
         return [
-            ModalUI::init([
+            PageUI::init([
                 Input::init('name')->label(__('Name')),
                 Input::init('email')->label(__('Email')),
                 Input::init('phone_number')->label(__('Phone')),

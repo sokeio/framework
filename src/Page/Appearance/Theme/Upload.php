@@ -6,7 +6,7 @@ use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Field\UploadFile;
-use Sokeio\UI\ModalUI;
+use Sokeio\UI\PageUI;
 use Sokeio\UI\WithUI;
 
 #[PageInfo(admin: true, auth: true,  title: 'Upload Theme (Not Implemented)')]
@@ -21,7 +21,7 @@ class Upload extends \Sokeio\Page
     protected function setupUI()
     {
         return [
-            ModalUI::init([
+            PageUI::init([
                 UploadFile::init('fileUpload'),
             ])->title($this->getPageConfig()->getTitle())
                 ->className('p-2')

@@ -5,7 +5,7 @@ namespace Sokeio\Page\Setting\Module;
 use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Common\Button;
-use Sokeio\UI\ModalUI;
+use Sokeio\UI\PageUI;
 use Sokeio\UI\WithUI;
 
 #[PageInfo(admin: true, auth: true,  title: 'Marketplace Module (Not Implemented)')]
@@ -19,7 +19,7 @@ class Marketplace extends \Sokeio\Page
     protected function setupUI()
     {
         return [
-            ModalUI::init([
+            PageUI::init([
                 Div::init()->className('mt-auto')->viewBlade('sokeio::pages.setting.module.marketplace')
             ])->title($this->getPageConfig()->getTitle())
                 ->className('p-2')

@@ -9,7 +9,7 @@ use Sokeio\UI\Common\Button;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Field\Input;
 use Sokeio\UI\Field\Select;
-use Sokeio\UI\ModalUI;
+use Sokeio\UI\PageUI;
 use Sokeio\UI\WithEditUI;
 
 #[PageInfo(admin: true, auth: true,  title: 'User', model: User::class)]
@@ -19,7 +19,7 @@ class Edit extends \Sokeio\Page
     protected function setupUI()
     {
         return [
-            ModalUI::init([
+            PageUI::init([
                 Input::init('name')->label(__('Name'))->ruleRequired('Please enter name'),
                 Input::init('email')->label(__('Email'))->ruleRequired()->ruleEmail(),
                 Input::init('phone_number')->label(__('Phone'))->ruleRequired()->rulePhone(),
@@ -30,14 +30,15 @@ class Edit extends \Sokeio\Page
                 Select::init('role_id')->label(__('Role'))->remoteActionWithModel(Role::class)->when(function () {
                     return !$this->dataId;
                 }),
-            ])->title(($this->dataId ? __('Edit') : __('Create')) . ' ' . $this->getPageConfig()->getTitle())
+            ])
+                ->card('p-2')
+                ->title($this->getTitleForm())
                 ->className('p-2')->setPrefix('formData')
                 ->afterUI([
                     Div::init([
                         Button::init()->text(__('Cancel'))->className('btn btn-warning me-2')->modalClose(),
                         Button::init()->text(__('Save'))->wireClick('saveData'),
-                    ])
-                        ->className('px-2 pt-2 d-flex justify-content-end')
+                    ])->useModalButtonRight()
                 ])
                 ->icon('ti ti-users')
         ];

@@ -9,175 +9,6 @@ h6 {
     padding: 0;
 }
 
-.btn {
-    border-radius: 2px !important;
-
-    i {
-        font-size: 1.25rem !important
-    }
-}
-
-button {
-    i~span {
-        margin-left: 5px;
-    }
-}
-
-.sokeio-table {
-    border-radius: 2px;
-    padding: 2px;
-
-    table th,
-    table td {
-        padding: 0px !important;
-    }
-
-    table th .cell-header {
-        padding: 7px !important;
-    }
-
-    table td .cell-value {
-        padding: 7px !important;
-    }
-
-    table tr:hover {
-        background-color: #f5f5f5;
-        color: #111;
-    }
-}
-
-.sokeio-field-input {
-    margin-bottom: 0.2rem !important;
-
-    .form-label {
-        margin-bottom: 0.2rem !important;
-    }
-
-    .form-control {
-        padding: 0.3rem 0.6rem !important;
-
-        &:focus {
-            box-shadow: unset !important;
-        }
-
-        &.ts-wrapper {
-            padding: 0 !important;
-
-            .ts-control {
-                padding: 0.3rem 0.6rem !important;
-                background: unset !important;
-                border: unset !important;
-                min-width: 140px;
-                min-height: 30px;
-            }
-        }
-    }
-}
-
-.sokeio-field-input-row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
-    .form-control {
-        padding: 0.3rem 0.6rem !important;
-    }
-}
-
-.sokeio-modal-ui {
-    .sokeio-modal-header {
-        margin-top: 5px;
-        margin-bottom: 5px;
-        padding-left: 5px;
-
-        i {
-            font-size: 24px;
-        }
-
-        i~span {
-            margin-left: 3px;
-            font-size: 20px;
-        }
-    }
-
-    .sokeio-modal-body {
-        min-height: 50px;
-    }
-
-    .btn {
-        padding: 0.3rem 0.6rem !important;
-    }
-
-    .tagify {
-        padding: 0.1rem 0.2rem !important;
-
-        .tagify__input {
-            margin: 0 !important;
-        }
-    }
-}
-
-.sokeio-page-ui {
-    .page-header {
-        margin-top: 10px !important;
-
-        .btn {
-            padding: 5px 10px !important;
-            margin-left: 5px !important;
-
-            i {
-                font-size: 1.25rem !important
-            }
-        }
-
-        .page-title {
-            i {
-                font-size: 1.25rem !important;
-                margin-right: 5px !important;
-            }
-        }
-
-        .page-header-actions {
-            .sokeio-field-input {
-                margin-bottom: 0 !important;
-            }
-        }
-    }
-
-    .page-body {
-        margin-top: 10px !important;
-        margin-bottom: 10px !important;
-    }
-}
-
-.range-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: end;
-
-
-    .range-body {
-        flex: auto;
-
-        .range-text {
-            display: flex;
-            position: relative;
-
-            .range-min-text {
-                flex: auto;
-            }
-
-            .range-value {
-                position: absolute;
-            }
-
-            .range-max-text {
-                flex: none;
-            }
-        }
-    }
-}
 
 .sokeio-screenshot-banner {
     height: 200px;
@@ -202,24 +33,6 @@ button {
     }
 }
 
-.so-dropzone {
-    min-height: 120px;
-    border: 2px dashed #babcc0;
-    color: #6c7a91;
-    border-radius: 5px;
-    padding: 20px 20px;
-    width: 100%;
-    justify-content: center;
-    justify-items: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    &:hover {
-        background-color: #e5e9ec;
-        cursor: pointer;
-    }
-}
 
 .sokeio-btn-system-updater {
 
@@ -227,6 +40,7 @@ button {
     color: #fcfdfe !important;
     border-radius: 2px !important;
     font-weight: 700;
+
     &:hover {
         background: #1e2d40 !important;
         color: #fcfdfe !important;

@@ -25,6 +25,10 @@ class Div extends BaseUI
             }
         ]);
     }
+    public function useModalButtonRight()
+    {
+        return $this->className('px-2 pt-2 so-modal-button-right');
+    }
     public function view()
     {
         $attr = $this->getAttr();

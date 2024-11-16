@@ -2,6 +2,8 @@
 
 namespace Sokeio\Support\Livewire\Concerns;
 
+use Illuminate\Support\Facades\Request;
+use Livewire\Attributes\Locked;
 use Sokeio\Concerns\WithHelpers;
 
 trait WithLivewire
@@ -9,6 +11,8 @@ trait WithLivewire
     use WithHelpers, WithLivewireData, WithLivewireDispatch;
 
     public $soNumberLoading = 0;
+    #[Locked]
+    public $isPageAjax = false;
 
     public function soLoadData()
     {
@@ -30,6 +34,9 @@ trait WithLivewire
     {
         if (!$this->getRefId()) {
             $this->data('refId', request('refId'));
+        }
+        if (!$this->isPageAjax) {
+            $this->isPageAjax = Request::ajax();
         }
     }
 }

@@ -1,0 +1,38 @@
+.sokeio-page-ui {
+    .page-header {
+        margin-top: 10px !important;
+
+        .btn {
+            padding: 5px 10px !important;
+            margin-left: 5px !important;
+
+            i {
+                font-size: 1.25rem !important
+            }
+        }
+
+        .page-title {
+            i {
+                font-size: 1.25rem !important;
+                margin-right: 5px !important;
+            }
+        }
+
+        .page-header-actions {
+            .sokeio-field-input {
+                margin-bottom: 0 !important;
+            }
+        }
+    }
+
+    .page-body {
+        margin-top: 10px !important;
+        margin-bottom: 10px !important;
+
+        .so-modal-button-right {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+    }
+}

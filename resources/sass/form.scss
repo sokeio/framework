@@ -1,0 +1,101 @@
+.btn {
+    border-radius: 2px !important;
+
+    i {
+        font-size: 1.25rem !important
+    }
+}
+
+button {
+    i~span {
+        margin-left: 5px;
+    }
+}
+
+.sokeio-field-input {
+    margin-bottom: 0.2rem !important;
+
+    .form-label {
+        margin-bottom: 0.2rem !important;
+    }
+
+    .form-control {
+        padding: 0.3rem 0.6rem !important;
+
+        &:focus {
+            box-shadow: unset !important;
+        }
+
+        &.ts-wrapper {
+            padding: 0 !important;
+
+            .ts-control {
+                padding: 0.3rem 0.6rem !important;
+                background: unset !important;
+                border: unset !important;
+                min-width: 140px;
+                min-height: 30px;
+            }
+        }
+    }
+}
+
+.sokeio-field-input-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .form-control {
+        padding: 0.3rem 0.6rem !important;
+    }
+}
+
+
+
+.range-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: end;
+
+
+    .range-body {
+        flex: auto;
+
+        .range-text {
+            display: flex;
+            position: relative;
+
+            .range-min-text {
+                flex: auto;
+            }
+
+            .range-value {
+                position: absolute;
+            }
+
+            .range-max-text {
+                flex: none;
+            }
+        }
+    }
+}
+
+.so-dropzone {
+    min-height: 120px;
+    border: 2px dashed #babcc0;
+    color: #6c7a91;
+    border-radius: 5px;
+    padding: 20px 20px;
+    width: 100%;
+    justify-content: center;
+    justify-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &:hover {
+        background-color: #e5e9ec;
+        cursor: pointer;
+    }
+}

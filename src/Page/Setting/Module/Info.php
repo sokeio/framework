@@ -9,7 +9,7 @@ use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Field\Input;
-use Sokeio\UI\ModalUI;
+use Sokeio\UI\PageUI;
 use Sokeio\UI\WithUI;
 
 #[PageInfo(admin: true, auth: true,  title: ' Module Info')]
@@ -26,7 +26,7 @@ class Info extends \Sokeio\Page
             $title =  $title . '(Vendor)';
         }
         return [
-            ModalUI::init([
+            PageUI::init([
                 Div::init()->className('mt-auto')->viewBlade(
                     'sokeio::pages.setting.module.info',
                     [
