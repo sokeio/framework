@@ -27,7 +27,7 @@ class AdminServiceProvider extends ServiceProvider
             ->hasTranslations()
             ->runsMigrations();
     }
-    public function packageBooted()
+    public function packageRegistered()
     {
         if (Platform::isUrlAdmin()) {
             Theme::linkJs(

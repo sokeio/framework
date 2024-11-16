@@ -220,3 +220,21 @@ button {
         cursor: pointer;
     }
 }
+
+.sokeio-btn-system-updater {
+
+    background: #253447 !important;
+    color: #fcfdfe !important;
+    border-radius: 2px !important;
+
+    &:hover {
+        background: #1e2d40 !important;
+        color: #fcfdfe !important;
+    }
+
+    .nav-link-icon {
+        i {
+            color: #fcfdfe !important;
+        }
+    }
+}

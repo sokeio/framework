@@ -18,6 +18,7 @@ class PageInfo
         public $auth = null,
         public $menu = null,
         public $menuTitle = null,
+        public $menuClass = null,
         public $menuIcon = null,
         public $menuTarget = null,
         public $menuTargetTitle = null,

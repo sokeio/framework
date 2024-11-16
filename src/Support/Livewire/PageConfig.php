@@ -25,6 +25,7 @@ class PageConfig
         'auth' => true,
         'menu' => false,
         'menuTitle' => null,
+        'menuClass' => null,
         'menuIcon' => null,
         'menuTarget' => null,
         'menuTargetTitle' => null,
@@ -44,6 +45,7 @@ class PageConfig
             if (!isset($info->{$key}) || $info->{$key} === null) {
                 continue;
             }
+            
             $this->config[$key] = $info->{$key};
         }
         $key = $this->getEnableKeyInSetting();
@@ -109,6 +111,7 @@ class PageConfig
         if ($config->getAdmin()) {
             if ($config->getAuth() && $config->getMenu() && Platform::isUrlAdmin()) {
                 $menuTitle = $config->getMenuTitle() ?? str(str($nameRoute)->afterLast('.'))->replace('-', ' ');
+                $menuClass = $config->getMenuClass();
                 $target = $config->getMenuTarget();
                 $sort = $config->getSort();
                 $icon = $config->getIcon();
@@ -119,7 +122,10 @@ class PageConfig
                 MenuManager::registerItem(
                     MenuItem::make($key, str($menuTitle)->title()->replace('-', ' '), null)
                         ->route('admin.' . $nameRoute)
-                        ->setup(function (MenuItem $item) use ($target, $sort, $icon) {
+                        ->setup(function (MenuItem $item) use ($target, $sort, $icon, $menuClass) {
+                            if ($menuClass) {
+                                $item->classItem = $menuClass;
+                            }
                             if ($target) {
                                 $item->target =  $target;
                             }
