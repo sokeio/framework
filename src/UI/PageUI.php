@@ -2,28 +2,12 @@
 
 namespace Sokeio\UI;
 
-use Illuminate\Support\Facades\Request;
+use Sokeio\UI\Concerns\WithModal;
 
 class PageUI extends BaseUI
 {
-    private $overlayClose = false;
-    private $useModal = false;
-    private $onlyModal = false;
-    public function useModal()
-    {
-        $this->useModal = true;
-        return $this;
-    }
-    public function onlyModal()
-    {
-        $this->onlyModal = true;
-        return $this;
-    }
-    public function overlayClose()
-    {
-        $this->overlayClose = true;
-        return $this;
-    }
+    use WithModal;
+   
     private function isModal()
     {
         return $this->getWire()->isPageAjax || $this->useModal;

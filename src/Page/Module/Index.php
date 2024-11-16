@@ -1,11 +1,10 @@
 <?php
 
-namespace Sokeio\Page\Setting\Module;
+namespace Sokeio\Page\Module;
 
 use Livewire\Attributes\Url;
 use Sokeio\Platform;
 use Sokeio\Support\Livewire\PageInfo;
-use Sokeio\Theme;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Field\Input;
@@ -18,9 +17,8 @@ use Sokeio\UI\WithUI;
     title: 'Module System',
     menu: true,
     menuTitle: 'Module',
-    menuTargetSort: 99999,
-    menuTargetIcon: 'ti ti-apps fs-2',
-    sort: 200
+    icon: 'ti ti-apps fs-2',
+    sort: 99990
 )]
 class Index extends \Sokeio\Page
 {

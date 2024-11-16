@@ -17,7 +17,7 @@ use Sokeio\UI\WithUI;
     title: 'Theme System',
     menu: true,
     menuTitle: 'Theme',
-    menuTargetSort: 99999,
+    menuTargetSort: 99991,
     menuTargetIcon: 'ti ti-palette fs-2',
     sort: 0
 )]

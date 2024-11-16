@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Page\Setting\Module;
+namespace Sokeio\Page\Module;
 
 use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\UI\Common\Div;

@@ -22,6 +22,7 @@ use Sokeio\UI\WithSettingUI;
     title: 'Overview',
     menu: true,
     menuTitle: 'Overview',
+    menuTargetSort: 99999,
     icon: 'ti ti-cogs',
     sort: 0,
 )]

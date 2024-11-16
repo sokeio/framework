@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Page\Setting\Module;
+namespace Sokeio\Page\Module;
 
 use Livewire\Attributes\Rule;
 use Livewire\Attributes\Url;

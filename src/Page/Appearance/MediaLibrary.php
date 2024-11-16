@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Page\Setting;
+namespace Sokeio\Page\Appearance;
 
 use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\UI\Common\Div;
@@ -15,7 +15,7 @@ use Sokeio\UI\WithUI;
     menuTitle: 'Media Library',
     sort: 999999999,
 )]
-class Media extends \Sokeio\Page
+class MediaLibrary extends \Sokeio\Page
 {
     use WithUI;
     protected function setupUI()
