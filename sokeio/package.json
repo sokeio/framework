@@ -1,0 +1,21 @@
+{
+  "name": "sokeio",
+  "version": "0.0.0-beta.0",
+  "license": "MIT",
+  "author": "Nguyen Van Hau",
+  "repository": "https://github.com/sokeio/framework",
+  "description": "a Laravel-based web application development package that provides support for developing modules, plugins, themes, livewire, and shortcodes.",
+  "main": "dist/main.js",
+  "umd": "dist/main.umd.js",
+  "module": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "~5.6.2",
+    "vite": "^5.4.10"
+  }
+}

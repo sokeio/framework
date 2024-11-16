@@ -16,7 +16,6 @@ export default {
     let template = el.innerHTML;
     template = template.replace("export default", " return");
     let divWrapper = document.createElement("div");
-    divWrapper.setAttribute("wire:ignore", "");
     divWrapper.setAttribute("data-sokeio-template", new Date().getTime());
     el.parentNode.insertBefore(divWrapper, el);
     let func = new Function(template);
