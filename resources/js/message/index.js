@@ -26,21 +26,26 @@ const messageComponent = {
 };
 
 const messagePayload = (payload) => {
-  let position = payload.position ?? "top-right";
-  let elPosition = document.querySelector(
-    `.so-position-manager .so-position-${position}`
-  );
-  if (!elPosition) {
-    elPosition = document.querySelector(
-      `.so-position-manager .so-position-bottom-right`
+  if (!document.querySelector(".so-position-manager")) {
+    position();
+  }
+  setTimeout(() => {
+    let position = payload.position ?? "top-right";
+    let elPosition = document.querySelector(
+      `.so-position-manager .so-position-${position}`
     );
-  }
-  if (elPosition.children.length > 9) {
-    elPosition.children[0].__sokeio?.delete?.();
-  }
-  window.sokeioUI.run(messageComponent, {
-    props: { ...payload },
-    selector: elPosition,
+    if (!elPosition) {
+      elPosition = document.querySelector(
+        `.so-position-manager .so-position-bottom-right`
+      );
+    }
+    if (elPosition.children.length > 9) {
+      elPosition.children[0].__sokeio?.delete?.();
+    }
+    window.sokeioUI.run(messageComponent, {
+      props: { ...payload },
+      selector: elPosition,
+    });
   });
 };
 window.sokeioMessage = messagePayload;
@@ -60,4 +65,3 @@ let position = () => {
     `;
   document.body.insertAdjacentHTML("beforeend", html);
 };
-setTimeout(position, 0);

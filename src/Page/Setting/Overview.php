@@ -11,55 +11,37 @@ use Sokeio\UI\Field\MediaFile;
 use Sokeio\UI\Field\SwitchField;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\SettingUI;
-use Sokeio\UI\WithUI;
+use Sokeio\UI\WithSettingUI;
 
 #[PageInfo(
     admin: true,
     auth: true,
-    title: 'Overview Setting',
+    title: 'Overview',
     menu: true,
     menuTitle: 'Overview',
-    icon: 'ti ti-login',
+    icon: 'ti ti-cogs',
     sort: 0,
 )]
 class Overview extends \Sokeio\Page
 {
     public const KEY_UI = "SOKEIO_OVERVIEW_SETTING_PAGE";
-    use WithUI;
-    public const COLUMN_GROUP = 'col-sm-12 col-md-12 col-lg-12';
-    public const COLUMN_GROUP2 = 'col-sm-12 col-md-6 col-lg-6';
-    public $formData = [];
-
-    public function saveData()
-    {
-        $this->getUI()->saveInSetting();
-        $this->alert('Setting has been saved!', 'Setting', 'success');
-    }
-    public function mount()
-    {
-        $this->getUI()->loadInSetting();
-    }
+    use WithSettingUI;
     private function settingOverview()
     {
         return SettingUI::init([
-            Input::init('system_name')
-                ->col6()
+            Input::init('SOKEIO_SYSTEM_NAME')->col6()
                 ->label('System Name')
                 ->ruleRequired('Please enter system name')
                 ->placeholder('System Name')
-                ->valueDefault('Sokeio Technology')
-                ->keyInSetting('SOKEIO_SYSTEM_NAME'),
-            MediaFile::init('system_logo')
-                ->col6()
+                ->valueDefault('Sokeio Technology'),
+            MediaFile::init('system_logo')->col6()
                 ->label('System Logo')
                 ->keyInSetting('SOKEIO_SYSTEM_LOGO'),
-            ContentEditor::init('system_description')
+            ContentEditor::init('SOKEIO_SYSTEM_DESCRIPTION')
                 ->col12()
                 ->label('System Description')
                 // ->ruleRequired('Please enter system description')
-                ->placeholder('System Description')
-                ->keyInSetting('SOKEIO_SYSTEM_DESCRIPTION'),
-
+                ->placeholder('System Description'),
         ])
             ->bodyRow()
             ->title('Overview Setting')
@@ -71,23 +53,16 @@ class Overview extends \Sokeio\Page
     private function settingUtility()
     {
         return SettingUI::init([
-            MediaFile::init('system_admin_login_cover_image')
-                ->col4()
-                ->label('System Admin Login Cover Image')
-                ->ruleRequired('Please enter system admin login cover image')
-                ->keyInSetting('SOKEIO_SYSTEM_ADMIN_LOGIN_COVER_IMAGE'),
-            SwitchField::init('show_progress_timer')
+            SwitchField::init('SOKEIO_SHOW_PROGRESS_TIMER')
                 ->col4()
                 ->labelTrue('Enable')
                 ->labelFalse('Disable')
-                ->label('Show Progress Timer')
-                ->keyInSetting('SOKEIO_SHOW_PROGRESS_TIMER'),
-            SwitchField::init('show_position_debug')
+                ->label('Show Progress Timer'),
+            SwitchField::init('SOKEIO_SHOW_POSITION_DEBUG')
                 ->col4()
                 ->labelTrue('Enable')
                 ->labelFalse('Disable')
-                ->label('Show Position Debug(Only Admin)')
-                ->keyInSetting('SOKEIO_SHOW_POSITION_DEBUG'),
+                ->label('Show Position Debug(Only Admin)'),
         ])->title('Utility Setting')
             ->bodyRow()
             ->subtitle('')
@@ -106,7 +81,7 @@ class Overview extends \Sokeio\Page
                 Button::init()
                     ->className('btn btn-primary')
                     ->text('Save Setting')
-                    ->icon('ti ti-save')
+                    ->icon('ti ti-settings')
                     ->wireClick('saveData')
             ])
                 ->icon('ti ti-login')

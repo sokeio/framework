@@ -34,7 +34,9 @@ class PageConfig
         'menuTargetSort' => null,
         'skipHtmlAjax' => false,
         'model' => null,
-        'skip' => false
+        'skip' => false,
+        'enable' => true,
+        'enableKeyInSetting' => false
     ];
     public function setInfo(PageInfo $info)
     {
@@ -43,6 +45,10 @@ class PageConfig
                 continue;
             }
             $this->config[$key] = $info->{$key};
+        }
+        $key = $this->getEnableKeyInSetting();
+        if ($key && !setting($key, data_get($this->config, 'enable'))) {
+            $this->config['skip'] = true;
         }
     }
     public function skipHtmlAjax()

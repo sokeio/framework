@@ -17,7 +17,8 @@
                     <div class="text-center mt-3 mb-6">
                         <a href="{{ url('/') }}" class="navbar-brand navbar-brand-autodark"><img
                                 src="{{ setting('SOKEIO_SYSTEM_LOGO', asset('platform/module/sokeio/sokeio.webp')) }}"
-                                class="rounded-2" height="100" alt=""></a>
+                                class="rounded-2" height="100"
+                                alt="{{ setting('SOKEIO_SYSTEM_NAME', 'Sokeio Technology') }}"></a>
                     </div>
                     @yield('content')
                 </div>

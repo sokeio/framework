@@ -22,7 +22,7 @@ class PlatformServiceProvider extends \Illuminate\Support\ServiceProvider
         Route::pushMiddlewareToGroup('sokeio.admin', Authenticate::class);
         Route::pushMiddlewareToGroup('sokeio.admin.guest', 'web');
         Platform::loadFromPath(Platform::getPlatformPath());
-        $this->app->booting(function () {
+        $this->app->booted(function () {
             Platform::boot();
         });
     }

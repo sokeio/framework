@@ -13,12 +13,12 @@ use Sokeio\UI\WithUI;
 #[PageInfo(
     admin: true,
     auth: true,
-    title: 'Tool System',
+    title: 'Cache System',
     menu: true,
-    menuTitle: 'Tool System',
+    menuTitle: 'Cache System',
     sort: 999999999,
 )]
-class ToolSystem extends \Sokeio\Page
+class CacheSystem extends \Sokeio\Page
 {
     use WithUI;
     const COLUMN = 'col-lg-4 col-md-6 col-sm-12';
@@ -32,7 +32,6 @@ class ToolSystem extends \Sokeio\Page
                 'column' => self::COLUMN,
                 'fn' => function () {
                     Artisan::call('cache:clear');
-                    $this->alert(__('Cache has been cleared!'));
                 },
                 'action' => 'sokeio::system::cache.clear',
             ],

@@ -8,12 +8,13 @@ use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Field\ContentEditor;
 use Sokeio\UI\Field\Input;
+use Sokeio\UI\Field\MediaFile;
 use Sokeio\UI\Field\Select;
 use Sokeio\UI\Field\SwitchField;
 use Sokeio\UI\Field\Textarea;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\SettingUI;
-use Sokeio\UI\WithUI;
+use Sokeio\UI\WithSettingUI;
 
 #[PageInfo(
     admin: true,
@@ -27,20 +28,7 @@ use Sokeio\UI\WithUI;
 class Authentication extends \Sokeio\Page
 {
     public const KEY_UI = "SOKEIO_LOGIN_SETTING_PAGE";
-    use WithUI;
-    public const COLUMN_GROUP = 'col-sm-12 col-md-12 col-lg-12';
-    public const COLUMN_GROUP2 = 'col-sm-12 col-md-6 col-lg-6';
-    public $formData = [];
-
-    public function saveData()
-    {
-        $this->getUI()->saveInSetting();
-        $this->alert('Setting has been saved!');
-    }
-    public function mount()
-    {
-        $this->getUI()->loadInSetting();
-    }
+    use WithSettingUI;
     private function settingLogin()
     {
         return SettingUI::init([
@@ -141,11 +129,33 @@ class Authentication extends \Sokeio\Page
             ->setPrefix('formData.github')
             ->className('mb-3');
     }
+    private function settingAdminAuth()
+    {
+        return SettingUI::init([
+            MediaFile::init('SOKEIO_ADMIN_LOGIN_COVER_IMAGE')
+                ->col4()
+                ->label('Auth Cover Image'),
+            SwitchField::init('SOKEIO_ADMIN_REGISTRATION_ENABLE_PAGE')
+                ->col4()
+                ->labelTrue('Enable')
+                ->labelFalse('Disable')
+                ->label('Register User Page')
+                ->valueDefault(true),
+        ])
+            ->title('Admin Auth Setting')
+            ->bodyRow()
+            ->icon('ti ti-user')
+            ->subtitle('')
+            ->column(self::COLUMN_GROUP)
+            ->setPrefix('formData.admin-auth')
+            ->className('mb-3');
+    }
     protected function setupUI()
     {
         return [
             PageUI::init([
                 $this->settingLogin(),
+                $this->settingAdminAuth(),
                 $this->settingLoginWithGoogle(),
                 $this->settingLoginWithFacebook(),
                 $this->settingLoginWithGithub(),

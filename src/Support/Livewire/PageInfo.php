@@ -26,6 +26,8 @@ class PageInfo
         public $menuTargetClass = null,
         public $menuTargetSort = null,
         public $skipHtmlAjax = null,
-        public $model = null
+        public $model = null,
+        public $enableKeyInSetting = null,
+        public $enable = null
     ) {}
 }

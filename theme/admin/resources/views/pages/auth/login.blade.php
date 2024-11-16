@@ -5,8 +5,7 @@
     <form autocomplete="off" novalidate="" wire:submit.prevent='login()'>
         <div class="mb-3">
             <label class="form-label">Email address</label>
-            <input type="email" class="form-control" placeholder="your@email.com" autocomplete="off"
-                wire:model='email'>
+            <input type="email" class="form-control" placeholder="your@email.com" autocomplete="off" wire:model='email'>
             @error('email')
                 <span class="error">{{ $message }}</span>
             @enderror
@@ -14,9 +13,13 @@
         <div class="mb-2">
             <label class="form-label">
                 Password
-                <span class="form-label-description">
-                    <a href="./forgot-password.html" wire:navigate.hover>I forgot password</a>
-                </span>
+                @if (Route::has('admin.forgot-password'))
+                    <span class="form-label-description">
+                        <a href="{{ route('admin.forgot-password') }}" title="I forgot password" wire:navigate.hover>
+                            I forgot password
+                        </a>
+                    </span>
+                @endif
             </label>
             <div class="input-group input-group-flat" x-data="{ showPass: false }">
                 <input type="password" :type="showPass ? 'text' : 'password'" class="form-control"
@@ -47,8 +50,10 @@
             <button type="submit" class="btn btn-primary w-100">Sign in</button>
         </div>
     </form>
-    <div class="text-center text-secondary mt-3">
-        Don't have account yet?
-        <a href="{{ route('admin.register') }}" tabindex="-1" wire:navigate.hover>Sign up</a>
-    </div>
+    @if (Route::has('admin.register'))
+        <div class="text-center text-secondary mt-3">
+            Don't have account yet?
+            <a href="{{ route('admin.register') }}" tabindex="-1" wire:navigate.hover>Sign up</a>
+        </div>
+    @endif
 </div>
