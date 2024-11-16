@@ -70,6 +70,12 @@ class Overview extends \Sokeio\Page
                 ->labelTrue('Enable')
                 ->labelFalse('Disable')
                 ->label('Show Position Debug(Only Admin)'),
+            SwitchField::init('SOKEIO_SYSTEM_UPDATER_ENABLE')
+                ->col4()
+                ->labelTrue('Enable')
+                ->labelFalse('Disable')
+                ->valueDefault(true)
+                ->label('System Updater'),
         ])->title('Utility Setting')
             ->bodyRow()
             ->subtitle('')

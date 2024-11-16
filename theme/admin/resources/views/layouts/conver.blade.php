@@ -16,9 +16,8 @@
                 <div class="container container-tight mt-4 px-lg-5">
                     <div class="text-center mt-3 mb-6">
                         <a href="{{ url('/') }}" class="navbar-brand navbar-brand-autodark"><img
-                                src="{{ setting('SOKEIO_SYSTEM_LOGO', asset('platform/module/sokeio/sokeio.webp')) }}"
-                                class="rounded-2" height="100"
-                                alt="{{ setting('SOKEIO_SYSTEM_NAME', 'Sokeio Technology') }}"></a>
+                                src="{{ platform()->getSystemLogo() }}" class="rounded-2" height="100"
+                                alt="{{ platform()->getSystemName() }}"></a>
                     </div>
                     @yield('content')
                 </div>

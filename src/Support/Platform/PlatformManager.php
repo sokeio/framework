@@ -12,14 +12,14 @@ use Sokeio\ILoader;
 use Sokeio\Support\Platform\Concerns\{
     WithLivewireComponent,
     WithPipelineLoader,
-    WithPlatform
+    WithPlatform,
+    WithPlatformInfo
 };
 use Symfony\Component\Finder\SplFileInfo;
 
 class PlatformManager
 {
-    use WithLivewireComponent, WithPipelineLoader, WithPlatform;
-
+    use WithLivewireComponent, WithPipelineLoader, WithPlatform, WithPlatformInfo;
     public function isVendor($path)
     {
         return !str(realpath($path))->startsWith($this->getPlatformPath());

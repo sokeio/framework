@@ -7,8 +7,8 @@
             </button>
             <div class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
                 <a href="{{ url('/') }}">
-                    <img src="{{ asset('platform/module/sokeio/sokeio.webp') }}" class="rounded-2" height="40"
-                        alt="Sokeio Technology">
+                    <img src="{{ platform()->getSystemLogo() }}" class="rounded-2" height="40"
+                        alt="{{ platform()->getSystemName() }}">
                 </a>
             </div>
             <div class="navbar-nav flex-row order-md-last" x-data="{}">
