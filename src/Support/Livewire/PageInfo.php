@@ -9,7 +9,7 @@ class PageInfo
 {
     public function __construct(
         public $title = null,
-        public $layout = 'default',
+        public $layout = null,
         public $route = null,
         public $url = null,
         public $sort = 99999,

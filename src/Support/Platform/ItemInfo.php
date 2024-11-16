@@ -83,10 +83,20 @@ class ItemInfo extends ObjectJson
     }
     public function getLayouts(): array
     {
-        return  collect(File::allFiles($this->path . '/resources/views/layouts'))->map(function ($file) {
-            // remove .blade.php
-            return str_replace('.blade.php', '', $file->getRelativePathname());
-        })->toArray();
+        $arrLayouts = [[
+            'value' => 'default',
+            'text' => __('Default'),
+        ]];
+        foreach ($this->layouts as $name => $label) {
+            if ($name == 'default') {
+                continue;
+            }
+            $arrLayouts[] = [
+                'value' => $name,
+                'text' => $label,
+            ];
+        }
+        return  $arrLayouts;
     }
     private function getPublicName()
     {

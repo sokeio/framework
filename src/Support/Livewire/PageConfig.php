@@ -15,7 +15,7 @@ class PageConfig
     public function __construct(protected $component = null) {}
 
     private $config = [
-        'layout' => 'default',
+        'layout' => null,
         'title' => '',
         'url' => null,
         'icon' => 'fs-2 ti ti-brand-databricks',

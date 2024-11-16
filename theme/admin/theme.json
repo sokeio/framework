@@ -10,6 +10,9 @@
   "namespace": "SokeioTheme\\Admin",
   "templates": [],
   "aliases": {},
+  "layouts": {
+    "navbar-pro": "Navbar Pro"
+  },
   "files": [],
   "requires": []
 }

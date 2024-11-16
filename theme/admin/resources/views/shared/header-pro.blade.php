@@ -52,11 +52,13 @@
             </div>
         </div>
     </header>
-    <div class="navbar-expand-md">
-        <div class="collapse navbar-collapse" id="navbar-menu">
-            <div class="d-flex flex-column flex-md-row flex-fill align-items-stretch align-items-md-center">
-                {!! \Sokeio\Support\Menu\MenuManager::renderMenu() !!}
+    <header class="navbar navbar-expand-md">
+        <div class="container-xxl">
+            <div class="collapse navbar-collapse" id="navbar-menu">
+                <div class="d-flex flex-column flex-md-row flex-fill align-items-stretch align-items-md-center">
+                    {!! \Sokeio\Support\Menu\MenuManager::renderMenu() !!}
+                </div>
             </div>
         </div>
-    </div>
+    </header>
 </div>

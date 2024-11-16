@@ -2,12 +2,15 @@
 
 namespace Sokeio\Page\Setting;
 
+use Sokeio\Platform;
 use Sokeio\Setting;
 use Sokeio\Support\Livewire\PageInfo;
+use Sokeio\Theme;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Field\ContentEditor;
 use Sokeio\UI\Field\Input;
 use Sokeio\UI\Field\MediaFile;
+use Sokeio\UI\Field\Select;
 use Sokeio\UI\Field\SwitchField;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\SettingUI;
@@ -29,14 +32,18 @@ class Overview extends \Sokeio\Page
     private function settingOverview()
     {
         return SettingUI::init([
-            Input::init('SOKEIO_SYSTEM_NAME')->col6()
+            Input::init('SOKEIO_SYSTEM_NAME')->col4()
                 ->label('System Name')
                 ->ruleRequired('Please enter system name')
                 ->placeholder('System Name')
                 ->valueDefault('Sokeio Technology'),
-            MediaFile::init('system_logo')->col6()
-                ->label('System Logo')
-                ->keyInSetting('SOKEIO_SYSTEM_LOGO'),
+            MediaFile::init('SOKEIO_SYSTEM_LOGO')->col4()
+                ->label('System Logo'),
+            Select::init('SOKEIO_LAYOUT_ADMIN_THEME')
+                ->col4()
+                ->label('Admin Theme')
+                ->valueDefault('default')
+                ->dataSource(Theme::getThemeAdmin()->getLayouts()),
             ContentEditor::init('SOKEIO_SYSTEM_DESCRIPTION')
                 ->col12()
                 ->label('System Description')

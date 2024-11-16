@@ -177,12 +177,19 @@ class ThemeManager
             $default,
             $default ?  $this->getLayoutName($default) : '',
             $this->layout,
-            $this->getLayoutName('default'),
+            // $this->getLayoutName('default'),
         ];
         foreach ($arrs as $layout) {
             if ($layout && View::exists($layout)) {
                 return $layout;
             }
+        }
+        $layoutDefault = $this->getLayoutName('default');
+        if(Platform::isUrlAdmin() ){
+            $layoutDefault = $this->getLayoutName(setting('SOKEIO_LAYOUT_ADMIN_THEME', 'default'), true);
+        }
+        if (View::exists($layoutDefault)) {
+            return $layoutDefault;
         }
         return 'sokeio::layouts.none';
     }
