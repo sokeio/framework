@@ -42,9 +42,11 @@ const componentFeature = (el, component) => {
 export default function (component) {
   setTimeout(() => {
     if (!component.$el) return;
-    component.$el.querySelectorAll("*").forEach((el) => {
-      componentFeature(el, component);
-    });
+    component.$el
+      .querySelectorAll(":scope > *:not([data-sokeio-id])")
+      .forEach((el) => {
+        componentFeature(el, component);
+      });
     componentFeature(component.$el, component);
   });
 }

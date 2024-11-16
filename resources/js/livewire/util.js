@@ -120,7 +120,7 @@ export function convertDateTimeFormatToMask(dateTimeFormat) {
 export function getWireIdFromElement(element) {
   return (
     element.getAttribute("wire:id") ??
-    element.closest("[wire:id]").getAttribute("wire:id")
+    element.closest("[wire\\:id]").getAttribute("wire:id")
   );
 }
 export function getWireComponentFromElement(element) {

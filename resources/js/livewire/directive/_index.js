@@ -15,6 +15,7 @@ import tomSelect from "./tom-select";
 import plyr from "./plyr";
 import media from "./media";
 import mediaFile from "./media-file";
+import sokeio from "./sokeio";
 const directive = {
   apexcharts,
   "get-value": getValue,
@@ -32,6 +33,7 @@ const directive = {
   plyr,
   media,
   "media-file": mediaFile,
+  'sokeio':sokeio
 };
 
 let waitLoader = (setting, items, level) => {

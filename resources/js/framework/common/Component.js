@@ -81,11 +81,11 @@ export function doBoot(component) {
   }
   feature(component);
   getChildComponent(component);
-  if (component.$children) {
-    component.$children.forEach((item) => {
-      doBoot(item);
-    });
-  }
+    if (component.$children) {
+      component.$children.forEach((item) => {
+        doBoot(item);
+      });
+    }
 }
 export function doRender(component) {
   logDebug("doRender", component);

@@ -1,3 +1,4 @@
+import { getWireIdFromElement } from "../livewire/util";
 import {
   Component,
   registerComponent,
@@ -82,11 +83,16 @@ export function run(template = {}, options = {}) {
   logDebug("templateCopy", templateCopy);
   let init = options.init === undefined ? true : options.init;
   document.dispatchEvent(new CustomEvent("sokeio::run"));
+  let wireId = getWireIdFromElement(querySelectorOrEl);
   if (options?.props?.wireId) {
+    wireId = options.props.wireId;
+  }
+
+  if (wireId) {
     options.props = {
       ...options.props,
-      wireId: options.props.wireId,
-      $wire: window.Livewire.find(options.props.wireId),
+      wireId,
+      $wire: window.Livewire.find(wireId),
     };
   }
   let appComponent = new Component(templateCopy, options.props ?? {});
