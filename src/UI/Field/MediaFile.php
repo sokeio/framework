@@ -30,7 +30,6 @@ class MediaFile extends FieldUI
     }
     protected function fieldView()
     {
-        $attr = $this->getAttr();
         $field = $this->getFieldName();
         $buttonText = $this->getVar('buttonText', 'Choose File', true);
         $buttonClass = $this->getVar('buttonClass', 'btn-primary', true);
@@ -38,7 +37,7 @@ class MediaFile extends FieldUI
         $mediaField = $this->getVar('media-field', 'public_url', true);
         $htmlPreview = <<<HTML
                 <button x-show="FieldValue" style="display: none;"
-                class="btn btn-danger" x-on:click="FieldValue = ''">Remove</button>
+                class="btn btn-danger" x-on:click="FieldValue = null">Remove</button>
             <div x-show="FieldValue" style="display: none;" class="sokeio-media-preview">
                 <img class="sokeio-media-preview-item" x-bind:src="FieldValue" />
             </div>
@@ -47,7 +46,7 @@ class MediaFile extends FieldUI
             $multiple = 'multiple="true"';
             $htmlPreview = <<<HTML
             <button x-show="FieldValue" style="display: none;"
-             class="btn btn-danger" x-on:click="FieldValue = []">Remove All</button>
+             class="btn btn-danger" x-on:click="FieldValue = null">Remove All</button>
             <div x-show="FieldValue" style="display: none;" class="sokeio-media-preview">
                 <template x-if="FieldValue" x-for="file in FieldValue">
                 <img class="sokeio-media-preview-item" x-bind:src="file" />
@@ -61,7 +60,6 @@ class MediaFile extends FieldUI
                  wire:media-file="{$field}" {$multiple} wire:media-field="{$mediaField}">
                     {$buttonText}
                 </button>
-                <!-- <input type="hidden" {$attr}> -->
                {$htmlPreview}
             </div>
         HTML;

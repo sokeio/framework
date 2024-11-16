@@ -39,11 +39,6 @@ class Overview extends \Sokeio\Page
                 ->valueDefault('Sokeio Technology'),
             MediaFile::init('SOKEIO_SYSTEM_LOGO')->col4()
                 ->label('System Logo'),
-            Select::init('SOKEIO_LAYOUT_ADMIN_THEME')
-                ->col4()
-                ->label('Admin Theme')
-                ->valueDefault('default')
-                ->dataSource(Theme::getThemeAdmin()->getLayouts()),
             ContentEditor::init('SOKEIO_SYSTEM_DESCRIPTION')
                 ->col12()
                 ->label('System Description')
@@ -55,6 +50,46 @@ class Overview extends \Sokeio\Page
             ->subtitle('')
             ->column(self::COLUMN_GROUP)
             ->setPrefix('formData.overview')
+            ->className('mb-3');
+    }
+    private function settingAdmin()
+    {
+        return SettingUI::init([
+            Select::init('SOKEIO_LAYOUT_ADMIN_THEME')
+                ->col4()
+                ->label('Admin Theme')
+                ->valueDefault('default')
+                ->dataSource(Theme::getThemeAdmin()->getLayouts()),
+            SwitchField::init('SOKEIO_ADMIN_HEADER_STICKY_ENABLE')
+                ->col4()
+                ->labelTrue('Enable')
+                ->labelFalse('Disable')
+                ->label('Admin Sticky Header')
+                ->valueDefault(true),
+            SwitchField::init('SOKEIO_SYSTEM_UPDATER_ENABLE')
+                ->col4()
+                ->labelTrue('Enable')
+                ->labelFalse('Disable')
+                ->valueDefault(true)
+                ->label('System Updater'),
+            SwitchField::init('SOKEIO_ADMIN_REGISTRATION_ENABLE_PAGE')
+                ->col6()
+
+                ->labelTrue('Enable')
+                ->labelFalse('Disable')
+                ->label('Register User Page')
+                ->valueDefault(true),
+            MediaFile::init('SOKEIO_ADMIN_LOGIN_COVER_IMAGE')
+                ->col12()
+                ->multiple()
+                ->label('Auth Cover Image'),
+
+        ])
+            ->bodyRow()
+            ->title('Admin Setting')
+            ->subtitle('')
+            ->column(self::COLUMN_GROUP)
+            ->setPrefix('formData.admin')
             ->className('mb-3');
     }
     private function settingUtility()
@@ -70,12 +105,7 @@ class Overview extends \Sokeio\Page
                 ->labelTrue('Enable')
                 ->labelFalse('Disable')
                 ->label('Show Position Debug(Only Admin)'),
-            SwitchField::init('SOKEIO_SYSTEM_UPDATER_ENABLE')
-                ->col4()
-                ->labelTrue('Enable')
-                ->labelFalse('Disable')
-                ->valueDefault(true)
-                ->label('System Updater'),
+
         ])->title('Utility Setting')
             ->bodyRow()
             ->subtitle('')
@@ -88,6 +118,7 @@ class Overview extends \Sokeio\Page
         return [
             PageUI::init([
                 $this->settingOverview(),
+                $this->settingAdmin(),
                 $this->settingUtility(),
                 ...Setting::getUI(self::KEY_UI)
             ])->row()->rightUI([

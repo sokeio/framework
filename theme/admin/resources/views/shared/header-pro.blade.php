@@ -1,4 +1,4 @@
-<div class="sticky-top">
+<div @if(setting('SOKEIO_ADMIN_HEADER_STICKY_ENABLE',true)) class="sticky-top" @endif>
     <header class="navbar navbar-expand-md d-print-none">
         <div class="container-xxl">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu"

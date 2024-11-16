@@ -2,6 +2,7 @@
 
 namespace Sokeio\UI;
 
+use Illuminate\Support\Facades\Log;
 
 trait WithUI
 {

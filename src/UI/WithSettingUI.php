@@ -2,6 +2,7 @@
 
 namespace Sokeio\UI;
 
+use Illuminate\Support\Facades\Log;
 
 trait WithSettingUI
 {
@@ -17,6 +18,10 @@ trait WithSettingUI
     }
     public function mount()
     {
-        $this->getUI()->loadInSetting();
+        $this->getUI()->tap(function ($ui) {
+            $ui->boot();
+            $ui->loadInSetting();
+            $ui->skipBoot();
+        });
     }
 }

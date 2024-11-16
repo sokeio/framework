@@ -129,33 +129,11 @@ class Authentication extends \Sokeio\Page
             ->setPrefix('formData.github')
             ->className('mb-3');
     }
-    private function settingAdminAuth()
-    {
-        return SettingUI::init([
-            MediaFile::init('SOKEIO_ADMIN_LOGIN_COVER_IMAGE')
-                ->col4()
-                ->label('Auth Cover Image'),
-            SwitchField::init('SOKEIO_ADMIN_REGISTRATION_ENABLE_PAGE')
-                ->col4()
-                ->labelTrue('Enable')
-                ->labelFalse('Disable')
-                ->label('Register User Page')
-                ->valueDefault(true),
-        ])
-            ->title('Admin Auth Setting')
-            ->bodyRow()
-            ->icon('ti ti-user')
-            ->subtitle('')
-            ->column(self::COLUMN_GROUP)
-            ->setPrefix('formData.admin-auth')
-            ->className('mb-3');
-    }
     protected function setupUI()
     {
         return [
             PageUI::init([
                 $this->settingLogin(),
-                $this->settingAdminAuth(),
                 $this->settingLoginWithGoogle(),
                 $this->settingLoginWithFacebook(),
                 $this->settingLoginWithGithub(),

@@ -19,6 +19,12 @@ trait LifecycleUI
     protected HookUI $hook;
     private $whenCallbacks = [];
     private $callbackDebug = null;
+    private $skipBoot = false;
+    public function skipBoot()
+    {
+        $this->skipBoot = true;
+        return $this;
+    }
     public function debug($callback)
     {
         $this->callbackDebug = $callback;
@@ -181,6 +187,10 @@ trait LifecycleUI
     }
     public function boot($callback = null)
     {
+        if ($callback == null && $this->skipBoot) {
+            $this->skipBoot = false;
+            return $this;
+        }
         return $this->lifecycleWithKey('boot', $callback, (func_get_args()));
     }
     public function render($callback = null)

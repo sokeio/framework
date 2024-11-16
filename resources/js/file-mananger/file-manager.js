@@ -18,6 +18,7 @@ export default {
   state: {
     path: "/",
     selected: [],
+    selectedCount: 0,
     files: [],
     folders: [],
     fileCount: 0,
@@ -53,8 +54,9 @@ export default {
     } else {
       this.selected.push(path);
     }
+    this.selectedCount = this.selected.length;
     this.$el.querySelector(".so-fm-footer-action button").disabled =
-      this.selected.length == 0;
+      this.selectedCount == 0;
   },
   checkItemActive(path) {
     return this.selected.includes(path);
@@ -140,7 +142,7 @@ export default {
     this.selected.forEach((item) => {
       this.files.filter((i) => i.path == item).forEach((i) => files.push(i));
     });
-    this.$root.fnCallback(this.$root.multiple?files:files[0], this.path);
+    this.$root.fnCallback(this.$root.multiple ? files : files[0], this.path);
     this.$root.delete();
   },
   render() {
