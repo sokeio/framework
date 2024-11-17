@@ -22,7 +22,7 @@ export default {
       }, 100);
     };
     window.addEventListener("resize", relayout);
-    onDestroy(() => {
+   cleanup(() => {
       window.removeEventListener("resize", relayout);
     });
   },

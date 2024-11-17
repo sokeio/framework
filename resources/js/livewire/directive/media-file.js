@@ -33,7 +33,7 @@ export default {
       );
     };
     el.addEventListener("click", event);
-    onDestroy(() => {
+   cleanup(() => {
       el.removeEventListener("click", event);
     });
   },
