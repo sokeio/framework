@@ -23,7 +23,7 @@ export default {
   },
   chooseFile(path, multiple = false) {
     this.$parent.chooseFile(path, multiple);
-    this.reRender();
+    this.refresh();
   },
   render() {
     return `

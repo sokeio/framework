@@ -43,7 +43,7 @@ export default {
     });
   },
   boot() {
-    this.cleanup(function () {});
+    this.onDestroy(function () {});
   },
   chooseFile(path) {
     if (!this.$root.multiple) {
@@ -100,7 +100,7 @@ export default {
       this.fileCount = this.files?.length ?? 0;
       if (this.path == "") this.path = "/";
       this.$loading?.hideLoading();
-      this.reRender();
+      this.refresh();
     });
   },
 
@@ -122,7 +122,7 @@ export default {
   openFolder(path) {
     this.path = path;
     this.selected = [];
-    this.reRender();
+    this.refresh();
     this.fmAction("list");
   },
   footerRender() {

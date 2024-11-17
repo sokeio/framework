@@ -39,7 +39,7 @@ export default {
       }
 
       this.loading = false;
-      this.reRender();
+      this.refresh();
     });
   },
   ready() {},

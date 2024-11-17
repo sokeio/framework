@@ -28,7 +28,7 @@ export default {
       ".so-fm-folder-wrapper"
     ).scrollTop;
     this.$parent.openFolder(path);
-    this.reRender();
+    this.refresh();
   },
   itemRender(item) {
     let html = `<li > <div so-on:click="openFolder('${

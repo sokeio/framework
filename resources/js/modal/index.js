@@ -33,7 +33,10 @@ window.showModal = function (
     };
     delete options.template;
   }
-  return window.sokeioUI.run(modal, {
-    props: { title, overlay: true, ...options },
-  });
+  return window.sokeioUI.run(
+    { ...modal, overlay: true },
+    {
+      props: { title, ...options },
+    }
+  );
 };

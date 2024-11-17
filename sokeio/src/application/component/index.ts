@@ -36,18 +36,23 @@ const componentMixin: any = {
   },
   onRegister: function (callback: any) {
     this.__hooks__.on("register", callback);
+    return this;
   },
   onBoot: function (callback: any) {
     this.__hooks__.on("boot", callback);
+    return this;
   },
   onRender: function (callback: any) {
     this.__hooks__.on("render", callback);
+    return this;
   },
   onReady: function (callback: any) {
     this.__hooks__.on("ready", callback);
+    return this;
   },
   onDestroy: function (callback: any) {
     this.__hooks__.on("destroy", callback);
+    return this;
   },
   __tapChildren: function (callback: any) {
     if (this.$children && callback) {
@@ -59,8 +64,10 @@ const componentMixin: any = {
   },
   __lifecycle(name: any, data: any) {
     logDebug(`component:${name}:begin`, this, data);
-
-    if (!name || !["register", "boot", "ready", "render"].includes(name))
+    if (
+      !name ||
+      !["register", "boot", "ready", "render", "destroy"].includes(name)
+    )
       return;
     if (this[name]) {
       this[name].bind(this)();
@@ -145,7 +152,7 @@ const componentMixin: any = {
   doRegister: function () {
     this.__lifecycle("register");
   },
-  doBoot: function () {                     
+  doBoot: function () {
     this.__lifecycle("boot");
     let html = this.render ? this.render() : "<div></div>";
     html = html.trim();
@@ -199,11 +206,11 @@ const componentMixin: any = {
   refresh: function () {
     let elParent = this.$el.parentNode;
     let elNext = this.$el.nextSibling;
+    // this.$el.remove();
+    // this.$el = null;
     this.doBoot();
     this.doRender();
     this.doReady();
-    this.$el.remove();
-    this.$el = null;
     if (elNext) {
       elParent.insertBefore(this.$el, elNext);
     } else {
@@ -218,16 +225,18 @@ const componentMixin: any = {
       this.$el.style.display = "block";
       return;
     }
+    logDebug("component:show", this);
     if (this.overlay) {
       if (!document.querySelector(".so-modal-overlay")) {
         document.body.classList.add("so-modal-open");
         document.body.style.overflow = "hidden";
       }
-
+      console.log(document.querySelector(".so-modal-overlay"));
       let html = getModalOverlay();
-      document.body.appendChild(html);
-      this.onDestroy(() => {
+      this.onDestroy(function () {
+        logDebug("component:show:onDestroy");
         document.body.removeChild(html);
+
         if (!document.querySelector(".so-modal-overlay")) {
           document.body.classList.remove("so-modal-open");
           document.body.style.overflow = "auto";

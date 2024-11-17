@@ -16,7 +16,7 @@ export default {
     if (el.hasAttribute("wire:tinymce")) {
       options = new Function(`return ${el.getAttribute("wire:tinymce")};`)();
     }
-    cleanup(() => {
+    onDestroy(() => {
       if (el.$sokeio_tinymce && el.$sokeio_tinymce.remove) {
         el.$sokeio_tinymce.remove();
         el.$sokeio_tinymce = null;

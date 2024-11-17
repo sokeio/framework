@@ -37,7 +37,7 @@ export default {
     let isFocus = false;
     let isShow = false;
     let getModal = function () {
-      return window.showModal(modalTitle, options).cleanup(() => {
+      return window.showModal(modalTitle, options).onDestroy(() => {
         modalInterval = undefined;
         el.modalInstance = undefined;
         isShow = false;

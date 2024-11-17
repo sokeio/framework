@@ -11,19 +11,19 @@ export default {
   },
   cancel() {
     this.isHide = true;
-    this.reRender();
+    this.refresh();
   },
   open(name, title, current) {
     this.name = name;
     this.title = title;
     this.current = current;
     this.isHide = false;
-    this.reRender();
+    this.refresh();
   },
   ok() {
     if(!this.name) return;
     this.isHide = true;
-    this.reRender();
+    this.refresh();
     this.$parent.fmAction("create-folder", {
       name: this.name,
       current: this.current,

@@ -9,12 +9,19 @@ export class Hook {
     if (!callback) {
       return;
     }
-    this.listeners[event] = callback;
+    console.log("on", event, callback);
+    if (!this.listeners[event]) {
+      this.listeners[event] = [];
+    }
+    this.listeners[event].push(callback);
   }
 
   fire(event: string, ...args: any) {
+    console.log("fire", event, args);
     if (this.listeners[event]) {
-      this.listeners[event].bind(this.component)(...args);
+      this.listeners[event].forEach((callback: any) =>
+        callback.bind(this.component)(...args)
+      );
     }
   }
 

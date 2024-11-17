@@ -12,7 +12,7 @@ export default {
   cancel() {
     this.isHide = true;
     this.files = [];
-    this.reRender();
+    this.refresh();
   },
   ok() {
     // convert this.files To FileList
@@ -22,7 +22,7 @@ export default {
       }
     }).bind(this));
     // this.isHide = true;
-    // this.reRender();
+    // this.refresh();
     // this.files = [];
   },
   ready() {
@@ -33,7 +33,7 @@ export default {
           for (const element of e.target.files) {
             this.files.push(element);
           }
-          this.reRender();
+          this.refresh();
         });
     });
   },
@@ -43,7 +43,7 @@ export default {
     this.current = current;
     this.files = [];
     this.isHide = false;
-    this.reRender();
+    this.refresh();
   },
   chooseFile() {
     this.$el.querySelector('input[type="file"]').click();
@@ -60,11 +60,11 @@ export default {
   },
   removeFile(index) {
     this.files.splice(index, 1);
-    this.reRender();
+    this.refresh();
   },
   removeAll() {
     this.files = null;
-    this.reRender();
+    this.refresh();
   },
   fileListRender() {
     if (!this.files || this.files.length == 0) return "";
