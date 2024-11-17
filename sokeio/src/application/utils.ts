@@ -17,7 +17,7 @@ export function getToken() {
   return "";
 }
 export function logDebug(...args: any[]) {
-  if ((window as any).sokeioUI.debug===true) {
+  if (true) {
     console.log(...args);
   }
 }
@@ -43,6 +43,25 @@ export function tap(component: any, callback: any) {
     callback(component);
   }
   return component;
+}
+
+export function getMethods(obj: any): any[] {
+  const isGetter = (x: any, name: any) =>
+    (Object.getOwnPropertyDescriptor(x, name) || {}).get;
+  const isFunction = (x: any, name: any) => typeof x[name] === "function";
+  const deepFunctions: any = (x: any) =>
+    x &&
+    x !== Object.prototype &&
+    Object.getOwnPropertyNames(x)
+      .filter((name) => isGetter(x, name) || isFunction(x, name))
+      .concat(deepFunctions(Object.getPrototypeOf(x)) || []);
+  const distinctDeepFunctions = (x: any) =>
+    Array.from(new Set(deepFunctions(x)));
+  const userFunctions = (x: any) =>
+    distinctDeepFunctions(x).filter(
+      (name: any) => name !== "constructor" && !~name.indexOf("__")
+    );
+  return userFunctions(obj);
 }
 
 export function getKeyAndComponent($component: any, $key: any) {
@@ -83,4 +102,35 @@ export function executeFn(fn: any, $event: any, app: any) {
     $event,
     mapObservableProxy(app),
   ]);
+}
+
+export function getComponentsFromText(htmlString: string) {
+  const regexComponent =
+    /\[([\w-:]+)((?:\s+\w+\s*=\s*"[^"]*")*)(\](.*?)\[\/\1\]|\s*\/\])/gs;
+  return [...htmlString.matchAll(regexComponent)].map((match) => {
+    const [component, tag, attrs, , content] = match;
+    return {
+      component,
+      tag,
+      attrs,
+      content,
+    };
+  });
+}
+export const tagSplit = "############$$$$$$$$############";
+export function getModalOverlay() {
+  let html = convertHtmlToElement('<div class="so-modal-overlay"></div>');
+  let elOverlay = document.body.querySelector(".so-modal-overlay");
+  if (elOverlay) {
+    elOverlay.parentNode && elOverlay.parentNode.insertBefore(html, elOverlay);
+  } else {
+    document.body.appendChild(html);
+  }
+  return html;
+}
+export function getWireIdFromElement(element: any) {
+  if (element.getAttribute("wire:id")) return element.getAttribute("wire:id");
+  if (element.closest("[wire\\:id]"))
+    return element.closest("[wire\\:id]").getAttribute("wire:id");
+  return null;
 }

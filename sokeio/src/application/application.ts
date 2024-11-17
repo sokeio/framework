@@ -1,7 +1,5 @@
-import { logDebug } from "./utils";
-import { getWireIdFromElement } from "./common";
-import { Component } from "./component";
-import { boot, ready, register, render } from "./lifecycle";
+import { getWireIdFromElement, logDebug } from "./utils";
+import { Component } from "./component/index";
 
 export function application(template: any = {}, options: any = {}) {
   let querySelectorOrEl = options.selector;
@@ -43,12 +41,10 @@ export function application(template: any = {}, options: any = {}) {
   }
   let appComponent: any = Component(templateCopy, options.props ?? {}, null);
   appComponent.$app = appComponent;
-  register(appComponent);
-
-  logDebug("run", appComponent);
-  boot(appComponent);
-  render(appComponent);
-  ready(appComponent);
+  appComponent.doRegister();
+  appComponent.doBoot();
+  appComponent.doRender();
+  appComponent.doReady();
   if (!appComponent.hide) {
     appComponent.show();
   }

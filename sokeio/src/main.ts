@@ -50,6 +50,5 @@ const sokeioUI: any = {
 };
 
 export default sokeioUI;
-(window as any).sokeioUI = sokeioUI;
 
 document.addEventListener("DOMContentLoaded", sokeioUI.runApplication);
