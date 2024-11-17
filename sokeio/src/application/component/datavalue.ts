@@ -2,7 +2,15 @@ export class DataValue {
   listeners: any = {};
   removeListeners: any = [];
   data: any = {};
-  constructor(data = undefined) {
+  component: any;
+  isProps: boolean = false;
+  constructor(
+    data = undefined,
+    component: any = null,
+    isProps: boolean = false
+  ) {
+    this.component = component;
+    this.isProps = isProps;
     this.data = data ?? {};
   }
   getValue(key: string) {

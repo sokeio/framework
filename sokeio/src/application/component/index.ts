@@ -137,8 +137,8 @@ const componentMixin: any = {
     return this;
   },
   doInit: function () {
-    this.__data__ = new DataValue(this.$initState);
-    this.__props__ = new DataValue(this.$initProps);
+    this.__data__ = new DataValue(this.$initState, this);
+    this.__props__ = new DataValue(this.$initProps, this, true);
     this.__hooks__ = new Hook(this);
     this.$id = (number++).toString();
   },
