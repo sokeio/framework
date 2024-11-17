@@ -145,7 +145,7 @@ const componentMixin: any = {
   doRegister: function () {
     this.__lifecycle("register");
   },
-  doBoot: function () {
+  doBoot: function () {                     
     this.__lifecycle("boot");
     let html = this.render ? this.render() : "<div></div>";
     html = html.trim();
