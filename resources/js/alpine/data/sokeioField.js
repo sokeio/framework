@@ -1,12 +1,12 @@
-import { Utils } from "../../framework/common/Uitls";
+import { dataGet, dataSet } from "../../utils";
 
 document.addEventListener("alpine:init", () => {
   Alpine.data("sokeioField", ($attrModel) => ({
     get FieldValue() {
-      return Utils.dataGet(this.$wire, $attrModel);
+      return dataGet(this.$wire, $attrModel);
     },
     set FieldValue(value) {
-      Utils.dataSet(this.$wire, $attrModel, value);
+      dataSet(this.$wire, $attrModel, value);
     },
   }));
 });

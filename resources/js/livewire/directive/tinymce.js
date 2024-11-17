@@ -1,4 +1,4 @@
-import { Utils } from "../../framework/common/Uitls";
+import { dataSet } from "../../utils";
 
 export default {
   checkFirst: () => window.tinymce !== undefined,
@@ -39,11 +39,11 @@ export default {
           editor.undoManager.dispatchChange();
         });
         editor.on("input", function (e) {
-          Utils.dataSet(component.$wire, modelKey, editor.getContent());
+          dataSet(component.$wire, modelKey, editor.getContent());
         });
         editor.on("ExecCommand", (e) => {
           if (["mceFocus"].includes(e.command)) return;
-          Utils.dataSet(component.$wire, modelKey, editor.getContent());
+          dataSet(component.$wire, modelKey, editor.getContent());
         });
       },
       file_picker_callback: function (callback, value, meta) {

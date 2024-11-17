@@ -1,4 +1,3 @@
-import { Utils } from "../../framework/common/Uitls";
 export default {
   checkFirst: () => window["TomSelect"] !== undefined,
   local: {

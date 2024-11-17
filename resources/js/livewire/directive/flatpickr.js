@@ -1,4 +1,4 @@
-import { Utils } from "../../framework/common/Uitls";
+import { dataSet } from "../../utils";
 import { convertDateTimeFormatToMask } from "../util";
 
 export default {
@@ -22,7 +22,7 @@ export default {
       dateFormat,
       ...options,
       onChange: (selectedDates, dateStr, instance) => {
-        Utils.dataSet(component.$wire, modelKey, selectedDates);
+        dataSet(component.$wire, modelKey, selectedDates);
       },
     });
     setTimeout(async () => {

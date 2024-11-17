@@ -1,4 +1,4 @@
-import { logDebug } from "../framework/common/Uitls";
+import { logDebug } from "../utils";
 import * as Utils from "./utils";
 export default {
   state: { html: "", loading: true },

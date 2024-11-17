@@ -1,4 +1,4 @@
-import { logDebug } from "../framework/common/Uitls";
+import { logDebug } from "../utils";
 
 export function onEventListenerFromDom(
   event,

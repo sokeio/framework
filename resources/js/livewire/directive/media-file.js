@@ -1,4 +1,4 @@
-import { Utils } from "../../framework/common/Uitls";
+import { dataSet } from "../../utils";
 
 export default {
   checkFirst: () => true,
@@ -26,7 +26,7 @@ export default {
               value = value[mediaField];
             }
           }
-          Utils.dataSet(component.$wire, modelKey, value);
+          dataSet(component.$wire, modelKey, value);
         },
         "image",
         multiple == "true"

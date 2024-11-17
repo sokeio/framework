@@ -1,4 +1,4 @@
-import { Utils } from "../../framework/common/Uitls";
+import { dataGet, dataSet } from "../../utils";
 
 export default {
   checkFirst: () => true,
@@ -16,7 +16,7 @@ export default {
     if (!componentParent) {
       return;
     }
-    let valueVar = Utils.dataGet(componentParent, varKey);
-    Utils.dataSet(component.$wire, modelKey, valueVar);
+    let valueVar = dataGet(componentParent, varKey);
+    dataSet(component.$wire, modelKey, valueVar);
   },
 };

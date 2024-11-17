@@ -1,13 +1,6 @@
 // @import 'animate.css';
-@import './reset.scss';
-@import './filemanager.scss';
-@import './modal.scss';
-@import './tab.scss';
-@import './table.scss';
-@import './permission.scss';
-@import './form.scss';
-@import './page.scss';
-@import './message.scss';
+@use 'reset';
+@use 'components';
 .body-overflow-hide {
     overflow: hidden !important;
 }

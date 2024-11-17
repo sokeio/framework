@@ -1,4 +1,3 @@
-import { Utils } from "../../framework/common/Uitls";
 import apexcharts from "./apexcharts";
 import carousel from "./carousel";
 import clipboard from "./clipboard";
@@ -16,6 +15,7 @@ import plyr from "./plyr";
 import media from "./media";
 import mediaFile from "./media-file";
 import sokeio from "./sokeio";
+import { addScriptToWindow, addStyleToWindow } from "../../utils";
 const directive = {
   apexcharts,
   "get-value": getValue,
@@ -33,7 +33,7 @@ const directive = {
   plyr,
   media,
   "media-file": mediaFile,
-  'sokeio':sokeio
+  sokeio: sokeio,
 };
 
 let waitLoader = (setting, items, level) => {
@@ -76,18 +76,18 @@ function install(app) {
           Array.isArray(setting?.cdn?.js) &&
           setting?.cdn?.js.length > 0
         ) {
-          Utils.addScriptToWindow(setting?.cdn?.js);
+          addScriptToWindow(setting?.cdn?.js);
         } else if (setting?.local?.js) {
-          Utils.addScriptToWindow(setting?.local?.js);
+          addScriptToWindow(setting?.local?.js);
         }
         if (
           setting?.cdn?.css &&
           Array.isArray(setting?.cdn?.css) &&
           setting?.cdn?.css.length > 0
         ) {
-          Utils.addStyleToWindow(setting?.cdn?.css);
+          addStyleToWindow(setting?.cdn?.css);
         } else if (setting?.local?.css) {
-          Utils.addStyleToWindow(setting?.local?.css);
+          addStyleToWindow(setting?.local?.css);
         }
       }
       waitLoader(setting, { ...items, options }, 0);

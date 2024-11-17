@@ -1,4 +1,4 @@
-import { Utils } from "../framework/common/Uitls";
+import { convertHtmlToElement } from "../utils";
 
 export function getModalHtmlRender(
   html = "",
@@ -29,7 +29,7 @@ export function getModalHtmlRender(
   let htmlClose = `<a class="so-modal-close" so-on:click="this.closeApp()"></a>`;
   let closeOverlay =
     'so-on:click="this.closeApp()" so-on:ignore=".so-modal-dialog"';
-  let elHtml = Utils.convertHtmlToElement(html);
+  let elHtml = convertHtmlToElement(html);
   let skipOverlayClose = component?.skipOverlayClose ?? false;
   let modalSize = component?.modalSize ?? "lg";
   if (elHtml && elHtml.getAttribute && elHtml.querySelector) {

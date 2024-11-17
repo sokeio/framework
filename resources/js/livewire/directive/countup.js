@@ -1,4 +1,4 @@
-import { Utils } from "../../framework/common/Uitls";
+import { dataGet } from "../../utils";
 
 export default {
   checkFirst: () => window.CountUp !== undefined,
@@ -13,7 +13,7 @@ export default {
   init: ({ el, directive, component, cleanup, options }) => {
     let valueNumber = el.getAttribute("wire:countup");
     if (!valueNumber || valueNumber == "") {
-      valueNumber = Utils.dataGet(
+      valueNumber = dataGet(
         component.$wire,
         el.getAttribute("wire:countup.model")
       );
