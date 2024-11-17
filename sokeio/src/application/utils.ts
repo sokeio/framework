@@ -17,7 +17,7 @@ export function getToken() {
   return "";
 }
 export function logDebug(...args: any[]) {
-  if (true) {
+  if ((window as any)["sokeioUI_debug"] === true) {
     console.log(...args);
   }
 }
