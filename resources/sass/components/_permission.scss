@@ -21,14 +21,14 @@
         }
 
         .permission-card-body {
-            display: flex;
-            flex-direction: row;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+            gap: 7px;
             flex-wrap: wrap;
             min-height: 100px;
             padding: 0.5rem 1rem;
 
             .permission-box {
-                width: calc(33.33% - 0.5rem);
                 border: 1px solid #1F5968;
                 border-radius: 2px;
                 margin: 0.25rem;
