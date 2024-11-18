@@ -39,18 +39,37 @@
                 .permission-box-header {
                     display: flex;
                     margin-bottom: 8px;
+                    border-radius: 2px;
                     padding: 5px;
-                    background-color: #648c96;
-                    border-bottom: 1px solid #1F5968;
+                    background-color: #63c8e1;
+                    border-bottom: 1px solid #63c8e1;
                 }
 
-                .permission-box {
-                    width: 100%;
-                    border: unset;
+                .permission-box-body {
+                    padding: 5px;
+                }
 
-                    .permission-box-header {
+                .permission-item {
+                    display: flex;
+                    margin-bottom: 5px;
+
+                    .form-check-input {
+                        margin-right: 5px;
+                    }
+                }
+
+                .permission-tree {
+                    .permission-tree-header {
                         display: flex;
-                        border-bottom: unset;
+                        margin-bottom: 8px;
+                        border-radius: 2px;
+                        padding: 5px;
+                        background-color: #99d8e8;
+                        border-bottom: 1px solid #99d8e8;
+                    }
+
+                    .permission-tree-body {
+                        padding: 5px 5px 5px 15px;
                     }
                 }
             }
