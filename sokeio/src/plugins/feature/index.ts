@@ -41,7 +41,7 @@ const componentFeature = (el: any, component: any) => {
     }
   });
 };
-export default function (component: any) {
+let excuteComponentFeature = function (component: any) {
   setTimeout(() => {
     if (!component.$el) return;
     component.$el.querySelectorAll("*").forEach((el: any) => {
@@ -57,4 +57,16 @@ export default function (component: any) {
     });
     componentFeature(component.$el, component);
   });
-}
+};
+
+export default {
+  js: [],
+  css: [],
+  check: function () {
+    return true;
+  },
+  excute(component: any, event: any) {
+    if (event !== "render") return;
+    excuteComponentFeature(component);
+  },
+};

@@ -10,7 +10,7 @@ import {
 } from "../utils";
 import { DataValue } from "./datavalue";
 import { Hook } from "./hook";
-import feature from "../feature/_index";
+// import feature from "../feature/_index";
 
 import request from "./../request";
 let number = new Date().getTime();
@@ -31,6 +31,7 @@ const componentMixin: any = {
   __data__: null,
   __props__: null,
   __hooks__: null,
+  $overlayEl: null,
   getId() {
     return this.$id;
   },
@@ -69,6 +70,7 @@ const componentMixin: any = {
       !["register", "boot", "ready", "render", "destroy"].includes(name)
     )
       return;
+    this.$app.$plugin.excute(this, name);
     if (this[name]) {
       this[name].bind(this)();
     }
@@ -168,7 +170,7 @@ const componentMixin: any = {
     });
   },
   doReady: function () {
-    feature(this);
+    // feature(this);
     this.__lifecycle("ready");
     this.__tapChildren((item: any) => {
       item.doReady();
@@ -231,11 +233,10 @@ const componentMixin: any = {
         document.body.classList.add("so-modal-open");
         document.body.style.overflow = "hidden";
       }
-      console.log(document.querySelector(".so-modal-overlay"));
-      let html = getModalOverlay();
+      this.$overlayEl = getModalOverlay();
       this.onDestroy(function () {
         logDebug("component:show:onDestroy");
-        document.body.removeChild(html);
+        document.body.removeChild(this.$overlayEl);
 
         if (!document.querySelector(".so-modal-overlay")) {
           document.body.classList.remove("so-modal-open");
@@ -247,6 +248,9 @@ const componentMixin: any = {
   },
   hide: function () {
     this.$el.style.display = "none";
+    if (this.$overlayEl) {
+      this.$overlayEl.display = "none";
+    }
   },
 };
 

@@ -1,4 +1,4 @@
-import { getKeyAndComponent } from "../utils";
+import { getKeyAndComponent } from "../../application/utils";
 
 export default function ({
   component,
@@ -9,9 +9,6 @@ export default function ({
 }: any) {
   if (value) {
     let [$key, $component] = getKeyAndComponent(component, value);
-    $component.watch($key, () => {
-      el.innerText = $component[$key];
-    });
-    el.innerText = $component[$key];
+    $component[$key] = el;
   }
 }

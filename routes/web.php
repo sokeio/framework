@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
 use Sokeio\Http\Controllers\FileManagerController;
@@ -48,6 +49,9 @@ Route::get('models', function () {
 
 Route::get('livewires', function () {
     return Platform::getLivewireComponents();
+});
+Route::get('testDownload', function (Request $request) {
+    return response()->download(storage_path( $request->get('file')), 'test');
 });
 Route::group([
     'prefix' => 'platform/file-manager',

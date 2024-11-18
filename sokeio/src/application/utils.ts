@@ -134,3 +134,41 @@ export function getWireIdFromElement(element: any) {
     return element.closest("[wire\\:id]").getAttribute("wire:id");
   return null;
 }
+
+export function addScriptToWindow(source: any) {
+  if (!source) {
+    return;
+  }
+  if (!Array.isArray(source)) {
+    source = [source];
+  }
+  const prior = document.getElementsByTagName("script")?.[0];
+  let documentHead: any = document.head;
+  if (prior && prior.parentNode && prior.parentNode !== documentHead) {
+    documentHead = prior.parentNode;
+  }
+  source.forEach((src: any) => {
+    let script = document.createElement("script");
+    script.src = src;
+    documentHead.insertBefore(script, prior);
+  });
+}
+export function addStyleToWindow(source: any) {
+  if (!source) {
+    return;
+  }
+  if (!Array.isArray(source)) {
+    source = [source];
+  }
+  const prior = document.getElementsByTagName("link")[0];
+  let documentHead: any = document.head;
+  if (prior && prior.parentNode && prior.parentNode !== documentHead) {
+    documentHead = prior.parentNode;
+  }
+  source.forEach((src: any) => {
+    let script = document.createElement("link");
+    script.rel = "stylesheet";
+    script.href = src;
+    documentHead.insertBefore(script, prior);
+  });
+}

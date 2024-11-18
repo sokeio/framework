@@ -1,3 +1,5 @@
+import { logDebug } from "../utils";
+
 export class Hook {
   listeners: any = {};
   component: any;
@@ -9,7 +11,7 @@ export class Hook {
     if (!callback) {
       return;
     }
-    console.log("on", event, callback);
+    logDebug("hook:on", event, callback);
     if (!this.listeners[event]) {
       this.listeners[event] = [];
     }
@@ -17,7 +19,7 @@ export class Hook {
   }
 
   fire(event: string, ...args: any) {
-    console.log("fire", event, args);
+    logDebug("hook:fire", event, args);
     if (this.listeners[event]) {
       this.listeners[event].forEach((callback: any) =>
         callback.bind(this.component)(...args)

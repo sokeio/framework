@@ -1,5 +1,7 @@
 import { getWireIdFromElement, logDebug } from "./utils";
 import { Component } from "./component/index";
+import { PluginManager } from "./plugin-manager";
+import featurePlugin from "../plugins/feature";
 
 export function application(template: any = {}, options: any = {}) {
   let querySelectorOrEl = options.selector;
@@ -39,13 +41,21 @@ export function application(template: any = {}, options: any = {}) {
       $wire: (window as any).Livewire.find(wireId),
     };
   }
+  if (!options?.plugins) {
+    options.plugins = [];
+  }
+  let $plugin = new PluginManager([...options.plugins, featurePlugin]);
+  $plugin.load();
+  options.props = {
+    ...options.props,
+    $plugin,
+  };
   let appComponent: any = Component(templateCopy, options.props ?? {}, null);
   appComponent.$app = appComponent;
   appComponent.doRegister();
   appComponent.doBoot();
   appComponent.doRender();
   appComponent.doReady();
-  console.log("appComponent", appComponent);
   if (!appComponent.isHide) {
     appComponent.show();
   }
