@@ -206,8 +206,8 @@ const componentMixin: any = {
   refresh: function () {
     let elParent = this.$el.parentNode;
     let elNext = this.$el.nextSibling;
-    // this.$el.remove();
-    // this.$el = null;
+    this.$el.remove();
+    this.$el = null;
     this.doBoot();
     this.doRender();
     this.doReady();
@@ -271,7 +271,17 @@ export function Component($component: any, $props: any, $parent: any = null) {
     .concat(Object.keys(component.$initProps))
     .concat(getMethods(component))
     .filter((item: any, index: any, items: any) => {
-      return !item.startsWith("_") && items.indexOf(item) === index;
+      return (
+        ([
+          "__data__",
+          "__props__",
+          "__hooks__",
+          "__lifecycle",
+          "__tapChildren",
+        ].includes(item) ||
+          !item.startsWith("_")) &&
+        items.indexOf(item) === index
+      );
     });
 
   return tap(

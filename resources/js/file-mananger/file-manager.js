@@ -28,6 +28,7 @@ export default {
     $modalNewFolder: null,
     $modalUpload: null,
     $loading: null,
+    btnChooseFileAction: null,
   },
 
   register() {
@@ -46,7 +47,7 @@ export default {
     this.onDestroy(function () {});
   },
   chooseFile(path) {
-    if (!this.$root.multiple) {
+    if (!this.$app.multiple) {
       this.selected = [];
     }
     if (this.selected.includes(path)) {
@@ -55,8 +56,9 @@ export default {
       this.selected.push(path);
     }
     this.selectedCount = this.selected.length;
-    this.$el.querySelector(".so-fm-footer-action button").disabled =
-      this.selectedCount == 0;
+    if (this.btnChooseFileAction) {
+      this.btnChooseFileAction.disabled = this.selectedCount == 0;
+    }
   },
   checkItemActive(path) {
     return this.selected.includes(path);
@@ -126,11 +128,11 @@ export default {
     this.fmAction("list");
   },
   footerRender() {
-    if (!this.$root.fnCallback) {
+    if (!this.$app?.fnCallback) {
       return "";
     }
     let html = `<div class="so-fm-footer-action">`;
-    html += `<button so-on:click="chooseFileAction()" ${
+    html += `<button so-refs="btnChooseFileAction" so-on:click="chooseFileAction()" ${
       this.selected.length == 0 ? "disabled" : ""
     } class="btn btn-primary"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M9 15l2 2l4 -4" /></svg> Choose File</button>`;
     html += `</div>`;
@@ -142,8 +144,8 @@ export default {
     this.selected.forEach((item) => {
       this.files.filter((i) => i.path == item).forEach((i) => files.push(i));
     });
-    this.$root.fnCallback(this.$root.multiple ? files : files[0], this.path);
-    this.$root.delete();
+    this.$app.fnCallback(this.$app.multiple ? files : files[0], this.path);
+    this.$app.delete();
   },
   render() {
     return ` <div class="so-fm-wrapper">

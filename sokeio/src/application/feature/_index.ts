@@ -1,6 +1,7 @@
 import html from "./html";
 import model from "./model";
 import on from "./on";
+import refs from "./refs";
 import text from "./text";
 
 const featureManager: any = {
@@ -8,6 +9,7 @@ const featureManager: any = {
   model,
   text,
   on,
+  refs,
 };
 const prexSokeio = "so-";
 const componentFeature = (el: any, component: any) => {

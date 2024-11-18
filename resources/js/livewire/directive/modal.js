@@ -15,7 +15,7 @@ export default {
       template: "",
       url: "",
       elTarget: el,
-      hide: true,
+      isHide: true,
     };
     let modalTitle = el.getAttribute("wire:modal.title");
     if (el.hasAttribute("wire:modal.url")) {

@@ -45,7 +45,8 @@ export function application(template: any = {}, options: any = {}) {
   appComponent.doBoot();
   appComponent.doRender();
   appComponent.doReady();
-  if (!appComponent.hide) {
+  console.log("appComponent", appComponent);
+  if (!appComponent.isHide) {
     appComponent.show();
   }
   return appComponent;

@@ -9,7 +9,7 @@ window.showModal = function (
     elTarget: undefined,
     data: {},
     callback: () => {},
-    hide: false,
+    isHide: false,
     overlay: true,
   }
 ) {
