@@ -50,5 +50,21 @@ const sokeioUI: any = {
 };
 
 export default sokeioUI;
-
-document.addEventListener("DOMContentLoaded", sokeioUI.runApplication);
+(function () {
+  window.sokeioUI = sokeioUI;
+})();
+document.addEventListener("DOMContentLoaded", function () {
+  window.sokeioUI.runApplication();
+});
+document.addEventListener(
+  "sokeio::plugin::load",
+  function ({ detail: plugin }: any) {
+    plugin.register({
+      css: [],
+      js: [],
+      excute: function (component: any, event: any) {
+        console.log("plugin_new:excute", event, component);
+      },
+    });
+  }
+);

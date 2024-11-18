@@ -12,14 +12,15 @@
     "isolatedModules": true,
     "moduleDetection": "force",
     "noEmit": true,
-    "noImplicitThis":false,
+    "noImplicitThis": false,
 
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+    "typeRoots": ["./node_modules/@types", "./src/types"]
   },
   "include": ["src"]
 }

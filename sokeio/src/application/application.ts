@@ -45,6 +45,9 @@ export function application(template: any = {}, options: any = {}) {
     options.plugins = [];
   }
   let $plugin = new PluginManager([...options.plugins, featurePlugin]);
+  document.dispatchEvent(
+    new CustomEvent("sokeio::plugin::load", { detail: $plugin })
+  );
   $plugin.load();
   options.props = {
     ...options.props,

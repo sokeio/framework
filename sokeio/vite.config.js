@@ -8,9 +8,9 @@ export default defineConfig({
       name: "sokeio",
       fileName: (format, name) => {
         if (format === "es") {
-          return `${name}.js`;
+          return `sokeio.js`;
         }
-        return `${name}.${format}.js`;
+        return `sokeio.${format}.js`;
       },
     },
     rollupOptions: {
