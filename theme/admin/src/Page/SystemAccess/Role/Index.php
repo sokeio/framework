@@ -63,7 +63,6 @@ class Index extends \Sokeio\Page
                         'ti ti-plus'
                     )
             ])
-                ->title($this->getPageConfig()->getTitle())
 
         ];
     }

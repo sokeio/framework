@@ -29,7 +29,6 @@ class Edit extends \Sokeio\Page
                     ->skipFill()
                     ->component('sokeio::permission-list.index')->label(__('Permissions')),
             ])->onlyModal()
-                ->title($this->getTitleForm())
                 ->className('p-2')->setPrefix('formData')
                 ->afterUI([
                     Div::init([

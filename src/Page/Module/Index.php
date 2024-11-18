@@ -51,7 +51,6 @@ class Index extends \Sokeio\Page
                 Button::init()->text(__('Marketplace'))->icon('ti ti-apps')
                     ->className('btn btn-success')->modalRoute($this->getRouteName('marketplace')),
             ])
-                ->title($this->getPageConfig()->getTitle())
 
         ];
     }

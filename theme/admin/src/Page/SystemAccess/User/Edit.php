@@ -32,7 +32,6 @@ class Edit extends \Sokeio\Page
                 }),
             ])
                 ->onlyModal()
-                ->title($this->getTitleForm())
                 ->className('p-2')->setPrefix('formData')
                 ->afterUI([
                     Div::init([

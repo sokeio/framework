@@ -24,7 +24,6 @@ class Edit extends \Sokeio\Page
                 Input::init('group')->label(__('Group'))->ruleRequired(),
                 Textarea::init('description')->label(__('Description')),
             ])
-                ->title($this->getTitleForm())
                 ->className('p-2')->setPrefix('formData')
                 ->afterUI([
                     Div::init([

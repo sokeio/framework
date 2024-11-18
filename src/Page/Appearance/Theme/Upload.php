@@ -23,7 +23,7 @@ class Upload extends \Sokeio\Page
         return [
             PageUI::init([
                 UploadFile::init('fileUpload'),
-            ])->title($this->getPageConfig()->getTitle())
+            ])
                 ->className('p-2')
                 ->afterUI([
                     Div::init([

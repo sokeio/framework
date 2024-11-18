@@ -37,6 +37,10 @@ trait WithUI
     {
         return [];
     }
+    public function getPageTitle()
+    {
+        return $this->getPageConfig()->getTitle();
+    }
     public function render()
     {
         return view('sokeio::ui', ['ui' => $this->getUI()]);

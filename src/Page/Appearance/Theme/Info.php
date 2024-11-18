@@ -28,7 +28,7 @@ class Info extends \Sokeio\Page
                         'item' => Platform::theme()->find($this->dataId)
                     ]
                 )
-            ])->title($this->getPageConfig()->getTitle())
+            ])
                 ->className('p-2')
                 ->xlSize()
                 ->afterUI([

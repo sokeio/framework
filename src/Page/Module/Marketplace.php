@@ -21,7 +21,7 @@ class Marketplace extends \Sokeio\Page
         return [
             PageUI::init([
                 Div::init()->className('mt-auto')->viewBlade('sokeio::pages.setting.module.marketplace')
-            ])->title($this->getPageConfig()->getTitle())
+            ])
                 ->className('p-2')
                 ->afterUI([
                     Div::init([

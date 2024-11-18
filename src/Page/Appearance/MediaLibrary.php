@@ -24,7 +24,6 @@ class MediaLibrary extends \Sokeio\Page
             PageUI::init([
                 Div::init()->attr('wire:media')->className('border border-gray-200 so-page-media')
             ])->rightUI([])
-                ->title($this->getPageConfig()->getTitle())
 
         ];
     }

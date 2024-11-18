@@ -78,7 +78,6 @@ class CacheSystem extends \Sokeio\Page
                     })->toArray()
                 )->row()
             ])->rightUI([])
-                ->title($this->getPageConfig()->getTitle())
 
         ];
     }

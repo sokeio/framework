@@ -130,7 +130,6 @@ class Overview extends \Sokeio\Page
                     ->wireClick('saveData')
             ])
                 ->icon('ti ti-login')
-                ->title($this->getPageConfig()->getTitle())
 
         ];
     }

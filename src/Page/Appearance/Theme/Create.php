@@ -29,7 +29,7 @@ class Create extends \Sokeio\Page
         return [
             PageUI::init([
                 Input::init('name')->label(__('Name')),
-            ])->title($this->getPageConfig()->getTitle())
+            ])
                 ->className('p-2')
                 ->smSize()
                 ->afterUI([

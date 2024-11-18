@@ -28,7 +28,7 @@ class Permission extends \Sokeio\Page
                     ->when(function () {
                         return !$this->dataId;
                     }),
-            ])->title($this->getPageConfig()->getTitle())
+            ])
                 ->className('p-2')->setPrefix('formData')
                 ->afterUI([
                     Div::init([

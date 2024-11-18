@@ -28,7 +28,7 @@ trait WithEditUI
     {
         return $data;
     }
-    protected function getTitleForm()
+    public function getPageTitle()
     {
         return ($this->dataId ? __('Edit') : __('Create')) . ' ' . $this->getPageConfig()->getTitle();
     }

@@ -51,7 +51,7 @@ class Setting extends \Sokeio\Page
                 'dashboards' => $dashboards,
                 'dashboardId' => $this->dashboardId,
             ])
-        ])->title($this->getPageConfig()->getTitle())
+        ])
             ->icon('ti ti-settings')
             ->className('p-2')
             ->xlSize()

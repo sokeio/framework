@@ -31,7 +31,6 @@ class SystemUpdater extends \Sokeio\Page
             ])
                 ->card()
                 ->icon('ti ti-settings')
-                ->title($this->getPageConfig()->getTitle())
 
         ];
     }

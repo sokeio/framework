@@ -7,7 +7,7 @@ use Sokeio\UI\Concerns\WithModal;
 class PageUI extends BaseUI
 {
     use WithModal;
-   
+
     private function isModal()
     {
         return $this->getWire()->isPageAjax || $this->useModal;
@@ -20,6 +20,9 @@ class PageUI extends BaseUI
             }
         });
         $this->render(function () {
+            if (!$this->checkVar('title')) {
+                $this->title($this->getWire()->getPageTitle());
+            }
             if ($this->isModal()) {
                 $this->className('sokeio-modal-ui');
                 if (!$this->getIcon()) {
@@ -29,7 +32,6 @@ class PageUI extends BaseUI
                     $this->attr('data-skip-overlay-close', true);
                 }
             } else {
-
                 $this->className('sokeio-page-ui');
                 if (!$this->getIcon()) {
                     $this->icon('ti ti-wallpaper');
