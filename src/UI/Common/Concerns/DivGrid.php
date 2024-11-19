@@ -9,6 +9,7 @@ trait DivGrid
     {
         return $this->className('container' . ($size ? '-' . $size : ''));
     }
+
     public function row()
     {
         return $this->className('row');

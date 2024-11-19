@@ -28,7 +28,18 @@ class WidgetUI extends BaseUI implements ILoader
     {
         return $this->info ?? ($this->info = WidgetInfo::getInfoFromUI(self::class));
     }
-
+    protected function initUI()
+    {
+        parent::initUI();
+        $this->render(function () {
+            $poll = $this->getDataParam('poll');
+            if ($poll) {
+                $this->action('poll', function () use ($poll) {
+                    return $poll;
+                });
+            }
+        });
+    }
 
     public static function paramUI()
     {

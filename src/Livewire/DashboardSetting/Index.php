@@ -5,6 +5,9 @@ namespace Sokeio\Livewire\DashboardSetting;
 use Sokeio\Component;
 use Sokeio\Models\Dashboard;
 use Sokeio\UI\Common\Div;
+use Sokeio\UI\Field\Input;
+use Sokeio\UI\Field\Select;
+use Sokeio\UI\Field\SwitchField;
 use Sokeio\UI\WithUI;
 use Sokeio\Widget;
 
@@ -64,7 +67,34 @@ class Index extends Component
             $key = $widget['key'];
             $class = data_get(Widget::getWidget($key), 'class');
             if ($class && class_exists($class)) {
-                return Div::init(($class)::paramUI())->setPrefix('widgetParams');
+                return Div::init([
+                    Div::init([
+                        SwitchField::init('polling')
+                            ->label(__('Poll'))
+                            ->labelTrue(__('Enable'))
+                            ->labelFalse(__('Disable'))
+                            ->valueDefault(true)->col6(),
+                        Input::init('polling_interval')->label(__('Interval'))->valueDefault(5)->col6(),
+                        Select::init('type')->label(__('Type'))->dataSource(function () {
+                            return [
+                                [
+                                    'value' => 'seconds',
+                                    'text' => __('Seconds')
+                                ],
+                                [
+                                    'value' => 'keep-alive',
+                                    'text' => __('Keep-alive')
+                                ],
+                                [
+                                    'value' => 'visible',
+                                    'text' => __('Visible')
+                                ]
+                            ];
+                        })->valueDefault('seconds')->col6()
+                    ])->row()->x()->show('widgetParams.polling')
+                        ->ui(),
+                    ($class)::paramUI()
+                ])->setPrefix('widgetParams');
             }
         }
         return [];

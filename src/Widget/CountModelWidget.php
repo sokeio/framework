@@ -5,6 +5,7 @@ namespace Sokeio\Widget;
 use Sokeio\Platform;
 use Sokeio\Support\Widget\WidgetInfo;
 use Sokeio\Support\Widget\WidgetUI;
+use Sokeio\UI\Common\Div;
 use Sokeio\UI\Field\Input;
 use Sokeio\UI\Field\Select;
 
@@ -14,7 +15,7 @@ class CountModelWidget extends WidgetUI
 {
     public static function paramUI()
     {
-        return [
+        return Div::init([
             Input::init('title')->label(__('Title')),
             Select::init('model')->label(__('Model'))->dataSource(function () {
                 return collect(Platform::getAllModel())->map(function ($item, $key) {
@@ -24,7 +25,7 @@ class CountModelWidget extends WidgetUI
                     ];
                 });
             }),
-        ];
+        ])->className('p-2');
     }
     public function view()
     {

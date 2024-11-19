@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\Locked;
 use Sokeio\Component;
 use Sokeio\UI\Common\Div;
+use Sokeio\UI\Field\SwitchField;
 use Sokeio\UI\WithUI;
 
 class WidgetComponent extends Component
@@ -36,7 +37,9 @@ class WidgetComponent extends Component
     {
         return [
             Div::init([
-                Div::init([$this->getWidget()?->getWidgetUI()])->className('card')
+                Div::init([
+                    $this->getWidget()?->getWidgetUI()
+                ])->className('card')
             ])->className($this->getWidget()->getColumnClass()),
 
         ];
