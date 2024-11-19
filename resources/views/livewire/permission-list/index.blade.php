@@ -30,8 +30,6 @@
             })
         }
 }" class="permission-container">
-    <h2>(Not Implemented)</h2>
-
     @foreach ($allPermissions as $key => $item)
         <div class="permission-card">
             <div class="permission-card-header permission-group">

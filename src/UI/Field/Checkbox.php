@@ -19,7 +19,7 @@ class Checkbox extends FieldUI
                 $this->className('form-check-input');
             }
             $this->attr('type', 'checkbox');
-            if ($this->containsAttr('value')) {
+            if (!$this->containsAttr('value')) {
                 $this->attr('value', '1');
             }
         });

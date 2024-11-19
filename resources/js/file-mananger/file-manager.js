@@ -145,7 +145,7 @@ export default {
       this.files.filter((i) => i.path == item).forEach((i) => files.push(i));
     });
     this.$app.fnCallback(this.$app.multiple ? files : files[0], this.path);
-    this.$app.delete();
+    this.$app.onDestroy();
   },
   render() {
     return ` <div class="so-fm-wrapper">

@@ -20,7 +20,7 @@ export function dataSet(object, key, value) {
     if (object[firstSegment] === undefined) {
       object[firstSegment] = {};
     }
-    this.dataSet(object[firstSegment], restOfSegments, value);
+    dataSet(object[firstSegment], restOfSegments, value);
   }
 }
 export function dataGet(object, key) {
