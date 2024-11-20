@@ -9,7 +9,7 @@ use Sokeio\Platform;
 
 class PlatformController extends Controller
 {
-    #[Route(MethodType::GET, '/screenshot/{type}/{id}')]
+    #[Route(MethodType::GET, '/screenshot/{type}/{id}', name: 'platform.screenshot', where: [['id', '.*']])]
     public function bannerScreenshot($type, $id)
     {
         return Platform::screenshot($type, $id);
