@@ -64,6 +64,17 @@ class ControllerLoader implements IPipeLoader
 
                         $routeMatch = FacadesRoute::match($route->method->value, $route->uri, [$class, $method]);
                         $routeMatch->name($route->name);
+                        if (!$route->middleware) {
+                            $route->middleware = [];
+                        }
+                        if (!is_array($route->middleware)) {
+                            $route->middleware = [$route->middleware];
+                        }
+                        if ($route->isWeb) {
+                            $route->middleware = ['web'];
+                        } else {
+                            $route->middleware = ['api'];
+                        }
                         if ($route->middleware) {
                             $routeMatch->middleware($route->middleware);
                         }
