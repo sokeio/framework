@@ -21,7 +21,10 @@ export default {
     this.refresh();
   },
   ok() {
-    if(!this.name) return;
+    if (!this.name) {
+      this.cancel();
+      return;
+    }
     this.isHide = true;
     this.refresh();
     this.$parent.fmAction("create-folder", {

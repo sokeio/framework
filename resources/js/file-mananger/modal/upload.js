@@ -16,11 +16,20 @@ export default {
   },
   ok() {
     // convert this.files To FileList
-    this.$parent.fmAction("upload", {}, this.files, (function (progress) {
-      if (progress.progress == 100) {
-        this.cancel();
-      }
-    }).bind(this));
+    if (this.files.length === 0) {
+      this.cancel();
+      return;
+    }
+    this.$parent.fmAction(
+      "upload",
+      {},
+      this.files,
+      function (progress) {
+        if (progress.progress == 100) {
+          this.cancel();
+        }
+      }.bind(this)
+    );
     // this.isHide = true;
     // this.refresh();
     // this.files = [];

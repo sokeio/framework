@@ -1,4 +1,22 @@
 export default {
+  itemClick(item) {
+    this.$parent.toolbars[item].action.bind(this.$parent)();
+  },
+  itemRender() {
+    let html = "";
+    this.$parent.toolbars.forEach((item, key) => {
+      html += `
+            <div class="so-fm-header-control-item" so-on:click="itemClick(${key})">
+                    <div class="so-fm-header-control-item-icon">
+                        <i class="${item.icon}"></i>
+                    </div>
+                    <div class="so-fm-header-control-item-text">${item.title}</div>
+                </div>
+            
+            `;
+    });
+    return html;
+  },
   render() {
     return `
         <div class="so-fm-header">
@@ -11,25 +29,7 @@ export default {
                 </a>
             </div>
             <div class="so-fm-header-control">
-                <div class="so-fm-header-control-item" so-on:click="$parent.createFolder()">
-                    <div class="so-fm-header-control-item-icon">
-                        <i class="ti ti-folder-plus"></i>
-                    </div>
-                    <div class="so-fm-header-control-item-text">New Folder</div>
-                </div>
-                <div class="so-fm-header-control-item" so-on:click="$parent.uploadFile()">
-                    <div class="so-fm-header-control-item-icon">
-                        <i class="ti ti-upload"></i>
-                    </div>
-                    <div class="so-fm-header-control-item-text">Upload File</div>
-                </div>
-               
-                <div class="so-fm-header-control-item" so-on:click="$parent.refreshSelected()">
-                    <div class="so-fm-header-control-item-icon">
-                        <i class="ti ti-refresh"></i>
-                    </div>
-                    <div class="so-fm-header-control-item-text">Refresh</div>
-                </div>
+  ${this.itemRender()}
             </div>
         </div>
         `;

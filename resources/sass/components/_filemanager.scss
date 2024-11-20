@@ -204,6 +204,7 @@
 
                     &:hover {
                         cursor: pointer;
+                        border: 1px solid #4472b3;
                     }
 
                     &.active {
@@ -260,6 +261,7 @@
         top: 0;
         left: 0;
         background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9999999;
 
         .so-fm-modal-dialog {
             margin: 20px auto;
@@ -370,9 +372,10 @@
 }
 
 .sokeio-media-file {
-    .btn{
+    .btn {
         padding: 4px 10px;
     }
+
     .sokeio-media-preview {
         margin-top: 10px;
         display: flex;
@@ -389,4 +392,14 @@
             cursor: pointer;
         }
     }
+}
+
+.so-fm-context-menu {
+    position: absolute;
+    min-width: 180px;
+    min-height: 300px;
+    background-color: #253447;
+    border: 1px solid #253447;
+    border-radius: 3px;
+    color: #b9bec5;
 }

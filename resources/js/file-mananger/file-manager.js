@@ -5,6 +5,7 @@ import newFolder from "./modal/new-folder";
 import upload from "./modal/upload";
 import gridFile from "./component/grid-file";
 import loading from "./component/loading";
+import contextMenu from "./component/context-menu";
 export default {
   components: {
     "so-fm::header": header,
@@ -14,6 +15,7 @@ export default {
     "so-fm::new-folder": newFolder,
     "so-fm::upload": upload,
     "so-fm::loading": loading,
+    "so-fm::context-menu": contextMenu,
   },
   state: {
     path: "/",
@@ -28,9 +30,32 @@ export default {
     $modalNewFolder: null,
     $modalUpload: null,
     $loading: null,
+    $contextMenu: null,
     btnChooseFileAction: null,
   },
-
+  toolbars: [
+    {
+      title: "New Folder",
+      icon: "ti ti-folder-plus",
+      action: function () {
+        this.createFolder();
+      },
+    },
+    {
+      title: "Upload File",
+      icon: "ti ti-upload",
+      action: function () {
+        this.uploadFile();
+      },
+    },
+    {
+      title: "Refresh",
+      icon: "ti ti-refresh",
+      action: function () {
+        this.refreshSelected();
+      },
+    },
+  ],
   register() {
     this.path = "/";
     this.disk = "public";
@@ -163,6 +188,7 @@ export default {
           ${this.footerRender()}
           [so-fm::new-folder /]
           [so-fm::upload /]
+          [so-fm::context-menu/]
         </div>`;
   },
 };
