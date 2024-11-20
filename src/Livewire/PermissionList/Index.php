@@ -9,7 +9,7 @@ use Sokeio\Models\Permission;
 class Index extends Component
 {
     #[Modelable]
-    public $value = [];
+    public $values = [];
     private function treePermissions($permissions, $level = 0)
     {
         $data = collect([]);
@@ -44,6 +44,7 @@ class Index extends Component
                     'name' => $levels[count($levels) - 1],
                     'group' => $permission->group,
                     'slug' => $permission->slug,
+                    'id' => $permission->id,
                     'levels' => $levels,
                     'level' => count($levels)
                 ];

@@ -8,9 +8,9 @@
                 item.checked = isChecked;
                 item.dispatchEvent(new Event('change'))
             });
-           setTimeout(() => {
+            setTimeout(() => {
                 this.checkGroupPermission();
-           }, 100);
+            }, 100);
         },
         checkGroupPermission() {
             this.$el.querySelectorAll('.permission-group input').forEach(item => {
@@ -27,6 +27,9 @@
         init() {
             this.$el.querySelectorAll('.permission-item input').forEach(item => {
                 item.addEventListener('change', this.checkGroupPermission.bind(this));
+            });
+            setTimeout(() => {
+                this.checkGroupPermission();
             })
         }
 }" class="permission-container">
@@ -34,7 +37,7 @@
         <div class="permission-card">
             <div class="permission-card-header permission-group">
                 <input class="form-check-input m-0" type="checkbox" id="permission-card-{{ $key }}"
-                    @change="changeCheck(event)"/>
+                    @change="changeCheck(event)" />
                 <span class="form-check-label" for="permission-card-{{ $key }}">
                     {{ $item['info']['name'] }}
                 </span>
@@ -60,8 +63,8 @@
                         <div class="permission-box-body">
                             @foreach ($children as $child)
                                 <div class="permission-item">
-                                    <input class="form-check-input m-0" type="checkbox"
-                                        value="{{ $child['info']['slug'] }}">
+                                    <input class="form-check-input m-0" type="checkbox" wire:model="values"
+                                        value="{{ $child['info']['id'] }}">
                                     <span class="form-check-label">{{ $child['info']['name'] }}</span>
                                 </div>
                             @endforeach
@@ -74,7 +77,7 @@
                             <div class="permission-box-header permission-group">
                                 <input class="form-check-input m-0" type="checkbox"
                                     id="permission-box-{{ $key }}-{{ $child['level'] }}"
-                                    @change="changeCheck(event)"/>
+                                    @change="changeCheck(event)" />
                                 <span class="form-check-label"
                                     for="permission-box-{{ $key }}-{{ $child['level'] }}">
                                     {{ $child['info']['name'] }}

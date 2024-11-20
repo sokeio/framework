@@ -2,6 +2,7 @@
 
 namespace SokeioTheme\Admin\Page\SystemAccess\Role;
 
+use Illuminate\Support\Facades\Log;
 use Sokeio\Models\Role;
 use Sokeio\Support\Livewire\PageInfo;
 use Sokeio\UI\Common\Div;
@@ -17,6 +18,18 @@ use Sokeio\UI\WithEditUI;
 class Edit extends \Sokeio\Page
 {
     use WithEditUI;
+    protected function afterMount($data)
+    {
+        $permissions = $data->permissions()->pluck('id')->toArray();
+        Log::info(['afterMount::permissions' => $permissions]);
+        data_set($this->formData, 'permissions', $permissions);
+    }
+    protected function afterSaveData($data)
+    {
+        $permissions = data_get($this->formData, 'permissions');
+        Log::info(['afterSaveData::permissions' => $permissions]);
+        $data->permissions()->sync($permissions);
+    }
     protected function setupUI()
     {
         return [

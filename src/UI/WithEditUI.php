@@ -17,8 +17,14 @@ trait WithEditUI
     public $dataId;
     public function mount()
     {
+    
         $data =  $this->dataId ? ($this->getModel())::find($this->dataId) : new ($this->getModel());
         $this->formData->fill($data);
+        $this->afterMount($data);
+    }
+    protected function afterMount($data)
+    {
+        return $data;
     }
     protected function afterSaveData($data)
     {

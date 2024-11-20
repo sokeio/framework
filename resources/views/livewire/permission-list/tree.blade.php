@@ -1,7 +1,7 @@
 @foreach ($items as $item)
     @if (count($item['children']) === 0)
         <div class="permission-item" tree-level="{{ $item['level'] }}">
-            <input class="form-check-input m-0" type="checkbox" value="{{ $item['info']['slug'] }}">
+            <input class="form-check-input m-0" type="checkbox" value="{{ $item['info']['id'] }}" wire:model="values">
             <span class="form-check-label">{{ $item['info']['name'] }}</span>
         </div>
     @endif
@@ -10,7 +10,7 @@
     @if (count($item['children']) > 0)
         <div class="permission-tree">
             <div class="permission-tree-header permission-group">
-                <input class="form-check-input m-0" type="checkbox" value="{{ $item['info']['slug'] }}"
+                <input class="form-check-input m-0" type="checkbox" 
                     @change="changeCheck(event)">
                 <span class="form-check-label">{{ $item['info']['name'] }}</span>
             </div>
