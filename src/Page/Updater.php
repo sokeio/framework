@@ -10,15 +10,15 @@ use Sokeio\UI\WithUI;
 #[PageInfo(
     admin: true,
     auth: true,
-    title: 'System Updater',
+    title: 'Updater',
     menu: true,
-    menuTitle: 'System Updater',
+    menuTitle: 'Updater',
     menuClass: 'sokeio-btn-system-updater',
     icon: 'ti ti-refresh fs-2',
     sort: 999999999999,
     enableKeyInSetting: 'SOKEIO_SYSTEM_UPDATER_ENABLE'
 )]
-class SystemUpdater extends \Sokeio\Page
+class Updater extends \Sokeio\Page
 {
     use WithUI;
     public $wireTest="duwx dieux";

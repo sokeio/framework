@@ -1,8 +1,9 @@
 export default function (payload) {
   setTimeout(() => {
+    console.log(payload);
     document
       .querySelector(`[wire\\:id="${payload.wireId}"]`)
       ?.closest("[data-sokeio-id]")
-      ?._sokeio?.delete?.();
+      ?.__sokeio?.$app?.onDestroy?.();
   });
 }

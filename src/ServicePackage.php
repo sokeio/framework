@@ -70,6 +70,13 @@ class ServicePackage
 
         return $this;
     }
+
+    /**
+     * Retrieves the short name of the package by removing the 'laravel-' prefix.
+     *
+     * @return string The short name of the package.
+     */
+
     public function shortName(): string
     {
         return Str::after($this->name, 'laravel-');

@@ -5,6 +5,7 @@ namespace Sokeio\UI\Support\Concerns;
 
 trait WithAlpine
 {
+    
     private function x($name, $value = null)
     {
         $this->ui->boot(function () use ($name, $value) {

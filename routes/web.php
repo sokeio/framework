@@ -39,9 +39,9 @@ Platform::routeAdmin(function () {
 //id is slug
 // id= abc/xyz/abc
 
-Route::get('platform/{type}/screenshot/{id}', [PlatformController::class, 'bannerScreenshot'])
-    ->where('id', '.*')
-    ->name('platform.screenshot');
+// Route::get('platform/{type}/screenshot/{id}', [PlatformController::class, 'bannerScreenshot'])
+//     ->where('id', '.*')
+//     ->name('platform.screenshot');
 
 Route::get('models', function () {
     return Platform::getAllModel();
@@ -51,12 +51,12 @@ Route::get('livewires', function () {
     return Platform::getLivewireComponents();
 });
 Route::get('testDownload', function (Request $request) {
-    return response()->download(storage_path( $request->get('file')), 'test');
+    return response()->download(storage_path($request->get('file')), 'test');
 });
-Route::group([
-    'prefix' => 'platform/file-manager',
-    'as' => 'platform.file-manager.',
-    'controller' => FileManagerController::class
-], function () {
-    Route::post('/', 'index')->name('index');
-});
+// Route::group([
+//     'prefix' => 'platform/file-manager',
+//     'as' => 'platform.file-manager.',
+//     'controller' => FileManagerController::class
+// ], function () {
+//     Route::post('/', 'index')->name('index');
+// });

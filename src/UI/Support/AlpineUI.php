@@ -13,4 +13,11 @@ class AlpineUI
     {
         return $this->ui;
     }
+    public function __get($name)
+    {
+        if (method_exists($this, $name)) {
+            return $this->$name();
+        }
+        return $this->ui->$name;
+    }
 }

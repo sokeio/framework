@@ -2,9 +2,10 @@
     .permission-card {
         margin-bottom: 2rem;
         border: 1px solid #1F5968;
-        border-radius: 2px;
+        border-radius: 3px;
         display: flex;
         flex-direction: column;
+        overflow: hidden;
 
         input~span {
             margin-left: 0.5rem;
@@ -26,15 +27,19 @@
             gap: 7px;
             flex-wrap: wrap;
             min-height: 100px;
-            padding: 0.5rem 1rem;
+            padding: 0.2rem 0.5rem;
 
             .permission-box {
                 border: 1px solid #1F5968;
-                border-radius: 2px;
+                border-radius: 5px;
                 margin: 0.25rem;
                 display: flex;
                 flex-direction: column;
                 transition: all 0.3s ease-in-out;
+                overflow: hidden;
+                &:hover {
+                    border-color: #63c8e1;
+                }
 
                 .permission-box-header {
                     display: flex;
