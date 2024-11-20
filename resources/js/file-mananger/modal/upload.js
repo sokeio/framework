@@ -72,7 +72,7 @@ export default {
     this.refresh();
   },
   removeAll() {
-    this.files = null;
+    this.files = [];
     this.refresh();
   },
   fileListRender() {
