@@ -66,8 +66,12 @@ class Select extends FieldUI
             $mapData = fn($item) => ['value' => $item->id, 'text' => $item->name, 'item' => $item];
         }
         return $this->remoteAction(function ($value) use ($model, $fieldSearch, $mapData, $fillable, $limit) {
+            $fieldValue = $this->getValue();
             return ($model)::query()
                 ->when($value, fn($query) => $query->whereAny($fieldSearch, 'like', '%' . $value . '%'))
+                ->when(!$value && $fieldValue && is_array($fieldValue), function ($query) use ($fieldValue) {
+                    $query->whereIn('id',  $fieldValue);
+                })
                 ->limit($limit)
                 ->get($fillable)->map($mapData);
         }, $name);
@@ -89,16 +93,24 @@ class Select extends FieldUI
     }
     public function multiple()
     {
-        return $this->attr('multiple');
+        return $this->attr('multiple', 'true');
     }
     protected function fieldView()
     {
         $attr = $this->getAttr();
         $value = $this->getValue();
+        $optionHtml = '';
+        if (is_array($value)) {
+            foreach ($value as $item) {
+                $optionHtml .= '<option value="' . $item . '" selected></option>';
+            }
+        } else {
+            $optionHtml = '<option value="' . $value . '" selected></option>';
+        }
         return <<<HTML
         <div wire:ignore>
             <select {$attr} >
-                <option value="{$value}"></option>
+               {$optionHtml}
             </select>
         </div>
         HTML;

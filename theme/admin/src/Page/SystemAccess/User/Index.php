@@ -49,15 +49,6 @@ class Index extends \Sokeio\Page
                             ]
                         )
                         ->columnAction([
-                            Button::init()
-                                ->modal(function (Button $button) {
-                                    return route($this->getRouteName('permission'), [
-                                        'dataId' =>
-                                        $button->getParams('row')->id
-                                    ]);
-                                })
-                                ->className('btn bg-azure text-azure-fg btn-sm ')
-                                ->text(__('Permission')),
                             Button::init()->text(__('Edit'))->className('btn ms-1 btn-primary btn-sm ')
                                 ->modal(function (Button $button) {
                                     return route($this->getRouteName('edit'), [

@@ -10,6 +10,10 @@ class LivewireField extends FieldUI
     {
         return $this->vars('component', $name);
     }
+    public function lazy($key = null)
+    {
+        return $this->attr('lazy', $key);
+    }
     protected function fieldView()
     {
         $component = $this->getVar('component', '', true);
