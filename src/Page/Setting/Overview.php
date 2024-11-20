@@ -106,8 +106,14 @@ class Overview extends \Sokeio\Page
                 ->labelTrue('Enable')
                 ->labelFalse('Disable')
                 ->label('Show Position Debug(Only Admin)'),
+            SwitchField::init('PLATFORM_TABLE_ROUTE_ENABLE')
+                ->col4()
+                ->labelTrue('Enable')
+                ->labelFalse('Disable')
+                ->valueDefault(true)
+                ->label('Show Route Table(DEBUG)'),
 
-        ])->title('Utility Setting')
+        ])->title('Develop Utility')
             ->bodyRow()
             ->subtitle('')
             ->column(self::COLUMN_GROUP)

@@ -52,6 +52,9 @@ class ControllerLoader implements IPipeLoader
                         if ($fnFilter && !call_user_func($fnFilter, $route, $method, $class)) {
                             continue;
                         }
+                        if ($route->enableKeyInSetting && !setting($route->enableKeyInSetting, $route->enable)) {
+                            continue;
+                        }
                         if (!$route->uri) {
                             throw new Exception("$class@$method uri is not found");
                         }
