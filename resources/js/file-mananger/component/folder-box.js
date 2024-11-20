@@ -1,4 +1,7 @@
 export default {
+  register() {
+    this.$parent.$folderBox = this;
+  },
   diskRender() {
     let html = ` <select so-model="$parent.disk" class="form-select mt-1 p-2">`;
 
@@ -30,12 +33,21 @@ export default {
     this.$parent.openFolder(path);
     this.refresh();
   },
+  showContextMenu(e, path) {
+    this.openFolder(path);
+    this.$parent.$contextMenu.open(e, this, "folder");
+    e.preventDefault();
+  },
   itemRender(item) {
     let html = `<li > <div so-on:click="openFolder('${
       item.path
     }')" class="so-fm-folder-item ${
       this.checkItemActive(item) ? "active" : ""
-    }" style="padding-left:${item.level * 7 + 5}px">${item.name}</div>`;
+    }" style="padding-left:${
+      item.level * 7 + 5
+    }px" so-on:contextmenu='showContextMenu($event,"${item.path}")'>${
+      item.name
+    }</div>`;
 
     if (item?.children && item?.children?.length > 0) {
       html += this.treeRender(item.children);

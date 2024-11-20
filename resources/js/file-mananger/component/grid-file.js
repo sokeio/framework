@@ -1,16 +1,19 @@
 export default {
-  showContextMenu(e) {
-    console.log(e);
-    this.$parent.$contextMenu.open(e, this);
+  register() {
+    this.$parent.$grid = this;
+  },
+  showContextMenu(e, path) {
+    this.chooseFile(path);
+    this.$parent.$contextMenu.open(e, this,'file');
     e.preventDefault();
   },
   itemRender(item) {
     return `
            <div class="so-fm-item-box ${
              this.$parent.checkItemActive(item.path) ? "active" : ""
-           }" so-on:click='chooseFile("${
-      item.path
-    }")' so-on:contextmenu="showContextMenu($event)">
+           }" 
+           so-on:click='chooseFile("${item.path}")' 
+           so-on:contextmenu='showContextMenu($event,"${item.path}")'>
             <div class="so-fm-item-box-preview">
                   <img src="${item.preview_url}" alt="${item.name}"/>
               </div>
@@ -20,7 +23,6 @@ export default {
            </div>
           `;
   },
-
   bodyGridRender() {
     let html = "";
     this.$parent.files.forEach((item) => {
@@ -36,8 +38,7 @@ export default {
   render() {
     return `
             <div class="so-fm-body-grid">
-                ${this.bodyGridRender()},
-
+                ${this.bodyGridRender()}
             </div>
           `;
   },

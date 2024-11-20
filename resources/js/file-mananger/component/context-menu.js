@@ -1,4 +1,4 @@
-function mouseX(evt) {
+function mouseX(evt, elWarp) {
   if (evt.pageX) {
     return evt.pageX;
   } else if (evt.clientX) {
@@ -13,7 +13,8 @@ function mouseX(evt) {
   }
 }
 
-function mouseY(evt) {
+function mouseY(evt, elWarp) {
+  console.log(elWarp);
   if (evt.pageY) {
     return evt.pageY;
   } else if (evt.clientY) {
@@ -28,14 +29,50 @@ function mouseY(evt) {
   }
 }
 export default {
+  state: {
+    path: "",
+    type: "",
+  },
   register() {
     this.$parent.$contextMenu = this;
   },
-  open(event, item) {
-    this.$el.style.display = "block";
-    this.$el.style.top = mouseY(event) + "px";
-    this.$el.style.left = mouseX(event) + "px";
+  itemClick(item) {
+    this.$parent.contextMenus[item].action.bind(this.$parent)();
+    this.hide();
+  },
+  itemRender() {
+    let html = "";
+    this.$parent.contextMenus
+      .filter((item) => item.type.includes(this.type))
+      .forEach((item, key) => {
+        html += `
+            <div class="so-fm-context-menu-item" so-on:click="itemClick(${key})">
+                    <div class="so-fm-context-menu-item-icon">
+                        <i class="${item.icon}"></i>
+                    </div>
+                    <div class="so-fm-context-menu-item-text">${item.title}</div>
+                </div>
+            
+            `;
+      });
+    return html;
+  },
+  open(event, path, type) {
+    this.path = path;
+    this.type = type;
+    console.log({ event, path, type });
     window.event.returnValue = false;
+    this.refresh();
+    let top = 0;
+    let left = 0;
+    if (this.$el.closest(".so-modal")) {
+      let e = this.$parent.$el.getBoundingClientRect();
+      top = e.top;
+      left = e.left;
+    }
+    this.$el.style.display = "block";
+    this.$el.style.top = mouseY(event, this.$app.$el) - top + "px";
+    this.$el.style.left = mouseX(event, this.$app.$el) - left + "px";
   },
   hide() {
     this.$el.style.display = "none";
@@ -43,7 +80,15 @@ export default {
   render() {
     return `
         <div class="so-fm-context-menu" so-click-outsite="hide()" style="display:none">
-                conext
+            <div class="so-fm-context-menu-header">
+                <a href="https://sokeio.com" class="logo-large" target="_blank">  
+                    Sokeio FM V1.0
+                </a>
+                <a href="https://sokeio.com" class="logo-small" target="_blank">
+                    SFM1.0
+                </a>
+            </div>
+                ${this.itemRender()}
         </div>
           `;
   },

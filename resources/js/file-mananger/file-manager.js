@@ -29,6 +29,8 @@ export default {
     boxFolderScrollTop: 0,
     $modalNewFolder: null,
     $modalUpload: null,
+    $grid: null,
+    $folderBox: null,
     $loading: null,
     $contextMenu: null,
     btnChooseFileAction: null,
@@ -56,6 +58,51 @@ export default {
       },
     },
   ],
+  contextMenus: [
+    {
+      title: "Refresh",
+      icon: "ti ti-refresh",
+      type: ["folder", "file"],
+      action: function () {
+        this.refreshSelected();
+      },
+    },
+    {
+      title: "Rename",
+      icon: "ti ti-edit",
+      type: ["folder", "file"],
+      action: function () {
+        this.createFolder();
+      },
+    },
+    {
+      title: "Remove",
+      icon: "ti ti-trash",
+      type: ["folder", "file"],
+      action: function () {
+        this.uploadFile();
+      },
+    },
+    {
+      title: "Download",
+      icon: "ti ti-download",
+      type: ["file"],
+      action: function () {
+        this.refreshSelected();
+      },
+    },
+    {
+      title: "Share",
+      icon: "ti ti-share",
+      type: ["file"],
+      action: function () {
+        alert("share");
+      },
+    },
+  ],
+  showMenuContext($event, $path, $type) {
+    this.$contextMenu?.open($event, $path, $type);
+  },
   register() {
     this.path = "/";
     this.disk = "public";
@@ -127,7 +174,8 @@ export default {
       this.fileCount = this.files?.length ?? 0;
       if (this.path == "") this.path = "/";
       this.$loading?.hideLoading();
-      this.refresh();
+      this.$grid?.refresh();
+      this.$folderBox?.refresh();
     });
   },
 
@@ -149,7 +197,7 @@ export default {
   openFolder(path) {
     this.path = path;
     this.selected = [];
-    this.refresh();
+    this.$grid?.refresh();
     this.fmAction("list");
   },
   footerRender() {
