@@ -51,7 +51,8 @@ trait FileManager
             return [
                 'files' => collect($storage->files($path))
                     ->map(fn($file) => $this->mapInfoFile($file, $storage, $disk))
-                    ->toArray(),
+                    ->where('name_without_extension', '!=', '')
+                    ->values()->toArray(),
                 'folders' => $folders,
                 'path' => $path,
                 'disk' => $disk,
@@ -71,6 +72,7 @@ trait FileManager
     {
         return [
             'name' => basename($file),
+            'name_without_extension' => pathinfo($file, PATHINFO_FILENAME),
             'path' => $file,
             'extension' => $storage->mimeType($file),
             'size' => $storage->size($file),

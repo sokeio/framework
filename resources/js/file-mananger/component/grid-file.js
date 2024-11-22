@@ -18,7 +18,7 @@ export default {
                   <img src="${item.preview_url}" alt="${item.name}"/>
               </div>
               <div class="so-fm-item-box-name">
-                  ${item.name}
+                  ${item.name_without_extension}
               </div>
            </div>
           `;

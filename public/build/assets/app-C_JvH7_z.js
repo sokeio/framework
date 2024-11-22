@@ -99,7 +99,7 @@ var B=Object.defineProperty;var P=(e,t,i)=>t in e?B(e,t,{enumerable:!0,configura
                   <img src="${e.preview_url}" alt="${e.name}"/>
               </div>
               <div class="so-fm-item-box-name">
-                  ${e.name}
+                  ${e.name_without_extension}
               </div>
            </div>
           `},bodyGridRender(){let e="";return this.$parent.files.forEach(t=>{e+=this.itemRender(t)}),e},chooseFile(e,t=!1){this.$parent.chooseFile(e,t),this.refresh()},render(){return`
