@@ -15,6 +15,7 @@ trait WithSettingUI
     {
         $this->getUI()->saveInSetting();
         $this->alert('Setting has been saved!', 'Setting', 'success');
+        $this->refreshPage();
     }
     public function mount()
     {

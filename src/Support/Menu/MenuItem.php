@@ -17,6 +17,7 @@ class MenuItem implements Arrayable
     public $position = 'default';
     public $badge = null;
     public $sort = 0;
+    private $callbackCheck = null;
     public function __construct(
         public $key,
         public $title,
@@ -24,6 +25,18 @@ class MenuItem implements Arrayable
         public $icon = null,
         public $target = null,
     ) {}
+    public function check($callback = null)
+    {
+        $this->callbackCheck = $callback;
+        return $this;
+    }
+    public function isCheck()
+    {
+        if ($this->callbackCheck) {
+            return call_user_func($this->callbackCheck, $this);
+        }
+        return true;
+    }
     public function route(string|callable|array $route)
     {
         $this->route = $route;
@@ -73,11 +86,18 @@ class MenuItem implements Arrayable
     public function children()
     {
         return $this->menuManager->getItems()->where(function (MenuItem $item) {
-            return $item->target == $this->key && $item->position == $this->position;
+            return $item->target == $this->key && $item->position == $this->position && $item->isCheck();
         })->sortBy('sort');
+    }
+    public function isShow()
+    {
+        return $this->children()->count() > 0 || ($this->url()!='#' && $this->isCheck());
     }
     public function render($level = 0)
     {
+        if (!$this->isCheck()) {
+            return '';
+        }
         if ($level > 0) {
             return Theme::view('sokeio::partials.menu.dropdown-item', [
                 'item' => $this,

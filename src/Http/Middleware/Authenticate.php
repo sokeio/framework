@@ -17,6 +17,12 @@ class Authenticate extends Middleware
         $route = $request->route()->getName();
         //skip with prexfix '_' and  Hasn't permission
         if (!(Str::startsWith($route, '_') || Str::endsWith($route, '_')) && !Platform::gate()->check($route)) {
+            dd([
+                'route' => $route,
+                'user' => $request->user(),
+                'permission' => Platform::gate()->getPermission(),
+                'role' => Platform::gate()->getRole()
+            ]);
             return abort(403);
         }
 

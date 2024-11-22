@@ -124,7 +124,7 @@ class MenuManager implements Arrayable
     private function getItemsByPosition($position)
     {
         return $this->menuItems->where('position', $position)->where(function ($item) {
-            return $item->target == '' || $item->target == null;
+            return ($item->target == '' || $item->target == null) &&  $item->isShow();
         })->sortBy('sort');
     }
     private function render($position = 'default')

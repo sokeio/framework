@@ -110,7 +110,11 @@ class PageConfig
             ??  ($shortName . '-page.' . $key);
         $key = 'sokeio-menu.' . $key;
         if ($config->getAdmin()) {
-            if ($config->getAuth() && $config->getMenu() && Platform::isUrlAdmin()) {
+            if (
+                $config->getAuth()
+                && $config->getMenu()
+                && Platform::isUrlAdmin()
+            ) {
                 $menuTitle = $config->getMenuTitle() ?? str(str($nameRoute)->afterLast('.'))->replace('-', ' ');
                 $menuClass = $config->getMenuClass();
                 $target = $config->getMenuTarget();
@@ -134,6 +138,8 @@ class PageConfig
                                 $item->icon = $icon;
                             }
                             $item->sort = $sort;
+                        })->check(function () use ($nameRoute) {
+                            return Platform::gate()->check('admin.' . $nameRoute);
                         })
                 );
                 if ($target) {

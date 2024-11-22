@@ -20,6 +20,8 @@ class GateManager
     private function __construct(protected PlatformManager $manager) {}
     private $ignores = ['admin.dashboard', 'admin.dashboard.setting'];
     private $customes = [];
+    private $roles = [];
+    private $permissions = [];
     public function setIgnores($ignores)
     {
         $this->ignores = array_merge($this->ignores, $ignores);
@@ -34,30 +36,40 @@ class GateManager
     {
         return $this->user;
     }
+    public function isSupperAdmin()
+    {
+        return in_array(config('sokeio.model.role')::SupperAdmin(), $this->roles);
+    }
     public function setUser($user)
     {
         $this->user = $user;
+        $this->permissions = $user->getAllPermission();
+        $this->roles = $user->getAllRole();
+        return $this;
     }
     public function getUserByToken($token)
     {
-        //TODO: get user by token
+        //TODO: get user by token {$token}
     }
     public function getPermission()
     {
-        //TODO: get user permission
+        return $this->permissions;
     }
     public function getRole()
     {
-        //TODO: get user role
+        return $this->roles;
     }
     public function check($permssion)
     {
-        return true;
-        //TODO: check user permission
+        return
+            str_starts_with($permssion, '_')
+            || in_array($permssion, $this->ignores)
+            || in_array($permssion, $this->permissions)
+            || $this->isSupperAdmin();
     }
     public function role($role)
     {
-        //TODO: check user role
+        return in_array($role, $this->roles) || $this->isSupperAdmin();
     }
     private function checkPermissionName($permssion)
     {

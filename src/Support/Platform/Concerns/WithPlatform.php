@@ -3,6 +3,7 @@
 namespace Sokeio\Support\Platform\Concerns;
 
 use Illuminate\Support\Facades\File;
+use Sokeio\Platform;
 use Sokeio\Support\Platform\ItemInfo;
 use Sokeio\Support\Platform\ItemManager;
 

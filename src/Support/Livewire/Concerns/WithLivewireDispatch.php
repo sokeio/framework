@@ -10,6 +10,7 @@ trait WithLivewireDispatch
     private const LIVEWIRE_FUNCTION = 'sokeio_function';
     private const LIVEWIRE_REFRESH = 'sokeio_refresh';
     private const LIVEWIRE_REFRESH_PARENT = 'sokeio_refresh_parent';
+    private const LIVEWIRE_REFRESH_PAGE = 'sokeio_refresh_page';
 
 
     public const MESSAGE_TYPE_SUCCESS = 'success';
@@ -55,6 +56,12 @@ trait WithLivewireDispatch
         $this->sendMessageToClient(self::LIVEWIRE_MESSAGE, [
             'message' => $message,
             ...$option
+        ]);
+    }
+    public function refreshPage($url = null)
+    {
+        $this->sendMessageToClient(self::LIVEWIRE_REFRESH_PAGE, [
+            'url' => $url
         ]);
     }
     public function refreshToId($id)

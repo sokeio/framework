@@ -51,4 +51,8 @@ class SokeioServiceProvider extends \Illuminate\Support\ServiceProvider
             }
         });
     }
+    public function bootingPackage()
+    {
+        config(['auth.providers.users.model' => config('sokeio.model.user')]);
+    }
 }

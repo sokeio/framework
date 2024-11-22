@@ -26,6 +26,20 @@ class User extends Authenticatable
     {
         return !$this->isActive();
     }
+    public function getAllPermission()
+    {
+        $permissions = $this->permissions()->pluck('slug')->toArray();
+        // get permissions in roles of user
+        foreach ($this->roles as $role) {
+            $permissions = array_merge($permissions, $role->permissions()->pluck('slug')->toArray());
+        }
+        return collect($permissions)->unique()->toArray();
+    }
+    public function getAllRole()
+    {
+        $roles = $this->roles->pluck('slug')->toArray();
+        return collect($roles)->unique()->toArray();
+    }
 
     public static function boot()
     {

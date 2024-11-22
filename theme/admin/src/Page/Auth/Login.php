@@ -23,7 +23,7 @@ class Login extends \Sokeio\Page
     {
         $this->validate();
         if (Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->isRememberMe)) {
-            return redirect(urldecode($this->urlRef ?? '/'));
+            $this->refreshPage(urldecode($this->urlRef ?? '/'));
         } else {
             $this->addError('account_error', 'Invalid account or password');
         }
