@@ -219,7 +219,7 @@ trait TableRender
             HTML;
         }
         return <<<HTML
-        <div {$attrWrapper}  x-data="sokeioTable()">
+        <div {$attrWrapper}  x-data="sokeioTable">
         {$this->formSearchRender()}
         {$templateDataSelected}
         <div class="table-responsive position-relative"

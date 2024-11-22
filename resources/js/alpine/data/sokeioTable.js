@@ -19,7 +19,8 @@ document.addEventListener("alpine:init", () => {
           this.typeSort = "";
         }
       }
-      let orderBy = this.$el.getAttribute("data-sokeio-table-order-by");
+      console.log(this);
+      let orderBy = this.$el.closest(".sokeio-table").getAttribute("data-sokeio-table-order-by");
       this.$wire.callActionUI(orderBy, {
         field: this.fieldSort,
         type: this.typeSort,

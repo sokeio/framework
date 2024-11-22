@@ -80,7 +80,9 @@ class Table extends BaseUI
         $this->action('paginate', function ($page) {
             $this->setValueByName('page.index', $page);
         });
-        $this->action($this->getKeyWithTable('orderBy'), function ($order) {
+        $keyFnOrderBy = $this->getKeyWithTable('order-by');
+        $this->attrWrapper('data-sokeio-table-order-by', $keyFnOrderBy);
+        $this->action($keyFnOrderBy, function ($order) {
             $field = $order['field'];
             $type = $order['type'] ?? 'asc';
             $this->setValueByName('order.field', $field);

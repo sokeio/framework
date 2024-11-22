@@ -40,7 +40,7 @@ trait WithUI
     }
     public function getUI(): SoUI
     {
-        return $this->ui ?? ($this->ui = SoUI::init($this->setupUI(), $this));
+        return $this->ui ?? ($this->ui = SoUI::init($this->setupUI(), $this)->bootAction());
     }
     protected function setupUI()
     {
