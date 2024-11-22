@@ -23,7 +23,7 @@
                         <div class="d-flex ">
                             <div class="me-auto">{{ $item->getTitle() }} @if ($item->isVendor())(Vendor) @endif</div>
                             <div class="">
-                                <span class="badge bg-primary text-bg-primary">{{ $item->getVersion() }}</span>
+                                <span class="badge bg-primary text-bg-primary">{{ $item->getVersion() }}-{{ $item->getLastVersion() }}</span>
                             </div>
                         </div>
                         <div class="text-secondary">{!! $item->description !!}</div>

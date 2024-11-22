@@ -17,6 +17,7 @@
                     <div class="card-body p-2">
                         <div class="d-flex ">
                             <div class="me-auto">{{ $item->name }}</div>
+                            
                             <div class="">
                                 <span class="badge bg-primary text-bg-primary">{{ $item->getVersion() }}</span>
                             </div>

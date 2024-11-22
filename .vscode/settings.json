@@ -1,6 +1,0 @@
-{
-    "sonarlint.connectedMode.project": {
-        "connectionId": "http-localhost-9001-",
-        "projectKey": "sokeio"
-    }
-}

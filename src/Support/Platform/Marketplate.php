@@ -9,7 +9,7 @@ use Sokeio\Platform;
 
 class Marketplate
 {
-    private $marketplaceUrl = 'http://sokeio.local/api/';
+    private $marketplaceUrl = 'https://sokeio.local/';
     private $pathTemps = 'platform/temps/';
     public function __construct(private ItemManager $manager)
     {
@@ -24,9 +24,20 @@ class Marketplate
     {
         $url = sprintf('%s%s', $this->marketplaceUrl, $url);
 
-        return Http::post($url, $data);
+        return Http::withOptions(['verify' => false])->post($url, $data);
     }
-
+    public function getLastVersion($id, $version = 'main')
+    {
+        $rs = $this->makeRequest('platform/version', [
+            'id' => $id,
+            'version' => $version,
+            'type' => $this->manager->getItemType()
+        ]);
+        if ($rs->ok()) {
+            return $rs->json('version', $version);
+        }
+        return $version;
+    }
     public function install($id, $version = 'main')
     {
         $filename = $this->manager->getItemType() . '-' . time() . '.zip';

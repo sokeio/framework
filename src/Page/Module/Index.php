@@ -32,7 +32,7 @@ class Index extends \Sokeio\Page
         return [
             PageUI::init([
                 Input::init()->fieldName('search')->debounce(500)->placeholder(__('Search'))->className('form-control'),
-                Div::init()->viewBlade('sokeio::pages.setting.module.index', [
+                Div::init()->viewBlade('sokeio::pages.module.index', [
                     'datas' => Platform::module()->getAll(),
                     'routeName' => $this->getRouteName('info'),
                 ])->className('mt-3'),

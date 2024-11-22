@@ -1,6 +1,0 @@
-projectKey=sokeio
-serverUrl=http://localhost:9001
-serverVersion=10.4.1.88267
-dashboardUrl=http://localhost:9001/dashboard?id=sokeio
-ceTaskId=997ea2f7-58c5-4395-930f-0750c5edf227
-ceTaskUrl=http://localhost:9001/api/ce/task?id=997ea2f7-58c5-4395-930f-0750c5edf227
