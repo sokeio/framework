@@ -3,11 +3,12 @@
 namespace Sokeio\Support\Menu;
 
 use Illuminate\Contracts\Support\Arrayable;
+use Sokeio\Platform;
 use Sokeio\Theme;
 
 class MenuItem implements Arrayable
 {
-    public static function make($key, $title, $url = null, $icon = null, $target = null)
+    public static function make($key, $title, $url = null, $icon = null, $target = '')
     {
         return new static($key, $title, $url, $icon, $target);
     }
@@ -17,25 +18,37 @@ class MenuItem implements Arrayable
     public $position = 'default';
     public $badge = null;
     public $sort = 0;
-    private $callbackCheck = null;
+    private $permission = null;
+    private $children = null;
     public function __construct(
         public $key,
         public $title,
         public $url = null,
         public $icon = null,
         public $target = null,
-    ) {}
-    public function check($callback = null)
+    ) {
+        if ($this->target === null) {
+            $this->target = '';
+        }
+    }
+    public function permission($permission = null)
     {
-        $this->callbackCheck = $callback;
+        $this->permission = $permission;
         return $this;
+    }
+    public function check()
+    {
+        return $this->permission == null || Platform::gate()->check($this->permission);
     }
     public function isCheck()
     {
-        if ($this->callbackCheck) {
-            return call_user_func($this->callbackCheck, $this);
+        if (!$this->check()) {
+            return false;
         }
-        return true;
+        $childs = $this->children()->where(function (MenuItem $item) {
+            return $item->isCheck();
+        });
+        return $childs->count() > 0 || $this->url() !== '#';
     }
     public function route(string|callable|array $route)
     {
@@ -85,14 +98,14 @@ class MenuItem implements Arrayable
     }
     public function children()
     {
-        return $this->menuManager->getItems()->where(function (MenuItem $item) {
-            return $item->target == $this->key && $item->position == $this->position && $item->isCheck();
-        })->sortBy('sort');
+        if ($this->children == null) {
+            $this->children = $this->menuManager->getItems()->where(function (MenuItem $item) {
+                return $item->target == $this->key && $item->position == $this->position;
+            })->sortBy('sort');
+        }
+        return $this->children;
     }
-    public function isShow()
-    {
-        return $this->children()->count() > 0 || ($this->url()!='#' && $this->isCheck());
-    }
+
     public function render($level = 0)
     {
         if (!$this->isCheck()) {
@@ -118,7 +131,7 @@ class MenuItem implements Arrayable
             'title' => $this->title,
             'url' => $this->url(),
             'route' => $this->route,
-            'icon' => $this->icon(),
+            'icon' => $this->icon,
             'target' => $this->target,
             'position' => $this->position,
             'badge' => $this->badge,

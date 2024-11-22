@@ -78,7 +78,7 @@ class MenuManager implements Arrayable
         });
         $items = $this->menuItems;
         foreach ($this->menuItems as $item) {
-            if ($item->target == null || $item->target == '') {
+            if ($item->target == '') {
                 continue;
             }
             $arr = str($item->target)->split('/\./');
@@ -110,6 +110,7 @@ class MenuManager implements Arrayable
             }
         }
         $this->menuItems = $items;
+
         foreach ($this->hookTarget as $callback) {
             if (!is_callable($callback)) {
                 continue;
@@ -124,7 +125,7 @@ class MenuManager implements Arrayable
     private function getItemsByPosition($position)
     {
         return $this->menuItems->where('position', $position)->where(function ($item) {
-            return ($item->target == '' || $item->target == null) &&  $item->isShow();
+            return $item->target == '';
         })->sortBy('sort');
     }
     private function render($position = 'default')

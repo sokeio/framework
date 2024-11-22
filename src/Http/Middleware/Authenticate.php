@@ -9,24 +9,37 @@ use Sokeio\Platform;
 
 class Authenticate extends Middleware
 {
-    public function handle($request, Closure $next, ...$guards)
+
+
+    /**
+     * Determine if the user is logged in to any of the given guards.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  array  $guards
+     * @return void
+     *
+     * @throws \Illuminate\Auth\AuthenticationException
+     */
+    protected function authenticate($request, array $guards)
     {
-        $response = parent::handle($request, $next, ...$guards);
-        Platform::gate()->setUser($request->user());
-        // Like: users.index
-        $route = $request->route()->getName();
-        //skip with prexfix '_' and  Hasn't permission
-        if (!(Str::startsWith($route, '_') || Str::endsWith($route, '_')) && !Platform::gate()->check($route)) {
-            dd([
-                'route' => $route,
-                'user' => $request->user(),
-                'permission' => Platform::gate()->getPermission(),
-                'role' => Platform::gate()->getRole()
-            ]);
-            return abort(403);
+        if (empty($guards)) {
+            $guards = [null];
         }
 
-        return $response;
+        foreach ($guards as $guard) {
+            if ($this->auth->guard($guard)->check()) {
+                Platform::gate()->setUser($request->user());
+                // Like: users.index
+                $route = $request->route()->getName();
+                //skip with prexfix '_' and  Hasn't permission
+                if (!(Str::startsWith($route, '_') || Str::endsWith($route, '_')) && !Platform::gate()->check($route)) {
+                    return abort(403);
+                }
+                return $this->auth->shouldUse($guard);
+            }
+        }
+
+        $this->unauthenticated($request, $guards);
     }
     /**
      * Get the path the user should be redirected to when they are not authenticated.

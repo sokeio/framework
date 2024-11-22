@@ -48,7 +48,7 @@ class SoUI
         $rules = [];
         $labels = [];
         foreach ($this->fields as $field) {
-            if ($group && $field->getGroup() != $group) {
+            if ($group && $field->getGroup() != $group ) {
                 continue;
             }
             $messages = array_merge($messages, $field->getRuleMessages());

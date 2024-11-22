@@ -138,9 +138,7 @@ class PageConfig
                                 $item->icon = $icon;
                             }
                             $item->sort = $sort;
-                        })->check(function () use ($nameRoute) {
-                            return Platform::gate()->check('admin.' . $nameRoute);
-                        })
+                        })->permission('admin.' . $nameRoute)
                 );
                 if ($target) {
                     MenuManager::targetSetup($target, function (MenuItem $item) use ($config) {

@@ -3,6 +3,7 @@
 namespace Sokeio\UI;
 
 use Illuminate\Support\Facades\Log;
+use Livewire\Livewire;
 
 trait WithUI
 {
@@ -22,7 +23,15 @@ trait WithUI
     public function booted()
     {
         parent::booted();
+
         $this->getUI()->boot();
+    }
+    public function updated()
+    {
+        if (method_exists(parent::class, 'updated')) {
+            parent::updated();
+        }
+        $this->reUI();
     }
     public function reUI()
     {

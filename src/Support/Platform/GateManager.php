@@ -45,8 +45,10 @@ class GateManager
         $this->user = $user;
         $this->permissions = $user->getAllPermission();
         $this->roles = $user->getAllRole();
+        // dd([$this->permissions, $this->roles]);
         return $this;
     }
+
     public function getUserByToken($token)
     {
         //TODO: get user by token {$token}
@@ -61,15 +63,20 @@ class GateManager
     }
     public function check($permssion)
     {
+        if ($this->isSupperAdmin()) {
+            return true;
+        }
         return
             str_starts_with($permssion, '_')
             || in_array($permssion, $this->ignores)
-            || in_array($permssion, $this->permissions)
-            || $this->isSupperAdmin();
+            || in_array($permssion, $this->permissions);
     }
     public function role($role)
     {
-        return in_array($role, $this->roles) || $this->isSupperAdmin();
+        if ($this->isSupperAdmin()) {
+            return true;
+        }
+        return in_array($role, $this->roles);
     }
     private function checkPermissionName($permssion)
     {
