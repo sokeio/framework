@@ -9,7 +9,7 @@ class Role extends \Sokeio\Model
     public static function SupperAdmin()
     {
         if (!self::$roleSupperAdmin) {
-            self::$roleSupperAdmin = applyFilters(PLATFORM_ROLE_SUPPER_ADMIN, 'supper_admin');
+            self::$roleSupperAdmin = 'supper_admin';
         }
         return self::$roleSupperAdmin;
     }
@@ -24,7 +24,7 @@ class Role extends \Sokeio\Model
     }
     public function isSuperAdmin(): bool
     {
-        return $this->name == self::SupperAdmin();
+        return $this->slug == self::SupperAdmin();
     }
     public function permissions()
     {

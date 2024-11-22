@@ -18,7 +18,8 @@ use Sokeio\Theme;
 )]
 class ForgotPassword extends \Sokeio\Page
 {
-    public function doWork(){
+    public function doWork()
+    {
         $this->alert('Please check your email to reset password', 'Forgot Password', 'success');
     }
     public function render()

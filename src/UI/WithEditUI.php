@@ -7,6 +7,15 @@ use Sokeio\FormData;
 trait WithEditUI
 {
     use WithUI;
+    private $dataModel = null;
+    public function getDataModel()
+    {
+        if (!$this->dataModel) {
+            $this->dataModel =  $this->dataId ? ($this->getModel())::find($this->dataId) : new ($this->getModel())();
+            $this->getUI()->fill($this->dataModel);
+        }
+        return $this->dataModel;
+    }
     public function queryStringWithEditUI()
     {
         return [
@@ -17,10 +26,9 @@ trait WithEditUI
     public $dataId;
     public function mount()
     {
-    
-        $data =  $this->dataId ? ($this->getModel())::find($this->dataId) : new ($this->getModel());
-        $this->formData->fill($data);
-        $this->afterMount($data);
+        $this->dataModel =  $this->dataId ? ($this->getModel())::find($this->dataId) : new ($this->getModel());
+        $this->formData->fill($this->dataModel);
+        $this->afterMount($this->dataModel);
     }
     protected function afterMount($data)
     {
@@ -46,8 +54,7 @@ trait WithEditUI
     {
 
         $this->getUI()->validate();
-        $data =  $this->dataId ? ($this->getModel())::find($this->dataId) : new ($this->getModel())();
-        $this->getUI()->fill($data);
+        $data =  $this->getDataModel();
         $this->beforeSaveData($data);
         $data->save();
         $this->afterSaveData($data);

@@ -32,7 +32,7 @@ class Register extends \Sokeio\Page
         $user->email = $this->email;
         $user->password = Hash::make($this->password);
         $user->save();
-        return redirect('/login');
+        return redirect(route('admin.login'));
     }
     public function render()
     {

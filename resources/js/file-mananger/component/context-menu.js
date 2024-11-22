@@ -1,5 +1,8 @@
 function mouseX(evt, elWarp) {
   if (evt.pageX) {
+    if (document.body.classList.contains("so-modal-open")) {
+      return evt.pageX - document.documentElement.scrollLeft;
+    }
     return evt.pageX;
   } else if (evt.clientX) {
     return (
@@ -14,8 +17,10 @@ function mouseX(evt, elWarp) {
 }
 
 function mouseY(evt, elWarp) {
-  console.log(elWarp);
   if (evt.pageY) {
+    if (document.body.classList.contains("so-modal-open")) {
+      return evt.pageY - document.documentElement.scrollTop;
+    }
     return evt.pageY;
   } else if (evt.clientY) {
     return (
@@ -68,7 +73,7 @@ export default {
     if (this.$el.closest(".so-modal")) {
       let e = this.$parent.$el.getBoundingClientRect();
       top = e.top;
-      left = e.left;
+      left = e.left - document.body.scrollLeft;
     }
     this.$el.style.display = "block";
     this.$el.style.top = mouseY(event, this.$app.$el) - top + "px";
