@@ -5,7 +5,7 @@ namespace Sokeio\Support\Platform\Loader;
 use Closure;
 use Exception;
 use Illuminate\Support\Facades\Route as FacadesRoute;
-use Sokeio\Attribute\Route;
+use Sokeio\Attribute\RouteInfo;
 use Sokeio\Platform;
 use Sokeio\Support\Platform\IPipeLoader;
 use Sokeio\Support\Platform\ItemInfo;
@@ -45,7 +45,7 @@ class ControllerLoader implements IPipeLoader
         foreach ($methods as $method) {
             $reflector = new \ReflectionMethod($class, $method);
             if ($reflector->isPublic()) {
-                $attributes = $reflector->getAttributes(Route::class);
+                $attributes = $reflector->getAttributes(RouteInfo::class);
                 if (count($attributes) > 0) {
                     foreach ($attributes as $attribute) {
                         $route = $attribute->newInstance();

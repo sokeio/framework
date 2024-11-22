@@ -46,6 +46,8 @@
         @error('account_error')
             <span class="error">{{ $message }}</span>
         @enderror
+        <span wire:loading class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+
         <div class="form-footer">
             <button type="submit" class="btn btn-primary w-100">Sign in</button>
         </div>

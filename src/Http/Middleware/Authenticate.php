@@ -34,11 +34,11 @@ class Authenticate extends Middleware
 
             if (Platform::isUrlAdmin()) {
                 return route('admin.login', [
-                    'ref' => urlencode($request->url())
+                    'url_ref' => urlencode($request->url())
                 ]);
             } else {
                 return route('login', [
-                    'ref' => urlencode($request->url())
+                    'url_ref' => urlencode($request->url())
                 ]);
             }
         }

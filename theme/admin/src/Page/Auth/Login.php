@@ -4,12 +4,15 @@ namespace SokeioTheme\Admin\Page\Auth;
 
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Rule;
+use Livewire\Attributes\Url;
 use Sokeio\Attribute\PageInfo;
 use Sokeio\Theme;
 
 #[PageInfo(admin: true, auth: false, url: '/login', route: 'login', title: 'Login', layout: 'conver')]
 class Login extends \Sokeio\Page
 {
+    #[Url('url_ref')]
+    public $urlRef = null;
     #[Rule('required')]
     public $email;
     #[Rule('required')]
@@ -20,7 +23,7 @@ class Login extends \Sokeio\Page
     {
         $this->validate();
         if (Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->isRememberMe)) {
-            return redirect('/');
+            return redirect(urldecode($this->urlRef ?? '/'));
         } else {
             $this->addError('account_error', 'Invalid account or password');
         }

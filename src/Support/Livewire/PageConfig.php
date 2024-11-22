@@ -5,6 +5,7 @@ namespace Sokeio\Support\Livewire;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Sokeio\Attribute\PageInfo;
 use Sokeio\Platform;
 use Sokeio\Support\Menu\MenuItem;
 use Sokeio\Support\Menu\MenuManager;
@@ -45,7 +46,7 @@ class PageConfig
             if (!isset($info->{$key}) || $info->{$key} === null) {
                 continue;
             }
-            
+
             $this->config[$key] = $info->{$key};
         }
         $key = $this->getEnableKeyInSetting();
