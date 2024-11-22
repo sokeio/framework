@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\On;
 use Sokeio\Models\Dashboard;
-use Sokeio\Support\Livewire\PageInfo;
+use Sokeio\Attribute\PageInfo;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Field\DatePicker;

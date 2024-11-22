@@ -3,7 +3,7 @@
 namespace Sokeio\Page\Dashboard;
 
 use Sokeio\Models\Dashboard;
-use Sokeio\Support\Livewire\PageInfo;
+use Sokeio\Attribute\PageInfo;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\WithUI;

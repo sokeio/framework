@@ -2,7 +2,7 @@
 
 namespace Sokeio\Page\Appearance\Theme;
 
-use Sokeio\Support\Livewire\PageInfo;
+use Sokeio\Attribute\PageInfo;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Field\Input;

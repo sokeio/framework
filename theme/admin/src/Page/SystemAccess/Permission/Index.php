@@ -5,7 +5,7 @@ namespace SokeioTheme\Admin\Page\SystemAccess\Permission;
 use Sokeio\Models\Permission;
 use Sokeio\Models\User;
 use Sokeio\Platform;
-use Sokeio\Support\Livewire\PageInfo;
+use Sokeio\Attribute\PageInfo;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\Table\Table;

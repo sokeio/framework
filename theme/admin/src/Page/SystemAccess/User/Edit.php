@@ -5,7 +5,7 @@ namespace SokeioTheme\Admin\Page\SystemAccess\User;
 use Illuminate\Support\Facades\Log;
 use Sokeio\Models\Role;
 use Sokeio\Models\User;
-use Sokeio\Support\Livewire\PageInfo;
+use Sokeio\Attribute\PageInfo;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Field\Input;

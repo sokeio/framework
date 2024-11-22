@@ -3,7 +3,7 @@
 namespace SokeioTheme\Admin\Page\SystemAccess\Permission;
 
 use Sokeio\Models\Permission;
-use Sokeio\Support\Livewire\PageInfo;
+use Sokeio\Attribute\PageInfo;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Field\Input;

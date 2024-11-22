@@ -17,6 +17,13 @@ export default {
     "so-fm::loading": loading,
     "so-fm::context-menu": contextMenu,
   },
+  $modalNewFolder: null,
+  $modalUpload: null,
+  $grid: null,
+  $folderBox: null,
+  $loading: null,
+  $contextMenu: null,
+  btnChooseFileAction: null,
   state: {
     path: "/",
     selected: [],
@@ -27,13 +34,6 @@ export default {
     disks: [],
     disk: "public",
     boxFolderScrollTop: 0,
-    $modalNewFolder: null,
-    $modalUpload: null,
-    $grid: null,
-    $folderBox: null,
-    $loading: null,
-    $contextMenu: null,
-    btnChooseFileAction: null,
   },
   toolbars: [
     {
@@ -101,6 +101,8 @@ export default {
     },
   ],
   showMenuContext($event, $path, $type) {
+    this.selected = [];
+    this.selectedCount = 0;
     this.$contextMenu?.open($event, $path, $type);
   },
   register() {

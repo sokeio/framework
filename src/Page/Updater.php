@@ -2,7 +2,7 @@
 
 namespace Sokeio\Page;
 
-use Sokeio\Support\Livewire\PageInfo;
+use Sokeio\Attribute\PageInfo;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\WithUI;

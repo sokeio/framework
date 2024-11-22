@@ -5,7 +5,7 @@ namespace Sokeio\Http\Controllers;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Sokeio\Attribute\Route;
+use Sokeio\Attribute\RouteInfo;
 use Sokeio\Concerns\FileManager;
 use Sokeio\Enums\MethodType;
 use Sokeio\Http\Requests\FileManager\ActionRequest;
@@ -14,7 +14,7 @@ class FileManagerController extends Controller
 {
     use FileManager;
 
-    #[Route( MethodType::POST, '/platform/file-manager')]
+    #[RouteInfo( MethodType::POST, '/platform/file-manager')]
     public function index(ActionRequest $request)
     {
         $disk = $request->disk ?? 'public';

@@ -5,7 +5,7 @@ namespace SokeioTheme\Admin\Page\SystemAccess\User;
 use Illuminate\Support\Facades\Log;
 use Sokeio\Models\Role;
 use Sokeio\Models\User;
-use Sokeio\Support\Livewire\PageInfo;
+use Sokeio\Attribute\PageInfo;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Field\Input;
 use Sokeio\UI\Field\Select;
@@ -38,14 +38,30 @@ class Index extends \Sokeio\Page
                         ->column('name')
                         ->column('email')
                         ->column('phone_number')
-                        ->query($this->getQuery())
+                        ->column(Column::init()->classNameHeader('w-1')
+                            ->renderCell(function ($row, $column, $index) {
+                                return $row->roles->pluck('name')->reduce(function ($carry, $item) {
+                                    return "<span class=\"badge badge-info me-1\">" . $item . "</span>" . ' ' . $carry;
+                                }, '');
+                            }), null, 'Role')
+                        ->query($this->getQuery()->with('roles'))
                         ->enableIndex()
                         ->enableCheckBox()
                         ->searchbox(['name', 'email', 'phone_number'])
                         ->formSearch(
                             [],
                             [
-                                Select::init('role_id')->label(__('Role'))->remoteActionWithModel(Role::class),
+                                Select::init('role_id')->label(__('Role'))->remoteActionWithModel(Role::class)
+                                    ->withQuery(
+                                        function ($query, $value) {
+                                            if (!$value) {
+                                                return;
+                                            }
+                                            $query->whereHas('roles', function ($query) use ($value) {
+                                                $query->where('id', $value);
+                                            });
+                                        }
+                                    ),
                             ]
                         )
                         ->columnAction([

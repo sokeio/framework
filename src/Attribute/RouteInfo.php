@@ -6,7 +6,7 @@ use Attribute;
 use Sokeio\Enums\MethodType;
 
 #[Attribute(Attribute::TARGET_METHOD | Attribute::TARGET_CLASS)]
-class Route
+class RouteInfo
 {
     public function __construct(
         public MethodType $method,

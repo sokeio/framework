@@ -4,7 +4,7 @@ namespace Sokeio\Page\Setting;
 
 use Sokeio\Components\Field\SelectField;
 use Sokeio\Setting;
-use Sokeio\Support\Livewire\PageInfo;
+use Sokeio\Attribute\PageInfo;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Field\ContentEditor;
 use Sokeio\UI\Field\Input;

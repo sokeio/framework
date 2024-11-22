@@ -3,7 +3,7 @@
 namespace Sokeio\Page\Setting;
 
 use Illuminate\Support\Facades\Artisan;
-use Sokeio\Support\Livewire\PageInfo;
+use Sokeio\Attribute\PageInfo;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Common\Card;
 use Sokeio\UI\Common\Div;

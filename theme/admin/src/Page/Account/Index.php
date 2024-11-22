@@ -2,7 +2,7 @@
 
 namespace SokeioTheme\Admin\Page\Account;
 
-use Sokeio\Support\Livewire\PageInfo;
+use Sokeio\Attribute\PageInfo;
 use Sokeio\Theme;
 
 #[PageInfo(admin: true, auth: true, title: 'Account')]

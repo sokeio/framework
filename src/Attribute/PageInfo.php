@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Support\Livewire;
+namespace Sokeio\Attribute;
 
 use Attribute;
 

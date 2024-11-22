@@ -5,7 +5,7 @@ namespace Sokeio\Page\Module;
 use Livewire\Attributes\Rule;
 use Livewire\Attributes\Url;
 use Sokeio\Platform;
-use Sokeio\Support\Livewire\PageInfo;
+use Sokeio\Attribute\PageInfo;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Field\Input;
