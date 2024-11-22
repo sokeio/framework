@@ -23,7 +23,7 @@ class Info extends \Sokeio\Page
         return [
             PageUI::init([
                 Div::init()->className('mt-auto')->viewBlade(
-                    'sokeio::pages.appearance.theme.info',
+                    'sokeio::livewire.platform.info',
                     [
                         'item' => Platform::theme()->find($this->dataId)
                     ]

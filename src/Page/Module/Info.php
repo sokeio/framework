@@ -28,7 +28,7 @@ class Info extends \Sokeio\Page
         return [
             PageUI::init([
                 Div::init()->className('mt-auto')->viewBlade(
-                    'sokeio::pages.module.info',
+                    'sokeio::livewire.platform.info',
                     [
                         'item' => $item
                     ]
