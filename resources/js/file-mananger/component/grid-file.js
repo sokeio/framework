@@ -13,7 +13,7 @@ export default {
              this.$parent.checkItemActive(item.path) ? "active" : ""
            }" 
            so-on:click='chooseFile("${item.path}")' 
-           so-on:contextmenu='showContextMenu($event,"${item.path}")'>
+           so-on:contextmenu='showContextMenu($event,"${item.path}")' title="${item.name}">
             <div class="so-fm-item-box-preview">
                   <img src="${item.preview_url}" alt="${item.name}"/>
               </div>

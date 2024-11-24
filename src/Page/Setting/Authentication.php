@@ -76,11 +76,22 @@ class Authentication extends \Sokeio\Page
                 ->ruleRequired('Please enter google client secret'),
             Input::init('SOKEIO_GOOGLE_REDIRECT')
                 ->label('Google Redirect')
+                ->valueDefault(route('socialite.callback', ['social' => 'google']))
                 ->ruleRequired('Please enter google redirect'),
         ])
             ->title('Login With Google Setting')
             ->icon('ti ti-brand-google')
-            ->subtitle('')
+            ->subtitle('
+            <div class=" p-1">
+            <div class="alert alert-info">
+                <p>For Google login, please enable OAuth in your Google account and copy the Client ID and Client Secret 
+                from <a href="https://console.developers.google.com/" target="_blank">Google OAuth</a> in your Google account.</p>
+            </div>
+            <p class="fw-bold">
+            Login with Google: ' . tagLink(route('socialite.login', ['social' => 'google'])) . '
+            </p>
+            </div>
+        ')
             ->column(self::COLUMN_GROUP2)
             ->showSwitcher('SOKEIO_GOOGLE_ENABLE', false)
             ->setPrefix('formData.google')
@@ -98,11 +109,21 @@ class Authentication extends \Sokeio\Page
             Input::init('SOKEIO_FACEBOOK_REDIRECT')
                 ->label('Facebook Redirect')
                 ->ruleRequired('Please enter facebook redirect')
-                ->keyInSetting('SOKEIO_FACEBOOK_REDIRECT'),
+                ->valueDefault(route('socialite.callback', ['social' => 'facebook'])),
         ])
             ->title('Login With Facebook Setting')
             ->icon('ti ti-brand-facebook')
-            ->subtitle('')
+            ->subtitle('
+            <div class=" p-1">
+            <div class="alert alert-info">
+                <p>For Facebook login, please enable OAuth in your Facebook account and copy the Client ID and Client Secret 
+                from <a href="https://developers.facebook.com/apps" target="_blank">Facebook OAuth</a> in your Facebook account.</p>
+            </div>
+            <p class="fw-bold">
+            Login with Facebook: ' . tagLink(route('socialite.login', ['social' => 'facebook'])) . '
+            </p>
+            </div>
+            ')
             ->column(self::COLUMN_GROUP2)
             ->showSwitcher('SOKEIO_FACEBOOK_ENABLE', false)
             ->setPrefix('formData.facebook')
@@ -119,11 +140,21 @@ class Authentication extends \Sokeio\Page
                 ->ruleRequired('Please enter github client secret'),
             Input::init('SOKEIO_GITHUB_REDIRECT')
                 ->label('Github Redirect')
-                ->ruleRequired('Please enter github redirect'),
+                ->ruleRequired('Please enter github redirect')
+                ->valueDefault(route('socialite.callback', ['social' => 'github'])),
         ])
             ->title('Login With Github Setting')
             ->icon('ti ti-brand-github')
-            ->subtitle('')
+            ->subtitle('<div class=" p-1">
+            <div class="alert alert-info">
+                <p>For Github login, please enable OAuth in your Github account and copy the Client ID and Client Secret from
+                <a href="https://github.com/settings/developers" target="_blank">Github OAuth</a> in your Github account.</p>
+            </div>
+            <p class="fw-bold">
+            Login with Github: ' . tagLink(route('socialite.login', ['social' => 'github'])) . '
+            </p>
+            </div>
+        ')
             ->column(self::COLUMN_GROUP2)
             ->showSwitcher('SOKEIO_GITHUB_ENABLE', false)
             ->setPrefix('formData.github')

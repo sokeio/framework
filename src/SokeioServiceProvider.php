@@ -4,6 +4,7 @@ namespace Sokeio;
 
 use Sokeio\Concerns\WithServiceProvider;
 use Sokeio\Providers\MediaSignedServiceProvider;
+use Sokeio\Providers\SocialiteServiceProvider;
 use Sokeio\Support\Livewire\LivewireServiceProvider;
 use Sokeio\Support\Platform\PlatformServiceProvider;
 use Sokeio\Support\Theme\ThemeServiceProvider;
@@ -37,11 +38,13 @@ class SokeioServiceProvider extends \Illuminate\Support\ServiceProvider
     public function registeringPackage()
     {
         WatchTime::start();
+
         $this->app->register(ThemeServiceProvider::class);
         $this->app->register(PlatformServiceProvider::class);
         $this->app->register(LivewireServiceProvider::class);
         $this->app->register(WidgetServiceProvider::class);
         $this->app->register(MediaSignedServiceProvider::class);
+        $this->app->register(SocialiteServiceProvider::class);
         Theme::bodyAfter(function () {
             if (setting('SOKEIO_SHOW_PROGRESS_TIMER')) {
                 echo '<p class="p-1 text-center"> Process Time: ' . WatchTime::showSeconds() . '</p>';

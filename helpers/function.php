@@ -26,3 +26,10 @@ if (!function_exists('setting')) {
         return Setting::get($key, $default);
     }
 }
+
+if (!function_exists('tagLink')) {
+    function tagLink($link)
+    {
+        return '<a href="' . $link . '" target="_blank">' . $link . '</a>';
+    }
+}

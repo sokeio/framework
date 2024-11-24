@@ -102,7 +102,6 @@ export default {
   ],
   showMenuContext($event, $path, $type) {
     this.selected = [];
-    this.selectedCount = 0;
     this.$contextMenu?.open($event, $path, $type);
   },
   register() {
@@ -119,20 +118,28 @@ export default {
   },
   boot() {
     this.onDestroy(function () {});
+    this.watch("selected", function (value, oldValue) {
+      if (value != oldValue) {
+        this.selectedCount = this.selected.length;
+      }
+    });
+    this.watch("selectedCount", function (value, oldValue) {
+      if (value != oldValue) {
+        this.btnChooseFileAction.disabled = value == 0;
+      }
+    });
   },
   chooseFile(path) {
     if (!this.$app.multiple) {
       this.selected = [];
     }
-    if (this.selected.includes(path)) {
-      this.selected = this.selected.filter((item) => item != path);
+    let selected = this.selected;
+    if (selected.includes(path)) {
+      selected = selected.filter((item) => item != path);
     } else {
-      this.selected.push(path);
+      selected.push(path);
     }
-    this.selectedCount = this.selected.length;
-    if (this.btnChooseFileAction) {
-      this.btnChooseFileAction.disabled = this.selectedCount == 0;
-    }
+    this.selected = selected;
   },
   checkItemActive(path) {
     return this.selected.includes(path);

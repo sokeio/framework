@@ -76,8 +76,8 @@ class SettingUI extends BaseUI
                         {$this->renderChilds('switcher')}
                     </div>
                 </div>
-                {$this->subTitleRender()}
                 <div class="card-body {$classBody}" {$htmlBodyCard}>
+                    {$this->subTitleRender()}
                     {$this->renderChilds()}
                 </div>
             </div>
