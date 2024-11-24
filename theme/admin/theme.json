@@ -8,6 +8,18 @@
   "keywords": [],
   "priority": 100,
   "namespace": "SokeioTheme\\Admin",
+  "tailwindcss": {
+    "enable": false,
+    "inline": true,
+    "cdn": "https://cdn.tailwindcss.com",
+    "plugins": [
+      "forms",
+      "typography",
+      "aspect-ratio",
+      "line-clamp",
+      "container-queries"
+    ]
+  },
   "templates": [],
   "aliases": {},
   "layouts": {

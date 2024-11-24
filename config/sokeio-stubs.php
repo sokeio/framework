@@ -63,7 +63,7 @@ return [
         'view-errors' => ['path' => 'resources/views/errors', 'generate' => true, 'only' => ['theme']],
         'view-pages' => ['path' => 'resources/views/pages', 'generate' => true, 'only' => ['theme']],
         'view-scope' => ['path' => 'resources/views/scope', 'generate' => true, 'only' => ['theme']],
-        'view-share' => ['path' => 'resources/views/share', 'generate' => true, 'only' => ['theme']],
+        'view-share' => ['path' => 'resources/views/shared', 'generate' => true, 'only' => ['theme']],
         'public' => ['path' => 'public', 'generate' => true],
         'test' => ['path' => 'Tests/Unit', 'namespace' => 'Tests\\Unit', 'generate' => true, 'only' => ['module']],
         'test-feature' => [

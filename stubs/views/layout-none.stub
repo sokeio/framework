@@ -1,14 +1,13 @@
 <!doctype html>
 <html>
 <head>
-    @ThemeHead(before)
-    @ThemeHead(after)
-    @stack('styles')
+    @themeHead
+    
 </head>
-<body @ThemeAttrBody()>
-    @ThemeBody(before)
+<body x-data="sokeioBody()">
+    @themeBody
     @yield('content')
-    @ThemeBody(after)
-    @stack('scripts')
+    @themeBodyEnd
+    
 </body>
 </html>

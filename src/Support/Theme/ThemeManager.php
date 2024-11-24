@@ -7,6 +7,7 @@ use Sokeio\Platform;
 use Sokeio\Support\Theme\Concerns\ThemeData;
 use Sokeio\Support\Theme\Concerns\ThemeHook;
 use Sokeio\Support\Theme\Concerns\ThemeMeta;
+use Sokeio\Tailwindcss;
 
 class ThemeManager
 {
@@ -54,6 +55,7 @@ class ThemeManager
     public function headRender()
     {
         $this->metaRender();
+        Tailwindcss::render($this->getTheme());
         $this->callhook('headBefore');
         $this->renderData('linkCss', function ($value) {
             ['contentOrLink' => $contentOrLink, 'cdn' => $cdn] = $value;
@@ -185,7 +187,7 @@ class ThemeManager
             }
         }
         $layoutDefault = $this->getLayoutName('default');
-        if(Platform::isUrlAdmin() ){
+        if (Platform::isUrlAdmin()) {
             $layoutDefault = $this->getLayoutName(setting('SOKEIO_LAYOUT_ADMIN_THEME', 'default'), true);
         }
         if (View::exists($layoutDefault)) {

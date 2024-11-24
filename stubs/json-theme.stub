@@ -8,8 +8,23 @@
     "priority": 200,
     "aliases": {},
     "namespace":"$NAMESPACE$",
+    "tailwindcss":{
+        "enable":false,
+        "inline": true,
+        "obfuscator":true,
+        "cdn":"https://cdn.tailwindcss.com",
+        "plugins":[
+            "forms",
+            "typography",
+            "aspect-ratio",
+            "line-clamp",
+            "container-queries"
+        ],
+    },
     "templates":[],
     "locations": [],
-    "layout":"",
+    "layouts": {
+        "default": "Theme Default"
+    },
     "requires": []
 }
