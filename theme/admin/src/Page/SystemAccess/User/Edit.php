@@ -22,7 +22,6 @@ class Edit extends \Sokeio\Page
     {
         $permissions = $data->permissions()->pluck('id')?->toArray() ;
         $roles = $data->roles()->pluck('id')?->toArray() ;
-        Log::info(['afterMount', $permissions, $roles]);
         data_set($this->formData, 'permissions', $permissions);
         data_set($this->formData, 'roles', $roles);
     }

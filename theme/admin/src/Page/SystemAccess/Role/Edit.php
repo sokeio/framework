@@ -31,7 +31,7 @@ class Edit extends \Sokeio\Page
     }
     protected function getIsAdmin()
     {
-        if ($this->isSuperAdmin === null) {
+        if ($this->isSuperAdmin === null&&$this->dataId) {
             $this->isSuperAdmin = $this->getDataModel()->isSuperAdmin();
         }
         return $this->isSuperAdmin;
@@ -47,7 +47,7 @@ class Edit extends \Sokeio\Page
         return [
             PageUI::init([
                 Input::init('name')->label(__('Name'))->ruleRequired(),
-                Input::init('slug')->label(__('Slug'))->ruleRequired()->when(function () {
+                Input::init('slug')->label(__('Slug'))->ruleRequired()->ruleUnique()->when(function () {
                     return !$this->getIsAdmin();
                 }),
                 Textarea::init('description')->label(__('Description')),

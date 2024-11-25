@@ -60,6 +60,22 @@ trait WithRule
     {
         return $this->rule('required', $message, $params, $callback);
     }
+    public function ruleUnique($message = null, $params = [], $callback = null, $key = null, $table = null)
+    {
+        return $this->register(function () use ($key, $table, $message, $params, $callback) {
+            if (!$table) {
+                $table = app($this->getWire()->getModel())->getTable();
+            }
+            if (!$key) {
+                $key = $this->getFieldNameWithoutPrefix();
+            }
+            if ($this->getWire()->dataId) {
+                $key .= ',' . $this->getWire()->dataId;
+            }
+            return $this->rule('unique:' . $table . ',' . $key, $message, $params, $callback);
+        });
+    }
+
     public function ruleEmail($message = null, $params = [], $callback = null)
     {
         return $this->rule('email', $message, $params, $callback);
@@ -76,6 +92,7 @@ trait WithRule
     {
         return $this->rule('between:' . $min . ',' . $max, $message, $params, $callback);
     }
+
     public function ruleInteger($message = null, $params = [], $callback = null)
     {
         return $this->rule('integer', $message, $params, $callback);
