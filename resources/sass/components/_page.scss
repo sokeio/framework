@@ -43,8 +43,9 @@
     }
 
     .system-updater-wrapper {
-        min-height: calc(100vh - 120px);
-        border: 1px solid #e5e5e5;
+        min-height: calc(100vh - 200px);
+        border: 1px solid #d3d0d0;
+        box-shadow: 0 0 2px #d3d0d0;
         border-radius: 5px;
         padding: 20px;
         display: flex;
@@ -53,8 +54,22 @@
         .system-updater-component {
             flex: auto;
         }
-        .system-updater-bottom{
+
+        .system-updater-bottom {
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+
+            .spinner-border {
+                width: 2rem;
+                height: 2rem;
+                margin: 0 auto;
+                top: -3rem;
+
+                position: absolute;
+            }
         }
     }
 }

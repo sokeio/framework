@@ -22,11 +22,12 @@ class CacheSystem extends \Sokeio\Page
 {
     use WithUI;
     const COLUMN = 'col-lg-4 col-md-6 col-sm-12';
-    protected function setupUI()
+    private function settingClear()
     {
-        $setting = [
+        return [
             [
                 'title' => 'Clear Cache',
+                'icon' => 'ti ti-playlist-x',
                 'subtitle' => 'it will clear all cache in the system',
                 'message-success' => 'Cache has been cleared!',
                 'column' => self::COLUMN,
@@ -37,6 +38,7 @@ class CacheSystem extends \Sokeio\Page
             ],
             [
                 'title' => 'Clear View',
+                'icon' => 'ti ti-script-x',
                 'subtitle' => 'it will clear all View in the system',
                 'message-success' => 'View has been cleared!',
                 'column' => self::COLUMN,
@@ -47,6 +49,7 @@ class CacheSystem extends \Sokeio\Page
             ],
             [
                 'title' => 'Clear Config',
+                'icon' => 'ti ti-adjustments-minus',
                 'subtitle' => 'it will clear all Config in the system',
                 'message-success' => 'Config has been cleared!',
                 'column' => self::COLUMN,
@@ -56,14 +59,30 @@ class CacheSystem extends \Sokeio\Page
                 'action' => 'sokeio::system::config.clear',
             ]
         ];
+    }
+    public function clearAll()
+    {
+        foreach ($this->settingClear() as $item) {
+            try {
+                $item['fn']();
+            } catch (\Exception $e) {
+                $this->alert($e->getMessage(), $item['title'], 'danger');
+                return;
+            }
+        }
+        $this->alert('All cache has been cleared!', 'Cache System', 'success');
+    }
+    protected function setupUI()
+    {
         return [
             PageUI::init([
                 Div::init(
-                    collect($setting)->map(function ($item) {
+                    collect($this->settingClear())->map(function ($item) {
                         return Card::init([
                             Div::init(
                                 Button::init()->text($item['title'])
                                     ->className('btn btn-primary')
+                                    ->icon(($item['icon'] ?? 'ti ti-trash') . ' fs-4 ')
                                     ->wireClick(function () use ($item) {
                                         $item['fn']();
                                         $this->alert($item['message-success'], $item['title'], 'success');
@@ -77,7 +96,12 @@ class CacheSystem extends \Sokeio\Page
                             );
                     })->toArray()
                 )->row()
-            ])->rightUI([])
+            ])->rightUI([
+                Button::init()->text(__('Clear All Cache'))
+                    ->icon('ti ti-trash')
+                    ->className('btn btn-danger')
+                    ->wireClick('clearAll')
+            ])
 
         ];
     }

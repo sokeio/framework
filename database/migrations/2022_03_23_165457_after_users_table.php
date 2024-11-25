@@ -34,10 +34,10 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropUnique(['phone_number_email_unique']);
-            $table->dropUnique(['email']);
-        });
+        // Schema::table('users', function (Blueprint $table) {
+        //     $table->dropUnique(['phone_number_email_unique']);
+        //     $table->dropUnique(['email']);
+        // });
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('username');
             $table->dropColumn('avatar_url');
