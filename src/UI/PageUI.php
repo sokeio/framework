@@ -55,6 +55,10 @@ class PageUI extends BaseUI
     {
         return $this->child($ui, 'after');
     }
+    public function hidePageHeader()
+    {
+        return $this->vars('hidePageHeader', true);
+    }
     public function row()
     {
         return $this->vars('row', 'row');
@@ -74,14 +78,14 @@ class PageUI extends BaseUI
         }
         return $this->renderChilds();
     }
-    private function getPageView()
+    private function getPageHeadView()
     {
-        $attr = $this->getAttr();
+        if ($this->checkVar('hidePageHeader')) {
+            return '';
+        }
         $title = $this->getVar('title', '', true);
         $icon = $this->getIcon();
-        $card = $this->getVar('card', '', true);
         return <<<HTML
-            <div {$attr}>
                 <div class="page-header d-print-none">
                     <div class="row align-items-center">
                         <div class="col-md col-sm-12 mb-1">
@@ -94,6 +98,16 @@ class PageUI extends BaseUI
                         </div>
                     </div>
                 </div>
+            HTML;
+    }
+    private function getPageView()
+    {
+        $attr = $this->getAttr();
+
+        $card = $this->getVar('card', '', true);
+        return <<<HTML
+            <div {$attr}>
+                {$this->getPageHeadView()}
                 <div class="page-body {$card}">
                     {$this->renderChilds('before')}
                     {$this->contentChildrenRender()}

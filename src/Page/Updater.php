@@ -21,7 +21,7 @@ use Sokeio\UI\WithUI;
 class Updater extends \Sokeio\Page
 {
     use WithUI;
-    public $wireTest="duwx dieux";
+    public $wireTest = "duwx dieux";
 
     protected function setupUI()
     {
@@ -29,12 +29,15 @@ class Updater extends \Sokeio\Page
             PageUI::init([
                 Div::init()->viewBlade('sokeio::pages.system-updater')
             ])
+                ->hidePageHeader()
                 ->card()
                 ->icon('ti ti-settings')
+                ->className('page-system-updater')
 
         ];
     }
-    public function saveDemo(){
-        $this->wireTest="duwx dieux:".rand(1, 100);
+    public function systemUpdater()
+    {
+        $this->wireTest = "duwx dieux:" . rand(1, 100);
     }
 }

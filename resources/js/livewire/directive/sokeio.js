@@ -29,7 +29,7 @@ export default {
     el.style.display = "none";
     console.log("sokeio", el.$sokeio_template);
     // divWrapper.appendChild(el);
-    // el.parentNode.removeChild(el);
+    el.parentNode.removeChild(el);
     //cleanup(() => {
     //   div.parentNode.insertBefore(el, div);
     //   div.remove();

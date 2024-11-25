@@ -1,0 +1,24 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2600 1625" width="2600" height="1625">
+	<defs>
+		<linearGradient id="g1" x2="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(-48.001,2972.006,-1857.504,-30,1836.983,-183.111)">
+			<stop offset=".003" stop-color="#ffffff"/>
+			<stop offset="1" stop-color="#d2d2ff"/>
+		</linearGradient>
+	</defs>
+	<style>
+		tspan { white-space:pre } 
+		.s0 { fill: url(#g1) } 
+		.s1 { fill: #b3b3b3 } 
+	</style>
+	<g id="Background">
+		<g id="&lt;Group&gt;">
+			<path id="&lt;Path&gt;" class="s0" d="m2600 1623h-2600v-1625h2600z"/>
+			<g id="&lt;Group&gt;" style="opacity: .1">
+				<path id="&lt;Path&gt;" class="s1" d="m2239 3c0 0-461.8-24.5-442 239.2 19.8 263.7-164.3 201.3-350 283.8-185.7 82.5-121.2 201.1-192.3 290.1-71.1 89-246.3 40-293.7 190.5-47.4 150.4-114.9 255.9-350 273.7-235.1 17.8-236.5 50.3-280 140.9-43.5 90.6-113.1 203.8-331 203.8h2600v-1617.9z"/>
+			</g>
+			<g id="&lt;Group&gt;" style="opacity: .1">
+				<path id="&lt;Path&gt;" class="s1" d="m2254 3c0 0-435-24.5-416.2 239.2 18.7 263.7-218.5 171-394.8 253.5-176.3 82.5-52.5 231.4-120 320.4-67.5 89-251-32.9-296 117.5-45 150.5-146.6 290.2-369.7 308-223.2 17.8-195.9 80.9-237.1 171.5-41.3 90.6-81.4 211.9-288.3 211.9h2468.1v-1625z"/>
+			</g>
+		</g>
+	</g>
+</svg>

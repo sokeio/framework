@@ -1,56 +1,19 @@
-<div>
-    <div wire:ignore>
-        <template type="text/x-template" wire:sokeio>
-
-            let test= {
-            state: {
-            tesst: "Dữ dữ liệu test",
-            },
-            testHam() {
-            this.$wire.wireTest="bac"+ this.tesst ;
-            this.tesst = new Date().getTime();
-            },
-            render() {
-            return `
-            <div class="p-4">
-                <h1>hello world1</h1>
-                <p so-text="tesst">dfdfdfdf</p>
-                <button class="btn btn-primary" so-on:click="testHam()">click 123</button>
-            </div>
-            `;
-            },
-            };
-            export default {
-            components: {
-            'sokeio::test': test
-            },
-            state: {
-            tesst: "123456",
-            },
-            updateTime() {
-            let self = this;
-            setTimeout(function () {
-            self.tesst = new Date();
-            self.updateTime();
-            }, 1000);
-            },
-            ready() {
-            this.updateTime();
-            },
-            render() {
-            return `
-            <div class="p-4">
-                <h1>hello world</h1>
-                <p so-text="tesst">dfdfdfdf</p>
-                <button class="btn btn-primary" so-on:click="this.tesst=new Date().getTime();">click</button>
-                [sokeio::test /]
-            </div>
-            `;
-            },
-            };
-
-        </template>
+<div class="system-updater-wrapper"
+    style="background-image: url({{ asset('platform/module/sokeio/sokeio_bg.svg') }});
+    background-size: cover;
+    background-repeat: repeat">
+    <div class="system-updater-top">
+        <h1 class="text-center fw-bold mb-4">System Updater</h1>
     </div>
-    <input wire:model='wireTest' type="text" class="form-control" placeholder="Enter dashboard name">
-    <button class="btn btn-primary" wire:click='saveDemo()'>Save</button>
+    <div class="row system-updater-component">
+        <div class="col-12 col-lg-6">
+            @sokeio('system-updater.js', [], ['class' => ''])
+        </div>
+        <div class="col-12 col-lg-6">
+            <img class="h-75" src="{{ asset('platform/module/sokeio/sokeio_update.svg') }}" alt="" />
+        </div>
+    </div>
+    <div class="system-updater-bottom">
+        <button class="btn btn-primary" wire:click='systemUpdater()'>Update Now</button>
+    </div>
 </div>
