@@ -25,7 +25,7 @@
 @else
     <li wire:key="menu-{{ $item->key }}" class="nav-item" menu-sort="{{ $item->sort }}">
         <a class="nav-link {{ $item->classItem }}" href="{{ $url }}" wire:navigate.hover>
-            @if ($item->icon)
+            @if ($item->icon )
                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                     {!! $item->getIcon() !!}
                 </span>

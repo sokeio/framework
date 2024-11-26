@@ -17,6 +17,7 @@ use Sokeio\UI\WithUI;
     title: 'Permission',
     menu: true,
     menuTitle: 'Permissions',
+    icon: 'ti ti-shield-lock',
     model: Permission::class
 )]
 class Index extends \Sokeio\Page

@@ -17,7 +17,7 @@ use Sokeio\UI\WithUI;
     title: 'Module System',
     menu: true,
     menuTitle: 'Module',
-    icon: 'ti ti-apps fs-2',
+    icon: 'ti ti-apps ',
     sort: 99990
 )]
 class Index extends \Sokeio\Page

@@ -21,7 +21,8 @@ use Sokeio\UI\WithUI;
     menu: true,
     menuTitle: 'Users',
     menuTargetTitle: 'Users',
-    menuTargetIcon: 'ti ti-users fs-2',
+    menuTargetIcon: 'ti ti-users',
+    icon: 'ti ti-users',
     menuTargetSort: 1000,
     sort: 0,
     model: User::class

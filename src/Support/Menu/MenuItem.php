@@ -89,6 +89,9 @@ class MenuItem implements Arrayable
         if ($this->icon != strip_tags($this->icon)) {
             return $this->icon;
         }
+        if (!str($this->icon)->contains('fs-')) {
+            return '<i class="fs-2 ' . $this->icon . '"></i>';
+        }
         return '<i class="' . $this->icon . '"></i>';
     }
 

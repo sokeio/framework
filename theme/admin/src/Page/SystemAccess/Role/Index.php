@@ -13,6 +13,7 @@ use Sokeio\UI\WithUI;
     admin: true,
     auth: true,
     title: 'Role',
+    icon: 'ti ti-user-check',
     menu: true,
     menuTitle: 'Roles',
     sort: 1,

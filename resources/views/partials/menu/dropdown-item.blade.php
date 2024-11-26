@@ -22,6 +22,11 @@
     </div>
 @else
     <a class="dropdown-item {{ $item->classItem }}" href="{{ $url }}" wire:navigate.hover>
+        @if ($item->icon && setting('SOKEIO_SHOW_ICON_IN_SUBMENU', true))
+            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                {!! $item->getIcon() !!}
+            </span>
+        @endif
         {{ $item->title }}
     </a>
 @endif

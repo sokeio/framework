@@ -15,7 +15,7 @@ use Sokeio\UI\WithUI;
     menu: true,
     menuTitle: 'Updater',
     menuClass: 'sokeio-btn-system-updater',
-    icon: 'ti ti-refresh fs-2',
+    icon: 'ti ti-refresh ',
     sort: 999999999999,
     enableKeyInSetting: 'SOKEIO_SYSTEM_UPDATER_ENABLE'
 )]

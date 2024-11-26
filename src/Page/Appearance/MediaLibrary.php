@@ -11,6 +11,7 @@ use Sokeio\UI\WithUI;
     admin: true,
     auth: true,
     title: 'Media Library',
+    icon:'ti ti-cloud-data-connection',
     menu: true,
     menuTitle: 'Media Library',
     sort: 999999999,

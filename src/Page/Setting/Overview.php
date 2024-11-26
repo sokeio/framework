@@ -22,8 +22,9 @@ use Sokeio\UI\WithSettingUI;
     title: 'Overview',
     menu: true,
     menuTitle: 'Overview',
+    menuIcon: 'ti ti-table-options',
     menuTargetSort: 99999,
-    icon: 'ti ti-cogs',
+    icon: 'ti ti-table-options',
     sort: 0,
 )]
 class Overview extends \Sokeio\Page
@@ -96,6 +97,12 @@ class Overview extends \Sokeio\Page
     private function settingUtility()
     {
         return SettingUI::init([
+            SwitchField::init('SOKEIO_SHOW_ICON_IN_SUBMENU')
+                ->col4()
+                ->labelTrue('Enable')
+                ->labelFalse('Disable')
+                ->valueDefault(true)
+                ->label('Show Icon In Submenu'),
             SwitchField::init('SOKEIO_SHOW_PROGRESS_TIMER')
                 ->col4()
                 ->labelTrue('Enable')

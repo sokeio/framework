@@ -22,7 +22,7 @@ use Sokeio\Widget;
     route: 'dashboard',
     title: 'Dashboard',
     menuTitle: 'Dashboard',
-    icon: 'ti ti-dashboard fs-2',
+    icon: 'ti ti-dashboard ',
     menu: true,
     sort: 0
 )]
