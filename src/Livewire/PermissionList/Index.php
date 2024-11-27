@@ -11,6 +11,12 @@ class Index extends Component
 {
     #[Modelable]
     public $values = [];
+    public function mount()
+    {
+        if (!is_array($this->values)) {
+            $this->values = [];
+        }
+    }
     private function treePermissions($permissions, $level = 0)
     {
         $data = collect([]);

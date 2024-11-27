@@ -31,6 +31,9 @@ class SwitchField extends FieldUI
             if ($this->getValue() || ($this->getValue() === null && $this->getValueDefault())) {
                 $this->attr('checked', 'checked');
             }
+            if ($this->getValue() === null) {
+                $this->setValue($this->getValueDefault() || 0);
+            }
         });
     }
     protected function fieldView()
