@@ -13,6 +13,7 @@ export default {
 
     el.$sokeio_sortable = window.Sortable.create(el, {
       animation: 150,
+      filter: "[data-sortable-ignore]",
       ...options,
       draggable: "[wire\\:sortable\\.item]",
       handle: el.querySelector("[wire\\:sortable\\.handle]")
