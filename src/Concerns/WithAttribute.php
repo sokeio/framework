@@ -14,13 +14,13 @@ trait WithAttribute
         $callback($this);
         return $this;
     }
-    public static function getInfoFromUI($ui): ?self
+    public static function getInfoFrom($className): ?self
     {
         // use ReflectionClass
-        $reflection = new \ReflectionClass($ui);
+        $reflection = new \ReflectionClass($className);
         $attributes = $reflection->getAttributes(static::class, \ReflectionAttribute::IS_INSTANCEOF);
         foreach ($attributes as $attribute) {
-            return $attribute->newInstance()->tap(fn(self $info) => $info->className = $ui);
+            return $attribute->newInstance()->tap(fn(self $info) => $info->className = $className);
         }
         return null;
     }
