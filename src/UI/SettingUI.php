@@ -2,7 +2,6 @@
 
 namespace Sokeio\UI;
 
-use Illuminate\Support\Facades\Log;
 use Sokeio\UI\Field\SwitchField;
 
 class SettingUI extends BaseUI
