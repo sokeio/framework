@@ -42,12 +42,13 @@ class Button extends BaseUI
             $wireClick = $this->getId() . $actionName;
 
             $this->action($wireClick, function ($_params) use ($callback) {
-                if (is_array($_params) && count($_params) > 0) {
-                    call_user_func($callback, ...$_params);
+                if (is_array($_params) && !empty($_params)) {
+                    $_params[] = $this;
+                    call_user_func($callback,  ...$_params);
                 } elseif ($_params) {
-                    call_user_func($callback, $_params);
+                    call_user_func($callback,  $_params, $this);
                 } else {
-                    call_user_func($callback);
+                    call_user_func($callback, $this);
                 }
             });
 

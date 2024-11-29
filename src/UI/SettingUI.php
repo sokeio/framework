@@ -26,6 +26,9 @@ class SettingUI extends BaseUI
                 })
                 ->boot(function () {
                     $this->setupChild(function ($item) {
+                        if (method_exists($item, 'whenRule') === false) {
+                            return;
+                        }
                         $item->whenRule(function ($item) {
                             return $item->getParams('setting_enable') === true;
                         });
