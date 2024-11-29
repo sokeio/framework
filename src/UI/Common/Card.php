@@ -3,9 +3,11 @@
 namespace Sokeio\UI\Common;
 
 use Sokeio\UI\BaseUI;
+use Sokeio\UI\Common\Concerns\WithViewBlade;
 
 class Card extends BaseUI
 {
+    use WithViewBlade;
     protected function initUI()
     {
         $this->render(function () {
@@ -14,17 +16,7 @@ class Card extends BaseUI
             }
         });
     }
-    public function viewBlade($blade, $params = [])
-    {
-        return $this->child([
-            function () use ($blade, $params) {
-                if (is_callable($params)) {
-                    $params = call_user_func($params, $this);
-                }
-                return view($blade, $params)->render();
-            }
-        ]);
-    }
+
     public function title($title)
     {
         return $this->vars('title', $title);

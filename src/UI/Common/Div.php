@@ -5,26 +5,16 @@ namespace Sokeio\UI\Common;
 use Sokeio\UI\BaseUI;
 use Sokeio\UI\Common\Concerns\DivAlert;
 use Sokeio\UI\Common\Concerns\DivGrid;
+use Sokeio\UI\Common\Concerns\WithViewBlade;
 
 class Div extends BaseUI
 {
-    use DivGrid, DivAlert;
+    use DivGrid, DivAlert, WithViewBlade;
     public function text($text)
     {
         return $this->vars('text', $text);
     }
 
-    public function viewBlade($blade, $params = [])
-    {
-        return $this->child([
-            function () use ($blade, $params) {
-                if (is_callable($params)) {
-                    $params = call_user_func($params, $this);
-                }
-                return view($blade, $params)->render();
-            }
-        ]);
-    }
     public function useModalButtonRight()
     {
         return $this->className('px-2 pt-2 so-modal-button-right');

@@ -2,6 +2,8 @@
 
 namespace Sokeio\UI\Concerns;
 
+use Illuminate\Support\Facades\Log;
+use Livewire\Drawer\Utils;
 use Sokeio\Pattern\Tap;
 use Sokeio\UI\BaseUI;
 use Sokeio\UI\SoUI;
@@ -11,15 +13,23 @@ trait LifecycleUI
 {
     use Tap;
     private BaseUI|SoUI  $parent;
+    private $showLogDebug = false;
     private $childs = [];
     private $params = [];
     private $prefix = '';
     private $group = '';
     protected $context = null;
+    protected $viewFactory = null;
     protected HookUI $hook;
     private $whenCallbacks = [];
     private $callbackDebug = null;
     private $skipBoot = false;
+    private $uiId = null;
+    public function uiId($uiId)
+    {
+        $this->uiId = $uiId;
+        return $this;
+    }
     public function skipBoot()
     {
         $this->skipBoot = true;
@@ -32,6 +42,12 @@ trait LifecycleUI
     }
     private function checkDebug($key)
     {
+        if ($this->showLogDebug) {
+            if ($this->uiId == null) {
+                $this->uiId = uniqid();
+            }
+            Log::info([$this->uiId, static::class, $key, $this->viewFactory ? "true" : "false"]);
+        }
         if ($this->callbackDebug) {
             call_user_func($this->callbackDebug, $this, $key);
         }
@@ -152,6 +168,33 @@ trait LifecycleUI
         $this->context = null;
         return $this->setupChild((fn($c) => $c->clearContext()));
     }
+    public function getViewFactory()
+    {
+        $this->checkDebug('getViewFactory');
+        return $this->viewFactory;
+    }
+    public function makeView($view, $data = [], $mergeData = [])
+    {
+        return $this->getViewFactory()->make($view, $data, $mergeData)
+        ->with(Utils::getPublicPropertiesDefinedOnSubclass($this->getWire()));
+    }
+    public function viewRender($view, $data = [], $mergeData = [])
+    {
+        return  $this->makeView($view, $data, $mergeData)?->render();
+    }
+
+    public function setViewFactory($viewFactory)
+    {
+        $this->viewFactory = $viewFactory;
+        $this->checkDebug('setViewFactory');
+        return $this->setupChild(fn($c) => $c->setViewFactory($viewFactory));
+    }
+    public function clearViewFactory()
+    {
+        $this->viewFactory = null;
+        return $this->setupChild((fn($c) => $c->clearViewFactory()));
+    }
+
     public function setParams($params)
     {
         if (!is_array($params)) {

@@ -50,6 +50,10 @@ trait WithUI
     {
         return $this->getPageConfig()->getTitle();
     }
+    public function getPageIcon()
+    {
+        return $this->getPageConfig()->getIcon();
+    }
     public function render()
     {
         return view('sokeio::ui', ['ui' => $this->getUI()]);

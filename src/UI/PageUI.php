@@ -23,19 +23,19 @@ class PageUI extends BaseUI
             if (!$this->checkVar('title')) {
                 $this->title($this->getWire()->getPageTitle());
             }
+            if (!$this->checkVar('icon')) {
+                $this->icon($this->getWire()->getPageIcon());
+            }
+            if (!$this->checkVar('icon')) {
+                $this->icon('ti ti-dashboard');
+            }
             if ($this->isModal()) {
                 $this->className('sokeio-modal-ui');
-                if (!$this->getIcon()) {
-                    $this->icon('ti ti-dashboard');
-                }
                 if (!$this->overlayClose) {
                     $this->attr('data-skip-overlay-close', true);
                 }
             } else {
                 $this->className('sokeio-page-ui');
-                if (!$this->getIcon()) {
-                    $this->icon('ti ti-wallpaper');
-                }
             }
         });
     }

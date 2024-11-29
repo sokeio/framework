@@ -66,34 +66,31 @@ class Index extends \Sokeio\Page
         if (!$this->dashboardKey) {
             $this->dashboardKey = 'dashboard-' . (time() . rand(1000, 9999));
         }
-        return [
-            PageUI::init([
-                Div::init()->viewBlade('sokeio::pages.dashboard.index', [
-                    'widgets' => $this->getWidgets(),
-                    'dashboardKey' => $this->dashboardKey,
-                    'dashboard_id' => data_get($this->dataSearch, 'dashboard_id')
-                ])
+        return PageUI::init([
+            Div::init()->viewBlade('sokeio::pages.dashboard.index', [
+                'widgets' => $this->getWidgets(),
+                'dashboard_id' => data_get($this->dataSearch, 'dashboard_id')
             ])
-                ->className('p-2')
-                ->icon('ti ti-dashboard')->rightUI([
-                    Select::init('dashboard_id')->placeholder('Dashboard')
-                        ->remoteActionWithModel(Dashboard::class)
-                        ->valueDefault(data_get($this->dataSearch, 'dashboard_id'))
-                        ->classNameWrapper('me-2')->debounce(10),
-                    // DatePicker::init('from_date')->placeholder(__('Start Date'))
-                    //     ->classNameWrapper('me-2')
-                    //     ->valueDefault(Carbon::now()->subDays(30))->debounce(10),
-                    // DatePicker::init('to_date')->placeholder(__('End Date'))
-                    //     ->valueDefault(Carbon::now())->debounce(10),
-                    Button::init()
-                        ->text(__('Settings'))
-                        ->icon('ti ti-settings')
-                        ->className('btn btn-danger')
-                        ->modalRoute($this->getRouteName('setting')),
-                ])->setPrefix('dataSearch')
-                ->render(function () {
-                    $this->updatedDataSearch();
-                })
-        ];
+        ])
+            ->className('p-2')
+            ->icon('ti ti-dashboard')->rightUI([
+                Select::init('dashboard_id')->placeholder('Dashboard')
+                    ->remoteActionWithModel(Dashboard::class)
+                    ->valueDefault(data_get($this->dataSearch, 'dashboard_id'))
+                    ->classNameWrapper('me-2')->debounce(10),
+                // DatePicker::init('from_date')->placeholder(__('Start Date'))
+                //     ->classNameWrapper('me-2')
+                //     ->valueDefault(Carbon::now()->subDays(30))->debounce(10),
+                // DatePicker::init('to_date')->placeholder(__('End Date'))
+                //     ->valueDefault(Carbon::now())->debounce(10),
+                Button::init()
+                    ->text(__('Settings'))
+                    ->icon('ti ti-settings')
+                    ->className('btn btn-danger')
+                    ->modalRoute($this->getRouteName('setting')),
+            ])->setPrefix('dataSearch')
+            ->render(function () {
+                $this->updatedDataSearch();
+            });
     }
 }

@@ -39,18 +39,21 @@ class Setting extends \Sokeio\Page
 
     protected function setupUI()
     {
-        if (!Dashboard::query()->where('id', $this->dashboardId)->exists()) {
-            $this->dashboardId = 0;
-        }
-        $dashboards = Dashboard::query()->orderBy('id', 'desc')->get(['id', 'name']);
-        if ($this->dashboardId <= 0 && $dashboards->count() > 0) {
-            $this->dashboardId = $dashboards->first()?->id ?? 0;
-        }
+
         return PageUI::init([
-            Div::init()->className('row g-0')->viewBlade('sokeio::pages.dashboard.setting', [
-                'dashboards' => $dashboards,
-                'dashboardId' => $this->dashboardId,
-            ])
+            Div::init()->className('row g-0')->render(function ($div) {
+                if (!Dashboard::query()->where('id', $this->dashboardId)->exists()) {
+                    $this->dashboardId = 0;
+                }
+                $dashboards = Dashboard::query()->orderBy('id', 'desc')->get(['id', 'name']);
+                if ($this->dashboardId <= 0 && $dashboards->count() > 0) {
+                    $this->dashboardId = $dashboards->first()?->id ?? 0;
+                }
+                $div->viewBlade('sokeio::pages.dashboard.setting', [
+                    'dashboards' => $dashboards,
+                    'dashboardId' => $this->dashboardId,
+                ]);
+            })
         ])
             ->icon('ti ti-settings')
             ->className('p-2')
