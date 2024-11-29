@@ -180,7 +180,7 @@ trait LifecycleUI
     }
     public function viewRender($view, $data = [], $mergeData = [])
     {
-        return  $this->makeView($view, $data, $mergeData)?->render();
+        return $this->makeView($view, $data, $mergeData)->render();
     }
 
     public function setViewFactory($viewFactory)
