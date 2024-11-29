@@ -21,6 +21,11 @@ class Card extends BaseUI
     {
         return $this->vars('title', $title);
     }
+    public function bodyClass($bodyClass)
+    {
+        return $this->vars('bodyClass', $bodyClass);
+    }
+
     public function subtitle($subtitle)
     {
         return $this->vars('subtitle', $subtitle);
@@ -34,7 +39,7 @@ class Card extends BaseUI
         $attr = $this->getAttr();
         $html = <<<HTML
         <div {$attr}>
-        <div class="card-body">
+        <div class="card-body {$this->getVar('bodyClass', 'p-3', true)}">
         <h3 class="card-title">{$this->getVar('title', '', true)}</h3>
         <p class="text-secondary">{$this->getVar('subtitle', '', true)}</p>
         </div>
