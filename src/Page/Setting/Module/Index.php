@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Page\Module;
+namespace Sokeio\Page\Setting\Module;
 
 use Livewire\Attributes\Url;
 use Sokeio\Platform;
@@ -18,7 +18,7 @@ use Sokeio\UI\WithUI;
     menu: true,
     menuTitle: 'Module',
     icon: 'ti ti-apps ',
-    sort: 99990
+    sort: 15
 )]
 class Index extends \Sokeio\Page
 {

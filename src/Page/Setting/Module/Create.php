@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Page\Module;
+namespace Sokeio\Page\Setting\Module;
 
 use Livewire\Attributes\Rule;
 use Sokeio\Platform;

@@ -8,7 +8,7 @@ class WidgetManager
     private $widgets = [];
     public function registerClass($widget)
     {
-        $info = WidgetInfo::getInfoFromUI($widget);
+        $info = WidgetInfo::getInfoFrom($widget);
         if (!$info) {
             return;
         }
