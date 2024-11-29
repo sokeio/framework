@@ -149,6 +149,10 @@ class ItemInfo extends ObjectJson
                 // symlink
                 app('files')->link($pathPublic, $pathTarget);
             } catch (\Exception $e) {
+                Log::info([
+                    'pathPublic' => $pathPublic,
+                    'pathTarget' => $pathTarget
+                ]);
                 Log::error($e);
             }
         }
