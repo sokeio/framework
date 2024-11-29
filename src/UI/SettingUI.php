@@ -20,9 +20,9 @@ class SettingUI extends BaseUI
                 ->labelTrue('Enable')
                 ->labelFalse('Disable')
                 ->valueDefault($default)
-                ->boot(function (SwitchField $item) {
+                ->boot(function (SwitchField $item) use ($default) {
                     $this->keyEnable = $item->getFieldName();
-                    $this->valueEnable = $item->getValue();
+                    $this->valueEnable = $item->getValue() === null ? $default : $item->getValue();
                     $this->setParams(['setting_enable' => $this->valueEnable]);
                 })
                 ->boot(function () {

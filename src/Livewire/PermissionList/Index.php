@@ -2,7 +2,6 @@
 
 namespace Sokeio\Livewire\PermissionList;
 
-use Livewire\Attributes\Lazy;
 use Livewire\Attributes\Modelable;
 use Sokeio\Component;
 use Sokeio\Models\Permission;

@@ -2,6 +2,7 @@
 
 namespace Sokeio\UI\Concerns;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Livewire\Drawer\Utils;
 use Sokeio\Pattern\Tap;
@@ -176,7 +177,7 @@ trait LifecycleUI
     public function makeView($view, $data = [], $mergeData = [])
     {
         return $this->getViewFactory()->make($view, $data, $mergeData)
-        ->with(Utils::getPublicPropertiesDefinedOnSubclass($this->getWire()));
+            ->with(Utils::getPublicPropertiesDefinedOnSubclass($this->getWire()));
     }
     public function viewRender($view, $data = [], $mergeData = [])
     {
@@ -248,6 +249,9 @@ trait LifecycleUI
     {
         if (!$childs) {
             return $this;
+        }
+        if ($childs instanceof Collection) {
+            $childs = $childs->toArray();
         }
         if (!is_array($childs)) {
             $childs = [$childs];
