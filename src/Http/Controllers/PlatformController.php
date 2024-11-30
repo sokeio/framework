@@ -37,4 +37,14 @@ class PlatformController extends Controller
         }
         echo "</table>";
     }
+    #[RouteInfo(
+        MethodType::GET,
+        'platform/components',
+        enableKeyInSetting: 'PLATFORM_COMPONENT_ROUTE_ENABLE',
+        enable: false
+    )]
+    public function components()
+    {
+        return Platform::getLivewireComponents();
+    }
 }
