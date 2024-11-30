@@ -2,7 +2,10 @@
 
 namespace Sokeio\UI;
 
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\View;
 use Sokeio\Setting;
 use Sokeio\UI\Concerns\LifecycleUI;
 
@@ -48,7 +51,7 @@ class SoUI
         $rules = [];
         $labels = [];
         foreach ($this->fields as $field) {
-            if ($group && $field->getGroup() != $group ) {
+            if ($group && $field->getGroup() != $group) {
                 continue;
             }
             $messages = array_merge($messages, $field->getRuleMessages());
@@ -91,6 +94,7 @@ class SoUI
             $data = $data->toArray();
         }
         $validator = Validator::make([$field => $data], $rule['rules'], $rule['messages'], $rule['labels']);
+
         if ($excute) {
             return $validator->validate();
         }

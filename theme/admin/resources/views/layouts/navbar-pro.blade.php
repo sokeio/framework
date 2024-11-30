@@ -12,9 +12,7 @@
     <div class="page">
         @themeInclude('shared.header-pro')
         <div class="page-wrapper">
-            <div class="container-xxl">
-                @yield('content')
-            </div>
+            @themeInclude('shared.content')
         </div>
         @themeInclude('shared.footer')
     </div>

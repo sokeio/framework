@@ -10,11 +10,12 @@
 <body x-data="sokeioBody()">
     @themeBody
     <div class="page">
-        @themeInclude('shared.header')
+        @themeInclude('shared.sidebar')
+        @themeInclude('shared.sidebar-header')
         <div class="page-wrapper">
             @themeInclude('shared.content')
+            @themeInclude('shared.footer')
         </div>
-        @themeInclude('shared.footer')
     </div>
     @themeBodyEnd
 </body>

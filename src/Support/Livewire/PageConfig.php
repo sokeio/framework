@@ -4,6 +4,7 @@ namespace Sokeio\Support\Livewire;
 
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use Sokeio\Attribute\PageInfo;
 use Sokeio\Platform;
@@ -81,6 +82,12 @@ class PageConfig
             $layoutConfig->view = "sokeio::html";
         } else {
             $layoutConfig->view = Theme::getLayout($config->getLayout());
+            $arr = explode('::layouts.', $layoutConfig->view);
+            if (count($arr) > 1) {
+                $name =  $arr[1];
+                $classContent = Theme::getTheme()->getLayoutData($name . '.classContent');
+                View::share('themeLayoutClassContent', $classContent);
+            }
         }
         Theme::title($config->getTitle());
     }

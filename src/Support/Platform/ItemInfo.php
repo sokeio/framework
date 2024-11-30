@@ -93,10 +93,14 @@ class ItemInfo extends ObjectJson
             }
             $arrLayouts[] = [
                 'value' => $name,
-                'text' => $label,
+                'text' => $label['title'],
             ];
         }
         return  $arrLayouts;
+    }
+    public function getLayoutData($name = 'default', $default = null)
+    {
+        return data_get($this->layouts, $name, $default);
     }
     private function getPublicName()
     {

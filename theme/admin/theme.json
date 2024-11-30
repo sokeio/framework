@@ -23,7 +23,18 @@
   "templates": [],
   "aliases": {},
   "layouts": {
-    "navbar-pro": "Navbar Pro"
+    "default": {
+      "classContent": "container-xxl",
+      "title": "Default"
+    },
+    "navbar-pro": {
+      "classContent": "container-xxl",
+      "title": "Navbar Pro"
+    },
+    "sidebar": {
+      "classContent": "container-fluid",
+      "title": "Sidebar"
+    }
   },
   "files": [],
   "requires": []

@@ -47,7 +47,7 @@ class SokeioServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->app->register(SocialiteServiceProvider::class);
         Theme::bodyAfter(function () {
             if (setting('SOKEIO_SHOW_PROGRESS_TIMER')) {
-                echo '<p class="p-1 text-center"> Process Time: ' . WatchTime::showSeconds() . '</p>';
+                echo '<p class="p-1 text-center text-secondary"> Load time: ' . WatchTime::showSeconds() . '</p>';
             }
             if (setting('SOKEIO_SHOW_POSITION_DEBUG') && Platform::isUrlAdmin()) {
                 echo '<script>document.body.classList.add("so-position-show-debug");</script>';
