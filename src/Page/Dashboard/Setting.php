@@ -56,7 +56,7 @@ class Setting extends \Sokeio\Page
             })
         ])
             ->icon('ti ti-settings')
-            ->className('p-2')
+            
             ->xlSize()
 
             ->afterUI([

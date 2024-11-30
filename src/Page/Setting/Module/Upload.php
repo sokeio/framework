@@ -24,7 +24,6 @@ class Upload extends \Sokeio\Page
             PageUI::init([
                 UploadFile::init('fileUpload'),
             ])
-                ->className('p-2')
                 ->afterUI([
                     Div::init([
                         Button::init()->text(__('Cancel'))->className('btn btn-warning me-2')

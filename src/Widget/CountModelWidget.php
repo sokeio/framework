@@ -25,7 +25,7 @@ class CountModelWidget extends WidgetUI
                     ];
                 });
             }),
-        ])->className('p-2');
+        ]);
     }
     public function view()
     {

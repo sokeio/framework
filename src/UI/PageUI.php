@@ -118,7 +118,7 @@ class PageUI extends BaseUI
     }
     private function getModalView()
     {
-        $this->className('position-relative');
+        $this->className('position-relative p-2');
         $attr = $this->getAttr();
         $title = $this->getVar('title', '', true);
         $icon = $this->getIcon();

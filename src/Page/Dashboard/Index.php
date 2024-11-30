@@ -72,7 +72,7 @@ class Index extends \Sokeio\Page
                 'dashboard_id' => data_get($this->dataSearch, 'dashboard_id')
             ])
         ])
-            ->className('p-2')
+            
             ->icon('ti ti-dashboard')->rightUI([
                 Select::init('dashboard_id')->placeholder('Dashboard')
                     ->remoteActionWithModel(Dashboard::class)

@@ -57,7 +57,7 @@ class Card extends BaseUI
         $attr = $this->getAttr();
         $html = <<<HTML
             <div {$attr}>
-                <div class="card-body {$this->getVar('bodyClass', 'p-3', true)}">
+                <div class="card-body {$this->getVar('bodyClass', 'p-2', true)}">
                     {$this->titleRender()}
                     {$this->subtitleRender()}
                     {$this->getVar('text', '', true)}{$this->renderChilds()}

@@ -29,7 +29,7 @@ class Info extends \Sokeio\Page
                     ]
                 )
             ])
-                ->className('p-2')
+                
                 ->xlSize()
                 ->afterUI([
                     Div::init([

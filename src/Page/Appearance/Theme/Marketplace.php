@@ -24,7 +24,7 @@ class Marketplace extends \Sokeio\Page
             PageUI::init([
                 Div::init()->className('mt-auto')->viewBlade('sokeio::pages.appearance.theme.marketplace')
             ])
-                ->className('p-2')
+                
                 ->afterUI([
                     Div::init([
                         Button::init()->text(__('Cancel'))->className('btn btn-warning me-2')

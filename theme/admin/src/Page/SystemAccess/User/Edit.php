@@ -58,7 +58,7 @@ class Edit extends \Sokeio\Page
                     ->component('sokeio::permission-list.index')->label(__('Permissions'))
             ])
                 ->onlyModal()
-                ->className('p-2')->setPrefix('formData')
+                ->setPrefix('formData')
                 ->afterUI([
                     Div::init([
                         Button::init()->text(__('Cancel'))->className('btn btn-warning me-2')->modalClose(),

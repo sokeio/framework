@@ -24,7 +24,7 @@ class Edit extends \Sokeio\Page
                 Input::init('group')->label(__('Group'))->ruleRequired(),
                 Textarea::init('description')->label(__('Description')),
             ])
-                ->className('p-2')->setPrefix('formData')
+                ->setPrefix('formData')
                 ->afterUI([
                     Div::init([
                         Button::init()->text(__('Cancel'))->className('btn btn-warning me-2')->modalClose(),
