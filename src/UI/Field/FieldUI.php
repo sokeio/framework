@@ -42,10 +42,7 @@ class FieldUI extends BaseUI
     {
         return $this->attrAdd('class', $className, 'wrapper');
     }
-    protected function getNameWithPrefix($name)
-    {
-        return $this->getPrefix() ? $this->getPrefix() . '.' . $name : $name;
-    }
+    
     public function getFieldNameWithoutPrefix()
     {
         return $this->getVar('name', null, true);

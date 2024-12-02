@@ -32,6 +32,10 @@ class BaseUI
     {
         return $this->vars('style', $style);
     }
+    protected function getNameWithPrefix($name)
+    {
+        return $this->getPrefix() ? $this->getPrefix() . '.' . $name : $name;
+    }
     public function getWire()
     {
         return $this->getManager()?->getWire();
@@ -40,6 +44,14 @@ class BaseUI
     {
         $wire = $this->getWire();
         return data_get($wire, $key, $default);
+    }
+    public function changeValue($key, $value, $withPrefix = true)
+    {
+        $wire = $this->getWire();
+        if ($withPrefix) {
+            $key = $this->getNameWithPrefix($key);
+        }
+        data_set($wire, $key, $value);
     }
     protected function __construct($childs = [])
     {

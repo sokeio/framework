@@ -46,23 +46,23 @@ trait WithCol
     }
     public function col7()
     {
-        return $this->col(7, 7, 12, 12);
+        return $this->col(7, 6, 12, 12);
     }
     public function col8()
     {
-        return $this->col(8, 8, 12, 12);
+        return $this->col(8, 6, 12, 12);
     }
     public function col9()
     {
-        return $this->col(9, 9, 12, 12);
+        return $this->col(9, 12, 12, 12);
     }
     public function col10()
     {
-        return $this->col(10, 10, 12, 12);
+        return $this->col(10, 12, 12, 12);
     }
     public function col11()
     {
-        return $this->col(11, 11, 12, 12);
+        return $this->col(11, 12, 12, 12);
     }
     public function col12()
     {

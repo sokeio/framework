@@ -2,13 +2,12 @@
 
 namespace Sokeio\UI;
 
-use Illuminate\Support\Facades\Log;
-use Livewire\Livewire;
 
 trait WithUI
 {
     private SoUI|null $ui = null;
     public $dataSelecteds = [];
+    public $dataChanges = [];
     public function getModel()
     {
         return $this->getPageConfig()->getModel();
