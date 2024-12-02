@@ -42,7 +42,7 @@ class FieldUI extends BaseUI
     {
         return $this->attrAdd('class', $className, 'wrapper');
     }
-    
+
     public function getFieldNameWithoutPrefix()
     {
         return $this->getVar('name', null, true);
@@ -66,6 +66,14 @@ class FieldUI extends BaseUI
     public function getValueDefault()
     {
         return $this->getVar('valueDefault', null, true);
+    }
+    public function disabled()
+    {
+        return $this->attr('disabled', 'disabled');
+    }
+    public function readonly()
+    {
+        return $this->attr('readonly', 'readonly');
     }
     protected function fieldView()
     {
