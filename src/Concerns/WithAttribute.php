@@ -16,6 +16,9 @@ trait WithAttribute
     }
     public static function getInfoFrom($className): ?self
     {
+        if (is_object($className)) {
+            $className = get_class($className);
+        }
         // use ReflectionClass
         $reflection = new \ReflectionClass($className);
         $attributes = $reflection->getAttributes(static::class, \ReflectionAttribute::IS_INSTANCEOF);
