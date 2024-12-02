@@ -22,6 +22,10 @@ class GateManager
     private $customes = [];
     private $roles = [];
     private $permissions = [];
+    public function getUserId()
+    {
+        return $this->user?->id;
+    }
     public function setIgnores($ignores)
     {
         $this->ignores = array_merge($this->ignores, $ignores);
