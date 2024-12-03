@@ -1,6 +1,7 @@
 // @import 'animate.css';
 @use 'reset';
 @use 'components';
+
 .body-overflow-hide {
     overflow: hidden !important;
 }
@@ -56,5 +57,17 @@
 
     100% {
         transform: rotate(-360deg);
+    }
+}
+
+.sokeio-sidebar {
+    .menu-active {
+        &>.dropdown-menu {
+            display: block !important;
+        }
+    }
+
+    .nav-link.active {
+        background: var(--tblr-navbar-active-bg);
     }
 }

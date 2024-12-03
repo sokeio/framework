@@ -1,4 +1,4 @@
-<aside class="navbar navbar-vertical navbar-expand-lg">
+<aside class="navbar navbar-vertical navbar-expand-lg sokeio-sidebar">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu"
             aria-controls="sidebar-menu" aria-expanded="false" aria-label="Toggle navigation">

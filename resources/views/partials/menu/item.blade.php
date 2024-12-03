@@ -4,7 +4,7 @@
     $url = $item->url();
 @endphp
 @if ($isChildren)
-    <li class="nav-item dropdown " wire:key="menu-{{ $item->key }}" menu-sort="{{ $item->sort }}">
+    <li class="nav-item dropdown @if ($item->isActive()) menu-active @endif" wire:key="menu-{{ $item->key }}" menu-sort="{{ $item->sort }}">
         <a class="nav-link dropdown-toggle {{ $item->classItem }}" href="{{ $url }}" data-bs-toggle="dropdown"
             data-bs-auto-close="outside" role="button" aria-expanded="false">
             @if ($item->icon)
@@ -24,7 +24,7 @@
     </li>
 @else
     <li wire:key="menu-{{ $item->key }}" class="nav-item" menu-sort="{{ $item->sort }}">
-        <a class="nav-link {{ $item->classItem }}" href="{{ $url }}" wire:navigate.hover>
+        <a class="nav-link {{ $item->classItem }} @if ($item->isActive()) active @endif" href="{{ $url }}" wire:navigate.hover>
             @if ($item->icon )
                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                     {!! $item->getIcon() !!}

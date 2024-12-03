@@ -81,13 +81,17 @@ class MenuItem implements Arrayable
 
         return $this->url;
     }
+    public function isActive()
+    {
+        if ($this->hasChildrenActive()) {
+            return true;
+        }
+        return request()->url() == $this->url();
+    }
     public function getIcon()
     {
-        if ($this->icon === null || $this->icon === '') {
-            return '';
-        }
-        if ($this->icon != strip_tags($this->icon)) {
-            return $this->icon;
+        if ($this->icon === null || $this->icon === '' || $this->icon != strip_tags($this->icon)) {
+            return $this->icon ?? '';
         }
         if (!str($this->icon)->contains('fs-')) {
             return '<i class="fs-2 ' . $this->icon . '"></i>';
@@ -107,6 +111,10 @@ class MenuItem implements Arrayable
             })->sortBy('sort');
         }
         return $this->children;
+    }
+    public function hasChildrenActive()
+    {
+        return $this->children()->where(fn(MenuItem $item) => $item->isActive())->count() > 0;
     }
 
     public function render($level = 0)
