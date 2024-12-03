@@ -33,4 +33,8 @@ trait AttributableEnum
 
         return array_shift($filtered_attributes)->newInstance()->get();
     }
+    public function toString(): string
+    {
+        return $this->label($this->value);
+    }
 }
