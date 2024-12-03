@@ -22,6 +22,25 @@ class GateManager
     private $customes = [];
     private $roles = [];
     private $permissions = [];
+    private $hooks = [];
+    public function filter(callable $filter)
+    {
+        if (!$filter) {
+            return;
+        }
+        $this->hooks[] = $filter;
+    }
+    public function applyFilter($user, $init = null)
+    {
+
+        foreach ($this->hooks as $hook) {
+            if (!is_callable($hook)) {
+                continue;
+            }
+            $init = call_user_func($hook, $user, $init);
+        }
+        return $init;
+    }
     public function getUserId()
     {
         return $this->user?->id;
@@ -49,7 +68,6 @@ class GateManager
         $this->user = $user;
         $this->permissions = $user->getAllPermission();
         $this->roles = $user->getAllRole();
-        // dd([$this->permissions, $this->roles]);
         return $this;
     }
 

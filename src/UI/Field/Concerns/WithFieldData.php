@@ -16,7 +16,7 @@ trait WithFieldData
                 if ($fnValue && is_callable($fnValue)) {
                     $value = $fnValue($value);
                 }
-                if ($value === ''||$value === null) {
+                if ($value === '' || $value === null) {
                     return $query;
                 }
                 if ($match) {
@@ -61,7 +61,11 @@ trait WithFieldData
         if ($this->fillCallback && is_callable($this->fillCallback)) {
             call_user_func($this->fillCallback, $model, $this);
         } else {
-            data_set($model, $this->getFieldNameWithoutPrefix(), $this->getValue());
+            $value = $this->getValue();
+            if ($value === '') {
+                $value = null;
+            }
+            data_set($model, $this->getFieldNameWithoutPrefix(), $value);
         }
     }
 }

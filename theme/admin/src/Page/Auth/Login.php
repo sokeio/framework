@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Rule;
 use Livewire\Attributes\Url;
 use Sokeio\Attribute\PageInfo;
+use Sokeio\Platform;
 use Sokeio\Theme;
 
 #[PageInfo(admin: true, auth: false, url: '/login', route: 'login', title: 'Login', layout: 'conver')]
@@ -22,11 +23,18 @@ class Login extends \Sokeio\Page
     public function login()
     {
         $this->validate();
-        if (Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->isRememberMe)) {
-            $this->refreshPage(urldecode($this->urlRef ?? '/'));
-        } else {
-            $this->addError('account_error', 'Invalid account or password');
+        if (!Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->isRememberMe)) {
+            $this->addError('account_error', __('Invalid account or password'));
+            return;
         }
+        if (!Platform::gate()->applyFilter(Auth::user(), true)) {
+            Platform::gate()->setUser(Auth::user());
+            if (!Platform::gate()->isSupperAdmin() || !setting('SOKEIO_LOGIN_SUPPORT_FILTER_USER_SUPPER_ADMIN', true)) {
+                $this->addError('account_error', __('You are not allowed to login'));
+                return;
+            }
+        }
+        $this->refreshPage(urldecode($this->urlRef ?? '/'));
     }
     public function render()
     {
