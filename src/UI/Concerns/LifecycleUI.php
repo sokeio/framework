@@ -245,7 +245,7 @@ trait LifecycleUI
     {
         return $this->lifecycleWithKey('render', $callback, (func_get_args()));
     }
-    protected function child($childs = [], $group = 'default')
+    public function child($childs = [], $group = 'default')
     {
         if (!$childs) {
             return $this;
