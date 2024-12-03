@@ -22,8 +22,7 @@ trait WithUI
     public function booted()
     {
         parent::booted();
-
-        $this->getUI()->boot();
+        $this->reUI();
     }
     public function updated()
     {
@@ -35,11 +34,13 @@ trait WithUI
     public function reUI()
     {
         $this->ui = null;
+        $this->getUI()->beforeBoot();
+        $this->getUI()->bootAction();
         $this->getUI()->boot();
     }
     public function getUI(): SoUI
     {
-        return $this->ui ?? ($this->ui = SoUI::init($this->setupUI(), $this)->bootAction());
+        return $this->ui ?? ($this->ui = SoUI::init($this->setupUI(), $this));
     }
     protected function setupUI()
     {

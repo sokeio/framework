@@ -229,6 +229,10 @@ trait LifecycleUI
     {
         return $this->lifecycleWithKey('register', $callback, (func_get_args()));
     }
+    public function beforeBoot($callback = null)
+    {
+        return $this->lifecycleWithKey('beforeBoot', $callback, (func_get_args()));
+    }
     public function bootAction($callback = null)
     {
         return $this->lifecycleWithKey('bootAction', $callback, (func_get_args()));
