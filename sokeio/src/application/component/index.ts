@@ -257,15 +257,25 @@ const componentMixin: any = {
     }
     this.__lifecycle("hide");
   },
-  focusInputAction() {
-    setTimeout(() => {
-      console.log("focusInputAction");
-      this.$el
+  focusInputAction: function () {
+    let attempts = 0;
+    const maxAttempts = 20;
+    let self = this;
+    // Attempt to focus on the first element 5 times
+    const interval = setInterval(function () {
+      if (
+        attempts >= maxAttempts ||
+        self.$el.contains(document.activeElement)
+      ) {
+        clearInterval(interval); // Stop the attempts after 5 times
+      }
+      self.$el
         .querySelector(
           "input:not([disabled]):not([readonly]), select:not([disabled]), textarea:not([readonly]"
         )
         ?.focus();
-    }, 350);
+      attempts++;
+    }, 100); // Focus every 1 second
   },
 };
 

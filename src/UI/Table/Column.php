@@ -2,12 +2,22 @@
 
 namespace Sokeio\UI\Table;
 
-use Sokeio\Pattern\Singleton;
 
 class Column
 {
-    use ColumnData, Singleton;
-
+    use ColumnData;
+    public static function init($field, $label = null)
+    {
+        return new static($field, $label);
+    }
+    public function __construct($field, $label = null)
+    {
+        $this->setField($field);
+        if (!$label) {
+            $label = $field;
+        }
+        $this->setLabel($label);
+    }
     protected $table;
 
     public function setTable(Table $table)

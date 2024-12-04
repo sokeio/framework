@@ -59,7 +59,6 @@ const explodeHotkey = (str: string) => {
   };
 };
 export default function ({ component, el, name: _name, method, value }: any) {
-  console.log("hotkey", el);
   if (value) {
     if (el["__SOKEIO_HOTKEY"]) {
       el.removeEventListener(method, el["__SOKEIO_HOTKEY"]);
@@ -82,11 +81,15 @@ export default function ({ component, el, name: _name, method, value }: any) {
         el.focus();
         el.dispatchEvent(new Event("focus"));
         console.log("hotkey:focus");
+        e.preventDefault();
+        e.stopPropagation && e.stopPropagation();
         return;
       }
       console.log("hotkey:click");
       el.click();
       el.dispatchEvent(new Event("click"));
+      e.preventDefault();
+      e.stopPropagation && e.stopPropagation();
     };
     window.addEventListener("keydown", el["__SOKEIO_HOTKEY"]);
     component.onDestroy(() => {

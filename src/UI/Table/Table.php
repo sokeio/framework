@@ -165,10 +165,8 @@ class Table extends BaseUI
             $nameOrColumn->setTable($this);
             $this->columns[$this->index] = $nameOrColumn;
         } else {
-            $this->columns[$this->index] = Column::init()
-                ->setTable($this)
-                ->setField($nameOrColumn)
-                ->setLabel($nameOrColumn);
+            $this->columns[$this->index] = Column::init($nameOrColumn)
+                ->setTable($this);
         }
         if ($callback) {
             $callback($this->current());
@@ -179,8 +177,8 @@ class Table extends BaseUI
     public function columnAction($array, $title = 'Actions', $callback = null)
     {
         return $this->child($array, 'columnAction')->boot(function () use ($title, $callback) {
-            $actionColumn = (new Column($this))
-                ->setLabel($title)
+            $actionColumn = Column::init('action', $title)
+                ->setTable($this)
                 ->classNameHeader('w-1')
                 ->disableSort()
                 ->renderCell(function ($row, $column, $index) {
@@ -200,8 +198,8 @@ class Table extends BaseUI
     public function enableIndex($callback = null)
     {
         return $this->render(function () use ($callback) {
-            $this->columns[-1] = (new Column($this))
-                ->setField('index')->setLabel('#')
+            $this->columns[-1] = Column::init('index', '#')
+                ->setTable($this)
                 ->disableSort()
                 ->classNameHeader('w-1')
                 ->renderCell(function ($row, $column, $index) {
@@ -217,8 +215,8 @@ class Table extends BaseUI
     {
         return $this->render(function () use ($callback, $isAfterIndex) {
             $this->showCheckBox = true;
-            $this->columns[$isAfterIndex ? -2 : 0] = (new Column($this))
-                ->setField('index')->setLabel('#')
+            $this->columns[$isAfterIndex ? -2 : 0] = Column::init('index', '#')
+                ->setTable($this)
                 ->disableSort()
                 ->classNameHeader('w-1')
                 ->renderHeader(function () {
