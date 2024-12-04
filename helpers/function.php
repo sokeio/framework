@@ -1,18 +1,20 @@
 <?php
 
 use Sokeio\Platform;
+use Sokeio\Support\Platform\PlatformManager;
 use Sokeio\Setting;
 use Sokeio\Support\Platform\SettingManager;
+use Sokeio\Support\Theme\ThemeManager;
 use Sokeio\Theme;
 
 if (!function_exists('theme')) {
-    function theme()
+    function theme(): ThemeManager
     {
         return Theme::getFacadeRoot();
     }
 }
 if (!function_exists('platform')) {
-    function platform()
+    function platform(): PlatformManager
     {
         return Platform::getFacadeRoot();
     }

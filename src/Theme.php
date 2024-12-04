@@ -36,6 +36,8 @@ use Sokeio\Support\Theme\ThemeManager;
  * @method static void headRender()
  * @method static void bodyRender()
  * @method static void bodyEndRender()
+ * @method static void renderLocation($location)
+ * @method static void location($location, $callback)
  *
  */
 class Theme extends Facade

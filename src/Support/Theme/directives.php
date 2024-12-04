@@ -41,6 +41,13 @@ return [
         ?>
         EOT;
     },
+    'themeLocation' => function ($expression) {
+        return <<<EOT
+        <?php
+            \Sokeio\Theme::renderLocation({$expression});
+        ?>
+        EOT;
+    },
     'sokeio' => function ($expression) {
         $expression = ThemeParser::multipleArgs($expression);
         $viewBasePath = Blade::getPath();

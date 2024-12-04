@@ -13,17 +13,7 @@
             </div>
             <div class="navbar-nav flex-row order-md-last" x-data="{}">
                 <div class="d-none d-md-flex">
-                    <a href="#" @click="toggleTheme" class="nav-link px-0 hide-theme-dark"
-                        data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Enable dark mode"
-                        data-bs-original-title="Enable dark mode">
-                        <i class="ti ti-moon fs-2"></i>
-                    </a>
-                    <a href="#" @click="toggleTheme" class="nav-link px-0 hide-theme-light"
-                        data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="Enable light mode"
-                        data-bs-original-title="Enable light mode">
-                        <i class="ti ti-sun fs-2"></i>
-                    </a>
-                    <livewire:sokeio::notification />
+                    @themeInclude('shared.header-right')
                 </div>
                 @auth
                     <div class="nav-item dropdown">
@@ -40,7 +30,7 @@
                             <div class="dropdown-divider p-0"></div>
                             <a href="{{ route('admin.theme-admin-page.account.setting') }}"
                                 class="dropdown-item">Settings</a>
-                            <a @click="$dispatch('logout'); setTimeout(() => window.location.reload(), 1000);"
+                            <a @click="$dispatch('logout'); setTimeout(() => window.location.reload(), 700);"
                                 class="dropdown-item">Logout</a>
                         </div>
                     </div>

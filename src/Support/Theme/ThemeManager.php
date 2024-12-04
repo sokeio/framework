@@ -16,6 +16,27 @@ class ThemeManager
     private $layout;
     private $themeSite = null;
     private $themeAdmin = null;
+    private $location = [];
+    public function renderLocation($location)
+    {
+        if (isset($this->location[$location])) {
+            foreach ($this->location[$location] as $callback) {
+                if (is_callable($callback)) {
+                    $callback();
+                }
+            }
+        }
+        if (setting('SOKEIO_THEME_LOCATION_SHOW_DEBUG')) {
+            echo "<div>$location</div>";
+        }
+    }
+    public function location($location, $callback)
+    {
+        if (!isset($this->location[$location])) {
+            $this->location = [];
+        }
+        $this->location[$location][] = $callback;
+    }
 
 
     public function getThemeAdmin()
