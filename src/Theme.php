@@ -40,6 +40,10 @@ use Sokeio\Support\Theme\ThemeManager;
  * @method static void location($location, $callback)
  * @method static \Sokeio\Support\Theme\ThemeManager setOptions($options)
  * @method static \Sokeio\Support\Theme\ThemeManager|string|number|array|null option($key = null, $default = null)
+ * @method static mixed getTemplates()
+ * @method static mixed getTemplateOptions($targets = null)
+ * @method static mixed getTemplate($template)
+ * @method static mixed viewTemplate($template, $data = [], $mergeData = [], $noScope = false, $view = null)
  *
  */
 class Theme extends Facade

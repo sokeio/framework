@@ -90,7 +90,7 @@ class PageConfig
             }
         }
         $info = Theme::getSiteInfo();
-        if (!isset($info['title'])) {
+        if (!isset($info['title']) || $info['title'] == '') {
             Theme::title($config->getTitle());
         }
     }

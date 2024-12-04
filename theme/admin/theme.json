@@ -20,7 +20,13 @@
       "container-queries"
     ]
   },
-  "templates": [],
+  "templates": {
+    "none": {
+      "name": "None",
+      "view": "none",
+      "layout": "default"
+    }
+  },
   "aliases": {},
   "layouts": {
     "default": {

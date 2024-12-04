@@ -11,6 +11,18 @@ class Select extends FieldUI
         $this->datasource = $datasource;
         return $this;
     }
+    public function checkDataSource(){
+        if (!$this->datasource) {
+            return false;
+        }
+        if (is_array($this->datasource)) {
+            return count($this->datasource) > 0;
+        }
+        if (is_callable($this->datasource)) {
+            return true;
+        }
+        return false;
+    }
     private $options = [];
     public function options($options)
     {

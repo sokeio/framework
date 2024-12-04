@@ -53,7 +53,33 @@ class ThemeManager
         }
         return data_get(setting($this->getThemeSiteKey()), $key, $default);
     }
-
+    public function getTemplates()
+    {
+        return $this->getThemeSite()->templates ?? [];
+    }
+    public function getTemplateOptions($target = null)
+    {
+        return collect($this->getTemplates())->filter(function ($item) use ($target) {
+            return !$target || in_array($target, data_get($item, 'target', []));
+        })->map(function ($item, $key) {
+            return ['value' => $key, 'text' => data_get($item, 'name', $key)];
+        })->toArray();
+    }
+    public function getTemplate($template)
+    {
+        return $this->getTemplates()[$template];
+    }
+    public function viewTemplate($template, $data = [], $mergeData = [], $noScope = false, $view = null)
+    {
+        $temp = $this->getTemplate($template);
+        if (!$temp) {
+            return $this->view($view, $data, $mergeData, $noScope);
+        }
+        if ($temp['layout']) {
+            $this->setLayout($temp['layout']);
+        }
+        return $this->view($temp['view'], $data, $mergeData, $noScope);
+    }
 
     public function getThemeAdmin()
     {
