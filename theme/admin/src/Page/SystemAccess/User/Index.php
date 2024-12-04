@@ -39,12 +39,12 @@ class Index extends \Sokeio\Page
                         ->column('name')
                         ->column('email')
                         ->column('phone_number')
-                        ->column(Column::init()->classNameHeader('w-1')
+                        ->column(Column::init('roles', 'roles')->classNameHeader('w-1')
                             ->renderCell(function ($row, $column, $index) {
                                 return $row->roles->pluck('name')->reduce(function ($carry, $item) {
                                     return "<span class=\"badge badge-info me-1\">" . $item . "</span>" . ' ' . $carry;
                                 }, '');
-                            }), null, 'Role')
+                            }))
                         ->query($this->getQuery()->with('roles'))
                         ->enableIndex()
                         ->enableCheckBox()

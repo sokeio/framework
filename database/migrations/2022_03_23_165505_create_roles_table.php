@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('description')->nullable();
             $table->boolean('is_active')->nullable();
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
             $table->timestamps();
         });
         Schema::create('users_roles', function (Blueprint $table) {

@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('slug');
             $table->string('group')->default('common');
             $table->string('description')->nullable();
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
             $table->timestamps();
         });
         Schema::create('users_permissions', function (Blueprint $table) {

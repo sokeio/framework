@@ -19,7 +19,7 @@ class Select extends FieldUI
     }
     public function optionsWithEnum($enum)
     {
-        return $this->options(collect($enum::cases())
+        return $this->dataSource(collect($enum::cases())
             ->map(fn($item) => ['value' => $item->value, 'text' => $item->label($item->value)])
             ->values()->toArray());
     }
@@ -40,15 +40,10 @@ class Select extends FieldUI
         parent::initUI();
         $this->render(function () {
             $this->attr('wire:tom-select');
-            if ($this->datasource) {
-                $this->options = [];
-                if (is_callable($this->datasource)) {
-                    $this->datasource = call_user_func($this->datasource, $this);
-                }
-                if ($this->datasource) {
-                    $this->options = $this->datasource;
-                }
+            if ($this->datasource && is_callable($this->datasource)) {
+                $this->datasource = call_user_func($this->datasource, $this);
             }
+            $this->attr('wire:tom-select.datasource', json_encode($this->datasource ?? []));
             if ($this->options) {
                 $this->attr('wire:tom-select.options', json_encode($this->options));
             }
@@ -58,22 +53,31 @@ class Select extends FieldUI
         $model,
         $fieldSearch = ['name'],
         $fillable = ['id', 'name'],
+        $fieldId = 'id',
+        $filedText = 'name',
         $mapData = null,
-        $limit = 20,
+        $limit = 30,
         $name = null
     ) {
         if (!$mapData || !is_callable($mapData)) {
-            $mapData = fn($item) => ['value' => $item->id, 'text' => $item->name, 'item' => $item];
+            $mapData = fn($item) => ['value' => $item->{$fieldId}, 'text' => $item->{$filedText}, 'item' => $item];
         }
         return $this->remoteAction(function ($value) use ($model, $fieldSearch, $mapData, $fillable, $limit) {
             $fieldValue = $this->getValue();
+            if (!$fieldValue || ! is_array($fieldValue)) {
+                $fieldValue = [];
+            }
             return ($model)::query()
-                ->when($value, fn($query) => $query->whereAny($fieldSearch, 'like', '%' . $value . '%'))
-                ->when(!$value && $fieldValue && is_array($fieldValue), function ($query) use ($fieldValue) {
-                    $query->whereIn('id',  $fieldValue);
-                })
+                ->whereIn('id',  $fieldValue)
+                ->union(
+                    $model::query()
+                        ->when($value, fn($query) => $query->whereAny($fieldSearch, 'like', '%' . $value . '%'))
+                        ->whereNotIn('id', $fieldValue)
+                        ->limit($limit - count($fieldValue))->select($fillable)
+                )
                 ->limit($limit)
-                ->get($fillable)->map($mapData);
+                ->select($fillable)
+                ->get()->map($mapData);
         }, $name);
     }
     public function remoteAction($action, $name = null)

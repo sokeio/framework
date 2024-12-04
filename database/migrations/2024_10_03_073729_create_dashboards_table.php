@@ -22,6 +22,8 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->boolean('is_private')->default(true);
             $table->bigInteger('user_id')->nullable();
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
             $table->timestamps();
         });
 

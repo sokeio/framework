@@ -3,6 +3,7 @@
 namespace Sokeio\UI\Tab;
 
 use Sokeio\UI\BaseUI;
+use Sokeio\UI\Common\Div;
 
 class TabControl extends BaseUI
 {
@@ -25,52 +26,23 @@ class TabControl extends BaseUI
     }
     public function tabItem(
         $title,
-        $icon = null,
-        $fnSetup = null,
+        $icon,
+        $ui = null,
     ) {
         $tab = new TabItem($this);
         $tab->title = $title;
         $tab->icon = $icon;
-        if ($fnSetup) {
-            call_user_func($fnSetup, $tab);
-        }
         $tab->id = ++$this->index;
+        if (!$ui) {
+            $ui = Div::init()->text($title)->className('bg-warning text-bg-warning p-4 rounded');
+        }
         $this->tabItems[$tab->id] = $tab;
+        $this->child($ui, 'tabItemUI' . $tab->id);
         return $this;
     }
-    public function tabItemComponent(
-        $title,
-        $icon = null,
-        $component = null,
-        $params = null,
-    ) {
-
-        return $this->tabItem($title, $icon, function ($tab) use ($component, $params) {
-            $tab->component = $component;
-            $tab->params = $params;
-        });
-    }
-    public function tabItemView(
-        $title,
-        $icon = null,
-        $view = null,
-        $params = null
-    ) {
-
-        return $this->tabItem($title, $icon, function ($tab) use ($view, $params) {
-            $tab->view = $view;
-            $tab->params = $params;
-        });
-    }
-    public function tabItemContent(
-        $title,
-        $icon = null,
-        $content = null
-    ) {
-
-        return $this->tabItem($title, $icon, function ($tab) use ($content) {
-            $tab->content = $content;
-        });
+    public function renderBodyTab($item)
+    {
+        return $this->renderChilds('tabItemUI' . $item->id, ['tab' => $item]);
     }
     public function activeTabIndex($index)
     {

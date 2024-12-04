@@ -42,16 +42,6 @@ class TabItem
         </li>
 HTML;
     }
-    private function renderBody()
-    {
-        if ($this->component) {
-            return Livewire::mount($this->component);
-        }
-        if ($this->view) {
-            return view($this->view, $this->params);
-        }
-        return $this->content ?? $this->title;
-    }
     public function isActive()
     {
         return $this->id === $this->tabControl->getTabActive();
@@ -62,7 +52,7 @@ HTML;
         return <<<HTML
         <div class="tab-pane fade {$active}" id="{$this->getKey()}"
          role="tabpanel" aria-labelledby="{$this->id}" data-tab-title="{$this->title}">
-            {$this->renderBody()}
+            {$this->tabControl->renderBodyTab($this)}
         </div>
 HTML;
     }

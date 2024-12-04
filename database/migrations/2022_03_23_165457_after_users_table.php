@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('phone_number')->nullable();
             $table->boolean('is_active')->nullable();
             $table->boolean('is_banned')->nullable();
+            $table->integer('created_by')->nullable();
+            $table->integer('updated_by')->nullable();
             $table->unique(array('phone_number', 'email'), 'phone_number_email_unique');
         });
     }
@@ -44,6 +46,8 @@ return new class extends Migration
             $table->dropColumn('phone_number');
             $table->dropColumn('is_active');
             $table->dropColumn('is_banned');
+            $table->dropColumn('created_by');
+            $table->dropColumn('updated_by');
             $table->unique('email');
         });
     }

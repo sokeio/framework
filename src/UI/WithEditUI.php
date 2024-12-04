@@ -3,6 +3,7 @@
 namespace Sokeio\UI;
 
 use Sokeio\FormData;
+use Sokeio\Platform;
 
 trait WithEditUI
 {
@@ -52,10 +53,14 @@ trait WithEditUI
     }
     public function saveData()
     {
-
         $this->getUI()->validate();
         $data =  $this->getDataModel();
         $this->beforeSaveData($data);
+        if ($this->dataId) {
+            $data->created_by = Platform::gate()->getUserId();
+        } else {
+            $data->updated_by = Platform::gate()->getUserId();
+        }
         $data->save();
         $this->afterSaveData($data);
         $this->formMessage();

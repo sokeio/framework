@@ -3,25 +3,9 @@
 namespace Sokeio\UI\Table;
 
 use Sokeio\UI\BaseUI;
-use Sokeio\UI\Field\Input;
 
 trait TableRender
 {
-    public function formSearch($fields, $fieldExtra = null)
-    {
-        return $this->child($fields, 'formSearch')
-            ->child($fieldExtra, 'formSearchExtra');
-    }
-    public function searchbox($columns = ['name'], $placeholder = 'Search')
-    {
-        return $this->child([
-            Input::init('keyword')
-                ->placeholder($placeholder)
-                ->withQuery(function ($query, $value) use ($columns) {
-                    $query->whereAny($columns, 'like', '%' . $value . '%');
-                }),
-        ], 'formSearch');
-    }
     private function headerRender()
     {
         $html = '';

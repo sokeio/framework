@@ -3,6 +3,7 @@
 namespace Sokeio\UI\Table;
 
 use Sokeio\UI\BaseUI;
+use Sokeio\UI\Field\Input;
 
 class Table extends BaseUI
 {
@@ -232,5 +233,21 @@ class Table extends BaseUI
                 $callback($this->columns[$isAfterIndex ? -2 : 0]);
             }
         });
+    }
+
+    public function formSearch($fields, $fieldExtra = null): self
+    {
+        return $this->child($fields, 'formSearch')
+            ->child($fieldExtra, 'formSearchExtra');
+    }
+    public function searchbox($columns = ['name'], $placeholder = 'Search'): self
+    {
+        return $this->child([
+            Input::init('keyword')
+                ->placeholder($placeholder)
+                ->withQuery(function ($query, $value) use ($columns) {
+                    $query->whereAny($columns, 'like', '%' . $value . '%');
+                }),
+        ], 'formSearch');
     }
 }
