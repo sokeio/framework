@@ -16,6 +16,7 @@ import media from "./media";
 import mediaFile from "./media-file";
 import sokeio from "./sokeio";
 import { addScriptToWindow, addStyleToWindow } from "../../utils";
+import codeEditor from "./code-editor";
 const directive = {
   apexcharts,
   "get-value": getValue,
@@ -34,6 +35,7 @@ const directive = {
   media,
   "media-file": mediaFile,
   sokeio: sokeio,
+  "code-editor": codeEditor,
 };
 
 let waitLoader = (setting, items, level) => {
@@ -72,22 +74,38 @@ function install(app) {
       }
       if (setting.checkFirst && !setting.checkFirst()) {
         if (
-          setting?.cdn?.js &&
-          Array.isArray(setting?.cdn?.js) &&
-          setting?.cdn?.js.length > 0
+          !window[
+            `$$sokeio_${key
+              .replace(/\./g, "_")
+              .replace(/\//g, "_")
+              .replace(/-/g, "_")}_loader`
+          ]
         ) {
-          addScriptToWindow(setting?.cdn?.js);
-        } else if (setting?.local?.js) {
-          addScriptToWindow(setting?.local?.js);
-        }
-        if (
-          setting?.cdn?.css &&
-          Array.isArray(setting?.cdn?.css) &&
-          setting?.cdn?.css.length > 0
-        ) {
-          addStyleToWindow(setting?.cdn?.css);
-        } else if (setting?.local?.css) {
-          addStyleToWindow(setting?.local?.css);
+          window[
+            `$$sokeio_${key
+              .replace(/\./g, "_")
+              .replace(/\//g, "_")
+              .replace(/-/g, "_")}_loader`
+          ] = true;
+          if (
+            setting?.cdn?.js &&
+            Array.isArray(setting?.cdn?.js) &&
+            setting?.cdn?.js.length > 0
+          ) {
+            addScriptToWindow(setting?.cdn?.js);
+          } else if (setting?.local?.js) {
+            addScriptToWindow(setting?.local?.js);
+          }
+          if (
+            setting?.cdn?.css &&
+            Array.isArray(setting?.cdn?.css) &&
+            setting?.cdn?.css.length > 0
+          ) {
+            addStyleToWindow(setting?.cdn?.css);
+          } else if (setting?.local?.css) {
+            addStyleToWindow(setting?.local?.css);
+          }
+          setting.checkFirstInit && setting.checkFirstInit();
         }
       }
       waitLoader(setting, { ...items, options }, 0);

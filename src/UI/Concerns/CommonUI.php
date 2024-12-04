@@ -77,9 +77,9 @@ trait CommonUI
         $attrValue = $this->getAttrKey($key, null, $group, true);
         return $attrValue !== null && ($value === null || str($attrValue)->contains($value));
     }
-    protected function getAttr($group = 'default')
+    protected function getAttr($group = 'default', $checkFn = null)
     {
-        return $this->getAttributeByGroup($group)->getAttributeText();
+        return $this->getAttributeByGroup($group)->getAttributeText($checkFn);
     }
     protected function getAttrValue($group = 'default')
     {

@@ -2,6 +2,7 @@
 
 namespace Sokeio\UI;
 
+use Illuminate\Support\Facades\DB;
 use Sokeio\FormData;
 use Sokeio\Platform;
 
@@ -55,16 +56,18 @@ trait WithEditUI
     {
         $this->getUI()->validate();
         $data =  $this->getDataModel();
-        $this->beforeSaveData($data);
-        if ($this->dataId) {
-            $data->created_by = Platform::gate()->getUserId();
-        } else {
-            $data->updated_by = Platform::gate()->getUserId();
-        }
-        $data->save();
-        $this->afterSaveData($data);
-        $this->formMessage();
-        $this->refreshRef();
-        $this->sokeioClose();
+        DB::transaction(function () use ($data) {
+            $this->beforeSaveData($data);
+            if ($this->dataId) {
+                $data->created_by = Platform::gate()->getUserId();
+            } else {
+                $data->updated_by = Platform::gate()->getUserId();
+            }
+            $data->save();
+            $this->afterSaveData($data);
+            $this->formMessage();
+            $this->refreshRef();
+            $this->sokeioClose();
+        });
     }
 }

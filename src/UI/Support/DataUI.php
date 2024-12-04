@@ -34,19 +34,24 @@ class DataUI
     {
         return $this->data ?: [];
     }
-    public function getAttributeText()
+    public function getAttributeText($checkFn = null)
     {
         $attr = '';
         foreach ($this->getData() as $key => $value) {
-            if (is_array($value)) {
-                // foreach ($value as $k => $v) {
-                //     if (is_callable($v)) {
-                //         dd(['key' => $key, 'value' => $v]);
-                //     }
-                // }
-                $value = implode(' ', $value);
+
+            if ($checkFn && is_callable($checkFn)) {
+                $attr .= call_user_func($checkFn, $key, $value);
+            } else {
+                if (is_array($value)) {
+                    // foreach ($value as $k => $v) {
+                    //     if (is_callable($v)) {
+                    //         dd(['key' => $key, 'value' => $v]);
+                    //     }
+                    // }
+                    $value = implode(' ', $value);
+                }
+                $attr .= ' ' . $key . '="' . htmlentities($value, ENT_QUOTES, 'UTF-8') . '"';
             }
-            $attr .= ' ' . $key . '="' . htmlentities($value, ENT_QUOTES, 'UTF-8') . '"';
         }
         return $attr;
     }
