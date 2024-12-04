@@ -1,4 +1,5 @@
 import clickOutsite from "./click-outsite";
+import hotkey from "./hotkey";
 import html from "./html";
 import model from "./model";
 import on from "./on";
@@ -12,6 +13,7 @@ const featureManager: any = {
   on,
   refs,
   "click-outsite": clickOutsite,
+  hotkey,
 };
 const prexSokeio = "so-";
 const componentFeature = (el: any, component: any) => {

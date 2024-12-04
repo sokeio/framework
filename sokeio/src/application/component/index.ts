@@ -16,6 +16,7 @@ import request from "./../request";
 let number = new Date().getTime();
 const componentDefine = {
   overlay: false,
+  focusInput: false,
   state: {},
   register: () => {},
   boot: () => {},
@@ -245,12 +246,26 @@ const componentMixin: any = {
       });
     }
     this.sokeAppSelector.appendChild(this.$el);
+    if (this.focusInput) {
+      this.focusInputAction();
+    }
   },
   hide: function () {
     this.$el.style.display = "none";
     if (this.$overlayEl) {
       this.$overlayEl.display = "none";
     }
+    this.__lifecycle("hide");
+  },
+  focusInputAction() {
+    setTimeout(() => {
+      console.log("focusInputAction");
+      this.$el
+        .querySelector(
+          "input:not([disabled]):not([readonly]), select:not([disabled]), textarea:not([readonly]"
+        )
+        ?.focus();
+    }, 350);
   },
 };
 

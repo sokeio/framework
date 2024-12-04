@@ -26,7 +26,7 @@ export function getModalHtmlRender(
       footer ? `<div class="so-modal-footer">${footer}</div>` : ""
     }`;
   }
-  let htmlClose = `<a class="so-modal-close" so-on:click="this.closeApp()"></a>`;
+  let htmlClose = `<a class="so-modal-close" so-hotkey="esc" so-on:click="this.closeApp()"></a>`;
   let closeOverlay =
     'so-on:click="this.closeApp()" so-on:ignore=".so-modal-dialog"';
   let elHtml = convertHtmlToElement(html);

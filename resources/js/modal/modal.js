@@ -33,7 +33,7 @@ export default {
     logDebug("modal.url", this.url);
     this.$request.get(this.url).then(async (res) => {
       if (!res.ok) {
-        this.html = `<div class="so-modal-content-error"><h3>${res.statusText}</h3><button class="btn btn-primary" so-on:click="this.closeApp()">Close</button></div>`;
+        this.html = `<div class="so-modal-content-error"><h3>${res.statusText}</h3><button class="btn btn-primary" so-hotkey="esc" so-on:click="this.closeApp()">Close</button></div>`;
       } else {
         this.html = await res.text();
       }

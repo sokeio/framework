@@ -34,7 +34,7 @@ window.showModal = function (
     delete options.template;
   }
   return window.sokeioUI.run(
-    { ...modal, overlay: true },
+    { ...modal, overlay: true, focusInput: true },
     {
       props: { title, ...options },
     }
