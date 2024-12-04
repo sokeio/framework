@@ -34,7 +34,7 @@ class CodeEditor extends FieldUI
         });
 
         return <<<HTML
-         <div {$attr}></div>
+         <div wire:ignore {$attr}></div>
         HTML;
     }
 }

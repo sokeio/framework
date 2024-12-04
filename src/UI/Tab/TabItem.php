@@ -35,7 +35,7 @@ class TabItem
         $active = $this->isActive() ? 'active' : '';
         return <<<HTML
         <li class="nav-item">
-            <a class="nav-link {$active}" data-bs-toggle="tab" href="#{$this->getKey()}"
+            <a wire:ignore.self class="nav-link {$active}" data-bs-toggle="tab" href="#{$this->getKey()}"
              role="tab" aria-controls="{$this->id}" aria-selected="{$active}">
                 <i class="{$icon} me-2"></i> <span>{$this->title}</span>
             </a>
@@ -50,7 +50,7 @@ HTML;
     {
         $active = $this->isActive() ? 'show' : '';
         return <<<HTML
-        <div class="tab-pane fade {$active}" id="{$this->getKey()}"
+        <div wire:ignore.self class="tab-pane fade {$active}" id="{$this->getKey()}"
          role="tabpanel" aria-labelledby="{$this->id}" data-tab-title="{$this->title}">
             {$this->tabControl->renderBodyTab($this)}
         </div>

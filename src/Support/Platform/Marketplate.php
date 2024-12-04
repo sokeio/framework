@@ -74,7 +74,7 @@ class Marketplate
         $json = json_decode($file->getContents(), true);
         $id = $json['id'];
         $version = str($json['version'])->replace('.', '-');
-        // move $id(sokeio/cms) => $folder_target(sokeio-cms-{version})
+        // move $id(sokeio/content) => $folder_target(sokeio-content-{version})
         $folder_target = str($id)->replace('/', '-') . '-' . $version;
         $path_folder_target = $this->manager->getPath($folder_target);
         if (file_exists($path_folder_target)) {

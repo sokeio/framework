@@ -89,7 +89,10 @@ class PageConfig
                 View::share('themeLayoutClassContent', $classContent);
             }
         }
-        Theme::title($config->getTitle());
+        $info = Theme::getSiteInfo();
+        if (!isset($info['title'])) {
+            Theme::title($config->getTitle());
+        }
     }
     public static function setupRoute($pageClass, $namespaceRoot = null, $shortName = null)
     {

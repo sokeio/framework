@@ -51,18 +51,25 @@ class Select extends FieldUI
     }
     public function remoteActionWithModel(
         $model,
-        $fieldSearch = ['name'],
-        $fillable = ['id', 'name'],
-        $fieldId = 'id',
         $filedText = 'name',
+        $fillable = null,
+        $fieldSearch = null,
+        $fieldId = 'id',
         $mapData = null,
         $limit = 30,
         $name = null
     ) {
+        if (!$fillable) {
+            $fillable = [$fieldId, $filedText];
+        }
+        if (!$fieldSearch) {
+            $fieldSearch = [$fieldId];
+        }
         if (!$mapData || !is_callable($mapData)) {
             $mapData = fn($item) => ['value' => $item->{$fieldId}, 'text' => $item->{$filedText}, 'item' => $item];
         }
         return $this->remoteAction(function ($value) use ($model, $fieldSearch, $mapData, $fillable, $limit) {
+
             $fieldValue = $this->getValue();
             if (!$fieldValue || ! is_array($fieldValue)) {
                 $fieldValue = [];

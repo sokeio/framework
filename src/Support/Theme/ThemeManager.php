@@ -37,6 +37,22 @@ class ThemeManager
         }
         $this->location[$location][] = $callback;
     }
+    protected function getThemeSiteKey()
+    {
+        return "SOKEIO_THEME_SITE_OPTION_" . md5($this->getThemeSite()->id);
+    }
+    public function setOptions($options)
+    {
+        setting()->set($this->getThemeSiteKey(), $options)->save();
+        return $this;
+    }
+    public function option($key = null, $default = null)
+    {
+        if (!$key) {
+            return setting($this->getThemeSiteKey());
+        }
+        return data_get(setting($this->getThemeSiteKey()), $key, $default);
+    }
 
 
     public function getThemeAdmin()

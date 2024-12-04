@@ -20,7 +20,7 @@ if (!function_exists('platform')) {
     }
 }
 if (!function_exists('setting')) {
-    function setting($key = null, $default = null): SettingManager|string|null
+    function setting($key = null, $default = null): SettingManager|string|array|null
     {
         if ($key === null) {
             return Setting::getFacadeRoot();

@@ -45,9 +45,9 @@ class Index extends \Sokeio\Page
                         }
                         return false;
                     }),
-                Button::init()->text(__('Upload'))->icon('ti ti-upload')
-                    ->className('btn btn-primary')
-                    ->modalRoute($this->getRouteName('upload')),
+                // Button::init()->text(__('Upload'))->icon('ti ti-upload')
+                //     ->className('btn btn-primary')
+                //     ->modalRoute($this->getRouteName('upload')),
                 Button::init()->text(__('Marketplace'))->icon('ti ti-apps')
                     ->className('btn btn-success')->modalRoute($this->getRouteName('marketplace')),
             ])

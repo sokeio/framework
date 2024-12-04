@@ -19,7 +19,18 @@ class Column
         $this->setLabel($label);
     }
     protected $table;
-
+    protected $link;
+    public function enableLink()
+    {
+        return $this->setLink(function ($row, $column, $index) {
+            return $row->getUrl();
+        });
+    }
+    public function setLink($link)
+    {
+        $this->link = $link;
+        return $this;
+    }
     public function setTable(Table $table)
     {
         $this->table = $table;
@@ -85,6 +96,22 @@ class Column
         }
         if ($classCell) {
             $classCell = ' class="' . $classCell . '"';
+        }
+        if ($this->link) {
+            $link = $this->link;
+            if (is_callable($link)) {
+                $link = call_user_func($link, $row, $this, $index);
+            }
+            return <<<html
+            <td {$classCell}>
+                <div class="d-flex align-items-center cell-value "
+                data-row-field="{$this->getField()}"
+                data-row-index="{$index}"
+                data-row-id="{$row->id}">
+                 <a href="{$link}" target="_blank">{$this->getValue($row,$index)}</a>
+                </div>
+            </td>
+            html;
         }
         return <<<html
         <td {$classCell}>

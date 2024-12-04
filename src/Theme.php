@@ -38,6 +38,8 @@ use Sokeio\Support\Theme\ThemeManager;
  * @method static void bodyEndRender()
  * @method static void renderLocation($location)
  * @method static void location($location, $callback)
+ * @method static \Sokeio\Support\Theme\ThemeManager setOptions($options)
+ * @method static \Sokeio\Support\Theme\ThemeManager|string|number|array|null option($key = null, $default = null)
  *
  */
 class Theme extends Facade

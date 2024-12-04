@@ -18,7 +18,8 @@ use Sokeio\UI\WithUI;
     menu: true,
     menuTitle: 'Theme',
     menuTargetSort: 99991,
-    menuTargetIcon: 'ti ti-palette ',
+    menuTargetIcon: 'ti ti-palette',
+    icon: 'ti ti-brush',
     sort: 0
 )]
 class Index extends \Sokeio\Page
@@ -47,9 +48,9 @@ class Index extends \Sokeio\Page
                         }
                         return false;
                     }),
-                Button::init()->text(__('Upload'))->icon('ti ti-upload')
-                    ->className('btn btn-primary')
-                    ->modalRoute($this->getRouteName('upload')),
+                // Button::init()->text(__('Upload'))->icon('ti ti-upload')
+                //     ->className('btn btn-primary')
+                //     ->modalRoute($this->getRouteName('upload')),
                 Button::init()->text(__('Marketplace'))->icon('ti ti-apps')
                     ->className('btn btn-success')->modalRoute($this->getRouteName('marketplace')),
             ])

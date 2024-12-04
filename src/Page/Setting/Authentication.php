@@ -177,7 +177,7 @@ class Authentication extends \Sokeio\Page
                     ->wireClick('saveData')
             ])
                 ->icon('ti ti-settings')
-                ->title($this->getPageConfig()->getTitle())
+               
 
         ];
     }

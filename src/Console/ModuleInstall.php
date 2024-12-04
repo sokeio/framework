@@ -14,7 +14,7 @@ class ModuleInstall extends Command
      */
     public function handle(): int
     {
-        Platform::module()->getMarketplate()->install('sokeio/cms');
+        Platform::module()->getMarketplate()->install('sokeio/content');
         return 0;
     }
 }
