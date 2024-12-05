@@ -44,6 +44,8 @@ use Sokeio\Support\Theme\ThemeManager;
  * @method static mixed getTemplateOptions($targets = null)
  * @method static mixed getTemplate($template)
  * @method static mixed viewTemplate($template, $data = [], $mergeData = [], $noScope = false, $view = null)
+ * @method static array getLocations()
+ * @method static mixed getLocationOptions($targets = null)
  *
  */
 class Theme extends Facade

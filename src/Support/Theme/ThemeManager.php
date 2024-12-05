@@ -57,6 +57,18 @@ class ThemeManager
     {
         return $this->getThemeSite()->templates ?? [];
     }
+    public function getLocations()
+    {
+        return $this->getThemeSite()->locations ?? [];
+    }
+    public function getLocationOptions($target=null)
+    {
+        return collect($this->getLocations())->filter(function ($item) use ($target) {
+            return !$target || in_array($target, data_get($item, 'target', []));
+        })->map(function ($item, $key) {
+            return ['value' => $key, 'text' => data_get($item, 'name', $key)];
+        })->toArray();
+    }
     public function getTemplateOptions($target = null)
     {
         return collect($this->getTemplates())->filter(function ($item) use ($target) {
