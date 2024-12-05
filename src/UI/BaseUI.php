@@ -53,6 +53,11 @@ class BaseUI
         }
         data_set($wire, $key, $value);
     }
+    public function getValueByKey($key, $default = null)
+    {
+        $wire = $this->getWire();
+        return data_get($wire, $this->getNameWithPrefix($key), $default);
+    }
     protected function __construct($childs = [])
     {
         $this->initLifecycleUI();

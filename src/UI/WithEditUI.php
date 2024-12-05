@@ -58,11 +58,14 @@ trait WithEditUI
         $data =  $this->getDataModel();
         DB::transaction(function () use ($data) {
             $this->beforeSaveData($data);
-            if ($this->dataId) {
-                $data->created_by = Platform::gate()->getUserId();
-            } else {
-                $data->updated_by = Platform::gate()->getUserId();
+            if (!isset($this->skipByUser) || !$this->skipByUser) {
+                if ($this->dataId) {
+                    $data->created_by = Platform::gate()->getUserId();
+                } else {
+                    $data->updated_by = Platform::gate()->getUserId();
+                }
             }
+
             $data->save();
             $this->afterSaveData($data);
             $this->formMessage();

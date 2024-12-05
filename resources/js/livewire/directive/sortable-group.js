@@ -8,10 +8,7 @@ export default {
     js: [],
     css: [],
   },
-  init: ({ el, directive, component, cleanup,options }) => {
-    if (!directive.modifiers.includes("item-group")) {
-      return;
-    }
+  init: ({ el, directive, component, cleanup, options }) => {
     el.$sokeio_sortable_group = window.Sortable.create(el, {
       animation: 150,
       filter: "[data-sortable-ignore]",
@@ -21,7 +18,7 @@ export default {
         ? "[wire\\:sortable-group\\.handle]"
         : null,
       sort: true,
-      dataIdAttr: "wire:sortable-group.item",
+      dataIdAttr: "data-sortable-id",
       group: {
         ...(options?.group ?? {}),
         name: el
@@ -31,26 +28,29 @@ export default {
         put: true,
       },
       onSort: () => {
-        let masterEl = el.closest("[wire\\:sortable-group]");
-        if (!masterEl) return;
-        let groups = Array.from(
-          masterEl.querySelectorAll("[wire\\:sortable-group\\.item-group]")
-        ).map((el, index) => {
-          return {
-            order: index + 1,
-            value: el.getAttribute("wire:sortable-group.item-group"),
-            items: el.$sokeio_sortable_group.toArray().map((value, index) => {
-              return {
-                order: index + 1,
-                value: value,
-              };
-            }),
-          };
-        });
-        component.$wire.call(
-          masterEl.getAttribute("wire:sortable-group"),
-          groups
-        );
+        try {
+          let masterEl = el.closest("[wire\\:sortable-group]");
+          if (!masterEl) return;
+          let groups = Array.from([masterEl]).map((el, index) => {
+            return {
+              order: index + 1,
+              value: el.getAttribute("wire:sortable-group.item-group"),
+              items: el.$sokeio_sortable_group.toArray().map((value, index) => {
+                return {
+                  order: index + 1,
+                  value: value,
+                };
+              }),
+            };
+          });
+          if (directive.expression) {
+            component.$wire.call(directive.expression, groups);
+          } else {
+            Alpine.$data(el).onSortable?.call(el, groups);
+          }
+        } catch (e) {
+          console.error(e);
+        }
       },
     });
   },

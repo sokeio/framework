@@ -10,6 +10,7 @@ export default {
   },
   init: ({ el, directive, component, cleanup, options }) => {
     if (el.$sokeio_sortable) return;
+    console.log(el);
 
     el.$sokeio_sortable = window.Sortable.create(el, {
       animation: 150,

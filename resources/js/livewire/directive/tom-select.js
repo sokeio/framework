@@ -46,7 +46,6 @@ export default {
         options: dataSource,
       };
     }
-    console.log(el.value);
     el.$sokeio_tomselect = new TomSelect(el, optionBase64);
   },
 };

@@ -16,6 +16,14 @@ trait WithCol
             ->classNameCol('col-xl-' . $xl)
             ->classNameCol('col-xxl-' . $xxl);
     }
+    public function colNone()
+    {
+        return $this->classNameCol('col-sm')
+            ->classNameCol('col-md')
+            ->classNameCol('col-lg')
+            ->classNameCol('col-xl')
+            ->classNameCol('col-xxl');
+    }
     public function colAuto()
     {
         return $this->col('auto', 'auto', 'auto', 'auto');
