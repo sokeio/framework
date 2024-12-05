@@ -56,15 +56,15 @@ export default sokeioUI;
 document.addEventListener("DOMContentLoaded", function () {
   window.sokeioUI.runApplication();
 });
-document.addEventListener(
-  "sokeio::plugin::load",
-  function ({ detail: plugin }: any) {
-    plugin.register({
-      css: [],
-      js: [],
-      excute: function (component: any, event: any) {
-        console.log("plugin_new:excute", event, component);
-      },
-    });
-  }
-);
+// document.addEventListener(
+//   "sokeio::plugin::load",
+//   function ({ detail: plugin }: any) {
+//     plugin.register({
+//       css: [],
+//       js: [],
+//       excute: function (component: any, event: any) {
+//         console.log("plugin_new:excute", event, component);
+//       },
+//     });
+//   }
+// );

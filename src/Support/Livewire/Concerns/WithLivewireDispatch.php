@@ -7,7 +7,7 @@ trait WithLivewireDispatch
 {
     private const LIVEWIRE_MESSAGE = 'sokeio_message';
     private const LIVEWIRE_CLOSE = 'sokeio_close';
-    private const LIVEWIRE_FUNCTION = 'sokeio_function';
+    private const LIVEWIRE_CALL_FUNC = 'sokeio_call_func';
     private const LIVEWIRE_REFRESH = 'sokeio_refresh';
     private const LIVEWIRE_REFRESH_PARENT = 'sokeio_refresh_parent';
     private const LIVEWIRE_REFRESH_PAGE = 'sokeio_refresh_page';
@@ -90,7 +90,7 @@ trait WithLivewireDispatch
     }
     public function callFunc($func, $option = [])
     {
-        $this->sendMessageToClient(self::LIVEWIRE_FUNCTION, [
+        $this->sendMessageToClient(self::LIVEWIRE_CALL_FUNC, [
             'func' => $func,
             'option' => $option
         ]);
@@ -102,5 +102,23 @@ trait WithLivewireDispatch
     public function refreshDashboard()
     {
         $this->dispatch('sokeio:refresh-dashboard');
+    }
+    // public function callFuncByName($name, $func, $params = [])
+    // {
+    //     $this->callFunc($func, [
+    //         'component' => $name,
+    //         'params' => $params
+    //     ]);
+    // }
+    public function callFuncById($id, $func, $params = [])
+    {
+        $this->callFunc($func, [
+            'id' => $id,
+            'params' => $params
+        ]);
+    }
+    public function callFuncByRef($func, $params = [])
+    {
+        $this->callFuncById($this->getRefId(), $func, $params);
     }
 }

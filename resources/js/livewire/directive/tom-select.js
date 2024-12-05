@@ -10,8 +10,10 @@ export default {
     ],
     css: ["https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css"],
   },
-  init: ({ el, directive, component, cleanup, options }) => {
-    if (el.$sokeio_tomselect) return;
+  init: ({ el, directive, component, cleanup, succeed, options }) => {
+    if (el.$sokeio_tomselect) {
+      return;
+    }
     let remoteAction = el.getAttribute("wire:tom-select.remote-action");
     let optionBase64 = el.getAttribute("wire:tom-select.base64");
     let dataSource = el.getAttribute("wire:tom-select.dataSource");
@@ -46,6 +48,34 @@ export default {
         options: dataSource,
       };
     }
-    el.$sokeio_tomselect = new TomSelect(el, optionBase64);
+    let init = () => {
+      el.$sokeio_tomselect = new TomSelect(el, optionBase64);
+    };
+
+    Alpine.$data(el).$watch("FieldValue", function (value, oldValue) {
+      if (el.skipUpdate) {
+        return;
+      }
+      el.skipUpdate = true;
+      console.log(this);
+      if (el.$sokeio_tomselect) {
+        el.$sokeio_tomselect.destroy();
+        el.$sokeio_tomselect = null;
+        init();
+        el.$sokeio_tomselect.setValue(value);
+        console.log({
+          oldValue,
+          value,
+        });
+        setTimeout(() => {
+          el.skipUpdate = false;
+        }, 1000);
+      }
+    });
+    init();
+    cleanup(() => {
+      el.$sokeio_tomselect.destroy();
+      el.$sokeio_tomselect = null;
+    });
   },
 };

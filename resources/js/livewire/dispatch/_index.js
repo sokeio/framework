@@ -1,3 +1,5 @@
+import sokeio from "../directive/sokeio";
+import call_func from "./call_func";
 import close from "./close";
 import message from "./message";
 import refresh from "./refresh";
@@ -9,6 +11,7 @@ const dispatch = {
   sokeio_refresh: refresh,
   sokeio_refresh_parent: refresh_parent,
   sokeio_refresh_page: refresh_page,
+  sokeio_call_func: call_func,
 };
 
 function install(app) {
