@@ -54,6 +54,10 @@ trait CommonUI
     {
         return $this->getAttributeByGroup($group)->set($key, $value);
     }
+    public function removeAttr($key, $value = null, $group = 'default'): static
+    {
+        return $this->getAttributeByGroup($group)->remove($key, $value);
+    }
     public function attrAdd($key, $value = null, $group = 'default'): static
     {
         return $this->getAttributeByGroup($group)->append($key, $value);

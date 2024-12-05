@@ -2,39 +2,18 @@
 
 namespace Sokeio\UI\Field;
 
+use Sokeio\UI\Field\Concerns\WithDatasource;
 
 class Select extends FieldUI
 {
-    protected $datasource;
-    public function dataSource($datasource)
-    {
-        $this->datasource = $datasource;
-        return $this;
-    }
-    public function checkDataSource(){
-        if (!$this->datasource) {
-            return false;
-        }
-        if (is_array($this->datasource)) {
-            return count($this->datasource) > 0;
-        }
-        if (is_callable($this->datasource)) {
-            return true;
-        }
-        return false;
-    }
+    use WithDatasource;
     private $options = [];
     public function options($options)
     {
         $this->options = array_merge($this->options, $options);
         return $this;
     }
-    public function optionsWithEnum($enum)
-    {
-        return $this->dataSource(collect($enum::cases())
-            ->map(fn($item) => ['value' => $item->value, 'text' => $item->label($item->value)])
-            ->values()->toArray());
-    }
+
     public function createItem()
     {
         return $this->options([
@@ -52,10 +31,7 @@ class Select extends FieldUI
         parent::initUI();
         $this->render(function () {
             $this->attr('wire:tom-select');
-            if ($this->datasource && is_callable($this->datasource)) {
-                $this->datasource = call_user_func($this->datasource, $this);
-            }
-            $this->attr('wire:tom-select.datasource', json_encode($this->datasource ?? []));
+            $this->attr('wire:tom-select.datasource', json_encode($this->getDatasource()));
             if ($this->options) {
                 $this->attr('wire:tom-select.options', json_encode($this->options));
             }
@@ -71,33 +47,19 @@ class Select extends FieldUI
         $limit = 30,
         $name = null
     ) {
-        if (!$fillable) {
-            $fillable = [$fieldId, $filedText];
-        }
-        if (!$fieldSearch) {
-            $fieldSearch = [$fieldId];
-        }
-        if (!$mapData || !is_callable($mapData)) {
-            $mapData = fn($item) => ['value' => $item->{$fieldId}, 'text' => $item->{$filedText}, 'item' => $item];
-        }
-        return $this->remoteAction(function ($value) use ($model, $fieldSearch, $mapData, $fillable, $limit) {
-
-            $fieldValue = $this->getValue();
-            if (!$fieldValue || ! is_array($fieldValue)) {
-                $fieldValue = [];
-            }
-            return ($model)::query()
-                ->whereIn('id',  $fieldValue)
-                ->union(
-                    $model::query()
-                        ->when($value, fn($query) => $query->whereAny($fieldSearch, 'like', '%' . $value . '%'))
-                        ->whereNotIn('id', $fieldValue)
-                        ->limit($limit - count($fieldValue))->select($fillable)
-                )
-                ->limit($limit)
-                ->select($fillable)
-                ->get()->map($mapData);
-        }, $name);
+        return $this->remoteAction(
+            fn($value) => $this->getDataByModel(
+                $model,
+                $filedText,
+                $fillable,
+                $fieldId,
+                $mapData,
+                $limit,
+                $fieldSearch,
+                $value
+            ),
+            $name
+        );
     }
     public function remoteAction($action, $name = null)
     {

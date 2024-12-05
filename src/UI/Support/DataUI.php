@@ -2,6 +2,7 @@
 
 namespace Sokeio\UI\Support;
 
+use Illuminate\Support\Facades\Log;
 use Sokeio\UI\BaseUI;
 
 class DataUI
@@ -12,6 +13,25 @@ class DataUI
     {
         $value = is_array($value) ? $value : [$value];
         $this->data[$key] = $value;
+        return $this->ui;
+    }
+
+    public function remove($key, $value = null)
+    {
+        $temp = $this->data;
+        if ($value == null) {
+            if (isset($temp[$key])) {
+                unset($temp[$key]);
+            }
+        } else {
+            $value = is_array($value) ? $value : [$value];
+            $temp[$key] = array_diff($temp[$key], $value);
+            if (count($temp[$key]) == 0) {
+                unset($temp[$key]);
+            }
+        }
+        $this->data = $temp;
+        Log::info($this->data);
         return $this->ui;
     }
     public function append($key, $value)

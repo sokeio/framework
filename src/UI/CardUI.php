@@ -16,7 +16,10 @@ class CardUI extends BaseUI
         $this->hideBody = $hideBody;
         return $this;
     }
-
+    public function hideSwitcher()
+    {
+        return $this->vars('hideSwitcher', true);
+    }
     public function subtitle($subtitle)
     {
         return $this->vars('subtitle', $subtitle);
@@ -27,8 +30,8 @@ class CardUI extends BaseUI
     }
     private function subTitleRender()
     {
-        if ($this->getVar('subtitle', '', true)) {
-            return '<p class="text-secondary">' . $this->getVar('subtitle', '', true) . '</p>';
+        if ($subtitle = $this->getVar('subtitle', '', true)) {
+            return '<p class="text-secondary">' . $subtitle . '</p>';
         }
         return '';
     }
@@ -44,17 +47,21 @@ class CardUI extends BaseUI
         if (!$classBody) {
             $classBody = 'p-2';
         }
-$showBody="true";
-if($this->hideBody){
-    $showBody="false";
-}
+        $showBody = "true";
+        if ($this->hideBody) {
+            $showBody = "false";
+        }
+        $hideSwitcher="";
+        if($this->checkVar('hideSwitcher')) {
+            $hideSwitcher = "style='display: none;'";
+        }
         $html = <<<HTML
         <div {$this->getAttr()}>
             <div class="card" x-data="{showBody: {$showBody}}">
                 <div class="card-header p-2">
                     <h3 class="card-title">{$this->getIcon()} {$this->getVar('title', '', true)}</h3>
                     <div class="card-actions pt-2 pe-2">
-                        <label class="form-check form-switch">
+                        <label {$hideSwitcher} class="form-check form-switch">
                             <input x-model="showBody" class="form-check-input" type="checkbox" >
                         </label>
                     </div>
