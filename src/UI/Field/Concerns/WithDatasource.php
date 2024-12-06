@@ -71,13 +71,20 @@ trait WithDatasource
         if ($fieldValue && ! is_array($fieldValue)) {
             $fieldValue = [$fieldValue];
         }
+        $checkFieldValue = $fieldValue && is_array($fieldValue);
         return ($model)::query()
-            ->whereIn('id',  $fieldValue)
+            ->when($checkFieldValue, fn($query) => $query->whereIn('id',  $fieldValue))
             ->union(
                 $model::query()
                     ->when($value, fn($query) => $query->whereAny($fieldSearch, 'like', '%' . $value . '%'))
-                    ->whereNotIn('id', $fieldValue)
-                    ->limit($limit - count($fieldValue))->select($fillable)
+                    ->when(
+                        $checkFieldValue,
+                        fn($query) =>
+                        $query->whereNotIn('id',  $fieldValue)
+                            ->limit($limit - count($fieldValue))
+                    )
+                    ->when(!$checkFieldValue, fn($query) => $query->limit($limit))
+                    ->select($fillable)
             )
             ->limit($limit)
             ->select($fillable)
