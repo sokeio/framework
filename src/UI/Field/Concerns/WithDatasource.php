@@ -53,7 +53,8 @@ trait WithDatasource
         $mapData = null,
         $limit = 30,
         $fieldSearch = null,
-        $value = null
+        $value = null,
+        $fnQuery = null,
     ) {
         if (!$fillable) {
             $fillable = [$fieldId, $filedText];
@@ -85,9 +86,11 @@ trait WithDatasource
                     )
                     ->when(!$checkFieldValue, fn($query) => $query->limit($limit))
                     ->select($fillable)
+                    ->when($fnQuery, $fnQuery)
             )
             ->limit($limit)
             ->select($fillable)
+            ->when($fnQuery, $fnQuery)
             ->get()->map($mapData);
     }
 }
