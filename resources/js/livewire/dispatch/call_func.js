@@ -6,8 +6,6 @@ export default function (payload) {
   if (id) {
     let component = window.Livewire.find(id);
     if (!component) return;
-    console.log(component);
     component[func](...params);
   }
-  console.log(payload);
 }

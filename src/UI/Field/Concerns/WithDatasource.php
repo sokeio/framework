@@ -65,8 +65,11 @@ trait WithDatasource
             $mapData = fn($item) => ['value' => $item->{$fieldId}, 'text' => $item->{$filedText}, 'item' => $item];
         }
         $fieldValue = $this->getValue();
-        if (!$fieldValue || ! is_array($fieldValue)) {
+        if($fieldValue===null||trim($fieldValue)===''){
             $fieldValue = [];
+        }
+        if ($fieldValue && ! is_array($fieldValue)) {
+            $fieldValue = [$fieldValue];
         }
         return ($model)::query()
             ->whereIn('id',  $fieldValue)

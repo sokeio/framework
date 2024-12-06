@@ -30,10 +30,11 @@ class Select extends FieldUI
     {
         parent::initUI();
         $this->render(function () {
-            $this->attr('wire:tom-select');
-            $this->attr('wire:tom-select.datasource', json_encode($this->getDatasource()));
+            $this->attr('wire:key', 'tom-select-' . $this->getFieldNameWithoutPrefix() . '-' . time(), 'tom-select');
+            $this->attr('wire:tom-select', null, 'tom-select');
+            $this->attr('wire:tom-select.datasource', json_encode($this->getDatasource()), 'tom-select');
             if ($this->options) {
-                $this->attr('wire:tom-select.options', json_encode($this->options));
+                $this->attr('wire:tom-select.options', json_encode($this->options), 'tom-select');
             }
         });
     }
@@ -67,7 +68,7 @@ class Select extends FieldUI
             if (!$name) {
                 $name = $this->getVar('name', null, true) . '_' . (class_basename(($this))) . '_remote_action';
             }
-            $this->attr('wire:tom-select.remote-action', $name);
+            $this->attr('wire:tom-select.remote-action', $name, 'tom-select');
             $this->action($name, $action);
             $this->render(function () use ($name) {
                 if (empty($this->dataSource)) {
@@ -83,6 +84,7 @@ class Select extends FieldUI
     protected function fieldView()
     {
         $attr = $this->getAttr();
+        $attrTomSelect = $this->getAttr('tom-select');
         $value = $this->getValue();
         $optionHtml = '';
         if (is_array($value)) {
@@ -93,10 +95,12 @@ class Select extends FieldUI
             $optionHtml = '<option value="' . $value . '" selected></option>';
         }
         return <<<HTML
-        <div wire:ignore>
-            <select {$attr} >
-               {$optionHtml}
-            </select>
+        <div  {$attrTomSelect} >
+            <div wire:ignore>
+                <select {$attr} >
+                    {$optionHtml}
+                </select>
+            </div>
         </div>
         HTML;
     }
