@@ -65,7 +65,7 @@ trait WithDatasource
             $mapData = fn($item) => ['value' => $item->{$fieldId}, 'text' => $item->{$filedText}, 'item' => $item];
         }
         $fieldValue = $this->getValue();
-        if($fieldValue===null||trim($fieldValue)===''){
+        if ($fieldValue === null || (is_string($fieldValue) && str($fieldValue)->trim() === '')) {
             $fieldValue = [];
         }
         if ($fieldValue && ! is_array($fieldValue)) {
