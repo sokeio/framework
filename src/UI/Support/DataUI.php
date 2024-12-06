@@ -58,16 +58,16 @@ class DataUI
     {
         $attr = '';
         foreach ($this->getData() as $key => $value) {
-
             if ($checkFn && is_callable($checkFn)) {
                 $attr .= call_user_func($checkFn, $key, $value);
             } else {
                 if (is_array($value)) {
-                    // foreach ($value as $k => $v) {
-                    //     if (is_callable($v)) {
-                    //         dd(['key' => $key, 'value' => $v]);
-                    //     }
-                    // }
+                    $value =  array_map(function ($v) {
+                        if (is_callable($v)) {
+                            return call_user_func($v, $this->ui);
+                        }
+                        return $v;
+                    }, $value);
                     $value = implode(' ', $value);
                 }
                 $attr .= ' ' . $key . '="' . htmlentities($value, ENT_QUOTES, 'UTF-8') . '"';
