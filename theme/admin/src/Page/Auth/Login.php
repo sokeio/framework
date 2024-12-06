@@ -19,7 +19,7 @@ class Login extends \Sokeio\Page
     #[Rule('required')]
     public $password;
     public $isRememberMe = false;
-
+    
     public function login()
     {
         $this->validate();

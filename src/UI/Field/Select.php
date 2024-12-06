@@ -66,12 +66,12 @@ class Select extends FieldUI
     {
         return $this->register(function () use ($action, $name) {
             if (!$name) {
-                $name = $this->getVar('name', null, true) . '_' . (class_basename(($this))) . '_remote_action';
+                $name = $this->getUIIDkey() . '_' . $this->getVar('name', null, true)  . '_remote_action';
             }
             $this->attr('wire:tom-select.remote-action', $name, 'tom-select');
             $this->action($name, $action);
-            $this->render(function () use ($name) {
-                if (empty($this->dataSource)) {
+            $this->renderAction(function () use ($name) {
+                if (!$this->checkDataSource()) {
                     $this->dataSource($this->getManager()->callActionUI($name));
                 }
             });

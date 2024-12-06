@@ -35,13 +35,14 @@ class Button extends BaseUI
         }
         return $this->wireClick($callback, $actionName, $params);
     }
+
     public function wireClick($callback, $actionName = 'button::click', $params = null)
     {
         return  $this->register(function () use ($callback, $actionName, $params) {
             if (is_string($callback) && strpos($callback, '::') === false && !class_exists($callback)) {
                 return $this->attr('wire:click', $callback);
             }
-            $wireClick = $this->getId() . $actionName;
+            $wireClick = $this->getUIIDkey() . $actionName;
 
             $this->action($wireClick, function ($_params) use ($callback) {
                 if (is_array($_params) && !empty($_params)) {

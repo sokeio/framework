@@ -3,29 +3,23 @@
 namespace Sokeio\UI\Common;
 
 use Sokeio\UI\BaseUI;
-use Sokeio\UI\Common\Concerns\WithViewBlade;
 
 class Card extends BaseUI
 {
-    use WithViewBlade;
-    protected function initUI()
-    {
-        $this->render(function () {
-            if (!$this->containsAttr('class', 'card')) {
-                $this->className('card');
-            }
-        });
-    }
-
+    private $hideBody = false;
     public function title($title)
     {
         return $this->vars('title', $title);
     }
-    public function bodyClass($bodyClass)
+    public function hideBody($hideBody = true)
     {
-        return $this->vars('bodyClass', $bodyClass);
+        $this->hideBody = $hideBody;
+        return $this;
     }
-
+    public function hideSwitcher()
+    {
+        return $this->vars('hideSwitcher', true);
+    }
     public function subtitle($subtitle)
     {
         return $this->vars('subtitle', $subtitle);
@@ -34,42 +28,62 @@ class Card extends BaseUI
     {
         return $this->vars('column', $column);
     }
-    private function subtitleRender()
+    private function subTitleRender()
     {
-        if ($this->checkVar('subtitle')) {
-            return <<<HTML
-            <p class="text-secondary">{$this->getVar('subtitle', '', true)}</p>
-            HTML;
+        if ($subtitle = $this->getVar('subtitle', '', true)) {
+            return '<p class="text-secondary">' . $subtitle . '</p>';
         }
         return '';
     }
-    private function titleRender()
+    public function bodyRow($class = '')
     {
-        if ($this->checkVar('title')) {
-            return <<<HTML
-            <h3 class="card-title">{$this->getVar('title', '', true)}</h3>
-            HTML;
-        }
-        return '';
+        return $this->vars('bodyRow', 'row ' . $class);
+    }
+    public function actionUI($actionUI)
+    {
+        return $this->child($actionUI, 'action');
     }
     public function view()
     {
-        $attr = $this->getAttr();
+        $htmlBodyCard = '';
+
+        $classBody = $this->getVar('bodyRow', '', true);
+        if (!$classBody) {
+            $classBody = 'p-2';
+        }
+        $showBody = "true";
+        if ($this->hideBody) {
+            $showBody = "false";
+        }
+        $hideSwitcher = "";
+        if ($this->checkVar('hideSwitcher')) {
+            $hideSwitcher = "style='display: none;'";
+        }
         $html = <<<HTML
-            <div {$attr}>
-                <div class="card-body {$this->getVar('bodyClass', 'p-2', true)}">
-                    {$this->titleRender()}
-                    {$this->subtitleRender()}
-                    {$this->getVar('text', '', true)}{$this->renderChilds()}
+        <div {$this->getAttr()}>
+            <div class="card" x-data="{showBody: {$showBody}}">
+                <div class="card-header p-2">
+                    <h3 class="card-title">{$this->getIcon()} {$this->getVar('title', '', true)}</h3>
+                    <div class="card-actions pt-2 pe-2">
+                        {$this->renderChilds('action')}
+                        <label {$hideSwitcher} class="form-check form-switch">
+                            <input x-model="showBody" class="form-check-input" type="checkbox" >
+                        </label>
+                    </div>
+                </div>
+                <div x-show="showBody" class="card-body {$classBody}" {$htmlBodyCard}>
+                    {$this->subTitleRender()}
+                    {$this->renderChilds()}
                 </div>
             </div>
+        </div>
         HTML;
         if ($this->getVar('column', '', true)) {
             $html = <<<HTML
             <div class="{$this->getVar('column', '', true)}">
                 {$html}
             </div>
-        HTML;
+            HTML;
         }
         return $html;
     }

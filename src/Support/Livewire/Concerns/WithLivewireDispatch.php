@@ -2,6 +2,9 @@
 
 namespace Sokeio\Support\Livewire\Concerns;
 
+use Illuminate\Console\View\Components\Alert;
+use Sokeio\Enums\AlertPosition;
+use Sokeio\Enums\AlertType;
 
 trait WithLivewireDispatch
 {
@@ -13,20 +16,7 @@ trait WithLivewireDispatch
     private const LIVEWIRE_REFRESH_PAGE = 'sokeio_refresh_page';
 
 
-    public const MESSAGE_TYPE_SUCCESS = 'success';
-    public const MESSAGE_TYPE_INFO = 'info';
-    public const MESSAGE_TYPE_WARNING = 'warning';
-    public const MESSAGE_TYPE_DANGER = 'text-bg-danger';
 
-    public const MESSAGE_POSITION_TOP_RIGHT = 'top-right';
-    public const MESSAGE_POSITION_TOP_CENTER = 'top-center';
-    public const MESSAGE_POSITION_TOP_LEFT = 'top-left';
-    public const MESSAGE_POSITION_MIDDLE_RIGHT = 'middle-right';
-    public const MESSAGE_POSITION_MIDDLE_CENTER = 'middle-center';
-    public const MESSAGE_POSITION_MIDDLE_LEFT = 'middle-left';
-    public const MESSAGE_POSITION_BOTTOM_RIGHT = 'bottom-right';
-    public const MESSAGE_POSITION_BOTTOM_CENTER = 'bottom-center';
-    public const MESSAGE_POSITION_BOTTOM_LEFT = 'bottom-left';
 
     protected function sendMessageToClient($type, $payload = [])
     {
@@ -38,8 +28,8 @@ trait WithLivewireDispatch
     public function alert(
         $message,
         $title = null,
-        $messageType = 'success',
-        $position = self::MESSAGE_POSITION_TOP_CENTER,
+        $messageType = AlertType::SUCCESS,
+        $position = AlertPosition::TOP_CENTER,
         $timeout = 5000
     ) {
         $this->sendMessage($message, [

@@ -22,15 +22,15 @@ trait CommonUI
     {
         return $this->alpine;
     }
-    public function className($className)
+    public function className($className): static
     {
         return $this->attrAdd('class', $className);
     }
-    public function confirm($message)
+    public function confirm($message): static
     {
         return $this->attr('wire:confirm', $message);
     }
-    public function id($id): self
+    public function id($id): static
     {
         return $this->attr('id', $id);
     }

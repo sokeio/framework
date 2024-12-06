@@ -22,20 +22,21 @@ class BaseUI
         return $icon;
     }
     private $callbackView = null;
-    private SoUI|null $manager = null;
-
-    public function getManager()
-    {
-        return $this->manager;
-    }
+   
     public function style($style)
     {
         return $this->vars('style', $style);
     }
-   
+
     protected function getNameWithPrefix($name)
     {
-        return $this->getPrefix() ? $this->getPrefix() . '.' . $name : $name;
+        if ($prefix = $this->getPrefix()) {
+            if ($groupField = $this->getGroupField()) {
+                return $prefix . '.' . $groupField . '.' . $name;
+            }
+            return $prefix . '.' . $name;
+        }
+        return  $name;
     }
     public function getWire()
     {
@@ -66,6 +67,10 @@ class BaseUI
         $this->child($childs);
         $this->boot(function () {
             $this->attr('sokeio-group', $this->getGroup());
+            // $this->attr('sokeio-ui-id', $this->getUIID());
+        });
+        $this->register(function () {
+            $this->initUI();
         });
     }
     public function refUI($callback = null)
@@ -75,13 +80,18 @@ class BaseUI
         }
         return $this->manager;
     }
-    public function registerManager(SoUI $manager)
+    public function resetErrorBag($field = null)
     {
-        $this->manager = $manager;
-        $this->setupChild(fn($c) => $c->registerManager($manager));
-        return $this->register(function () {
-            $this->initUI();
-        });
+        if ($field) {
+            $field = $this->getNameWithPrefix($field);
+        }
+        $this->getWire()->resetErrorBag($field);
+        return $this;
+    }
+    public function addError($field, $message)
+    {
+        $this->getWire()->addError($this->getNameWithPrefix($field), $message);
+        return $this;
     }
 
     protected function initUI()

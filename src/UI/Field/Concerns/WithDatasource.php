@@ -12,7 +12,7 @@ trait WithDatasource
     }
     public function getDatasource()
     {
-        if ($this->datasource && is_callable($this->datasource)) {
+        if ($this->datasource && !is_string($this->datasource) && is_callable($this->datasource)) {
             return call_user_func($this->datasource, $this) ?? [];
         }
         return $this->datasource ?? [];

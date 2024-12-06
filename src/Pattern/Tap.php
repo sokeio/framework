@@ -6,7 +6,9 @@ trait Tap
 {
     public function tap($callback)
     {
-        $callback($this);
+        if ($callback) {
+            $callback($this);
+        }
         return $this;
     }
 }
