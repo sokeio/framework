@@ -35,3 +35,10 @@ if (!function_exists('tagLink')) {
         return '<a href="' . $link . '" target="_blank">' . $link . '</a>';
     }
 }
+
+if (!function_exists('themeOption')) {
+    function themeOption($key, $default = null)
+    {
+        return Theme::option($key, $default);
+    }
+}
