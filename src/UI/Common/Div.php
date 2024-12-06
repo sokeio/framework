@@ -5,10 +5,12 @@ namespace Sokeio\UI\Common;
 use Sokeio\UI\BaseUI;
 use Sokeio\UI\Common\Concerns\DivAlert;
 use Sokeio\UI\Common\Concerns\DivGrid;
+use Sokeio\UI\Common\Concerns\WithTextHtml;
 use Sokeio\UI\Common\Concerns\WithViewBlade;
 
 class Div extends BaseUI
 {
+    use WithTextHtml;
     use DivGrid, DivAlert, WithViewBlade;
     public function text($text)
     {

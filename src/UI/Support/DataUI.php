@@ -63,7 +63,7 @@ class DataUI
             } else {
                 if (is_array($value)) {
                     $value =  array_map(function ($v) {
-                        if (is_callable($v)) {
+                        if (!is_string($v) && is_callable($v)) {
                             return call_user_func($v, $this->ui);
                         }
                         return $v;

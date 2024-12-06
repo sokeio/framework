@@ -3,9 +3,11 @@
 namespace Sokeio\UI\Common;
 
 use Sokeio\UI\BaseUI;
+use Sokeio\UI\Common\Concerns\WithTextHtml;
 
 class Button extends BaseUI
 {
+    use WithTextHtml;
     protected function initUI()
     {
         $this->render(function () {

@@ -32,6 +32,7 @@ class BaseUI
     {
         return $this->vars('style', $style);
     }
+   
     protected function getNameWithPrefix($name)
     {
         return $this->getPrefix() ? $this->getPrefix() . '.' . $name : $name;

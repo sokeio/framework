@@ -13,7 +13,7 @@ use Sokeio\UI\Support\HookUI;
 trait LifecycleUI
 {
     use Tap;
-    private BaseUI|SoUI  $parent;
+    private BaseUI|SoUI|null  $parent = null;
     private $showLogDebug = false;
     private $childs = [];
     private $params = [];
@@ -141,18 +141,20 @@ trait LifecycleUI
     public function setPrefix($prefix)
     {
         $this->prefix = $prefix;
-        $this->checkDebug('setPrefix');
-        return $this->setupChild(fn($c) => $c->setPrefix($prefix));
+        return $this;
     }
 
     public function clearPrefix()
     {
         $this->prefix = '';
-        return $this->setupChild(fn($c) => $c->clearPrefix());
+        return $this;
     }
     public function getPrefix()
     {
-        return $this->prefix;
+        if ($this->prefix) {
+            return $this->prefix;
+        }
+        return $this->parent ? $this->parent->getPrefix() : '';
     }
     public function getContext()
     {
@@ -177,7 +179,7 @@ trait LifecycleUI
     public function makeView($view, $data = [], $mergeData = [])
     {
         return $this->getViewFactory()->make($view, $data, $mergeData)
-            ->with(Utils::getPublicPropertiesDefinedOnSubclass($this->getWire()));
+            ->with([...Utils::getPublicPropertiesDefinedOnSubclass($this->getWire()), 'soUI' => $this]);
     }
     public function viewRender($view, $data = [], $mergeData = [])
     {
@@ -292,11 +294,13 @@ trait LifecycleUI
             if ($rs && is_callable($rs)) {
                 call_user_func($rs, $ui);
             }
+        } elseif (is_string($ui)) {
+            $html = $ui;
         }
 
         return $html;
     }
-    protected function renderChilds($group = 'default', $params = null, $callback = null)
+    public function renderChilds($group = 'default', $params = null, $callback = null)
     {
         $html = '';
         foreach ($this->childs[$group] ?? [] as $child) {
