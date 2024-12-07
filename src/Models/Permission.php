@@ -2,7 +2,9 @@
 
 namespace Sokeio\Models;
 
+use Sokeio\Attribute\ModelInfo;
 
+#[ModelInfo()]
 class Permission extends \Sokeio\Model
 {
     protected $fillable = ['name', 'group', 'slug'];

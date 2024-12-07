@@ -3,11 +3,13 @@
 namespace Sokeio\Attribute;
 
 use Attribute;
+use Sokeio\Concerns\WithAttribute;
 use Sokeio\Enums\MethodType;
 
 #[Attribute(Attribute::TARGET_METHOD | Attribute::TARGET_CLASS)]
 class RouteInfo
 {
+    use WithAttribute;
     public function __construct(
         public MethodType $method,
         public string $uri,

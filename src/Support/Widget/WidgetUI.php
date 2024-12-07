@@ -26,7 +26,7 @@ class WidgetUI extends BaseUI implements ILoader
     }
     public function getInfo(): WidgetInfo
     {
-        return $this->info ?? ($this->info = WidgetInfo::getInfoFrom(self::class));
+        return $this->info ?? ($this->info = WidgetInfo::fromClass(self::class));
     }
     protected function initUI()
     {

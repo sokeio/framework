@@ -2,7 +2,9 @@
 
 namespace Sokeio\Models;
 
+use Sokeio\Attribute\ModelInfo;
 
+#[ModelInfo()]
 class Role extends \Sokeio\Model
 {
     private static $roleSupperAdmin = null;

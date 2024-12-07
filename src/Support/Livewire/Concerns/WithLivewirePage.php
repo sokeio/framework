@@ -14,14 +14,12 @@ trait WithLivewirePage
     public function getPageConfig()
     {
         if (!$this->pageConfig) {
-            $this->pageConfig = new PageConfig($this);
-            // use ReflectionClass
-            $reflection = new \ReflectionClass(get_class($this));
-            // getAttributes  PageInfo::class
-            $attributes = $reflection->getAttributes(PageInfo::class, \ReflectionAttribute::IS_INSTANCEOF);
-            foreach ($attributes as $attribute) {
-                $this->pageConfig->setInfo($attribute->newInstance());
-            }
+            $this->pageConfig = (new PageConfig($this))
+                ->tap(
+                    fn(PageConfig $pageConfig) =>
+                    $pageConfig->setInfo(PageInfo::fromClass($this))
+                );
+
             static::pageSetup($this->pageConfig);
         }
         return $this->pageConfig;

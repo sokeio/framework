@@ -2,12 +2,13 @@
 
 namespace Sokeio\Models;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Sokeio\Concerns\WithModelHook;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Sokeio\Concerns\WithPermission;
 use Illuminate\Support\Facades\Hash;
+use Sokeio\Attribute\ModelInfo;
 
+#[ModelInfo(createBy: '', updateBy: '')]
 class User extends Authenticatable
 {
     use WithPermission;

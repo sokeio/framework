@@ -2,7 +2,9 @@
 
 namespace Sokeio\Models;
 
+use Sokeio\Attribute\ModelInfo;
 
+#[ModelInfo()]
 class Dashboard extends \Sokeio\Model
 {
     public $fillable = ['name', 'description', 'widgets', 'is_default', 'is_active', 'is_private', 'user_id'];

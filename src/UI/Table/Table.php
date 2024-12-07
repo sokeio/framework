@@ -62,16 +62,16 @@ class Table extends BaseUI
     }
     protected function getValueByName($name, $default = null, $withKey = true)
     {
-        if (!$this->context) {
+        if (!$this->getContext()) {
             return $this->getWire()->getValueQuery($this->getKeyWithTable($name, $withKey), $default);
         }
-        return data_get($this->context, $this->getKeyWithTable($name, $withKey), $default);
+        return data_get($this->getContext(), $this->getKeyWithTable($name, $withKey), $default);
     }
     protected function setValueByName($name, $value, $withKey = true)
     {
         $this->getWire()->query($this->getKeyWithTable($name, $withKey), $value);
-        if ($this->context) {
-            data_set($this->context, $this->getKeyWithTable($name, $withKey), $value);
+        if ($this->getContext()) {
+            data_set($this->getContext(), $this->getKeyWithTable($name, $withKey), $value);
         }
         return $this;
     }

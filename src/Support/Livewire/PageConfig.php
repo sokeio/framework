@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use Sokeio\Attribute\PageInfo;
+use Sokeio\Pattern\Tap;
 use Sokeio\Platform;
 use Sokeio\Support\Menu\MenuItem;
 use Sokeio\Support\Menu\MenuManager;
@@ -14,6 +15,7 @@ use Sokeio\Theme;
 
 class PageConfig
 {
+    use Tap;
     public function __construct(protected $component = null) {}
 
     private $config = [
