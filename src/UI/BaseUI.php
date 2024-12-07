@@ -2,6 +2,7 @@
 
 namespace Sokeio\UI;
 
+use Illuminate\Support\Facades\Log;
 use Sokeio\UI\Concerns\CommonUI;
 use Sokeio\UI\Concerns\LifecycleUI;
 
@@ -22,7 +23,7 @@ class BaseUI
         return $icon;
     }
     private $callbackView = null;
-   
+
     public function style($style)
     {
         return $this->vars('style', $style);
@@ -67,7 +68,8 @@ class BaseUI
         $this->child($childs);
         $this->boot(function () {
             $this->attr('sokeio-group', $this->getGroup());
-            // $this->attr('sokeio-ui-id', $this->getUIID());
+            $this->attr('sokeio-ui-id', $this->getUIID());
+            $this->attr('sokeio-ui-key', $this->getUIIDkey());
         });
         $this->register(function () {
             $this->initUI();

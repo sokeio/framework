@@ -94,7 +94,7 @@ class Index extends Component
                     ])->row()->x()->show('widgetParams.polling')
                         ->ui(),
                     ($class)::paramUI()
-                ])->setPrefix('widgetParams');
+                ])->prefix('widgetParams');
             }
         }
         return [];

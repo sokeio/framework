@@ -1,5 +1,5 @@
 @php
-    $ui->setViewFactory($__env);
+    $ui->viewFactory($__env);
 
     $html = $ui->render();
     if (!$html) {

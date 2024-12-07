@@ -88,7 +88,7 @@ class Index extends \Sokeio\Page
                     ->icon('ti ti-settings')
                     ->className('btn btn-danger')
                     ->modalRoute($this->getRouteName('setting')),
-            ])->setPrefix('dataSearch')
+            ])->prefix('dataSearch')
             ->render(function () {
                 $this->updatedDataSearch();
             });

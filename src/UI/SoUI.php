@@ -2,6 +2,7 @@
 
 namespace Sokeio\UI;
 
+use Illuminate\Support\Facades\Log;
 use Sokeio\UI\Common\Card;
 use Sokeio\UI\Concerns\LifecycleUI;
 use Sokeio\UI\Concerns\WithSoUI;
@@ -14,7 +15,7 @@ class SoUI
         $this->wire = $wire;
         $this->initLifecycleUI();
         $this->child($ui);
-        $this->registerManager($this);
+        $this->setManager($this);
         $this->register();
     }
     public function toArray()
@@ -57,8 +58,24 @@ class SoUI
     {
         return static::init($ui, $wire)->toHtml();
     }
+    private static $uiDebug = [];
     private static $uiWithKey = [];
     private static $uiWithGroupKey = [];
+    public static function debug($uiKey, $callback = null, $lifeKey = null)
+    {
+        static::$uiDebug[] = function ($ui, $key) use ($callback, $uiKey, $lifeKey) {
+            Log::info([$uiKey, $ui->getUIIDkey()]);
+            if ($ui->getUIIDkey() == $uiKey && ($lifeKey == null || $key == $lifeKey)) {
+                $callback($ui, $key);
+            }
+        };
+    }
+    public static function checkDebug($ui, $lifeKey = null)
+    {
+        foreach (static::$uiDebug as $callback) {
+            $callback($ui, $lifeKey);
+        }
+    }
     public static function registerUI($ui, $key = null, $group = null,  $tapCard = null)
     {
         if (!is_array($ui)) {
@@ -69,9 +86,7 @@ class SoUI
                 static::$uiWithKey[$key] = [];
             }
 
-            static::$uiWithKey[$key] = array_merge(static::$uiWithKey[$key], array_map(function ($u) {
-                return clone $u;
-            }, $ui));
+            static::$uiWithKey[$key] = array_merge(static::$uiWithKey[$key], $ui);
         }
 
         if ($group) {

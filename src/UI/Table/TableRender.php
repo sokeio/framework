@@ -149,11 +149,11 @@ trait TableRender
         }
         $formSearch = $this->renderChilds('formSearch', null, function (BaseUI $child) {
             $child->debounce();
-            $child->setPrefix('soQuery.' . $this->getKeyWithTable());
+            $child->prefix('soQuery.' . $this->getKeyWithTable());
         });
         $formSearchExtra = $this->renderChilds('formSearchExtra', null, function (BaseUI $child) {
             $child->debounce();
-            $child->setPrefix('soQuery.' . $this->getKeyWithTable());
+            $child->prefix('soQuery.' . $this->getKeyWithTable());
         });
         $htmlButton = <<<html
         <div class="sokeio-form-search-action">

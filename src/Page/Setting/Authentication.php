@@ -62,7 +62,7 @@ class Authentication extends \Sokeio\Page
             ->icon('ti ti-settings-up')
             ->subtitle('')
             ->column(self::COLUMN_GROUP)
-            ->setPrefix('formData.login')
+            ->prefix('formData.login')
             ->className('mb-3');
     }
     private function settingLoginWithGoogle()
@@ -94,7 +94,7 @@ class Authentication extends \Sokeio\Page
         ')
             ->column(self::COLUMN_GROUP2)
             ->showSwitcher('SOKEIO_GOOGLE_ENABLE', false)
-            ->setPrefix('formData.google')
+            ->prefix('formData.google')
             ->className('mb-3');
     }
     private function settingLoginWithFacebook()
@@ -126,7 +126,7 @@ class Authentication extends \Sokeio\Page
             ')
             ->column(self::COLUMN_GROUP2)
             ->showSwitcher('SOKEIO_FACEBOOK_ENABLE', false)
-            ->setPrefix('formData.facebook')
+            ->prefix('formData.facebook')
             ->className('mb-3');
     }
     private function settingLoginWithGithub()
@@ -157,7 +157,7 @@ class Authentication extends \Sokeio\Page
         ')
             ->column(self::COLUMN_GROUP2)
             ->showSwitcher('SOKEIO_GITHUB_ENABLE', false)
-            ->setPrefix('formData.github')
+            ->prefix('formData.github')
             ->className('mb-3');
     }
     protected function setupUI()

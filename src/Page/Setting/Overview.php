@@ -51,7 +51,7 @@ class Overview extends \Sokeio\Page
             ->title('Overview Setting')
             ->subtitle('')
             ->column(self::COLUMN_GROUP)
-            ->setPrefix('formData.overview')
+            ->prefix('formData.overview')
             ->className('mb-3');
     }
     private function settingAdmin()
@@ -91,7 +91,7 @@ class Overview extends \Sokeio\Page
             ->title('Admin Setting')
             ->subtitle('')
             ->column(self::COLUMN_GROUP)
-            ->setPrefix('formData.admin')
+            ->prefix('formData.admin')
             ->className('mb-3');
     }
     private function settingUtility()
@@ -124,7 +124,7 @@ class Overview extends \Sokeio\Page
             ->bodyRow()
             ->subtitle('')
             ->column(self::COLUMN_GROUP)
-            ->setPrefix('formData.utility')
+            ->prefix('formData.utility')
             ->className('mb-3');
     }
     protected function setupUI()

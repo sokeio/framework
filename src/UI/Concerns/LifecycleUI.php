@@ -3,8 +3,6 @@
 namespace Sokeio\UI\Concerns;
 
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
-use Livewire\Drawer\Utils;
 use Sokeio\Pattern\Tap;
 use Sokeio\UI\BaseUI;
 use Sokeio\UI\SoUI;
@@ -15,32 +13,16 @@ use Sokeio\UI\Common\None;
 
 trait LifecycleUI
 {
-    use Tap;
+    use Tap, DataShareUI;
     private BaseUI|SoUI|null  $parent = null;
-    private SoUI|null $manager = null;
-    private $showLogDebug = false;
     private $childs = [];
-    private $params = [];
-    private $prefix = '';
-    private $group = '';
-    protected $context = null;
-    protected $viewFactory = null;
     protected HookUI $hook;
     private $whenCallbacks = [];
-    private $callbackDebug = null;
     private $skipBoot = false;
     private $uiId = null;
+    private $uiIdKey = null;
     private $hookStatus = [];
-    public function getManager()
-    {
-        return $this->manager;
-    }
-    public function registerManager(SoUI $manager)
-    {
-        $this->manager = $manager;
-        $this->setupChild(fn($c) => $c->registerManager($manager));
-        return $this;
-    }
+
     public function uiId($uiId)
     {
         $this->uiId = $uiId;
@@ -48,50 +30,24 @@ trait LifecycleUI
     }
     public function getUIIDkey()
     {
-        if ($this->parent) {
-            return $this->parent->getUIIDkey() . '_' . $this->getUIID();
+        if ($this->uiIdKey) {
+            return $this->uiIdKey;
         }
-        return $this->getUIID();
+        if ($this->parent) {
+            return  $this->uiIdKey = md5($this->parent->getUIIDkey() . '_' . $this->getUIID());
+        }
+        return $this->uiIdKey = md5($this->getUIID());
     }
     public function getUIID()
     {
         return $this->uiId;
-    }
-    private $groupField = null;
-    public function groupField($group)
-    {
-        $this->groupField = $group;
-        return $this;
-    }
-    public function getGroupField()
-    {
-        if ($this->groupField) {
-            return $this->groupField;
-        }
-        return $this->getParent()?->getGroupField();
     }
     public function skipBoot()
     {
         $this->skipBoot = true;
         return $this;
     }
-    public function debug($callback)
-    {
-        $this->callbackDebug = $callback;
-        return $this;
-    }
-    private function checkDebug($key)
-    {
-        if ($this->showLogDebug) {
-            if ($this->uiId == null) {
-                $this->uiId = uniqid();
-            }
-            Log::info([$this->uiId, static::class, $key, $this->viewFactory ? "true" : "false"]);
-        }
-        if ($this->callbackDebug) {
-            call_user_func($this->callbackDebug, $this, $key);
-        }
-    }
+
     public function getParent()
     {
         return $this->parent;
@@ -135,15 +91,7 @@ trait LifecycleUI
         if (!$callback || !is_callable($callback) || empty($this->childs)) {
             return $this;
         }
-        foreach ($this->childs as  $childs) {
-            if (is_array($childs) && !empty($childs)) {
-                foreach ($childs as $c) {
-                    if ($c && is_subclass_of($c, BaseUI::class)) {
-                        $callback($c);
-                    }
-                }
-            }
-        }
+        $this->callbackUI($this->childs, fn($c) => $callback($c));
 
         return $this;
     }
@@ -158,116 +106,14 @@ trait LifecycleUI
         } else {
             $this->hook->group($key)->run([$this]);
         }
+        SoUI::checkDebug($this, $key);
         $this->hookStatus[$key] = true;
-        $this->checkDebug($key);
         if ($key == 'render') {
             return $this;
         }
         return  $this->setupChild(fn($c) => $c->lifecycleWithKey($key));
     }
-    public function setGroup($group)
-    {
-        $this->group = $group;
-        return $this;
-    }
-    public function getGroup()
-    {
-        if ($this->group) {
-            return $this->group;
-        }
-        return $this->parent ? $this->parent->getGroup() : '';
-    }
-    public function setPrefix($prefix)
-    {
-        $this->prefix = $prefix;
-        return $this;
-    }
 
-    public function clearPrefix()
-    {
-        $this->prefix = '';
-        return $this;
-    }
-    public function getPrefix()
-    {
-        if ($this->prefix) {
-            return $this->prefix;
-        }
-        return $this->parent ? $this->parent->getPrefix() : '';
-    }
-    public function getContext()
-    {
-        if ($this->context) {
-            return $this->context;
-        }
-        return $this->parent ? $this->parent->getContext() : null;
-    }
-    public function setContext($context)
-    {
-        $this->context = $context;
-        return $this;
-    }
-    public function clearContext()
-    {
-        $this->context = null;
-        return $this;
-    }
-    public function getViewFactory()
-    {
-        if ($this->viewFactory) {
-            return $this->viewFactory;
-        }
-        return $this->parent ? $this->parent->getViewFactory() : null;
-    }
-    public function makeView($view, $data = [], $mergeData = [])
-    {
-        return $this->getViewFactory()?->make($view, $data, $mergeData)
-            ->with([...Utils::getPublicPropertiesDefinedOnSubclass($this->getWire()), 'soUI' => $this]);
-    }
-    public function viewRender($view, $data = [], $mergeData = [])
-    {
-        return $this->makeView($view, $data, $mergeData)->render();
-    }
-
-    public function setViewFactory($viewFactory)
-    {
-        $this->viewFactory = $viewFactory;
-        return $this;
-    }
-    public function clearViewFactory()
-    {
-        $this->viewFactory = null;
-        return $this;
-    }
-
-    public function setParams($params)
-    {
-        if (!is_array($params)) {
-            $params = [$params];
-        }
-        $this->params = array_merge($this->params, $params);
-        return $this;
-    }
-
-    public function clearParams()
-    {
-        $this->params = [];
-        return $this;
-    }
-    public function getParams($key = null, $keyParam = null, $default = null)
-    {
-        if (!$this->params) {
-            return $this->parent ? $this->parent->getParams($key, $keyParam, $default) : $default;
-        }
-        $value = $this->params;
-        if ($keyParam && $key) {
-            $value =  data_get($this->params[$key], $keyParam, $default);
-        }
-        if (!$keyParam && $key) {
-            $value = $this->params[$key] ?? $default;
-        }
-        return $value;
-    }
     public function ready($callback = null)
     {
         return $this->lifecycleWithKey('ready', $callback, (func_get_args()));
@@ -300,6 +146,18 @@ trait LifecycleUI
     {
         return $this->lifecycleWithKey('render', $callback, (func_get_args()));
     }
+    private function callbackUI($uis, $callback = null)
+    {
+        foreach ($uis as $key => $child) {
+            if ($child instanceof BaseUI) {
+                $callback($child, $key);
+            }
+            if (is_array($child)) {
+                $this->callbackUI($child, $callback);
+            }
+        }
+        return $this;
+    }
     public function child($childs = [], $group = 'default')
     {
         if (!$childs) {
@@ -311,12 +169,7 @@ trait LifecycleUI
         if (!is_array($childs)) {
             $childs = [$childs];
         }
-        foreach ($childs as  $child) {
-            if ($child instanceof BaseUI) {
-                $child->setGroup($group);
-                $child->setParent($this);
-            }
-        }
+        $this->callbackUI($childs, fn($c) => $c->setParent($this)->group($group));
         $this->childs[$group] = array_merge($this->childs[$group] ?? [],  $childs);
         foreach ($this->childs[$group] as $key => $child) {
             if ($child instanceof BaseUI) {
@@ -327,17 +180,17 @@ trait LifecycleUI
     }
     public function childWithKey($key,  $tap = null, $group = 'default')
     {
-        return $this->child(None::init(SoUI::getUI($key))->tap($tap), $group);
+        return $this->child(clone None::init(SoUI::getUI($key))->tap($tap), $group);
     }
     public function childWithGroupKey($key,  $tap = null, $group = 'default')
     {
-        return $this->child(None::init(SoUI::getGroupUI($key))->tap($tap), $group);
+        return $this->child(clone None::init(SoUI::getGroupUI($key))->tap($tap), $group);
     }
     private function getHtmlItem($ui, $params = null, $callback = null)
     {
         $html = '';
         if (is_array($ui)) {
-            $html = implode('', $ui);
+            $html = $this->getHtmlItems($ui, $params, $callback);
         }
         if (is_callable($ui)) {
             $html = call_user_func($ui);
@@ -363,13 +216,17 @@ trait LifecycleUI
 
         return $html;
     }
-    public function renderChilds($group = 'default', $params = null, $callback = null)
+    private function getHtmlItems($uis, $params = null, $callback = null)
     {
         $html = '';
-        foreach ($this->childs[$group] ?? [] as $child) {
-            $html .= $this->getHtmlItem($child, $params, $callback);
+        foreach ($uis as $ui) {
+            $html .= $this->getHtmlItem($ui, $params, $callback);
         }
         return $html;
+    }
+    public function renderChilds($group = 'default', $params = null, $callback = null)
+    {
+        return $this->getHtmlItems($this->childs[$group] ?? [], $params, $callback);
     }
     public function hasChilds($group = 'default')
     {
@@ -384,5 +241,6 @@ trait LifecycleUI
         $timeout = 5000
     ) {
         $this->getWire()->alert($message, $title, $messageType, $position, $timeout);
+        return $this;
     }
 }

@@ -62,7 +62,7 @@ class Edit extends \Sokeio\Page
                         return !$this->getIsAdmin();
                     }),
             ])->onlyModal()
-                ->setPrefix('formData')
+                ->prefix('formData')
                 ->afterUI([
                     Div::init([
                         Button::init()->text(__('Cancel'))->className('btn btn-warning me-2')->modalClose(),
