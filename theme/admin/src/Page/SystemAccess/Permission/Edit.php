@@ -18,17 +18,17 @@ class Edit extends \Sokeio\Page
     protected function setupUI()
     {
         return [
-            PageUI::init([
-                Input::init('name')->label(__('Name'))->ruleRequired(),
-                Input::init('slug')->label(__('Slug'))->ruleRequired(),
-                Input::init('group')->label(__('Group'))->ruleRequired(),
-                Textarea::init('description')->label(__('Description')),
+            PageUI::make([
+                Input::make('name')->label(__('Name'))->ruleRequired(),
+                Input::make('slug')->label(__('Slug'))->ruleRequired(),
+                Input::make('group')->label(__('Group'))->ruleRequired(),
+                Textarea::make('description')->label(__('Description')),
             ])
                 ->prefix('formData')
                 ->afterUI([
-                    Div::init([
-                        Button::init()->text(__('Cancel'))->className('btn btn-warning me-2')->modalClose(),
-                        Button::init()->text(__('Save'))->wireClick('saveData')
+                    Div::make([
+                        Button::make()->text(__('Cancel'))->className('btn btn-warning me-2')->modalClose(),
+                        Button::make()->text(__('Save'))->wireClick('saveData')
                     ])->useModalButtonRight()
                 ])
 

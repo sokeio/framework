@@ -31,8 +31,8 @@ class Authentication extends \Sokeio\Page
     use WithSettingUI;
     private function settingLogin()
     {
-        return SettingUI::init([
-            Select::init('SOKEIO_AUTH_WITH_TYPE')
+        return SettingUI::make([
+            Select::make('SOKEIO_AUTH_WITH_TYPE')
                 ->col4()
                 ->options([
                     [
@@ -50,7 +50,7 @@ class Authentication extends \Sokeio\Page
                 ])
                 ->label('Auth Type')
                 ->valueDefault('email'),
-            SwitchField::init('SOKEIO_SOCIAL_LOGIN')
+            SwitchField::make('SOKEIO_SOCIAL_LOGIN')
                 ->col6()
                 ->labelTrue('Enable')
                 ->labelFalse('Disable')
@@ -67,14 +67,14 @@ class Authentication extends \Sokeio\Page
     }
     private function settingLoginWithGoogle()
     {
-        return SettingUI::init([
-            Input::init('SOKEIO_GOOGLE_CLIENT_ID')
+        return SettingUI::make([
+            Input::make('SOKEIO_GOOGLE_CLIENT_ID')
                 ->label('Google Client ID')
                 ->ruleRequired('Please enter google client id'),
-            Input::init('SOKEIO_GOOGLE_CLIENT_SECRET')
+            Input::make('SOKEIO_GOOGLE_CLIENT_SECRET')
                 ->label('Google Client Secret')
                 ->ruleRequired('Please enter google client secret'),
-            Input::init('SOKEIO_GOOGLE_REDIRECT')
+            Input::make('SOKEIO_GOOGLE_REDIRECT')
                 ->label('Google Redirect')
                 ->valueDefault(route('socialite.callback', ['social' => 'google']))
                 ->ruleRequired('Please enter google redirect'),
@@ -99,14 +99,14 @@ class Authentication extends \Sokeio\Page
     }
     private function settingLoginWithFacebook()
     {
-        return SettingUI::init([
-            Input::init('SOKEIO_FACEBOOK_CLIENT_ID')
+        return SettingUI::make([
+            Input::make('SOKEIO_FACEBOOK_CLIENT_ID')
                 ->label('Facebook Client ID')
                 ->ruleRequired('Please enter facebook client id'),
-            Input::init('SOKEIO_FACEBOOK_CLIENT_SECRET')
+            Input::make('SOKEIO_FACEBOOK_CLIENT_SECRET')
                 ->label('Facebook Client Secret')
                 ->ruleRequired('Please enter facebook client secret'),
-            Input::init('SOKEIO_FACEBOOK_REDIRECT')
+            Input::make('SOKEIO_FACEBOOK_REDIRECT')
                 ->label('Facebook Redirect')
                 ->ruleRequired('Please enter facebook redirect')
                 ->valueDefault(route('socialite.callback', ['social' => 'facebook'])),
@@ -131,14 +131,14 @@ class Authentication extends \Sokeio\Page
     }
     private function settingLoginWithGithub()
     {
-        return SettingUI::init([
-            Input::init('SOKEIO_GITHUB_CLIENT_ID')
+        return SettingUI::make([
+            Input::make('SOKEIO_GITHUB_CLIENT_ID')
                 ->label('Github Client ID')
                 ->ruleRequired('Please enter github client id'),
-            Input::init('SOKEIO_GITHUB_CLIENT_SECRET')
+            Input::make('SOKEIO_GITHUB_CLIENT_SECRET')
                 ->label('Github Client Secret')
                 ->ruleRequired('Please enter github client secret'),
-            Input::init('SOKEIO_GITHUB_REDIRECT')
+            Input::make('SOKEIO_GITHUB_REDIRECT')
                 ->label('Github Redirect')
                 ->ruleRequired('Please enter github redirect')
                 ->valueDefault(route('socialite.callback', ['social' => 'github'])),
@@ -163,14 +163,14 @@ class Authentication extends \Sokeio\Page
     protected function setupUI()
     {
         return [
-            PageUI::init([
+            PageUI::make([
                 $this->settingLogin(),
                 $this->settingLoginWithGoogle(),
                 $this->settingLoginWithFacebook(),
                 $this->settingLoginWithGithub(),
                 ...Setting::getUI(self::KEY_UI)
             ])->row()->rightUI([
-                Button::init()
+                Button::make()
                     ->className('btn btn-primary')
                     ->text('Save Setting')
                     ->icon('ti ti-save')

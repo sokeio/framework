@@ -30,23 +30,23 @@ class Index extends \Sokeio\Page
     protected function setupUI()
     {
         return [
-            PageUI::init(
+            PageUI::make(
                 [
-                    Table::init()
+                    Table::make()
                         ->column('name')
                         ->column('slug')
                         ->column('group')
                         ->query($this->getQuery())
                         ->enableIndex()
                         ->columnAction([
-                            Button::init()->text(__('Edit'))->className('btn btn-primary btn-sm ')
+                            Button::make()->text(__('Edit'))->className('btn btn-primary btn-sm ')
                                 ->modal(function (Button $button) {
                                     return route($this->getRouteName('edit'), [
                                         'dataId' =>
                                         $button->getParams('row')->id
                                     ]);
                                 }),
-                            Button::init()->text(__('Delete'))
+                            Button::make()->text(__('Delete'))
                                 ->wireClick(function ($params) {
                                     ($this->getModel())::find($params)->delete();
                                 }, 'table_delete', function (Button $button) {
@@ -59,12 +59,12 @@ class Index extends \Sokeio\Page
                         ])
                 ]
             )->rightUI([
-                Button::init()
+                Button::make()
                     ->text(__('Upadate Permissions'))
                     ->wireClick('updatePermissions')
                     ->className('btn btn-success')
                     ->icon('ti ti-refresh'),
-                Button::init()
+                Button::make()
                     ->text(__('Add ' . $this->getPageConfig()->getTitle()))
                     ->icon('ti ti-plus')
                     ->modalRoute(

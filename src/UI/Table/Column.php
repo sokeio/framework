@@ -6,7 +6,7 @@ namespace Sokeio\UI\Table;
 class Column
 {
     use ColumnData;
-    public static function init($field, $label = null)
+    public static function make($field, $label = null)
     {
         return new static($field, $label);
     }

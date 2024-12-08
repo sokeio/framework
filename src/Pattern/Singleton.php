@@ -10,7 +10,7 @@ trait Singleton
     {
         $class = get_called_class();
         if (!isset(self::$instances[$class])) {
-            self::$instances[$class] = static::init();
+            self::$instances[$class] = static::make();
         }
         return self::$instances[$class];
     }

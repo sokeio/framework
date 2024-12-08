@@ -34,13 +34,12 @@ trait WithUI
     public function reUI()
     {
         $this->ui = null;
-        $this->getUI()->beforeBoot();
-        $this->getUI()->bootAction();
+        $this->getUI()->register();
         $this->getUI()->boot();
     }
     public function getUI(): SoUI
     {
-        return $this->ui ?? ($this->ui = SoUI::init($this->setupUI(), $this));
+        return $this->ui ?? ($this->ui = SoUI::make($this->setupUI(), $this));
     }
     protected function setupUI()
     {

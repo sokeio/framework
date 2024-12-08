@@ -2,38 +2,36 @@
 
 namespace Sokeio\UI\Concerns;
 
-use Livewire\Drawer\Utils;
-use Sokeio\UI\SoUI;
-
 
 trait DataShareUI
 {
-    private $dataShared = [];
+    private $arrayShare = ['context', 'prefix', 'groupField'];
+    private $shareContext = null;
+    private $sharePrefix = null;
+    private $shareGroupField = null;
     private $params = [];
-    private SoUI|null $manager = null;
+
+
     private function getDataShared($key = null, $default = null)
     {
-        if (isset($this->dataShared[$key])) {
-            return $this->dataShared[$key];
-        }
-        if ($this->parent) {
-            return $this->dataShared[$key] = $this->parent->{"get" . ucfirst($key)}($default);
+        if ($this->{'share' . ucfirst($key)}) {
+            return $this->{'share' . ucfirst($key)};
         }
         return  $default;
     }
     private function setDataShared($key, $value)
     {
-        $this->dataShared[$key] = $value;
-        return $this;
+        if ($value && $this->{'share' . ucfirst($key)}) {
+            return $this;
+        }
+        $this->{'share' . ucfirst($key)} = $value;
+        return $this->boot(function () use ($key, $value) {
+            $this->setupChild(fn($c) => $c->{$key}($value));
+        });
     }
     private function clearDataShared($key = null)
     {
-        if ($key) {
-            unset($this->dataShared[$key]);
-        } else {
-            $this->dataShared = [];
-        }
-        return $this;
+        return $this->setDataShared($key, null);
     }
     public function context($value)
     {
@@ -59,30 +57,7 @@ trait DataShareUI
     {
         return $this->clearDataShared('prefix');
     }
-    public function group($value)
-    {
-        return $this->setDataShared('group', $value);
-    }
-    public function getGroup($default = null)
-    {
-        return $this->getDataShared('group', $default);
-    }
-    public function clearGroup()
-    {
-        return $this->clearDataShared('group');
-    }
-    public function viewFactory($value)
-    {
-        return $this->setDataShared('viewFactory', $value);
-    }
-    public function getViewFactory($default = null)
-    {
-        return $this->getDataShared('viewFactory', $default);
-    }
-    public function clearViewFactory()
-    {
-        return $this->clearDataShared('viewFactory');
-    }
+
     public function groupField($value)
     {
         return $this->setDataShared('groupField', $value);
@@ -95,25 +70,13 @@ trait DataShareUI
     {
         return $this->clearDataShared('groupField');
     }
-
-    public function getManager(): SoUI
-    {
-        return $this->manager;
-    }
-    public function setManager(SoUI $manager)
-    {
-        $this->manager = $manager;
-        $this->setupChild(fn($c) => $c->setManager($manager));
-        return $this;
-    }
-
     public function setParams($params)
     {
         if (!is_array($params)) {
             $params = [$params];
         }
         $this->params = array_merge($this->params, $params);
-        return $this;
+        return $this->setupChild(fn($c) => $c->setParams($params));
     }
 
     public function clearParams()
@@ -123,9 +86,6 @@ trait DataShareUI
     }
     public function getParams($key = null, $keyParam = null, $default = null)
     {
-        if (!$this->params) {
-            return $this->parent ? $this->parent->getParams($key, $keyParam, $default) : $default;
-        }
         $value = $this->params;
         if ($keyParam && $key) {
             $value =  data_get($this->params[$key], $keyParam, $default);
@@ -135,13 +95,21 @@ trait DataShareUI
         }
         return $value;
     }
-    public function makeView($view, $data = [], $mergeData = [])
+    public function clearDataShare()
     {
-        return $this->getViewFactory()?->make($view, $data, $mergeData)
-            ->with([...Utils::getPublicPropertiesDefinedOnSubclass($this->getWire()), 'soUI' => $this]);
+        $this->clearParams();
+        $this->clearGroupField();
     }
-    public function viewRender($view, $data = [], $mergeData = [])
+    public function onlyChildClear()
     {
-        return $this->makeView($view, $data, $mergeData)->render();
+        foreach ($this->arrayShare  as $key) {
+            $this->setupChild(fn($c) => $c->{$key}(null));
+        }
+    }
+    public function shareToChild()
+    {
+        foreach ($this->arrayShare  as $item) {
+            $this->setDataShared($item, $this->getDataShared($item));
+        }
     }
 }

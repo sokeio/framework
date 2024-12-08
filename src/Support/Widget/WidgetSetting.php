@@ -22,7 +22,7 @@ class WidgetSetting implements \Serializable
         if (!$this->getWidget()) {
             return null;
         }
-        return (data_get($this->getWidget(), 'class'))::init()->setDataParam($this->params);
+        return (data_get($this->getWidget(), 'class'))::make()->setDataParam($this->params);
     }
     public function getColumnClass()
     {

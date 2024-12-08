@@ -2,7 +2,7 @@
 
 namespace Sokeio\UI\Concerns;
 
-trait WithModal
+trait ModalUI
 {
     private $overlayClose = false;
     private $useModal = false;

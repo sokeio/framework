@@ -15,7 +15,7 @@ class SettingUI extends BaseUI
     public function showSwitcher($key = null, $default = true)
     {
         return $this->child([
-            SwitchField::init($key)
+            SwitchField::make($key)
                 ->labelTrue('Enable')
                 ->labelFalse('Disable')
                 ->valueDefault($default)

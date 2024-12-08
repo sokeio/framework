@@ -7,6 +7,10 @@ use Sokeio\UI\Field\Concerns\WithDatasource;
 class Select extends FieldUI
 {
     use WithDatasource;
+    public function lazyLoad()
+    {
+        return  $this->attr('wire:tom-select.lazyLoad', true, 'tom-select')->vars('lazyLoad', true);
+    }
     private $options = [];
     public function options($options)
     {
@@ -66,12 +70,15 @@ class Select extends FieldUI
     {
         return $this->register(function () use ($action, $name) {
             if (!$name) {
-                $name = $this->getUIIDkey() . '_' . $this->getVar('name', null, true)  . '_remote_action';
+                $name = md5($this->getUIIDkey() . '_' . $this->getVar('name', null, true)  . '_remote_action');
             }
             $this->attr('wire:tom-select.remote-action', $name, 'tom-select');
-            $this->action($name, $action);
-            $this->renderAction(function () use ($name) {
-                if (!$this->checkDataSource()) {
+            $this->action($name, $action, true);
+            $this->beforeRender(function () use ($name) {
+                if (
+                    !$this->checkDataSource() &&
+                    !$this->checkVar('lazyLoad', null)
+                ) {
                     $this->dataSource($this->getManager()->callActionUI($name));
                 }
             });

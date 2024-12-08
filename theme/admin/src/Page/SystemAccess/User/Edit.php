@@ -36,23 +36,22 @@ class Edit extends \Sokeio\Page
     {
         $permissions = data_get($this->formData, 'permissions');
         $roles = data_get($this->formData, 'roles');
-        Log::info(['afterSaveData', $permissions, $roles]);
         $data->roles()->sync($roles);
         $data->permissions()->sync($permissions);
     }
     protected function setupUI()
     {
         return [
-            PageUI::init([
-                Input::init('name')->label(__('Name'))->ruleRequired('Please enter name'),
-                Input::init('email')->label(__('Email'))->ruleRequired()->ruleEmail(),
-                Input::init('phone_number')->label(__('Phone'))->ruleRequired(),
-                Input::init('password')->label(__('Password'))->password()
+            PageUI::make([
+                Input::make('name')->label(__('Name'))->ruleRequired('Please enter name'),
+                Input::make('email')->label(__('Email'))->ruleRequired()->ruleEmail(),
+                Input::make('phone_number')->label(__('Phone'))->ruleRequired(),
+                Input::make('password')->label(__('Password'))->password()
                     ->when(function () {
                         return !$this->dataId;
                     }),
-                Select::init('roles')->multiple()->label(__('Role'))->remoteActionWithModel(Role::class)->skipFill(),
-                LivewireField::init('permissions')
+                Select::make('roles')->multiple()->label(__('Role'))->remoteActionWithModel(Role::class)->skipFill(),
+                LivewireField::make('permissions')
                     ->lazy()
                     ->skipFill()
                     ->component('sokeio::permission-list.index')->label(__('Permissions'))
@@ -60,9 +59,9 @@ class Edit extends \Sokeio\Page
                 ->onlyModal()
                 ->prefix('formData')
                 ->afterUI([
-                    Div::init([
-                        Button::init()->text(__('Cancel'))->className('btn btn-warning me-2')->modalClose(),
-                        Button::init()->text(__('Save'))->wireClick('saveData'),
+                    Div::make([
+                        Button::make()->text(__('Cancel'))->className('btn btn-warning me-2')->modalClose(),
+                        Button::make()->text(__('Save'))->wireClick('saveData'),
                     ])->useModalButtonRight()
                 ])
                 ->icon('ti ti-users')

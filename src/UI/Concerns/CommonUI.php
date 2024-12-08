@@ -7,6 +7,7 @@ use Sokeio\UI\Support\DataUI;
 
 trait CommonUI
 {
+    use DataShareUI;
     private DataUI|null $data;
     private AlpineUI|null  $alpine;
     public function initCommonUI()

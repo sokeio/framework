@@ -2,6 +2,7 @@
 
 namespace Sokeio\UI\Support;
 
+use Illuminate\Support\Facades\Log;
 
 class HookUI
 {
@@ -16,7 +17,7 @@ class HookUI
     {
         foreach ($this->hook ?? [] as $callback) {
             if (is_array($parameters) && count($parameters) > 0) {
-                call_user_func($callback, ...$parameters);
+                call_user_func_array($callback, $parameters);
             } else {
                 call_user_func($callback);
             }

@@ -26,23 +26,14 @@ class Button extends BaseUI
         return $this->attr('type', 'submit')->attr('value', $text)->vars('text', $text);
     }
 
-    public function click($callback, $actionName = 'button::click', $params = null)
-    {
-        if (is_string($callback) && strpos($callback, '::') === false && !class_exists($callback)) {
-            return $this->register(function () use ($callback) {
-                return $this->x()->on($callback);
-            });
-        }
-        return $this->wireClick($callback, $actionName, $params);
-    }
 
-    public function wireClick($callback, $actionName = 'button::click', $params = null)
+    public function wireClick($callback, $actionName = 'button::click', $params = null, $skipRender = false)
     {
-        return  $this->register(function () use ($callback, $actionName, $params) {
+        return $this->register(function () use ($callback, $actionName, $params, $skipRender) {
             if (is_string($callback) && strpos($callback, '::') === false && !class_exists($callback)) {
                 return $this->attr('wire:click', $callback);
             }
-            $wireClick = $this->getUIIDkey() . $actionName;
+            $wireClick = ($this->getUIIDkey() . $actionName);
 
             $this->action($wireClick, function ($_params) use ($callback) {
                 if (is_array($_params) && !empty($_params)) {
@@ -53,7 +44,7 @@ class Button extends BaseUI
                 } else {
                     call_user_func($callback, $this);
                 }
-            });
+            }, $skipRender);
 
             return $this->render(function () use ($wireClick, $params) {
                 $paraText = '';

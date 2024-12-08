@@ -139,7 +139,7 @@ class MenuManager implements Arrayable
 
     public function toArray()
     {
-        $this->beforRender();
+        $this->beforeRender();
         return [
             'isAdmin' => $this->isAdmin,
             'menus' => $this->menuItems->toArray()

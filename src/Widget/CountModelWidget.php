@@ -15,9 +15,9 @@ class CountModelWidget extends WidgetUI
 {
     public static function paramUI()
     {
-        return Div::init([
-            Input::init('title')->label(__('Title')),
-            Select::init('model')->label(__('Model'))->dataSource(function () {
+        return Div::make([
+            Input::make('title')->label(__('Title')),
+            Select::make('model')->label(__('Model'))->dataSource(function () {
                 return collect(Platform::getAllModel())->map(function ($item, $key) {
                     return [
                         'value' => $key,

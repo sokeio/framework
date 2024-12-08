@@ -17,6 +17,7 @@ export default {
     if (dataSource) {
       dataSource = JSON.parse(dataSource) ?? {};
     }
+    //wire:tom-select.disableLazyLoad;
     let remoteAction = warpSelect.getAttribute("wire:tom-select.remote-action");
     let optionSelect = warpSelect.getAttribute("wire:tom-select.base64");
     if (optionSelect) {
@@ -42,6 +43,7 @@ export default {
               callback(rs);
             });
         },
+        onInitialize: function () {},
       };
     }
     if (dataSource) {
@@ -51,9 +53,23 @@ export default {
       };
     }
     el.$sokeio_tomselect = new TomSelect(el, optionSelect);
-    cleanup(() => {
-      el.$sokeio_tomselect.destroy();
-      el.$sokeio_tomselect = null;
-    });
+    if (
+      remoteAction &&
+      !warpSelect.getAttribute("wire:tom-select.lazyLoad")
+      && false
+    ) {
+      //TODO: Implement lazyLoad
+      component.$wire.callActionUI(remoteAction, queryText).then(function (rs) {
+        console.log({ rs });
+        el.$sokeio_tomselect.clearOptions();
+        el.$sokeio_tomselect.addOptions(rs);
+        el.$sokeio_tomselect.setValue(el.value);
+      });
+    }
+
+    // cleanup(() => {
+    //   el.$sokeio_tomselect.destroy();
+    //   el.$sokeio_tomselect = null;
+    // });
   },
 };

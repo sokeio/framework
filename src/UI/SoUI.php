@@ -2,35 +2,29 @@
 
 namespace Sokeio\UI;
 
-use Illuminate\Support\Facades\Log;
 use Sokeio\UI\Common\Card;
 use Sokeio\UI\Concerns\LifecycleUI;
-use Sokeio\UI\Concerns\WithSoUI;
+use Sokeio\UI\Concerns\WireUI;
 
 class SoUI
 {
-    use LifecycleUI, WithSoUI;
+    use LifecycleUI, WireUI;
+
+    private $viewFactory = null;
+    public function getViewFactory()
+    {
+        return $this->viewFactory;
+    }
+    public function setViewFactory($viewFactory)
+    {
+        $this->viewFactory = $viewFactory;
+    }
     public function __construct($ui = [], $wire = null)
     {
         $this->wire = $wire;
         $this->initLifecycleUI();
         $this->child($ui);
         $this->setManager($this);
-        $this->register();
-    }
-    public function toArray()
-    {
-        $ui = [];
-        foreach ($this->childs as $key => $value) {
-            if (is_array($value)) {
-                foreach ($value as $k => $v) {
-                    $ui[$key][$k] = $v->toArray();
-                }
-            } else {
-                $ui[$key] = $value->toArray();
-            }
-        }
-        return $ui;
     }
     public function render($callback = null)
     {
@@ -43,20 +37,19 @@ class SoUI
     public function toHtml()
     {
         $this->boot();
-        $this->ready();
         return $this->renderChilds();
     }
     public function toUI($arr)
     {
         return BaseUI::toUI($arr);
     }
-    public static function init($ui, $wire = null)
+    public static function make($ui, $wire = null)
     {
         return new SoUI($ui, $wire);
     }
     public static function renderUI($ui, $wire = null)
     {
-        return static::init($ui, $wire)->toHtml();
+        return static::make($ui, $wire)->toHtml();
     }
     private static $uiDebug = [];
     private static $uiWithKey = [];
@@ -64,7 +57,6 @@ class SoUI
     public static function debug($uiKey, $callback = null, $lifeKey = null)
     {
         static::$uiDebug[] = function ($ui, $key) use ($callback, $uiKey, $lifeKey) {
-            Log::info([$uiKey, $ui->getUIIDkey()]);
             if ($ui->getUIIDkey() == $uiKey && ($lifeKey == null || $key == $lifeKey)) {
                 $callback($ui, $key);
             }
@@ -97,7 +89,7 @@ class SoUI
                 static::$uiWithGroupKey[$group] = array_merge(
                     static::$uiWithGroupKey[$group],
                     [
-                        Card::init($ui)
+                        Card::make($ui)
                             ->tap($tapCard)
                     ]
                 );

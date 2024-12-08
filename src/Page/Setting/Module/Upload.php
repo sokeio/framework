@@ -21,14 +21,14 @@ class Upload extends \Sokeio\Page
     protected function setupUI()
     {
         return [
-            PageUI::init([
-                UploadFile::init('fileUpload'),
+            PageUI::make([
+                UploadFile::make('fileUpload'),
             ])
                 ->afterUI([
-                    Div::init([
-                        Button::init()->text(__('Cancel'))->className('btn btn-warning me-2')
+                    Div::make([
+                        Button::make()->text(__('Cancel'))->className('btn btn-warning me-2')
                             ->modalClose()->icon('ti ti-x'),
-                        Button::init()->text(__('Upload'))->wireClick('saveData')->icon('ti ti-upload')
+                        Button::make()->text(__('Upload'))->wireClick('saveData')->icon('ti ti-upload')
                     ])
                         ->className('px-2 pt-2 d-flex justify-content-end')
                 ])

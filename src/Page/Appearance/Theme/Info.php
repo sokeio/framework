@@ -21,8 +21,8 @@ class Info extends \Sokeio\Page
     protected function setupUI()
     {
         return [
-            PageUI::init([
-                Div::init()->className('mt-auto')->viewBlade(
+            PageUI::make([
+                Div::make()->className('mt-auto')->viewBlade(
                     'sokeio::livewire.platform.info',
                     [
                         'item' => Platform::theme()->find($this->dataId)
@@ -32,8 +32,8 @@ class Info extends \Sokeio\Page
                 
                 ->xlSize()
                 ->afterUI([
-                    Div::init([
-                        Button::init()->text(__('Activate'))->icon('ti ti-checks')
+                    Div::make([
+                        Button::make()->text(__('Activate'))->icon('ti ti-checks')
                             ->wireClick(function () {
                                 Platform::theme()->setActive($this->dataId);
                                 $this->sokeioClose();

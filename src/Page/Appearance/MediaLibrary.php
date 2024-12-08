@@ -22,8 +22,8 @@ class MediaLibrary extends \Sokeio\Page
     protected function setupUI()
     {
         return [
-            PageUI::init([
-                Div::init()->attr('wire:media')->className('border border-gray-200 so-page-media')
+            PageUI::make([
+                Div::make()->attr('wire:media')->className('border border-gray-200 so-page-media')
             ])->rightUI([])
 
         ];

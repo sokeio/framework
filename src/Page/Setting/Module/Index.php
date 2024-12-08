@@ -30,14 +30,14 @@ class Index extends \Sokeio\Page
     protected function setupUI()
     {
         return [
-            PageUI::init([
-                Input::init()->fieldName('search')->debounce(500)->placeholder(__('Search'))->className('form-control'),
-                Div::init()->viewBlade('sokeio::pages.module.index', [
+            PageUI::make([
+                Input::make()->fieldName('search')->debounce(500)->placeholder(__('Search'))->className('form-control'),
+                Div::make()->viewBlade('sokeio::pages.module.index', [
                     'datas' => Platform::module()->getAll(),
                     'routeName' => $this->getRouteName('info'),
                 ])->className('mt-3'),
             ])->rightUI([
-                Button::init()->text(__('Create'))->icon('ti ti-table-plus')
+                Button::make()->text(__('Create'))->icon('ti ti-table-plus')
                     ->className('btn btn-warning')
                     ->modalRoute($this->getRouteName('create'))->when(function () {
                         if (config('app.env') == 'local' && env('SOKEIO_MODE_DEV') == 'true') {
@@ -45,10 +45,10 @@ class Index extends \Sokeio\Page
                         }
                         return false;
                     }),
-                // Button::init()->text(__('Upload'))->icon('ti ti-upload')
+                // Button::make()->text(__('Upload'))->icon('ti ti-upload')
                 //     ->className('btn btn-primary')
                 //     ->modalRoute($this->getRouteName('upload')),
-                // Button::init()->text(__('Marketplace'))->icon('ti ti-apps')
+                // Button::make()->text(__('Marketplace'))->icon('ti ti-apps')
                 //     ->className('btn btn-success')->modalRoute($this->getRouteName('marketplace')),
             ])
 

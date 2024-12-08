@@ -33,13 +33,13 @@ class Index extends \Sokeio\Page
     protected function setupUI()
     {
         return [
-            PageUI::init(
+            PageUI::make(
                 [
-                    Table::init()
+                    Table::make()
                         ->column('name')
                         ->column('email')
                         ->column('phone_number')
-                        ->column(Column::init('roles', 'roles')->classNameHeader('w-1')
+                        ->column(Column::make('roles', 'roles')->classNameHeader('w-1')
                             ->renderCell(function ($row, $column, $index) {
                                 return $row->roles->pluck('name')->reduce(function ($carry, $item) {
                                     return "<span class=\"badge badge-info me-1\">" . $item . "</span>" . ' ' . $carry;
@@ -52,7 +52,7 @@ class Index extends \Sokeio\Page
                         ->formSearch(
                             [],
                             [
-                                Select::init('role_id')->label(__('Role'))->remoteActionWithModel(Role::class)
+                                Select::make('role_id')->label(__('Role'))->remoteActionWithModel(Role::class)
                                     ->withQuery(
                                         function ($query, $value) {
                                             if (!$value) {
@@ -66,14 +66,14 @@ class Index extends \Sokeio\Page
                             ]
                         )
                         ->columnAction([
-                            Button::init()->text(__('Edit'))->className('btn ms-1 btn-primary btn-sm ')
+                            Button::make()->text(__('Edit'))->className('btn ms-1 btn-primary btn-sm ')
                                 ->modal(function (Button $button) {
                                     return route($this->getRouteName('edit'), [
                                         'dataId' =>
                                         $button->getParams('row')->id
                                     ]);
                                 }),
-                            Button::init()->text(__('Delete'))
+                            Button::make()->text(__('Delete'))
                                 ->wireClick(function ($params) {
                                     ($this->getModel())::find($params)->delete();
                                 }, 'table_delete', function (Button $button) {
@@ -86,7 +86,7 @@ class Index extends \Sokeio\Page
                         ])
                 ]
             )->rightUI([
-                Button::init()
+                Button::make()
                     ->text(__('Add ' . $this->getPageConfig()->getTitle()))
                     ->icon('ti ti-plus')
                     ->modalRoute(

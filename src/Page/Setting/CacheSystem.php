@@ -75,12 +75,12 @@ class CacheSystem extends \Sokeio\Page
     protected function setupUI()
     {
         return [
-            PageUI::init([
-                Div::init(
+            PageUI::make([
+                Div::make(
                     collect($this->settingClear())->map(function ($item) {
-                        return Card::init([
-                            Div::init(
-                                Button::init()->text($item['title'])
+                        return Card::make([
+                            Div::make(
+                                Button::make()->text($item['title'])
                                     ->className('btn btn-primary')
                                     ->icon(($item['icon'] ?? 'ti ti-trash') . ' fs-4 ')
                                     ->wireClick(function () use ($item) {
@@ -97,7 +97,7 @@ class CacheSystem extends \Sokeio\Page
                     })->toArray()
                 )->row()
             ])->rightUI([
-                Button::init()->text(__('Clear All Cache'))
+                Button::make()->text(__('Clear All Cache'))
                     ->icon('ti ti-trash')
                     ->className('btn btn-danger')
                     ->wireClick('clearAll')

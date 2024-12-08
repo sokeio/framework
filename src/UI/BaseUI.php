@@ -2,7 +2,6 @@
 
 namespace Sokeio\UI;
 
-use Illuminate\Support\Facades\Log;
 use Sokeio\UI\Concerns\CommonUI;
 use Sokeio\UI\Concerns\LifecycleUI;
 
@@ -66,13 +65,12 @@ class BaseUI
         $this->initLifecycleUI();
         $this->initCommonUI();
         $this->child($childs);
-        $this->boot(function () {
+        $this->initUI();
+        $this->register(function () {
+            $this->registerIDChild();
             $this->attr('sokeio-group', $this->getGroup());
             $this->attr('sokeio-ui-id', $this->getUIID());
             $this->attr('sokeio-ui-key', $this->getUIIDkey());
-        });
-        $this->register(function () {
-            $this->initUI();
         });
     }
     public function refUI($callback = null)
@@ -82,31 +80,19 @@ class BaseUI
         }
         return $this->manager;
     }
-    public function resetErrorBag($field = null)
-    {
-        if ($field) {
-            $field = $this->getNameWithPrefix($field);
-        }
-        $this->getWire()->resetErrorBag($field);
-        return $this;
-    }
-    public function addError($field, $message)
-    {
-        $this->getWire()->addError($this->getNameWithPrefix($field), $message);
-        return $this;
-    }
 
     protected function initUI()
     {
         // TODO: Implement initUI() method.
     }
 
-    public function action($key, $callback)
+    public function action($key, $callback, $skipRender = false)
     {
-        $this->bootAction(function () use ($key, $callback) {
-            $this->manager->action($key, $callback, $this);
+        return $this->boot(function () use ($key, $callback, $skipRender) {
+            $this->manager->action($key, $callback, $this, $skipRender);
+        })->afterRender(function ()  use ($key) {
+            $this->manager->removeAction($key);
         });
-        return $this;
     }
     public function setView($callback)
     {
@@ -173,7 +159,7 @@ class BaseUI
 
         return $instance;
     }
-    public static function init($childs = [])
+    public static function make($childs = [])
     {
         return new static($childs);
     }

@@ -2,11 +2,11 @@
 
 namespace Sokeio\UI;
 
-use Sokeio\UI\Concerns\WithModal;
+use Sokeio\UI\Concerns\ModalUI;
 
 class PageUI extends BaseUI
 {
-    use WithModal;
+    use ModalUI;
 
     private function isModal()
     {

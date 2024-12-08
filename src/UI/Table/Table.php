@@ -166,7 +166,7 @@ class Table extends BaseUI
             $nameOrColumn->setTable($this);
             $this->columns[$this->index] = $nameOrColumn;
         } else {
-            $this->columns[$this->index] = Column::init($nameOrColumn)
+            $this->columns[$this->index] = Column::make($nameOrColumn)
                 ->setTable($this);
         }
         if ($callback) {
@@ -178,7 +178,7 @@ class Table extends BaseUI
     public function columnAction($array, $title = 'Actions', $callback = null)
     {
         return $this->child($array, 'columnAction')->boot(function () use ($title, $callback) {
-            $actionColumn = Column::init('action', $title)
+            $actionColumn = Column::make('action', $title)
                 ->setTable($this)
                 ->classNameHeader('w-1')
                 ->disableSort()
@@ -199,7 +199,7 @@ class Table extends BaseUI
     public function enableIndex($callback = null)
     {
         return $this->render(function () use ($callback) {
-            $this->columns[-1] = Column::init('index', '#')
+            $this->columns[-1] = Column::make('index', '#')
                 ->setTable($this)
                 ->disableSort()
                 ->classNameHeader('w-1')
@@ -216,7 +216,7 @@ class Table extends BaseUI
     {
         return $this->render(function () use ($callback, $isAfterIndex) {
             $this->showCheckBox = true;
-            $this->columns[$isAfterIndex ? -2 : 0] = Column::init('index', '#')
+            $this->columns[$isAfterIndex ? -2 : 0] = Column::make('index', '#')
                 ->setTable($this)
                 ->disableSort()
                 ->classNameHeader('w-1')
@@ -243,7 +243,7 @@ class Table extends BaseUI
     public function searchbox($columns = ['name'], $placeholder = 'Search'): self
     {
         return $this->child([
-            Input::init('keyword')
+            Input::make('keyword')
                 ->placeholder($placeholder)
                 ->withQuery(function ($query, $value) use ($columns) {
                     $query->whereAny($columns, 'like', '%' . $value . '%');

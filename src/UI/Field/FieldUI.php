@@ -51,7 +51,7 @@ class FieldUI extends BaseUI
     {
         return $this->getNameWithPrefix($this->getFieldNameWithoutPrefix());
     }
-    public function fieldName($name):static
+    public function fieldName($name): static
     {
         return $this->vars('name', $name)->className('form-control');
     }
@@ -146,7 +146,7 @@ class FieldUI extends BaseUI
         </div>
         HTML;
     }
-    public static function init($fieldName = null)
+    public static function make($fieldName = null)
     {
         return (new static())->fieldName($fieldName);
     }

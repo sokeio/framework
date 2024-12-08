@@ -3,17 +3,14 @@
 namespace Sokeio\UI\Concerns;
 
 use Illuminate\Support\Facades\Validator;
+use Sokeio\Enums\AlertPosition;
+use Sokeio\Enums\AlertType;
 use Sokeio\Setting;
 
-trait WithSoUI
+trait WireUI
 {
     private $actions = [];
-    private $wire = null;
     private $fields = [];
-    public function getWire()
-    {
-        return $this->wire;
-    }
 
     public function registerField($field)
     {
@@ -95,13 +92,22 @@ trait WithSoUI
         return $validator;
     }
 
-    public function action($name, $callback, $ui = null)
+
+    public function action($name, $callback, $ui = null, $skipRender = false)
     {
         $this->actions[$name] = [
             'callback' => $callback,
-            'ui' => $ui
+            'ui' => $ui,
+            'skipRender' => $skipRender
         ];
     }
+    public function removeAction($name)
+    {
+        if (isset($this->actions[$name])) {
+            unset($this->actions[$name]);
+        }
+    }
+
     public function callActionUI($name, $params = []): mixed
     {
         if (!array_key_exists($name, $this->actions)) {
@@ -109,6 +115,9 @@ trait WithSoUI
             return null;
         }
         $action = $this->actions[$name];
+        if ($action['skipRender']) {
+            $this->getWire()->skipRender();
+        }
         if ($action['callback']) {
             return  call_user_func($action['callback'], $params);
         }

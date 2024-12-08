@@ -31,7 +31,6 @@ class DataUI
             }
         }
         $this->data = $temp;
-        Log::info($this->data);
         return $this->ui;
     }
     public function append($key, $value)

@@ -36,8 +36,8 @@ class WidgetComponent extends Component
     protected function setupUI()
     {
         return [
-            Div::init([
-                Div::init([
+            Div::make([
+                Div::make([
                     $this->getWidget()?->getWidgetUI()
                 ])->className('card')
             ])->className($this->getWidget()->getColumnClass()),

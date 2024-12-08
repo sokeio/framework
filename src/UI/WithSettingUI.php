@@ -21,7 +21,6 @@ trait WithSettingUI
         $this->getUI()->tap(function ($ui) {
             $ui->boot();
             $ui->loadInSetting();
-            $ui->skipBoot();
         });
     }
 }

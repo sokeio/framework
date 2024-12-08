@@ -33,15 +33,15 @@ class Overview extends \Sokeio\Page
     use WithSettingUI;
     private function settingOverview()
     {
-        return SettingUI::init([
-            Input::init('SOKEIO_SYSTEM_NAME')->col4()
+        return SettingUI::make([
+            Input::make('SOKEIO_SYSTEM_NAME')->col4()
                 ->label('System Name')
                 ->ruleRequired('Please enter system name')
                 ->placeholder('System Name')
                 ->valueDefault('Sokeio Technology'),
-            MediaFile::init('SOKEIO_SYSTEM_LOGO')->col4()
+            MediaFile::make('SOKEIO_SYSTEM_LOGO')->col4()
                 ->label('System Logo'),
-            ContentEditor::init('SOKEIO_SYSTEM_DESCRIPTION')
+            ContentEditor::make('SOKEIO_SYSTEM_DESCRIPTION')
                 ->col12()
                 ->label('System Description')
                 // ->ruleRequired('Please enter system description')
@@ -56,32 +56,32 @@ class Overview extends \Sokeio\Page
     }
     private function settingAdmin()
     {
-        return SettingUI::init([
-            Select::init('SOKEIO_LAYOUT_ADMIN_THEME')
+        return SettingUI::make([
+            Select::make('SOKEIO_LAYOUT_ADMIN_THEME')
                 ->col4()
                 ->label('Admin Theme')
                 ->valueDefault('default')
                 ->dataSource(Theme::getThemeAdmin()->getLayouts()),
-            SwitchField::init('SOKEIO_ADMIN_HEADER_STICKY_ENABLE')
+            SwitchField::make('SOKEIO_ADMIN_HEADER_STICKY_ENABLE')
                 ->col4()
                 ->labelTrue('Enable')
                 ->labelFalse('Disable')
                 ->label('Admin Sticky Header')
                 ->valueDefault(true),
-            SwitchField::init('SOKEIO_SYSTEM_UPDATER_ENABLE')
+            SwitchField::make('SOKEIO_SYSTEM_UPDATER_ENABLE')
                 ->col4()
                 ->labelTrue('Enable')
                 ->labelFalse('Disable')
                 ->valueDefault(true)
                 ->label('System Updater'),
-            SwitchField::init('SOKEIO_ADMIN_REGISTRATION_ENABLE_PAGE')
+            SwitchField::make('SOKEIO_ADMIN_REGISTRATION_ENABLE_PAGE')
                 ->col6()
 
                 ->labelTrue('Enable')
                 ->labelFalse('Disable')
                 ->label('Register User Page')
                 ->valueDefault(true),
-            MediaFile::init('SOKEIO_ADMIN_LOGIN_COVER_IMAGE')
+            MediaFile::make('SOKEIO_ADMIN_LOGIN_COVER_IMAGE')
                 ->col12()
                 ->multiple()
                 ->label('Auth Cover Image'),
@@ -96,24 +96,24 @@ class Overview extends \Sokeio\Page
     }
     private function settingUtility()
     {
-        return SettingUI::init([
-            SwitchField::init('SOKEIO_SHOW_ICON_IN_SUBMENU')
+        return SettingUI::make([
+            SwitchField::make('SOKEIO_SHOW_ICON_IN_SUBMENU')
                 ->col4()
                 ->labelTrue('Enable')
                 ->labelFalse('Disable')
                 ->valueDefault(true)
                 ->label('Show Icon In Submenu'),
-            SwitchField::init('SOKEIO_SHOW_PROGRESS_TIMER')
+            SwitchField::make('SOKEIO_SHOW_PROGRESS_TIMER')
                 ->col4()
                 ->labelTrue('Enable')
                 ->labelFalse('Disable')
                 ->label('Show Progress Timer'),
-            SwitchField::init('SOKEIO_SHOW_POSITION_DEBUG')
+            SwitchField::make('SOKEIO_SHOW_POSITION_DEBUG')
                 ->col4()
                 ->labelTrue('Enable')
                 ->labelFalse('Disable')
                 ->label('Show Position Debug(Only Admin)'),
-            SwitchField::init('PLATFORM_TABLE_ROUTE_ENABLE')
+            SwitchField::make('PLATFORM_TABLE_ROUTE_ENABLE')
                 ->col4()
                 ->labelTrue('Enable')
                 ->labelFalse('Disable')
@@ -130,13 +130,13 @@ class Overview extends \Sokeio\Page
     protected function setupUI()
     {
         return [
-            PageUI::init([
+            PageUI::make([
                 $this->settingOverview(),
                 $this->settingAdmin(),
                 $this->settingUtility(),
                 ...Setting::getUI(self::KEY_UI)
             ])->row()->rightUI([
-                Button::init()
+                Button::make()
                     ->className('btn btn-primary')
                     ->text('Save Setting')
                     ->icon('ti ti-settings')

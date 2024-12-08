@@ -34,7 +34,7 @@ class TabControl extends BaseUI
         $tab->icon = $icon;
         $tab->id = ++$this->index;
         if (!$ui) {
-            $ui = Div::init()->text($title)->className('bg-warning text-bg-warning p-4 rounded');
+            $ui = Div::make()->text($title)->className('bg-warning text-bg-warning p-4 rounded');
         }
         $this->tabItems[$tab->id] = $tab;
         $this->child($ui, 'tabItemUI' . $tab->id);

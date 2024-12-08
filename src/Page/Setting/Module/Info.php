@@ -26,8 +26,8 @@ class Info extends \Sokeio\Page
             $title =  $title . '(Vendor)';
         }
         return [
-            PageUI::init([
-                Div::init()->className('mt-auto')->viewBlade(
+            PageUI::make([
+                Div::make()->className('mt-auto')->viewBlade(
                     'sokeio::livewire.platform.info',
                     [
                         'item' => $item
@@ -36,8 +36,8 @@ class Info extends \Sokeio\Page
             ])->title($title)
                 ->xlSize()
                 ->afterUI([
-                    Div::init([
-                        Button::init()->text(__('Activate'))->icon('ti ti-checks')
+                    Div::make([
+                        Button::make()->text(__('Activate'))->icon('ti ti-checks')
                             ->wireClick(function () use ($item) {
                                 $item->setActive();
                                 $this->sokeioClose();
@@ -46,7 +46,7 @@ class Info extends \Sokeio\Page
                             ->when(function ()  use ($item) {
                                 return ! $item->isActive();
                             }),
-                        Button::init()->text(__('Block'))->icon('ti ti-lock')
+                        Button::make()->text(__('Block'))->icon('ti ti-lock')
                             ->className('btn btn-danger')
                             ->wireClick(function () use ($item) {
                                 $item->block();

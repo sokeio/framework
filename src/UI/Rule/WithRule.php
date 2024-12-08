@@ -62,7 +62,7 @@ trait WithRule
     }
     public function ruleUnique($message = null, $params = [], $callback = null, $key = null, $table = null)
     {
-        return $this->register(function () use ($key, $table, $message, $params, $callback) {
+        return $this->boot(function () use ($key, $table, $message, $params, $callback) {
             if (!$table) {
                 $table = app($this->getWire()->getModel())->getTable();
             }

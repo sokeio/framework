@@ -45,17 +45,17 @@ class Edit extends \Sokeio\Page
     protected function setupUI()
     {
         return [
-            PageUI::init([
-                Input::init('name')->label(__('Name'))->ruleRequired(),
-                Input::init('slug')->label(__('Slug'))->ruleRequired()->ruleUnique()->when(function () {
+            PageUI::make([
+                Input::make('name')->label(__('Name'))->ruleRequired(),
+                Input::make('slug')->label(__('Slug'))->ruleRequired()->ruleUnique()->when(function () {
                     return !$this->getIsAdmin();
                 }),
-                Textarea::init('description')->label(__('Description')),
-                Checkbox::init('is_active')->label(__('Status'))->labelCheckbox(__('Active'))
+                Textarea::make('description')->label(__('Description')),
+                Checkbox::make('is_active')->label(__('Status'))->labelCheckbox(__('Active'))
                     ->when(function () {
                         return !$this->getIsAdmin();
                     }),
-                LivewireField::init('permissions')
+                LivewireField::make('permissions')
                     ->skipFill()
                     ->component('sokeio::permission-list.index')->label(__('Permissions'))
                     ->when(function () {
@@ -64,9 +64,9 @@ class Edit extends \Sokeio\Page
             ])->onlyModal()
                 ->prefix('formData')
                 ->afterUI([
-                    Div::init([
-                        Button::init()->text(__('Cancel'))->className('btn btn-warning me-2')->modalClose(),
-                        Button::init()->text(__('Save'))->wireClick('saveData')
+                    Div::make([
+                        Button::make()->text(__('Cancel'))->className('btn btn-warning me-2')->modalClose(),
+                        Button::make()->text(__('Save'))->wireClick('saveData')
                     ])->useModalButtonRight()
                 ])
         ];

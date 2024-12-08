@@ -28,8 +28,8 @@ class Updater extends \Sokeio\Page
     protected function setupUI()
     {
         return [
-            PageUI::init([
-                Div::init()->viewBlade('sokeio::pages.system-updater')
+            PageUI::make([
+                Div::make()->viewBlade('sokeio::pages.system-updater')
             ])
                 ->hidePageHeader()
                 ->card()

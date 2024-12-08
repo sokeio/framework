@@ -21,13 +21,13 @@ class Marketplace extends \Sokeio\Page
     protected function setupUI()
     {
         return [
-            PageUI::init([
-                Div::init()->className('mt-auto')->viewBlade('sokeio::pages.appearance.theme.marketplace')
+            PageUI::make([
+                Div::make()->className('mt-auto')->viewBlade('sokeio::pages.appearance.theme.marketplace')
             ])
                 
                 ->afterUI([
-                    Div::init([
-                        Button::init()->text(__('Cancel'))->className('btn btn-warning me-2')
+                    Div::make([
+                        Button::make()->text(__('Cancel'))->className('btn btn-warning me-2')
                             ->modalClose()->icon('ti ti-x')
                     ])
                         ->className('px-2 pt-2 d-flex justify-content-end')
