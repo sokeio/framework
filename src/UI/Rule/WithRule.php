@@ -62,17 +62,17 @@ trait WithRule
     }
     public function ruleUnique($message = null, $params = [], $callback = null, $key = null, $table = null)
     {
-        return $this->boot(function () use ($key, $table, $message, $params, $callback) {
+        return $this->boot(function ($base) use ($key, $table, $message, $params, $callback) {
             if (!$table) {
-                $table = app($this->getWire()->getModel())->getTable();
+                $table = app($base->getWire()->getModel())->getTable();
             }
             if (!$key) {
-                $key = $this->getFieldNameWithoutPrefix();
+                $key = $base->getFieldNameWithoutPrefix();
             }
-            if ($this->getWire()->dataId) {
-                $key .= ',' . $this->getWire()->dataId;
+            if ($base->getWire()->dataId) {
+                $key .= ',' . $base->getWire()->dataId;
             }
-            return $this->rule('unique:' . $table . ',' . $key, $message, $params, $callback);
+            return $base->rule('unique:' . $table . ',' . $key, $message, $params, $callback);
         });
     }
 

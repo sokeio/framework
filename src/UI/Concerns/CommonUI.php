@@ -10,12 +10,32 @@ trait CommonUI
     use DataShareUI;
     private DataUI|null $data;
     private AlpineUI|null  $alpine;
+    private $dataHooks = [];
+    private $applyFlg = false;
+    protected function registerData($callback)
+    {
+        if ($this->applyFlg) {
+            $callback($this);
+        } else {
+            $this->dataHooks[] = $callback;
+        }
+        return $this;
+    }
+    public function applyRegisterData()
+    {
+        foreach ($this->dataHooks as $callback) {
+            $callback($this);
+        }
+        $this->dataHooks = [];
+        $this->applyFlg = true;
+        return $this;
+    }
     public function initCommonUI()
     {
         $this->data = DataUI::create($this);
         $this->alpine = new AlpineUI($this);
     }
-    protected function data($group): DataUI
+    public function data($group): DataUI
     {
         return $this->data->group($group);
     }
@@ -41,29 +61,37 @@ trait CommonUI
     }
     public function vars($key, $value = null): static
     {
-        return $this->data('vars')->set($key, $value);
+        return $this->registerData(function ($base) use ($key, $value) {
+            $base->data('vars')->set($key, $value);
+        });
     }
     public function getVar($key, $default = null, $isText = false, $separator = ' ')
     {
         return $this->data('vars')->get($key, $default, $isText, $separator);
     }
-    protected function getAttributeByGroup($group = 'default')
+    public function getAttributeByGroup($group = 'default')
     {
         return $this->data('attributes_' . $group);
     }
     public function attr($key, $value = null, $group = 'default'): static
     {
-        return $this->getAttributeByGroup($group)->set($key, $value);
+        return $this->registerData(function ($base) use ($key, $value, $group) {
+            $base->getAttributeByGroup($group)->set($key, $value);
+        });
     }
     public function removeAttr($key, $value = null, $group = 'default'): static
     {
-        return $this->getAttributeByGroup($group)->remove($key, $value);
+        return $this->registerData(function ($base) use ($key, $value, $group) {
+            $base->getAttributeByGroup($group)->remove($key, $value);
+        });
     }
     public function attrAdd($key, $value = null, $group = 'default'): static
     {
-        return $this->getAttributeByGroup($group)->append($key, $value);
+        return $this->registerData(function ($base) use ($key, $value, $group) {
+            $base->getAttributeByGroup($group)->append($key, $value);
+        });
     }
-    protected function getAttrKey($key, $default = null, $group = 'default', $isText = false, $separator = ' ')
+    public function getAttrKey($key, $default = null, $group = 'default', $isText = false, $separator = ' ')
     {
         return $this->getAttributeByGroup($group)->get($key, $default, $isText, $separator);
     }
@@ -82,11 +110,11 @@ trait CommonUI
         $attrValue = $this->getAttrKey($key, null, $group, true);
         return $attrValue !== null && ($value === null || str($attrValue)->contains($value));
     }
-    protected function getAttr($group = 'default', $checkFn = null)
+    public function getAttr($group = 'default', $checkFn = null)
     {
         return $this->getAttributeByGroup($group)->getAttributeText($checkFn);
     }
-    protected function getAttrValue($group = 'default')
+    public function getAttrValue($group = 'default')
     {
         return $this->getAttributeByGroup($group)->getData();
     }

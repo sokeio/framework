@@ -11,6 +11,11 @@ class SoUI
     use LifecycleUI, WireUI;
 
     private $viewFactory = null;
+    private $wire = null;
+    public function getWire()
+    {
+        return $this->wire;
+    }
     public function getViewFactory()
     {
         return $this->viewFactory;
@@ -24,7 +29,11 @@ class SoUI
         $this->wire = $wire;
         $this->initLifecycleUI();
         $this->child($ui);
+    }
+    public function setup()
+    {
         $this->setManager($this);
+        return $this;
     }
     public function render($callback = null)
     {

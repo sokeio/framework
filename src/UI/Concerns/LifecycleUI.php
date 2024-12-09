@@ -2,7 +2,6 @@
 
 namespace Sokeio\UI\Concerns;
 
-use Sokeio\UI\BaseUI;
 use Sokeio\UI\SoUI;
 use Sokeio\UI\Support\HookUI;
 
@@ -12,7 +11,15 @@ trait LifecycleUI
     private $childs = [];
     protected HookUI $hook;
     private $hookStatus = [];
-
+    public function resetHookStatus()
+    {
+        $this->hookStatus = [];
+        return $this;
+    }
+    public function getChilds()
+    {
+        return $this->childs;
+    }
     // 1. register UI
     public function register($callback = null)
     {
@@ -56,12 +63,24 @@ trait LifecycleUI
 
     public function lifecycleWithKey($key, $callback = null, $params = null): static
     {
-        if ($callback && !isset($this->hookStatus[$key])) {
-            $this->hook->group($key)->callback($callback);
+        if ($params && count(array_keys($params)) > 0) {
+            array_shift($params);
+        }
+        if ($callback) {
+            if (isset($this->hookStatus[$key])) {
+                if ($params && count($params) > 1) {
+                    call_user_func_array($callback, [$this, ...$params]);
+                } else {
+                    call_user_func_array($callback, [$this]);
+                }
+            } else {
+                $this->hook->group($key)->callback($callback);
+            }
             return $this;
         }
+
         if ($params && count($params) > 1) {
-            $this->hook->group($key)->run([$this, ...array_shift($params)]);
+            $this->hook->group($key)->run([$this, ...$params]);
         } else {
             $this->hook->group($key)->run([$this]);
         }

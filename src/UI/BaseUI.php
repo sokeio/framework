@@ -2,6 +2,7 @@
 
 namespace Sokeio\UI;
 
+use Illuminate\Support\Facades\Log;
 use Sokeio\UI\Concerns\CommonUI;
 use Sokeio\UI\Concerns\LifecycleUI;
 
@@ -38,10 +39,7 @@ class BaseUI
         }
         return  $name;
     }
-    public function getWire()
-    {
-        return $this->getManager()?->getWire();
-    }
+
     public function getWireValue($key, $default = null)
     {
         $wire = $this->getWire();
@@ -66,13 +64,17 @@ class BaseUI
         $this->initCommonUI();
         $this->child($childs);
         $this->initUI();
-        $this->register(function () {
-            $this->registerIDChild();
-            $this->attr('sokeio-group', $this->getGroup());
-            $this->attr('sokeio-ui-id', $this->getUIID());
-            $this->attr('sokeio-ui-key', $this->getUIIDkey());
+        $this->register(function ($base) {
+            $base->registerIDChild();
+            $base->attr('sokeio-group', $base->getGroup());
+            $base->attr('sokeio-ui-id', $base->getUIID());
+            $base->attr('sokeio-ui-key', $base->getUIIDkey());
+        });
+        $this->boot(function ($base) {
+            $base->applyRegisterData();
         });
     }
+
     public function refUI($callback = null)
     {
         if ($callback) {
@@ -88,10 +90,10 @@ class BaseUI
 
     public function action($key, $callback, $skipRender = false)
     {
-        return $this->boot(function () use ($key, $callback, $skipRender) {
-            $this->manager->action($key, $callback, $this, $skipRender);
-        })->afterRender(function ()  use ($key) {
-            $this->manager->removeAction($key);
+        return $this->boot(function ($base) use ($key, $callback, $skipRender) {
+            $base->getManager()?->action($base->getUIIDKey() . $key, $callback, $base, $skipRender);
+        })->afterRender(function ($base)  use ($key) {
+            $base->getManager()?->removeAction($base->getUIIDKey() . $key);
         });
     }
     public function setView($callback)
@@ -162,5 +164,33 @@ class BaseUI
     public static function make($childs = [])
     {
         return new static($childs);
+    }
+    private function cloneArray($arr)
+    {
+        $arrTemp = [];
+        foreach ($arr as $key => $value) {
+            $valueTemp = null;
+            if (is_array($value)) {
+                $valueTemp = $this->cloneArray($value);
+            } elseif ($value instanceof BaseUI) {
+                $valueTemp = $value->cloneUI();
+            } elseif (is_string($value)) {
+                $valueTemp = `$value`;
+            } else {
+                $valueTemp = $value;
+            }
+            $arrTemp[$key] = $valueTemp;
+        }
+        return $arrTemp;
+    }
+    public function cloneUI()
+    {
+        $self = clone $this;
+        $self->clearCoreUI();
+        $self->initCommonUI();
+        $self->resetHookStatus();
+
+        $self->childs = $this->cloneArray($self->getChilds());
+        return $self;
     }
 }

@@ -25,8 +25,8 @@ trait DataShareUI
             return $this;
         }
         $this->{'share' . ucfirst($key)} = $value;
-        return $this->boot(function () use ($key, $value) {
-            $this->setupChild(fn($c) => $c->{$key}($value));
+        return $this->boot(function ($base) use ($key, $value) {
+            $base->setupChild(fn($c) => $c->{$key}($value));
         });
     }
     private function clearDataShared($key = null)

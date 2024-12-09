@@ -34,7 +34,7 @@ trait WithUI
     public function reUI()
     {
         $this->ui = null;
-        $this->getUI()->register();
+        $this->getUI()->setup()->register();
         $this->getUI()->boot();
     }
     public function getUI(): SoUI

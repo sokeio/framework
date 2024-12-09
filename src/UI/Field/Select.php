@@ -33,12 +33,12 @@ class Select extends FieldUI
     public function initUI()
     {
         parent::initUI();
-        $this->render(function () {
-            $this->attr('wire:key', 'tom-select-' . $this->getFieldNameWithoutPrefix() . '-' . time(), 'tom-select');
-            $this->attr('wire:tom-select', null, 'tom-select');
-            $this->attr('wire:tom-select.datasource', json_encode($this->getDatasource()), 'tom-select');
-            if ($this->options) {
-                $this->attr('wire:tom-select.options', json_encode($this->options), 'tom-select');
+        $this->beforeRender(function ($base) {
+            $base->attr('wire:key', 'tom-select-' . $base->getFieldNameWithoutPrefix() . '-' . time(), 'tom-select');
+            $base->attr('wire:tom-select', null, 'tom-select');
+            $base->attr('wire:tom-select.datasource', json_encode($base->getDatasource()), 'tom-select');
+            if ($base->options) {
+                $base->attr('wire:tom-select.options', json_encode($base->options), 'tom-select');
             }
         });
     }
@@ -68,18 +68,18 @@ class Select extends FieldUI
     }
     public function remoteAction($action, $name = null)
     {
-        return $this->register(function () use ($action, $name) {
+        return $this->register(function ($base) use ($action, $name) {
             if (!$name) {
-                $name = md5($this->getUIIDkey() . '_' . $this->getVar('name', null, true)  . '_remote_action');
+                $name = 'select_remote_action';
             }
-            $this->attr('wire:tom-select.remote-action', $name, 'tom-select');
-            $this->action($name, $action, true);
-            $this->beforeRender(function () use ($name) {
+            $base->action($name, $action, true);
+            $base->beforeRender(function ($base) use ($name) {
+                $base->attr('wire:tom-select.remote-action', $base->getUIIDKey() .  $name, 'tom-select');
                 if (
-                    !$this->checkDataSource() &&
-                    !$this->checkVar('lazyLoad', null)
+                    !$base->checkDataSource() &&
+                    !$base->checkVar('lazyLoad', null)
                 ) {
-                    $this->dataSource($this->getManager()->callActionUI($name));
+                    $base->dataSource($base->getManager()?->callActionUI($base->getUIIDKey() . $name));
                 }
             });
         });

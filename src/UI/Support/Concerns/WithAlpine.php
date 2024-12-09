@@ -5,11 +5,11 @@ namespace Sokeio\UI\Support\Concerns;
 
 trait WithAlpine
 {
-    
+
     private function x($name, $value = null): self
     {
-        $this->ui->boot(function () use ($name, $value) {
-            $this->ui->attr('x-' . $name, $value);
+        $this->ui->boot(function ($base) use ($name, $value) {
+            $base->attr('x-' . $name, $value);
         });
         return $this;
     }

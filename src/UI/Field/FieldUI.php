@@ -18,18 +18,18 @@ class FieldUI extends BaseUI
     protected function initUI()
     {
         parent::initUI();
-        $this->boot(function () {
-            $this->getManager()->registerField($this);
+        $this->boot(function ($base) {
+            $base->getManager()?->registerField($base);
         });
-        $this->render(function () {
-            if (!$this->containsAttr('class', 'sokeio-field-input', 'wrapper')) {
-                $this->classNameWrapper('sokeio-field-input');
+        $this->render(function ($base) {
+            if (!$base->containsAttr('class', 'sokeio-field-input', 'wrapper')) {
+                $base->classNameWrapper('sokeio-field-input');
             }
             $debounce = $this->getVar('wire:debounce', null, true);
             if ($debounce && $debounce > 0) {
-                $this->attr('wire:model.live.debounce.' . $debounce . 'ms', $this->getFieldName());
+                $base->attr('wire:model.live.debounce.' . $debounce . 'ms', $base->getFieldName());
             } else {
-                $this->attr('wire:model', $this->getFieldName());
+                $base->attr('wire:model', $base->getFieldName());
             }
         });
     }

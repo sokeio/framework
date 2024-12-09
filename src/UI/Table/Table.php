@@ -135,7 +135,7 @@ class Table extends BaseUI
         if ($orderBy) {
             $query = $query->orderBy($orderBy, $type);
         }
-        $fields = $this->getManager()->getFieldsByGroup(['formSearch', 'formSearchExtra']);
+        $fields = $this->getManager()?->getFieldsByGroup(['formSearch', 'formSearchExtra']);
         foreach ($fields as $field) {
             $field->applyQuery($query);
         }
@@ -177,13 +177,13 @@ class Table extends BaseUI
     }
     public function columnAction($array, $title = 'Actions', $callback = null)
     {
-        return $this->child($array, 'columnAction')->boot(function () use ($title, $callback) {
+        return $this->child($array, 'columnAction')->boot(function ($base) use ($title, $callback) {
             $actionColumn = Column::make('action', $title)
-                ->setTable($this)
+                ->setTable($base)
                 ->classNameHeader('w-1')
                 ->disableSort()
-                ->renderCell(function ($row, $column, $index) {
-                    return $this->renderChilds('columnAction', [
+                ->renderCell(function ($row, $column, $index) use ($base) {
+                    return $base->renderChilds('columnAction', [
                         'row' => $row,
                         'column' => $column,
                         'index' => $index

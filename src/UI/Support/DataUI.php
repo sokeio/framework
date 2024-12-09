@@ -2,7 +2,6 @@
 
 namespace Sokeio\UI\Support;
 
-use Illuminate\Support\Facades\Log;
 use Sokeio\UI\BaseUI;
 
 class DataUI

@@ -2,6 +2,7 @@
 
 namespace Sokeio\UI\Concerns;
 
+use Illuminate\Support\Facades\Log;
 use Livewire\Drawer\Utils;
 use Sokeio\Enums\AlertPosition;
 use Sokeio\Enums\AlertType;
@@ -18,10 +19,17 @@ trait CoreUI
     private SoUI|null $manager = null;
     private BaseUI|SoUI|null  $parent = null;
     private $whenCallbacks = [];
-    private $wire = null;
+    public function clearCoreUI()
+    {
+        $this->uiId = null;
+        $this->uiIdKey = null;
+        $this->uiGroup = null;
+        $this->manager = null;
+        $this->parent = null;
+    }
     public function getWire()
     {
-        return $this->wire;
+        return $this->getManager()?->getWire();
     }
     public function resetErrorBag($field = null)
     {
@@ -75,7 +83,7 @@ trait CoreUI
         return $this;
     }
 
-    public function getManager(): SoUI
+    public function getManager(): SoUI|null
     {
         return $this->manager;
     }
@@ -87,7 +95,7 @@ trait CoreUI
     }
     public function group($value)
     {
-         $this->uiGroup = $value;
+        $this->uiGroup = $value;
         return $this;
     }
     public function getGroup($default = null)
@@ -96,7 +104,7 @@ trait CoreUI
     }
     public function makeView($view, $data = [], $mergeData = [])
     {
-        return $this->getManager()->getViewFactory()?->make($view, $data, $mergeData)
+        return $this->getManager()?->getViewFactory()?->make($view, $data, $mergeData)
             ->with([...Utils::getPublicPropertiesDefinedOnSubclass($this->getWire()), 'soUI' => $this]);
     }
     public function viewRender($view, $data = [], $mergeData = [])

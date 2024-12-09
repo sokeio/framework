@@ -24,8 +24,8 @@ class SettingUI extends BaseUI
                     $this->valueEnable = $item->getValue() === null ? $default : $item->getValue();
                     $this->setParams(['setting_enable' => $this->valueEnable]);
                 })
-                ->boot(function () {
-                    $this->setupChild(function ($item) {
+                ->boot(function ($base) {
+                    $base->setupChild(function ($item) {
                         if (method_exists($item, 'whenRule') === false) {
                             return;
                         }

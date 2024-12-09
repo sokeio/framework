@@ -10,6 +10,8 @@ use Sokeio\UI\SoUI;
 trait CoreChildUI
 {
     private $childs = [];
+
+
     public function registerIDChild()
     {
         foreach ($this->childs as $group => $uis) {
@@ -62,18 +64,11 @@ trait CoreChildUI
             $childs = [$childs];
         }
         $this->childs[$group] = array_merge($this->childs[$group] ?? [],  $childs);
-
-
         return $this;
     }
     private function childNone($ui, $tap = null, $group = 'default')
     {
-        return $this->child((clone None::make($ui))->tap($tap)->afterRender(function (None $none) {
-            $none->onlyChildClear();
-        })->beforeRender(function (None $none) {
-            $none->shareToChild();
-            $none->registerIDChild();
-        }), $group);
+        return $this->child((None::make($ui))->cloneUI()->tap($tap), $group);
     }
     public function childWithKey($key,  $tap = null, $group = 'default')
     {

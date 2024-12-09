@@ -29,32 +29,32 @@ class Button extends BaseUI
 
     public function wireClick($callback, $actionName = 'button::click', $params = null, $skipRender = false)
     {
-        return $this->register(function () use ($callback, $actionName, $params, $skipRender) {
+        return $this->boot(function ($base) use ($callback, $actionName, $params, $skipRender) {
             if (is_string($callback) && strpos($callback, '::') === false && !class_exists($callback)) {
-                return $this->attr('wire:click', $callback);
+                return $base->attr('wire:click', $callback);
             }
-            $wireClick = ($this->getUIIDkey() . $actionName);
 
-            $this->action($wireClick, function ($_params) use ($callback) {
+            $base->action($actionName, function ($_params) use ($callback, $base) {
                 if (is_array($_params) && !empty($_params)) {
-                    $_params[] = $this;
+                    $_params[] = $base;
                     call_user_func($callback,  ...$_params);
                 } elseif ($_params) {
-                    call_user_func($callback,  $_params, $this);
+                    call_user_func($callback,  $_params, $base);
                 } else {
-                    call_user_func($callback, $this);
+                    call_user_func($callback, $base);
                 }
             }, $skipRender);
 
-            return $this->render(function () use ($wireClick, $params) {
+            return $base->render(function ($base) use ($actionName, $params) {
                 $paraText = '';
                 if (is_callable($params)) {
-                    $params = call_user_func($params, $this);
+                    $params = call_user_func($params, $base);
                 }
                 if ($params) {
                     $paraText = ',' . json_encode($params);
                 }
-                return $this->attr('wire:click',  'callActionUI("' . $wireClick . '"' . $paraText . ')');
+                $keyClick = $base->getUIIDkey() . $actionName;
+                return $base->attr('wire:click',  'callActionUI("' . $keyClick . '"' . $paraText . ')');
             });
         });
     }
