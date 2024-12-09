@@ -12,11 +12,3 @@ window.addStyleToWindow = addStyleToWindow;
 window.addScriptToWindow = addScriptToWindow;
 
 window.sokeioUI = SokeioUI;
-window.showModal("File Manager", {
-  fnCallback: function (file) {
-    console.log(file);
-  },
-  template: icon,
-  modalSize: "xxl",
-  skipOverlayClose: true,
-});

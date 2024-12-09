@@ -17,6 +17,7 @@ import mediaFile from "./media-file";
 import sokeio from "./sokeio";
 import { addScriptToWindow, addStyleToWindow } from "../../utils";
 import codeEditor from "./code-editor";
+import mediaIcon from "./media-icon";
 const directive = {
   apexcharts,
   "get-value": getValue,
@@ -34,6 +35,7 @@ const directive = {
   plyr,
   media,
   "media-file": mediaFile,
+  "media-icon": mediaIcon,
   sokeio: sokeio,
   "code-editor": codeEditor,
 };
