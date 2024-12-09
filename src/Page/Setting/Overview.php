@@ -58,12 +58,30 @@ class Overview extends \Sokeio\Page
     {
         return SettingUI::make([
             Select::make('SOKEIO_LAYOUT_ADMIN_THEME')
-                ->col4()
+                ->col3()
                 ->label('Admin Theme')
                 ->valueDefault('default')
                 ->dataSource(Theme::getThemeAdmin()->getLayouts()),
+            Select::make('SOKEIO_ADMIN_HEADER_CONTAINER')
+                ->col3()
+                ->label('Header Container')
+                ->valueDefault(setting('SOKEIO_ADMIN_HEADER_CONTAINER', 'container-xxl'))
+                ->dataSource([
+                    ['value' => 'container-fluid', 'text' => 'Container Fluid'],
+                    ['value' => 'container', 'text' => 'Container'],
+                    ['value' => 'container-xxl', 'text' => 'Container XXL'],
+                ]),
+            Select::make('SOKEIO_ADMIN_BODY_CONTAINER')
+                ->col3()
+                ->label('Body Container')
+                ->valueDefault(setting('SOKEIO_ADMIN_BODY_CONTAINER', 'container-xxl'))
+                ->dataSource([
+                    ['value' => 'container-fluid', 'text' => 'Container Fluid'],
+                    ['value' => 'container', 'text' => 'Container'],
+                    ['value' => 'container-xxl', 'text' => 'Container XXL'],
+                ]),
             SwitchField::make('SOKEIO_ADMIN_HEADER_STICKY_ENABLE')
-                ->col4()
+                ->col3()
                 ->labelTrue('Enable')
                 ->labelFalse('Disable')
                 ->label('Admin Sticky Header')

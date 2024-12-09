@@ -2,12 +2,18 @@
 
 namespace Sokeio\UI;
 
+use Illuminate\Support\Facades\Log;
+use Livewire\Livewire;
 
 trait WithUI
 {
     private SoUI|null $ui = null;
     public $dataSelecteds = [];
     public $dataChanges = [];
+    public function isLivewire()
+    {
+        return Livewire::isLivewireRequest();
+    }
     public function getModel()
     {
         return $this->getPageConfig()->getModel();
@@ -21,6 +27,7 @@ trait WithUI
     }
     public function booted()
     {
+        Log::info('booted');
         parent::booted();
         $this->reUI();
     }
@@ -29,6 +36,7 @@ trait WithUI
         if (method_exists(parent::class, 'updated')) {
             parent::updated();
         }
+        Log::info('updated');
         $this->reUI();
     }
     public function reUI()
@@ -59,6 +67,7 @@ trait WithUI
     }
     public function callActionUI($name, $params = [])
     {
+        Log::info('callActionUI');
         return $this->getUI()->callActionUI($name, $params);
     }
 }

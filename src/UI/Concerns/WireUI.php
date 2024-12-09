@@ -3,8 +3,6 @@
 namespace Sokeio\UI\Concerns;
 
 use Illuminate\Support\Facades\Validator;
-use Sokeio\Enums\AlertPosition;
-use Sokeio\Enums\AlertType;
 use Sokeio\Setting;
 
 trait WireUI
@@ -114,10 +112,12 @@ trait WireUI
             $this->getWire()->alert('Action ' . $name . ' not found');
             return null;
         }
+
         $action = $this->actions[$name];
         if ($action['skipRender']) {
             $this->getWire()->skipRender();
         }
+        // $this->getWire()->alert('Action ' . $name . ' not called');
         if ($action['callback']) {
             return  call_user_func($action['callback'], $params);
         }

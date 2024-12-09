@@ -29,7 +29,7 @@ class BaseUI
         return $this->vars('style', $style);
     }
 
-    protected function getNameWithPrefix($name)
+    public function getNameWithPrefix($name)
     {
         if ($prefix = $this->getPrefix()) {
             if ($groupField = $this->getGroupField()) {
@@ -69,9 +69,13 @@ class BaseUI
             $base->attr('sokeio-group', $base->getGroup());
             $base->attr('sokeio-ui-id', $base->getUIID());
             $base->attr('sokeio-ui-key', $base->getUIIDkey());
+          
         });
         $this->boot(function ($base) {
             $base->applyRegisterData();
+        });
+        $this->beforeRender(function ($base) {
+            $base->attr('sokeio-prefix', $base->getNameWithPrefix('test'));
         });
     }
 

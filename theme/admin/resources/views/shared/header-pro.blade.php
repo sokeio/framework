@@ -1,6 +1,6 @@
 <div @if (setting('SOKEIO_ADMIN_HEADER_STICKY_ENABLE', true)) class="sticky-top" @endif>
     <header class="navbar navbar-expand-md d-print-none">
-        <div class="container-xxl">
+        <div class="{{ setting('SOKEIO_ADMIN_HEADER_CONTAINER', 'container-xxl') }}">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu"
                 aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -43,7 +43,7 @@
         </div>
     </header>
     <header class="navbar navbar-expand-md">
-        <div class="container-xxl">
+        <div class="{{ setting('SOKEIO_ADMIN_HEADER_CONTAINER', 'container-xxl') }}">
             <div class="collapse navbar-collapse" id="navbar-menu">
                 <div class="d-flex flex-column flex-md-row flex-fill align-items-stretch align-items-md-center">
                     {!! \Sokeio\Support\Menu\MenuManager::renderMenu() !!}

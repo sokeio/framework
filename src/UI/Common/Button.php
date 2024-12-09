@@ -54,6 +54,7 @@ class Button extends BaseUI
                     $paraText = ',' . json_encode($params);
                 }
                 $keyClick = $base->getUIIDkey() . $actionName;
+               
                 return $base->attr('wire:click',  'callActionUI("' . $keyClick . '"' . $paraText . ')');
             });
         });
