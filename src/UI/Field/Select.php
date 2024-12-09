@@ -77,8 +77,7 @@ class Select extends FieldUI
                 $base->attr('wire:tom-select.remote-action', $base->getUIIDKey() .  $name, 'tom-select');
                 if (
                     !$base->checkDataSource() &&
-                    !$base->checkVar('lazyLoad', null) &&
-                    !$base->getWire()->isLivewire()
+                    !$base->checkVar('lazyLoad', null) 
                 ) {
                     $base->dataSource($base->getManager()?->callActionUI($base->getUIIDKey() . $name, ''));
                 }
