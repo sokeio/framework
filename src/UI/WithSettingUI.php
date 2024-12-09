@@ -16,11 +16,14 @@ trait WithSettingUI
         $this->alert('Setting has been saved!', 'Setting', 'success');
         $this->refreshPage();
     }
-    public function mount()
+
+    public function reUI()
     {
-        $this->getUI()->tap(function ($ui) {
-            $ui->boot();
-            $ui->loadInSetting();
-        });
+        $this->ui = null;
+        $this->getUI()->setup()->register();
+        $this->getUI()->boot();
+        if (!$this->isLivewire()) {
+            $this->getUI()->loadInSetting();
+        }
     }
 }

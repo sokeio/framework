@@ -82,16 +82,13 @@ class FieldUI extends BaseUI
         <input {$attr} />
         HTML;
     }
-    public function getValue()
+    public function getValue($default = null)
     {
-        $wire = $this->getWire();
-        return data_get($wire, $this->getFieldName());
+        return $this->getValueByKey($this->getFieldNameWithoutPrefix(), $default);
     }
     public function setValue($value)
     {
-        $wire = $this->getWire();
-        data_set($wire, $this->getFieldName(), $value);
-        return $this;
+        return $this->changeValue($this->getFieldNameWithoutPrefix(), $value);
     }
     public function getLabel()
     {
@@ -104,8 +101,7 @@ class FieldUI extends BaseUI
         $valueDefault = $this->getValueDefault();
         $value = $this->getValue();
         if ($valueDefault !== null && $value === null) {
-            $wire = $this->getWire();
-            data_set($wire, $attrModel, $valueDefault);
+            $this->setValue($valueDefault);
         }
         $fieldView = $this->fieldView();
         if ($this->checkVar('label')) {
@@ -116,7 +112,7 @@ class FieldUI extends BaseUI
             HTML;
         }
         $view = <<<HTML
-        <div {$attrWrapper} x-data="sokeioField('{$attrModel}')" >
+        <div {$attrWrapper} x-data="sokeioField('{$attrModel}')">
         {$fieldView}
         {$this->errorView()}
         </div>
