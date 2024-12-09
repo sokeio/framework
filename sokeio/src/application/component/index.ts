@@ -211,6 +211,7 @@ const componentMixin: any = {
     let elNext = this.$el.nextSibling;
     this.$el.remove();
     this.$el = null;
+    this.__data__.cleanup();
     this.doBoot();
     this.doRender();
     this.doReady();

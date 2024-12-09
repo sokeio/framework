@@ -75,3 +75,9 @@
 .sokeio-code-editor {
     min-height: 120px;
 }
+
+.sokeio-hover:hover, .sokeio-active {
+    cursor: pointer;
+    background-color: #c4c4c4;
+    
+}
