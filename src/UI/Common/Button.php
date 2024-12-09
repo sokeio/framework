@@ -29,23 +29,13 @@ class Button extends BaseUI
 
     public function wireClick($callback, $actionName = 'button::click', $params = null, $skipRender = false)
     {
-        return $this->boot(function ($base) use ($callback, $actionName, $params, $skipRender) {
-            if (is_string($callback) && strpos($callback, '::') === false && !class_exists($callback)) {
-                return $base->attr('wire:click', $callback);
-            }
-
-            $base->action($actionName, function ($_params) use ($callback, $base) {
-                if (is_array($_params) && !empty($_params)) {
-                    $_params[] = $base;
-                    call_user_func($callback,  ...$_params);
-                } elseif ($_params) {
-                    call_user_func($callback,  $_params, $base);
-                } else {
-                    call_user_func($callback, $base);
-                }
-            }, $skipRender);
-
-            return $base->render(function ($base) use ($actionName, $params) {
+        if (is_string($callback) && strpos($callback, '::') === false && !class_exists($callback)) {
+            return $this->attr('wire:click', $callback);
+        }
+        return $this->action($actionName, function (...$params) use ($callback) {
+            call_user_func_array($callback, $params);
+        }, $skipRender)
+            ->render(function ($base) use ($actionName, $params) {
                 $paraText = '';
                 if (is_callable($params)) {
                     $params = call_user_func($params, $base);
@@ -54,10 +44,9 @@ class Button extends BaseUI
                     $paraText = ',' . json_encode($params);
                 }
                 $keyClick = $base->getUIIDkey() . $actionName;
-               
+
                 return $base->attr('wire:click',  'callActionUI("' . $keyClick . '"' . $paraText . ')');
             });
-        });
     }
     public function modalClose()
     {

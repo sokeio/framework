@@ -69,7 +69,6 @@ class BaseUI
             $base->attr('sokeio-group', $base->getGroup());
             $base->attr('sokeio-ui-id', $base->getUIID());
             $base->attr('sokeio-ui-key', $base->getUIIDkey());
-          
         });
         $this->boot(function ($base) {
             $base->applyRegisterData();
@@ -96,8 +95,6 @@ class BaseUI
     {
         return $this->boot(function ($base) use ($key, $callback, $skipRender) {
             $base->getManager()?->action($base->getUIIDKey() . $key, $callback, $base, $skipRender);
-        })->afterRender(function ($base)  use ($key) {
-            $base->getManager()?->removeAction($base->getUIIDKey() . $key);
         });
     }
     public function setView($callback)

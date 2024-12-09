@@ -9,7 +9,7 @@ class Select extends FieldUI
     use WithDatasource;
     public function lazyLoad()
     {
-        return  $this->attr('wire:tom-select.lazyLoad', true, 'tom-select')->vars('lazyLoad', true);
+        return $this->attr('wire:tom-select.lazyLoad', true, 'tom-select')->vars('lazyLoad', true);
     }
     private $options = [];
     public function options($options)
@@ -80,7 +80,7 @@ class Select extends FieldUI
                     !$base->checkVar('lazyLoad', null) &&
                     !$base->getWire()->isLivewire()
                 ) {
-                    $base->dataSource($base->getManager()?->callActionUI($base->getUIIDKey() . $name));
+                    $base->dataSource($base->getManager()?->callActionUI($base->getUIIDKey() . $name, ''));
                 }
             });
         });
