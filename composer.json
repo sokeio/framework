@@ -14,8 +14,7 @@
   ],
   "require": {
     "livewire/livewire": "^3.4.11",
-    "laravel/socialite": "^5.16.0",
-    "spatie/laravel-backup": "^11.0"
+    "laravel/socialite": "^5.16.0"
   },
   "require-dev": {},
   "autoload": {
