@@ -24,6 +24,10 @@ class Tag extends BaseUI
     {
         return $this->name('p');
     }
+    public function a($href)
+    {
+        return $this->name('a')->attr('href', $href)->attr('target', '_blank');
+    }
 
     public function name($name)
     {
