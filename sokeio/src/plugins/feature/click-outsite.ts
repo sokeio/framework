@@ -10,7 +10,7 @@ export default function ({ component, el, name: _name, method, value }: any) {
       if (el.contains(e.target)) {
         return;
       }
-      executeFn(value, e, component);
+      executeFn(value, e,e.target, component);
     };
     window.addEventListener("click", el["__SOKEIO_CLICK_OUTSITE"]);
     component.onDestroy(() => {

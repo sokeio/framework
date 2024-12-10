@@ -7,10 +7,10 @@ export default function ({ component, el, name: _name, method, value }: any) {
     }
     el["__SOKEIO_ON__" + method] = (e: any) => {
       let ignore: any = el.getAttribute("so-on:ignore");
-      if (ignore) {
-        if (e.target.closest(ignore)) return;
+      if (ignore && e.target.closest(ignore)) {
+        return;
       }
-      executeFn(value, e, component);
+      executeFn(value, e, el, component);
     };
     el.addEventListener(method, el["__SOKEIO_ON__" + method]);
   }

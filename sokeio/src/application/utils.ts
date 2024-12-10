@@ -97,11 +97,13 @@ function mapObservableProxy(app: any) {
   });
   return obj;
 }
-export function executeFn(fn: any, $event: any, app: any) {
-  return new Function("$event", "$obj", `with($obj) {  ${fn}}`).apply(app, [
-    $event,
-    mapObservableProxy(app),
-  ]);
+export function executeFn(fn: any, $event: any, el: any, app: any) {
+  return new Function(
+    "$event",
+    "$eventEl",
+    "$obj",
+    `with($obj) {  ${fn}}`
+  ).apply(app, [$event, el, mapObservableProxy(app)]);
 }
 
 export function getComponentsFromText(htmlString: string) {

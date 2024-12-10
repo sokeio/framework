@@ -1,5 +1,5 @@
 import icon from "../../icon";
-import { dataSet } from "../../utils";
+import { dataGet, dataSet } from "../../utils";
 
 export default {
   checkFirst: () => true,
@@ -21,6 +21,7 @@ export default {
         template: icon,
         modalSize: "xxl",
         skipOverlayClose: true,
+        iconValue: dataGet(component.$wire, modelKey),
       });
     };
     el.addEventListener("click", event);
