@@ -13,7 +13,7 @@ function extractIconsFromCSS(cssFilePath, outputJsonPath, prefix, iconRegex) {
     let match;
     while ((match = iconRegex.exec(data)) !== null) {
       const iconName = match[1];
-      const iconClass = `${prefix}-${iconName}`;
+      const iconClass = `${prefix} ${prefix}-${iconName}`;
       icons.push({ name: iconName, class: iconClass });
     }
     // Xuất ra file JSON
