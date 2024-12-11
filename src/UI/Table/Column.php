@@ -2,126 +2,107 @@
 
 namespace Sokeio\UI\Table;
 
+use Sokeio\UI\BaseUI;
+use Sokeio\UI\Common\Div;
 
-class Column
+class Column extends BaseUI
 {
-    use ColumnData;
-    public static function make($field, $label = null)
+    public function columnIndex($index): static
     {
-        return new static($field, $label);
+        return $this->vars('columnIndex', $index);
     }
-    public function __construct($field, $label = null)
+    public function getColumnIndex()
     {
-        $this->setField($field);
-        if (!$label) {
-            $label = $field;
+        return $this->getVar('columnIndex', '', true);
+    }
+    private function fieldName($name): static
+    {
+        return $this->vars('name', $name);
+    }
+    public function attrHeader($key, $value): static
+    {
+        return $this->attr($key, $value, 'header');
+    }
+    public function label($label): static
+    {
+        return $this->vars('label', $label);
+    }
+    public function setTable(Table $table): static
+    {
+        return $this->vars('table', $table);
+    }
+    public static function make($fieldName = null)
+    {
+        return (new static(null))->fieldName($fieldName);
+    }
+    public function disableSort(): static
+    {
+        return $this->vars('disableSort', true);
+    }
+    public function classNameHeader($class): static
+    {
+        return $this->vars('classNameHeader', $class);
+    }
+    public function classNameCell($class): static
+    {
+        return $this->vars('classNameCell', $class);
+    }
+    public function editUI($ui, $when = null): static
+    {
+        return $this->child(Div::make($ui)->when($when)->className('edit-column'), 'editUI');
+    }
+    public function cellUI($ui, $when = null): static
+    {
+        return $this->child(Div::make($ui)->when($when), 'cellUI');
+    }
+    public function headerUI($ui, $when = null): static
+    {
+        return $this->child(Div::make($ui)->when($when), 'headerUI');
+    }
+    public function getRowData()
+    {
+        return $this->getParams('row');
+    }
+    public function getValueCell()
+    {
+        $name = $this->getVar('name', null, true);
+        if (!$name) {
+            return '1';
         }
-        $this->setLabel($label);
+        return data_get($this->getRowData(), $name);
     }
-    protected $table;
-    protected $link;
-    public function enableLink()
+    protected function initUI()
     {
-        return $this->setLink(function ($row, $column, $index) {
-            return $row->getUrl();
+        parent::initUI();
+        $this->register(function (self $base) {
+            if (!$base->hasChilds('cellUI')) {
+                $base->cellUI(Div::make(function () use ($base) {
+                    return $base->getValueCell();
+                }));
+            }
+            if (!$base->hasChilds('headerUI')) {
+                $base->headerUI(Div::make(function () use ($base) {
+                    $label = $base->getVar('label', '',  true);
+                    if ($label) {
+                        return $label;
+                    }
+                    return $base->getVar('name', '', true);
+                }));
+            }
         });
     }
-    public function setLink($link)
+    public function viewHeader()
     {
-        $this->link = $link;
-        return $this;
+        $attr = $this->getAttr('header');
+        return <<<HTML
+        <th {$attr}> {$this->renderChilds('headerUI')}</th>
+        HTML;
     }
-    public function setTable(Table $table)
+    public function view()
     {
-        $this->table = $table;
-        return $this;
-    }
-    public function getTable()
-    {
-        return $this->table;
-    }
-    public function classNameHeader($class)
-    {
-        return $this->setData('classNameHeader', $class);
-    }
-    public function getValue($row, $index = 0)
-    {
-        $callback = $this->getRenderCell();
-        if ($callback && is_callable($callback)) {
-            return call_user_func($callback, $row, $this, $index);
-        }
-        return data_get($row, $this->getField());
-    }
-    protected function getHeaderContent()
-    {
-        $callback = $this->getRenderHeader();
-        if ($callback && is_callable($callback)) {
-            return call_user_func($callback, $this);
-        }
-        return $this->getLabel();
-    }
-    public function getHeaderView()
-    {
-        $name = $this->getField();
-        $class = $this->getData('classNameHeader');
-        if ($this->getDisableSort()) {
-            return <<<html
-            <th class="{$class}">
-                <div class="d-flex align-items-center cell-header" data-field="{$name}">
-                   {$this->getHeaderContent()}
-                </div>
-            </th>
-            html;
-        }
-        return <<<html
-        <th class="{$class}">
-            <div class="d-flex align-items-center cell-header" data-field="{$name}"  x-on:click="sortField(\$el)">
-                <div class="table-sort"
-                x-bind:class="{
-                    'asc': typeSort === 'asc'&&fieldSort === '{$name}',
-                    'desc': typeSort === 'desc'&&fieldSort === '{$name}'
-                }">
-                {$this->getHeaderContent()}
-                </div>
-            </div>
-        </th>
-        html;
-    }
-
-    public function getCellView($row, $index = 0)
-    {
-        $classCell = $this->getClassNameCell() ?? '';
-        if ($classCell && is_callable($classCell)) {
-            $classCell = call_user_func($classCell, $row, $this, $index);
-        }
-        if ($classCell) {
-            $classCell = ' class="' . $classCell . '"';
-        }
-        if ($this->link) {
-            $link = $this->link;
-            if (is_callable($link)) {
-                $link = call_user_func($link, $row, $this, $index);
-            }
-            return <<<html
-            <td {$classCell}>
-                <div class="d-flex align-items-center cell-value "
-                data-row-field="{$this->getField()}"
-                data-row-index="{$index}"
-                data-row-id="{$row->id}">
-                 <a href="{$link}" target="_blank">{$this->getValue($row,$index)}</a>
-                </div>
-            </td>
-            html;
-        }
-        return <<<html
-        <td {$classCell}>
-            <div class="d-flex align-items-center cell-value "
-            data-row-field="{$this->getField()}"
-            data-row-index="{$index}"
-            data-row-id="{$row->id}">
-             {$this->getValue($row,$index)}
-            </div>
-        </td>
-        html;
+        $attr = $this->getAttr();
+        return <<<HTML
+        <td {$attr}>{$this->renderChilds('cellUI')}{$this->renderChilds('editUI')}</td>
+        HTML;
     }
 }

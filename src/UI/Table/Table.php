@@ -3,18 +3,15 @@
 namespace Sokeio\UI\Table;
 
 use Sokeio\UI\BaseUI;
+use Sokeio\UI\Common\Div;
 use Sokeio\UI\Field\Input;
+use Sokeio\UI\Table\Concerns\TableRender;
+use Sokeio\UI\Table\Concerns\WithDatasource;
 
 class Table extends BaseUI
 {
-    use TableRender;
-    private $tableKey = '';
-    private $rows = null;
-    private $query = null;
-    private $showAll = false;
-    private $showCheckBox = false;
+    use TableRender, WithDatasource;
     private $columns = [];
-    private $classNameRow = null;
     private $index = 1;
     private $pageSizes = [
         15,
@@ -55,9 +52,7 @@ class Table extends BaseUI
         if ($name) {
             $name = '.' . $name;
         }
-        if ($this->tableKey && $withKey) {
-            return 'table.' . $this->tableKey . $name;
-        }
+
         return 'table' . $name;
     }
     protected function getValueByName($name, $default = null, $withKey = true)
@@ -80,7 +75,7 @@ class Table extends BaseUI
         $this->className('table');
         $this->action('paginate', function ($page) {
             $this->setValueByName('page.index', $page);
-        });
+        }, false);
         $keyFnOrderBy = $this->getKeyWithTable('order-by');
         $this->attrWrapper('data-sokeio-table-order-by', $keyFnOrderBy);
         $this->action($keyFnOrderBy, function ($order) {
@@ -88,151 +83,97 @@ class Table extends BaseUI
             $type = $order['type'] ?? 'asc';
             $this->setValueByName('order.field', $field);
             $this->setValueByName('order.type', $type);
-        });
+        }, false);
     }
 
     public function showAll()
     {
-        $this->showAll = true;
-        return $this;
+        return $this->vars('showAll', true);
     }
-    public function tableKey($key)
+    public function column($nameOrColumn, $callback = null, $label = null, $index = null)
     {
-        $this->tableKey = $key;
-        return $this;
-    }
-    private $arrQuery = [];
-    public function withQuery($key, $value = null, $match = null)
-    {
-        if (!$key) {
-            return $this;
+        if ($index === null) {
+            $this->index++;
+            $columnIndex = $this->index;
+        } else {
+            $columnIndex = $index;
         }
-        if (is_string($key)) {
-            $this->arrQuery[] = function ($query) use ($key, $match, $value) {
-                if ($match) {
-                    $query->where($key, $match, $value);
-                } else {
 
-                    $query->where($key, $value);
-                }
-                return $query;
-            };
-        } elseif (is_callable($key)) {
-            $this->arrQuery[] = $key;
+        if (!($nameOrColumn instanceof Column)) {
+            $nameOrColumn = Column::make($nameOrColumn);
         }
-        return $this;
-    }
-    public function query($query)
-    {
-        $this->query = $query;
-        return $this;
-    }
-    public function applyQuery()
-    {
-        $query = $this->query;
-        $orderBy = $this->getValueByName('order.field');
-        $type = $this->getValueByName('order.type', 'asc');
-        if ($orderBy) {
-            $query = $query->orderBy($orderBy, $type);
+        $nameOrColumn->setTable($this)->tap($callback)->columnIndex($columnIndex);
+        if ($label) {
+            $nameOrColumn->label($label);
         }
-        $fields = $this->getManager()?->getFieldsByGroup(['formSearch', 'formSearchExtra']);
-        foreach ($fields as $field) {
-            $field->applyQuery($query);
-        }
-        foreach ($this->arrQuery as $q) {
-            $q($query);
-        }
-        return $query;
-    }
-    public function getRows()
-    {
-        if ($this->showAll) {
-            $this->rows = $this->applyQuery()?->get();
-        } else {
-            $pageSize = $this->getValueByName('page.size', 15);
-            $pageIndex = $this->getValueByName('page.index', 1);
-            $this->rows = $this->applyQuery()?->paginate($pageSize, ['*'], $this->tableKey ?? 'page', $pageIndex);
-        }
-        return $this->rows ?? [];
-    }
-    private function current()
-    {
-        return $this->columns[$this->index];
-    }
-    public function column($nameOrColumn, $callback = null, $label = null)
-    {
-        $this->index++;
-        if ($nameOrColumn instanceof Column) {
-            $nameOrColumn->setTable($this);
-            $this->columns[$this->index] = $nameOrColumn;
-        } else {
-            $this->columns[$this->index] = Column::make($nameOrColumn)
-                ->setTable($this);
-        }
-        if ($callback) {
-            $callback($this->current());
-        }
-        $label && $this->current()->setLabel($label);
+        $this->columns[$columnIndex] = $nameOrColumn;
+        $this->child($nameOrColumn, 'column_' . $columnIndex);
         return $this;
     }
     public function columnAction($array, $title = 'Actions', $callback = null)
     {
-        return $this->child($array, 'columnAction')->boot(function ($base) use ($title, $callback) {
-            $actionColumn = Column::make('action', $title)
-                ->setTable($base)
-                ->classNameHeader('w-1')
+        return $this->column(
+            Column::make()
+                ->cellUI($array)
+                ->label($title)
                 ->disableSort()
-                ->renderCell(function ($row, $column, $index) use ($base) {
-                    return $base->renderChilds('columnAction', [
-                        'row' => $row,
-                        'column' => $column,
-                        'index' => $index
-                    ]);
-                });
-
-            if ($callback) {
-                $callback($actionColumn);
-            }
-            $this->columns[++$this->index] = $actionColumn;
-        });
+                ->tap($callback),
+            null,
+            null,
+            999999999999999
+        );
     }
     public function enableIndex($callback = null)
     {
-        return $this->render(function () use ($callback) {
-            $this->columns[-1] = Column::make('index', '#')
-                ->setTable($this)
+        return $this->column(
+            Column::make()
+                ->label('#')
                 ->disableSort()
-                ->classNameHeader('w-1')
-                ->renderCell(function ($row, $column, $index) {
-                    return $this->getRows()->firstItem() + $index;
-                });
+                ->tap($callback),
+            null,
+            null,
+            -1
+        );
+        // return $this->column('', function (Column $column) {
+        //     $column->disableSort();
+        //     $column->attrHeader('class', 'w-1');
+        // }, '#', -1);
+        // return $this->render(function () use ($callback) {
+        //     $this->columns[-1] = Column::make('index', '#')
+        //         ->setTable($this)
+        //         ->disableSort()
+        //         ->classNameHeader('w-1')
+        //         ->renderCell(function ($row, $column, $index) {
+        //             return $this->getRows()->firstItem() + $index;
+        //         });
 
-            if ($callback) {
-                $callback($this->columns[-1]);
-            }
-        });
+        //     if ($callback) {
+        //         $callback($this->columns[-1]);
+        //     }
+        // });
     }
     public function enableCheckBox($callback = null, $isAfterIndex = true)
     {
-        return $this->render(function () use ($callback, $isAfterIndex) {
-            $this->showCheckBox = true;
-            $this->columns[$isAfterIndex ? -2 : 0] = Column::make('index', '#')
-                ->setTable($this)
-                ->disableSort()
-                ->classNameHeader('w-1')
-                ->renderHeader(function () {
-                    return '<input type="checkbox" @change="checkboxAll" x-model="statusCheckAll" name="select-all"
-                 class="form-check-input sokeio-checkbox-all">';
-                })
-                ->renderCell(function ($row, $column, $index) {
-                    return '<input type="checkbox" wire:key="sokeio-checkbox-' . $index . '-' . $row->id . '"
-                 name="selected[]" class="form-check-input sokeio-checkbox-one"
-                 wire:model="dataSelecteds" value="' . $row->id . '">';
-                });
-            if ($callback) {
-                $callback($this->columns[$isAfterIndex ? -2 : 0]);
-            }
-        });
+        // return $this->render(function () use ($callback, $isAfterIndex) {
+        //     $this->vars('enableCheckBox', true)->vars('isAfterIndex', $isAfterIndex);
+        //     $this->columns[$isAfterIndex ? -2 : 0] = Column::make('index', '#')
+        //         ->setTable($this)
+        //         ->disableSort()
+        //         ->classNameHeader('w-1')
+        //         ->renderHeader(function () {
+        //             return '<input type="checkbox" @change="checkboxAll" x-model="statusCheckAll" name="select-all"
+        //          class="form-check-input sokeio-checkbox-all">';
+        //         })
+        //         ->renderCell(function ($row, $column, $index) {
+        //             return '<input type="checkbox" wire:key="sokeio-checkbox-' . $index . '-' . $row->id . '"
+        //          name="selected[]" class="form-check-input sokeio-checkbox-one"
+        //          wire:model="dataSelecteds" value="' . $row->id . '">';
+        //         });
+        //     if ($callback) {
+        //         $callback($this->columns[$isAfterIndex ? -2 : 0]);
+        //     }
+        // });
+        return $this;
     }
 
     public function formSearch($fields, $fieldExtra = null): self

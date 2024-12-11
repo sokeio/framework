@@ -113,6 +113,9 @@ trait CoreUI
     }
     public function when($callback, $group = 'default')
     {
+        if (!$callback) {
+            return $this;
+        }
         if (!isset($this->whenCallbacks[$group])) {
             $this->whenCallbacks[$group] = [];
         }

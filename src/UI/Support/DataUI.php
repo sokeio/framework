@@ -44,9 +44,22 @@ class DataUI
     public function get($key, $default = null, $isText = false, $separator = ' ')
     {
         if (isset($this->data[$key]) && $isText) {
-            return trim(implode($separator, $this->data[$key]));
+            return trim(implode($separator, array_map(function ($v) {
+                if (!is_string($v) && is_callable($v)) {
+                    return call_user_func($v, $this->ui);
+                }
+                return $v;
+            }, $this->data[$key])));
         }
-        return $this->data[$key] ?? $default;
+        if (isset($this->data[$key])) {
+            return array_map(function ($v) {
+                if (!is_string($v) && is_callable($v)) {
+                    return call_user_func($v, $this->ui);
+                }
+                return $v;
+            }, $this->data[$key]);
+        }
+        return  $default;
     }
     public function getData()
     {
@@ -57,18 +70,17 @@ class DataUI
         $attr = '';
         foreach ($this->getData() as $key => $value) {
             if ($checkFn && is_callable($checkFn)) {
-                $attr .= call_user_func($checkFn, $key, $value);
+                $attr .= call_user_func($checkFn,  $key, $value);
             } else {
                 if (is_array($value)) {
-                    $value =  array_map(function ($v) {
+                    $value = implode(' ', array_map(function ($v) {
                         if (!is_string($v) && is_callable($v)) {
                             return call_user_func($v, $this->ui);
                         }
                         return $v;
-                    }, $value);
-                    $value = implode(' ', $value);
+                    }, $value));
                 }
-                $attr .= ' ' . $key . '="' . htmlentities($value, ENT_QUOTES, 'UTF-8') . '"';
+                $attr .= ' ' . $key . '="' . htmlentities(trim($value), ENT_QUOTES, 'UTF-8') . '"';
             }
         }
         return $attr;

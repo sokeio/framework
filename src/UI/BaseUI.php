@@ -87,12 +87,16 @@ class BaseUI
         // TODO: Implement initUI() method.
     }
 
-    public function action($key, $callback, $skipRender = false)
+    public function action($key, $callback, $withUIIDKey = true, $skipRender = false)
     {
-        return $this->boot(function ($base) use ($key, $callback, $skipRender) {
-            $base->getManager()?->action($base->getUIIDKey() . $key, $callback, $base, $skipRender);
+        return $this->boot(function ($base) use ($key, $callback, $withUIIDKey, $skipRender) {
+            if ($withUIIDKey) {
+                $key = $base->getUIIDKey() . $key;
+            }
+            $base->getManager()?->action($key, $callback, $base,  $skipRender);
         });
     }
+
     public function setView($callback)
     {
         $this->callbackView = $callback;

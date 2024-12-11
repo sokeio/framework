@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\UI\Table;
+namespace Sokeio\UI\Table\Concerns;
 
 use Sokeio\UI\BaseUI;
 
@@ -10,7 +10,7 @@ trait TableRender
     {
         $html = '';
         foreach ($this->columns as $column) {
-            $html .= $column->getHeaderView();
+            $html .= $column->viewHeader();
         }
         return $html;
     }
@@ -18,18 +18,20 @@ trait TableRender
     {
         $html = '';
         foreach ($this->columns as $column) {
-            $html .= $column->getCellView($row, $index);
+            $html .= $this->renderChilds('column_' . $column->getColumnIndex(), [
+                'row' => $row,
+                'column' => $column,
+                'index' => $index
+            ]);
         }
         return $html;
     }
     private function bodyRender()
     {
         $html = '';
-        foreach ($this->getRows() as $key => $row) {
+        foreach ($this->getDatasource() as $key => $row) {
             $classNameRow = '';
-            if ($this->classNameRow) {
-                $classNameRow = call_user_func($this->classNameRow, $row, $this, $key);
-            }
+           
             if ($classNameRow) {
                 $classNameRow = ' class="' . $classNameRow . '"';
             }
@@ -45,7 +47,7 @@ trait TableRender
     {
         $html = '';
 
-        $data = $this->getRows();
+        $data = $this->getDatasource();
 
         if ($data && method_exists($data, 'links')) {
             $keyModel = $this->getKeyWithTable('page.size');
@@ -188,7 +190,7 @@ trait TableRender
 
         $orderBy = $this->getKeyWithTable('orderBy');
         $templateDataSelected = '';
-        if ($this->showCheckBox) {
+        if ($this->checkVar('enableCheckBox', true)) {
             $templateDataSelected = <<<HTML
             <template x-if="\$wire.dataSelecteds?.length>0">
                 <div class="d-flex align-items-center p-2">

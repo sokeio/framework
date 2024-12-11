@@ -91,8 +91,12 @@ trait WireUI
     }
 
 
-    public function action($name, $callback, $ui = null, $skipRender = false)
-    {
+    public function action(
+        $name,
+        $callback,
+        $ui = null,
+        $skipRender = false
+    ) {
         $this->actions[$name] = [
             'callback' => $callback,
             'ui' => $ui,
