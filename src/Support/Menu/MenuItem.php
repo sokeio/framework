@@ -10,15 +10,14 @@ use Sokeio\Theme;
 class MenuItem implements Arrayable
 {
     use Tap;
-    public static function make($key, $title, $url = null, $icon = null, $target = '')
+    public static function make($key, $title, $url = null, $icon = null, $sort = 0, $target = '')
     {
-        return new static($key, $title, $url, $icon, $target);
+        return new static($key, $title, $url, $icon, $sort, $target);
     }
     protected MenuCollection $menuManager;
     public $classItem;
     private $route;
     public $badge = null;
-    public $sort = 0;
     private $permission = null;
     private $children = null;
     public function __construct(
@@ -26,6 +25,7 @@ class MenuItem implements Arrayable
         public $title,
         public $url = null,
         public $icon = null,
+        public $sort = 0,
         public $target = null,
     ) {
         if ($this->target === null) {
