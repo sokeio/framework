@@ -42,3 +42,10 @@ if (!function_exists('themeOption')) {
         return Theme::option($key, $default);
     }
 }
+
+if (!function_exists('themeLocation')) {
+    function themeLocation($location)
+    {
+        return Theme::renderLocation($location);
+    }
+}
