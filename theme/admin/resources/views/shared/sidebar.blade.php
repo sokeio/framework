@@ -211,7 +211,7 @@
             </div>
         </div>
         <div class="collapse navbar-collapse" id="sidebar-menu">
-            {!! \Sokeio\Support\Menu\MenuManager::renderMenu() !!}
+            {!! platform()->menu()->render()  !!}
         </div>
     </div>
 </aside>

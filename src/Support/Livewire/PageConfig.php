@@ -136,10 +136,10 @@ class PageConfig
                 if (!$target && $level > 2) {
                     $target = str($key)->beforeLast('.');
                 }
-                MenuManager::registerItem(
+                Platform::menu()->register(
                     MenuItem::make($key, str($menuTitle)->title()->replace('-', ' '), null)
                         ->route('admin.' . $nameRoute)
-                        ->setup(function (MenuItem $item) use ($target, $sort, $icon, $menuClass) {
+                        ->tap(function (MenuItem $item) use ($target, $sort, $icon, $menuClass) {
                             if ($menuClass) {
                                 $item->classItem = $menuClass;
                             }
@@ -153,7 +153,7 @@ class PageConfig
                         })->permission('admin.' . $nameRoute)
                 );
                 if ($target) {
-                    MenuManager::targetSetup($target, function (MenuItem $item) use ($config) {
+                    Platform::menu()->target($target, function (MenuItem $item) use ($config) {
                         if ($config->getMenuTargetClass()) {
                             $item->classItem = $config->getMenuTargetClass();
                         }

@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Livewire\Component;
 use ReflectionClass;
 use Sokeio\ILoader;
+use Sokeio\Support\Menu\MenuManager;
 use Sokeio\Support\Platform\Concerns\{
     WithLivewireComponent,
     WithPipelineLoader,
@@ -34,7 +35,11 @@ class PlatformManager
     }
     public function gate()
     {
-        return GateManager::getInstance($this);
+        return GateManager::getInstance();
+    }
+    public function menu()
+    {
+        return MenuManager::getInstance('admin');
     }
     public function routeWeb($group, $isAuth = false)
     {

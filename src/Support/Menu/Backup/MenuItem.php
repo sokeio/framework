@@ -3,20 +3,19 @@
 namespace Sokeio\Support\Menu;
 
 use Illuminate\Contracts\Support\Arrayable;
-use Sokeio\Pattern\Tap;
 use Sokeio\Platform;
 use Sokeio\Theme;
 
 class MenuItem implements Arrayable
 {
-    use Tap;
     public static function make($key, $title, $url = null, $icon = null, $target = '')
     {
         return new static($key, $title, $url, $icon, $target);
     }
-    protected MenuCollection $menuManager;
+    protected MenuManager $menuManager;
     public $classItem;
     private $route;
+    public $position = 'default';
     public $badge = null;
     public $sort = 0;
     private $permission = null;
@@ -54,6 +53,11 @@ class MenuItem implements Arrayable
     public function route(string|callable|array $route)
     {
         $this->route = $route;
+        return $this;
+    }
+    public function setup(callable $callback)
+    {
+        $callback($this);
         return $this;
     }
     public function url(): string
@@ -95,14 +99,16 @@ class MenuItem implements Arrayable
         return '<i class="' . $this->icon . '"></i>';
     }
 
-    public function setManager(MenuCollection $menuManager)
+    public function setManager(MenuManager $menuManager)
     {
         $this->menuManager = $menuManager;
     }
     public function children()
     {
         if ($this->children == null) {
-            $this->children = $this->menuManager->getItemsByTarget($this->key);
+            $this->children = $this->menuManager->getItems()->where(function (MenuItem $item) {
+                return $item->target == $this->key && $item->position == $this->position;
+            })->sortBy('sort');
         }
         return $this->children;
     }
@@ -116,7 +122,14 @@ class MenuItem implements Arrayable
         if (!$this->isCheck()) {
             return '';
         }
-        return Theme::view($this->menuManager->getViewItem($level), [
+        if ($level > 0) {
+            return Theme::view('sokeio::partials.menu.dropdown-item', [
+                'item' => $this,
+                'level' => $level
+            ], [], true)->render();
+        }
+
+        return Theme::view('sokeio::partials.menu.item', [
             'item' => $this,
             'level' => $level
         ], [], true)->render();
@@ -131,6 +144,7 @@ class MenuItem implements Arrayable
             'route' => $this->route,
             'icon' => $this->icon,
             'target' => $this->target,
+            'position' => $this->position,
             'badge' => $this->badge,
             'sort' => $this->sort,
         ];

@@ -18,6 +18,7 @@ use Sokeio\Support\Platform\PlatformManager;
  * @method static void booted($callback)
  * @method static \Sokeio\Support\Platform\ItemManager module()
  * @method static \Sokeio\Support\Platform\ItemManager theme()
+ * @method static \Sokeio\Support\Menu\MenuManager menu()
  * @method static string adminUrl()
  * @method static bool isUrlAdmin()
  * @method static bool isVendor($path)

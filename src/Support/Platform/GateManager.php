@@ -5,19 +5,13 @@ namespace Sokeio\Support\Platform;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Sokeio\Models\Permission;
+use Sokeio\Pattern\Singleton;
 
 class GateManager
 {
-    private static $instance;
-    public static function getInstance(PlatformManager $manager = null)
-    {
-        if (!self::$instance && $manager) {
-            self::$instance = new self($manager);
-        }
-        return self::$instance;
-    }
+    use Singleton;
     private $user;
-    private function __construct(protected PlatformManager $manager) {}
+
     private $ignores = ['admin.dashboard', 'admin.dashboard.setting'];
     private $customes = [];
     private $roles = [];
