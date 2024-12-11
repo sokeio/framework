@@ -7,7 +7,18 @@ return [
         'src' => ['path' => 'src', 'namespace' => '', 'generate' => false],
         'module-theme' => ['path' => 'theme', 'generate' => true, 'only' => ['module']],
         'config' => ['path' => 'config', 'generate' => true, 'only' => ['module']],
-        'command' => ['path' => 'src/Console', 'namespace' => 'Console', 'generate' => true, 'only' => ['module']],
+        'command' => [
+            'path' => 'src/Console/Commands',
+            'namespace' => 'Console/Commands',
+            'generate' => true,
+            'only' => ['module']
+        ],
+        'observer' => [
+            'path' => 'src/Observer',
+            'namespace' => 'Observer',
+            'generate' => true,
+            'only' => ['module']
+        ],
         'migration' => [
             'path' => 'database/migrations',
             'namespace' => 'Database\\Migrations',
@@ -40,17 +51,23 @@ return [
             'namespace' => 'Http\\Middleware',
             'generate' => true
         ],
+        'request' => [
+            'path' => 'src/Http/Requests',
+            'namespace' => 'Http\\Requests',
+            'generate' => true
+        ],
+        'services' => [
+            'path' => 'src/Http/Services',
+            'namespace' => 'Http\\Services',
+            'generate' => true
+        ],
         'action' => [
             'path' => 'src/Actions',
             'namespace' => 'Actions',
             'generate' => true,
             'only' => ['module']
         ],
-        'request' => [
-            'path' => 'src/Http/Requests',
-            'namespace' => 'Http\\Requests',
-            'generate' => true
-        ],
+
         'page' => ['path' => 'src/Page', 'namespace' => 'Page', 'generate' => true],
         'livewire' => ['path' => 'src/Livewire', 'namespace' => 'Livewire', 'generate' => true],
         'provider' => ['path' => 'src/Providers', 'namespace' => 'Providers', 'generate' => true],
@@ -121,6 +138,7 @@ return [
             "admin",
             "function",
             "command",
+            "observer",
             "component-class",
             "component-view",
             "controller-api",
@@ -140,6 +158,7 @@ return [
             "provider",
             "route-provider",
             "request",
+            "services",
             "resource",
             "resource-collection",
             "rule",

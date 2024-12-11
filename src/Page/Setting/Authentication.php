@@ -23,7 +23,7 @@ use Sokeio\UI\WithSettingUI;
     menu: true,
     menuTitle: 'Authentication',
     icon: 'ti ti-user',
-    sort: 100,
+    sort: -20,
 )]
 class Authentication extends \Sokeio\Page
 {

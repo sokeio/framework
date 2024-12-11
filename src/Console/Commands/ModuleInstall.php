@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Console;
+namespace Sokeio\Console\Commands;
 
 use Illuminate\Console\Command;
 use Sokeio\Platform;

@@ -25,7 +25,7 @@ use Sokeio\UI\WithSettingUI;
     menuIcon: 'ti ti-table-options',
     menuTargetSort: 99999,
     icon: 'ti ti-table-options',
-    sort: 0,
+    sort: -100,
 )]
 class Overview extends \Sokeio\Page
 {

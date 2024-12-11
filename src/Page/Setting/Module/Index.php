@@ -18,7 +18,7 @@ use Sokeio\UI\WithUI;
     menu: true,
     menuTitle: 'Module',
     icon: 'ti ti-apps ',
-    sort: 15
+    sort: -50
 )]
 class Index extends \Sokeio\Page
 {

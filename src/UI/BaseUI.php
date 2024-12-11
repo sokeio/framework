@@ -2,7 +2,6 @@
 
 namespace Sokeio\UI;
 
-use Illuminate\Support\Facades\Log;
 use Sokeio\UI\Concerns\CommonUI;
 use Sokeio\UI\Concerns\LifecycleUI;
 
@@ -72,9 +71,6 @@ class BaseUI
         });
         $this->boot(function ($base) {
             $base->applyRegisterData();
-        });
-        $this->beforeRender(function ($base) {
-            $base->attr('sokeio-prefix', $base->getNameWithPrefix('test'));
         });
     }
 

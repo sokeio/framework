@@ -1,8 +1,8 @@
 <?php
 
-use Sokeio\Console\DebugCommand;
-use Sokeio\Console\ModuleInstall;
-use Sokeio\Console\ThemeInstall;
+use Sokeio\Console\Commands\DebugCommand;
+use Sokeio\Console\Commands\ModuleInstall;
+use Sokeio\Console\Commands\ThemeInstall;
 
 return [
     'version' => '1.0.0',
