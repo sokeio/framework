@@ -12,6 +12,7 @@ class Table extends BaseUI
 {
     use TableRender, WithDatasource;
     private $columns = [];
+    private $columnKey = 'id';
     private $index = 1;
     private $pageSizes = [
         15,
@@ -23,6 +24,7 @@ class Table extends BaseUI
         1000,
         2000
     ];
+    
     public function classNameRow($callback)
     {
         if ($callback) {
@@ -30,7 +32,11 @@ class Table extends BaseUI
         }
         return $this;
     }
-
+    public function columnKey($key)
+    {
+        $this->columnKey = $key ?? 'id';
+        return $this;
+    }
     public function attrWrapper($name, $value)
     {
         return $this->attr($name, $value, 'wrapper');
@@ -47,7 +53,7 @@ class Table extends BaseUI
         $this->pageSizes = $sizes;
         return $this;
     }
-    private function getKeyWithTable($name = '', $withKey = true)
+    private function getKeyWithTable($name = '')
     {
         if ($name) {
             $name = '.' . $name;
@@ -72,7 +78,7 @@ class Table extends BaseUI
     }
     protected function initUI()
     {
-        $this->className('table');
+        $this->className('table sokeio-table');
         $this->action('paginate', function ($page) {
             $this->setValueByName('page.index', $page);
         }, false);
@@ -145,28 +151,8 @@ class Table extends BaseUI
     }
     public function enableCheckBox($callback = null, $isAfterIndex = true)
     {
-        // return $this->render(function () use ($callback, $isAfterIndex) {
-        //     $this->vars('enableCheckBox', true)->vars('isAfterIndex', $isAfterIndex);
-        //     $this->columns[$isAfterIndex ? -2 : 0] = Column::make('index', '#')
-        //         ->setTable($this)
-        //         ->disableSort()
-        //         ->classNameHeader('w-1')
-        //         ->renderHeader(function () {
-        //             return '<input type="checkbox" @change="checkboxAll" x-model="statusCheckAll" name="select-all"
-        //          class="form-check-input sokeio-checkbox-all">';
-        //         })
-        //         ->renderCell(function ($row, $column, $index) {
-        //             return '<input type="checkbox" wire:key="sokeio-checkbox-' . $index . '-' . $row->id . '"
-        //          name="selected[]" class="form-check-input sokeio-checkbox-one"
-        //          wire:model="dataSelecteds" value="' . $row->id . '">';
-        //         });
-        //     if ($callback) {
-        //         $callback($this->columns[$isAfterIndex ? -2 : 0]);
-        //     }
-        // });
         return $this->column(
             Column::make()
-                ->label('#')
                 ->headerUI(
                     Checkbox::make()
                         ->className('sokeio-checkbox-all')

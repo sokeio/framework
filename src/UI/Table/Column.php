@@ -4,9 +4,14 @@ namespace Sokeio\UI\Table;
 
 use Sokeio\UI\BaseUI;
 use Sokeio\UI\Common\Div;
+use Sokeio\UI\Common\Tag;
 
 class Column extends BaseUI
 {
+    public function enableLink(): static
+    {
+        return $this->vars('enableLink', true);
+    }
     public function columnIndex($index): static
     {
         return $this->vars('columnIndex', $index);
@@ -76,8 +81,16 @@ class Column extends BaseUI
         parent::initUI();
         $this->register(function (self $base) {
             if (!$base->hasChilds('cellUI')) {
-                $base->cellUI(Div::make(function () use ($base) {
+                $base->cellUI(Tag::make(function () use ($base) {
                     return $base->getValueCell();
+                })->render(function ($ui) use ($base) {
+                    if ($base->checkVar('enableLink')) {
+                        $ui->a(function ($ui) {
+                            return $ui->getParams('row')->url;
+                        });
+                    } else {
+                        $ui->span();
+                    }
                 }));
             }
             if (!$base->hasChilds('headerUI')) {
@@ -95,14 +108,23 @@ class Column extends BaseUI
     {
         $attr = $this->getAttr('header');
         return <<<HTML
-        <th {$attr}> {$this->renderChilds('headerUI')}</th>
+        <th {$attr}>
+            <div class="sokeio-table-header">
+                {$this->renderChilds('headerUI')}
+            </div>
+        </th>
         HTML;
     }
     public function view()
     {
         $attr = $this->getAttr();
         return <<<HTML
-        <td {$attr}>{$this->renderChilds('cellUI')}{$this->renderChilds('editUI')}</td>
+        <td {$attr}>
+            <div class="sokeio-table-cell">
+                {$this->renderChilds('cellUI')}
+                {$this->renderChilds('editUI')}
+            </div>
+        </td>
         HTML;
     }
 }

@@ -17,7 +17,9 @@ trait TableRender
     private function cellRender($row, $index = 0)
     {
         $html = '';
+        $prefix = $this->getPrefix();
         foreach ($this->columns as $column) {
+            $this->prefix($prefix . '.' . data_get($row, $this->columnKey));
             $html .= $this->renderChilds('column_' . $column->getColumnIndex(), [
                 'row' => $row,
                 'column' => $column,
@@ -25,6 +27,7 @@ trait TableRender
                 'datasource' => $this->getDatasource(),
             ]);
         }
+        $this->prefix($prefix);
         return $html;
     }
     private function bodyRender()
