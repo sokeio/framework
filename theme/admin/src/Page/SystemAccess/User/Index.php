@@ -7,6 +7,7 @@ use Sokeio\Models\Role;
 use Sokeio\Models\User;
 use Sokeio\Attribute\PageInfo;
 use Sokeio\UI\Common\Button;
+use Sokeio\UI\Common\Div;
 use Sokeio\UI\Field\Input;
 use Sokeio\UI\Field\Select;
 use Sokeio\UI\PageUI;
@@ -39,11 +40,16 @@ class Index extends \Sokeio\Page
                         ->column('name')
                         ->column('email')
                         ->column('phone_number')
-                        ->column(Column::make('roles', 'roles')->classNameHeader('w-1')
-                            ->renderCell(function ($row, $column, $index) {
-                                return $row->roles->pluck('name')->reduce(function ($carry, $item) {
-                                    return "<span class=\"badge badge-info me-1\">" . $item . "</span>" . ' ' . $carry;
-                                }, '');
+                        ->column(Column::make('roles', 'roles')
+                            ->classNameHeader('w-1')
+                            ->editUI(Select::make('role_id')->remoteActionWithModel(Role::class))
+                            ->cellUI(function (Div $column) {
+                                return $column->getParams('row')
+                                    ->roles()
+                                    ->pluck('name')
+                                    ->reduce(function ($carry, $item) {
+                                        return "<span class=\"badge badge-info me-1\">" . $item . "</span>" . ' ' . $carry;
+                                    }, '');
                             }))
                         ->query($this->getQuery()->with('roles'))
                         ->enableIndex()

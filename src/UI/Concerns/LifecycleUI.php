@@ -8,17 +8,12 @@ use Sokeio\UI\Support\HookUI;
 trait LifecycleUI
 {
     use CoreUI;
-    private $childs = [];
     protected HookUI $hook;
     private $hookStatus = [];
     public function resetHookStatus()
     {
         $this->hookStatus = [];
         return $this;
-    }
-    public function getChilds()
-    {
-        return $this->childs;
     }
     // 1. register UI
     public function register($callback = null)

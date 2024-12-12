@@ -21,7 +21,8 @@ trait TableRender
             $html .= $this->renderChilds('column_' . $column->getColumnIndex(), [
                 'row' => $row,
                 'column' => $column,
-                'index' => $index
+                'index' => $index,
+                'datasource' => $this->getDatasource(),
             ]);
         }
         return $html;
@@ -31,7 +32,7 @@ trait TableRender
         $html = '';
         foreach ($this->getDatasource() as $key => $row) {
             $classNameRow = '';
-           
+
             if ($classNameRow) {
                 $classNameRow = ' class="' . $classNameRow . '"';
             }

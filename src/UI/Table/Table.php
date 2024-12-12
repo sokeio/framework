@@ -3,7 +3,7 @@
 namespace Sokeio\UI\Table;
 
 use Sokeio\UI\BaseUI;
-use Sokeio\UI\Common\Div;
+use Sokeio\UI\Field\Checkbox;
 use Sokeio\UI\Field\Input;
 use Sokeio\UI\Table\Concerns\TableRender;
 use Sokeio\UI\Table\Concerns\WithDatasource;
@@ -128,29 +128,20 @@ class Table extends BaseUI
         return $this->column(
             Column::make()
                 ->label('#')
+                ->cellUI(function ($ui) {
+                    $datasource = $ui->getParams('datasource');
+                    $index = $ui->getParams('index');
+                    if (method_exists($datasource, 'firstItem')) {
+                        return  $datasource->firstItem() + $index + 1;
+                    }
+                    return $index + 1;
+                })
                 ->disableSort()
                 ->tap($callback),
             null,
             null,
             -1
         );
-        // return $this->column('', function (Column $column) {
-        //     $column->disableSort();
-        //     $column->attrHeader('class', 'w-1');
-        // }, '#', -1);
-        // return $this->render(function () use ($callback) {
-        //     $this->columns[-1] = Column::make('index', '#')
-        //         ->setTable($this)
-        //         ->disableSort()
-        //         ->classNameHeader('w-1')
-        //         ->renderCell(function ($row, $column, $index) {
-        //             return $this->getRows()->firstItem() + $index;
-        //         });
-
-        //     if ($callback) {
-        //         $callback($this->columns[-1]);
-        //     }
-        // });
     }
     public function enableCheckBox($callback = null, $isAfterIndex = true)
     {
@@ -173,7 +164,32 @@ class Table extends BaseUI
         //         $callback($this->columns[$isAfterIndex ? -2 : 0]);
         //     }
         // });
-        return $this;
+        return $this->column(
+            Column::make()
+                ->label('#')
+                ->headerUI(
+                    Checkbox::make()
+                        ->className('sokeio-checkbox-all')
+                        ->attr('@change', 'checkboxAll')
+                        ->attr('x-model', 'statusCheckAll')
+                )
+                ->cellUI(Checkbox::make('dataSelecteds[]')
+                    ->className('sokeio-checkbox-one')
+                    ->attr('wire:key', function (Checkbox $checkbox) {
+                        $row = $checkbox->getParams('row');
+                        $index = $checkbox->getParams('index');
+                        return "sokeio-checkbox-" . $index . "-" . $row->id;
+                    })
+                    ->attr('value', function (Checkbox $checkbox) {
+                        $row = $checkbox->getParams('row');
+                        return $row->id;
+                    }))
+                ->disableSort()
+                ->tap($callback),
+            null,
+            null,
+            $isAfterIndex ? -2 : 0
+        );
     }
 
     public function formSearch($fields, $fieldExtra = null): self

@@ -10,8 +10,10 @@ use Sokeio\UI\SoUI;
 trait CoreChildUI
 {
     private $childs = [];
-
-
+    public function getChilds()
+    {
+        return $this->childs;
+    }
     public function registerIDChild()
     {
         foreach ($this->childs as $group => $uis) {
@@ -86,7 +88,7 @@ trait CoreChildUI
             $html = $this->getHtmlItems($ui, $params, $callback);
         }
         if (is_callable($ui)) {
-            $html = call_user_func($ui);
+            $html = call_user_func($ui, $this);
         }
         if ($ui instanceof BaseUI) {
             $rs = null;
