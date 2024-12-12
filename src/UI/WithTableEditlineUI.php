@@ -2,12 +2,11 @@
 
 namespace Sokeio\UI;
 
-use Sokeio\FormData;
 
 trait WithTableEditlineUI
 {
     use WithUI;
-    public FormData $tableEditline;
+    public $tableEditline = [];
 
     protected function afterSaveData($data)
     {

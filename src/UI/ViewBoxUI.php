@@ -6,7 +6,6 @@ use Sokeio\UI\BaseUI;
 
 class ViewBoxUI extends BaseUI
 {
-    private $index = 1;
     private $query;
     private $pageSizes = [
         15,
@@ -18,13 +17,7 @@ class ViewBoxUI extends BaseUI
         1000,
         2000
     ];
-    public function classNameRow($callback)
-    {
-        if ($callback) {
-            $this->classNameRow = $callback;
-        }
-        return $this;
-    }
+
 
     public function attrWrapper($name, $value)
     {
@@ -42,12 +35,11 @@ class ViewBoxUI extends BaseUI
         $this->pageSizes = $sizes;
         return $this;
     }
-  
-    
+
+
     protected function initUI()
     {
         $this->className('table');
-      
     }
     public function query($query)
     {
@@ -75,7 +67,7 @@ class ViewBoxUI extends BaseUI
         }
         return $this->rows ?? [];
     }
-   
+
     private function pagitateRender()
     {
         $html = '';

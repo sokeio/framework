@@ -34,13 +34,9 @@ trait TableRender
     {
         $html = '';
         foreach ($this->getDatasource() as $key => $row) {
-            $classNameRow = '';
 
-            if ($classNameRow) {
-                $classNameRow = ' class="' . $classNameRow . '"';
-            }
             $html .= <<<html
-            <tr {$classNameRow} wire:key="sokeio-row-{$row->id}" row-index="{$row->id}">
+            <tr  wire:key="sokeio-row-{$row->id}" row-index="{$row->id}">
                 {$this->cellRender($row,$key)}
             </tr>
             html;

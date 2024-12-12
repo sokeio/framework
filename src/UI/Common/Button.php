@@ -34,7 +34,7 @@ class Button extends BaseUI
         }
         return $this->action($actionName, function (...$params) use ($callback) {
             call_user_func_array($callback, $params);
-        }, $skipRender)
+        }, true,$skipRender)
             ->render(function ($base) use ($actionName, $params) {
                 $paraText = '';
                 if (is_callable($params)) {

@@ -21,11 +21,14 @@ class FieldUI extends BaseUI
         $this->boot(function ($base) {
             $base->getManager()?->registerField($base);
         });
-        $this->render(function ($base) {
+        $this->render(function (self $base) {
             if (!$base->containsAttr('class', 'sokeio-field-input', 'wrapper')) {
                 $base->classNameWrapper('sokeio-field-input');
             }
-            $debounce = $this->getVar('wire:debounce', null, true);
+            if($base->getUIIDkey()=='d81e6bc63401aa14fc490718c632abfe'){
+                // dd($base->getPrefix());
+            }
+            $debounce = $base->getVar('wire:debounce', null, true);
             if ($debounce && $debounce > 0) {
                 $base->attr('wire:model.live.debounce.' . $debounce . 'ms', $base->getFieldName());
             } else {

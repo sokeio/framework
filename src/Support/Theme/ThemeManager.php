@@ -6,37 +6,19 @@ use Illuminate\Support\Facades\View;
 use Sokeio\Platform;
 use Sokeio\Support\Theme\Concerns\ThemeData;
 use Sokeio\Support\Theme\Concerns\ThemeHook;
+use Sokeio\Support\Theme\Concerns\ThemeLocation;
 use Sokeio\Support\Theme\Concerns\ThemeMeta;
 use Sokeio\Tailwindcss;
 
 class ThemeManager
 {
     use ThemeHook, ThemeData, ThemeMeta;
+    use ThemeLocation;
     private $useCdn = false;
     private $layout;
     private $themeSite = null;
     private $themeAdmin = null;
-    private $location = [];
-    public function renderLocation($location)
-    {
-        if (isset($this->location[$location])) {
-            foreach ($this->location[$location] as $callback) {
-                if (is_callable($callback)) {
-                    $callback();
-                }
-            }
-        }
-        if (setting('SOKEIO_THEME_LOCATION_SHOW_DEBUG')) {
-            echo "<div>$location</div>";
-        }
-    }
-    public function location($location, $callback)
-    {
-        if (!isset($this->location[$location])) {
-            $this->location = [];
-        }
-        $this->location[$location][] = $callback;
-    }
+
     protected function getThemeSiteKey()
     {
         return "SOKEIO_THEME_SITE_OPTION_" . md5($this->getThemeSite()->id);
@@ -61,7 +43,7 @@ class ThemeManager
     {
         return $this->getThemeSite()->locations ?? [];
     }
-    public function getLocationOptions($target=null)
+    public function getLocationOptions($target = null)
     {
         return collect($this->getLocations())->filter(function ($item) use ($target) {
             return !$target || in_array($target, data_get($item, 'target', []));
@@ -212,26 +194,24 @@ class ThemeManager
         }
 
         [$namespace, $viewName] = $viewParts;
-
+        $tempView = $view;
         if (!str_starts_with($namespace, 'theme\\')) {
             $themeNamespace = $this->namespaceTheme();
             if ($noScope) {
                 if (View::exists("{$themeNamespace}::{$viewName}")) {
-                    return view("{$themeNamespace}::{$viewName}", $data, $mergeData);
+                    $tempView = "{$themeNamespace}::{$viewName}";
                 }
-                return view($view, $data, $mergeData);
-            }
-            $scopeView = "{$themeNamespace}::scope.{$namespace}.{$viewName}";
-            $viewWithoutScope = "{$themeNamespace}::scope.{$viewName}";
-
-
-            if (View::exists($scopeView)) {
-                return view($scopeView, $data, $mergeData);
-            } elseif (View::exists($viewWithoutScope)) {
-                return view($viewWithoutScope, $data, $mergeData);
+            } else {
+                $scopeView = "{$themeNamespace}::scope.{$namespace}.{$viewName}";
+                $viewWithoutScope = "{$themeNamespace}::scope.{$viewName}";
+                if (View::exists($scopeView)) {
+                    $tempView = $scopeView;
+                } elseif (View::exists($viewWithoutScope)) {
+                    $tempView = $viewWithoutScope;
+                }
             }
         }
-        return view($view, $data, $mergeData);
+        return view($tempView, $data, $mergeData);
     }
     public function include($view, array $data = [], array $mergeData = [])
     {

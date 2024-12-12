@@ -15,6 +15,7 @@ trait CoreUI
     use Tap, CoreChildUI;
     private $uiId = null;
     private $uiIdKey = null;
+    private $debugKey = null;
     private $uiGroup = null;
     private SoUI|null $manager = null;
     private BaseUI|SoUI|null  $parent = null;
@@ -23,9 +24,19 @@ trait CoreUI
     {
         $this->uiId = null;
         $this->uiIdKey = null;
+        $this->debugKey = null;
         $this->uiGroup = null;
         $this->manager = null;
         $this->parent = null;
+    }
+    public function debugKey($debugKey)
+    {
+        $this->debugKey = $debugKey;
+        return $this;
+    }
+    public function getDebugKey()
+    {
+        return $this->debugKey;
     }
     public function getWire()
     {

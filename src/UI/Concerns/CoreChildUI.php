@@ -95,14 +95,14 @@ trait CoreChildUI
             if ($callback) {
                 $rs = call_user_func($callback, $ui);
             }
-            $ui->beforeRender();
             $ui->setParams($params);
+            $ui->beforeRender();
             $ui->render();
             if ($ui->checkWhen()) {
                 $html = $ui->view();
             }
-            $ui->clearParams();
             $ui->afterRender();
+            $ui->clearParams();
             if ($rs && is_callable($rs)) {
                 call_user_func($rs, $ui);
             }

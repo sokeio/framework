@@ -24,14 +24,8 @@ class Table extends BaseUI
         1000,
         2000
     ];
-    
-    public function classNameRow($callback)
-    {
-        if ($callback) {
-            $this->classNameRow = $callback;
-        }
-        return $this;
-    }
+
+
     public function columnKey($key)
     {
         $this->columnKey = $key ?? 'id';
@@ -149,7 +143,7 @@ class Table extends BaseUI
             -1
         );
     }
-    public function enableCheckBox($callback = null, $isAfterIndex = true)
+    public function enableCheckBox($callback = null, $isAfterIndex = true, $withoutPrefix = true)
     {
         return $this->column(
             Column::make()
@@ -159,8 +153,16 @@ class Table extends BaseUI
                         ->attr('@change', 'checkboxAll')
                         ->attr('x-model', 'statusCheckAll')
                 )
-                ->cellUI(Checkbox::make('dataSelecteds[]')
+                ->cellUI(Checkbox::make('dataSelecteds')
                     ->className('sokeio-checkbox-one')
+                    ->tap(function (Checkbox $checkbox) use ($withoutPrefix) {
+                        if ($withoutPrefix) {
+                            $checkbox->beforeRender(function (Checkbox $checkbox) {
+                                $checkbox->prefix('');
+                            });
+                        }
+                    })
+                    ->valueDefault([])
                     ->attr('wire:key', function (Checkbox $checkbox) {
                         $row = $checkbox->getParams('row');
                         $index = $checkbox->getParams('index');

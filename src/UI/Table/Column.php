@@ -54,7 +54,17 @@ class Column extends BaseUI
     }
     public function editUI($ui, $when = null): static
     {
-        return $this->child(Div::make($ui)->when($when)->className('edit-column'), 'editUI');
+        return $this->child(Div::make($ui)->when($when)->className('edit-column')
+            ->beforeRender(function (Div $div) {
+                if($div->getUIIDkey()=='d633d791ff73bef6a5dca0ff5d38c09f'){
+                    dd($div->getPrefix());
+                }
+                $prefix = $div->getParent()->getPrefix();
+                $row = $div->getParams('row');
+                $div->prefix($prefix . '.row_' . $row?->id . '.');
+            })->afterRender(function (Div $div) {
+                $div->prefix($div->getParent()->getPrefix());
+            }), 'editUI');
     }
     public function cellUI($ui, $when = null): static
     {
