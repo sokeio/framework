@@ -28,11 +28,12 @@ class SwitchField extends FieldUI
             if (!$this->containsAttr('value')) {
                 $this->attr('value', '1');
             }
-            if ($this->getValue() || ($this->getValue() === null && $this->getValueDefault())) {
+            $valueDefault = $this->getValueDefaultOrParam();
+            if ($this->getValue() || ($this->getValue() === null && $valueDefault)) {
                 $this->attr('checked', 'checked');
             }
             if ($this->getValue() === null) {
-                $this->setValue($this->getValueDefault() || 0);
+                $this->setValue($valueDefault || 0);
             }
         });
     }

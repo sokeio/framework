@@ -92,6 +92,9 @@ class Table extends BaseUI
             $this->setValueByName('order.field', $order['field'] ?? '');
             $this->setValueByName('order.type',  $order['type'] ?? 'asc');
         }, false);
+        $this->boot(function(Table $table){
+            $table->group('tableRowEditline');
+        });
     }
 
     public function showAll()
@@ -118,13 +121,14 @@ class Table extends BaseUI
         $this->child($nameOrColumn, 'column_' . $columnIndex);
         return $this;
     }
-    public function columnAction($array, $title = 'Actions', $callback = null)
+    public function columnAction($array, $title = 'Actions', $callback = null, $with = 150)
     {
         return $this->column(
             Column::make()
                 ->cellUI($array)
                 ->label($title)
                 ->disableSort()
+                ->width($with)
                 ->tap($callback),
             null,
             null,

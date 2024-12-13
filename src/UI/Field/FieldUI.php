@@ -94,18 +94,22 @@ class FieldUI extends BaseUI
     {
         return $this->getVar('label', null, true);
     }
+    protected function getValueDefaultOrParam()
+    {
+        $valueDefault = $this->getValueDefault();
+        if ($valueDefault === null) {
+            $valueDefault = $this->getParams('column_' . $this->getFieldNameWithoutPrefix() . '_value');
+        }
+        return $valueDefault;
+    }
     public function view()
     {
         $attrWrapper = $this->getAttr('wrapper') ?? 'class="mb-3"';
         $attrModel = $this->getFieldName();
-        $valueDefault = $this->getValueDefault();
+        $valueDefault = $this->getValueDefaultOrParam();
         // this value is from table
-        $valueParam = $this->getParams('column_' . $this->getFieldNameWithoutPrefix() . '_value');
         $value = $this->getValue();
-        if (($valueDefault !== null || $valueParam !== null) && $value === null) {
-            if ($valueDefault === null) {
-                $valueDefault = $valueParam;
-            }
+        if ($valueDefault !== null && $value === null) {
             $this->setValue($valueDefault);
         }
         $fieldView = $this->fieldView();
@@ -117,7 +121,7 @@ class FieldUI extends BaseUI
             HTML;
         }
         $view = <<<HTML
-        <div {$attrWrapper} x-data="sokeioField('{$attrModel}')">
+        <div {$attrWrapper} x-data="sokeioField('{$attrModel}')" data-sokeio-default="{$valueDefault}">
         {$fieldView}
         {$this->errorView()}
         </div>

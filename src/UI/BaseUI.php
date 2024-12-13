@@ -21,8 +21,6 @@ class BaseUI
         }
         return $icon;
     }
-    private $callbackView = null;
-
     public function style($property, $value, $group = 'default')
     {
         return $this->attr('style', $property . ':' . $value . ';', $group);
@@ -96,21 +94,9 @@ class BaseUI
             $base->getManager()?->action($key, $callback, $base,  $skipRender);
         });
     }
-
-    public function setView($callback)
-    {
-        $this->callbackView = $callback;
-        return $this;
-    }
     public function view()
     {
-        if ($this->callbackView) {
-            return call_user_func($this->callbackView, $this);
-        }
-        $attr = $this->getAttr();
-        return <<<HTML
-        <div {$attr}></div>
-        HTML;
+        return $this->renderChilds();
     }
     public function toArray()
     {

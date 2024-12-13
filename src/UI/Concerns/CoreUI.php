@@ -107,6 +107,7 @@ trait CoreUI
     public function group($value)
     {
         $this->uiGroup = $value;
+        $this->setupChild(fn($c) => $c->group($value));
         return $this;
     }
     public function getGroup($default = null)

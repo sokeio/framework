@@ -11,13 +11,18 @@ trait WithTableEditlineUI
     public function rowEditline($id)
     {
         $this->tableRowEditline[$id] = $id;
-        $this->dataSelecteds[$id] = [$id];
+        $this->dataSelecteds[] = [$id];
     }
     public function cancelRowEditline($id)
     {
         unset($this->tableRowEditline[$id]);
+        unset($this->dataSelecteds[$id]);
     }
-
+    public function saveRowEditline($id)
+    {
+        //TODO: implement  
+        $this->getUI()->validate('tableEditline','tableRowEditline');
+    }
     protected function afterSaveData($data)
     {
         return $data;

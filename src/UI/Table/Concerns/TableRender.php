@@ -23,6 +23,7 @@ trait TableRender
                 'row' => $row,
                 'column' => $column,
                 'column_' . $column->getFieldName() . '_value' => $column->getValueCell(),
+                'rowValueId' => $column->getColumnValueKey(),
                 'index' => $index,
                 'datasource' => $this->getDatasource(),
                 ...$column->getColumnParams(),
@@ -207,7 +208,6 @@ trait TableRender
         return <<<HTML
         <div {$attrWrapper}  x-data="sokeioTable">
         {$this->formSearchRender()}
-        {$templateDataSelected}
         <div class="table-responsive position-relative"
          x-init="tableInit"
           data-sokeio-table-order-by="{$orderBy}">
@@ -223,6 +223,7 @@ trait TableRender
                 </tbody>
             </table>
         </div>
+        {$templateDataSelected}
         {$this->pagitateRender()}
         </div>
         HTML;
