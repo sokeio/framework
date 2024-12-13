@@ -75,7 +75,7 @@ trait WithUI
     {
         return view('sokeio::ui', ['ui' => $this->getUI()]);
     }
-    public function callActionUI($name, $params = [])
+    public function callActionUI($name, ...$params)
     {
         return $this->getUI()->callActionUI($name, $params, $this->uiRefresh);
     }

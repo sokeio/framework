@@ -41,23 +41,22 @@ class DataUI
         $this->data[$key] = array_merge($this->data[$key], $value);
         return $this->ui;
     }
+    protected function getMapFn($data)
+    {
+        return array_unique(array_map(function ($v) {
+            if (!is_string($v) && is_callable($v)) {
+                return call_user_func($v, $this->ui);
+            }
+            return $v;
+        }, $data));
+    }
     public function get($key, $default = null, $isText = false, $separator = ' ')
     {
         if (isset($this->data[$key]) && $isText) {
-            return trim(implode($separator, array_map(function ($v) {
-                if (!is_string($v) && is_callable($v)) {
-                    return call_user_func($v, $this->ui);
-                }
-                return $v;
-            }, $this->data[$key])));
+            return trim(implode($separator, $this->getMapFn($this->data[$key])));
         }
         if (isset($this->data[$key])) {
-            return array_map(function ($v) {
-                if (!is_string($v) && is_callable($v)) {
-                    return call_user_func($v, $this->ui);
-                }
-                return $v;
-            }, $this->data[$key]);
+            return $this->getMapFn($this->data[$key]);
         }
         return  $default;
     }
@@ -73,12 +72,7 @@ class DataUI
                 $attr .= call_user_func($checkFn,  $key, $value);
             } else {
                 if (is_array($value)) {
-                    $value = implode(' ', array_map(function ($v) {
-                        if (!is_string($v) && is_callable($v)) {
-                            return call_user_func($v, $this->ui);
-                        }
-                        return $v;
-                    }, $value));
+                    $value = implode(' ', $this->getMapFn($value));
                 }
                 $attr .= ' ' . $key . '="' . htmlentities(trim($value), ENT_QUOTES, 'UTF-8') . '"';
             }

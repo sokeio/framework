@@ -77,7 +77,31 @@ class Column extends BaseUI
     }
     public function headerUI($ui, $when = null): static
     {
-        return $this->child(Div::make($ui)->when($when), 'headerUI');
+        return $this->child(Div::make($ui)
+            ->when($when)
+            ->className('sokeio-table-header-title')
+            ->beforeRender(function (Div $div) {
+                if (!$this->checkVar('disableSort', true)) {
+                    $div->className('table-sort')
+                        ->attr('x-bind:class', "{
+                            'asc': typeSort === 'asc'&&fieldSort === '{$this->getFieldName()}',
+                            'desc': typeSort === 'desc'&&fieldSort === '{$this->getFieldName()}'
+                        }")
+                        ->attr(
+                            'x-on:click',
+                            "sortField(\$el)"
+                        )->attr('data-field', $this->getFieldName());
+                }
+            }), 'headerUI');
+    }
+    public function headerExtraUI($ui, $when = null): static
+    {
+        return $this->child(
+            Div::make($ui)
+                ->when($when)
+                ->className('sokeio-table-header-extra'),
+            'headerExtraUI'
+        );
     }
     public function getFieldName()
     {
@@ -126,6 +150,7 @@ class Column extends BaseUI
         <th {$attr}>
             <div class="sokeio-table-header">
                 {$this->renderChilds('headerUI')}
+               {$this->renderChilds('headerExtraUI')}
             </div>
         </th>
         HTML;

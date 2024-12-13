@@ -2,6 +2,7 @@
 
 namespace Sokeio\UI\Table;
 
+use Illuminate\Support\Facades\Log;
 use Sokeio\UI\BaseUI;
 use Sokeio\UI\Field\Checkbox;
 use Sokeio\UI\Field\Input;
@@ -77,12 +78,10 @@ class Table extends BaseUI
             $this->setValueByName('page.index', $page);
         }, false);
         $keyFnOrderBy = $this->getKeyWithTable('order-by');
-        $this->attrWrapper('data-sokeio-table-order-by', $keyFnOrderBy);
+        $this->attr('data-sokeio-table-order-by', $keyFnOrderBy);
         $this->action($keyFnOrderBy, function ($order) {
-            $field = $order['field'];
-            $type = $order['type'] ?? 'asc';
-            $this->setValueByName('order.field', $field);
-            $this->setValueByName('order.type', $type);
+            $this->setValueByName('order.field', $order['field'] ?? '');
+            $this->setValueByName('order.type',  $order['type'] ?? 'asc');
         }, false);
     }
 
@@ -178,7 +177,7 @@ class Table extends BaseUI
             null,
             null,
             $isAfterIndex ? -2 : 0
-        );
+        )->vars('enableCheckBox', true);
     }
 
     public function formSearch($fields, $fieldExtra = null): self

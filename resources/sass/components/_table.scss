@@ -9,6 +9,22 @@
 
     table th .sokeio-table-header {
         padding: 7px !important;
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+
+        .sokeio-table-header-title {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            & > div {
+                flex: 1;
+            }
+        }
+
+        .sokeio-table-header-extra {
+            margin-left: 5px;
+        }
     }
 
     table td .sokeio-table-cell {

@@ -34,6 +34,7 @@ trait ColumnData
     {
         return $this->vars('disableSort', true);
     }
+    
     public function classNameHeader($class): static
     {
         return $this->vars('classNameHeader', $class);
