@@ -147,6 +147,7 @@ class Table extends BaseUI
     {
         return $this->column(
             Column::make()
+                ->width(20)
                 ->headerUI(
                     Checkbox::make()
                         ->className('sokeio-checkbox-all')

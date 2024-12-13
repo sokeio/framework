@@ -17,17 +17,17 @@ trait TableRender
     private function cellRender($row, $index = 0)
     {
         $html = '';
-        $prefix = $this->getPrefix();
         foreach ($this->columns as $column) {
-            $this->prefix($prefix . '.' . data_get($row, $this->columnKey));
+            $column->setRowData($row);
             $html .= $this->renderChilds('column_' . $column->getColumnIndex(), [
                 'row' => $row,
                 'column' => $column,
+                'column_' . $column->getFieldName() . '_value' => $column->getValueCell(),
                 'index' => $index,
                 'datasource' => $this->getDatasource(),
+                ...$column->getColumnParams(),
             ]);
         }
-        $this->prefix($prefix);
         return $html;
     }
     private function bodyRender()

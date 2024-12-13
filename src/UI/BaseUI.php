@@ -23,9 +23,9 @@ class BaseUI
     }
     private $callbackView = null;
 
-    public function style($style)
+    public function style($property, $value, $group = 'default')
     {
-        return $this->vars('style', $style);
+        return $this->attr('style', $property . ':' . $value . ';', $group);
     }
 
     public function getNameWithPrefix($name)

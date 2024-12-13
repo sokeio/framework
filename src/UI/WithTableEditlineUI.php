@@ -7,6 +7,8 @@ trait WithTableEditlineUI
 {
     use WithUI;
     public $tableEditline = [];
+    public $tableRowEditline = [];
+
 
     protected function afterSaveData($data)
     {

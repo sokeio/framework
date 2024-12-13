@@ -5,63 +5,68 @@ namespace Sokeio\UI\Table;
 use Sokeio\UI\BaseUI;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Common\Tag;
+use Sokeio\UI\Table\Concerns\ColumnData;
 
 class Column extends BaseUI
 {
-    public function enableLink(): static
+    use ColumnData;
+    private $paramCallback = null;
+    private $rowData = null;
+    private $rowIndex = null;
+    private Table|null $table = null;
+    public function getTable()
     {
-        return $this->vars('enableLink', true);
-    }
-    public function columnIndex($index): static
-    {
-        return $this->vars('columnIndex', $index);
-    }
-    public function getColumnIndex()
-    {
-        return $this->getVar('columnIndex', '', true);
-    }
-    private function fieldName($name): static
-    {
-        return $this->vars('name', $name);
-    }
-    public function attrHeader($key, $value): static
-    {
-        return $this->attr($key, $value, 'header');
-    }
-    public function label($label): static
-    {
-        return $this->vars('label', $label);
+        return $this->table;
     }
     public function setTable(Table $table): static
     {
-        return $this->vars('table', $table);
+        return $this->tap(function () use ($table) {
+            $this->table = $table;
+        });
     }
-    public static function make($fieldName = null)
+    public function setRowData($row, $index = null)
     {
-        return (new static(null))->fieldName($fieldName);
+        return $this->tap(function () use ($row, $index) {
+            $this->rowData = $row;
+            $this->rowIndex = $index;
+        });
     }
-    public function disableSort(): static
+    public function getRowData()
     {
-        return $this->vars('disableSort', true);
+        return $this->rowData;
     }
-    public function classNameHeader($class): static
+    public function columnParams($callback): static
     {
-        return $this->vars('classNameHeader', $class);
+        $this->paramCallback = $callback;
+        return $this;
     }
-    public function classNameCell($class): static
+    public function getColumnParams()
     {
-        return $this->vars('classNameCell', $class);
+        if ($this->paramCallback) {
+            $rs = call_user_func($this->paramCallback, $this);
+            if (is_array($rs)) {
+                return $rs;
+            }
+        }
+        return [];
+    }
+    public function width($width): static
+    {
+        if (!$width) {
+            return $this;
+        }
+        if (is_numeric($width)) {
+            $width .= 'px';
+        }
+        return $this->style('width', $width, 'header');
     }
     public function editUI($ui, $when = null): static
     {
         return $this->child(Div::make($ui)->when($when)->className('edit-column')
             ->beforeRender(function (Div $div) {
-                if($div->getUIIDkey()=='d633d791ff73bef6a5dca0ff5d38c09f'){
-                    dd($div->getPrefix());
-                }
                 $prefix = $div->getParent()->getPrefix();
                 $row = $div->getParams('row');
-                $div->prefix($prefix . '.row_' . $row?->id . '.');
+                $div->prefix($prefix . '.row_' . $row?->id . '');
             })->afterRender(function (Div $div) {
                 $div->prefix($div->getParent()->getPrefix());
             }), 'editUI');
@@ -74,15 +79,15 @@ class Column extends BaseUI
     {
         return $this->child(Div::make($ui)->when($when), 'headerUI');
     }
-    public function getRowData()
+    public function getFieldName()
     {
-        return $this->getParams('row');
+        return $this->getVar('name', '', true);
     }
     public function getValueCell()
     {
-        $name = $this->getVar('name', null, true);
+        $name = $this->getFieldName();
         if (!$name) {
-            return '1';
+            return '';
         }
         return data_get($this->getRowData(), $name);
     }
@@ -127,7 +132,9 @@ class Column extends BaseUI
     }
     public function view()
     {
+        $this->attr('sokeio-table-row', $this->rowIndex);
         $attr = $this->getAttr();
+
         return <<<HTML
         <td {$attr}>
             <div class="sokeio-table-cell">
@@ -136,5 +143,9 @@ class Column extends BaseUI
             </div>
         </td>
         HTML;
+    }
+    public static function make($fieldName = null)
+    {
+        return (new static(null))->fieldName($fieldName);
     }
 }

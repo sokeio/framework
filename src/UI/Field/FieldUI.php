@@ -25,9 +25,6 @@ class FieldUI extends BaseUI
             if (!$base->containsAttr('class', 'sokeio-field-input', 'wrapper')) {
                 $base->classNameWrapper('sokeio-field-input');
             }
-            if($base->getUIIDkey()=='d81e6bc63401aa14fc490718c632abfe'){
-                // dd($base->getPrefix());
-            }
             $debounce = $base->getVar('wire:debounce', null, true);
             if ($debounce && $debounce > 0) {
                 $base->attr('wire:model.live.debounce.' . $debounce . 'ms', $base->getFieldName());
@@ -102,8 +99,13 @@ class FieldUI extends BaseUI
         $attrWrapper = $this->getAttr('wrapper') ?? 'class="mb-3"';
         $attrModel = $this->getFieldName();
         $valueDefault = $this->getValueDefault();
+        // this value is from table
+        $valueParam = $this->getParams('column_' . $this->getFieldNameWithoutPrefix() . '_value');
         $value = $this->getValue();
-        if ($valueDefault !== null && $value === null) {
+        if (($valueDefault !== null || $valueParam !== null) && $value === null) {
+            if ($valueDefault === null) {
+                $valueDefault = $valueParam;
+            }
             $this->setValue($valueDefault);
         }
         $fieldView = $this->fieldView();

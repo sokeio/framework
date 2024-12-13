@@ -21,9 +21,6 @@ trait DataShareUI
     }
     private function setDataShared($key, $value)
     {
-        if ($value && $this->{'share' . ucfirst($key)}) {
-            return $this;
-        }
         $this->{'share' . ucfirst($key)} = $value;
         return $this->boot(function ($base) use ($key, $value) {
             $base->setupChild(fn($c) => $c->{$key}($value));
