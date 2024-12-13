@@ -65,6 +65,7 @@ class BaseUI
             $base->registerIDChild();
             $base->attr('sokeio-group', $base->getGroup());
             $base->attr('sokeio-ui-id', $base->getUIID());
+            $base->attr('sokeio-ui-group', $base->getUIGroup());
             $base->attr('sokeio-ui-key', $base->getUIIDkey());
         });
         $this->boot(function ($base) {

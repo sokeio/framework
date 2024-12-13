@@ -92,8 +92,8 @@ class Table extends BaseUI
             $this->setValueByName('order.field', $order['field'] ?? '');
             $this->setValueByName('order.type',  $order['type'] ?? 'asc');
         }, false);
-        $this->boot(function(Table $table){
-            $table->group('tableRowEditline');
+        $this->register(function(Table $table){
+            $table->uiGroup('tableRowEditline');
         });
     }
 

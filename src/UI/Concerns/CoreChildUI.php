@@ -10,6 +10,17 @@ use Sokeio\UI\SoUI;
 trait CoreChildUI
 {
     private $childs = [];
+    private $group = 'default';
+    public function getGroup()
+    {
+        return $this->group;
+    }
+    public function group($group)
+    {
+        $this->group = $group;
+        $this->setupChild(fn($c) => $c->group($group));
+        return $this;
+    }
     public function getChilds()
     {
         return $this->childs;

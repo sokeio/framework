@@ -104,13 +104,13 @@ trait CoreUI
         $this->setupChild(fn($c) => $c->setManager($manager));
         return $this;
     }
-    public function group($value)
+    public function uiGroup($value)
     {
         $this->uiGroup = $value;
-        $this->setupChild(fn($c) => $c->group($value));
+        $this->setupChild(fn($c) => $c->uiGroup($value));
         return $this;
     }
-    public function getGroup($default = null)
+    public function getUIGroup($default = null)
     {
         return $this->uiGroup ?? $default;
     }

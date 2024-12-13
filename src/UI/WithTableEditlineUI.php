@@ -16,12 +16,12 @@ trait WithTableEditlineUI
     public function cancelRowEditline($id)
     {
         unset($this->tableRowEditline[$id]);
+        unset($this->tableEditline['row_' . $id]);
         unset($this->dataSelecteds[$id]);
     }
     public function saveRowEditline($id)
     {
-        //TODO: implement  
-        $this->getUI()->validate('tableEditline','tableRowEditline');
+        $this->getUI()->validate('tableEditline', 'tableRowEditline');
     }
     protected function afterSaveData($data)
     {
