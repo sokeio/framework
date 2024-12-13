@@ -14,6 +14,16 @@ class Column extends BaseUI
     private $rowData = null;
     private $rowIndex = null;
     private Table|null $table = null;
+    public function checkEditInline($ui, $when = null)
+    {
+        if (!$this->getTable()->checkColumnEditable($this)) {
+            return false;
+        }
+        if ($when) {
+            return call_user_func($when, $ui);
+        }
+        return true;
+    }
     public function getTable()
     {
         return $this->table;
@@ -60,20 +70,28 @@ class Column extends BaseUI
         }
         return $this->style('width', $width, 'header');
     }
+    public function getColumnValueKey()
+    {
+        return data_get($this->getRowData(), $this->getTable()->getColumnKey());
+    }
     public function editUI($ui, $when = null): static
     {
-        return $this->child(Div::make($ui)->when($when)->className('edit-column')
+        return $this->child(Div::make($ui)
+            ->when(fn($divUI) => $this->checkEditInline($divUI, $when))
+            ->className('edit-column')
             ->beforeRender(function (Div $div) {
                 $prefix = $div->getParent()->getPrefix();
-                $row = $div->getParams('row');
-                $div->prefix($prefix . '.row_' . $row?->id . '');
+                $dataId = $this->getColumnValueKey();
+                $div->prefix($prefix . '.row_' . $dataId . '');
             })->afterRender(function (Div $div) {
                 $div->prefix($div->getParent()->getPrefix());
             }), 'editUI');
     }
     public function cellUI($ui, $when = null): static
     {
-        return $this->child(Div::make($ui)->when($when), 'cellUI');
+        return $this->child(Div::make($ui)
+            ->when(fn($divUI) => !$this->hasChilds('editUI') || !$this->checkEditInline($divUI))
+            ->when($when), 'cellUI');
     }
     public function headerUI($ui, $when = null): static
     {

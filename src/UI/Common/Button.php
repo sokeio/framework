@@ -27,14 +27,30 @@ class Button extends BaseUI
     }
 
 
-    public function wireClick($callback, $actionName = 'button::click', $params = null, $skipRender = false)
-    {
+    public function wireClick(
+        $callback,
+        $params = null,
+        $withUIIDKey = true,
+        $skipRender = false,
+        $actionName = 'button::click'
+    ) {
         if (is_string($callback) && strpos($callback, '::') === false && !class_exists($callback)) {
-            return $this->attr('wire:click', $callback);
+            return $this->render(function ($ui) use ($callback, $params) {
+                if (is_callable($params)) {
+                    $params = call_user_func($params, $ui);
+                }
+                if (is_array($params)) {
+                    $params = trim(implode(',', $params), ',');
+                }
+                if ($params) {
+                    $callback = $callback . '(' . $params . ')';
+                }
+                return $this->attr('wire:click', $callback);
+            });
         }
         return $this->action($actionName, function (...$params) use ($callback) {
             call_user_func_array($callback, $params);
-        }, true,$skipRender)
+        }, $withUIIDKey, $skipRender)
             ->render(function ($base) use ($actionName, $params) {
                 $paraText = '';
                 if (is_callable($params)) {

@@ -2,7 +2,6 @@
 
 namespace Sokeio\UI\Table;
 
-use Illuminate\Support\Facades\Log;
 use Sokeio\UI\BaseUI;
 use Sokeio\UI\Field\Checkbox;
 use Sokeio\UI\Field\Input;
@@ -26,11 +25,21 @@ class Table extends BaseUI
         2000
     ];
 
-
+    public function checkColumnEditable(Column $column)
+    {
+        if (!isset($this->getWire()->tableRowEditline[$column->getColumnValueKey()])) {
+            return false;
+        }
+        return true;
+    }
     public function columnKey($key)
     {
         $this->columnKey = $key ?? 'id';
         return $this;
+    }
+    public function getColumnKey()
+    {
+        return $this->columnKey;
     }
     public function attrWrapper($name, $value)
     {

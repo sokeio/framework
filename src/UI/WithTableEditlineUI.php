@@ -8,7 +8,15 @@ trait WithTableEditlineUI
     use WithUI;
     public $tableEditline = [];
     public $tableRowEditline = [];
-
+    public function rowEditline($id)
+    {
+        $this->tableRowEditline[$id] = $id;
+        $this->dataSelecteds[$id] = [$id];
+    }
+    public function cancelRowEditline($id)
+    {
+        unset($this->tableRowEditline[$id]);
+    }
 
     protected function afterSaveData($data)
     {
