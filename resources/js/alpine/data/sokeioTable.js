@@ -7,29 +7,30 @@ document.addEventListener("alpine:init", () => {
     get dataSelecteds() {
       return this.$wire.dataSelecteds ?? [];
     },
+    get tableRowEditline() {
+      return this.$wire.tableRowEditline ?? [];
+    },
     editRowAllSelected() {
       if (this.$wire.dataSelecteds.length > 0) {
         let temps = this.$wire.dataSelecteds;
         this.$wire.dataSelecteds = [];
         temps.forEach((id) => {
-          this.tableRowEditline(id);
+          this.setRowEditline(id);
         });
       }
     },
-    tableRowEditline($id) {
-      this.$wire.tableRowEditline = [...this.$wire.tableRowEditline, $id];
-      this.$wire.dataSelecteds = [...this.$wire.dataSelecteds, $id];
+    setRowEditline($id) {
+      this.$wire.tableRowEditline = [...this.tableRowEditline, $id];
+      this.$wire.dataSelecteds = [...this.dataSelecteds, $id];
     },
     cancelRowEditline($id) {
-      this.$wire.tableRowEditline = this.$wire.tableRowEditline.filter(
+      this.$wire.tableRowEditline = this.tableRowEditline.filter(
         (el) => el !== $id
       );
-      this.$wire.dataSelecteds = this.$wire.dataSelecteds.filter(
-        (el) => el !== $id
-      );
+      this.$wire.dataSelecteds = this.dataSelecteds.filter((el) => el !== $id);
     },
     checkRowEditline($id) {
-      return this.$wire.tableRowEditline.includes($id);
+      return this.tableRowEditline.includes($id);
     },
     sortField(el) {
       let field = el.getAttribute("data-field");
@@ -58,8 +59,7 @@ document.addEventListener("alpine:init", () => {
         ].map((el) => el.value);
         this.statusCheckAll =
           checkedValues.length ===
-          checkedValues.filter((el) => this.$wire.dataSelecteds.includes(el))
-            .length;
+          checkedValues.filter((el) => this.dataSelecteds.includes(el)).length;
       });
       Livewire.hook(
         "request",
@@ -71,9 +71,8 @@ document.addEventListener("alpine:init", () => {
               ].map((el) => el.value);
               this.statusCheckAll =
                 checkedValues.length ===
-                checkedValues.filter((el) =>
-                  this.$wire.dataSelecteds.includes(el)
-                ).length;
+                checkedValues.filter((el) => this.dataSelecteds.includes(el))
+                  .length;
             }, 0);
           });
         }
@@ -88,10 +87,9 @@ document.addEventListener("alpine:init", () => {
         this.$wire.dataSelecteds = [];
       }
       if (isChecked) {
-        this.$wire.dataSelecteds =
-          this.$wire.dataSelecteds.concat(checkedValues);
+        this.$wire.dataSelecteds = this.dataSelecteds.concat(checkedValues);
       } else {
-        this.$wire.dataSelecteds = this.$wire.dataSelecteds.filter(
+        this.$wire.dataSelecteds = this.dataSelecteds.filter(
           (el) => !checkedValues.includes(el)
         );
       }

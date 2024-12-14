@@ -27,7 +27,7 @@ class Table extends BaseUI
 
     public function checkColumnEditable(Column $column)
     {
-        if (!isset($this->getWire()->tableRowEditline[$column->getColumnValueKey()])) {
+        if (!in_array($column->getColumnValueKey(), $this->getWire()->tableRowEditline)) {
             return false;
         }
         return true;
@@ -92,9 +92,6 @@ class Table extends BaseUI
             $this->setValueByName('order.field', $order['field'] ?? '');
             $this->setValueByName('order.type',  $order['type'] ?? 'asc');
         }, false);
-        $this->register(function (Table $table) {
-            $table->uiGroup('tableRowEditline');
-        });
     }
 
     public function showAll()
@@ -168,10 +165,13 @@ class Table extends BaseUI
                 ->headerUI(
                     Checkbox::make()
                         ->className('sokeio-checkbox-all')
+                        ->skipFill()
+
                         ->attr('@change', 'checkboxAll')
                         ->attr('x-model', 'statusCheckAll')
                 )
                 ->cellUI(Checkbox::make('dataSelecteds')
+                    ->skipFill()
                     ->className('sokeio-checkbox-one')
                     ->tap(function (Checkbox $checkbox) use ($withoutPrefix) {
                         if ($withoutPrefix) {

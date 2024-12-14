@@ -37,7 +37,7 @@ class ButtonEditable extends BaseUI
                     ->text(fn() => $base->getVar('editText', __('Edit')))
                     ->className('btn btn-primary btn-sm ')
                     ->wireKey(fn() => 'rowEditline-' . $base->getParams('rowValueId'))
-                    ->attr('@click', fn() => 'tableRowEditline(\'' . $base->getParams('rowValueId') . '\')')
+                    ->attr('@click', fn() => 'setRowEditline(\'' . $base->getParams('rowValueId') . '\')')
                     ->attr('x-show', fn() => '!checkRowEditline(\'' . $base->getParams('rowValueId') . '\')'),
                 Button::make()
                     ->text(fn() => $base->getVar('saveText', __('Save')))

@@ -73,10 +73,11 @@ class Column extends BaseUI
     {
         return data_get($this->getRowData(), $this->getTable()->getColumnKey());
     }
-    public function editUI($ui, $when = null): static
+    public function editUI($ui, $when = null, $groupEditUI = 'tableColumnEdit'): static
     {
         return $this->child(Div::make($ui)
             ->attr('style', 'display: none')
+            ->uiGroup($groupEditUI)
             ->when($when)
             ->attr('x-show', fn($divUI) => 'checkRowEditline(\'' . $divUI->getParams('rowValueId') . '\')')
             // ->when(fn($divUI) => $this->checkEditInline($divUI, $when))

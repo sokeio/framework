@@ -65,7 +65,10 @@ trait WithFieldData
             if ($value === '') {
                 $value = null;
             }
-            data_set($model, $this->getFieldNameWithoutPrefix(), $value);
+            $key = $this->getFieldNameWithoutPrefix();
+            if ($key) {
+                data_set($model, $key, $value);
+            }
         }
     }
 }

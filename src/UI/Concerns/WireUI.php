@@ -40,12 +40,22 @@ trait WireUI
             $field->fillToModel($model);
         }
     }
-    public function getRuleForm($group = null, $prefix = null, $id = null)
+    public function fillWithId($model,  $prefix, $group, $id = null)
     {
-        $messages = [];
-        $rules = [];
-        $labels = [];
-
+        foreach ($this->fields as $field) {
+            if ($group && $field->getUIGroup() != $group) {
+                continue;
+            }
+            $prefix_temp = $field->getPrefix();
+            if ($prefix && $id) {
+                $field->prefix($prefix . '.' . $id);
+            }
+            $field->fillToModel($model);
+            $field->prefix($prefix_temp);
+        }
+    }
+    private function ruleForm(&$messages, &$rules, &$labels, $group = null, $prefix = null, $id = null)
+    {
         foreach ($this->fields as $field) {
             if ($group && $field->getUIGroup() != $group) {
                 continue;
@@ -66,6 +76,20 @@ trait WireUI
             $labels[$field->getFieldName()] = $label;
             $field->prefix($prefix_temp);
         }
+    }
+    public function getRuleForm($group = null, $prefix = null, $id = null)
+    {
+        $messages = [];
+        $rules = [];
+        $labels = [];
+        if ($id && is_array($id)) {
+            foreach ($id as $key => $value) {
+                $this->ruleForm($messages, $rules, $labels, $group, $prefix, $value);
+            }
+        } else {
+            $this->ruleForm($messages, $rules, $labels, $group, $prefix, $id);
+        }
+
         return [
             'rules' => $rules,
             'messages' => $messages,
