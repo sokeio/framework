@@ -11,13 +11,17 @@ trait WithTableEditlineUI
     public function rowEditline($id)
     {
         $this->tableRowEditline[$id] = $id;
-        $this->dataSelecteds[] = [$id];
+        $this->dataSelecteds[] = $id;
     }
     public function cancelRowEditline($id)
     {
         unset($this->tableRowEditline[$id]);
         unset($this->tableEditline['row_' . $id]);
-        unset($this->dataSelecteds[$id]);
+        $temp = $this->dataSelecteds;
+        $this->dataSelecteds = null;
+        $this->dataSelecteds = collect($temp)->filter(function ($item) use ($id) {
+            return $item !== $id;
+        })->toArray();
     }
     public function saveRowEditline($id)
     {

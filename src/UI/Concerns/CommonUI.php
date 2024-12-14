@@ -59,6 +59,10 @@ trait CommonUI
     {
         return $this->getAttrKey('id');
     }
+    public function wireKey($callback): static
+    {
+        return $this->attr('wire:key', $callback);
+    }
     public function vars($key, $value = null): static
     {
         return $this->registerData(function ($base) use ($key, $value) {

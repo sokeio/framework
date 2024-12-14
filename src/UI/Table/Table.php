@@ -117,6 +117,7 @@ class Table extends BaseUI
         if ($label) {
             $nameOrColumn->label($label);
         }
+        
         $this->columns[$columnIndex] = $nameOrColumn;
         $this->child($nameOrColumn, 'column_' . $columnIndex);
         return $this;

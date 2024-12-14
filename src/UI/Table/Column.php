@@ -89,9 +89,12 @@ class Column extends BaseUI
     }
     public function cellUI($ui, $when = null): static
     {
-        return $this->child(Div::make($ui)
-            ->when(fn($divUI) => !$this->hasChilds('editUI') || !$this->checkEditInline($divUI))
-            ->when($when), 'cellUI');
+        return $this->child(
+            Div::make($ui)
+                ->when(fn($divUI) => !$this->hasChilds('editUI') || !$this->checkEditInline($divUI))
+                ->when($when),
+            'cellUI'
+        );
     }
     public function headerUI($ui, $when = null): static
     {
