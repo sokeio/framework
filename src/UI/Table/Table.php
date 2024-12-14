@@ -123,7 +123,7 @@ class Table extends BaseUI
 
         return $this->setupChild(fn($c) => $label && $c->label($label));
     }
-    public function columnAction($array, $title = 'Actions', $callback = null, $with = 150)
+    public function columnAction($array, $title = 'Actions', $callback = null, $with = 200)
     {
         return $this->column(
             Column::make()
