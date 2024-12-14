@@ -77,7 +77,9 @@ class Column extends BaseUI
     public function editUI($ui, $when = null): static
     {
         return $this->child(Div::make($ui)
-            ->when(fn($divUI) => $this->checkEditInline($divUI, $when))
+            ->attr('style', 'display: none')
+            ->attr('x-show', fn($divUI) => '$wire.tableRowEditline.includes(' . $this->getColumnValueKey() . ')')
+            // ->when(fn($divUI) => $this->checkEditInline($divUI, $when))
             ->className('edit-column')
             ->beforeRender(function (Div $div) {
                 $prefix = $div->getParent()->getPrefix();
@@ -91,7 +93,15 @@ class Column extends BaseUI
     {
         return $this->child(
             Div::make($ui)
-                ->when(fn($divUI) => !$this->hasChilds('editUI') || !$this->checkEditInline($divUI))
+                ->attr('style', 'display: none')
+                ->attr(
+                    'x-show',
+                    fn($divUI) =>
+                    $this->hasChilds('editUI') ?
+                        '!$wire.tableRowEditline.includes(' . $this->getColumnValueKey() . ')'
+                        : 'true'
+                )
+                // ->when(fn($divUI) => !$this->hasChilds('editUI') || !$this->checkEditInline($divUI))
                 ->when($when),
             'cellUI'
         );
@@ -192,6 +202,6 @@ class Column extends BaseUI
     }
     public static function make($fieldName = null)
     {
-        return (new static(null))->fieldName($fieldName);
+        return (new static(null))->fieldName($fieldName)->label($fieldName);
     }
 }

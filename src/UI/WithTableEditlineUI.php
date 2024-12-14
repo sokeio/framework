@@ -25,7 +25,7 @@ trait WithTableEditlineUI
     }
     public function saveRowEditline($id)
     {
-        $this->getUI()->validate('tableEditline', 'tableRowEditline');
+        $this->getUI()->validate('tableEditline', 'tableRowEditline', true, 'row_' . $id);
     }
     protected function afterSaveData($data)
     {

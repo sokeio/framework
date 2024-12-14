@@ -26,10 +26,6 @@ trait ColumnData
     {
         return $this->attr($key, $value, 'header');
     }
-    public function label($label): static
-    {
-        return $this->vars('label', $label);
-    }
     public function disableSort(): static
     {
         return $this->vars('disableSort', true);

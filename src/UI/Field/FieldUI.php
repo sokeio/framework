@@ -34,11 +34,7 @@ class FieldUI extends BaseUI
         });
     }
 
-    public function label($label)
-    {
-        return $this->vars('label', $label);
-    }
-    public function classNameWrapper($className)
+        public function classNameWrapper($className)
     {
         return $this->attrAdd('class', $className, 'wrapper');
     }

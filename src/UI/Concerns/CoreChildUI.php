@@ -65,7 +65,7 @@ trait CoreChildUI
         }
         return $this;
     }
-    public function child($childs = [], $group = 'default')
+    public function child($childs = [], $group = 'default', $prepend = false)
     {
         if (!$childs) {
             return $this;
@@ -76,7 +76,11 @@ trait CoreChildUI
         if (!is_array($childs)) {
             $childs = [$childs];
         }
-        $this->childs[$group] = array_merge($this->childs[$group] ?? [],  $childs);
+        if ($prepend) {
+            $this->childs[$group] = array_merge($childs, $this->childs[$group] ?? []);
+        } else {
+            $this->childs[$group] = array_merge($this->childs[$group] ?? [],  $childs);
+        }
         return $this;
     }
     private function childNone($ui, $tap = null, $group = 'default')

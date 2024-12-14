@@ -7,6 +7,30 @@ document.addEventListener("alpine:init", () => {
     get dataSelecteds() {
       return this.$wire.dataSelecteds ?? [];
     },
+    editRowAllSelected() {
+      if (this.$wire.dataSelecteds.length > 0) {
+        let temps = this.$wire.dataSelecteds;
+        this.$wire.dataSelecteds = [];
+        temps.forEach((id) => {
+          this.tableRowEditline(id);
+        });
+      }
+    },
+    tableRowEditline($id) {
+      this.$wire.tableRowEditline = [...this.$wire.tableRowEditline, $id];
+      this.$wire.dataSelecteds = [...this.$wire.dataSelecteds, $id];
+    },
+    cancelRowEditline($id) {
+      this.$wire.tableRowEditline = this.$wire.tableRowEditline.filter(
+        (el) => el !== $id
+      );
+      this.$wire.dataSelecteds = this.$wire.dataSelecteds.filter(
+        (el) => el !== $id
+      );
+    },
+    checkRowEditline($id) {
+      return this.$wire.tableRowEditline.includes($id);
+    },
     sortField(el) {
       let field = el.getAttribute("data-field");
       if (field != this.fieldSort) {

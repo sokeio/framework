@@ -33,8 +33,8 @@ class Select extends FieldUI
     public function initUI()
     {
         parent::initUI();
-        $this->beforeRender(function ($base) {
-            $base->attr('wire:key', 'tom-select-' . $base->getFieldNameWithoutPrefix() . '-' . time(), 'tom-select');
+        $this->beforeRender(function (self $base) {
+            $base->wireKey('tom-select-' . $base->getFieldNameWithoutPrefix() . '-' . time(), 'tom-select');
             $base->attr('wire:tom-select', null, 'tom-select');
             $base->attr('wire:tom-select.datasource', json_encode($base->getDatasource()), 'tom-select');
             if ($base->options) {
@@ -77,7 +77,7 @@ class Select extends FieldUI
                 $base->attr('wire:tom-select.remote-action', $base->getUIIDKey() .  $name, 'tom-select');
                 if (
                     !$base->checkDataSource() &&
-                    !$base->checkVar('lazyLoad', null) 
+                    !$base->checkVar('lazyLoad', null)
                 ) {
                     $base->dataSource($base->getManager()?->callActionUI($base->getUIIDKey() . $name, ''));
                 }

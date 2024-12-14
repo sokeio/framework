@@ -92,7 +92,7 @@ class Table extends BaseUI
             $this->setValueByName('order.field', $order['field'] ?? '');
             $this->setValueByName('order.type',  $order['type'] ?? 'asc');
         }, false);
-        $this->register(function(Table $table){
+        $this->register(function (Table $table) {
             $table->uiGroup('tableRowEditline');
         });
     }
@@ -117,10 +117,14 @@ class Table extends BaseUI
         if ($label) {
             $nameOrColumn->label($label);
         }
-        
+        if (!$label) {
+            $label = $nameOrColumn->getLabel();
+        }
+
         $this->columns[$columnIndex] = $nameOrColumn;
         $this->child($nameOrColumn, 'column_' . $columnIndex);
-        return $this;
+
+        return $this->setupChild(fn($c) => $label && $c->label($label));
     }
     public function columnAction($array, $title = 'Actions', $callback = null, $with = 150)
     {
@@ -177,7 +181,7 @@ class Table extends BaseUI
                         }
                     })
                     ->valueDefault([])
-                    ->attr('wire:key', function (Checkbox $checkbox) {
+                    ->wireKey(function (Checkbox $checkbox) {
                         $row = $checkbox->getParams('row');
                         $index = $checkbox->getParams('index');
                         return "sokeio-checkbox-" . $index . "-" . $row->id;

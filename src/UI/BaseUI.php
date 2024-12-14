@@ -8,7 +8,29 @@ use Sokeio\UI\Concerns\LifecycleUI;
 class BaseUI
 {
     use LifecycleUI, CommonUI;
+    public function label($label)
+    {
+        return $this->vars('label', $label);
+    }
+    public function getLabel()
+    {
+        return $this->getVar('label', null, true);
+    }
 
+    public function hideLabel($group = 'default')
+    {
+        return $this->tap(function (self $base) use ($group) {
+            $base->vars('hideLabel', true, $group);
+            $base->setupChild(fn($c) => $c->hideLable($group));
+        });
+    }
+    public function showLabel($group = 'default')
+    {
+        return $this->tap(function (self $base) use ($group) {
+            $base->vars('hideLabel', false, $group);
+            $base->setupChild(fn($c) => $c->showLable($group));
+        });
+    }
     public function icon($icon)
     {
         return $this->vars('icon', $icon);
@@ -71,14 +93,6 @@ class BaseUI
         $this->boot(function ($base) {
             $base->applyRegisterData();
         });
-    }
-
-    public function refUI($callback = null)
-    {
-        if ($callback) {
-            call_user_func($callback, $this);
-        }
-        return $this->manager;
     }
 
     protected function initUI()

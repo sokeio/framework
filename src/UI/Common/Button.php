@@ -25,6 +25,10 @@ class Button extends BaseUI
     {
         return $this->attr('type', 'submit')->attr('value', $text)->vars('text', $text);
     }
+    public function editRowAllSelected()
+    {
+        return $this->attr('x-data',"sokeioTableEditline")->attr('@click', 'editRowAllSelected()');
+    }
 
 
     public function wireClick(

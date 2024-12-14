@@ -4,10 +4,12 @@ namespace Sokeio\UI\Concerns;
 
 use Illuminate\Support\Facades\Validator;
 use Sokeio\Setting;
+use Sokeio\UI\Field\FieldUI;
 
 trait WireUI
 {
     private $actions = [];
+    /** @var FieldUI[] */
     private $fields = [];
 
     public function registerField($field)
@@ -38,18 +40,31 @@ trait WireUI
             $field->fillToModel($model);
         }
     }
-    public function getRuleForm($group = null)
+    public function getRuleForm($group = null, $prefix = null, $id = null)
     {
         $messages = [];
         $rules = [];
         $labels = [];
+
         foreach ($this->fields as $field) {
-            if ($group && $field->getGroup() != $group) {
+            if ($group && $field->getUIGroup() != $group) {
                 continue;
+            }
+            $prefix_temp = $field->getPrefix();
+            if ($prefix && $id) {
+                $field->prefix($prefix . '.' . $id);
             }
             $messages = array_merge($messages, $field->getRuleMessages());
             $rules = array_merge($rules, $field->getRules());
-            $labels[$field->getFieldName()] = $field->getLabel();
+            $label = $field->getLabel();
+            if (!$label) {
+                $label = $field->getFieldName();
+            }
+            $arr = explode('.', $label);
+            $label = end($arr);
+
+            $labels[$field->getFieldName()] = $label;
+            $field->prefix($prefix_temp);
         }
         return [
             'rules' => $rules,
@@ -75,9 +90,10 @@ trait WireUI
         Setting::save();
         return $this;
     }
-    public function validate($field = 'formData', $group = null, $excute = true)
+    public function validate($field = 'formData', $group = null, $excute = true, $id = null)
     {
-        $rule = $this->getRuleForm($group);
+        $rule = $this->getRuleForm($group, $field, $id);
+        // dd($rule);
         $data = data_get($this->getWire(), $field);
         if ($data instanceof \Sokeio\FormData) {
             $data = $data->toArray();
