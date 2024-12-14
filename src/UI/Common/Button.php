@@ -25,9 +25,21 @@ class Button extends BaseUI
     {
         return $this->attr('type', 'submit')->attr('value', $text)->vars('text', $text);
     }
-    public function editRowAllSelected()
+    public function checkShowSelected($extra = '')
     {
-        return $this->attr('x-data',"sokeioTableEditline")->attr('@click', 'editRowAllSelected()');
+        return $this->attr('x-show', '$wire.dataSelecteds.length>0 ' . $extra)->style('display', 'none');
+    }
+    public function editRowAllSelected($extra = '')
+    {
+        return $this->attr('x-data', "sokeioTableEditline")
+            ->attr('@click', 'editRowAllSelected()')
+            ->checkShowSelected($extra . ' && checkExistNotEditInSelectd');
+    }
+    public function CancelRowAllSelected($extra = '')
+    {
+        return $this->attr('x-data', "sokeioTableEditline")
+            ->attr('@click', 'cancelRowAllSelected()')
+            ->checkShowSelected($extra . ' && checkExistEditInSelectd');
     }
 
 

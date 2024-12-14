@@ -47,8 +47,7 @@ class Column extends BaseUI
     }
     public function columnParams($callback): static
     {
-        $this->paramCallback = $callback;
-        return $this;
+        return $this->tap(fn($c) => $c->paramCallback = $callback);
     }
     public function getColumnParams()
     {
@@ -78,7 +77,8 @@ class Column extends BaseUI
     {
         return $this->child(Div::make($ui)
             ->attr('style', 'display: none')
-            ->attr('x-show', fn($divUI) => '$wire.tableRowEditline.includes(' . $this->getColumnValueKey() . ')')
+            ->when($when)
+            ->attr('x-show', fn($divUI) => 'checkRowEditline(\'' . $divUI->getParams('rowValueId') . '\')')
             // ->when(fn($divUI) => $this->checkEditInline($divUI, $when))
             ->className('edit-column')
             ->beforeRender(function (Div $div) {
@@ -98,7 +98,7 @@ class Column extends BaseUI
                     'x-show',
                     fn($divUI) =>
                     $this->hasChilds('editUI') ?
-                        '!$wire.tableRowEditline.includes(' . $this->getColumnValueKey() . ')'
+                        '!checkRowEditline(\'' . $divUI->getParams('rowValueId') . '\')'
                         : 'true'
                 )
                 // ->when(fn($divUI) => !$this->hasChilds('editUI') || !$this->checkEditInline($divUI))

@@ -1,10 +1,20 @@
 document.addEventListener("alpine:init", () => {
   Alpine.data("sokeioTableEditline", () => ({
+    get checkExistEditInSelectd() {
+      return (
+        this.$wire.dataSelecteds.filter((el) =>
+          this.$wire.tableRowEditline.includes(el)
+        ).length > 0
+      );
+    },
+    get checkExistNotEditInSelectd() {
+      return (
+        this.$wire.dataSelecteds.filter(
+          (el) => !this.$wire.tableRowEditline.includes(el)
+        ).length > 0
+      );
+    },
     sokeioTableEditline($id) {
-      // check $id is string to number
-      if (typeof $id === "string") {
-        $id = parseInt($id);
-      }
       this.$wire.tableRowEditline = [
         ...this.$wire.tableRowEditline,
         $id,
@@ -14,9 +24,6 @@ document.addEventListener("alpine:init", () => {
       );
     },
     cancelSokeioTableEditline($id) {
-      if (typeof $id === "string") {
-        $id = parseInt($id);
-      }
       this.$wire.tableRowEditline = this.$wire.tableRowEditline.filter(
         (el) => el !== $id
       );
@@ -27,6 +34,7 @@ document.addEventListener("alpine:init", () => {
     editRowAllSelected() {
       if (this.$wire.dataSelecteds.length > 0) {
         let temps = this.$wire.dataSelecteds;
+        this.$wire.dataSelecteds = [];
         temps.forEach((id) => {
           this.sokeioTableEditline(id);
         });
@@ -35,7 +43,6 @@ document.addEventListener("alpine:init", () => {
     cancelRowAllSelected() {
       if (this.$wire.dataSelecteds.length > 0) {
         let temps = this.$wire.dataSelecteds;
-        this.$wire.dataSelecteds = [];
         temps.forEach((id) => {
           this.cancelSokeioTableEditline(id);
         });
