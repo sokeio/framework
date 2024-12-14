@@ -1,6 +1,10 @@
 document.addEventListener("alpine:init", () => {
   Alpine.data("sokeioTableEditline", () => ({
     sokeioTableEditline($id) {
+      // check $id is string to number
+      if (typeof $id === "string") {
+        $id = parseInt($id);
+      }
       this.$wire.tableRowEditline = [
         ...this.$wire.tableRowEditline,
         $id,
@@ -10,6 +14,9 @@ document.addEventListener("alpine:init", () => {
       );
     },
     cancelSokeioTableEditline($id) {
+      if (typeof $id === "string") {
+        $id = parseInt($id);
+      }
       this.$wire.tableRowEditline = this.$wire.tableRowEditline.filter(
         (el) => el !== $id
       );
@@ -22,10 +29,6 @@ document.addEventListener("alpine:init", () => {
         let temps = this.$wire.dataSelecteds;
         temps.forEach((id) => {
           this.sokeioTableEditline(id);
-        });
-        // refresh all page
-        this.$nextTick(() => {
-          Alpine.$data(document.body).$refresh();
         });
       }
     },
