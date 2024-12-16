@@ -18,7 +18,7 @@ class MediaIcon extends FieldUI
     protected function fieldView()
     {
         $field = $this->getFieldName();
-        $buttonText = $this->getVar('buttonText', 'Choose Icon', true);
+        $buttonText = $this->getVar('buttonText', 'Icon', true);
         $buttonClass = $this->getVar('buttonClass', 'btn-primary', true);
 
         return <<<HTML

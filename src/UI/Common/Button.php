@@ -41,14 +41,14 @@ class Button extends BaseUI
             ->attr('@click', 'cancelRowAllSelected()')
             ->checkShowSelected($extra . ' && checkExistEditInSelectd');
     }
-    
+
     public function SaveRowAllSelected($extra = '')
     {
         return $this->attr('x-data', "sokeioTableEditline")
             ->attr('@click', '$wire.saveData()')
             ->checkShowSelected($extra . ' && checkExistEditInSelectd');
     }
-    
+
 
 
     public function wireClick(

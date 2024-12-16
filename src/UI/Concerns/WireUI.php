@@ -166,6 +166,7 @@ trait WireUI
                 $params = [$params];
             }
             $params[] = $action['ui'];
+            // $params = array_merge([$action['ui']], $params);
             $rs =  call_user_func_array($action['callback'], $params);
             if ($action['skipRender']) {
                 $uirefresh = false;
