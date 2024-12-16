@@ -53,6 +53,35 @@ let waitLoader = (setting, items, level) => {
   }, 50);
 };
 function install(app) {
+  app.directive("assets", (items) => {
+    let el = items.el;
+    if (Alpine.$data(el).checkAssets && Alpine.$data(el).checkAssets()) {
+      Alpine.$data(el).initAssets && Alpine.$data(el).initAssets(items);
+      return;
+    }
+    let js = el.getAttribute("wire:assets.js");
+    let css = el.getAttribute("wire:assets.css");
+    if (js) {
+      addScriptToWindow(js);
+    }
+    if (css) {
+      addStyleToWindow(css);
+    }
+    if (Alpine.$data(el).checkAssets) {
+      waitLoader(
+        {
+          checkFirst: () => Alpine.$data(el).checkAssets(),
+          init: (items) => {
+            Alpine.$data(el).initAssets && Alpine.$data(el).initAssets(items);
+          },
+        },
+        items,
+        0
+      );
+    } else {
+      Alpine.$data(el).initAssets && Alpine.$data(el).initAssets(items);
+    }
+  });
   Object.keys(directive).forEach(function (key) {
     let setting = directive[key];
     ///{ el, directive, component }
