@@ -14,7 +14,7 @@ class FileManagerController extends Controller
 {
     use FileManager;
 
-    #[RouteInfo( MethodType::POST, '/platform/file-manager')]
+    #[RouteInfo( MethodType::POST, '/platform/file-manager',isWeb: true)]
     public function index(ActionRequest $request)
     {
         $disk = $request->disk ?? 'public';

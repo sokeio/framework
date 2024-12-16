@@ -10,8 +10,7 @@
     @if (count($item['children']) > 0)
         <div class="permission-tree">
             <div class="permission-tree-header permission-group">
-                <input class="form-check-input m-0" type="checkbox" 
-                    @change="changeCheck(event)">
+                <input class="form-check-input m-0" type="checkbox" @change="changeCheck(event)">
                 <span class="form-check-label">{{ $item['info']['name'] }}</span>
             </div>
             <div class="permission-tree-body">

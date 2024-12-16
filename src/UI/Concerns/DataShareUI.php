@@ -10,6 +10,19 @@ trait DataShareUI
     private $sharePrefix = null;
     private $shareGroupField = null;
     private $params = [];
+    private $paramSaveIndex = 0;
+    private $paramSave = [];
+    public function savePramas(): static
+    {
+        $this->paramSave[$this->paramSaveIndex] = $this->params;
+        $this->paramSaveIndex++;
+        return $this->setupChild(fn($c) => $c->savePramas());
+    }
+    public function restorePramas(): static
+    {
+        $this->params = $this->paramSave[--$this->paramSaveIndex];
+        return $this->setupChild(fn($c) => $c->restorePramas());
+    }
 
 
     private function getDataShared($key = null, $default = null)
@@ -67,12 +80,16 @@ trait DataShareUI
     {
         return $this->clearDataShared('groupField');
     }
-    public function setParams($params)
+    public function setParams($params, $merge = true)
     {
         if (!is_array($params)) {
             $params = [$params];
         }
-        $this->params = array_merge($this->params, $params);
+        if ($merge) {
+            $this->params = array_merge($this->params, $params);
+        } else {
+            $this->params = $params;
+        }
         return $this->setupChild(fn($c) => $c->setParams($params));
     }
 

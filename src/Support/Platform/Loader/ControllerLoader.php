@@ -73,11 +73,18 @@ class ControllerLoader implements IPipeLoader
                         if (!is_array($route->middleware)) {
                             $route->middleware = [$route->middleware];
                         }
-                        if ($route->isWeb) {
-                            $route->middleware = ['web'];
-                        } else {
-                            $route->middleware = ['api'];
+                        $middleware = "sokeio.api";
+                        if (!$route->isAuth) {
+                            $middleware .= ".guest";
                         }
+                        if ($route->isWeb) {
+                            $middleware = "sokeio.web";
+                            if ($route->isAuth) {
+                                $middleware .= ".auth";
+                            }
+                        }
+
+                        $route->middleware = [$middleware];
                         if ($route->middleware) {
                             $routeMatch->middleware($route->middleware);
                         }

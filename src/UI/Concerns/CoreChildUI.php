@@ -102,10 +102,11 @@ trait CoreChildUI
         if (is_array($ui)) {
             $html = $this->getHtmlItems($ui, $params, $callback);
         }
-        if (is_callable($ui)) {
+        if (!is_string($ui) && is_callable($ui)) {
             $html = call_user_func($ui, $this);
         }
         if ($ui instanceof BaseUI) {
+            $ui->savePramas();
             $rs = null;
             if ($callback) {
                 $rs = call_user_func($callback, $ui);
@@ -117,10 +118,10 @@ trait CoreChildUI
                 $html = $ui->view();
             }
             $ui->afterRender();
-            $ui->clearParams();
             if ($rs && is_callable($rs)) {
                 call_user_func($rs, $ui);
             }
+            $ui->restorePramas();
         } elseif (is_string($ui)) {
             $html = $ui;
         }

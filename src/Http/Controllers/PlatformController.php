@@ -10,12 +10,24 @@ use Sokeio\Platform;
 
 class PlatformController extends Controller
 {
-    #[RouteInfo(MethodType::GET, 'platform/screenshot/{type}/{id}', name: 'platform.screenshot', where: [['id', '.*']])]
+    #[RouteInfo(
+        MethodType::GET,
+        'platform/screenshot/{type}/{id}',
+        name: 'platform.screenshot',
+        where: [['id', '.*']],
+        isWeb: true
+    )]
     public function bannerScreenshot($type, $id)
     {
         return Platform::screenshot($type, $id);
     }
-    #[RouteInfo(MethodType::GET, 'platform/routes', enableKeyInSetting: 'PLATFORM_TABLE_ROUTE_ENABLE', enable: false)]
+    #[RouteInfo(
+        MethodType::GET,
+        'platform/routes',
+        enableKeyInSetting: 'PLATFORM_TABLE_ROUTE_ENABLE',
+        enable: false,
+        isWeb: true
+    )]
     public function routes()
     {
         $routeCollection = FacadesRoute::getRoutes();

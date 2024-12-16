@@ -18,7 +18,8 @@ class RouteInfo
         public array $middleware = [],
         public array $where = [],
         public array $options = [],
-        public bool $isWeb = true,
+        public bool $isWeb = false,
+        public bool $isAuth = true,
         public $enableKeyInSetting = null,
         public $enable = true
     ) {}
