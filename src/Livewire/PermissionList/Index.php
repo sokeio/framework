@@ -2,6 +2,7 @@
 
 namespace Sokeio\Livewire\PermissionList;
 
+use Illuminate\Support\Facades\Route;
 use Livewire\Attributes\Modelable;
 use Sokeio\Component;
 use Sokeio\Models\Permission;
@@ -27,16 +28,38 @@ class Index extends Component
                     'name' => str($key)->replace('-', ' ')->title(),
                 ];
             }
-            $group = [
+            $children = $this->treePermissions($colPers->where(function ($item) use ($level) {
+                return $item['level'] > $level;
+            })
+                ->groupBy(function ($item) use ($level) {
+                    return $item['levels'][$level];
+                }), $level + 1, []);
+            $levels =     $colPers->first()['levels'];
+            $subKey = '';
+            for ($index = 0; $index < $level - 1; $index++) {
+                $subKey .= $levels[$index] . '.';
+            }
+
+            if (Route::has($subKey)) {
+                dd($subKey);
+                $children = array_merge([
+                    [
+                        'key' => $subKey,
+                        'info' => [
+                            'name' => str($subKey)->replace('-', ' ')->title(),
+                        ],
+                        'level' => $level,
+                    ],
+                    $children
+                ]);
+            }
+            $item = [
                 'key' => $key,
                 'info' => $info,
                 'level' => $level,
-                'children' => $this->treePermissions($colPers->where('level', '>', $level)
-                    ->groupBy(function ($item) use ($level) {
-                        return $item['levels'][$level];
-                    }), $level + 1, [])
+                'children' =>  $children
             ];
-            $data[] = $group;
+            $data[] = $item;
         }
 
         return $data;

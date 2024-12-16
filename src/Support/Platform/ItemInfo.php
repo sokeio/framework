@@ -4,7 +4,6 @@ namespace Sokeio\Support\Platform;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
-use Sokeio\ObjectJson;
 use Sokeio\Platform;
 use Sokeio\Support\Platform\Concerns\WithRegisterItemInfo;
 use Sokeio\ServicePackage;

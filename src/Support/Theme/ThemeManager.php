@@ -59,8 +59,12 @@ class ThemeManager
             return ['value' => $key, 'text' => data_get($item, 'name', $key)];
         })->toArray();
     }
-    public function getTemplate($template)
+    public function getTemplate($template, $key = null)
     {
+
+        if ($key) {
+            return data_get($this->getTemplates()[$template], $key);
+        }
         return $this->getTemplates()[$template];
     }
     public function viewTemplate($template, $data = [], $mergeData = [], $noScope = false, $view = null)

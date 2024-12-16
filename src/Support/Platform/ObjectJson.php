@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio;
+namespace Sokeio\Support\Platform;
 
 use Illuminate\Support\Str;
 

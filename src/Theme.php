@@ -42,7 +42,7 @@ use Sokeio\Support\Theme\ThemeManager;
  * @method static \Sokeio\Support\Theme\ThemeManager|string|number|array|null option($key = null, $default = null)
  * @method static mixed getTemplates()
  * @method static mixed getTemplateOptions($targets = null)
- * @method static mixed getTemplate($template)
+ * @method static mixed getTemplate($template, $key = null)
  * @method static mixed viewTemplate($template, $data = [], $mergeData = [], $noScope = false, $view = null)
  * @method static array getLocations()
  * @method static mixed getLocationOptions($targets = null)

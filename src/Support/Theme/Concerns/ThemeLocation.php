@@ -4,7 +4,7 @@ namespace Sokeio\Support\Theme\Concerns;
 
 trait ThemeLocation
 {
-    private $location = [];
+    protected $location = [];
     public function renderLocation($location)
     {
         if (isset($this->location[$location])) {
@@ -20,9 +20,6 @@ trait ThemeLocation
     }
     public function location($location, $callback)
     {
-        if (!isset($this->location[$location])) {
-            $this->location = [];
-        }
         $this->location[$location][] = $callback;
     }
 }

@@ -6,7 +6,7 @@ use Sokeio\Support\Livewire\Concerns\WithLivewirePage;
 use Sokeio\Support\Livewire\PageConfig;
 use Sokeio\Support\Platform\ItemInfo;
 
-class Page extends Component implements IPage
+class Page extends Component implements ILoader
 {
     use WithLivewirePage;
     public static function runLoad(ItemInfo $itemInfo)
