@@ -54,6 +54,16 @@ h6 {
 }
 
 .tox-tinymce {
-    border: 1px solid #fcfdfe !important;
-    border-radius: 2px 2px 2px 2px !important;
+    border: var(--tblr-border-width) solid var(--tblr-border-color) !important;
+    background-color: var(--tblr-bg-forms);
+    background-clip: padding-box;
+    border-radius: var(--tblr-border-radius) !important;
+    box-shadow: var(--tblr-box-shadow-input);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+
+    &:focus {
+        color: var(--tblr-body-color);
+        background-color: var(--tblr-bg-forms);
+        border-color: #80aad3;
+    }
 }

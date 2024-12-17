@@ -17,6 +17,6 @@ trait WithThemeOption
     }
     public function mount()
     {
-        $this->formData = Theme::option();
+        $this->formData = Theme::option()??[];
     }
 }
