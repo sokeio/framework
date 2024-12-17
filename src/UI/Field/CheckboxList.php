@@ -62,6 +62,7 @@ class CheckboxList extends FieldUI
         <div {$attrWrapper} >
             <span class="{$classSpan}" x-text="JSON.stringify(FieldValue)"
             x-init="if(!Array.isArray(FieldValue)) {FieldValue = []}"></span>
+            {$this->renderChilds('searchBox')}
             <div x-ref="checklist" class="mt-2" >
             {$this->checklistRender()}
             </div>

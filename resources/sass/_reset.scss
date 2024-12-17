@@ -67,3 +67,8 @@ h6 {
         border-color: #80aad3;
     }
 }
+.highlighted-shortcode {
+    background-color: yellow; /* Màu nền cho shortcode */
+    border: 1px solid orange; /* Viền cho shortcode */
+    padding: 2px; /* Khoảng cách bên trong */
+}

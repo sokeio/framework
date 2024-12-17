@@ -18,6 +18,7 @@ import sokeio from "./sokeio";
 import { addScriptToWindow, addStyleToWindow } from "../../utils";
 import codeEditor from "./code-editor";
 import mediaIcon from "./media-icon";
+import coloris from "./coloris";
 const directive = {
   apexcharts,
   "get-value": getValue,
@@ -38,6 +39,7 @@ const directive = {
   "media-icon": mediaIcon,
   sokeio: sokeio,
   "code-editor": codeEditor,
+  coloris,
 };
 
 let waitLoader = (setting, items, level) => {

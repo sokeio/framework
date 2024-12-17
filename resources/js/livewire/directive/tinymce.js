@@ -10,13 +10,13 @@ export default {
     js: [],
     css: [],
   },
+
   init: ({ el, directive, component, cleanup, options }) => {
     if (el.$sokeio_tinymce) return;
-
     if (el.hasAttribute("wire:tinymce")) {
       options = new Function(`return ${el.getAttribute("wire:tinymce")};`)();
     }
-   cleanup(() => {
+    cleanup(() => {
       if (el.$sokeio_tinymce && el.$sokeio_tinymce.remove) {
         el.$sokeio_tinymce.remove();
         el.$sokeio_tinymce = null;
