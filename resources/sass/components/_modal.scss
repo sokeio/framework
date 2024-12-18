@@ -129,6 +129,7 @@ body[data-bs-theme=dark] [data-bs-theme=light] {
             flex-direction: column;
             width: 100%;
             // background-color: #ffffff;
+            min-height: 50px;
             background-clip: padding-box;
             border-radius: 4px;
             box-shadow: #1f596837 0 2px 4px 0;
