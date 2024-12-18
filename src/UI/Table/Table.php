@@ -12,6 +12,7 @@ class Table extends BaseUI
 {
     use TableRender, WithDatasource;
     private $columns = [];
+    private $columnGroups = [];
     private $columnKey = 'id';
     private $index = 1;
     private $pageSizes = [
@@ -24,6 +25,10 @@ class Table extends BaseUI
         1000,
         2000
     ];
+    public function columnGroup($key, $label = null)
+    {
+        return $this->tap(fn($c) => $c->columnGroups[$key] = $label);
+    }
 
     public function checkColumnEditable(Column $column)
     {

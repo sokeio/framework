@@ -11,9 +11,14 @@ class Column extends BaseUI
 {
     use ColumnData;
     private $paramCallback = null;
+    private $groupColumn = null;
     private $rowData = null;
     private $rowIndex = null;
     private Table|null $table = null;
+    public function columnGroup($groupColumn): static
+    {
+        return $this->tap(fn($c) => $c->groupColumn = $groupColumn);
+    }
     public function checkEditInline($ui, $when = null)
     {
         if (!$this->getTable()->checkColumnEditable($this)) {
