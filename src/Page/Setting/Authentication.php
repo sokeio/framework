@@ -5,6 +5,7 @@ namespace Sokeio\Page\Setting;
 use Sokeio\Components\Field\SelectField;
 use Sokeio\Setting;
 use Sokeio\Attribute\PageInfo;
+use Sokeio\Models\Role;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Field\ContentEditor;
 use Sokeio\UI\Field\Input;
@@ -33,8 +34,8 @@ class Authentication extends \Sokeio\Page
     {
         return SettingUI::make([
             Select::make('SOKEIO_AUTH_WITH_TYPE')
-                ->col4()
-                ->options([
+                ->col3()
+                ->dataSource([
                     [
                         'value' => 'email',
                         'text' => 'Login with Email',
@@ -50,8 +51,12 @@ class Authentication extends \Sokeio\Page
                 ])
                 ->label('Auth Type')
                 ->valueDefault('email'),
+                Select::make('SOKEIO_ROLE_IN_REGISTER')
+                    ->col3()
+                    ->remoteActionWithModel(Role::class, 'name')
+                    ->label('Register Role'),
             SwitchField::make('SOKEIO_SOCIAL_LOGIN')
-                ->col6()
+                ->col3()
                 ->labelTrue('Enable')
                 ->labelFalse('Disable')
                 ->label('Show Social Login')
@@ -177,7 +182,7 @@ class Authentication extends \Sokeio\Page
                     ->wireClick('saveData')
             ])
                 ->icon('ti ti-settings')
-               
+
 
         ];
     }

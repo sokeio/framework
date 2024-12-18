@@ -13,9 +13,7 @@ export default {
 
   init: ({ el, directive, component, cleanup, options }) => {
     if (el.$sokeio_tinymce) return;
-    if (el.hasAttribute("wire:tinymce")) {
-      options = new Function(`return ${el.getAttribute("wire:tinymce")};`)();
-    }
+
     cleanup(() => {
       if (el.$sokeio_tinymce && el.$sokeio_tinymce.remove) {
         el.$sokeio_tinymce.remove();
@@ -49,7 +47,10 @@ export default {
       file_picker_callback: function (callback, value, meta) {
         window.showFileManager(
           function (content) {
-            callback(content[0].url);
+            if (Array.isArray(content)) {
+              content = content[0];
+            }
+            callback(content.public_url);
           },
           {
             type: "image",

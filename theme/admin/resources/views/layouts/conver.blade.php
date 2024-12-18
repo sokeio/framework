@@ -9,8 +9,14 @@
 
 <body x-data="sokeioBody()">
     @themeBody
-    <div class=" vh-100 d-flex flex-column bg-white">
+    <div class="vh-100 d-flex flex-column bg-white">
         <div class="row g-0 flex-fill">
+            <div class="col-12 col-lg-6 col-xl-8 d-none d-lg-block">
+                <!-- Photo -->
+                <div class="bg-cover h-100 min-vh-100"
+                    style="background-image: url({{ setting('SOKEIO_SYSTEM_ADMIN_LOGIN_COVER_IMAGE', asset('platform/module/sokeio/cover.jpg')) }})">
+                </div>
+            </div>
             <div
                 class="col-12 col-lg-6 col-xl-4 border-top-wide border-primary d-flex flex-column justify-content-center">
                 <div class="container container-tight mt-4 px-lg-5">
@@ -28,13 +34,6 @@
                         </a> V1.0
                     </div>
                     Copyright &copy; {{ date('Y') }}. All rights reserved.
-                </div>
-
-            </div>
-            <div class="col-12 col-lg-6 col-xl-8 d-none d-lg-block">
-                <!-- Photo -->
-                <div class="bg-cover h-100 min-vh-100"
-                    style="background-image: url({{ setting('SOKEIO_SYSTEM_ADMIN_LOGIN_COVER_IMAGE', asset('platform/module/sokeio/cover.jpg')) }})">
                 </div>
             </div>
         </div>

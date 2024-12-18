@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Page\Dashboard;
+namespace Sokeio\Page\Setting\Dashboard;
 
 use Sokeio\Models\Dashboard;
 use Sokeio\Attribute\PageInfo;
@@ -14,7 +14,7 @@ use Sokeio\UI\WithUI;
     title: 'Dashboard Setting',
     route: 'dashboard.setting',
 )]
-class Setting extends \Sokeio\Page
+class Index extends \Sokeio\Page
 {
     use WithUI;
     public $dashboardId = 0;
@@ -56,7 +56,7 @@ class Setting extends \Sokeio\Page
             })
         ])
             ->icon('ti ti-settings')
-            
+
             ->xlSize()
 
             ->afterUI([

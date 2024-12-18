@@ -321,3 +321,6 @@ body[data-bs-theme=dark] [data-bs-theme=light] {
         }
     }
 }
+.tox ~ .so-modal{
+    z-index: 2055 !important;
+}

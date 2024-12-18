@@ -2,14 +2,12 @@
 
 namespace Sokeio\Page\Dashboard;
 
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\On;
 use Sokeio\Models\Dashboard;
 use Sokeio\Attribute\PageInfo;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Common\Div;
-use Sokeio\UI\Field\DatePicker;
 use Sokeio\UI\Field\Select;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\WithUI;
@@ -74,20 +72,20 @@ class Index extends \Sokeio\Page
         ])
             
             ->icon('ti ti-dashboard')->rightUI([
-                Select::make('dashboard_id')->placeholder('Dashboard')
-                    ->remoteActionWithModel(Dashboard::class)
-                    ->valueDefault(data_get($this->dataSearch, 'dashboard_id'))
-                    ->classNameWrapper('me-2')->debounce(10),
+                // Select::make('dashboard_id')->placeholder('Dashboard')
+                //     ->remoteActionWithModel(Dashboard::class)
+                //     ->valueDefault(data_get($this->dataSearch, 'dashboard_id'))
+                //     ->classNameWrapper('me-2')->debounce(10),
                 // DatePicker::make('from_date')->placeholder(__('Start Date'))
                 //     ->classNameWrapper('me-2')
                 //     ->valueDefault(Carbon::now()->subDays(30))->debounce(10),
                 // DatePicker::make('to_date')->placeholder(__('End Date'))
                 //     ->valueDefault(Carbon::now())->debounce(10),
-                Button::make()
-                    ->text(__('Settings'))
-                    ->icon('ti ti-settings')
-                    ->className('btn btn-danger')
-                    ->modalRoute($this->getRouteName('setting')),
+                // Button::make()
+                //     ->text(__('Settings'))
+                //     ->icon('ti ti-settings')
+                //     ->className('btn btn-danger')
+                //     ->modalRoute($this->getRouteName('setting')),
             ])->prefix('dataSearch')
             ->render(function () {
                 $this->updatedDataSearch();
