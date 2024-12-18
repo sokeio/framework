@@ -7,17 +7,37 @@
         padding: 0px !important;
     }
 
+    thead tr th {
+        padding: 2px !important;
+        border: 1px solid #e5e5e5;
+        &.column-group{
+            padding: 7px !important;
+            text-align: center;
+        }
+    }
+
+    tbody {
+        border: 1px solid #e5e5e5;
+
+        tr td {
+            border: 1px solid #e5e5e5;
+        }
+    }
+
     table th .sokeio-table-header {
         padding: 7px !important;
         display: flex;
         align-items: center;
         flex-direction: row;
-
+        .form-check{
+            margin-bottom: 0 !important;
+        }
         .sokeio-table-header-title {
             flex: 1;
             display: flex;
             align-items: center;
-            & > div {
+
+            &>div {
                 flex: 1;
             }
         }
@@ -28,7 +48,10 @@
     }
 
     table td .sokeio-table-cell {
-        padding: 7px !important;
+        padding: 6px !important;
+        .form-check{
+            margin-bottom: 0 !important;
+        }
     }
 
     table tr:hover {

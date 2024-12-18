@@ -19,6 +19,10 @@ class Column extends BaseUI
     {
         return $this->tap(fn($c) => $c->groupColumn = $groupColumn);
     }
+    public function getGroupColumn()
+    {
+        return $this->groupColumn;
+    }
     public function checkEditInline($ui, $when = null)
     {
         if (!$this->getTable()->checkColumnEditable($this)) {
@@ -180,9 +184,12 @@ class Column extends BaseUI
             }
         });
     }
-    public function viewHeader()
+    public function viewHeader($rowSpan = null)
     {
         $attr = $this->getAttr('header');
+        if ($rowSpan) {
+            $attr .= ' rowspan="' . $rowSpan . '"';
+        }
         return <<<HTML
         <th {$attr}>
             <div class="sokeio-table-header">

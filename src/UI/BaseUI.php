@@ -47,6 +47,10 @@ class BaseUI
     {
         return $this->attr('style', $property . ':' . $value . ';', $group);
     }
+    public function styleWrapper($property, $value)
+    {
+        return $this->attr('style', $property . ':' . $value . ';', 'wrapper');
+    }
 
     public function getNameWithPrefix($name)
     {

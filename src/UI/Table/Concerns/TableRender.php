@@ -8,10 +8,36 @@ trait TableRender
 {
     private function headerRender()
     {
+        $groupSkip = [];
         $html = '';
-        foreach ($this->columns as $column) {
-            $html .= $column->viewHeader();
+        $columns = collect($this->columns);
+        $isGroup = $columns->where(fn($c) => $c->getGroupColumn())->count() > 0;
+        if ($isGroup) {
+            $html .= '<tr>';
+            foreach ($columns as $column) {
+                $group = $column->getGroupColumn();
+                if ($group) {
+                    if (in_array($group, $groupSkip)) {
+                        continue;
+                    }
+                    $groupSkip[] = $group;
+                    $colSpan = $columns->where(fn($c) => $c->getGroupColumn() == $group)->count();
+                    $html .= '<th colspan="' . $colSpan . '" class="text-center column-group">'
+                        . $this->columnGroups[$group]
+                        . '</th>';
+                } else {
+                    $html .= $column->viewHeader(2);
+                }
+            }
+            $html .= '</tr>';
         }
+        $html .= '<tr>';
+        foreach ($this->columns as $column) {
+            if ($column->getGroupColumn() || !$isGroup) {
+                $html .= $column->viewHeader();
+            }
+        }
+        $html .= '</tr>';
         return $html;
     }
     private function cellRender($row, $index = 0)

@@ -9,13 +9,9 @@ export default {
     css: [],
   },
   init: ({ el, directive, component, cleanup, options }) => {
-    if (el.$sokeio_coloris) return;
-    el.$sokeio_coloris = Coloris({
+    Coloris({
       ...options,
       el: el,
-    });
-    setTimeout(() => {
-      el.$sokeio_coloris.update();
     });
   },
 };

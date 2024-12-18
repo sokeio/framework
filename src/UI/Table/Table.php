@@ -169,15 +169,16 @@ class Table extends BaseUI
                 ->width(20)
                 ->headerUI(
                     Checkbox::make()
+                        ->styleWrapper('text-align', 'center')
                         ->className('sokeio-checkbox-all')
                         ->skipFill()
-
                         ->attr('@change', 'checkboxAll')
                         ->attr('x-model', 'statusCheckAll')
                 )
                 ->cellUI(Checkbox::make('dataSelecteds')
                     ->skipFill()
                     ->className('sokeio-checkbox-one')
+                    ->styleWrapper('text-align', 'center')
                     ->tap(function (Checkbox $checkbox) use ($withoutPrefix) {
                         if ($withoutPrefix) {
                             $checkbox->beforeRender(function (Checkbox $checkbox) {
