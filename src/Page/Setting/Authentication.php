@@ -51,10 +51,10 @@ class Authentication extends \Sokeio\Page
                 ])
                 ->label('Auth Type')
                 ->valueDefault('email'),
-                Select::make('SOKEIO_ROLE_IN_REGISTER')
-                    ->col3()
-                    ->remoteActionWithModel(Role::class, 'name')
-                    ->label('Register Role'),
+            Select::make('SOKEIO_ROLE_IN_REGISTER')
+                ->col3()
+                ->remoteActionWithModel(Role::class, 'name')
+                ->label('Register With Role'),
             SwitchField::make('SOKEIO_SOCIAL_LOGIN')
                 ->col3()
                 ->labelTrue('Enable')
