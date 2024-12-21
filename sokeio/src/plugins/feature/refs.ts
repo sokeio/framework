@@ -1,4 +1,4 @@
-import { getKeyAndComponent } from "../../application/utils";
+import { getKeyAndComponent } from "../../utils";
 
 export default function ({
   component,

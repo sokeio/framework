@@ -15,7 +15,6 @@ let processNodeInElement = (component: any, $el: any) => {
   component.$children.push(componentNew);
 };
 export default (component: any) => {
-  console.log(component);
   if (!component.$el) {
     return component;
   }

@@ -1,4 +1,4 @@
-import { getWireIdFromElement, logDebug } from "./utils";
+import { getWireIdFromElement, logDebug } from "./../utils";
 import { PluginManager } from "./plugin-manager";
 import featurePlugin from "../plugins/feature";
 import { Component } from "../component";

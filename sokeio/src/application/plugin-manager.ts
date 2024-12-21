@@ -1,4 +1,4 @@
-import { addScriptToWindow, addStyleToWindow } from "./utils";
+import { addScriptToWindow, addStyleToWindow } from "./../utils";
 
 export class Plugin {
   css: any[] = [];

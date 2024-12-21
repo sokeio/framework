@@ -52,7 +52,6 @@ export default {
   },
   tapChildren: function ($callback: any) {
     if ($callback && this.$children) {
-      console.log(this.$children);
       this.$children.forEach((c: any) => {
         $callback(c);
       });

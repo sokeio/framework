@@ -9,7 +9,7 @@ const elScriptToJs = (el: any) => {
 };
 const sokeioUI: any = {
   version: "1.0.0",
-  debug: true,
+  debug: false,
   skipRun: false,
   run: application,
   regisger: registerComponent,

@@ -1,4 +1,4 @@
-import { executeFn } from "../../application/utils";
+import { executeFn } from "../../utils";
 
 export default function ({ component, el, name: _name, method, value }: any) {
   if (value) {
