@@ -8,8 +8,12 @@
   </head>
   <body>
     <div id="app">
-      <script sokeio-application-template type="javascript/x-template">
-        const template={
+      <template sokeio:application-template="sokeio::template" sokeio:application>
+
+
+      </template>
+      <script sokeio-application-template>
+        const template = {
           state: {
             count: 0,
           },
@@ -17,7 +21,7 @@
             setTimeout(() => {
               this.count = new Date();
               this.updateTime();
-            }, 1000); 
+            }, 1000);
           },
           ready() {
             this.updateTime();
@@ -28,11 +32,11 @@
                 <p so-text="count">dfdfdfdf</p>
                 <button class="btn btn-primary" so-on:click="count++;">click</button>
             </div>`;
-          }
+          },
         };
         export default {
           components: {
-            'sokeio::template': template
+            "sokeio::template": template,
           },
           state: {
             count: 0,

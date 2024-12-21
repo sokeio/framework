@@ -50,7 +50,7 @@ let excuteComponentFeature = function (component: any) {
     if (!component.$el) return;
     component.$el.querySelectorAll("*").forEach((el: any) => {
       if (
-        el.closest("[data-sokeio-id]").getAttribute("data-sokeio-id") !=
+        el.closest("[data-sokeio-id]")?.getAttribute("data-sokeio-id") !=
           component.getId() ||
         (el.hasAttribute("data-sokeio-id") &&
           el.getAttribute("data-sokeio-id") != component.getId())

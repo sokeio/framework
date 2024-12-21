@@ -71,7 +71,7 @@ class PageUI extends BaseUI
     {
         if ($this->checkVar('row')) {
             return <<<HTML
-            <div class="row">
+            <div class="row mx-0">
                 {$this->renderChilds()}
             </div>
             HTML;

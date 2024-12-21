@@ -231,21 +231,21 @@ export default {
   },
   render() {
     return ` <div class="so-fm-wrapper">
-          [so-fm::header /]
+          <so:so-fm::header></so:so-fm::header>
           <div class="so-fm-body">
               <div class="so-fm-folder-box">
-              [so-fm::folder-box /]
+               <so:so-fm::folder-box></so:so-fm::folder-box>
               </div>
               <div class="so-fm-body-list">
-                  [so-fm::loading /]
-                  [so-fm::grid-file /]
+                   <so:so-fm::loading></so:so-fm::loading>
+                   <so:so-fm::grid-file></so:so-fm::grid-file>
               </div>
           </div>
-          [so-fm::footer /]
+           <so:so-fm::footer></so:so-fm::footer>
           ${this.footerRender()}
-          [so-fm::new-folder /]
-          [so-fm::upload /]
-          [so-fm::context-menu/]
+           <so:so-fm::new-folder></so:so-fm::new-folder>
+           <so:so-fm::upload></so:so-fm::upload>
+           <so:so-fm::context-menu></so:so-fm::context-menu>
         </div>`;
   },
 };

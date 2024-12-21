@@ -1,7 +1,7 @@
 import { getWireIdFromElement, logDebug } from "./utils";
-import { Component } from "./component/index";
 import { PluginManager } from "./plugin-manager";
 import featurePlugin from "../plugins/feature";
+import { Component } from "../component";
 
 export function application(template: any = {}, options: any = {}) {
   let querySelectorOrEl = options.selector;
@@ -11,22 +11,13 @@ export function application(template: any = {}, options: any = {}) {
   if (typeof querySelectorOrEl === "string") {
     querySelectorOrEl = document.querySelector(querySelectorOrEl);
   }
-  let templateCopy = {
+  let templateApp = {
     ...template,
     sokeAppSelector: querySelectorOrEl,
     state: JSON.parse(JSON.stringify(template.state ?? {})),
   };
-  if (options.components) {
-    if (typeof options.components === "string") {
-      options.components = JSON.parse(options.components);
-    }
-    templateCopy.components = templateCopy.components ?? {};
-    templateCopy.components = {
-      ...templateCopy.components,
-      ...options.components,
-    };
-  }
-  logDebug("templateCopy", templateCopy);
+
+  logDebug("templateApp", templateApp);
   // let init = options.init === undefined ? true : options.init;
   document.dispatchEvent(new CustomEvent("sokeio::run"));
   let wireId = getWireIdFromElement(querySelectorOrEl);
@@ -53,8 +44,22 @@ export function application(template: any = {}, options: any = {}) {
     ...options.props,
     $plugin,
   };
-  let appComponent: any = Component(templateCopy, options.props ?? {}, null);
-  appComponent.$app = appComponent;
+  let appComponent: any = Component(templateApp, options.props ?? {}, null);
+  appComponent.$app = options?.$app ?? appComponent;
+  if (options.components) {
+    let components = options.components;
+    if (typeof components === "string") {
+      components = JSON.parse(options.components);
+    }
+    appComponent.$app.$components = appComponent.$app.$components ?? {};
+    if (components) {
+      appComponent.$app.$components = {
+        ...appComponent.$app.$components,
+        ...components,
+      };
+      console.log(components);
+    }
+  }
   appComponent.doRegister();
   appComponent.doBoot();
   appComponent.doRender();
