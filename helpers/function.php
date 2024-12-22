@@ -44,7 +44,8 @@ if (!function_exists('viewjs')) {
         $moduleName = $namespaces[0];
         $path = str_replace('.', '/', $namespaces[1]);
         if ($theme) {
-            $item =  Platform::theme()->findByNameOrId($moduleName);
+            // Not implemented yet
+            // $item =  Platform::theme()->findByNameOrId($moduleName);
         } else {
             $item =  Platform::module()->findByNameOrId($moduleName);
         }
