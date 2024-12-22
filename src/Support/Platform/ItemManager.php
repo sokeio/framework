@@ -182,6 +182,12 @@ class ItemManager
             return $item->name == $name;
         })->first();
     }
+    public function findByNameOrId($name): ?ItemInfo
+    {
+        return collect($this->arrItems)->where(function ($item) use ($name) {
+            return $item->name == $name || $item->id == $name;
+        })->first();
+    }
     public function hasByName($name): bool
     {
         return $this->findByName($name) !== null;

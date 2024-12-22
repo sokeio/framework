@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Sokeio\Platform;
 use Sokeio\Support\Platform\PlatformManager;
 use Sokeio\Setting;
@@ -33,6 +35,23 @@ if (!function_exists('tagLink')) {
     function tagLink($link)
     {
         return '<a href="' . $link . '" target="_blank">' . $link . '</a>';
+    }
+}
+if (!function_exists('viewjs')) {
+    function viewjs($name)
+    {
+        $namespaces = explode('::', $name);
+        $moduleName = $namespaces[0];
+        $path = str_replace('.', '/', $namespaces[1]);
+        $item =  Platform::module()->findByNameOrId($moduleName);
+        if (!$item) {
+            return '';
+        }
+        $path = $item->getPath("resources/views/{$path}.js");
+        if (!File::exists($path)) {
+            return '';
+        }
+        return file_get_contents($path);
     }
 }
 
