@@ -18,6 +18,7 @@ export default {
         template: "",
         url: "",
         elTarget: el,
+        $wire: component.$wire,
         isHide: true,
       };
       let modalTitle = el.getAttribute("wire:modal.title");
@@ -42,10 +43,7 @@ export default {
           options.template = main;
           options.components = components;
         }
-        console.log({ app });
       }
-      console.log(el);
-      console.log({ options });
       return window.showModal(modalTitle, options).onDestroy(() => {
         modalInterval = undefined;
         el.modalInstance = undefined;

@@ -32,6 +32,12 @@ export function application(template: any = {}, options: any = {}) {
       $wire: (window as any).Livewire.find(wireId),
     };
   }
+  if (options?.$wire) {
+    options.props = {
+      ...options.props,
+      $wire: options?.$wire,
+    };
+  }
   if (!options?.plugins) {
     options.plugins = [];
   }
