@@ -11,6 +11,7 @@ const sokeioUI: any = {
   version: "1.0.0",
   debug: false,
   skipRun: false,
+  app: {},
   run: application,
   regisger: registerComponent,
   getComponents: getComponents,
@@ -24,6 +25,7 @@ const sokeioUI: any = {
   getApplication(el: any) {
     if (!el) return null;
     // get component main
+    let appId = el.getAttribute("sokeio:application") ?? "";
     let main = el.querySelector("[sokeio\\:main]");
     if (!main) return null;
     let mainId = main.getAttribute("sokeio:main") ?? "";
@@ -37,7 +39,7 @@ const sokeioUI: any = {
       component[name] = elScriptToJs(el);
     });
     let isRun = el.getAttribute("sokeio:run") != null;
-    return { mainId, main, components: component, isRun, el };
+    return { appId, mainId, main, components: component, isRun, el };
   },
   getListApplication(el: any) {
     return [...el.querySelectorAll("[sokeio\\:application]")]
@@ -47,7 +49,8 @@ const sokeioUI: any = {
       .filter((app: any) => app);
   },
   execute(application: any, $app = null, $parent = null) {
-    let { main, components, isRun, mainId: _mainId, el: elApp } = application;
+    let { main, components, isRun, appId: _appId, el: elApp } = application;
+    elApp.parentNode.removeChild(elApp);
     if (isRun) {
       let divWrapper = document.createElement("div");
       elApp.parentNode.insertBefore(divWrapper, elApp);
@@ -60,9 +63,10 @@ const sokeioUI: any = {
         $app,
         $parent
       );
-      elApp.parentNode.removeChild(elApp);
+
       return true;
     }
+    sokeioUI.app[_appId] = application;
     return false;
   },
   runApplication(el: any, $app: any = null, $parent: any = null) {

@@ -33,6 +33,7 @@
 
 .so-modal-overlay {
     --tblr-backdrop-zindex: 1050;
+    --tblr-modal-zindex: 1056;
     --tblr-backdrop-bg: #182433;
     --tblr-backdrop-opacity: 0.75;
     position: fixed;
@@ -47,6 +48,14 @@
     &~.so-modal-overlay {
         z-index: var(--tblr-backdrop-zindex) - 1;
         display: none;
+
+        &~.so-modal {
+            z-index: var(--tblr-backdrop-zindex) - 10 !important;
+
+            &:last-child {
+                z-index: 1056 !important;
+            }
+        }
     }
 }
 

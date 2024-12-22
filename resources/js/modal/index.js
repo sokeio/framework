@@ -13,6 +13,7 @@ window.showModal = function (
     overlay: true,
   }
 ) {
+  let components = options.components || {};
   if (options.templateId) {
     options.template = document
       .getElementById(options.templateId)
@@ -24,12 +25,13 @@ window.showModal = function (
     if (typeof template === "string") {
       template = new Function(template)();
     }
+    components = {
+      ...components,
+      "sokeio::modal::template": template,
+    };
     options = {
       ...options,
-      components: {
-        "sokeio::modal::template": template,
-      },
-      htmlComponent: "[sokeio::modal::template][/sokeio::modal::template]",
+      htmlComponent: "<so:sokeio::modal::template></sokeio::modal::template>",
     };
     delete options.template;
   }
@@ -37,6 +39,7 @@ window.showModal = function (
     { ...modal, overlay: true, focusInput: true },
     {
       props: { title, ...options },
+      components,
     }
   );
 };

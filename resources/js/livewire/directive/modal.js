@@ -9,34 +9,43 @@ export default {
     css: [],
   },
   init: ({ el, directive, component, cleanup }) => {
-    let options = {
-      icon: '<i class="ti ti-alarm"></i>',
-      templateId: "",
-      template: "",
-      url: "",
-      elTarget: el,
-      isHide: true,
-    };
-    let modalTitle = el.getAttribute("wire:modal.title");
-    if (el.hasAttribute("wire:modal.url")) {
-      options.url = el.getAttribute("wire:modal.url");
-    }
-    if (el.hasAttribute("wire:modal.size")) {
-      options.size = el.getAttribute("wire:modal.size");
-    }
-
-    if (el.hasAttribute("wire:modal.icon")) {
-      options.icon = el.getAttribute("wire:modal.icon");
-    }
-    if (el.hasAttribute("wire:modal.template-id")) {
-      options.templateId = el.getAttribute("wire:modal.template-id");
-    }
-    if (el.hasAttribute("wire:modal.template")) {
-      options.template = el.getAttribute("wire:modal.template");
-    }
     let isFocus = false;
     let isShow = false;
     let getModal = function () {
+      let options = {
+        icon: '<i class="ti ti-alarm"></i>',
+        templateId: "",
+        template: "",
+        url: "",
+        elTarget: el,
+        isHide: true,
+      };
+      let modalTitle = el.getAttribute("wire:modal.title");
+      if (el.hasAttribute("wire:modal.url")) {
+        options.url = el.getAttribute("wire:modal.url");
+      }
+      if (el.hasAttribute("wire:modal.size")) {
+        options.size = el.getAttribute("wire:modal.size");
+      }
+
+      if (el.hasAttribute("wire:modal.icon")) {
+        options.icon = el.getAttribute("wire:modal.icon");
+      }
+      if (el.hasAttribute("wire:modal.template-id")) {
+        options.templateId = el.getAttribute("wire:modal.template-id");
+      }
+      if (el.hasAttribute("wire:modal.id")) {
+        let modalId = el.getAttribute("wire:modal.id");
+        let app = sokeioUI.app[modalId];
+        if (app) {
+          let { main, components, isRun } = app;
+          options.template = main;
+          options.components = components;
+        }
+        console.log({ app });
+      }
+      console.log(el);
+      console.log({ options });
       return window.showModal(modalTitle, options).onDestroy(() => {
         modalInterval = undefined;
         el.modalInstance = undefined;
