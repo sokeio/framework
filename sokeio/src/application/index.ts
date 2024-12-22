@@ -57,7 +57,6 @@ export function application(template: any = {}, options: any = {}) {
         ...appComponent.$app.$components,
         ...components,
       };
-      console.log(components);
     }
   }
   appComponent.doRegister();

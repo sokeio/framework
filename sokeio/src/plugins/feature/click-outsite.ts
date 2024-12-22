@@ -1,7 +1,6 @@
 import { executeFn } from "../../utils";
 
 export default function ({ component, el, name: _name, method, value }: any) {
-  console.log("click-outsite", el);
   if (value) {
     if (el["__SOKEIO_CLICK_OUTSITE"]) {
       el.removeEventListener(method, el["__SOKEIO_CLICK_OUTSITE"]);

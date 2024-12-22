@@ -9,6 +9,6 @@ export default {
     css: [],
   },
   init: ({ el, directive, component, cleanup }) => {
-    // window.sokeioUI.runApplicationTemplate(el);
+    window.sokeioUI.runApplication(el);
   },
 };

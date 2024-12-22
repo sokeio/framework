@@ -65,7 +65,6 @@ export default {
   open(event, path, type) {
     this.path = path;
     this.type = type;
-    console.log({ event, path, type });
     window.event.returnValue = false;
     this.refresh();
     let top = 0;

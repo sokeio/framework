@@ -70,7 +70,7 @@ export default {
     return true;
   },
   excute(component: any, event: any) {
-    if (event !== "render") return;
+    if (event !== "ready") return;
     excuteComponentFeature(component);
   },
 };

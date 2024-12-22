@@ -21,12 +21,12 @@ const sokeioUI: any = {
 
     return (el as any).__sokeio;
   },
-  getApplicationTemplate(el: any) {
+  getApplication(el: any) {
     if (!el) return null;
     // get component main
-    let main = el.querySelector("[sokeio\\:component-main]");
+    let main = el.querySelector("[sokeio\\:main]");
     if (!main) return null;
-    let mainId = main.getAttribute("sokeio:component-main") ?? "";
+    let mainId = main.getAttribute("sokeio:main") ?? "";
     main = elScriptToJs(main);
     // get component with name
     let components = [...el.querySelectorAll("[sokeio\\:component]")];
@@ -36,42 +36,45 @@ const sokeioUI: any = {
       if (!name) return;
       component[name] = elScriptToJs(el);
     });
-    let isRun = el.getAttribute("sokeio:application") != null;
-    console.log({ mainId, main, components: component, isRun });
+    let isRun = el.getAttribute("sokeio:run") != null;
     return { mainId, main, components: component, isRun, el };
   },
-  getApplicationTemplates(el: any) {
-    return [...el.querySelectorAll("[sokeio\\:application-template]")].map(
-      (el: any) => {
-        return sokeioUI.getApplicationTemplate(el);
-      }
-    );
+  getListApplication(el: any) {
+    return [...el.querySelectorAll("[sokeio\\:application]")]
+      .map((el: any) => {
+        return sokeioUI.getApplication(el);
+      })
+      .filter((app: any) => app);
   },
-  runApplicationTemplate(el: any, $app: any = null, $parent: any = null) {
-    sokeioUI.getApplicationTemplates(el).forEach((app: any) => {
-      let { main, components, isRun, mainId, el: elApp } = app;
-      console.log(mainId);
-      if (isRun) {
-        let divWrapper = document.createElement("div");
-        elApp.parentNode.insertBefore(divWrapper, elApp);
-        sokeioUI.run(
-          main,
-          {
-            selector: divWrapper,
-            components,
-          },
-          $app,
-          $parent
-        );
-        console.log($app);
-      }
-      console.log(elApp);
+  execute(application: any, $app = null, $parent = null) {
+    let { main, components, isRun, mainId: _mainId, el: elApp } = application;
+    if (isRun) {
+      let divWrapper = document.createElement("div");
+      elApp.parentNode.insertBefore(divWrapper, elApp);
+      sokeioUI.run(
+        main,
+        {
+          selector: divWrapper,
+          components,
+        },
+        $app,
+        $parent
+      );
       elApp.parentNode.removeChild(elApp);
+      return true;
+    }
+    return false;
+  },
+  runApplication(el: any, $app: any = null, $parent: any = null) {
+    sokeioUI.getListApplication(el).forEach((app: any) => {
+      if (!sokeioUI.execute(app, $app, $parent)) {
+        console.error("Application not run", app);
+      }
     });
   },
-  runApplication() {
+  runDocument() {
     if (sokeioUI.skipRun) return;
-    sokeioUI.runApplicationTemplate(document.body);
+    sokeioUI.runApplication(document.body);
   },
 };
 
@@ -80,7 +83,7 @@ export default sokeioUI;
   window.sokeioUI = sokeioUI;
 })();
 document.addEventListener("DOMContentLoaded", function () {
-  window.sokeioUI.runApplication();
+  window.sokeioUI.runDocument();
 });
 // document.addEventListener(
 //   "sokeio::plugin::load",

@@ -124,7 +124,7 @@ export default {
       }
     });
     this.watch("selectedCount", function (value, oldValue) {
-      if (value != oldValue) {
+      if (value != oldValue && this.btnChooseFileAction) {
         this.btnChooseFileAction.disabled = value == 0;
       }
     });

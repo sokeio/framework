@@ -6,7 +6,7 @@ export default {
     this.lifecycle("register");
   },
   doBoot: function () {
-    this.lifecycle("boot");
+    this.lifecycle("boot", null, false);
     let html = this.render ? this.render() : "<div></div>";
     html = html.trim();
     if (this.$el) {
@@ -22,9 +22,6 @@ export default {
   },
   doReady: function () {
     this.lifecycle("ready");
-    this.tapChildren((item: any) => {
-      item.doReady();
-    });
   },
   doRender: function () {
     if (this.$el) {
@@ -39,15 +36,10 @@ export default {
       elTemp.replaceWith(this.$el);
     }
     this.lifecycle("render");
-    this.tapChildren((item: any) => {
-      item.doRender();
-    });
   },
   doDestroy: function () {
     this.lifecycle("destroy");
-    this.tapChildren((item: any) => {
-      item.doDestroy();
-    });
+
     if (this.$parent) {
       this.$parent.$children.splice(this.$parent.$children.indexOf(this), 1);
     }

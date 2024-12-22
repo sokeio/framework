@@ -40,14 +40,22 @@ export default {
     }
     return this;
   },
-  lifecycle: function ($name: any, $callback: any = null) {
+  lifecycle: function ($name: any, $callback: any = null, $runChildren = true) {
     if ($callback) {
       this.__hooks__.on($name, $callback);
       return this;
     }
 
     this.__hooks__.fire($name);
-
+    if (this[$name]) {
+      this[$name]();
+    }
+    if ($runChildren) {
+      this.tapChildren((item: any) => {
+        item["do" + $name.charAt(0).toUpperCase() + $name.slice(1)]();
+      });
+    }
+    this.$app.$plugin.excute(this, $name);
     return this;
   },
   tapChildren: function ($callback: any) {
