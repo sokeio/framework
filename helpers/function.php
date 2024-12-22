@@ -38,12 +38,16 @@ if (!function_exists('tagLink')) {
     }
 }
 if (!function_exists('viewjs')) {
-    function viewjs($name)
+    function viewjs($name, $theme = false)
     {
         $namespaces = explode('::', $name);
         $moduleName = $namespaces[0];
         $path = str_replace('.', '/', $namespaces[1]);
-        $item =  Platform::module()->findByNameOrId($moduleName);
+        if ($theme) {
+            $item =  Platform::theme()->findByNameOrId($moduleName);
+        } else {
+            $item =  Platform::module()->findByNameOrId($moduleName);
+        }
         if (!$item) {
             return '';
         }
