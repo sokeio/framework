@@ -44,6 +44,19 @@ export default {
           options.components = components;
         }
       }
+      if (el.hasAttribute("wire:modal.callback")) {
+        options.callback = function (value) {
+          if (Alpine.$data(el)[el.getAttribute("wire:modal.callback")]) {
+            Alpine.$data(el)[el.getAttribute("wire:modal.callback")](value);
+          } else {
+            console.error(
+              "Callback {" +
+                el.getAttribute("wire:modal.callback") +
+                "} function not found"
+            );
+          }
+        };
+      }
       return window.showModal(modalTitle, options).onDestroy(() => {
         modalInterval = undefined;
         el.modalInstance = undefined;
