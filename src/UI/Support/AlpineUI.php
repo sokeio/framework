@@ -9,7 +9,7 @@ class AlpineUI
 {
     use WithAlpine;
     public function __construct(protected BaseUI $ui) {}
-    public function ui()
+    public function getUI()
     {
         return $this->ui;
     }

@@ -3,7 +3,7 @@ import manager from "./file-manager";
 window.showFileManager = function (callback, type = "file", multiple = false) {
   window.showModal("File Manager", {
     type: type,
-    fnCallback: callback,
+    callback: callback,
     template: manager,
     modalSize: "xxl",
     skipOverlayClose: true,

@@ -100,7 +100,7 @@ function mapObservableProxy(app: any) {
 export function executeFn(fn: any, $event: any, el: any, app: any) {
   return new Function(
     "$event",
-    "$eventEl",
+    "$targetEl",
     "$obj",
     `with($obj) {  ${fn}}`
   ).apply(app, [$event, el, mapObservableProxy(app)]);

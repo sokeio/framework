@@ -94,6 +94,14 @@ export default {
       this.$app.doDestroy();
     }
   },
+  fnCallbackAndClose($value: any, $closeApp = true) {
+    if (this.$app) {
+      this.$app.fnCallback?.($value);
+      if ($closeApp) {
+        this.$app.doDestroy();
+      }
+    }
+  },
 
   refresh: function () {
     let elParent = this.$el.parentNode;

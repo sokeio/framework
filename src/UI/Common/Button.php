@@ -90,7 +90,11 @@ class Button extends BaseUI
     }
     public function modalClose()
     {
-        return $this->attr('so-on:click', 'this.closeApp()');
+        return $this->sokeioClick('this.closeModal()');
+    }
+    public function sokeioClick($callback)
+    {
+        return $this->attr('so-on:click', $callback);
     }
     private function getUrlFromModal($modal)
     {

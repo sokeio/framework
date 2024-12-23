@@ -43,6 +43,22 @@ trait CommonUI
     {
         return $this->alpine;
     }
+    public function xData($data)
+    {
+        return $this->alpine->data($data);
+    }
+    public function xShow($data)
+    {
+        return $this->alpine->show($data);
+    }
+    public function xBind($data)
+    {
+        return $this->alpine->bind($data);
+    }
+    public function xModel($data)
+    {
+        return $this->alpine->model($data);
+    }
     public function className($className): static
     {
         return $this->attrAdd('class', $className);

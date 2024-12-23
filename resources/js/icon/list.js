@@ -8,12 +8,12 @@ export default {
       this.listEl.scrollTop = this.$parent.listElTop;
     });
   },
-  chooseIcon(icon, $eventEl) {
+  chooseIcon(icon, $targetEl) {
     this.listEl
       .querySelector(".sokeio-active")
       ?.classList.remove("sokeio-active");
     setTimeout(() => {
-      $eventEl.classList.add("sokeio-active");
+      $targetEl.classList.add("sokeio-active");
     });
     this.$parent.chooseIcon(icon);
   },
@@ -30,9 +30,9 @@ export default {
       .map((item) => {
         return `<span class="p-2 item-icon sokeio-hover rounded-2 ${
           this.$parent.icon == item.class ? " sokeio-active" : ""
-        }" so-on:click="chooseIcon('${item.class}',$eventEl)"><i class="fs-1  ${
+        }" so-on:click="chooseIcon('${
           item.class
-        }"></i></span>`;
+        }',$targetEl)"><i class="fs-1  ${item.class}"></i></span>`;
       })
       .join("");
   },

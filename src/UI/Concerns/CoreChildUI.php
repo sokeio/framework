@@ -76,6 +76,12 @@ trait CoreChildUI
         if (!is_array($childs)) {
             $childs = [$childs];
         }
+        $childs = array_map(function ($child) {
+            if (is_object($child) && method_exists($child, 'getUI')) {
+                return $child->getUI();
+            }
+            return $child;
+        }, $childs);
         if ($prepend) {
             $this->childs[$group] = array_merge($childs, $this->childs[$group] ?? []);
         } else {

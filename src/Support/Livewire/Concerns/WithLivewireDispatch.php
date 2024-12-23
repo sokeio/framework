@@ -111,4 +111,12 @@ trait WithLivewireDispatch
     {
         $this->callFuncById($this->getRefId(), $func, $params);
     }
+    public function callFuncByParent($func, $params = [])
+    {
+        $this->callFunc($func, [
+            'id' => $this->getId(),
+            'parent' => true,
+            'params' => $params
+        ]);
+    }
 }

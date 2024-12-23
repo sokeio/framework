@@ -34,7 +34,7 @@ export default {
     });
     this.onReady(() => {
       setTimeout(() => {
-        this.textSearchEl.focus();
+        this.textSearchEl?.focus();
       });
     });
   },
@@ -64,8 +64,8 @@ export default {
                     <div class="p-2">
                     <input type="text" so-refs="textSearchEl" class="form-control" placeholder="Search..." so-model="textSearch"  />
                     </div>
-                    [list-icon][/list-icon]
-                    [footer][/footer]
+                    <so:list-icon></so:list-icon>
+                    <so:footer></so:footer>
                </div>
         `;
   },
