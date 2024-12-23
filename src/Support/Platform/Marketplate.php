@@ -2,10 +2,9 @@
 
 namespace Sokeio\Support\Platform;
 
-use Directory;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
-use Sokeio\Platform;
+use Illuminate\Support\Facades\Log;
 
 class Marketplate
 {
@@ -23,7 +22,7 @@ class Marketplate
     private function makeRequest(string $url, array $data = []): \Illuminate\Http\Client\Response
     {
         $url = sprintf('%s%s', $this->marketplaceUrl, $url);
-
+        Log::info($url);
         return Http::withOptions(['verify' => false])->post($url, $data);
     }
     public function getLastVersion($id, $version = 'main')

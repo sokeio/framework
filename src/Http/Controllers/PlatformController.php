@@ -10,6 +10,16 @@ use Sokeio\Platform;
 
 class PlatformController extends Controller
 {
+
+    #[RouteInfo(
+        MethodType::GET,
+        'platform/test',
+        isWeb: true
+    )]
+    public function test()
+    {
+        return  Platform::module()->getMarketplate()->getLastVersion('sokeio/framework');
+    }
     #[RouteInfo(
         MethodType::GET,
         'platform/screenshot/{type}/{id}',

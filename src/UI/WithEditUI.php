@@ -3,6 +3,7 @@
 namespace Sokeio\UI;
 
 use Illuminate\Support\Facades\DB;
+use Sokeio\Attribute\ModelInfo;
 use Sokeio\FormData;
 use Sokeio\Platform;
 
@@ -58,7 +59,8 @@ trait WithEditUI
         $data =  $this->getDataModel();
         DB::transaction(function () use ($data) {
             $this->beforeSaveData($data);
-            if (!isset($this->skipByUser) || !$this->skipByUser) {
+            $model =  ModelInfo::fromClass($this->getModel());
+            if ($model && !$model->skipBy) {
                 if ($this->dataId) {
                     $data->created_by = Platform::gate()->getUserId();
                 } else {
