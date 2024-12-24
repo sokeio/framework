@@ -5,9 +5,9 @@ namespace Sokeio\Console\Commands;
 use Illuminate\Console\Command;
 use Sokeio\Platform;
 
-class ThemeInstall extends Command
+class ModuleInstall extends Command
 {
-    protected $name = 'so:theme:install';
+    protected $signature = 'so:install';
 
     /**
      * Execute the console command.

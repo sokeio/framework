@@ -1,6 +1,9 @@
 <?php
 
+use Illuminate\Database\Console\Migrations\InstallCommand;
 use Sokeio\Console\Commands\DebugCommand;
+use Sokeio\Console\Commands\FileCommand;
+use Sokeio\Console\Commands\MakeCommand;
 use Sokeio\Console\Commands\ModuleInstall;
 use Sokeio\Console\Commands\ThemeInstall;
 
@@ -16,12 +19,17 @@ return [
     ],
     'commands' => [
         DebugCommand::class,
-        ModuleInstall::class,
-        ThemeInstall::class
+        MakeCommand::class,
+        FileCommand::class,
+        InstallCommand::class,
     ],
     'platform' => [
         'base_url' => env('PLATFORM_URL', 'https://sokeio.com/api/'),
-        'temps' => env('PLATFORM_TEMP', 'platform/temps/'),
+        'temps' => base_path(env('PLATFORM_TEMP', 'platform/temps/')),
+        'updater' => [
+            'backup' => base_path(env('PLATFORM_UPDATER_BACKUP', 'platform/updater/backups/')),
+            'temp' => base_path(env('PLATFORM_UPDATER_BACKUP', 'platform/updater/temps/'))
+        ],
         'module' => [
             'path' => base_path('platform/module'),
             'public' => base_path('public/platform/module'),

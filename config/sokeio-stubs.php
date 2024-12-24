@@ -69,6 +69,7 @@ return [
         ],
 
         'page' => ['path' => 'src/Page', 'namespace' => 'Page', 'generate' => true],
+        'widget' => ['path' => 'src/Widget', 'namespace' => 'Widget', 'generate' => true],
         'livewire' => ['path' => 'src/Livewire', 'namespace' => 'Livewire', 'generate' => true],
         'provider' => ['path' => 'src/Providers', 'namespace' => 'Providers', 'generate' => true],
         'helpers' => ['path' => 'helpers', 'generate' => true],
@@ -592,6 +593,24 @@ return [
         ],
         'action' => [
             'path' => 'action',
+            'name' => '$CLASS_FILE$.php',
+            'replacements' => [
+                'CLASS',
+                'NAMESPACE',
+                'LOWER_NAME',
+            ]
+        ],
+        'page' => [
+            'path' => 'page',
+            'name' => '$CLASS_FILE$.php',
+            'replacements' => [
+                'CLASS',
+                'NAMESPACE',
+                'LOWER_NAME',
+            ]
+        ],
+        'widget' => [
+            'path' => 'widget',
             'name' => '$CLASS_FILE$.php',
             'replacements' => [
                 'CLASS',

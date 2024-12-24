@@ -1,0 +1,10 @@
+<?php
+
+namespace $NAMESPACE$;
+
+use Sokeio\Attribute\PageInfo;
+
+#[PageInfo(admin: true,auth: true,title: '$CLASS$',menu: true,menuTitle: '$CLASS$',icon: '',sort: -20)]
+class $CLASS$ extends \Sokeio\Page
+{
+}

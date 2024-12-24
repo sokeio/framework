@@ -256,4 +256,11 @@ class ItemManager
         }
         return $this->itemGenerate->generate($name);
     }
+    public function generateFile($typeId, $name, $fileType = 'page')
+    {
+        if (!$this->itemGenerate) {
+            $this->itemGenerate = new ItemGenerate($this);
+        }
+        return $this->itemGenerate->generateFile($typeId, $name, $fileType);
+    }
 }

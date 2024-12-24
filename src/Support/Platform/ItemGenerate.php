@@ -122,6 +122,12 @@ class ItemGenerate
         $this->generatorFile();
         return 0;
     }
+    public function generateFile($baseName, $fileName, $type)
+    {
+        $this->baseName = $baseName;
+        $this->fileName = $fileName;
+        $this->generatorFileByStub($type);
+    }
     public function processConvertClass($class)
     {
         $class = str_replace('/', '\\', $class);

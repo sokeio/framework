@@ -12,6 +12,8 @@ class WidgetInfo
     public function __construct(
         public $key,
         public $name = '',
-        public $icon = null
+        public $icon = null,
+        public $description = '',
+        public $useDefault = true,
     ) {}
 }
