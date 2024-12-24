@@ -97,6 +97,11 @@ class Table extends BaseUI
             $this->setValueByName('order.field', $order['field'] ?? '');
             $this->setValueByName('order.type',  $order['type'] ?? 'asc');
         }, false);
+        $this->register(function(self $table){
+            if(!$table->getPrefix()){
+                $table->prefix('tableEditline');
+            }
+        });
     }
 
     public function showAll()

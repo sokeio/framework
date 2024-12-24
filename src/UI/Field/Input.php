@@ -10,11 +10,7 @@ class Input extends FieldUI
         return $this->attr('type', 'text');
     }
 
-    public function password()
-    {
-        return $this->attr('type', 'password');
-    }
-
+  
     public function number()
     {
         return $this->attr('type', 'number');
@@ -39,26 +35,7 @@ class Input extends FieldUI
     {
         return $this->attr('type', 'search');
     }
-
-    public function date()
-    {
-        return $this->attr('type', 'text')->attr('wire:flatpickr');
-    }
-
-    public function time()
-    {
-        return $this->attr('type', 'time');
-    }
-
-    public function datetimeLocal()
-    {
-        return $this->attr('type', 'datetime-local');
-    }
-
-    public function week()
-    {
-        return $this->attr('type', 'week');
-    }
+ 
     public function hidden()
     {
         return $this->attr('type', 'hidden');

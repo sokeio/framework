@@ -10,6 +10,7 @@ use Sokeio\UI\Common\Button;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Field\Input;
 use Sokeio\UI\Field\LivewireField;
+use Sokeio\UI\Field\Password;
 use Sokeio\UI\Field\Select;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\WithEditUI;
@@ -20,8 +21,8 @@ class Edit extends \Sokeio\Page
     use WithEditUI;
     protected function afterMount($data)
     {
-        $permissions = $data->permissions()->pluck('id')?->toArray() ;
-        $roles = $data->roles()->pluck('id')?->toArray() ;
+        $permissions = $data->permissions()->pluck('id')?->toArray();
+        $roles = $data->roles()->pluck('id')?->toArray();
         data_set($this->formData, 'permissions', $permissions);
         data_set($this->formData, 'roles', $roles);
     }
@@ -46,7 +47,7 @@ class Edit extends \Sokeio\Page
                 Input::make('name')->label(__('Name'))->ruleRequired('Please enter name'),
                 Input::make('email')->label(__('Email'))->ruleRequired()->ruleEmail(),
                 Input::make('phone_number')->label(__('Phone'))->ruleRequired(),
-                Input::make('password')->label(__('Password'))->password()
+                Password::make('password')->label(__('Password'))
                     ->when(function () {
                         return !$this->dataId;
                     }),

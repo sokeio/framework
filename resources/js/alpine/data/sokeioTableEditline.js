@@ -6,17 +6,26 @@ document.addEventListener("alpine:init", () => {
     get tableRowEditline() {
       return this.$wire.tableRowEditline ?? [];
     },
+    checkRowEditline($id) {
+      if (
+        !this.tableRowEditline ||
+        Array.isArray(this.tableRowEditline) === false
+      ) {
+        return false;
+      }
+      return this.tableRowEditline.includes($id);
+    },
     get checkExistEditInSelectd() {
       return (
         this.dataSelecteds.filter((el) =>
-          this.tableRowEditline.includes(el)
+          this.checkRowEditline(el)
         ).length > 0
       );
     },
     get checkExistNotEditInSelectd() {
       return (
         this.dataSelecteds.filter(
-          (el) => !this.tableRowEditline.includes(el)
+          (el) => !this.checkRowEditline(el)
         ).length > 0
       );
     },

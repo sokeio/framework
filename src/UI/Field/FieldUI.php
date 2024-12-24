@@ -22,21 +22,36 @@ class FieldUI extends BaseUI
             $base->getManager()?->registerField($base);
         });
         $this->render(function (self $base) {
-            if (!$base->containsAttr('class', 'sokeio-field-input', 'wrapper')) {
+            if (!$base->containsAttrWrapper('class', 'sokeio-field-input')) {
                 $base->classNameWrapper('sokeio-field-input');
             }
-            $debounce = $base->getVar('wire:debounce', null, true);
-            if ($debounce && $debounce > 0) {
-                $base->attr('wire:model.live.debounce.' . $debounce . 'ms', $base->getFieldName());
-            } else {
-                $base->attr('wire:model', $base->getFieldName());
+            $name = $base->getFieldNameWithoutPrefix();
+            if ($name) {
+                $name = $base->getFieldName();
+                $debounce = $base->getVar('wire:debounce', null, true);
+                if ($debounce && $debounce > 0) {
+                    $base->attr('wire:model.live.debounce.' . $debounce . 'ms', $name);
+                } else {
+                    $base->attr('wire:model', $name);
+                }
             }
         });
     }
-
-        public function classNameWrapper($className)
+    public function containsAttrWrapper($key, $value = null)
     {
-        return $this->attrAdd('class', $className, 'wrapper');
+        return $this->containsAttr($key, $value, 'wrapper');
+    }
+    public function attrWrapper($key, $value)
+    {
+        return $this->attr($key, $value, 'wrapper');
+    }
+    public function attrAddWrapper($key, $value)
+    {
+        return $this->attrAdd($key, $value, 'wrapper');
+    }
+    public function classNameWrapper($className)
+    {
+        return $this->attrAddWrapper('class', $className);
     }
 
     public function getFieldNameWithoutPrefix()
@@ -90,6 +105,45 @@ class FieldUI extends BaseUI
     {
         return $this->getVar('label', null, true);
     }
+    public function showCount()
+    {
+        return $this->vars('showCount', true);
+    }
+    public function hideCount()
+    {
+        return $this->vars('showCount', false);
+    }
+    public function maxLength($maxLength)
+    {
+        return $this->attr('maxlength', $maxLength)->vars('maxLength', $maxLength);
+    }
+    private function labelCount()
+    {
+        if ($this->getVar('showCount', false, true)) {
+
+            if ($maxLength = $this->getVar('maxLength', null, true)) {
+                return '<span class="form-label-description" x-text="FieldValue?.length + \'/\' + ' . $maxLength . '"></span>';
+            }
+            return '<span class="form-label-description" x-text="FieldValue?.length"></span>';
+        }
+        return '';
+    }
+    public function beforeIcon($icon)
+    {
+        return $this->vars('beforeIcon', $icon);
+    }
+    public function afterIcon($icon)
+    {
+        return $this->vars('afterIcon', $icon);
+    }
+    public function beforeUI($ui)
+    {
+        return $this->child($ui, 'beforeUI');
+    }
+    public function afterUI($ui)
+    {
+        return $this->child($ui, 'afterUI');
+    }
     protected function getValueDefaultOrParam()
     {
         $valueDefault = $this->getValueDefault();
@@ -109,15 +163,40 @@ class FieldUI extends BaseUI
             $this->setValue($valueDefault);
         }
         $fieldView = $this->fieldView();
+        if ($beforeIcon = $this->getVar('beforeIcon', '', true) || $afterIcon = $this->getVar('afterIcon', '', true)) {
+            if ($beforeIcon) {
+                $beforeIcon = '<span class="input-icon-addon"><i class="' . $beforeIcon . '"></i></span>';
+            }
+            if ($afterIcon) {
+                $afterIcon = '<span class="input-icon-addon"><i class="' . $afterIcon . '"></i></span>';
+            }
+            $fieldView = <<<HTML
+            <div class="input-icon">
+                {$beforeIcon}
+                {$fieldView}
+                {$afterIcon}
+            </div>
+            HTML;
+        }
+        if ($this->hasChilds('beforeUI') || $this->hasChilds('afterUI')) {
+            $fieldView = <<<HTML
+            <div class="input-group">
+                {$this->renderChilds('beforeUI')}
+                {$fieldView}
+                {$this->renderChilds('afterUI')}
+            </div>
+            HTML;
+        }
+        $fieldLabel = '';
         if ($this->checkVar('label')) {
             $label = $this->getLabel();
-            $fieldView = <<<HTML
-            <label class="form-label">{$label}</label>
-            {$fieldView}
+            $fieldLabel = <<<HTML
+            <label class="form-label">{$label} {$this->labelCount()}</label>
             HTML;
         }
         $view = <<<HTML
         <div {$attrWrapper} x-data="sokeioField('{$attrModel}')" data-sokeio-default="{$valueDefault}">
+        {$fieldLabel}
         {$fieldView}
         {$this->errorView()}
         </div>

@@ -30,6 +30,12 @@ document.addEventListener("alpine:init", () => {
       this.$wire.dataSelecteds = this.dataSelecteds.filter((el) => el !== $id);
     },
     checkRowEditline($id) {
+      if (
+        !this.tableRowEditline ||
+        Array.isArray(this.tableRowEditline) === false
+      ) {
+        return false;
+      }
       return this.tableRowEditline.includes($id);
     },
     sortField(el) {
