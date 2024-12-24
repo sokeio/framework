@@ -32,7 +32,6 @@ export default {
       promotion: false,
       target: el,
       setup: function (editor) {
-        console.log("setup", editor);
         editor.on("init", function () {
           editor.setContent(el.value);
           editor.undoManager.dispatchChange();

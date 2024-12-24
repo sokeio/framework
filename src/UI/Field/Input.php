@@ -9,7 +9,6 @@ class Input extends FieldUI
     {
         return $this->attr('type', 'text');
     }
-
   
     public function number()
     {

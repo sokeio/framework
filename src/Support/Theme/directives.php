@@ -48,6 +48,13 @@ return [
         ?>
         EOT;
     },
+    'viewjs' => function ($expression) {
+        return <<<EOT
+        <?php
+            echo viewjs({$expression});
+        ?>
+        EOT;
+    },
     'sokeio' => function ($expression) {
         $expression = ThemeParser::multipleArgs($expression);
         $viewBasePath = Blade::getPath();
