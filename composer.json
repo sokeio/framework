@@ -13,7 +13,7 @@
     }
   ],
   "require": {
-    "livewire/livewire": "^3.4.11",
+    "livewire/livewire": "^3.5.18",
     "laravel/socialite": "^5.16.0"
   },
   "require-dev": {},

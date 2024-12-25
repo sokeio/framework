@@ -36,6 +36,8 @@ use Sokeio\Support\Platform\PlatformManager;
  * @method static \Sokeio\Support\Platform\PlatformManager registerModel($class, ItemInfo $itemInfo)
  * @method static array getAllModel()
  * @method static array getModelByKey($modelKey, $paramKey = null)
+ * @method static mixed apiOk($data = null,$message = null, $code = 200)
+ * @method static mixed apiError($message = null, $errors = [], $code = 500)
  */
 
 class Platform extends Facade

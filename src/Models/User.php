@@ -4,15 +4,63 @@ namespace Sokeio\Models;
 
 use Sokeio\Concerns\WithModelHook;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Sokeio\Concerns\WithPermission;
 use Illuminate\Support\Facades\Hash;
 use Sokeio\Attribute\ModelInfo;
+use Illuminate\Support\Str;
+use DateTimeInterface;
 
-#[ModelInfo(createBy: '', updateBy: '')]
+#[ModelInfo(skipBy: true)]
 class User extends Authenticatable
 {
-    use WithPermission;
+    use WithPermission, Notifiable;
     use WithModelHook;
+    /**
+     * Get the access tokens that belong to model.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany<TToken, $this>
+     */
+    public function tokens()
+    {
+        return $this->morphMany(PersonalAccessToken::class, 'tokenable');
+    }
+    /**
+     * Generate the token string.
+     *
+     * @return string
+     */
+    public function generateTokenString()
+    {
+        return sprintf(
+            '%s%s%s',
+            config('sokeio.platform.token_prefix', ''),
+            $tokenEntropy = Str::random(40),
+            hash('crc32b', $tokenEntropy)
+        );
+    }
+    /**
+     * Create a new personal access token for the user.
+     *
+     * @param  string  $name
+     * @param  array  $abilities
+     * @param  \DateTimeInterface|null  $expiresAt
+     * @return \Laravel\Sanctum\NewAccessToken
+     */
+    public function createToken(string $name, array $abilities = ['*'], ?DateTimeInterface $expiresAt = null)
+    {
+        $plainTextToken = $this->generateTokenString();
+
+        $token = $this->tokens()->create([
+            'name' => $name,
+            'token' => hash('sha256', $plainTextToken),
+            'abilities' => $abilities,
+            'expires_at' => $expiresAt,
+        ]);
+
+        return  $token->getKey() . '|' . $plainTextToken;
+    }
+
     protected $fillable = ["*"];
     protected $hidden = ["password"];
     public function isActive()

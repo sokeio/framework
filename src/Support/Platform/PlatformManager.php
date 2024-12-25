@@ -95,4 +95,23 @@ class PlatformManager
             }
         });
     }
+    public function apiOk($data = null, $message = null, $code = 200)
+    {
+        return response()->json([
+            'message' => $message,
+            'data' => $data,
+            'errors' => [],
+            'success' => true,
+        ]);
+    }
+    public function apiError($message = null, $errors = [], $code = 500)
+    {
+        return response()->json([
+            'message' => $message,
+            'success' => false,
+            'data' => null,
+            'errors' => $errors,
+            'status_code' => $code
+        ], 403);
+    }
 }

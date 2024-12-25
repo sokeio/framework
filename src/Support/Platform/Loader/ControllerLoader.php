@@ -65,32 +65,38 @@ class ControllerLoader implements IPipeLoader
                             }
                         }
 
-                        $routeMatch = FacadesRoute::match($route->method->value, $route->uri, [$class, $method]);
-                        $routeMatch->name($route->name);
+
                         if (!$route->middleware) {
                             $route->middleware = [];
                         }
                         if (!is_array($route->middleware)) {
                             $route->middleware = [$route->middleware];
                         }
-                        $middleware = "sokeio.api";
-                        if (!$route->isAuth) {
-                            $middleware .= ".guest";
-                        }
+
                         if ($route->isWeb) {
-                            $middleware = "sokeio.web";
-                            if ($route->isAuth) {
-                                $middleware .= ".auth";
-                            }
-                        }
+                            Platform::routeWeb(function () use ($class, $method, $route) {
+                                $routeMatch = FacadesRoute::match($route->method->value, $route->uri, [$class, $method]);
+                                $routeMatch->name($route->name);
+                                if ($route->middleware) {
+                                    $routeMatch->middleware($route->middleware);
+                                }
 
-                        $route->middleware = [$middleware];
-                        if ($route->middleware) {
-                            $routeMatch->middleware($route->middleware);
-                        }
+                                foreach ($route->where as $where) {
+                                    $routeMatch->where($where[0], $where[1]);
+                                }
+                            }, $route->isAuth);
+                        } else {
+                            Platform::routeApi(function () use ($class, $method, $route) {
+                                $routeMatch = FacadesRoute::match($route->method->value, $route->uri, [$class, $method]);
+                                $routeMatch->name($route->name);
+                                if ($route->middleware) {
+                                    $routeMatch->middleware($route->middleware);
+                                }
 
-                        foreach ($route->where as $where) {
-                            $routeMatch->where($where[0], $where[1]);
+                                foreach ($route->where as $where) {
+                                    $routeMatch->where($where[0], $where[1]);
+                                }
+                            }, !$route->isAuth);
                         }
                     }
                 }

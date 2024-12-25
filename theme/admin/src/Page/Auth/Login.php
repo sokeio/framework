@@ -19,7 +19,7 @@ class Login extends \Sokeio\Page
     #[Rule('required')]
     public $password;
     public $isRememberMe = false;
-    
+
     public function login()
     {
         $this->validate();
@@ -31,6 +31,7 @@ class Login extends \Sokeio\Page
             Platform::gate()->setUser(Auth::user());
             if (!Platform::gate()->isSupperAdmin() || !setting('SOKEIO_LOGIN_SUPPORT_FILTER_USER_SUPPER_ADMIN', true)) {
                 $this->addError('account_error', __('You are not allowed to login'));
+                Auth::logout();
                 return;
             }
         }
