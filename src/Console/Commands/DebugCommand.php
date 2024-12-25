@@ -3,6 +3,7 @@
 namespace Sokeio\Console\Commands;
 
 use Illuminate\Console\Command;
+use Sokeio\Marketplate;
 
 class DebugCommand extends Command
 {
@@ -13,7 +14,7 @@ class DebugCommand extends Command
      */
     public function handle(): int
     {
-       
+        Marketplate::checkNewVersion();
         return 0;
     }
 }

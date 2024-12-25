@@ -41,7 +41,6 @@ class Index extends Component
             }
 
             if (Route::has($subKey)) {
-                dd($subKey);
                 $children = array_merge([
                     [
                         'key' => $subKey,

@@ -2,4 +2,6 @@
 
 namespace Sokeio\Support\MediaStorage;
 
-class MediaStorageBase {}
+class MediaStorageBase {
+    
+}

@@ -24,7 +24,8 @@ return [
         InstallCommand::class,
     ],
     'platform' => [
-        'base_url' => env('PLATFORM_URL', 'https://sokeio.com/api/'),
+        'product' => base_path('platform/product.json'),
+        'marketplace' => env('PLATFORM_MARKETPLACE_API', 'https://sokeio.com/api/'),
         'temps' => base_path(env('PLATFORM_TEMP', 'platform/temps/')),
         'updater' => [
             'backup' => base_path(env('PLATFORM_UPDATER_BACKUP', 'platform/updater/backups/')),

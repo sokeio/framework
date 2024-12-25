@@ -9,9 +9,9 @@ class Password extends FieldUI
     protected function initUI()
     {
         parent::initUI();
-        return $this->attr('type', 'password')->afterIcon('ti ti-eye')->afterUI([
-            Button::make()->icon('ti ti-eye')->className('btn btn-icon')->attr('x-on:click', 'togglePassword(true)'),
-            Button::make()->icon('ti ti-eye-off')->className('btn btn-icon')->attr('x-on:click', 'togglePassword(false)'),
+        return $this->attr('type', 'password')->afterUI([
+            Button::make()->icon('ti ti-eye')->className('btn btn-icon p-2')->attr('x-on:click', 'togglePassword(true)')->attr('x-show', '!show'),
+            Button::make()->icon('ti ti-eye-off')->className('btn btn-icon p-2')->attr('x-on:click', 'togglePassword(false)')->attr('x-show', 'show'),
         ])->attrWrapper('x-data', '{
             show: false,
             togglePassword: function (show) {

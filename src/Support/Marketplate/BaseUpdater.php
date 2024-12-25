@@ -1,10 +1,10 @@
 <?php
 
-namespace Sokeio\Support\Updater;
+namespace Sokeio\Support\Marketplate;
 
 use Illuminate\Support\Facades\File;
 
-class UpdaterService
+class BaseUpdater
 {
     public function __construct(
         private array $data

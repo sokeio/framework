@@ -25,7 +25,7 @@ class Item extends Component
     }
     public function loadLastVersion()
     {
-        $this->lastVersion = $this->getItemInfo()->getLastVersion();
+        $this->lastVersion = '1.0.0';
     }
     public function render()
     {

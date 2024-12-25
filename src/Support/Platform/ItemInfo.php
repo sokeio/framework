@@ -182,12 +182,8 @@ class ItemInfo extends ObjectJson
     {
         return $this->title ?? $this->name;
     }
-    private $lastVersion = null;
-    public function getLastVersion(): string
+    public function getId()
     {
-        if ($this->lastVersion === null) {
-            $this->lastVersion = $this->getManager()->getMarketplate()->getLastVersion($this->id, $this->getVersion());
-        }
-        return $this->lastVersion;
+        return $this->id;
     }
 }
