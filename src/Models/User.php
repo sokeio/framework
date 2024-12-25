@@ -23,7 +23,7 @@ class User extends Authenticatable
      */
     public function tokens()
     {
-        return $this->morphMany(PersonalAccessToken::class, 'tokenable');
+        return $this->morphMany(UserAccessToken::class, 'tokenable');
     }
     /**
      * Generate the token string.

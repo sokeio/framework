@@ -5,6 +5,7 @@ namespace Sokeio\Support\Platform;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Sokeio\Models\Permission;
+use Sokeio\Models\UserAccessToken;
 use Sokeio\Pattern\Singleton;
 
 class GateManager
@@ -67,7 +68,7 @@ class GateManager
 
     public function getUserByToken($token)
     {
-        //TODO: get user by token {$token}
+        return app(UserAccessToken::class)->findToken($token)?->tokenable;
     }
     public function getPermission()
     {

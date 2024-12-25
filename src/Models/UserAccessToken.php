@@ -4,7 +4,7 @@ namespace Sokeio\Models;
 
 use Sokeio\Model;
 
-class PersonalAccessToken extends Model
+class UserAccessToken extends Model
 {
     /**
      * The attributes that should be cast to native types.

@@ -23,7 +23,7 @@ class AuthController extends Controller
             return Platform::apiError('Invalid account or password');
         }
         return Platform::apiOk([
-            'user' => Auth::user()->createToken('token')->plainTextToken
+            'access_token' => Auth::user()->createToken('token')
         ]);
     }
     #[RouteInfo(
@@ -35,5 +35,7 @@ class AuthController extends Controller
         MethodType::POST,
         'auth/register',
     )]
-    public function register(RegisterRequest $request) {}
+    public function register(RegisterRequest $request) {
+        
+    }
 }
