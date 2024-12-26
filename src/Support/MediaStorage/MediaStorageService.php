@@ -23,14 +23,14 @@ class MediaStorageService
     public function getActions() {}
     public function getToolbar() {}
     public function getMenu() {}
-    public function getFiles() {}
-    public function getFolders() {}
+    public function getFiles($action, $path, $data) {}
+    public function getFolders($action, $path, $data) {}
 
-    public function getData()
+    public function getData($action, $path, $data)
     {
         return [
-            'files' => $this->getFiles(),
-            'folders' => $this->getFolders(),
+            'files' => $this->getFiles($action, $path, $data),
+            'folders' => $this->getFolders($action, $path, $data),
             'toolbar' => $this->getToolbar(),
             'menu' => $this->getMenu(),
             'views' => $this->getViews(),
@@ -43,6 +43,6 @@ class MediaStorageService
         if (method_exists($this, $action . 'Action')) {
             $this->{$action . 'Action'}($path, $data);
         }
-        return $this->getData();
+        return $this->getData($action, $path, $data);
     }
 }

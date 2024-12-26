@@ -12,7 +12,7 @@ class MediaStorageRequest extends FormRequest
             'type' => 'required',
             'action' => 'required',
             'path' => 'required',
-            'data' => 'required'
+            'data' => 'nullable',
         ];
     }
 }

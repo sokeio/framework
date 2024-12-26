@@ -12,7 +12,6 @@ class MediaStorageController extends \Illuminate\Routing\Controller
         $path = $request->get('path');
         $data = $request->get('data');
         $action = $request->get('action');
-
-        return MediaStorage::get($type)->action($action, $path, $data);
+        return MediaStorage::action($type, $action, $path, $data);
     }
 }

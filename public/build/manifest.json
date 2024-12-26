@@ -1,11 +1,16 @@
 {
   "resources/js/app.js": {
-    "file": "assets/app-8d3c31d3.js",
+    "file": "assets/app-8bd07e61.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   },
+  "resources/js/media-storage/component/grid.js": {
+    "file": "assets/grid-b10607a4.js",
+    "isDynamicEntry": true,
+    "src": "resources/js/media-storage/component/grid.js"
+  },
   "resources/sass/app.scss": {
-    "file": "assets/app-3c9712f1.css",
+    "file": "assets/app-2943b225.css",
     "isEntry": true,
     "src": "resources/sass/app.scss"
   }

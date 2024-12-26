@@ -7,12 +7,15 @@ use Sokeio\Platform;
 
 class MediaStorageServiceProvider extends \Illuminate\Support\ServiceProvider
 {
-    public function register() {}
+    public function register()
+    {
+        Platform::routeApi(function () {
+            Route::post('platform/media-store', [MediaStorageController::class, 'action'])->name('platform.media-store');
+        },true);
+    }
     public function boot()
     {
         //
-        Platform::routeAdmin(function () {
-            Route::post('platform/media-store', [MediaStorageController::class, 'action'])->name('platform.media-store');
-        });
+
     }
 }

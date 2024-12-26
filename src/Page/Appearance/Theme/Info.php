@@ -29,7 +29,6 @@ class Info extends \Sokeio\Page
                     ]
                 )
             ])
-                
                 ->xlSize()
                 ->afterUI([
                     Div::make([

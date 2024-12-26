@@ -1,4 +1,4 @@
-import manager from "../../file-mananger/file-manager";
+import manager from "../../media-storage";
 
 export default {
   checkFirst: () => true,

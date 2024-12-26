@@ -24,4 +24,17 @@ class MediaStorageManager
         }
         return $this->services[$this->default];
     }
+    public function action($type, $action, $path, $data)
+    {
+        return [
+            'result' => $this->get($type)->action($action, $path, $data),
+            'services' => collect($this->services)->map(function ($service, $key) {
+                return [
+                    'key' => $key,
+                    'name' => $service->getName(),
+                    'icon' => $service->getIcon(),
+                ];
+            })
+        ];
+    }
 }
