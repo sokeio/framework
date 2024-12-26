@@ -5,6 +5,9 @@ export default {
     this.$parent.path = path;
     this.$parent.refreshData();
   },
+  showContextMenu(e, path) {
+      
+  },
   folderRender() {
     let html = "";
     this.$parent.folders.forEach((item) => {

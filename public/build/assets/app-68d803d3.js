@@ -162,7 +162,7 @@ var K=Object.defineProperty;var H=(e,a,i)=>a in e?K(e,a,{enumerable:!0,configura
                   ${this.breadcrumbRender()}
                   </div>
                   <div></div>
-          </div>`}},sa={components:{},state:{},openFolder(e){this.$parent.path=e,this.$parent.refreshData()},folderRender(){let e="";return this.$parent.folders.forEach(a=>{e+=`<div class="so-media-storage-item" so-on:click="openFolder('${a.path}')" so-on:contextmenu='showContextMenu($event,"${a.path}")'>
+          </div>`}},sa={components:{},state:{},openFolder(e){this.$parent.path=e,this.$parent.refreshData()},showContextMenu(e,a){},folderRender(){let e="";return this.$parent.folders.forEach(a=>{e+=`<div class="so-media-storage-item" so-on:click="openFolder('${a.path}')" so-on:contextmenu='showContextMenu($event,"${a.path}")'>
                         <div class="so-media-storage-item-icon">
                             <i class="ti ti-folder"></i>
                         </div>
