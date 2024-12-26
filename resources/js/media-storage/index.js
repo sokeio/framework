@@ -1,11 +1,13 @@
 import breadcrumbs from "./component/breadcrumbs";
 import grid from "./component/grid";
 import loading from "./component/loading";
+import contextMenu from "./component/context-menu";
 export default {
   components: {
     "media-storage::breadcrumbs": breadcrumbs,
     "media-storage::grid": grid,
     "media-storage::loading": loading,
+    "media-storage::context-menu": contextMenu,
   },
   state: {
     services: {},

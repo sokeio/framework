@@ -8,7 +8,7 @@ export default {
   folderRender() {
     let html = "";
     this.$parent.folders.forEach((item) => {
-      html += `<div class="so-media-storage-item" so-on:click="openFolder('${item.path}') ">
+      html += `<div class="so-media-storage-item" so-on:click="openFolder('${item.path}')" so-on:contextmenu='showContextMenu($event,"${item.path}")'>
                         <div class="so-media-storage-item-icon">
                             <i class="ti ti-folder"></i>
                         </div>
