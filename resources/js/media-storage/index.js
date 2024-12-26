@@ -18,16 +18,16 @@ export default {
     this.refreshData();
   },
   setResult(result) {
-    this.files = result.files;
-    this.folders = result.folders;
-    this.path = result.path ?? this.path;
+    this.files = result?.files ?? [];
+    this.folders = result?.folders ?? [];
+    this.path = result?.path ?? this.path;
   },
   refreshData() {
     this.mediaAction("refresh");
   },
   mediaAction(action = "refresh", data = {}) {
     this.$request
-      .post("/api/platform/media-store", {
+      .post("/platform/media-store", {
         action,
         data,
         type: this.service,

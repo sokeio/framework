@@ -9,9 +9,9 @@ class MediaStorageServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     public function register()
     {
-        Platform::routeApi(function () {
+        Platform::routeAdmin(function () {
             Route::post('platform/media-store', [MediaStorageController::class, 'action'])->name('platform.media-store');
-        },true);
+        });
     }
     public function boot()
     {

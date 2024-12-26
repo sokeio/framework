@@ -187,7 +187,7 @@ var D=Object.defineProperty;var H=(e,a,i)=>a in e?D(e,a,{enumerable:!0,configura
                 ${this.itemBackRender()}
                 ${this.folderRender()}
                 ${this.fileRender()}
-            </div>`}},ta={components:{"media-storage::breadcrumbs":ia,"media-storage::grid":sa},state:{services:{},path:"/",service:"local",files:[],folders:[],folderSelected:[],fileSelected:[]},register(){this.refreshData()},setResult(e){this.files=e.files,this.folders=e.folders,this.path=e.path??this.path},refreshData(){this.mediaAction("refresh")},mediaAction(e="refresh",a={}){this.$request.post("/api/platform/media-store",{action:e,data:a,type:this.service,path:this.path}).then(i=>i.json()).then(i=>{this.setResult(i.result),this.services=i.services,this.refresh()})},render(){return` <div class="so-media-storage-wrapper">
+            </div>`}},ta={components:{"media-storage::breadcrumbs":ia,"media-storage::grid":sa},state:{services:{},path:"/",service:"local",files:[],folders:[],folderSelected:[],fileSelected:[]},register(){this.refreshData()},setResult(e){this.files=(e==null?void 0:e.files)??[],this.folders=(e==null?void 0:e.folders)??[],this.path=(e==null?void 0:e.path)??this.path},refreshData(){this.mediaAction("refresh")},mediaAction(e="refresh",a={}){this.$request.post("/platform/media-store",{action:e,data:a,type:this.service,path:this.path}).then(i=>i.json()).then(i=>{this.setResult(i.result),this.services=i.services,this.refresh()})},render(){return` <div class="so-media-storage-wrapper">
                 <div class="so-media-storage-header">
                 </div>
                 <div class="so-media-storage-body">
