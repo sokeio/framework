@@ -25,6 +25,7 @@ export default {
   },
   openFolder(path) {
     this.$parent.path = path;
+    this.$parent.refreshData();
   },
   render() {
     return ` <div class="so-media-storage-breadcrumbs">

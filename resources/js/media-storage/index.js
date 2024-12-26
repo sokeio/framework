@@ -1,9 +1,11 @@
 import breadcrumbs from "./component/breadcrumbs";
 import grid from "./component/grid";
+import loading from "./component/loading";
 export default {
   components: {
     "media-storage::breadcrumbs": breadcrumbs,
     "media-storage::grid": grid,
+    "media-storage::loading": loading,
   },
   state: {
     services: {},
@@ -14,7 +16,19 @@ export default {
     folderSelected: [],
     fileSelected: [],
   },
+  $loading: null,
   register() {
+    this.refreshData();
+  },
+  goBack() {
+    let path = this.path.split("/");
+    path.pop();
+    path = path.join("/");
+    if (path == "") path = "/";
+    this.openPath(path);
+  },
+  openPath(path) {
+    this.path = path;
     this.refreshData();
   },
   setResult(result) {
@@ -26,6 +40,7 @@ export default {
     this.mediaAction("refresh");
   },
   mediaAction(action = "refresh", data = {}) {
+    this.$loading?.showLoading();
     this.$request
       .post("/platform/media-store", {
         action,
@@ -46,8 +61,9 @@ export default {
                 <div class="so-media-storage-header">
                 </div>
                 <div class="so-media-storage-body">
-                <so:media-storage::breadcrumbs></so:media-storage::breadcrumbs>
+                    <so:media-storage::breadcrumbs></so:media-storage::breadcrumbs>
                     <div class="so-media-storage-body-list">
+                        <so:media-storage::loading></so:media-storage::loading>
                         <so:media-storage::grid></so:media-storage::grid>
                     </div>
                 </div>

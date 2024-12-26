@@ -1,10 +1,14 @@
 export default {
   components: {},
   state: {},
+  openFolder(path) {
+    this.$parent.path = path;
+    this.$parent.refreshData();
+  },
   folderRender() {
     let html = "";
     this.$parent.folders.forEach((item) => {
-      html += `<div class="so-media-storage-item ">
+      html += `<div class="so-media-storage-item" so-on:click="openFolder('${item.path}') ">
                         <div class="so-media-storage-item-icon">
                             <i class="ti ti-folder"></i>
                         </div>
@@ -18,7 +22,7 @@ export default {
   fileRender() {
     let html = "";
     this.$parent.files.forEach((item) => {
-      html += `<div class="so-media-storage-item ">
+      html += `<div class="so-media-storage-item so-media-storage-item-file">
                         <div class="so-media-storage-item-icon">
                             <i class="ti ti-file"></i>
                         </div>
@@ -31,9 +35,9 @@ export default {
   },
   itemBackRender() {
     if (this.$parent.path == "/" || this.$parent.path == "") return "";
-    return `<div class="so-media-storage-item ">
+    return `<div class="so-media-storage-item " so-on:click="$parent.goBack()">
                         <div class="so-media-storage-item-icon">
-                            ..
+                            <i class="ti ti-arrow-back-up"></i>
                         </div>
                     </div>`;
   },

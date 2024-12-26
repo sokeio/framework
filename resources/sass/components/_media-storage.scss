@@ -25,6 +25,8 @@ $prefixMediaStorage: ".so-media-storage";
         flex-direction: column;
         min-height: 150px;
 
+
+
         #{$prefixMediaStorage}-breadcrumbs {
             flex: none;
             background-color: #d7d9db;
@@ -45,23 +47,35 @@ $prefixMediaStorage: ".so-media-storage";
                 padding: 0.3rem 0.6rem !important;
 
                 &:hover {
-                    background-color: #4472b3;
+                    color: #4472b3 !important;
                 }
             }
         }
 
         #{$prefixMediaStorage}-body-list {
             padding: 5px;
+            position: relative;
+
+            #{$prefixMediaStorage}-loading {
+                position: absolute;
+                left: calc(100% / 2 - 20px);
+                top: calc(100% / 2 - 10px);
+                width: 40px;
+                z-index: 9999;
+            }
         }
 
         #{$prefixMediaStorage}-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
             gap: 7px;
+            min-height: 200px;
 
             @media screen and (max-width: 768px) {
                 grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
             }
+
+
 
             #{$prefixMediaStorage}-item {
                 border: 1px solid #473131;
@@ -92,7 +106,6 @@ $prefixMediaStorage: ".so-media-storage";
 
                 #{$prefixMediaStorage}-item-name {
                     flex: none;
-                    padding: 0px 5px;
                     border-top: 1px solid #473131;
                     background-color: #473131;
                     color: #fff;
@@ -101,9 +114,26 @@ $prefixMediaStorage: ".so-media-storage";
                     align-items: center;
                     justify-content: center;
                     text-wrap: break-word;
-                    height: 50px;
+                    height: 40px;
+                    overflow: auto;
 
                     * {
+                        color: #fff;
+                    }
+                }
+
+                &#{$prefixMediaStorage}-item-file {
+
+                    #{$prefixMediaStorage}-item-icon {
+                        img {
+                            max-width: 100%;
+                            max-height: 100%;
+                        }
+                    }
+
+                    #{$prefixMediaStorage}-item-name {
+                        border-top: 1px solid #706060;
+                        background-color: #706060;
                         color: #fff;
                     }
                 }

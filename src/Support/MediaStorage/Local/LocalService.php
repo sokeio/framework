@@ -16,11 +16,18 @@ class LocalService extends MediaStorageService
             'extension' => $storage->mimeType($file),
             'size' => $storage->size($file),
             'public_url' => url('storage/' . $file),
+            'created_at' => $storage->lastModified($file),
+            'updated_at' => $storage->lastModified($file),
             'preview_url' => Storage::temporaryUrl($file, now()->addSeconds(15), ['disk' => $disk]),
         ];
     }
-    private function mapInfoFolder($folder, $storage, $disk)
+    private function mapInfoFolder($folder, $storage, $path)
     {
+        // check last $path char == /
+        // if (substr($path, -1) != '/') {
+        //     $path .= '/';
+        // }
+
         return [
             'name' => basename($folder),
             'path' => $folder,
@@ -36,8 +43,8 @@ class LocalService extends MediaStorageService
     public function getFolders($action, $path, $data)
     {
         return collect(Storage::disk('local')->directories($path))
-            ->map(function ($folder) {
-                return $this->mapInfoFolder($folder, Storage::disk('local'), 'local');
+            ->map(function ($folder) use ($path) {
+                return $this->mapInfoFolder($folder, Storage::disk('local'), $path);
             })->where('name', '!=', '')->values()->toArray();
     }
     public function getName()
