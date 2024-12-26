@@ -63,6 +63,7 @@ class MarketplateManager
             $product['themes'] = array_merge($product['themes'], $themes);
             $product['updated_at'] = date('Y-m-d H:i:s');
         }
+        
         $this->product = $product;
         file_put_contents((config('sokeio.platform.product')), json_encode($product, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
     }
@@ -70,8 +71,9 @@ class MarketplateManager
     {
         return $this->marketplateUrl;
     }
-    public function getNewVersionInfo()
+    private function getInfoUpdater()
     {
+
         $this->saveProductInfo();
         $product = $this->getProductInfo();
         $modules = $product['modules'];
@@ -79,13 +81,17 @@ class MarketplateManager
         $productId = $product['id'];
         $productVersion = $product['version'];
         $framework = $product['framework'];
-        $response = $this->makeRequest('/product-new-version', [
+        return [
             'product_id' => $productId,
             'product_version' => $productVersion,
             'framework' => $framework,
             'modules' => $modules,
             'themes' => $themes,
-        ]);
+        ];
+    }
+    public function getNewVersionInfo()
+    {
+        $response = $this->makeRequest('/product-new-version', $this->getInfoUpdater());
 
         return $response->json();
     }
@@ -98,5 +104,11 @@ class MarketplateManager
 
 
         return false;
+    }
+    public function doUpdater($callback = null)
+    {
+        $response = $this->makeRequest('/updater', $this->getInfoUpdater());
+
+        return $response->json();
     }
 }

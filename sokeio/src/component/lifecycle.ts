@@ -29,7 +29,7 @@ export default {
       this.$el.__sokeio = this;
     }
     if (this.$parent) {
-      let elTemp = this.$parent.$el.querySelector(
+      let elTemp = this.$parent.$el?.querySelector(
         "#sokeio-component-" + this.getId()
       );
       if (!elTemp) return;

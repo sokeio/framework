@@ -36,6 +36,16 @@ class AuthController extends Controller
         'auth/register',
     )]
     public function register(RegisterRequest $request) {
+        $email=$request->email;
+        $password=$request->password;
+        $name=$request->name;
+        $phone=$request->phone;
         
+        // return [
+        //     'password' => ['required', 'string', 'min:8'],
+        //     'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        //     'name' => ['required', 'string', 'max:255'],
+        //     'phone' => ['required', 'string', 'max:255'],
+        // ];
     }
 }
