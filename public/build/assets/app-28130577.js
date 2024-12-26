@@ -163,25 +163,22 @@ var D=Object.defineProperty;var H=(e,a,i)=>a in e?D(e,a,{enumerable:!0,configura
                   </div>
                   <div></div>
           </div>`}},sa={components:{},state:{},folderRender(){let e="";return this.$parent.folders.forEach(a=>{e+=`<div class="so-media-storage-item ">
-                        <div class="so-media-storage-folder-icon">
-                            <i class="fa fa-folder"></i>
+                        <div class="so-media-storage-item-icon">
+                            <i class="ti ti-folder"></i>
                         </div>
-                        <div class="so-media-storage-folder-name">
-                            <a href="#">${a.name}</a>
+                        <div class="so-media-storage-item-name">
+                        ${a.name}
                         </div>
                     </div>`}),e},fileRender(){let e="";return this.$parent.files.forEach(a=>{e+=`<div class="so-media-storage-item ">
-                        <div class="so-media-storage-file-icon">
-                            <i class="fa fa-file"></i>
+                        <div class="so-media-storage-item-icon">
+                            <i class="ti ti-file"></i>
                         </div>
-                        <div class="so-media-storage-file-name">
-                            <a href="#">${a.name}</a>
+                        <div class="so-media-storage-item-name">
+                           ${a.name}
                         </div>
                     </div>`}),e},itemBackRender(){return this.$parent.path=="/"||this.$parent.path==""?"":`<div class="so-media-storage-item ">
-                        <div class="so-media-storage-folder-icon">
-                            <i class="fa fa-folder"></i>
-                        </div>
-                        <div class="so-media-storage-folder-name">
-                            <a href="#">..</a>
+                        <div class="so-media-storage-item-icon">
+                            ..
                         </div>
                     </div>`},render(){return` <div class="so-media-storage-grid">
                 ${this.itemBackRender()}

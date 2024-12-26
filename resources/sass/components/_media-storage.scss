@@ -66,9 +66,47 @@ $prefixMediaStorage: ".so-media-storage";
             #{$prefixMediaStorage}-item {
                 border: 1px solid #473131;
                 overflow: hidden;
-                background-color: #ccc;
+                background-color: #fff;
                 border-radius: 3px;
                 height: 200px;
+                display: flex;
+                flex-direction: column;
+
+                &:hover {
+                    cursor: pointer;
+                    border: 1px solid #4472b3;
+                    background-color: #eee;
+                }
+
+                #{$prefixMediaStorage}-item-icon {
+                    flex: auto;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    overflow: hidden;
+
+                    i {
+                        font-size: 60px;
+                    }
+                }
+
+                #{$prefixMediaStorage}-item-name {
+                    flex: none;
+                    padding: 0px 5px;
+                    border-top: 1px solid #473131;
+                    background-color: #473131;
+                    color: #fff;
+                    text-align: center;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    text-wrap: break-word;
+                    height: 50px;
+
+                    * {
+                        color: #fff;
+                    }
+                }
             }
 
             @media screen and (max-width: 768px) {

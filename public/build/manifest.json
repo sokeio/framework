@@ -1,6 +1,6 @@
 {
   "resources/js/app.js": {
-    "file": "assets/app-c687f8d5.js",
+    "file": "assets/app-28130577.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   },
@@ -10,7 +10,7 @@
     "src": "resources/js/media-storage/component/grid.js"
   },
   "resources/sass/app.scss": {
-    "file": "assets/app-2943b225.css",
+    "file": "assets/app-be86aa60.css",
     "isEntry": true,
     "src": "resources/sass/app.scss"
   }
