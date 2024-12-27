@@ -7,6 +7,17 @@ use Illuminate\Support\Facades\Storage;
 
 class LocalService extends MediaStorageService
 {
+    public function getMenuContext()
+    {
+        return [
+            [
+                'name' => 'Download',
+                'icon' => 'ti ti-download',
+                'action' => 'download',
+                'class' => '',
+            ]
+        ];
+    }
     private function mapInfoFile($file, $storage, $disk)
     {
         return [

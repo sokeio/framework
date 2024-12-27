@@ -46,18 +46,25 @@ export default {
     this.hide();
   },
   itemRender() {
-    let html = "";
+    let html = `
+    <div class="so-media-storage-context-menu-item" so-on:click="$parent.refreshData()">
+                    <div class="so-media-storage-context-menu-item-icon">
+                        <i class="ti ti-refresh"></i>
+                    </div>
+                    <div class="so-media-storage-context-menu-item-text">Refresh</div>
+                </div>
+    `;
     // this.$parent.contextMenus
     //   .filter((item) => item.type.includes(this.type))
     //   .forEach((item, key) => {
     //     html += `
-    //         <div class="so-fm-context-menu-item" so-on:click="itemClick(${key})">
-    //                 <div class="so-fm-context-menu-item-icon">
+    //         <div class="so-media-storage-context-menu-item" so-on:click="itemClick(${key})">
+    //                 <div class="so-media-storage-context-menu-item-icon">
     //                     <i class="${item.icon}"></i>
     //                 </div>
-    //                 <div class="so-fm-context-menu-item-text">${item.title}</div>
+    //                 <div class="so-media-storage-context-menu-item-text">${item.title}</div>
     //             </div>
-            
+
     //         `;
     //   });
     return html;
@@ -83,8 +90,8 @@ export default {
   },
   render() {
     return `
-        <div class="so-fm-context-menu" so-click-outsite="hide()" style="display:none">
-            <div class="so-fm-context-menu-header">
+        <div class="so-media-storage-context-menu" so-click-outsite="hide()" style="display:none">
+            <div class="so-media-storage-context-menu-header">
                 <a href="https://sokeio.com" class="logo-large" target="_blank">  
                     Sokeio FM V1.0
                 </a>

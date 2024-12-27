@@ -22,7 +22,9 @@ class MediaStorageService
     }
     public function getActions() {}
     public function getToolbar() {}
-    public function getMenu() {}
+    public function getMenuContext() {
+        return [];
+    }
     public function getFiles($action, $path, $data) {}
     public function getFolders($action, $path, $data) {}
 
@@ -32,7 +34,7 @@ class MediaStorageService
             'files' => $this->getFiles($action, $path, $data),
             'folders' => $this->getFolders($action, $path, $data),
             'toolbar' => $this->getToolbar(),
-            'menu' => $this->getMenu(),
+            'menu-context' => $this->getMenuContext(),
             'views' => $this->getViews(),
             'actions' => $this->getActions(),
         ];
