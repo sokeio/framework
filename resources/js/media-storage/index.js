@@ -11,17 +11,26 @@ export default {
   },
   state: {
     services: {},
+    search: "",
     path: "/",
     service: "local",
     files: [],
     folders: [],
     folderSelected: [],
     fileSelected: [],
+    menuContext: [],
+    views: {},
   },
   $loading: null,
   $contextMenu: null,
+  $grid: null,
+
   register() {
     this.refreshData();
+  },
+  searchData(value) {
+    this.search = value;
+    this.$grid.refresh();
   },
   goBack() {
     let path = this.path.split("/");
@@ -38,6 +47,8 @@ export default {
     this.files = result?.files ?? [];
     this.folders = result?.folders ?? [];
     this.path = result?.path ?? this.path;
+    this.menuContext = result?.menuContext ?? [];
+    this.views = result?.views ?? {};
   },
   refreshData() {
     this.mediaAction("refresh");

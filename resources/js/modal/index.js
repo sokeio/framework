@@ -1,5 +1,4 @@
 import modal from "./modal";
-import * as Utils from "./utils";
 window.showModal = function (
   title = "",
   options = {
@@ -29,10 +28,15 @@ window.showModal = function (
       ...components,
       "sokeio::modal::template": template,
     };
+    let data = options.data ?? {};
+    delete options.data;
+
     options = {
       ...options,
+      ...data,
       htmlComponent: "<so:sokeio::modal::template></sokeio::modal::template>",
     };
+
     delete options.template;
   }
   return window.sokeioUI.run(

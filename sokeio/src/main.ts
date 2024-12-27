@@ -7,11 +7,18 @@ const elScriptToJs = (el: any) => {
   let func = new Function(template);
   return func();
 };
+const textScriptToJs = (template: any) => {
+  template = template.replace("export default", " return");
+  let func = new Function(template);
+  return func();
+};
 const sokeioUI: any = {
   version: "1.0.0",
   debug: false,
   skipRun: false,
   app: {},
+  elScriptToJs: elScriptToJs,
+  textScriptToJs: textScriptToJs,
   run: application,
   regisger: registerComponent,
   getComponents: getComponents,

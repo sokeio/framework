@@ -1,3 +1,6 @@
+import mediaStorage from "..";
+import media from "../../livewire/directive/media";
+
 function mouseX(evt, elWarp) {
   if (evt.pageX) {
     if (document.body.classList.contains("so-modal-open")) {
@@ -42,7 +45,28 @@ export default {
     this.$parent.$contextMenu = this;
   },
   itemClick(item) {
-    this.$parent.contextMenus[item].action.bind(this.$parent)();
+    let itemContext = this.$parent.menuContext[item];
+    if (itemContext) {
+      if (itemContext.action) {
+        let func = new Function(`return function(type,path,item){
+            ${itemContext.action}
+          }`)();
+        func.bind(this.$parent)(this.type, this.path, itemContext);
+      }
+      if (itemContext.view && this.$parent.views[itemContext.view]) {
+        window.showModal(itemContext.title, {
+          template: window.sokeioUI.textScriptToJs(
+            this.$parent.views[itemContext.view]
+          ),
+          data: {
+            item: itemContext,
+            path: this.path,
+            type: this.type,
+            mediaStorage: this.$parent,
+          },
+        });
+      }
+    }
     this.hide();
   },
   itemRender() {
@@ -54,6 +78,23 @@ export default {
                     <div class="so-media-storage-context-menu-item-text">Refresh</div>
                 </div>
     `;
+    let menuContext = this.$parent.menuContext;
+    if (menuContext && menuContext.length > 0) {
+      menuContext.forEach((item, key) => {
+        if (!item.type || item.type.includes(this.type)) {
+          return;
+        }
+        html += `
+            <div class="so-media-storage-context-menu-item" so-on:click="itemClick(${key})">
+                    <div class="so-media-storage-context-menu-item-icon">
+                        <i class="${item.icon}"></i>
+                    </div>
+                    <div class="so-media-storage-context-menu-item-text">${item.name}</div>
+                </div>
+        
+            `;
+      });
+    }
     // this.$parent.contextMenus
     //   .filter((item) => item.type.includes(this.type))
     //   .forEach((item, key) => {
@@ -72,6 +113,7 @@ export default {
   open(event, path, type) {
     this.path = path;
     this.type = type;
+    console.log({ path, type });
     window.event.returnValue = false;
     this.refresh();
     let top = 0;

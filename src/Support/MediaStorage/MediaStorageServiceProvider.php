@@ -16,6 +16,5 @@ class MediaStorageServiceProvider extends \Illuminate\Support\ServiceProvider
     public function boot()
     {
         //
-
     }
 }

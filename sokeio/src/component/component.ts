@@ -163,12 +163,11 @@ export default {
     const interval = setInterval(function () {
       if (
         attempts >= maxAttempts ||
-        self.$el.contains(document.activeElement)
+        self.$el?.contains(document.activeElement)
       ) {
         clearInterval(interval); // Stop the attempts after 5 times
       }
-      self.$el
-        .querySelector(
+      self.$el?.querySelector(
           "input:not([disabled]):not([readonly]), select:not([disabled]), textarea:not([readonly]"
         )
         ?.focus();

@@ -31,15 +31,25 @@ $prefixMediaStorage: ".so-media-storage";
             flex: none;
             background-color: #d7d9db;
             color: rgb(6, 6, 6);
-            padding: 0 10px;
+            padding: 0 5px;
             min-height: 35px;
             display: flex;
             align-items: center;
 
-            #{$prefixMediaStorage}-service {
-                margin-right: 10px;
+            #{$prefixMediaStorage}-service,
+            #{$prefixMediaStorage}-search {
                 padding: 0.3rem 0.6rem !important;
                 width: 150px !important;
+
+                &:focus {
+                    box-shadow: unset !important;
+                }
+            }
+
+            .breadcrumb {
+                margin-left: 5px;
+                margin-right: 5px;
+                flex: auto;
             }
 
             .breadcrumb-item {

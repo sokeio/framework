@@ -34,7 +34,9 @@ export default {
                   <div class="breadcrumb-item" so-on:click="openFolder('/')">Home</div>
                   ${this.breadcrumbRender()}
                   </div>
-                  <div></div>
+                  <div>
+                  <input type="text" class="form-control so-media-storage-search" placeholder="Search..." so-on:input="$parent.searchData($event.target.value)"/>
+                  </div>
           </div>`;
   },
 };

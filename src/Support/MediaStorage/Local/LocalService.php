@@ -7,19 +7,51 @@ use Illuminate\Support\Facades\Storage;
 
 class LocalService extends MediaStorageService
 {
+    public function getViews()
+    {
+        return [
+            'local::demo' => file_get_contents(__DIR__ . '/views/demo.js'),
+        ];
+    }
+    public function getToolbar()
+    {
+        return [];
+    }
+    public function getFooter()
+    {
+        return [];
+    }
     public function getMenuContext()
     {
         return [
             [
                 'name' => 'Download',
                 'icon' => 'ti ti-download',
-                'action' => 'download',
+                'action' => 'console.log(this);',
                 'class' => '',
+                'type' => ['file']
+            ],
+            [
+                'name' => 'Rename File',
+                'icon' => 'ti ti-pencil',
+                'view' => 'local::demo',
+                'title' => 'Rename File',
+                'class' => '',
+                'type' => ['file']
+            ],
+            [
+                'name' => 'Rename Folder',
+                'icon' => 'ti ti-pencil',
+                'view' => 'local::demo',
+                'title' => 'Rename Folder',
+                'class' => '',
+                'type' => ['folder']
             ]
         ];
     }
     private function mapInfoFile($file, $storage, $disk)
     {
+
         return [
             'name' => basename($file),
             'name_without_extension' => pathinfo($file, PATHINFO_FILENAME),
@@ -34,11 +66,6 @@ class LocalService extends MediaStorageService
     }
     private function mapInfoFolder($folder, $storage, $path)
     {
-        // check last $path char == /
-        // if (substr($path, -1) != '/') {
-        //     $path .= '/';
-        // }
-
         return [
             'name' => basename($folder),
             'path' => $folder,
