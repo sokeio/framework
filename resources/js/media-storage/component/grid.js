@@ -5,13 +5,15 @@ export default {
     this.$parent.path = path;
     this.$parent.refreshData();
   },
-  showContextMenu(e, path) {
-      
+  showContextMenu(e, path, type) {
+    this.$parent.$contextMenu.open(e, this, path, type);
+    e.preventDefault();
+
   },
   folderRender() {
     let html = "";
     this.$parent.folders.forEach((item) => {
-      html += `<div class="so-media-storage-item" so-on:click="openFolder('${item.path}')" so-on:contextmenu='showContextMenu($event,"${item.path}")'>
+      html += `<div class="so-media-storage-item" so-on:click="openFolder('${item.path}')" so-on:contextmenu='showContextMenu($event,"${item.path}","folder")'>
                         <div class="so-media-storage-item-icon">
                             <i class="ti ti-folder"></i>
                         </div>
@@ -25,7 +27,7 @@ export default {
   fileRender() {
     let html = "";
     this.$parent.files.forEach((item) => {
-      html += `<div class="so-media-storage-item so-media-storage-item-file">
+      html += `<div class="so-media-storage-item so-media-storage-item-file" so-on:contextmenu='showContextMenu($event,"${item.path}","file")'>
                         <div class="so-media-storage-item-icon">
                             <i class="ti ti-file"></i>
                         </div>

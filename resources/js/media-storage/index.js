@@ -19,6 +19,7 @@ export default {
     fileSelected: [],
   },
   $loading: null,
+  $contextMenu: null,
   register() {
     this.refreshData();
   },
@@ -74,6 +75,7 @@ export default {
                         <span>Media Storage</span>
                     </div>
                 </div>
+                <so:media-storage::context-menu></so:media-storage::context-menu>
         </div>`;
   },
 };
