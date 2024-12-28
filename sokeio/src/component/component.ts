@@ -94,6 +94,12 @@ export default {
       this.$app.doDestroy();
     }
   },
+  checkFnCallback: function () {
+    if (this.$app) {
+      return this.$app.fnCallback !== null;
+    }
+    return false;
+  },
   fnCallbackAndClose($value: any, $closeApp = true) {
     if (this.$app) {
       this.$app.fnCallback?.($value);
@@ -103,9 +109,9 @@ export default {
     }
   },
 
-  refresh: function () {
+  refresh: function (delay = 100) {
     let self = this;
-    setTimeout(function () {
+    let fnRefresh = function () {
       let elParent = self.$el.parentNode;
       let elNext = self.$el.nextSibling;
       self.$el.remove();
@@ -119,7 +125,12 @@ export default {
       } else {
         elParent.appendChild(self.$el);
       }
-    }, 100);
+    };
+    if (delay == 0) {
+      fnRefresh();
+      return;
+    }
+    setTimeout(fnRefresh, delay);
   }, // Refresh component
   show: function () {
     if (!this.$el) {

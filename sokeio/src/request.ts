@@ -72,7 +72,6 @@ export default {
       //'application/x-www-form-urlencoded'
       xhr.setRequestHeader("Accept", "application/json");
       xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-      xhr.responseType = "application/json";
       xhr.setRequestHeader("X-SOKEIO", "");
       xhr.setRequestHeader("X-CSRF-TOKEN", getToken() ?? "");
       xhr.upload.addEventListener("progress", (e: any) => {

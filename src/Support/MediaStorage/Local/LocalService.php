@@ -122,4 +122,17 @@ class LocalService extends MediaStorageService
     {
         Storage::disk('local')->makeDirectory($path . '/' . $data['name']);
     }
+    public function uploadFileAction($path, $data)
+    {
+        if (!isset($data['files'])) {
+            return;
+        }
+        foreach ($data['files'] as $file) {
+            // add time to name file eg:abc.jpge => abc-time.jpge
+            $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
+            $name = $filename . time() . '.' . $extension;
+            Storage::disk('local')->putFileAs($path, $file, $name);
+        }
+    }
 }

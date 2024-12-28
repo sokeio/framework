@@ -57,8 +57,40 @@ export default {
   refreshData() {
     this.mediaAction("refresh");
   },
-  mediaAction(action = "refresh", data = {}, callback = null) {
+  mediaAction(
+    action = "refresh",
+    data = {},
+    callback = null,
+    files = [],
+    progress = null
+  ) {
     this.$loading?.showLoading();
+    if (files.length > 0) {
+      let formData = this.$request.convertJsonToFormData({
+        action,
+        data,
+        type: this.service,
+        path: this.path,
+      });
+      for (let item in files) {
+        formData.append("data[files][]", files[item]);
+      }
+      request = this.$request
+        .upload("/platform/media-store", formData, {
+          progress: progress,
+        })
+        .then((res) => {
+          res = JSON.parse(res);
+          this.setResult(res.result);
+          this.services = res.services;
+          this.refresh();
+          if (callback) {
+            callback(res);
+          }
+          this.$loading?.hideLoading();
+        });
+      return;
+    }
     this.$request
       .post("/platform/media-store", {
         action,

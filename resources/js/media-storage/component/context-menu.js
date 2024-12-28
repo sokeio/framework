@@ -83,7 +83,7 @@ export default {
     let menuContext = this.$parent.menuContext;
     if (menuContext && menuContext.length > 0) {
       menuContext.forEach((item, key) => {
-        if (!item.type || item.type.includes(this.type)) {
+        if (!item.type || !item.type.includes(this.type)) {
           return;
         }
         html += `
@@ -97,27 +97,14 @@ export default {
             `;
       });
     }
-    // this.$parent.contextMenus
-    //   .filter((item) => item.type.includes(this.type))
-    //   .forEach((item, key) => {
-    //     html += `
-    //         <div class="so-media-storage-context-menu-item" so-on:click="itemClick(${key})">
-    //                 <div class="so-media-storage-context-menu-item-icon">
-    //                     <i class="${item.icon}"></i>
-    //                 </div>
-    //                 <div class="so-media-storage-context-menu-item-text">${item.title}</div>
-    //             </div>
-
-    //         `;
-    //   });
     return html;
   },
   open(event, path, type) {
     this.path = path;
     this.type = type;
-    console.log({ path, type });
+    // console.log({ path, type });
     window.event.returnValue = false;
-    this.refresh();
+    this.refresh(0);
     let top = 0;
     let left = 0;
     if (this.$el.closest(".so-modal")) {

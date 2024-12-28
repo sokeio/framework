@@ -66,7 +66,7 @@ export default {
     this.path = path;
     this.type = type;
     window.event.returnValue = false;
-    this.refresh();
+    // this.refresh();
     let top = 0;
     let left = 0;
     if (this.$el.closest(".so-modal")) {
