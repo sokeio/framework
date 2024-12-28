@@ -5,8 +5,7 @@ export default {
   render() {
     return `
                <div>
-                    DEMO
-                    <button so-on:click="test()">Test</button>
+                   REPLACE
                </div>
                 `;
   },

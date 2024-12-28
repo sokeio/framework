@@ -31,23 +31,24 @@ export function getModalHtmlRender(
     'so-on:click="this.closeApp()" so-on:ignore=".so-modal-dialog"';
   let elHtml = convertHtmlToElement(html);
   let skipOverlayClose = component?.skipOverlayClose ?? false;
-  let modalSize = component?.modalSize ?? "lg";
-  if (elHtml && elHtml.getAttribute && elHtml.querySelector) {
+  let modalSize = component?.modalSize;
+  if (!modalSize && elHtml && elHtml.getAttribute && elHtml.querySelector) {
     if (
       elHtml.querySelector?.(".hide-show-button-close") ||
       elHtml.getAttribute("data-hide-button-close")
     ) {
       htmlClose = "";
     }
-    // attribute data-modal-size
-    modalSize = elHtml.getAttribute("data-modal-size");
     if (!modalSize && elHtml.querySelector?.("[data-modal-size]")) {
       modalSize = elHtml
         .querySelector("[data-modal-size]")
         .getAttribute("data-modal-size");
     }
     skipOverlayClose = elHtml.getAttribute("data-skip-overlay-close");
-    if (!skipOverlayClose && elHtml.querySelector?.("[data-skip-overlay-close]")) {
+    if (
+      !skipOverlayClose &&
+      elHtml.querySelector?.("[data-skip-overlay-close]")
+    ) {
       skipOverlayClose = elHtml
         .querySelector("[data-skip-overlay-close]")
         .getAttribute("data-skip-overlay-close");

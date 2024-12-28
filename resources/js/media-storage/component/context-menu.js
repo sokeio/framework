@@ -54,11 +54,13 @@ export default {
         func.bind(this.$parent)(this.type, this.path, itemContext);
       }
       if (itemContext.view && this.$parent.views[itemContext.view]) {
+        let viewOptions = itemContext.viewOptions || {};
         window.showModal(itemContext.title, {
           template: window.sokeioUI.textScriptToJs(
             this.$parent.views[itemContext.view]
           ),
           data: {
+            ...viewOptions,
             item: itemContext,
             path: this.path,
             type: this.type,

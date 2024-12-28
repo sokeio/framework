@@ -10,12 +10,33 @@ class LocalService extends MediaStorageService
     public function getViews()
     {
         return [
-            'local::demo' => file_get_contents(__DIR__ . '/views/demo.js'),
+            'local::create' => file_get_contents(__DIR__ . '/views/create.js'),
+            'local::replace' => file_get_contents(__DIR__ . '/views/replace.js'),
+            'local::upload' => file_get_contents(__DIR__ . '/views/upload.js'),
         ];
     }
     public function getToolbar()
     {
-        return [];
+        return [
+            [
+                'name' => 'Create Folder',
+                'icon' => 'ti ti-plus',
+                'class' => '',
+                'view' => 'local::create',
+                'viewOptions' => [
+                    'modalSize' => 'md',
+                ],
+            ],
+            [
+                'name' => 'Upload File',
+                'icon' => 'ti ti-upload',
+                'class' => '',
+                'view' => 'local::upload',
+                'viewOptions' => [
+                    'modalSize' => 'md',
+                ],
+            ]
+        ];
     }
     public function getFooter()
     {
@@ -35,6 +56,9 @@ class LocalService extends MediaStorageService
                 'name' => 'Rename File',
                 'icon' => 'ti ti-pencil',
                 'view' => 'local::demo',
+                'viewOptions' => [
+                    'modalSize' => 'md',
+                ],
                 'title' => 'Rename File',
                 'class' => '',
                 'type' => ['file']
@@ -43,6 +67,9 @@ class LocalService extends MediaStorageService
                 'name' => 'Rename Folder',
                 'icon' => 'ti ti-pencil',
                 'view' => 'local::demo',
+                'viewOptions' => [
+                    'modalSize' => 'md',
+                ],
                 'title' => 'Rename Folder',
                 'class' => '',
                 'type' => ['folder']
@@ -88,5 +115,11 @@ class LocalService extends MediaStorageService
     public function getName()
     {
         return 'Local';
+    }
+
+    // *** Action *** //
+    public function createFolderAction($path, $data)
+    {
+        Storage::disk('local')->makeDirectory($path . '/' . $data['name']);
     }
 }

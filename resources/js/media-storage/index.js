@@ -2,12 +2,14 @@ import breadcrumbs from "./component/breadcrumbs";
 import grid from "./component/grid";
 import loading from "./component/loading";
 import contextMenu from "./component/context-menu";
+import header from "./component/header";
 export default {
   components: {
     "media-storage::breadcrumbs": breadcrumbs,
     "media-storage::grid": grid,
     "media-storage::loading": loading,
     "media-storage::context-menu": contextMenu,
+    "media-storage::header": header,
   },
   state: {
     services: {},
@@ -20,6 +22,7 @@ export default {
     fileSelected: [],
     menuContext: [],
     views: {},
+    toolbar: [],
   },
   $loading: null,
   $contextMenu: null,
@@ -49,11 +52,12 @@ export default {
     this.path = result?.path ?? this.path;
     this.menuContext = result?.menuContext ?? [];
     this.views = result?.views ?? {};
+    this.toolbar = result?.toolbar ?? [];
   },
   refreshData() {
     this.mediaAction("refresh");
   },
-  mediaAction(action = "refresh", data = {}) {
+  mediaAction(action = "refresh", data = {}, callback = null) {
     this.$loading?.showLoading();
     this.$request
       .post("/platform/media-store", {
@@ -68,12 +72,15 @@ export default {
         this.setResult(res.result);
         this.services = res.services;
         this.refresh();
+        if (callback) {
+          callback(res);
+        }
+        this.$loading?.hideLoading();
       });
   },
   render() {
     return ` <div class="so-media-storage-wrapper">
-                <div class="so-media-storage-header">
-                </div>
+                <so:media-storage::header></so:media-storage::header>
                 <div class="so-media-storage-body">
                     <so:media-storage::breadcrumbs></so:media-storage::breadcrumbs>
                     <div class="so-media-storage-body-list">

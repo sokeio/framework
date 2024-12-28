@@ -11,10 +11,45 @@ $prefixMediaStorage: ".so-media-storage";
         background-color: #4472b3;
         color: rgb(238, 236, 236);
         padding: 0 10px;
-        min-height: 40px;
+        min-height: 30px;
         display: flex;
         align-items: center;
         justify-content: space-between;
+    }
+
+    #{$prefixMediaStorage}-header-title {
+        flex: none;
+        align-items: center;
+
+    }
+
+    #{$prefixMediaStorage}-header-control {
+        flex: auto;
+        display: flex;
+        align-items: center;
+        padding: 5px;
+
+        #{$prefixMediaStorage}-header-control-item {
+            background-color: #081024;
+            border: 1px solid #263445;
+            color: rgb(238, 236, 236);
+            padding: 0 10px;
+            min-height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 3px;
+            margin-right: 5px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #344c6f;
+            }
+
+            #{$prefixMediaStorage}-header-control-item-icon {
+                margin-right: 5px;
+            }
+        }
     }
 
     #{$prefixMediaStorage}-body {

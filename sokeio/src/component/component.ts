@@ -104,19 +104,22 @@ export default {
   },
 
   refresh: function () {
-    let elParent = this.$el.parentNode;
-    let elNext = this.$el.nextSibling;
-    this.$el.remove();
-    this.$el = null;
-    this.__data__.cleanup();
-    this.doBoot();
-    this.doRender();
-    this.doReady();
-    if (elNext) {
-      elParent.insertBefore(this.$el, elNext);
-    } else {
-      elParent.appendChild(this.$el);
-    }
+    let self = this;
+    setTimeout(function () {
+      let elParent = self.$el.parentNode;
+      let elNext = self.$el.nextSibling;
+      self.$el.remove();
+      self.$el = null;
+      self.__data__.cleanup();
+      self.doBoot();
+      self.doRender();
+      self.doReady();
+      if (elNext) {
+        elParent.insertBefore(self.$el, elNext);
+      } else {
+        elParent.appendChild(self.$el);
+      }
+    }, 100);
   }, // Refresh component
   show: function () {
     if (!this.$el) {
@@ -167,7 +170,8 @@ export default {
       ) {
         clearInterval(interval); // Stop the attempts after 5 times
       }
-      self.$el?.querySelector(
+      self.$el
+        ?.querySelector(
           "input:not([disabled]):not([readonly]), select:not([disabled]), textarea:not([readonly]"
         )
         ?.focus();
