@@ -1,3 +1,4 @@
+
 export default {
   state: {
     nameFile: "",
@@ -10,12 +11,13 @@ export default {
     this.extension = this.nameFile.split(".").pop();
     this.nameFile = this.nameFile.split(".").shift();
   },
-  deleteFile() {
+  renameFile() {
     let self = this;
     this.$app.mediaStorage.mediaAction(
-      "deleteFile",
+      "renameFile",
       {
         path: this.$app.path,
+        name: this.nameFile + "." + this.extension,
       },
       function (res) {
         self.closeApp();
@@ -35,7 +37,7 @@ export default {
                 </div>
               </div>
             <div class="d-flex justify-content-center mt-2" >
-              <button so-on:click="deleteFile()" class="btn btn-danger p-2"><i class="ti ti-trash me-1"></i> Delete File</button>
+              <button so-on:click="renameFile()" class="btn btn-danger p-2"><i class="ti ti-edit me-1"></i> Rename File</button>
             </div>
         </div>
         `;

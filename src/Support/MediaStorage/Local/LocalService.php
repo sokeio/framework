@@ -11,7 +11,7 @@ class LocalService extends MediaStorageService
     {
         return [
             'local::create' => file_get_contents(__DIR__ . '/views/create.js'),
-            'local::replace-file' => file_get_contents(__DIR__ . '/views/replace-file.js'),
+            'local::rename-file' => file_get_contents(__DIR__ . '/views/rename-file.js'),
             'local::upload' => file_get_contents(__DIR__ . '/views/upload.js'),
             'local::delete-folder' => file_get_contents(__DIR__ . '/views/delete-folder.js'),
             'local::delete-file' => file_get_contents(__DIR__ . '/views/delete-file.js'),
@@ -90,7 +90,7 @@ class LocalService extends MediaStorageService
             [
                 'name' => 'Rename File',
                 'icon' => 'ti ti-pencil',
-                'view' => 'local::replace-file',
+                'view' => 'local::rename-file',
                 'viewOptions' => [
                     'modalSize' => 'md',
                 ],
@@ -177,5 +177,25 @@ class LocalService extends MediaStorageService
         }
         $pathFile =  $data['path'];
         Storage::disk('local')->delete($pathFile);
+    }
+    public function renameFileAction($path, $data)
+    {
+
+        if (!isset($data['path']) || !isset($data['name'])) {
+            return;
+        }
+        $pathFile =  $data['path'];
+        $nameFile =  $data['name'];
+
+        $pathNew = dirname($pathFile);
+        if ($pathNew == '.') {
+            $pathFile = './' . $pathFile;
+        }
+        if ($pathNew) {
+            $pathNew = $pathNew . '/' . $nameFile;
+        } else {
+            $pathNew = $nameFile;
+        }
+        Storage::disk('local')->move($pathFile, $pathNew);
     }
 }
