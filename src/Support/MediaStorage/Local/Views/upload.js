@@ -111,7 +111,7 @@ export default {
   },
   render() {
     return `
-      <div class="p-3" data-modal-size="sm">
+      <div class="p-3" >
           <div class="mb-2 sokeio-field-input">
             <label class="form-label">File</label>
             <input type="file" class="form-control" multiple so-on:change="changeFile($event)" >

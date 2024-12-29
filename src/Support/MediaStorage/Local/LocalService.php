@@ -11,8 +11,10 @@ class LocalService extends MediaStorageService
     {
         return [
             'local::create' => file_get_contents(__DIR__ . '/views/create.js'),
-            'local::replace' => file_get_contents(__DIR__ . '/views/replace.js'),
+            'local::replace-file' => file_get_contents(__DIR__ . '/views/replace-file.js'),
             'local::upload' => file_get_contents(__DIR__ . '/views/upload.js'),
+            'local::delete-folder' => file_get_contents(__DIR__ . '/views/delete-folder.js'),
+            'local::delete-file' => file_get_contents(__DIR__ . '/views/delete-file.js'),
         ];
     }
     public function getToolbar()
@@ -46,22 +48,15 @@ class LocalService extends MediaStorageService
     {
         return [
             [
-                'name' => 'Download',
-                'icon' => 'ti ti-download',
-                'action' => 'console.log(this);',
-                'class' => '',
-                'type' => ['file']
-            ],
-            [
-                'name' => 'Rename File',
-                'icon' => 'ti ti-pencil',
-                'view' => 'local::demo',
+                'name' => 'Remove Folder',
+                'icon' => 'ti ti-trash',
+                'view' => 'local::delete-folder',
                 'viewOptions' => [
                     'modalSize' => 'md',
                 ],
-                'title' => 'Rename File',
+                'title' => 'Remove Folder',
                 'class' => '',
-                'type' => ['file']
+                'type' => ['folder']
             ],
             [
                 'name' => 'Rename Folder',
@@ -73,6 +68,35 @@ class LocalService extends MediaStorageService
                 'title' => 'Rename Folder',
                 'class' => '',
                 'type' => ['folder']
+            ],
+            [
+                'name' => 'Remove File',
+                'icon' => 'ti ti-trash',
+                'view' => 'local::delete-file',
+                'viewOptions' => [
+                    'modalSize' => 'md',
+                ],
+                'title' => 'Remove File',
+                'class' => '',
+                'type' => ['file']
+            ],
+            [
+                'name' => 'Download',
+                'icon' => 'ti ti-download',
+                'action' => 'console.log(this);',
+                'class' => '',
+                'type' => ['file']
+            ],
+            [
+                'name' => 'Rename File',
+                'icon' => 'ti ti-pencil',
+                'view' => 'local::replace-file',
+                'viewOptions' => [
+                    'modalSize' => 'md',
+                ],
+                'title' => 'Rename File',
+                'class' => '',
+                'type' => ['file']
             ]
         ];
     }
@@ -120,6 +144,9 @@ class LocalService extends MediaStorageService
     // *** Action *** //
     public function createFolderAction($path, $data)
     {
+        if (!isset($data['name'])) {
+            return;
+        }
         Storage::disk('local')->makeDirectory($path . '/' . $data['name']);
     }
     public function uploadFileAction($path, $data)
@@ -134,5 +161,21 @@ class LocalService extends MediaStorageService
             $name = $filename . time() . '.' . $extension;
             Storage::disk('local')->putFileAs($path, $file, $name);
         }
+    }
+    public function deleteFolderAction($path, $data)
+    {
+        if (!isset($data['path'])) {
+            return;
+        }
+        $pathFolder =  $data['path'];
+        Storage::disk('local')->deleteDirectory($pathFolder);
+    }
+    public function deleteFileAction($path, $data)
+    {
+        if (!isset($data['path'])) {
+            return;
+        }
+        $pathFile =  $data['path'];
+        Storage::disk('local')->delete($pathFile);
     }
 }

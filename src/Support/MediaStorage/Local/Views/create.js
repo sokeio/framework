@@ -13,7 +13,7 @@ export default {
   },
   render() {
     return `
-      <div class="p-3" data-modal-size="sm">
+      <div class="p-3" >
           <div class="mb-2 sokeio-field-input">
             <label class="form-label">Folder Name</label>
             <input so-model="folderName" type="text" class="form-control "  placeholder="Folder Name">
