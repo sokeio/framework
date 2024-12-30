@@ -134,7 +134,13 @@ export default {
       });
   },
   chooseOK() {
-    this.fnCallbackAndClose(this.fileSelected);
+    let arr = this.fileSelected.map((item) =>
+      this.files.find((file) => file.path == item)
+    );
+    if (!this.$app.multiple) {
+      arr = arr.length > 0 ? arr[0] : null;
+    }
+    this.fnCallbackAndClose(arr);
   },
   buttonChooseRender() {
     this.$btnChoose = null;

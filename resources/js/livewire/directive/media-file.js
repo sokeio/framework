@@ -26,6 +26,7 @@ export default {
               value = value[mediaField];
             }
           }
+
           if (modelKey) {
             dataSet(component.$wire, modelKey, value);
           } else {
@@ -33,7 +34,7 @@ export default {
           }
         },
         "image",
-        multiple == "true" || true
+        multiple == "true"
       );
     };
     el.addEventListener("click", event);
