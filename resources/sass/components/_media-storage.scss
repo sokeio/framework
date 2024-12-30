@@ -15,7 +15,7 @@ $prefixMediaStorage: ".so-media-storage";
         display: flex;
         align-items: center;
         justify-content: space-between;
-        
+
     }
 
     #{$prefixMediaStorage}-header-title {
@@ -166,7 +166,7 @@ $prefixMediaStorage: ".so-media-storage";
                     align-items: center;
                     justify-content: center;
                     text-wrap: break-word;
-                    height: 40px;
+                    height: 45px;
                     overflow: auto;
 
                     * {
