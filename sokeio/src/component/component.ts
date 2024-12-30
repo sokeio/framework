@@ -96,7 +96,7 @@ export default {
   },
   checkFnCallback: function () {
     if (this.$app) {
-      return this.$app.fnCallback !== null;
+      return this.$app.fnCallback ? true : false;
     }
     return false;
   },
@@ -112,6 +112,7 @@ export default {
   refresh: function (delay = 100) {
     let self = this;
     let fnRefresh = function () {
+      console.log(self);
       let elParent = self.$el.parentNode;
       let elNext = self.$el.nextSibling;
       self.$el.remove();

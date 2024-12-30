@@ -29,11 +29,17 @@ export default {
       this.$el.__sokeio = this;
     }
     if (this.$parent) {
-      let elTemp = this.$parent.$el?.querySelector(
-        "#sokeio-component-" + this.getId()
-      );
-      if (!elTemp) return;
-      elTemp.replaceWith(this.$el);
+      setTimeout(() => {
+        let elTemp = this.$parent.$el?.querySelector(
+          "#sokeio-component-" + this.getId()
+        );
+        console.log({ elTemp });
+        if (!elTemp) {
+          console.log("#sokeio-component-" + this.getId());
+          return;
+        }
+        elTemp.replaceWith(this.$el);
+      });
     }
     this.lifecycle("render");
   },

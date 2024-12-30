@@ -6,6 +6,7 @@ import "./modal/index";
 import "./livewire";
 import "./alpine";
 import { addScriptToWindow, addStyleToWindow } from "./utils";
+import "./media-storage/media-storage";
 import icon from "./icon";
 
 window.addStyleToWindow = addStyleToWindow;

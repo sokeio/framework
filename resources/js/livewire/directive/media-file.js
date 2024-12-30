@@ -16,7 +16,7 @@ export default {
     //wire:media-field
     let mediaField = el.getAttribute("wire:media-field");
     let event = () => {
-      window.showFileManager(
+      window.showMediaManager(
         function (file) {
           let value = file;
           if (mediaField) {

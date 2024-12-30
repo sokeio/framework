@@ -80,6 +80,7 @@ export default {
     progress = null
   ) {
     this.$loading?.showLoading();
+    let self = this;
     if (files.length > 0) {
       let formData = this.$request.convertJsonToFormData({
         action,
@@ -96,13 +97,12 @@ export default {
         })
         .then((res) => {
           res = JSON.parse(res);
-          this.setResult(res.result);
-          this.services = res.services;
-          this.refresh();
+          self.setResult(res.result);
+          self.services = res.services;
+          self.refresh();
           if (callback) {
             callback(res);
           }
-          this.$loading?.hideLoading();
         });
       return;
     }
@@ -116,20 +116,31 @@ export default {
       .then((res) => res.json())
       .then((res) => {
         // res = JSON.parse(res);
-        this.setResult(res.result);
-        this.services = res.services;
-        this.refresh();
+        self.setResult(res.result);
+        self.services = res.services;
+        self.refresh();
         if (callback) {
           callback(res);
         }
-        this.$loading?.hideLoading();
       });
+  },
+  chooseOK() {
+    this.fnCallbackAndClose(this.fileSelected);
+  },
+  buttonChooseRender() {
+    if (!this.checkFnCallback()) return "";
+    let html = "";
+    html += `<div class="bg-white p-1 d-flex justify-content-end">
+      <button class="btn btn-primary" so-on:click="chooseOK()">OK</button>
+    </div>
+    `;
+    return html;
   },
   render() {
     return ` <div class="so-media-storage-wrapper">
                 <so:media-storage::header></so:media-storage::header>
+                <so:media-storage::breadcrumbs></so:media-storage::breadcrumbs>
                 <div class="so-media-storage-body">
-                    <so:media-storage::breadcrumbs></so:media-storage::breadcrumbs>
                     <div class="so-media-storage-body-list">
                         <so:media-storage::loading></so:media-storage::loading>
                         <so:media-storage::grid></so:media-storage::grid>
@@ -140,6 +151,7 @@ export default {
                         <span>Media Storage</span>
                     </div>
                 </div>
+                ${this.buttonChooseRender()}
                 <so:media-storage::context-menu></so:media-storage::context-menu>
         </div>`;
   },
