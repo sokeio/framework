@@ -33,9 +33,7 @@ export default {
         let elTemp = this.$parent.$el?.querySelector(
           "#sokeio-component-" + this.getId()
         );
-        console.log({ elTemp });
         if (!elTemp) {
-          console.log("#sokeio-component-" + this.getId());
           return;
         }
         elTemp.replaceWith(this.$el);

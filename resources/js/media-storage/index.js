@@ -27,8 +27,14 @@ export default {
   $loading: null,
   $contextMenu: null,
   $grid: null,
+  $btnChoose: null,
 
   register() {
+    this.fileSelected = [];
+    this.folderSelected = [];
+    this.path = "/";
+    this.search = "";
+    this.service = "local";
     this.refreshData();
   },
   searchData(value) {
@@ -56,6 +62,9 @@ export default {
       this.fileSelected.push(path);
     }
     this.$grid.refresh();
+    if (this.$btnChoose) {
+      this.$btnChoose.disabled = this.fileSelected.length == 0;
+    }
   },
   openPath(path) {
     this.path = path;
@@ -128,10 +137,11 @@ export default {
     this.fnCallbackAndClose(this.fileSelected);
   },
   buttonChooseRender() {
+    this.$btnChoose = null;
     if (!this.checkFnCallback()) return "";
     let html = "";
-    html += `<div class="bg-white p-1 d-flex justify-content-end">
-      <button class="btn btn-primary" so-on:click="chooseOK()">OK</button>
+    html += `<div class="bg-white p-1 d-flex justify-content-end" >
+      <button class="btn btn-primary" so-on:click="chooseOK()" so-refs="$btnChoose" disabled><i class="ti ti-check me-1"></i> Choose</button>
     </div>
     `;
     return html;

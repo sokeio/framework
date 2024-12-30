@@ -112,7 +112,6 @@ export default {
   refresh: function (delay = 100) {
     let self = this;
     let fnRefresh = function () {
-      console.log(self);
       let elParent = self.$el.parentNode;
       let elNext = self.$el.nextSibling;
       self.$el.remove();

@@ -26,10 +26,14 @@ export default {
               value = value[mediaField];
             }
           }
-          dataSet(component.$wire, modelKey, value);
+          if (modelKey) {
+            dataSet(component.$wire, modelKey, value);
+          } else {
+            Alpine.$data(el).mediaCallback?.call(value, file);
+          }
         },
         "image",
-        multiple == "true"
+        multiple == "true" || true
       );
     };
     el.addEventListener("click", event);

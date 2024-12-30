@@ -7,6 +7,15 @@ use Illuminate\Support\Facades\Storage;
 
 class LocalService extends MediaStorageService
 {
+    private $disk = 'public';
+    private $tempStorage = null;
+    public function getMediaStoreage()
+    {
+        if (!$this->tempStorage) {
+            $this->tempStorage = Storage::disk($this->disk);
+        }
+        return $this->tempStorage;
+    }
     public function getViews()
     {
         return [
@@ -103,17 +112,22 @@ class LocalService extends MediaStorageService
     }
     private function mapInfoFile($file, $storage, $disk)
     {
-
+        // check $file is Image
+        $isImage = false;
+        $extension = pathinfo($file, PATHINFO_EXTENSION);
+        if (in_array($extension, ['jpg', 'jpeg', 'png', 'gif'])) {
+            $isImage = true;
+        }
         return [
             'name' => basename($file),
             'name_without_extension' => pathinfo($file, PATHINFO_FILENAME),
             'path' => $file,
-            'extension' => $storage->mimeType($file),
+            'extension' => $extension,
             'size' => $storage->size($file),
             'public_url' => url('storage/' . $file),
             'created_at' => $storage->lastModified($file),
             'updated_at' => $storage->lastModified($file),
-            'preview_url' => Storage::temporaryUrl($file, now()->addSeconds(15), ['disk' => $disk]),
+            'preview_url' => $isImage ? Storage::temporaryUrl($file, now()->addSeconds(15), ['disk' => $disk]) : null,
         ];
     }
     private function mapInfoFolder($folder, $storage, $path)
@@ -126,15 +140,15 @@ class LocalService extends MediaStorageService
     }
     public function getFiles($action, $path, $data)
     {
-        return collect(Storage::disk('local')->files($path))->map(function ($file) {
-            return $this->mapInfoFile($file, Storage::disk('local'), 'local');
+        return collect($this->getMediaStoreage()->files($path))->map(function ($file) {
+            return $this->mapInfoFile($file, $this->getMediaStoreage(), $this->disk);
         })->where('name_without_extension', '!=', '')->values()->toArray();
     }
     public function getFolders($action, $path, $data)
     {
-        return collect(Storage::disk('local')->directories($path))
+        return collect($this->getMediaStoreage()->directories($path))
             ->map(function ($folder) use ($path) {
-                return $this->mapInfoFolder($folder, Storage::disk('local'), $path);
+                return $this->mapInfoFolder($folder, $this->getMediaStoreage(), $path);
             })->where('name', '!=', '')->values()->toArray();
     }
     public function getName()
@@ -148,7 +162,7 @@ class LocalService extends MediaStorageService
         if (!isset($data['name'])) {
             return;
         }
-        Storage::disk('local')->makeDirectory($path . '/' . $data['name']);
+        $this->getMediaStoreage()->makeDirectory($path . '/' . $data['name']);
     }
     public function uploadFileAction($path, $data)
     {
@@ -160,7 +174,7 @@ class LocalService extends MediaStorageService
             $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
             $name = $filename . time() . '.' . $extension;
-            Storage::disk('local')->putFileAs($path, $file, $name);
+            $this->getMediaStoreage()->putFileAs($path, $file, $name);
         }
     }
     public function deleteFolderAction($path, $data)
@@ -169,7 +183,7 @@ class LocalService extends MediaStorageService
             return;
         }
         $pathFolder =  $data['path'];
-        Storage::disk('local')->deleteDirectory($pathFolder);
+        $this->getMediaStoreage()->deleteDirectory($pathFolder);
     }
     public function deleteFileAction($path, $data)
     {
@@ -177,7 +191,7 @@ class LocalService extends MediaStorageService
             return;
         }
         $pathFile =  $data['path'];
-        Storage::disk('local')->delete($pathFile);
+        $this->getMediaStoreage()->delete($pathFile);
     }
     public function renameFileAction($path, $data)
     {
@@ -197,7 +211,7 @@ class LocalService extends MediaStorageService
         } else {
             $pathNew = $nameFile;
         }
-        Storage::disk('local')->move($pathFile, $pathNew);
+        $this->getMediaStoreage()->move($pathFile, $pathNew);
     }
     public function renameFolderAction($path, $data)
     {
@@ -216,6 +230,6 @@ class LocalService extends MediaStorageService
         } else {
             $pathNew = $nameFolder;
         }
-        Storage::disk('local')->move($pathFolder, $pathNew);
+        $this->getMediaStoreage()->move($pathFolder, $pathNew);
     }
 }

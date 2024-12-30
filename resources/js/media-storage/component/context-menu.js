@@ -103,7 +103,6 @@ export default {
   open(event, path, type) {
     this.path = path;
     this.type = type;
-    // console.log({ path, type });
     window.event.returnValue = false;
     this.refresh(0);
     let top = 0;
@@ -118,7 +117,9 @@ export default {
     this.$el.style.left = mouseX(event, this.$app.$el) - left + "px";
   },
   hide() {
-    this.$el.style.display = "none";
+    if (this.$el) {
+      this.$el.style.display = "none";
+    }
   },
   render() {
     return `

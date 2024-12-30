@@ -37,10 +37,16 @@ export default {
     this.$parent.files.forEach((item) => {
       if(search && !item.name.toLowerCase().includes(search.toLowerCase())) return
       let isSelected = this.$parent.checkItemActive(item.path, "file");
+      let ext = item.name.split(".").pop();
+
+      let preview_url=`<i class="ti ti-file"></i>`;
+      if(item.preview_url){
+        preview_url=`<img src="${item.preview_url}" alt="${item.name}"/>`;
+      }
       html += `<div class="so-media-storage-item so-media-storage-item-file ${isSelected ? "item-active" : ""}"
              so-on:click="selectFile('${item.path}')" so-on:contextmenu='showContextMenu($event,"${item.path}","file")'>
                         <div class="so-media-storage-item-icon">
-                            <i class="ti ti-file"></i>
+                            ${preview_url}
                         </div>
                         <div class="so-media-storage-item-name">
                            ${item.name}

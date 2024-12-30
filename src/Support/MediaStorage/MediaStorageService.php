@@ -4,6 +4,10 @@ namespace Sokeio\Support\MediaStorage;
 
 class MediaStorageService
 {
+    public function getMediaStoreage()
+    {
+        return null;
+    }
     public function getName()
     {
         return '';
