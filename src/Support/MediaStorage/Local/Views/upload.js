@@ -113,7 +113,7 @@ export default {
     return `
       <div class="p-3" >
           <div class="mb-2 sokeio-field-input">
-            <label class="form-label">File</label>
+            <label class="form-label">Upload File</label>
             <input type="file" class="form-control" multiple so-on:change="changeFile($event)" >
           </div>
           <so:local:list-file></so:local:list-file>

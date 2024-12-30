@@ -42,6 +42,21 @@ export default {
     if (path == "") path = "/";
     this.openPath(path);
   },
+  checkItemActive(path, type = "folder") {
+    if (type == "folder") return this.folderSelected.includes(path);
+    return this.fileSelected.includes(path);
+  },
+  selectFile(path) {
+    if (this.fileSelected.includes(path)) {
+      this.fileSelected = this.fileSelected.filter((item) => item != path);
+    } else {
+      if (!this.$app.multiple) {
+        this.fileSelected = [];
+      }
+      this.fileSelected.push(path);
+    }
+    this.$grid.refresh();
+  },
   openPath(path) {
     this.path = path;
     this.refreshData();

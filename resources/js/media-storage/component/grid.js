@@ -5,8 +5,10 @@ export default {
     this.$parent.$grid = this;
   },
   openFolder(path) {
-    this.$parent.path = path;
-    this.$parent.refreshData();
+    this.$parent.openPath(path);
+  },
+  selectFile(path) {
+    this.$parent.selectFile(path);
   },
   showContextMenu(e, path, type) {
     this.$parent.$contextMenu.open(e, path, type);
@@ -17,7 +19,8 @@ export default {
     let search = this.$parent.search;
     this.$parent.folders.forEach((item) => {
       if(search && !item.name.toLowerCase().includes(search.toLowerCase())) return
-      html += `<div class="so-media-storage-item" so-on:click="openFolder('${item.path}')" so-on:contextmenu='showContextMenu($event,"${item.path}","folder")'>
+      let isSelected = this.$parent.checkItemActive(item.path, "folder");
+      html += `<div class="so-media-storage-item ${isSelected ? "item-active" : ""}" so-on:click="openFolder('${item.path}')" so-on:contextmenu='showContextMenu($event,"${item.path}","folder")'>
                         <div class="so-media-storage-item-icon">
                             <i class="ti ti-folder"></i>
                         </div>
@@ -33,7 +36,9 @@ export default {
     let search = this.$parent.search;
     this.$parent.files.forEach((item) => {
       if(search && !item.name.toLowerCase().includes(search.toLowerCase())) return
-      html += `<div class="so-media-storage-item so-media-storage-item-file" so-on:contextmenu='showContextMenu($event,"${item.path}","file")'>
+      let isSelected = this.$parent.checkItemActive(item.path, "file");
+      html += `<div class="so-media-storage-item so-media-storage-item-file ${isSelected ? "item-active" : ""}"
+             so-on:click="selectFile('${item.path}')" so-on:contextmenu='showContextMenu($event,"${item.path}","file")'>
                         <div class="so-media-storage-item-icon">
                             <i class="ti ti-file"></i>
                         </div>

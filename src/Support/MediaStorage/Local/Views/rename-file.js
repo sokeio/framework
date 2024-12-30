@@ -5,7 +5,6 @@ export default {
     extension: "",
   },
   register() {
-    console.log(this);
     let pathFile = this.$app.path;
     this.nameFile = pathFile.split("/").pop();
     this.extension = this.nameFile.split(".").pop();
@@ -28,7 +27,7 @@ export default {
     return `
         <div class="p-3 mt-2" >
             <div>
-                You want to replace this file <b>${this.$app.path}</b>
+                You want to rename this file <b>${this.$app.path}</b>
             </div>
               <div class="mb-2 sokeio-field-input ">
                 <div class="input-group">
