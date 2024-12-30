@@ -1,5 +1,39 @@
 $prefixMediaStorage: ".so-media-storage";
 
+.so-logo {
+    a {
+        width: 100%;
+        margin-bottom: 5px;
+
+        font-weight: bold;
+        font-size: 14px;
+        background-color: #253447;
+        border-radius: 2px;
+        text-align: center;
+        padding: 5px 10px;
+        text-decoration: none;
+        color: #fff;
+
+        &.logo-large {
+            display: inline-block;
+        }
+
+        &.logo-small {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            &.logo-large {
+                display: none;
+            }
+
+            &.logo-small {
+                display: inline-block;
+            }
+        }
+    }
+}
+
 #{$prefixMediaStorage}-wrapper {
     display: flex;
     flex-direction: column;
@@ -52,6 +86,38 @@ $prefixMediaStorage: ".so-media-storage";
                 margin-right: 5px;
             }
         }
+    }
+
+    @media screen and (max-width: 768px) {
+        #{$prefixMediaStorage}-header {
+            flex-direction: column;
+
+            #{$prefixMediaStorage}-header-title {
+                width: 100%;
+
+                a {
+                    &.logo-large {
+                        display: inline-block;
+                    }
+
+                    &.logo-small {
+                        display: none;
+                    }
+                }
+            }
+
+            #{$prefixMediaStorage}-header-control {
+                width: 100%;
+                flex-wrap: wrap;
+                justify-content: center;
+
+                #{$prefixMediaStorage}-header-control-item {
+                    margin: 3px;
+                    padding: 5px;
+                }
+            }
+        }
+
     }
 
     #{$prefixMediaStorage}-body {
@@ -233,40 +299,6 @@ $prefixMediaStorage: ".so-media-storage";
 
         &:hover {
             background-color: #344c6f;
-        }
-    }
-}
-
-.so-logo {
-    a {
-        width: 100%;
-        margin-bottom: 5px;
-        
-        font-weight: bold;
-        font-size: 14px;
-        background-color: #253447;
-        border-radius: 2px;
-        text-align: center;
-        padding: 5px 10px;
-        text-decoration: none;
-        color: #fff;
-
-        &.logo-large {
-            display: inline-block;
-        }
-
-        &.logo-small {
-            display: none;
-        }
-
-        @media (max-width: 768px) {
-            &.logo-large {
-                display: none;
-            }
-
-            &.logo-small {
-                display: inline-block;
-            }
         }
     }
 }
