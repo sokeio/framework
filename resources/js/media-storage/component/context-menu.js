@@ -66,6 +66,7 @@ export default {
             type: this.type,
             mediaStorage: this.$parent,
           },
+          skipOverlayClose: true,
         });
       }
     }

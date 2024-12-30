@@ -193,7 +193,7 @@ var K=Object.defineProperty;var H=(e,a,i)=>a in e?K(e,a,{enumerable:!0,configura
                   </div>
           `:"<div style='display:none'></div>"}};function na(e,a){return e.pageX?document.body.classList.contains("so-modal-open")?e.pageX-document.documentElement.scrollLeft:e.pageX:e.clientX?e.clientX+(document.documentElement.scrollLeft?document.documentElement.scrollLeft:document.body.scrollLeft):null}function ca(e,a){return e.pageY?document.body.classList.contains("so-modal-open")?e.pageY-document.documentElement.scrollTop:e.pageY:e.clientY?e.clientY+(document.documentElement.scrollTop?document.documentElement.scrollTop:document.body.scrollTop):null}const ra={state:{path:"",type:""},register(){this.$parent.$contextMenu=this},itemClick(e){let a=this.$parent.menuContext[e];if(a&&(a.action&&new Function(`return function(type,path,item){
             ${a.action}
-          }`)().bind(this.$parent)(this.type,this.path,a),a.view&&this.$parent.views[a.view])){let i=a.viewOptions||{};window.showModal(a.title,{template:window.sokeioUI.textScriptToJs(this.$parent.views[a.view]),data:{...i,item:a,path:this.path,type:this.type,mediaStorage:this.$parent}})}this.hide()},itemRender(){let e=`
+          }`)().bind(this.$parent)(this.type,this.path,a),a.view&&this.$parent.views[a.view])){let i=a.viewOptions||{};window.showModal(a.title,{template:window.sokeioUI.textScriptToJs(this.$parent.views[a.view]),data:{...i,item:a,path:this.path,type:this.type,mediaStorage:this.$parent},skipOverlayClose:!0})}this.hide()},itemRender(){let e=`
     <div class="so-media-storage-context-menu-item" so-on:click="$parent.refreshData()">
                     <div class="so-media-storage-context-menu-item-icon">
                         <i class="ti ti-refresh"></i>
