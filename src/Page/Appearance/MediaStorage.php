@@ -10,13 +10,13 @@ use Sokeio\UI\WithUI;
 #[PageInfo(
     admin: true,
     auth: true,
-    title: 'Media Library',
-    icon:'ti ti-cloud-data-connection',
+    title: 'Media Storage',
+    icon: 'ti ti-cloud-data-connection',
     menu: true,
-    menuTitle: 'Media Library',
+    menuTitle: 'Media Storage',
     sort: 999999999,
 )]
-class MediaLibrary extends \Sokeio\Page
+class MediaStorage extends \Sokeio\Page
 {
     use WithUI;
     protected function setupUI()

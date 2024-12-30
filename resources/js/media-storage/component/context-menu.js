@@ -122,7 +122,7 @@ export default {
   render() {
     return `
         <div class="so-media-storage-context-menu" so-click-outsite="hide()" style="display:none">
-            <div class="so-media-storage-context-menu-header">
+            <div class="so-media-storage-context-menu-header so-logo">
                 <a href="https://sokeio.com" class="logo-large" target="_blank">  
                     Sokeio FM V1.0
                 </a>

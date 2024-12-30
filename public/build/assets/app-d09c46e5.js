@@ -210,7 +210,7 @@ var K=Object.defineProperty;var H=(e,a,i)=>a in e?K(e,a,{enumerable:!0,configura
         
             `)}),e},open(e,a,i){this.path=a,this.type=i,window.event.returnValue=!1,this.refresh(0);let s=0,t=0;if(this.$el.closest(".so-modal")){let l=this.$parent.$el.getBoundingClientRect();s=l.top,t=l.left-document.body.scrollLeft}this.$el.style.display="block",this.$el.style.top=ca(e,this.$app.$el)-s+"px",this.$el.style.left=na(e,this.$app.$el)-t+"px"},hide(){this.$el.style.display="none"},render(){return`
         <div class="so-media-storage-context-menu" so-click-outsite="hide()" style="display:none">
-            <div class="so-media-storage-context-menu-header">
+            <div class="so-media-storage-context-menu-header so-logo">
                 <a href="https://sokeio.com" class="logo-large" target="_blank">  
                     Sokeio FM V1.0
                 </a>
@@ -229,8 +229,13 @@ var K=Object.defineProperty;var H=(e,a,i)=>a in e?K(e,a,{enumerable:!0,configura
                       <div class="so-media-storage-header-control-item-text">${a.name}</div>
                   </div>`}),e},render(){return`
       <div class="so-media-storage-header">
-                    <div class="so-media-storage-header-title">
-                        <span>Media Storage</span>
+                    <div class="so-media-storage-header-title so-logo">
+                        <a href="https://sokeio.com" class="logo-large" target="_blank">  
+                            Sokeio FM V1.0
+                        </a>
+                        <a href="https://sokeio.com" class="logo-small" target="_blank">
+                            SFM1.0
+                        </a>
                     </div>
                     <div class="so-media-storage-header-control">
                         <div class="so-media-storage-header-control-item" so-on:click="$parent.mediaAction('refresh')">

@@ -40,8 +40,13 @@ export default {
   render() {
     return `
       <div class="so-media-storage-header">
-                    <div class="so-media-storage-header-title">
-                        <span>Media Storage</span>
+                    <div class="so-media-storage-header-title so-logo">
+                        <a href="https://sokeio.com" class="logo-large" target="_blank">  
+                            Sokeio FM V1.0
+                        </a>
+                        <a href="https://sokeio.com" class="logo-small" target="_blank">
+                            SFM1.0
+                        </a>
                     </div>
                     <div class="so-media-storage-header-control">
                         <div class="so-media-storage-header-control-item" so-on:click="$parent.mediaAction('refresh')">
