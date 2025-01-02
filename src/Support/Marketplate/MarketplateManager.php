@@ -18,7 +18,7 @@ class MarketplateManager
     private function makeRequest(string $url, array $data = []): \Illuminate\Http\Client\Response
     {
         $url = sprintf('%s%s', $this->getMarketplateUrl(), $url);
-        Log::info(['url' => $url, 'data' => $data]);
+        Log::info(['makeRequest' => $url]);
         return Http::withOptions(['verify' => false])->post($url, $data);
     }
     public function getProductInfo()
@@ -92,24 +92,23 @@ class MarketplateManager
     }
     public function cacheProductInfo()
     {
-        return $this->makeRequest('/product-info', $this->getInfoUpdater())->json();;
-        return  Cache::remember('marketplate_product_info', 60, function () {
-            return $this->makeRequest('/product-info', $this->getInfoUpdater())->json();
-        });
+        return $this->makeRequest('api/platform/product-info', $this->getInfoUpdater())->json();;
+        // return  Cache::remember('marketplate_product_info', 60, function () {
+        //     return $this->makeRequest('/product-info', $this->getInfoUpdater())->json();
+        // });
     }
     public function checkNewVersion(): bool
     {
         $rs =  $this->cacheProductInfo();
-
+        Log::info(['checkNewVersion' => $rs]);
         return data_get($rs, 'is_updated') == true;
     }
     public function updateNow($callback = null): bool
     {
-        $log=function($msg) use ($callback) {
+        $log = function ($msg) use ($callback) {
             if ($callback) {
                 $callback($msg);
             }
-            
         };
         $log("start");
         $rs =  $this->cacheProductInfo();
@@ -117,7 +116,7 @@ class MarketplateManager
             $log("update");
             $modules = data_get($rs, 'modules');
             $themes = data_get($rs, 'themes');
-           
+
             $log("end");
         }
         $log("done");

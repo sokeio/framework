@@ -1,12 +1,14 @@
-<div class="position-fixed bottom-0 end-0 p-2">
-    <div class="card" style="width: 18rem;">
+<div class="position-fixed bottom-0 end-0 p-2" wire:init="lazySystemUpdate">
+    <div class="card" style="width: 18rem; display: none" x-show="$wire.isSystemVersionNew">
         <div class="ribbon bg-red">New</div>
         <div class="card-body p-2">
-            <h3 class="card-title m-1">System Updater </h3>
+            <h3 class="card-title m-1">System Update </h3>
             <p class="text-secondary">{{ $message }}</p>
             <div class="d-flex justify-content-center">
-                <button class="btn btn-primary p-1 me-1" wire:modal.id="system-updater-modal" wire:modal wire:modal.size="full"><i
-                        class="ti ti-refresh me-1"></i> Update Now</button>
+                <button class="btn btn-primary p-1 me-1" wire:modal.id="system-updater-modal" wire:modal
+                    wire:modal.skip-overlay-close wire:modal.hide-button-close><i class="ti ti-refresh me-1"></i>
+                    Update
+                    Now</button>
                 <div wire:ignore>
                     <div sokeio:application="system-updater-modal">
                         <template sokeio:main>
@@ -28,6 +30,5 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>

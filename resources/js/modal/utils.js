@@ -30,8 +30,12 @@ export function getModalHtmlRender(
   let closeOverlay =
     'so-on:click="this.closeApp()" so-on:ignore=".so-modal-dialog"';
   let elHtml = convertHtmlToElement(html);
-  let skipOverlayClose = component?.skipOverlayClose ?? false;
+  let skipOverlayClose = component?.skipOverlayClose;
+
   let modalSize = component?.modalSize;
+  if (component?.hideButtonClose) {
+    htmlClose = "";
+  }
   if (!modalSize && elHtml && elHtml.getAttribute && elHtml.querySelector) {
     if (
       elHtml.querySelector?.(".hide-show-button-close") ||
@@ -44,9 +48,14 @@ export function getModalHtmlRender(
         .querySelector("[data-modal-size]")
         .getAttribute("data-modal-size");
     }
-    skipOverlayClose = elHtml.getAttribute("data-skip-overlay-close");
     if (
-      !skipOverlayClose &&
+      skipOverlayClose === undefined &&
+      elHtml.getAttribute("data-skip-overlay-close")
+    ) {
+      skipOverlayClose = elHtml.getAttribute("data-skip-overlay-close");
+    }
+    if (
+      skipOverlayClose === undefined &&
       elHtml.querySelector?.("[data-skip-overlay-close]")
     ) {
       skipOverlayClose = elHtml

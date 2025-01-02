@@ -19,7 +19,8 @@ export default {
         url: "",
         elTarget: el,
         $wire: component.$wire,
-        
+        skipOverlayClose: false,
+        hideButtonClose: false,
         isHide: true,
       };
       let modalTitle = el.getAttribute("wire:modal.title");
@@ -44,6 +45,12 @@ export default {
           options.template = main;
           options.components = components;
         }
+      }
+      if (el.hasAttribute("wire:modal.skip-overlay-close")) {
+        options.skipOverlayClose = true;
+      }
+      if (el.hasAttribute("wire:modal.hide-button-close")) {
+        options.hideButtonClose = true;
       }
       if (el.hasAttribute("wire:modal.callback")) {
         options.fnCallback = function (value) {
