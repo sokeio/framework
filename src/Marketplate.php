@@ -12,7 +12,7 @@ use Sokeio\Support\Marketplate\MarketplateManager;
  * @method static mixed getNewVersionInfo()
  * @method static void saveProductInfo()
  * @method static mixed getProductInfo()
- * @method static void doUpdater($callback = null)
+ * @method static mixed cacheProductInfo()
  *
  */
 

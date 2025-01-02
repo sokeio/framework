@@ -100,7 +100,6 @@ class MarketplateManager
     public function checkNewVersion(): bool
     {
         $rs =  $this->cacheProductInfo();
-        Log::info(['checkNewVersion' => $rs]);
         return data_get($rs, 'is_updated') == true;
     }
     public function updateNow($callback = null): bool

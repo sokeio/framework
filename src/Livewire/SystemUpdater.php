@@ -2,8 +2,10 @@
 
 namespace Sokeio\Livewire;
 
+use Illuminate\Support\Facades\Auth;
 use Sokeio\Component;
 use Sokeio\Marketplate;
+use Sokeio\Platform;
 
 class SystemUpdater extends Component
 {
@@ -14,7 +16,13 @@ class SystemUpdater extends Component
     }
     public function lazySystemUpdate()
     {
-        $this->isSystemVersionNew = Marketplate::checkNewVersion();
+        if (Auth::check() && Platform::isUrlAdmin()) {
+            $this->isSystemVersionNew = Marketplate::checkNewVersion();
+        }
+    }
+    public function getProductInfo()
+    {
+        return Marketplate::cacheProductInfo();
     }
     public function render()
     {
