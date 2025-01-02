@@ -14,7 +14,7 @@ class ItemUpdater
         private string $type, // module, theme, pacakge
         private string $id, // organization/key
         private string $version, // version
-        private BaseUpdater $serviceUpdater
+        private BaseProvider $serviceUpdater
     ) {
         if ($this->type === 'module') {
             $this->itemInfo = Platform::module()->findByNameOrId($this->id);

@@ -19,6 +19,7 @@ export default {
         url: "",
         elTarget: el,
         $wire: component.$wire,
+        
         isHide: true,
       };
       let modalTitle = el.getAttribute("wire:modal.title");
@@ -26,7 +27,7 @@ export default {
         options.url = el.getAttribute("wire:modal.url");
       }
       if (el.hasAttribute("wire:modal.size")) {
-        options.size = el.getAttribute("wire:modal.size");
+        options.modalSize = el.getAttribute("wire:modal.size");
       }
 
       if (el.hasAttribute("wire:modal.icon")) {
@@ -45,7 +46,7 @@ export default {
         }
       }
       if (el.hasAttribute("wire:modal.callback")) {
-        options.callback = function (value) {
+        options.fnCallback = function (value) {
           if (Alpine.$data(el)[el.getAttribute("wire:modal.callback")]) {
             Alpine.$data(el)[el.getAttribute("wire:modal.callback")](value);
           } else {

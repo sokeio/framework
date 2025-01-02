@@ -4,7 +4,7 @@ namespace Sokeio\Support\Marketplate;
 
 use Illuminate\Support\Facades\File;
 
-class BaseUpdater
+class BaseProvider
 {
     public function __construct(
         private array $data

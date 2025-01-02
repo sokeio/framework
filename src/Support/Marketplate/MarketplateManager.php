@@ -2,6 +2,7 @@
 
 namespace Sokeio\Support\Marketplate;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Sokeio\Platform;
@@ -63,7 +64,7 @@ class MarketplateManager
             $product['themes'] = array_merge($product['themes'], $themes);
             $product['updated_at'] = date('Y-m-d H:i:s');
         }
-        
+
         $this->product = $product;
         file_put_contents((config('sokeio.platform.product')), json_encode($product, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
     }
@@ -89,26 +90,37 @@ class MarketplateManager
             'themes' => $themes,
         ];
     }
-    public function getNewVersionInfo()
+    public function cacheProductInfo()
     {
-        $response = $this->makeRequest('/product-new-version', $this->getInfoUpdater());
-
-        return $response->json();
+        return $this->makeRequest('/product-info', $this->getInfoUpdater())->json();;
+        return  Cache::remember('marketplate_product_info', 60, function () {
+            return $this->makeRequest('/product-info', $this->getInfoUpdater())->json();
+        });
     }
     public function checkNewVersion(): bool
     {
-        $response = $this->getNewVersionInfo();
-        if (data_get($response, 'is_update') == 'success') {
-            return true;
-        }
+        $rs =  $this->cacheProductInfo();
 
-
-        return false;
+        return data_get($rs, 'is_updated') == true;
     }
-    public function doUpdater($callback = null)
+    public function updateNow($callback = null): bool
     {
-        $response = $this->makeRequest('/updater', $this->getInfoUpdater());
-
-        return $response->json();
+        $log=function($msg) use ($callback) {
+            if ($callback) {
+                $callback($msg);
+            }
+            
+        };
+        $log("start");
+        $rs =  $this->cacheProductInfo();
+        if (data_get($rs, 'is_updated') == true) {
+            $log("update");
+            $modules = data_get($rs, 'modules');
+            $themes = data_get($rs, 'themes');
+           
+            $log("end");
+        }
+        $log("done");
+        return true;
     }
 }
