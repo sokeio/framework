@@ -79,7 +79,7 @@ const sokeioUI: any = {
   runApplication(el: any, $app: any = null, $parent: any = null) {
     sokeioUI.getListApplication(el).forEach((app: any) => {
       if (!sokeioUI.execute(app, $app, $parent)) {
-        console.error("Application not run", app);
+        // console.error("Application not run", app);
       }
     });
   },

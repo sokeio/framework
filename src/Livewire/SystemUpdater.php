@@ -10,6 +10,7 @@ use Sokeio\Platform;
 class SystemUpdater extends Component
 {
     public $isSystemVersionNew = false;
+    public $productInfo = [];
     public function checkSystemUpdate()
     {
         return Marketplate::checkNewVersion();
@@ -18,11 +19,10 @@ class SystemUpdater extends Component
     {
         if (Auth::check() && Platform::isUrlAdmin()) {
             $this->isSystemVersionNew = Marketplate::checkNewVersion();
+            if ($this->isSystemVersionNew) {
+                $this->productInfo = Marketplate::getNewVersionInfo();
+            }
         }
-    }
-    public function getProductInfo()
-    {
-        return Marketplate::cacheProductInfo();
     }
     public function render()
     {

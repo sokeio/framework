@@ -18,7 +18,6 @@ class MarketplateManager
     private function makeRequest(string $url, array $data = []): \Illuminate\Http\Client\Response
     {
         $url = sprintf('%s%s', $this->getMarketplateUrl(), $url);
-        Log::info(['makeRequest' => $url]);
         return Http::withOptions(['verify' => false])->post($url, $data);
     }
     public function getProductInfo()
@@ -90,7 +89,7 @@ class MarketplateManager
             'themes' => $themes,
         ];
     }
-    public function cacheProductInfo()
+    public function getNewVersionInfo()
     {
         return $this->makeRequest('api/platform/product-info', $this->getInfoUpdater())->json();;
         // return  Cache::remember('marketplate_product_info', 60, function () {
@@ -99,7 +98,7 @@ class MarketplateManager
     }
     public function checkNewVersion(): bool
     {
-        $rs =  $this->cacheProductInfo();
+        $rs =  $this->getNewVersionInfo();
         return data_get($rs, 'is_updated') == true;
     }
     public function updateNow($callback = null): bool
@@ -110,7 +109,7 @@ class MarketplateManager
             }
         };
         $log("start");
-        $rs =  $this->cacheProductInfo();
+        $rs =  $this->getNewVersionInfo();
         if (data_get($rs, 'is_updated') == true) {
             $log("update");
             $modules = data_get($rs, 'modules');
