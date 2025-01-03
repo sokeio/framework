@@ -89,9 +89,16 @@ export default {
     return html;
   },
   updateNow() {
+    window.Livewire.trigger("stream", function (item) {
+      console.log(item);
+    });
     this.isRunning = true;
     this.$app.$el.querySelector(".so-modal-close").style.display = "none";
     this.refresh();
+    let self = this;
+    setTimeout(function () {
+      self.$wire.begin();
+    });
   },
 
   render() {
