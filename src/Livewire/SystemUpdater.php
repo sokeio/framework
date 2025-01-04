@@ -3,32 +3,27 @@
 namespace Sokeio\Livewire;
 
 use Illuminate\Support\Facades\Auth;
+use Livewire\WithFileUploads;
 use Sokeio\Component;
 use Sokeio\Marketplate;
 use Sokeio\Platform;
 
 class SystemUpdater extends Component
 {
+    use WithFileUploads;
     public $isSystemVersionNew = false;
     public $productInfo = [];
-    public $start = 3;
- 
-    public function begin()
+    public $start = 100000;
+    public function startUpdate()
     {
-        while ($this->start >= 0) {
-            // Stream the current count to the browser...
-            $this->stream(  
-                to: 'count',
-                content: $this->start,
-                replace: true,
-            );
- 
-            // Pause for 1 second between numbers...
-            sleep(1);
- 
-            // Decrement the counter...
-            $this->start = $this->start - 1;
-        };
+        $secret = rand(100000000, 999999999);
+        // Run command so:system-update in background
+        Platform::artisanInBackground('so:system-update', $secret);
+        return url($secret);
+    }
+    public function checkUpdateStatus()
+    {
+        return Marketplate::statusUpdate();
     }
     public function checkSystemUpdate()
     {

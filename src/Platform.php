@@ -38,6 +38,7 @@ use Sokeio\Support\Platform\PlatformManager;
  * @method static array getModelByKey($modelKey, $paramKey = null)
  * @method static mixed apiOk($data = null,$message = null, $code = 200)
  * @method static mixed apiError($message = null, $errors = [], $code = 500)
+ * @method static void artisanInBackground($command, $data = null)
  */
 
 class Platform extends Facade

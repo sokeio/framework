@@ -13,6 +13,7 @@ use Sokeio\Support\Marketplate\MarketplateManager;
  * @method static void saveProductInfo()
  * @method static mixed getProductInfo()
  * @method static mixed cacheProductInfo()
+ * @method static void updateNow($callback = null, $secret=null)
  *
  */
 

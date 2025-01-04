@@ -4,7 +4,9 @@ namespace Sokeio\Support\Platform;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Process\PhpExecutableFinder;
 use Livewire\Livewire;
+use Symfony\Component\Process\Process;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use ReflectionClass;
@@ -113,5 +115,16 @@ class PlatformManager
             'errors' => $errors,
             'status_code' => $code
         ], 403);
+    }
+    public function artisanInBackground($command, $data = null)
+    {
+        $phpBinaryFinder = new PhpExecutableFinder();
+
+        $phpBinaryPath = $phpBinaryFinder->find();
+
+        $process = new Process([$phpBinaryPath, base_path('artisan'), $command, $data]); // (['php', 'artisan', 'foo:bar', 'json data'])
+
+        $process->setoptions(['create_new_console' => true]); //Run process in background 
+        $process->start();
     }
 }

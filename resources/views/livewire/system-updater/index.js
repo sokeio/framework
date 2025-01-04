@@ -1,5 +1,45 @@
+let updatingComponent = {
+  state: {
+    process: -1,
+    message: "",
+    isShow: false,
+  },
+  register() {
+    this.$parent.$updatingComponent = this;
+  },
+  processUpdate($process, $message) {
+    if (this.process != $process) {
+      this.process = $process;
+      this.message = " (" + $process + "%)" + $message + "<br/>" + this.message;
+      this.isShow = true;
+      this.refresh(0);
+    }
+  },
+  render() {
+    if (!this.isShow) {
+      return `<div style="display:none"></div>`;
+    }
+    return `
+    <div class="sokeio-updating-component">
+      <div class="p-3 mt-2" >
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="${this.process}" aria-valuemin="0" aria-valuemax="100" style="width: ${this.process}%"></div>
+        </div>
+      <div class="alert alert-danger mt-2" role="alert">
+              <div>
+                <h4 class="alert-title">Don't Close This Page</h4>
+                <div class="alert-message" style="max-height: 300px; overflow-y: auto;" >${this.message}</div>
+              </div>
+            </div>
+      </div>
+    </div>`;
+  },
+};
+
 export default {
-  components: {},
+  components: {
+    "sokeio::updating-component": updatingComponent,
+  },
   state: {
     isRunning: false,
     productId: "",
@@ -10,6 +50,7 @@ export default {
     themes: [],
     isUpdated: false,
   },
+  $updatingComponent: null,
   register() {
     let self = this;
     let productInfo = this.$wire.productInfo;
@@ -19,21 +60,7 @@ export default {
     self.framework = productInfo.framework;
     self.modules = productInfo.modules;
     self.themes = productInfo.themes;
-    self.refresh();
-  },
-  boot() {},
-  runningRender() {
-    if (!this.isRunning) {
-      return "";
-    }
-    return `
-      <div class="alert alert-danger mt-2" role="alert">
-              <div>
-                <h4 class="alert-title">Don't Close This Page</h4>
-                <div class="alert-message">System Update is running</div>
-              </div>
-            </div>
-      `;
+    self.refresh(1);
   },
   listRender(items, title) {
     if (items.length == 0) {
@@ -60,9 +87,9 @@ export default {
     html += ` <div class="card">
                       <div class="card-header p-2">
                         <h3 class="card-title">${this.productName} 
-                        <span class="badge bg-red text-bg-red">${
-                          this.productVersion
-                        }</span></h3>
+                        <span class="badge bg-red text-bg-red">
+                        ${this.productVersion}
+                        </span></h3>
                       </div>
                       <div class="card-body p-0">
                         <div class="fw-bold bg-primary text-bg-primary p-2 mb-1">Sokeio Framework: ${
@@ -89,25 +116,42 @@ export default {
     return html;
   },
   updateNow() {
-    window.Livewire.trigger("stream", function (item) {
-      console.log(item);
-    });
     this.isRunning = true;
     this.$app.$el.querySelector(".so-modal-close").style.display = "none";
     this.refresh();
     let self = this;
+    let checkUpdateStatus = function () {
+      self.$wire.checkUpdateStatus().then(function (res) {
+        if (res) {
+          self.$updatingComponent.processUpdate(res.process, res.message);
+          checkUpdateStatus();
+        } else {
+          self.$app.$el.querySelector(".so-modal-close").style.display =
+            "block";
+          self.$updatingComponent.processUpdate(100, "Update Complete");
+        }
+      });
+    };
     setTimeout(function () {
-      self.$wire.begin();
+      console.log("start update");
+      self.$wire.startUpdate().then(function (res) {
+        self.$updatingComponent.processUpdate(0, "Start Update");
+        setTimeout(function () {
+          self.$request.get(res).then(function () {
+            checkUpdateStatus();
+          });
+        }, 1000);
+      });
     });
   },
 
   render() {
     return `
       <div class="p-3">
-          <h3 class="fw-bold">System Updater</h3>
+          <h3 class="fw-bold mb-3">System Updater</h3>
           ${this.productRender()}
           ${this.buttonRender()}
-          ${this.runningRender()}
+         <so:sokeio::updating-component></so:sokeio::updating-component>
       </div>
       `;
   },

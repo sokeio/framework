@@ -1,11 +1,9 @@
 <?php
 
-use Illuminate\Database\Console\Migrations\InstallCommand;
 use Sokeio\Console\Commands\DebugCommand;
 use Sokeio\Console\Commands\FileCommand;
 use Sokeio\Console\Commands\MakeCommand;
-use Sokeio\Console\Commands\ModuleInstall;
-use Sokeio\Console\Commands\ThemeInstall;
+use Sokeio\Console\Commands\SystemUpdateCommand;
 
 return [
     'version' => '1.0.0',
@@ -21,7 +19,7 @@ return [
         DebugCommand::class,
         MakeCommand::class,
         FileCommand::class,
-        InstallCommand::class,
+        SystemUpdateCommand::class,
     ],
     'platform' => [
         'token_prefix' => env('PLATFORM_TOKEN_PREFIX', 'sokeio-'),

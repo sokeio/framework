@@ -2,6 +2,7 @@
 
 namespace Sokeio\Support\Marketplate;
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -101,23 +102,53 @@ class MarketplateManager
         $rs =  $this->getNewVersionInfo();
         return data_get($rs, 'is_updated') == true;
     }
-    public function updateNow($callback = null): bool
+    public function statusUpdate()
     {
+        return json_decode(Cache::get(self::SYSTEM_UPDATE_CACHE_KEY), true);
+    }
+    private const SYSTEM_UPDATE_CACHE_KEY = 'marketplate_update';
+    public function updateNow($callback = null, $secret = null): bool
+    {
+        Log::info('update now');
         $log = function ($msg) use ($callback) {
+            if (is_array($msg)) {
+                $msg = json_encode($msg);
+            }
+            Log::info($msg);
+            Cache::set(self::SYSTEM_UPDATE_CACHE_KEY, $msg, 24 * 60 * 60);
             if ($callback) {
                 $callback($msg);
             }
         };
-        $log("start");
+        $log([
+            'message' => 'start',
+            'process' => 0,
+        ]);
+
         $rs =  $this->getNewVersionInfo();
+        // Run command system down
+        Artisan::call('down', ['--secret' => $secret]);
         if (data_get($rs, 'is_updated') == true) {
-            $log("update");
+            $log([
+                'message' => 'update',
+                'process' => 0,
+            ]);
             $modules = data_get($rs, 'modules');
             $themes = data_get($rs, 'themes');
-
-            $log("end");
+            for ($index = 0; $index < 50; $index++) {
+                sleep(1);
+                $log([
+                    'message' => 'update module: ' . $index,
+                    'process' => round($index / 50 * 100, 4),
+                ]);
+            }
         }
-        $log("done");
+        $log([
+            'message' => 'done',
+            'process' => 100,
+        ]);
+        Cache::forget(self::SYSTEM_UPDATE_CACHE_KEY);
+        Artisan::call('up');
         return true;
     }
 }
