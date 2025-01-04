@@ -18,6 +18,13 @@ class MarketplateManager
     {
         $this->marketplateProviders[$key] = $provider;
     }
+    public function getProvider($key, $data)
+    {
+        if (!isset($this->marketplateProviders[$key]) || !class_exists($this->marketplateProviders[$key])) {
+            return null;
+        }
+        return new ($this->marketplateProviders[$key])($data);
+    }
     public function __construct()
     {
         // $this->marketplateUrl = config('sokeio.platform.marketplace');
@@ -115,6 +122,7 @@ class MarketplateManager
         return json_decode(Cache::get(self::SYSTEM_UPDATE_CACHE_KEY), true);
     }
     private const SYSTEM_UPDATE_CACHE_KEY = 'marketplate_update';
+   
     public function updateNow($callback = null, $secret = null): bool
     {
         $log = function ($msg) use ($callback) {
@@ -139,10 +147,58 @@ class MarketplateManager
                 'message' => 'update',
                 'process' => 0,
             ]);
-            $total = 0;
-            $modules = data_get($rs, 'modules');
-            $themes = data_get($rs, 'themes');
-            $total = count($modules) + count($themes);
+            $progress = 0;
+            $modules = collect(data_get($rs, 'modules', []))->map(function ($item, $key) {
+                return new ItemUpdater($item, 'module');
+            });
+            $themes = collect(data_get($rs, 'themes', []))->map(function ($item, $key) {
+                return new ItemUpdater($item, 'theme');
+            });
+            $totalProgress = (count($modules) + count($themes)) * 2;
+            foreach ($modules as $item) {
+                try {
+                    $progress++;
+                    $log([
+                        'message' => 'Backup module ' . $item->getName(),
+                        'process' => 100 * $progress / $totalProgress,
+                    ]);
+                    $item->backup();
+                    $progress++;
+                    $log([
+                        'message' => 'Install module ' . $item->getName(),
+                        'process' => 100 * $progress / $totalProgress,
+                    ]);
+                    $item->update();
+                } catch (\Throwable $th) {
+                    $log([
+                        'message' => 'Error install module ' . $item->getName() . ':' .  $th->getMessage(),
+                        'process' => 100 * $progress / $totalProgress,
+                    ]);
+                    $item->rollback();
+                }
+            }
+            foreach ($themes as $item) {
+                try {
+                    $progress++;
+                    $log([
+                        'message' => 'Backup theme ' . $item->getName(),
+                        'process' => 100 * $progress / $totalProgress,
+                    ]);
+                    $item->backup();
+                    $progress++;
+                    $log([
+                        'message' => 'Install theme ' . $item->getName(),
+                        'process' => 100 * $progress / $totalProgress,
+                    ]);
+                    $item->update();
+                } catch (\Throwable $th) {
+                    $log([
+                        'message' => 'Error install theme ' . $item->getName() . ':' .  $th->getMessage(),
+                        'process' => 100 * $progress / $totalProgress,
+                    ]);
+                    $item->rollback();
+                }
+            }
         }
         $log([
             'message' => 'done',
