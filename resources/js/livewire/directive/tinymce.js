@@ -47,7 +47,7 @@ export default {
         });
       },
       file_picker_callback: function (callback, value, meta) {
-        window.showFileManager(
+        window.showMediaManager(
           function (content) {
             if (Array.isArray(content)) {
               content = content[0];

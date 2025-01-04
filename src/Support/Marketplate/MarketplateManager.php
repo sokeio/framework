@@ -5,16 +5,24 @@ namespace Sokeio\Support\Marketplate;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 use Sokeio\Platform;
+use Sokeio\Support\Marketplate\Provider\GithubProvider;
+use Sokeio\Support\Marketplate\Provider\SokeioProvider;
 
 class MarketplateManager
 {
     private $marketplateUrl = 'https://sokeio.local/';
     private $product = null;
+    private $marketplateProviders = [];
+    public function registerProvider($key, $provider)
+    {
+        $this->marketplateProviders[$key] = $provider;
+    }
     public function __construct()
     {
         // $this->marketplateUrl = config('sokeio.platform.marketplace');
+        $this->registerProvider('github', GithubProvider::class);
+        $this->registerProvider('sokeio', SokeioProvider::class);
     }
     private function makeRequest(string $url, array $data = []): \Illuminate\Http\Client\Response
     {
@@ -109,12 +117,10 @@ class MarketplateManager
     private const SYSTEM_UPDATE_CACHE_KEY = 'marketplate_update';
     public function updateNow($callback = null, $secret = null): bool
     {
-        Log::info('update now');
         $log = function ($msg) use ($callback) {
             if (is_array($msg)) {
                 $msg = json_encode($msg);
             }
-            Log::info($msg);
             Cache::set(self::SYSTEM_UPDATE_CACHE_KEY, $msg, 24 * 60 * 60);
             if ($callback) {
                 $callback($msg);
@@ -133,15 +139,10 @@ class MarketplateManager
                 'message' => 'update',
                 'process' => 0,
             ]);
+            $total = 0;
             $modules = data_get($rs, 'modules');
             $themes = data_get($rs, 'themes');
-            for ($index = 0; $index < 50; $index++) {
-                sleep(1);
-                $log([
-                    'message' => 'update module: ' . $index,
-                    'process' => round($index / 50 * 100, 4),
-                ]);
-            }
+            $total = count($modules) + count($themes);
         }
         $log([
             'message' => 'done',

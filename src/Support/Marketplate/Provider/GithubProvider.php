@@ -5,17 +5,14 @@ namespace Sokeio\Support\Marketplate\Provider;
 use Illuminate\Support\Facades\Http;
 use Sokeio\Support\Marketplate\BaseProvider;
 
-class LinkProvider extends BaseProvider
+class GithubProvider extends BaseProvider
 {
     public function downloadZip(): mixed
     {
         $url = $this->getDataValue('download_link');
 
-        $headers = [
-            'Accept' => 'application/vnd.github.v3+json',
-            'User-Agent' => 'Sokeio',
-        ];
-       
+        $headers = [];
+
         $response = Http::get($url, [
             'headers' => $headers,
         ]);

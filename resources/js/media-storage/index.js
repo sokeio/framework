@@ -68,6 +68,8 @@ export default {
   },
   openPath(path) {
     this.path = path;
+    this.folderSelected = [];
+    this.fileSelected = [];
     this.refreshData();
   },
   setResult(result) {
