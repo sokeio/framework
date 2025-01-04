@@ -122,7 +122,7 @@ class MarketplateManager
         return json_decode(Cache::get(self::SYSTEM_UPDATE_CACHE_KEY), true);
     }
     private const SYSTEM_UPDATE_CACHE_KEY = 'marketplate_update';
-   
+
     public function updateNow($callback = null, $secret = null): bool
     {
         $log = function ($msg) use ($callback) {
