@@ -3,7 +3,6 @@
 namespace Sokeio;
 
 use Sokeio\Concerns\WithServiceProvider;
-use Sokeio\Providers\MediaSignedServiceProvider;
 use Sokeio\Providers\SocialiteServiceProvider;
 use Sokeio\Support\Livewire\LivewireServiceProvider;
 use Sokeio\Support\MediaStorage\MediaStorageServiceProvider;
@@ -44,7 +43,6 @@ class SokeioServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->app->register(PlatformServiceProvider::class);
         $this->app->register(LivewireServiceProvider::class);
         $this->app->register(WidgetServiceProvider::class);
-        $this->app->register(MediaSignedServiceProvider::class);
         $this->app->register(SocialiteServiceProvider::class);
         Theme::bodyAfter(function () {
             if (setting('SOKEIO_SHOW_PROGRESS_TIMER')) {

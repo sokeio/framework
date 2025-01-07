@@ -2,8 +2,11 @@
 
 namespace Sokeio\Support\MediaStorage;
 
+use Sokeio\Pattern\Tap;
+
 class MediaStorageService
 {
+    use Tap;
     public function getMediaStoreage()
     {
         return null;
@@ -12,11 +15,15 @@ class MediaStorageService
     {
         return '';
     }
+    public function getKey()
+    {
+        return '';
+    }
     public function getIcon()
     {
         return '';
     }
-    public function check()
+    public function when()
     {
         return true;
     }
@@ -47,6 +54,7 @@ class MediaStorageService
             'toolbar' => $this->getToolbar(),
             'menuContext' => $this->getMenuContext(),
             'views' => $this->getViews(),
+            'service' => $this->getKey(),
         ];
     }
 

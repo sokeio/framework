@@ -39,7 +39,8 @@ class Index extends \Sokeio\Page
             ])->rightUI([
                 Button::make()->text(__('Create'))->icon('ti ti-table-plus')
                     ->className('btn btn-warning')
-                    ->modalRoute($this->getRouteName('create'))->when(function () {
+                    ->modalRoute($this->getRouteName('create'))
+                    ->when(function () {
                         if (config('app.env') == 'local' && env('SOKEIO_MODE_DEV') == 'true') {
                             return true;
                         }

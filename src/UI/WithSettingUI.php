@@ -7,7 +7,7 @@ trait WithSettingUI
 {
     use WithUI;
     public const COLUMN_GROUP = 'col-sm-12 col-md-12 col-lg-12';
-    public const COLUMN_GROUP2 = 'col-sm-12 col-md-3 col-lg-4';
+    public const COLUMN_GROUP2 = 'col-sm-12 col-md-6 col-lg-4';
     public $formData = [];
 
     public function saveData()

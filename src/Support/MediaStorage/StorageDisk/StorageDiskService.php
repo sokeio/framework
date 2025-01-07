@@ -1,14 +1,33 @@
 <?php
 
-namespace Sokeio\Support\MediaStorage\Local;
+namespace Sokeio\Support\MediaStorage\StorageDisk;
 
 use Sokeio\Support\MediaStorage\MediaStorageService;
 use Illuminate\Support\Facades\Storage;
 
-class LocalService extends MediaStorageService
+class StorageDiskService extends MediaStorageService
 {
     private $disk = 'public';
+    private $name = "local";
+    private $key = null;
     private $tempStorage = null;
+    private $fnWhen = null;
+    public static function make($disk = 'public', $key, $name = "local", callable $when = null)
+    {
+        return (new self)->tap(function ($instance) use ($disk, $key, $name, $when) {
+            $instance->disk = $disk;
+            $instance->name = $name;
+            $instance->fnWhen = $when;
+            $instance->key = $key;
+        });
+    }
+    public function when()
+    {
+        if ($this->fnWhen) {
+            return call_user_func($this->fnWhen, $this);
+        }
+        return true;
+    }
     public function getMediaStoreage()
     {
         if (!$this->tempStorage) {
@@ -118,13 +137,17 @@ class LocalService extends MediaStorageService
         if (in_array($extension, ['jpg', 'jpeg', 'png', 'gif'])) {
             $isImage = true;
         }
+        $public_url = "";
+        if (config('filesystems.disks.' . $disk . '.url')) {
+            $public_url = config('filesystems.disks.' . $disk . '.url') . '/' . $file;
+        }
         return [
             'name' => basename($file),
             'name_without_extension' => pathinfo($file, PATHINFO_FILENAME),
             'path' => $file,
             'extension' => $extension,
             'size' => $storage->size($file),
-            'public_url' => url('storage/' . $file),
+            'public_url' =>  $public_url,
             'created_at' => $storage->lastModified($file),
             'updated_at' => $storage->lastModified($file),
             'preview_url' => $isImage ? Storage::temporaryUrl($file, now()->addSeconds(15), ['disk' => $disk]) : null,
@@ -153,7 +176,11 @@ class LocalService extends MediaStorageService
     }
     public function getName()
     {
-        return 'Local';
+        return $this->name;
+    }
+    public function getKey()
+    {
+        return $this->key;
     }
 
     // *** Action *** //

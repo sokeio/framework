@@ -79,6 +79,7 @@ export default {
     this.menuContext = result?.menuContext ?? [];
     this.views = result?.views ?? {};
     this.toolbar = result?.toolbar ?? [];
+    this.service = result?.service ?? this.service;
   },
   refreshData() {
     this.mediaAction("refresh");
@@ -96,7 +97,7 @@ export default {
       let formData = this.$request.convertJsonToFormData({
         action,
         data,
-        type: this.service,
+        service: this.service,
         path: this.path,
       });
       for (let item in files) {

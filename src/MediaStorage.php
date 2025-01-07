@@ -11,6 +11,7 @@ use Sokeio\Support\MediaStorage\MediaStorageManager;
  * @method static \Sokeio\Support\MediaStorage\MediaStorageService get($type)
  * @method static void register($action, $path, $data)
  * @method static array action($type, $action, $path, $data)
+ * @method static array getAll()
  * 
  *
  */

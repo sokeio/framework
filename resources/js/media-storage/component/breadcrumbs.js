@@ -2,11 +2,15 @@ export default {
   components: {},
   state: {},
   serviceRender() {
-    if (!this.$parent.services || this.$parent.services.length < 2) return "";
-    let html = '<select class="form-select so-media-storage-service">';
+    let keys = Object.keys(this.$parent.services);
+    if (!this.$parent.services || keys.length < 2) return "";
+    let html =
+      '<select class="form-select so-media-storage-service" so-on:change="changeService($event.target.value)">';
 
-    Object.keys(this.$parent.services).forEach((key) => {
-      html += `<option value="${key}">${this.$parent.services[key].name}</option>`;
+    keys.forEach((key) => {
+      html += `<option value="${key}" ${
+        key == this.$parent.service ? "selected" : ""
+      }>${this.$parent.services[key].name}</option>`;
     });
     html += "</select>";
     return html;
@@ -25,6 +29,10 @@ export default {
   },
   openFolder(path) {
     this.$parent.path = path;
+    this.$parent.refreshData();
+  },
+  changeService(service) {
+    this.$parent.service = service;
     this.$parent.refreshData();
   },
   render() {
