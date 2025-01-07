@@ -77,6 +77,13 @@ class StorageDiskService extends MediaStorageService
     {
         return [
             [
+                'name' => 'Copy Link',
+                'icon' => 'ti ti-copy',
+                'action' => 'navigator.clipboard.writeText(file.public_url);alert("Copied")',
+                'class' => '',
+                'type' => ['file:public']
+            ],
+            [
                 'name' => 'Remove Folder',
                 'icon' => 'ti ti-trash',
                 'view' => 'local::delete-folder',

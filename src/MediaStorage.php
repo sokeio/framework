@@ -8,9 +8,9 @@ use Sokeio\Support\MediaStorage\MediaStorageManager;
 /**
  * @see \Sokeio\Support\MediaStorage
  * 
- * @method static \Sokeio\Support\MediaStorage\MediaStorageService get($type)
+ * @method static \Sokeio\Support\MediaStorage\MediaStorageService get($service)
  * @method static void register($action, $path, $data)
- * @method static array action($type, $action, $path, $data)
+ * @method static array action($service, $action, $path, $data)
  * @method static array getAll()
  * 
  *

@@ -9,7 +9,7 @@ class MediaStorageRequest extends FormRequest
     public function rules()
     {
         return [
-            'type' => 'required',
+            'service' => 'required',
             'action' => 'required',
             'path' => 'required',
             'data' => 'nullable',

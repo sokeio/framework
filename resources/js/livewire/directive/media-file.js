@@ -18,7 +18,7 @@ export default {
     let event = () => {
       window.showMediaManager(
         function (file) {
-          let value = file;
+          let value = file.data;
           if (mediaField) {
             if (Array.isArray(value)) {
               value = value.map((item) => item[mediaField]);

@@ -1,6 +1,3 @@
-import mediaStorage from "..";
-import media from "../../livewire/directive/media";
-
 function mouseX(evt, elWarp) {
   if (evt.pageX) {
     if (document.body.classList.contains("so-modal-open")) {
@@ -48,10 +45,17 @@ export default {
     let itemContext = this.$parent.menuContext[item];
     if (itemContext) {
       if (itemContext.action) {
-        let func = new Function(`return function(type,path,item){
+        let file = this.$parent.files.find((f) => f.path == this.path);
+        let func = new Function(`return function(type,path,file,item,service){
             ${itemContext.action}
           }`)();
-        func.bind(this.$parent)(this.type, this.path, itemContext);
+        func.bind(this.$parent)(
+          this.type,
+          this.path,
+          file,
+          itemContext,
+          this.$parent.service
+        );
       }
       if (itemContext.view && this.$parent.views[itemContext.view]) {
         let viewOptions = itemContext.viewOptions || {};
@@ -83,8 +87,21 @@ export default {
     `;
     let menuContext = this.$parent.menuContext;
     if (menuContext && menuContext.length > 0) {
+      if (!this.type) {
+        return;
+      }
+      let arrType = [this.type];
+      if (this.type == "file") {
+        let file = this.$parent.files.find((f) => f.path == this.path);
+        if (file && file.public_url) {
+          arrType.push("file:public");
+        } else {
+          arrType.push("file:private");
+        }
+      }
+
       menuContext.forEach((item, key) => {
-        if (!item.type || !item.type.includes(this.type)) {
+        if (!item.type || !arrType.find((t) => item.type.includes(t))) {
           return;
         }
         html += `

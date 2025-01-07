@@ -34,36 +34,36 @@ class MediaStorageManager
     {
         $this->services[$service->getKey()] = $service;
     }
-    public function get($type): MediaStorageService
+    public function get($service): MediaStorageService
     {
-        if (isset($this->services[$type]) && $this->services[$type]->when()) {
-            return $this->services[$type];
+        if (isset($this->services[$service]) && $this->services[$service]->when()) {
+            return $this->services[$service];
         }
         if (isset($this->services[$this->default]) && $this->services[$this->default]->when()) {
             return $this->services[$this->default];
         }
-        return collect($this->services)->where(fn($service) => $service->when())->first();
+        return collect($this->services)->where(fn($item) => $item->when())->first();
     }
-    public function action($type, $action, $path, $data)
+    public function action($service, $action, $path, $data)
     {
         return [
-            'result' => $this->get($type)->action($action, $path, $data),
-            'services' => collect($this->services)->where(fn($service) => $service->when())->map(function ($service, $key) {
+            'result' => $this->get($service)->action($action, $path, $data),
+            'services' => collect($this->services)->where(fn($item) => $item->when())->map(function ($item, $key) {
                 return [
                     'key' => $key,
-                    'name' => $service->getName(),
-                    'icon' => $service->getIcon(),
+                    'name' => $item->getName(),
+                    'icon' => $item->getIcon(),
                 ];
             })
         ];
     }
     public function getAll()
     {
-        return collect($this->services)->map(function ($service, $key) {
+        return collect($this->services)->map(function ($item, $key) {
             return [
-                'text' => $service->getName(),
+                'text' => $item->getName(),
                 'value' => $key,
-                'icon' => $service->getIcon(),
+                'icon' => $item->getIcon(),
             ];
         })->values();
     }

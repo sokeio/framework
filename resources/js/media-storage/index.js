@@ -110,7 +110,7 @@ export default {
         .then((res) => {
           res = JSON.parse(res);
           self.setResult(res.result);
-          self.services = res.services;
+          self.services = res.services ?? {};
           self.refresh();
           if (callback) {
             callback(res);
@@ -122,14 +122,14 @@ export default {
       .post("/platform/media-store", {
         action,
         data,
-        type: this.service,
+        service: this.service,
         path: this.path,
       })
       .then((res) => res.json())
       .then((res) => {
         // res = JSON.parse(res);
         self.setResult(res.result);
-        self.services = res.services;
+        self.services = res.services ?? {};
         self.refresh();
         if (callback) {
           callback(res);
@@ -143,7 +143,10 @@ export default {
     if (!this.$app.multiple) {
       arr = arr.length > 0 ? arr[0] : null;
     }
-    this.fnCallbackAndClose(arr);
+    this.fnCallbackAndClose({
+      data: arr,
+      service: this.service,
+    });
   },
   buttonChooseRender() {
     this.$btnChoose = null;
