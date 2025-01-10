@@ -4,6 +4,7 @@ namespace Sokeio\Console\Commands;
 
 use Illuminate\Console\Command;
 use Sokeio\Marketplate;
+use Sokeio\Platform;
 
 class DebugCommand extends Command
 {
@@ -14,7 +15,10 @@ class DebugCommand extends Command
      */
     public function handle(): int
     {
-        Marketplate::checkNewVersion();
+        // Marketplate::checkNewVersion();
+        foreach (Platform::theme()->getAll() as $theme) {
+            $this->info("Theme: {$theme->getId()} - {$theme->getPath()}");
+        }
         return 0;
     }
 }

@@ -48,9 +48,16 @@ export default {
       },
       file_picker_callback: function (callback, value, meta) {
         window.showMediaManager(
-          function (content) {
+          function (media) {
+            let content = media.data;
+            let service = media.service;
+            console.log({ content, service });
             if (Array.isArray(content)) {
               content = content[0];
+            }
+            if (!content.public_url) {
+              alert("No file public selected");
+              return false;
             }
             callback(content.public_url);
           },

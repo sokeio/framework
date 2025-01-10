@@ -106,8 +106,8 @@ export default {
   },
   fnCallbackAndClose($value: any, $closeApp = true) {
     if (this.$app) {
-      this.$app.fnCallback?.($value);
-      if ($closeApp) {
+      let rs = this.$app.fnCallback?.($value);
+      if ($closeApp && rs !== false) {
         this.$app.doDestroy();
       }
     }

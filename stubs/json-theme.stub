@@ -19,7 +19,7 @@
             "aspect-ratio",
             "line-clamp",
             "container-queries"
-        ],
+        ]
     },
     "templates":[],
     "locations": [],

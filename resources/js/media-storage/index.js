@@ -137,9 +137,9 @@ export default {
       });
   },
   chooseOK() {
-    let arr = this.fileSelected.map((item) =>
-      this.files.find((file) => file.path == item)
-    );
+    let arr = this.fileSelected
+      .map((item) => this.files.find((file) => file.path == item))
+      .filter((item) => item);
     if (!this.$app.multiple) {
       arr = arr.length > 0 ? arr[0] : null;
     }

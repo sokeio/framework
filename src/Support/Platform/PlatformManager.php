@@ -121,9 +121,11 @@ class PlatformManager
         $phpBinaryFinder = new PhpExecutableFinder();
 
         $phpBinaryPath = $phpBinaryFinder->find();
-
-        $process = new Process([$phpBinaryPath, base_path('artisan'), $command, $data]); // (['php', 'artisan', 'foo:bar', 'json data'])
-
+        return $this->runInBackground($phpBinaryPath, base_path('artisan'), $command, $data);
+    }
+    public function runInBackground($command, $data = null)
+    {
+        $process = new Process($command);
         $process->setoptions(['create_new_console' => true]); //Run process in background 
         $process->start();
     }

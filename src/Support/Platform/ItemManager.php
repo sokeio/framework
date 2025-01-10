@@ -215,6 +215,7 @@ class ItemManager
     public function loadFromPath(string $path)
     {
         $pathDir = realpath("{$path}/{$this->type}");
+
         if (!File::exists($pathDir)) {
             return;
         }
@@ -233,6 +234,8 @@ class ItemManager
     public function addFromPath(string $path)
     {
         $pathFileJson = realpath("{$path}/{$this->type}.json");
+
+       
         if (!file_exists($pathFileJson)) {
             return null;
         }
