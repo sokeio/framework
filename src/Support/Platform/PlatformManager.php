@@ -121,7 +121,7 @@ class PlatformManager
         $phpBinaryFinder = new PhpExecutableFinder();
 
         $phpBinaryPath = $phpBinaryFinder->find();
-        return $this->runInBackground($phpBinaryPath, base_path('artisan'), $command, $data);
+        return $this->runInBackground([$phpBinaryPath, base_path('artisan'), $command, $data]);
     }
     public function runInBackground($command, $data = null)
     {

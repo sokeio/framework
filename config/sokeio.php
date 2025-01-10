@@ -25,7 +25,6 @@ return [
         'token_prefix' => env('PLATFORM_TOKEN_PREFIX', 'sokeio-'),
         'product' => base_path('platform/product.json'),
         'marketplace' => env('PLATFORM_MARKETPLACE_API', 'https://sokeio.com/api/'),
-        'temps' => base_path(env('PLATFORM_TEMP', 'platform/temps/')),
         'updater' => [
             'backup' => base_path(env('PLATFORM_UPDATER_BACKUP', 'platform/updater/backups/')),
             'temp' => base_path(env('PLATFORM_UPDATER_BACKUP', 'platform/updater/temps/'))

@@ -7,7 +7,7 @@ use Sokeio\Pattern\Tap;
 class MediaStorageService
 {
     use Tap;
-    public function getMediaStoreage()
+    public function getMediaStoreage(): mixed
     {
         return null;
     }
@@ -42,6 +42,13 @@ class MediaStorageService
     public function getMenuContext()
     {
         return [];
+    }
+    public function file($path)
+    {
+        return $this->getMediaStoreage()->get($path);
+    }
+    public function readStream($path) {
+        return $this->getMediaStoreage()->readStream($path);
     }
     public function getFiles($action, $path, $data) {}
     public function getFolders($action, $path, $data) {}

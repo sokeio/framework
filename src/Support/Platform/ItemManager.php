@@ -37,6 +37,17 @@ class ItemManager
 
         return $this->platformStatus ??= PlatformStatus::key($this->type);
     }
+    public function getPathWithFileTypeInfo($path)
+    {
+        // search ${this->type}.json in folder $path and get basePath
+        foreach (File::directories($path) as $item) {
+            $pathFileJson = realpath("{$item}/{$this->type}.json");
+            if (file_exists($pathFileJson)) {
+                return $item;
+            }
+        }
+        return null;
+    }
     public function getItemType()
     {
         return $this->type;
@@ -235,7 +246,7 @@ class ItemManager
     {
         $pathFileJson = realpath("{$path}/{$this->type}.json");
 
-       
+
         if (!file_exists($pathFileJson)) {
             return null;
         }

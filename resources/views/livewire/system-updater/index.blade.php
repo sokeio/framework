@@ -6,8 +6,7 @@
                 <h3 class="card-title m-1">System Update </h3>
                 <p class="text-secondary">{{ $message }}</p>
                 <div class="d-flex justify-content-center">
-                    <button class="btn btn-primary p-1 me-1" wire:modal.id="system-updater-modal" wire:modal
-                        wire:modal.skip-overlay-close>
+                    <button class="btn btn-primary p-1 me-1" wire:modal.id="system-updater-modal" wire:modal>
                         <i class="ti ti-refresh me-1"></i>
                         Update Now
                     </button>

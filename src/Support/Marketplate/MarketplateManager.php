@@ -141,7 +141,7 @@ class MarketplateManager
 
         $rs =  $this->getNewVersionInfo();
         // Run command system down
-        Artisan::call('down', ['--secret' => $secret]);
+        // Artisan::call('down', ['--secret' => $secret]);
         if (data_get($rs, 'is_updated') == true) {
             $log([
                 'message' => 'update',
@@ -168,7 +168,13 @@ class MarketplateManager
                         'message' => 'Install module ' . $item->getName(),
                         'process' => 100 * $progress / $totalProgress,
                     ]);
-                    $item->update();
+                    if (!$item->update()) {
+                        throw new \Exception('update module error');
+                    }
+                    $log([
+                        'message' => 'Update module ' . $item->getName(),
+                        'process' => 100 * $progress / $totalProgress,
+                    ]);
                 } catch (\Throwable $th) {
                     $log([
                         'message' => 'Error install module ' . $item->getName() . ':' .  $th->getMessage(),
@@ -205,7 +211,7 @@ class MarketplateManager
             'process' => 100,
         ]);
         Cache::forget(self::SYSTEM_UPDATE_CACHE_KEY);
-        Artisan::call('up');
+        // Artisan::call('up');
         return true;
     }
 }

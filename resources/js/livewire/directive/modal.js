@@ -19,7 +19,7 @@ export default {
         url: "",
         elTarget: el,
         $wire: component.$wire,
-        skipOverlayClose: false,
+        skipOverlayClose: true,
         hideButtonClose: false,
         isHide: true,
       };
@@ -46,7 +46,7 @@ export default {
           options.components = components;
         }
       }
-      if (el.hasAttribute("wire:modal.skip-overlay-close")) {
+      if (el.hasAttribute("wire:modal.enable-overlay-close")) {
         options.skipOverlayClose = true;
       }
       if (el.hasAttribute("wire:modal.hide-button-close")) {

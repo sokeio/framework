@@ -28,7 +28,7 @@ class StorageDiskService extends MediaStorageService
         }
         return true;
     }
-    public function getMediaStoreage()
+    public function getMediaStoreage(): mixed
     {
         if (!$this->tempStorage) {
             $this->tempStorage = Storage::disk($this->disk);

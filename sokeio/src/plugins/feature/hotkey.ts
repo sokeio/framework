@@ -64,7 +64,7 @@ export default function ({ component, el, name: _name, method, value }: any) {
       el.removeEventListener(method, el["__SOKEIO_HOTKEY"]);
     }
     el["__SOKEIO_HOTKEY"] = (e: any) => {
-      if (el.contains(e.target)) {
+      if (el.contains(e.target) || !component.$el.contains(e.target)) {
         return;
       }
       let { shift, ctrl, alt, meta, keyCodes } = explodeHotkey(value);
@@ -80,7 +80,6 @@ export default function ({ component, el, name: _name, method, value }: any) {
       if (["INPUT", "SELECT", "TEXTAREA"].includes(el.tagName)) {
         el.focus();
         el.dispatchEvent(new Event("focus"));
-        console.log("hotkey:focus");
         e.preventDefault();
         e.stopPropagation && e.stopPropagation();
         return;

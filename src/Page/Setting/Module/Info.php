@@ -21,6 +21,9 @@ class Info extends \Sokeio\Page
     protected function setupUI()
     {
         $item = Platform::module()->find($this->dataId);
+        if(! $item) {
+            return [];
+        }
         $title = $item->getTitle();
         if ($item->isVendor()) {
             $title =  $title . '(Vendor)';
