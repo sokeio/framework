@@ -141,7 +141,7 @@ class MarketplateManager
 
         $rs =  $this->getNewVersionInfo();
         // Run command system down
-        // Artisan::call('down', ['--secret' => $secret]);
+        Artisan::call('down', ['--secret' => $secret]);
         if (data_get($rs, 'is_updated') == true) {
             $log([
                 'message' => 'update',
@@ -211,7 +211,7 @@ class MarketplateManager
             'process' => 100,
         ]);
         Cache::forget(self::SYSTEM_UPDATE_CACHE_KEY);
-        // Artisan::call('up');
+        Artisan::call('up');
         return true;
     }
 }

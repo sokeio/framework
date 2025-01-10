@@ -186,4 +186,12 @@ class ItemInfo extends ObjectJson
     {
         return $this->id;
     }
+    public function updateVersion($version): void
+    {
+        $this->version = $version;
+        $path = $this->path . '/'.$this->manager->isTheme() ? 'theme.json' : 'module.json';
+        if (file_exists($path)) {
+            
+        }
+    }
 }
