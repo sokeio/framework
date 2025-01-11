@@ -140,8 +140,7 @@ class MarketplateManager
         ]);
 
         $rs =  $this->getNewVersionInfo();
-        // Run command system down
-        Artisan::call('down', ['--secret' => $secret]);
+        // Backup => download => down => update => up
         if (data_get($rs, 'is_updated') == true) {
             $log([
                 'message' => 'update',
@@ -154,56 +153,20 @@ class MarketplateManager
             $themes = collect(data_get($rs, 'themes', []))->map(function ($item, $key) {
                 return new ItemUpdater($item, 'theme');
             });
-            $totalProgress = (count($modules) + count($themes)) * 2;
-            foreach ($modules as $item) {
-                try {
-                    $progress++;
-                    $log([
-                        'message' => 'Backup module ' . $item->getName(),
-                        'process' => 100 * $progress / $totalProgress,
-                    ]);
-                    $item->backup();
-                    $progress++;
-                    $log([
-                        'message' => 'Install module ' . $item->getName(),
-                        'process' => 100 * $progress / $totalProgress,
-                    ]);
-                    if (!$item->update()) {
-                        throw new \Exception('update module error');
-                    }
-                    $log([
-                        'message' => 'Update module ' . $item->getName(),
-                        'process' => 100 * $progress / $totalProgress,
-                    ]);
-                } catch (\Throwable $th) {
-                    $log([
-                        'message' => 'Error install module ' . $item->getName() . ':' .  $th->getMessage(),
-                        'process' => 100 * $progress / $totalProgress,
-                    ]);
-                    $item->rollback();
-                }
-            }
-            foreach ($themes as $item) {
-                try {
-                    $progress++;
-                    $log([
-                        'message' => 'Backup theme ' . $item->getName(),
-                        'process' => 100 * $progress / $totalProgress,
-                    ]);
-                    $item->backup();
-                    $progress++;
-                    $log([
-                        'message' => 'Install theme ' . $item->getName(),
-                        'process' => 100 * $progress / $totalProgress,
-                    ]);
-                    $item->update();
-                } catch (\Throwable $th) {
-                    $log([
-                        'message' => 'Error install theme ' . $item->getName() . ':' .  $th->getMessage(),
-                        'process' => 100 * $progress / $totalProgress,
-                    ]);
-                    $item->rollback();
-                }
+            $totalProgress = (count($modules) + count($themes)) * 3;
+            try {
+                $this->backupAndDownload($modules, 'module', $progress, $totalProgress, $log);
+                $this->backupAndDownload($themes, 'theme', $progress, $totalProgress, $log);
+                // Run command system down
+                Artisan::call('down', ['--secret' => $secret]);
+                $this->itemUpdate($modules, 'module', $progress, $totalProgress, $log);
+                $this->itemUpdate($themes, 'theme', $progress, $totalProgress, $log);
+                Artisan::call('up');
+            } catch (\Throwable $th) {
+                $this->itemRollback($modules, 'module', $progress, $totalProgress, $log);
+                $this->itemRollback($themes, 'theme', $progress, $totalProgress, $log);
+                Cache::forget(self::SYSTEM_UPDATE_CACHE_KEY);
+                return false;
             }
         }
         $log([
@@ -211,7 +174,51 @@ class MarketplateManager
             'process' => 100,
         ]);
         Cache::forget(self::SYSTEM_UPDATE_CACHE_KEY);
-        Artisan::call('up');
         return true;
+    }
+    private function backupAndDownload($items, $type, &$progress, $totalProgress, $log)
+    {
+        foreach ($items as $item) {
+            $progress++;
+            $log([
+                'message' => 'Backup ' . $type . ' : ' . $item->getName(),
+                'process' => 100 * $progress / $totalProgress,
+            ]);
+            $item->backup();
+            $progress++;
+            $log([
+                'message' => 'Download ' . $type . ' : ' . $item->getName(),
+                'process' => 100 * $progress / $totalProgress,
+            ]);
+            $item->download();
+        }
+    }
+    private function itemUpdate($items, $type, &$progress, $totalProgress, $log)
+    {
+        foreach ($items as $item) {
+            $progress++;
+            $log([
+                'message' => 'Update ' . $type . ' : ' . $item->getName(),
+                'process' => 100 * $progress / $totalProgress,
+            ]);
+            $item->update();
+        }
+    }
+    private function itemRollback($items, $type, &$progress, $totalProgress, $log)
+    {
+        foreach ($items as $item) {
+            $log([
+                'message' => 'Rollback ' . $type . ' : ' . $item->getName(),
+                'process' => 100,
+            ]);
+            try {
+                $item->rollback();
+            } catch (\Throwable $th) {
+                $log([
+                    'message' => $th->getMessage(),
+                    'process' =>  100,
+                ]);
+            }
+        }
     }
 }

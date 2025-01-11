@@ -11,9 +11,12 @@ class ItemUpdater
 {
     private ItemInfo $itemInfo;
     private $backupPath;
+    private $itemNewPath;
+    private $extractPath;
     private $name;
     private $id;
     private $folderId;
+    private $version;
     private ItemDownloader $itemDownloader;
     public function __construct(
         protected $data,
@@ -21,6 +24,7 @@ class ItemUpdater
     ) {
         $id = data_get($this->data, 'id');
         $this->folderId = str_replace('/', '-', $id);
+        $this->version = data_get($this->data, 'version');
         $this->id = $id;
         $this->name = data_get($this->data, 'name');
         $this->itemDownloader = new ItemDownloader($this->data);
@@ -53,21 +57,22 @@ class ItemUpdater
             File::copyDirectory($pathCurent,  $this->backupPath);
         }
     }
+    public function download()
+    {
+        $this->extractPath = config('sokeio.platform.updater.temp') . $this->folderId . '-' . $this->itemInfo->getVersion() . '-' . time();
+        Log::info('update3:' . $this->extractPath);
+        $this->itemDownloader->extractZip($this->extractPath);
+        $this->itemNewPath = $this->itemInfo->getManager()->getPathWithFileTypeInfo($this->extractPath);
+    }
     public function update()
     {
-        if ($this->itemInfo) {
+        if ($this->itemInfo && $this->itemNewPath) {
             Log::info('update:' . $this->id);
             $pathCurent = $this->itemInfo->getPath();
             File::deleteDirectory($pathCurent);
-            Log::info('update2:' . $pathCurent);
-            $pathExtract = config('sokeio.platform.updater.temp') . $this->folderId . '-' . $this->itemInfo->getVersion() . '-' . time();
-            Log::info('update3:' . $pathExtract);
-            $this->itemDownloader->extractZip($pathExtract);
-            $pathCopy = $this->itemInfo->getManager()->getPathWithFileTypeInfo($pathExtract);
-            if ($pathCopy) {
-                File::copyDirectory($pathCopy, $pathCurent);
-            }
-            File::deleteDirectory($pathExtract);
+            File::copyDirectory($this->itemNewPath, $pathCurent);
+            File::deleteDirectory($this->itemNewPath);
+            $this->itemInfo->updateVersion($this->version);
             return true;
         }
         return false;

@@ -188,10 +188,12 @@ class ItemInfo extends ObjectJson
     }
     public function updateVersion($version): void
     {
-        $this->version = $version;
-        $path = $this->path . '/'.$this->manager->isTheme() ? 'theme.json' : 'module.json';
+        $path = $this->path . '/' . ($this->manager->isTheme() ? 'theme.json' : 'module.json');
         if (file_exists($path)) {
-            
+            Log::info('updateVersion:' . $path);
+            $data = json_decode(file_get_contents($path), true);
+            $data['version'] = $version;
+            file_put_contents($path, json_encode($data, JSON_PRETTY_PRINT));
         }
     }
 }
