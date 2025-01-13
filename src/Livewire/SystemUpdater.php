@@ -14,11 +14,17 @@ class SystemUpdater extends Component
     public $isSystemVersionNew = false;
     public $productInfo = [];
     public $start = 100000;
+    private function checkUpdatePermission()
+    {
+        return Auth::check() && Platform::isUrlAdmin() && Platform::gate()->isSupperAdmin();
+    }
     public function startUpdate()
     {
         $secret = rand(100000000, 999999999);
-        // Run command so:system-update in background
-        Platform::artisanInBackground('so:system-update', $secret);
+        if ($this->checkUpdatePermission()) {
+            // Run command so:system-update in background
+            Platform::artisanInBackground('so:system-update', $secret);
+        }
         return url($secret);
     }
     public function checkUpdateStatus()
@@ -31,11 +37,12 @@ class SystemUpdater extends Component
     }
     public function lazySystemUpdate()
     {
-        if (Auth::check() && Platform::isUrlAdmin()) {
-            $this->isSystemVersionNew = Marketplate::checkNewVersion();
-            if ($this->isSystemVersionNew) {
-                $this->productInfo = Marketplate::getNewVersionInfo();
-            }
+        if (!$this->checkUpdatePermission()) {
+            return;
+        }
+        $this->isSystemVersionNew = Marketplate::checkNewVersion();
+        if ($this->isSystemVersionNew) {
+            $this->productInfo = Marketplate::getNewVersionInfo();
         }
     }
     public function render()

@@ -166,6 +166,7 @@ class MarketplateManager
                 $this->itemRollback($modules, 'module', $progress, $totalProgress, $log);
                 $this->itemRollback($themes, 'theme', $progress, $totalProgress, $log);
                 Cache::forget(self::SYSTEM_UPDATE_CACHE_KEY);
+                Artisan::call('up');
                 return false;
             }
         }
