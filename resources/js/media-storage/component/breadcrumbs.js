@@ -33,6 +33,7 @@ export default {
   },
   changeService(service) {
     this.$parent.service = service;
+    this.$parent.path = "/";
     this.$parent.refreshData();
   },
   render() {
