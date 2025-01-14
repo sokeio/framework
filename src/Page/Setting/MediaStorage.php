@@ -60,8 +60,7 @@ class MediaStorage extends \Sokeio\Page
         return [
             PageUI::make([
                 $this->mediaStorageSetting(),
-                ...Setting::getUI(self::KEY_UI)
-            ])->row()->rightUI([
+            ])->childWithKey(self::KEY_UI)->row()->rightUI([
                 Button::make()
                     ->className('btn btn-primary')
                     ->text('Save Setting')

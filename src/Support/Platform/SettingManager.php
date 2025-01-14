@@ -4,6 +4,7 @@ namespace Sokeio\Support\Platform;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Schema;
 use Sokeio\Models\Setting;
 
 class SettingManager
@@ -11,30 +12,14 @@ class SettingManager
     const CACHE_KEY = 'sokeio_settings';
     private $values = [];
     private $changed = [];
-    private $uis = [];
-    public function ui($key, $ui)
-    {
-        if (!isset($this->uis[$key])) {
-            $this->uis[$key] = [];
-        }
-        if (!is_array($ui)) {
-            $ui = [$ui];
-        }
-        $this->uis[$key] = array_merge($this->uis[$key], $ui);
-        return $this;
-    }
-    public function getUI($key = null)
-    {
-        if ($key) {
-            return Arr::get($this->uis, $key, []);
-        }
-        return $this->uis;
-    }
     public function __construct()
     {
-        $this->values =  Cache::rememberForever(self::CACHE_KEY, function () {
-            return Setting::all()->pluck('value', 'key')->toArray();
-        });
+        // check connection and table setting is exist
+        if (Schema::hasTable((new Setting())->getTable())) {
+            $this->values =  Cache::rememberForever(self::CACHE_KEY, function () {
+                return Setting::all()->pluck('value', 'key')->toArray();
+            });
+        }
     }
 
     public function get($key, $default = null)

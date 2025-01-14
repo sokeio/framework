@@ -173,8 +173,7 @@ class Authentication extends \Sokeio\Page
                 $this->settingLoginWithGoogle(),
                 $this->settingLoginWithFacebook(),
                 $this->settingLoginWithGithub(),
-                ...Setting::getUI(self::KEY_UI)
-            ])->row()->rightUI([
+            ])->childWithKey(self::KEY_UI)->row()->rightUI([
                 Button::make()
                     ->className('btn btn-primary')
                     ->text('Save Setting')

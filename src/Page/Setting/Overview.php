@@ -152,8 +152,7 @@ class Overview extends \Sokeio\Page
                 $this->settingOverview(),
                 $this->settingAdmin(),
                 $this->settingUtility(),
-                ...Setting::getUI(self::KEY_UI)
-            ])->row()->rightUI([
+            ])->childWithKey(self::KEY_UI)->row()->rightUI([
                 Button::make()
                     ->className('btn btn-primary')
                     ->text('Save Setting')
