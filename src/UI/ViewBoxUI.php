@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\UI\Table;
+namespace Sokeio\UI;
 
 use Sokeio\UI\BaseUI;
 

@@ -2,7 +2,6 @@
 
 namespace Sokeio\Support\MediaStorage;
 
-use Illuminate\Support\Facades\Log;
 use Sokeio\Support\MediaStorage\StorageDisk\StorageDiskService;
 
 class MediaStorageManager
