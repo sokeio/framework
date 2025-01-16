@@ -3,22 +3,22 @@
 namespace Sokeio;
 
 use Illuminate\Support\Facades\Facade;
-use Sokeio\Support\Platform\PlatformManager;
+use Sokeio\Core\PlatformManager;
 
 /**
- * @see \Sokeio\Support\Platform
+ * @see \Sokeio\Platform
  *
  * @method static mixed version()
  * @method static void loadFromPath($path)
  * @method static void loadFromServicePackage($package)
  * @method static void addLoader($loader)
- * @method static void applyLoader(\Sokeio\Support\Platform\ItemInfo $item)
+ * @method static void applyLoader(\Sokeio\Core\ItemInfo $item)
  * @method static void booting($callback)
  * @method static void boot()
  * @method static void booted($callback)
- * @method static \Sokeio\Support\Platform\ItemManager module()
- * @method static \Sokeio\Support\Platform\ItemManager theme()
- * @method static \Sokeio\Support\Menu\MenuManager menu()
+ * @method static \Sokeio\Platform\ItemManager module()
+ * @method static \Sokeio\Platform\ItemManager theme()
+ * @method static \Sokeio\Menu\MenuManager menu()
  * @method static string adminUrl()
  * @method static bool isUrlAdmin()
  * @method static bool isVendor($path)
@@ -27,13 +27,13 @@ use Sokeio\Support\Platform\PlatformManager;
  * @method static void routeWeb($group,$isAuth=false)
  * @method static void routeAdmin($group,$isGuest = false)
  * @method static void routeApi($group,$isGuest = false)
- * @method static \Sokeio\Support\Platform\GateManager gate()
+ * @method static \Sokeio\Platform\GateManager gate()
  * @method static void scanAllClass($directory, $namespace, callable $callback = null, callable $filter = null)
- * @method static void runLoader(\Sokeio\Support\Platform\ItemInfo $item, $path, $namespace, $aliasPrefix = '')
+ * @method static void runLoader(\Sokeio\Core\ItemInfo $item, $path, $namespace, $aliasPrefix = '')
  * @method static string logoFull()
  * @method static string logo()
  * @method static mixed getThemeSite()
- * @method static \Sokeio\Support\Platform\PlatformManager registerModel($class, ItemInfo $itemInfo)
+ * @method static \Sokeio\Core\PlatformManager registerModel($class, ItemInfo $itemInfo)
  * @method static array getAllModel()
  * @method static array getModelByKey($modelKey, $paramKey = null)
  * @method static mixed apiOk($data = null,$message = null, $code = 200)

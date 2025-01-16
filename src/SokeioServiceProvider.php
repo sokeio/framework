@@ -2,13 +2,14 @@
 
 namespace Sokeio;
 
+use Livewire\Livewire;
 use Sokeio\Concerns\WithServiceProvider;
 use Sokeio\Providers\SocialiteServiceProvider;
-use Sokeio\Support\Livewire\LivewireServiceProvider;
-use Sokeio\Support\MediaStorage\MediaStorageServiceProvider;
-use Sokeio\Support\Platform\PlatformServiceProvider;
-use Sokeio\Support\Theme\ThemeServiceProvider;
-use Sokeio\Support\Widget\WidgetServiceProvider;
+use Sokeio\Livewire\LivewireServiceProvider;
+use Sokeio\MediaStorage\MediaStorageServiceProvider;
+use Sokeio\Core\PlatformServiceProvider;
+use Sokeio\Theme\ThemeServiceProvider;
+use Sokeio\Widget\WidgetServiceProvider;
 
 class SokeioServiceProvider extends \Illuminate\Support\ServiceProvider
 {
@@ -51,6 +52,7 @@ class SokeioServiceProvider extends \Illuminate\Support\ServiceProvider
             if (setting('SOKEIO_SHOW_POSITION_DEBUG') && Platform::isUrlAdmin()) {
                 echo '<script>document.body.classList.add("so-position-show-debug");</script>';
             }
+            echo Livewire::mount('sokeio::global-body');
         });
     }
     public function bootingPackage()

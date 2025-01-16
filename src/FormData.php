@@ -3,4 +3,4 @@
 namespace Sokeio;
 
 
-class FormData extends \Sokeio\Support\Livewire\Form {}
+class FormData extends \Sokeio\Livewire\Form {}

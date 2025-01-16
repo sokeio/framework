@@ -3,7 +3,7 @@
 namespace Sokeio;
 
 use Illuminate\Support\Facades\Facade;
-use Sokeio\Support\Theme\TailwindcssManager;
+use Sokeio\Theme\TailwindcssManager;
 
 /**
  * @see \Sokeio\Tailwindcss

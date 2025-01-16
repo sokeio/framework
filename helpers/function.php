@@ -3,10 +3,10 @@
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Sokeio\Platform;
-use Sokeio\Support\Platform\PlatformManager;
+use Sokeio\Core\PlatformManager;
 use Sokeio\Setting;
-use Sokeio\Support\Platform\SettingManager;
-use Sokeio\Support\Theme\ThemeManager;
+use Sokeio\Core\SettingManager;
+use Sokeio\Theme\ThemeManager;
 use Sokeio\Theme;
 
 if (!function_exists('theme')) {

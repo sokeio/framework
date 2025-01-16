@@ -3,10 +3,10 @@
 namespace Sokeio;
 
 use Illuminate\Support\Facades\Facade;
-use Sokeio\Support\Marketplate\MarketplateManager;
+use Sokeio\Marketplate\MarketplateManager;
 
 /**
- * @see \Sokeio\Support\Marketplate
+ * @see \Sokeio\Marketplate
  * 
  * @method static bool checkNewVersion()
  * @method static mixed getNewVersionInfo()

@@ -1,0 +1,29 @@
+{
+  "name": "sokeio/livewire",
+  "description": "Laravel Livewire",
+  "license": "MIT",
+  "homepage": "https://sokeio.com",
+  "support": {
+    "issues": "https://github.com/sokeio/framework/issues",
+    "source": "https://github.com/sokeio/framework"
+  },
+  "authors": [
+    {
+      "name": "Nguyen Van Hau",
+      "email": "nguyenvanhaudev@gamil.com"
+    }
+  ],
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "Sokeio\\Livewire\\": ""
+    },
+    "files": []
+  },
+  "extra": {},
+  "suggest": {},
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev"
+}

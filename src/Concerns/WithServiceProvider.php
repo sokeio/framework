@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use Sokeio\Exceptions\InvalidPackage;
 use Sokeio\Platform;
-use Sokeio\Support\Platform\ItemInfo;
+use Sokeio\Core\ItemInfo;
 use Sokeio\ServicePackage;
 use ReflectionClass;
 use Sokeio\Theme;

@@ -23,8 +23,17 @@
       "helpers/function.php"
     ],
     "psr-4": {
-      "Sokeio\\": "src/",
-      "Sokeio\\Seeders\\": "database/seeders/"
+      "Sokeio\\Livewire\\": "features/livewire/",
+      "Sokeio\\Marketplate\\": "features/marketplate/",
+      "Sokeio\\MediaStorage\\": "features/media-storage/",
+      "Sokeio\\Core\\": "features/core/",
+      "Sokeio\\Menu\\": "features/menu/",
+      "Sokeio\\Theme\\": "features/theme/",
+      "Sokeio\\UI\\": "features/ui/",
+      "Sokeio\\Widget\\": "features/widget/",
+      "Sokeio\\Seeders\\": "database/seeders/",
+      "Sokeio\\Database\\Factories\\": "database/factories/",
+      "Sokeio\\": "src/"
     }
   },
   "autoload-dev": {
@@ -45,7 +54,7 @@
     }
   },
   "config": {
-    "sort-packages": true
+    "sort-features": true
   },
   "minimum-stability": "dev",
   "prefer-stable": true

@@ -2,9 +2,9 @@
 
 namespace Sokeio;
 
-use Sokeio\Support\Livewire\Concerns\WithLivewirePage;
-use Sokeio\Support\Livewire\PageConfig;
-use Sokeio\Support\Platform\ItemInfo;
+use Sokeio\Livewire\Concerns\WithLivewirePage;
+use Sokeio\Livewire\PageConfig;
+use Sokeio\Core\ItemInfo;
 
 class Page extends Component implements ILoader
 {

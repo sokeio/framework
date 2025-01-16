@@ -3,7 +3,7 @@
 namespace Sokeio;
 
 use Illuminate\Support\Facades\Facade;
-use Sokeio\Support\Platform\SettingManager;
+use Sokeio\Core\SettingManager;
 
 /**
  * @see \Sokeio\Setting

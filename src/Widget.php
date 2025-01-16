@@ -3,8 +3,8 @@
 namespace Sokeio;
 
 use Illuminate\Support\Facades\Facade;
-use Sokeio\Support\Widget\WidgetManager;
-use Sokeio\Support\Widget\WidgetSetting;
+use Sokeio\Widget\WidgetManager;
+use Sokeio\Widget\WidgetSetting;
 
 /**
  * @see WidgetManager
