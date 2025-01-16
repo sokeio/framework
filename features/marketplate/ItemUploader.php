@@ -2,31 +2,25 @@
 
 namespace Sokeio\Marketplate;
 
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 
-class ItemDownloader extends ItemInstaller
+class ItemUpload extends ItemInstaller
 {
     private $extractPath;
-   
+    public  function __construct(
+        protected $data,
+        protected $type,
+        private $file
+    ) {
+        parent::__construct($data, $type);
+    }
     // download the zip file stream
-    public function downloadZip(): mixed
+    public function uploadZip(): mixed
     {
-        // download the zip file
-        $downloadUrl = $this->getDataValue('download_url');
-        if ($downloadUrl) {
-            $response = Http::withoutVerifying()->get($downloadUrl);
-            if ($response->ok()) {
-                return $response->body();
-            }
-            Log::info('downloadZip error:' . $downloadUrl);
-            Log::info($response->body());
-        }
         return false;
     }
     public function saveAs($path)
     {
-        $body = $this->downloadZip();
+        $body = $this->uploadZip();
         if (!$body) {
             return false;
         }

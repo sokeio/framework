@@ -7,27 +7,45 @@ use Illuminate\Support\Facades\Log;
 use Sokeio\Platform;
 use Sokeio\Core\ItemInfo;
 
-class ItemUpdater
+class ItemInstaller
 {
     private ItemInfo $itemInfo;
     private $backupPath;
-    private $itemNewPath;
-    private $extractPath;
+    protected $itemNewPath;
     private $name;
     private $id;
     private $folderId;
     private $version;
-    private ItemDownloader $itemDownloader;
+    public function getDataValue($key, $default = null)
+    {
+        if (!$this->data) {
+            return $default;
+        }
+        return data_get($this->data, $key, $default);
+    }
     public function __construct(
         protected $data,
         protected $type,
     ) {
+        $this->init();
+    }
+    public function getItemInfo()
+    {
+        return $this->itemInfo;
+    }
+    public function getFolderId()
+    {
+        return $this->folderId;
+    }
+
+    protected function init()
+    {
+
         $id = data_get($this->data, 'id');
         $this->folderId = str_replace('/', '-', $id);
         $this->version = data_get($this->data, 'version');
         $this->id = $id;
         $this->name = data_get($this->data, 'name');
-        $this->itemDownloader = new ItemDownloader($this->data);
         if ($this->type === 'module') {
             $this->itemInfo = Platform::module()->find($id);
         } else if ($this->type === 'theme') {
@@ -57,13 +75,8 @@ class ItemUpdater
             File::copyDirectory($pathCurent,  $this->backupPath);
         }
     }
-    public function download()
-    {
-        $this->extractPath = config('sokeio.platform.updater.temp') . $this->folderId . '-' . $this->itemInfo->getVersion() . '-' . time();
-        Log::info('update3:' . $this->extractPath);
-        $this->itemDownloader->extractZip($this->extractPath);
-        $this->itemNewPath = $this->itemInfo->getManager()->getPathWithFileTypeInfo($this->extractPath);
-    }
+    public function processNew() {}
+
     public function update()
     {
         if ($this->itemInfo && $this->itemNewPath) {
@@ -89,5 +102,23 @@ class ItemUpdater
             File::copyDirectory($this->backupPath, $pathCurent);
             File::deleteDirectory($this->backupPath);
         }
+    }
+    protected function extractZip($path, $pathFile)
+    {
+        // extract the zip file
+        $zip = new \ZipArchive;
+        $res = $zip->open($pathFile);
+        if ($res === TRUE) {
+            $zip->extractTo($path);
+            $zip->close();
+            Log::info('extractZip:' . $path);
+            File::delete($pathFile);
+            return true;
+        } else {
+            Log::info('extractZip error:' . $path);
+            File::delete($pathFile);
+            return false;
+        }
+        return false;
     }
 }

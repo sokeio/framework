@@ -6,8 +6,6 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Sokeio\Platform;
-use Sokeio\Marketplate\Provider\GithubProvider;
-use Sokeio\Marketplate\Provider\SokeioProvider;
 
 class MarketplateManager
 {
@@ -27,9 +25,9 @@ class MarketplateManager
     }
     public function __construct()
     {
-        // $this->marketplateUrl = config('sokeio.platform.marketplace');
-        $this->registerProvider('github', GithubProvider::class);
-        $this->registerProvider('sokeio', SokeioProvider::class);
+        if (!env('SOKEIO_MARKETPLACE_LOCAL')) {
+            $this->marketplateUrl = config('sokeio.platform.marketplace');
+        }
     }
     private function makeRequest(string $url, array $data = []): \Illuminate\Http\Client\Response
     {
@@ -60,7 +58,7 @@ class MarketplateManager
         $product = $this->getProductInfo();
         if (empty($product['id'])) {
             $product = [
-                'id' => 'sokeio/product-example',
+                'id' => 'sokeio-product-example',
                 'name' => 'Sokeio Product Example',
                 'description' => 'Sokeio Product Example',
                 "framework" => "v1.0.0",
@@ -148,10 +146,10 @@ class MarketplateManager
             ]);
             $progress = 0;
             $modules = collect(data_get($rs, 'modules', []))->map(function ($item, $key) {
-                return new ItemUpdater($item, 'module');
+                return new ItemDownloader($item, 'module');
             });
             $themes = collect(data_get($rs, 'themes', []))->map(function ($item, $key) {
-                return new ItemUpdater($item, 'theme');
+                return new ItemDownloader($item, 'theme');
             });
             $totalProgress = (count($modules) + count($themes)) * 3;
             try {
@@ -179,6 +177,7 @@ class MarketplateManager
     }
     private function backupAndDownload($items, $type, &$progress, $totalProgress, $log)
     {
+
         foreach ($items as $item) {
             $progress++;
             $log([
@@ -191,7 +190,7 @@ class MarketplateManager
                 'message' => 'Download ' . $type . ' : ' . $item->getName(),
                 'process' => 100 * $progress / $totalProgress,
             ]);
-            $item->download();
+            $item->processNew();
         }
     }
     private function itemUpdate($items, $type, &$progress, $totalProgress, $log)
@@ -221,5 +220,8 @@ class MarketplateManager
                 ]);
             }
         }
+    }
+    public function installFile($type,$file){
+        
     }
 }
