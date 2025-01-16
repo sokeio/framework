@@ -29,12 +29,12 @@ class ItemUpdater
         $this->name = data_get($this->data, 'name');
         $this->itemDownloader = new ItemDownloader($this->data);
         if ($this->type === 'module') {
-            $this->itemInfo = Platform::module()->findByNameOrId($id);
+            $this->itemInfo = Platform::module()->find($id);
         } else if ($this->type === 'theme') {
-            $this->itemInfo = Platform::theme()->findByNameOrId($id);
+            $this->itemInfo = Platform::theme()->find($id);
         } else if ($this->type === 'package') {
             // Not implemented yet
-            // $this->itemInfo = Platform::package()->findByNameOrId($this->id);
+            // $this->itemInfo = Platform::package()->find($this->id);
         }
         $this->backupPath = config('sokeio.platform.backup');
     }

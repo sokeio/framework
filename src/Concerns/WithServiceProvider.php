@@ -40,6 +40,8 @@ trait WithServiceProvider
 
         $this->configurePackage($this->package);
         $this->configurePackaged();
+        self::$itemInfo = Platform::loadFromServicePackage($this->package);
+        $this->package->name(self::$itemInfo->getId());
         if (empty($this->package->name)) {
             throw InvalidPackage::nameIsRequired();
         }
@@ -53,7 +55,6 @@ trait WithServiceProvider
         if (File::exists($fileConfig)) {
             $this->mergeConfigFrom($fileConfig, $this->package->shortName());
         }
-        self::$itemInfo = Platform::loadFromServicePackage($this->package);
         if ((static::itemInfo()->isActiveOrVendor())) {
             if ($this->package->hasRouteWeb) {
                 Route::middleware('web')

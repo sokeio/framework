@@ -109,7 +109,7 @@ class ItemInfo extends ObjectJson
             }
             return 'site';
         }
-        return $this->name;
+        return $this->id;
     }
     public function autoAssets(): void
     {

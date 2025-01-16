@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Content\Models;
+namespace Sokeio\Models;
 
 use Sokeio\Model;
 

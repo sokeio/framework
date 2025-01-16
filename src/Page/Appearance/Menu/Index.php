@@ -1,13 +1,13 @@
 <?php
 
-namespace Sokeio\Content\Page\Appearance\Menu;
+namespace Sokeio\Page\Appearance\Menu;
 
 use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Url;
 use Sokeio\Attribute\PageInfo;
-use Sokeio\Content\Enums\UIKey;
-use Sokeio\Content\Models\Menu;
-use Sokeio\Content\Models\MenuItem;
+use Sokeio\Enums\UIKey;
+use Sokeio\Models\Menu;
+use Sokeio\Models\MenuItem;
 use Sokeio\Theme;
 use Sokeio\UI\BaseUI;
 use Sokeio\UI\Common\Button;

@@ -1,9 +1,9 @@
 <?php
 
-namespace Sokeio\Content\Page\Appearance\Menu;
+namespace Sokeio\Page\Appearance\Menu;
 
 use Sokeio\Attribute\PageInfo;
-use Sokeio\Content\Models\Menu;
+use Sokeio\Models\Menu;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Field\Input;
