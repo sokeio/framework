@@ -76,8 +76,26 @@
     min-height: 120px;
 }
 
-.sokeio-hover:hover, .sokeio-active {
+.sokeio-hover:hover,
+.sokeio-active {
     cursor: pointer;
     background-color: #c4c4c4;
-    
+
+}
+
+.navbar-vertical {
+
+    .navar-menu-toggler {
+        position: absolute;
+        bottom: 20px;
+        right: 0;
+        padding: 0.2rem 0.5rem;
+        border-radius: 0.25rem;
+        cursor: pointer;
+        background: #c4c4c4;
+        display: none;
+        &:hover {
+            background: #adadad;
+        }
+    }
 }

@@ -3,7 +3,7 @@
 namespace Sokeio\Marketplate;
 
 
-class ItemUpload extends ItemInstaller
+class ItemUploader extends ItemInstaller
 {
     private $extractPath;
     public  function __construct(
