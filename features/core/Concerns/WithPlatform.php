@@ -75,7 +75,7 @@ trait WithPlatform
 
             return response()->file($item->getPath('screenshot.png'));
         }
-        return response()->file(__DIR__ . '/../../../../public/sokeio.jpg');
+        return response()->file(__DIR__ . '/../../../public/sokeio.jpg');
     }
     public function adminUrl()
     {

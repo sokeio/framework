@@ -3,8 +3,7 @@
 namespace Sokeio\Theme;
 
 use Illuminate\Support\Facades\Blade;
-use Livewire\Livewire;
-use Sokeio\Theme;
+use Sokeio\Platform;
 
 class ThemeServiceProvider extends \Illuminate\Support\ServiceProvider
 {
@@ -13,7 +12,7 @@ class ThemeServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->app->singleton(\Illuminate\Contracts\Debug\ExceptionHandler::class, ThemeHandler::class);
 
         $this->registerDirectives();
-        
+        Platform::addLoader(TemplateLoader::class);
     }
     /**
      * Register all directives.
