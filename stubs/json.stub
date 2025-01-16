@@ -1,5 +1,5 @@
 {
-    "id":"$VENDOR$/$BASE_TYPE_LOWER_NAME$-$LOWER_NAME$",
+    "id":"$VENDOR$-$BASE_TYPE_LOWER_NAME$-$LOWER_NAME$",
     "name": "$STUDLY_NAME$",
     "version":"v1.0.0",
     "alias": "$LOWER_NAME$",

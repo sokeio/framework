@@ -13,7 +13,7 @@
                     <div wire:ignore>
                         <div sokeio:application="system-updater-modal">
                             <template sokeio:main>
-                                @viewjs('sokeio/framework::livewire.system-updater.index')
+                                @viewjs('sokeio::livewire.system-updater.index')
                             </template>
                         </div>
                     </div>
