@@ -14,6 +14,8 @@ trait WithLivewireDispatch
     private const LIVEWIRE_REFRESH = 'sokeio_refresh';
     private const LIVEWIRE_REFRESH_PARENT = 'sokeio_refresh_parent';
     private const LIVEWIRE_REFRESH_PAGE = 'sokeio_refresh_page';
+    private const LIVEWIRE_OPEN_TAB = 'sokeio_open_tab';
+    private const LIVEWIRE_CLOSE_TAB = 'sokeio_close_tab';
 
 
 
@@ -118,5 +120,16 @@ trait WithLivewireDispatch
             'parent' => true,
             'params' => $params
         ]);
+    }
+    public function openTab($url, $callbackClose = null)
+    {
+        $this->sendMessageToClient(self::LIVEWIRE_OPEN_TAB, [
+            'url' => $url,
+            'callbackClose' => $callbackClose
+        ]);
+    }
+    public function closeTab()
+    {
+        $this->sendMessageToClient(self::LIVEWIRE_CLOSE_TAB, []);
     }
 }

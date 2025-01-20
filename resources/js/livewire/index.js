@@ -6,11 +6,14 @@ document.addEventListener("livewire:init", () => {
 });
 document.addEventListener("sokeio::dispatch", (event) => {
   let data = event.detail[0];
+  let wireId = getWireIdFromElement(event.target);
+  let $wire = window.Livewire.find(wireId);
   dispatch.install({
     type: data.type,
     payload: {
       ...data.payload,
-      wireId: getWireIdFromElement(event.target),
+      wireId: wireId,
+      $wire,
     },
   });
 });
