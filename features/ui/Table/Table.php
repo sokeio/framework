@@ -68,7 +68,7 @@ class Table extends BaseUI
             $name = '.' . $name;
         }
 
-        return 'table' . $name;
+        return 'tb_'.$this->getUIIDkey() . $name;
     }
     protected function getValueByName($name, $default = null, $withKey = true)
     {

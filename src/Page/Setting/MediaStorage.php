@@ -24,7 +24,7 @@ use Sokeio\UI\WithSettingUI;
     title: 'Media Storage',
     menu: true,
     menuTitle: 'Media Storage',
-    icon: 'ti ti-user',
+    icon: 'ti ti-cloud-data-connection',
     sort: -20,
 )]
 class MediaStorage extends \Sokeio\Page
@@ -51,7 +51,8 @@ class MediaStorage extends \Sokeio\Page
             ->bodyRow()
             ->title('Media Storage Setting')
             ->icon('ti ti-settings-up')
-            ->column(self::COLUMN_GROUP2)
+            ->column(self::COLUMN_GROUP)
+            
             ->prefix('formData.mediaStorage')
             ->className('mb-3');
     }
@@ -67,7 +68,6 @@ class MediaStorage extends \Sokeio\Page
                     ->icon('ti ti-save')
                     ->wireClick('saveData')
             ])
-                ->icon('ti ti-settings')
 
 
         ];
