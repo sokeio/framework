@@ -2,6 +2,7 @@
 
 use Sokeio\Console\Commands\DebugCommand;
 use Sokeio\Console\Commands\FileCommand;
+use Sokeio\Console\Commands\InstallCommand;
 use Sokeio\Console\Commands\MakeCommand;
 use Sokeio\Console\Commands\SystemUpdateCommand;
 
@@ -20,6 +21,7 @@ return [
         MakeCommand::class,
         FileCommand::class,
         SystemUpdateCommand::class,
+        InstallCommand::class
     ],
     'platform' => [
         'token_prefix' => env('PLATFORM_TOKEN_PREFIX', 'sokeio-'),

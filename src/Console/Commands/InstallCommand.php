@@ -5,7 +5,7 @@ namespace Sokeio\Console\Commands;
 use Illuminate\Console\Command;
 use Sokeio\Platform;
 
-class ModuleInstall extends Command
+class InstallCommand extends Command
 {
     protected $signature = 'so:install';
 
