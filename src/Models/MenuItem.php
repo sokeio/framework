@@ -23,14 +23,14 @@ class MenuItem extends Model
     protected $appends = ['url', 'title'];
     public function getUrlAttribute()
     {
-        if ($this->link) {
+        if ($this->link || !class_exists($this->menuable_type)) {
             return $this->link;
         }
         return $this->menuable?->url ?? '#';
     }
     public function getTitleAttribute()
     {
-        if ($this->name) {
+        if ($this->name || !class_exists($this->menuable_type)) {
             return $this->name;
         }
         return $this->menuable?->title ?? '';

@@ -34,6 +34,38 @@ class MarketplateManager
         $url = sprintf('%s%s', $this->getMarketplateUrl(), $url);
         return Http::withOptions(['verify' => false])->post($url, $data);
     }
+    public function verifyLicense($license, $productId)
+    {
+        $product = $this->getProductInfo();
+        if (empty($product['id']) || $product['id'] !== $productId) {
+            return false;
+        };
+
+        $rs = $this->makeRequest('api/platform/verify-license', [
+            'license' => $license,
+            'product_id' => $productId,
+            'domain' => config('app.url')
+        ])->json();;
+
+        if (!isset($rs['token'])) {
+            return false;
+        }
+
+        $token = $rs['token'];
+        // Token
+        $licenseData = [
+            'product_id' => $product['id'],
+            'product_name' => $product['name'],
+            'product_version' => $product['version'],
+            'license' => $license,
+            'token' => $token
+        ];
+        if (!file_exists(base_path('platform'))) {
+            mkdir(base_path('platform'));
+        }
+        file_put_contents(base_path('platform/.license'), json_encode($licenseData));
+        return true;
+    }
     public function getProductInfo()
     {
         if ($this->product === null) {
@@ -85,6 +117,18 @@ class MarketplateManager
     {
         return $this->marketplateUrl;
     }
+    protected function getMarketplateToken()
+    {
+        // 
+        $pathLicense =  base_path('platform/.license');
+        if (file_exists($pathLicense)) {
+            $license = file_get_contents($pathLicense);
+            $license = json_decode($license, true);
+            return $license['token'];
+        }
+        return null;
+    }
+
     private function getInfoUpdater()
     {
 
@@ -98,6 +142,8 @@ class MarketplateManager
         return [
             'product_id' => $productId,
             'product_version' => $productVersion,
+            'token' => $this->getMarketplateToken(),
+            'domain' => url(''),
             'framework' => $framework,
             'modules' => $modules,
             'themes' => $themes,
@@ -221,7 +267,5 @@ class MarketplateManager
             }
         }
     }
-    public function installFile($type,$file){
-        
-    }
+    public function installFile($type, $file) {}
 }

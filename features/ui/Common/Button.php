@@ -3,11 +3,12 @@
 namespace Sokeio\UI\Common;
 
 use Sokeio\UI\BaseUI;
+use Sokeio\UI\Common\Concerns\WithCol;
 use Sokeio\UI\Common\Concerns\WithTextHtml;
 
 class Button extends BaseUI
 {
-    use WithTextHtml;
+    use WithTextHtml, WithCol;
     protected function initUI()
     {
         $this->render(function () {
@@ -159,8 +160,17 @@ class Button extends BaseUI
         if ($title) {
             $title = '<span>' . $title . '</span>';
         }
-        return <<<HTML
+        $view = <<<HTML
         <button {$attr}>{$icon} {$title}</button>
         HTML;
+        if ($this->containsAttr('class', null, 'col')) {
+            $attrCol = $this->getAttr('col');
+            $view = <<<HTML
+            <div {$attrCol}>
+            {$view}
+            </div>
+            HTML;
+        }
+        return $view;
     }
 }

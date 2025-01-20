@@ -44,6 +44,11 @@ class Index extends \Sokeio\Page
     {
         $this->setMenuId($menuId);
     }
+    public function updatedMenuId2($menuId)
+    {
+        $this->setMenuId($menuId);
+        $this->refreshMe();
+    }
     public function setMenuId($menuId)
     {
         $this->menuLocations = [];
@@ -170,21 +175,18 @@ class Index extends \Sokeio\Page
     }
     protected function setupUI()
     {
-        SoUI::debug('203199ef3c4bad7a8bac34e6ac05e7b8', function (BaseUI $ui, $key) {
-            Log::info($key);
-            Log::info($ui->getUIIDkey());
-        });
         return [
             PageUI::make([
                 Div::make([])->childWithGroupKey('content::menu_add_item')->prefix('formData')->col3(),
                 Div::make([
                     Card::make([
                         Div::make([
-                            Input::make('menuName')->label('Menu Name')
-                                ->ruleRequired()
-                                ->when(function () {
-                                    return $this->menuId;
-                                }),
+                            Div::make([
+                                Select::make('menuId')->remoteActionWithModel(Menu::class, 'name')->debounce()->colAuto(),
+                                Button::make()->text(__('Edit'))->col4()->modal(function (Button $button) {
+                                    return route($this->getRouteName('create-menu'), ['dataId' => $this->menuId]);
+                                })
+                            ])->row(),
                             CheckboxList::make('menuLocations')->label('Locations')
                                 ->dataSource(Theme::getLocationOptions('menu')),
                             Div::make([
@@ -225,7 +227,7 @@ class Index extends \Sokeio\Page
                 ->row()
                 ->rightUI(
                     [
-                        Select::make('menuId')->remoteActionWithModel(Menu::class, 'name')->debounce(),
+
                         Button::make()->text('Add Menu')->className('btn btn-primary')
                             ->modal(function (Button $button) {
                                 return route($this->getRouteName('create-menu'));

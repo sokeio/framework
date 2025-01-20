@@ -141,4 +141,12 @@ trait WithRule
     {
         return $this->rule('regex:' . $regex, $message, $params, $callback);
     }
+    public function ruleDomain($message = null, $params = [])
+    {
+        return $this->rule('domain', $message, $params);
+    }
+    public function ruleUrl($message = null, $params = [])
+    {
+        return $this->rule('url', $message, $params);
+    }
 }

@@ -45,7 +45,7 @@ trait LifecycleUI
     {
         return $this->lifecycleWithKey('destroy', $callback, func_get_args());
     }
-    public function debounce($debounce = 250)
+    public function debounce($debounce = 250): static
     {
         return $this->vars('wire:debounce', $debounce)->setupChild(fn($c) => $c->debounce($debounce));
     }

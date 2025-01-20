@@ -16,7 +16,7 @@ class CreateMenu extends \Sokeio\Page
     use WithEditUI;
     protected function afterSaveData($data)
     {
-        $this->callFuncByRef('setMenuId', [$data['id']]);
+        $this->callFuncByRef('updatedMenuId2', [$data['id']]);
     }
     protected $skipByUser = true;
     protected function setupUI()

@@ -68,7 +68,7 @@ class Table extends BaseUI
             $name = '.' . $name;
         }
 
-        return 'tb_'.$this->getUIIDkey() . $name;
+        return 'tb_' . $this->getUIIDkey() . $name;
     }
     protected function getValueByName($name, $default = null, $withKey = true)
     {
@@ -97,8 +97,8 @@ class Table extends BaseUI
             $this->setValueByName('order.field', $order['field'] ?? '');
             $this->setValueByName('order.type',  $order['type'] ?? 'asc');
         }, false);
-        $this->register(function(self $table){
-            if(!$table->getPrefix()){
+        $this->register(function (self $table) {
+            if (!$table->getPrefix()) {
                 $table->prefix('tableEditline');
             }
         });
@@ -131,7 +131,7 @@ class Table extends BaseUI
         $this->columns[$columnIndex] = $nameOrColumn;
         $this->child($nameOrColumn, 'column_' . $columnIndex);
 
-        return $this->setupChild(fn($c) => $label && $c->label($label));
+        return $this; // $this->setupChild(fn($c) => $label && $c->label($label));
     }
     public function columnAction($array, $title = 'Actions', $callback = null, $with = 200)
     {

@@ -8,7 +8,14 @@ use Sokeio\Providers\SocialiteServiceProvider;
 use Sokeio\Livewire\LivewireServiceProvider;
 use Sokeio\MediaStorage\MediaStorageServiceProvider;
 use Sokeio\Core\PlatformServiceProvider;
+use Sokeio\Enums\AlertType;
+use Sokeio\Enums\UIKey;
 use Sokeio\Theme\ThemeServiceProvider;
+use Sokeio\UI\Common\Button;
+use Sokeio\UI\Common\Card;
+use Sokeio\UI\Field\Input;
+use Sokeio\UI\Field\MediaIcon;
+use Sokeio\UI\SoUI;
 use Sokeio\Widget\WidgetServiceProvider;
 
 class SokeioServiceProvider extends \Illuminate\Support\ServiceProvider
@@ -58,5 +65,93 @@ class SokeioServiceProvider extends \Illuminate\Support\ServiceProvider
     public function bootingPackage()
     {
         config(['auth.providers.users.model' => config('sokeio.model.user')]);
+        
+        // packageBooted
+        Theme::location('SOKEIO_ADMIN_THEME_HEADER_RIGHT_BEFORE', function () {
+            echo "<div class='btn-group me-2 py-1'>
+                        <a href='" . url('/') . "' class='btn btn-primary' target='_blank'>Go To Site</a>
+                    </div>";
+        });
+
+        SoUI::registerUI(
+            [
+                Input::make('name')->label('Name'),
+                MediaIcon::make('icon')->label('Icon'),
+                Input::make('link')->label('Link'),
+                Button::make()->boot(function (Button $button) {
+                    if ($button->getValueByKey('id')) {
+                        $button->text('Update')
+                            ->icon('ti ti-check')
+                            ->className('btn btn-success p-2 mt-1');
+                    } else {
+                        $button->text(__('Add to menu'))
+                            ->icon('ti ti-plus')
+                            ->className('btn btn-primary p-2 mt-1');
+                    }
+                })
+                    ->wireClick(function (Button $button) {
+                        $button->resetErrorBag();
+                        $fail = false;
+                        if (!($button->getValueByKey('name'))) {
+                            $fail = true;
+                            $button->addError('name', 'Name is required');
+                        }
+                        if (!($button->getValueByKey('link'))) {
+                            $fail = true;
+                            $button->addError('link', 'Link is required');
+                        }
+                        // if (!($button->getValueByKey('icon'))) {
+                        //     $fail = true;
+                        //     $button->addError('icon', 'Icon is required');
+                        // }
+                        if ($fail) {
+                            return;
+                        }
+                        $id = $button->getValueByKey('id');
+                        $button->getWire()->updateItemMenu(
+                            $id,
+                            function ($menuItem) use ($button) {
+                                $menuItem->name = $button->getValueByKey('name');
+                                $menuItem->link = $button->getValueByKey('link');
+                                $menuItem->icon = $button->getValueByKey('icon');
+                                $menuItem->type = 'link';
+                            }
+                        );
+                        $button->wireAlert(
+                            $button->getValueByKey('name') . ' has been saved!',
+                            'Menu',
+                            AlertType::SUCCESS
+                        );
+                        if (!$id) {
+                            $button->changeValue('name', '');
+                            $button->changeValue('link', '');
+                            $button->changeValue('icon', '');
+                        }
+                    })
+                    ->when(function (Button $button) {
+                        return $button->getWire()->menuId;
+                    }),
+                Button::make()->text('Remove')
+                    ->icon('ti ti-trash')
+                    ->className('btn btn-danger p-2 ms-2 mt-1')
+                    ->confirm('Are you really want to remove?')
+                    ->wireClick(function (Button $button) {
+                        $id = $button->getValueByKey('id');
+                        $button->getWire()->removeItemMenu($id);
+                    })->when(function (Button $button) {
+                        return $button->getValueByKey('id');
+                    })
+            ],
+            UIKey::MENU_ITEM_TYPE->value . 'link',
+            UIKey::MENU_ADD_ITEM->value,
+            fn(Card $card) => $card->title('Custom Link')->className('mb-2')
+                ->boot(function (Card $card) {
+                    $card->groupField(null);
+                    if (!$card->getValueByKey('id')) {
+
+                        $card->groupField('links');
+                    }
+                })
+        );
     }
 }
