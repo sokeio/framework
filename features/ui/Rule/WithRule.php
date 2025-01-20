@@ -137,4 +137,8 @@ trait WithRule
     {
         return $this->rule('regex:' . $regex, $message, $params, $callback);
     }
+    public function ruleRegex($regex, $message = null, $params = [], $callback = null)
+    {
+        return $this->rule('regex:' . $regex, $message, $params, $callback);
+    }
 }
