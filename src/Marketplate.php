@@ -15,6 +15,8 @@ use Sokeio\Marketplate\MarketplateManager;
  * @method static void updateNow($callback = null, $secret=null)
  * @method static void getProvider($key, $data)
  * @method static void registerProvider($key, $provider)
+ * @method static bool verifyLicense($license, $productId)
+ * @method static array getLicense()
  *
  */
 

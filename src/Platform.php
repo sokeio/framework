@@ -39,6 +39,7 @@ use Sokeio\Core\PlatformManager;
  * @method static mixed apiOk($data = null,$message = null, $code = 200)
  * @method static mixed apiError($message = null, $errors = [], $code = 500)
  * @method static void artisanInBackground($command, $data = null)
+ * @method static string randomKey($length = 24, $groupLength = 6, $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')
  */
 
 class Platform extends Facade

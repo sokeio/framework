@@ -2,6 +2,7 @@
 
 namespace Sokeio\Marketplate;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
@@ -52,19 +53,30 @@ class MarketplateManager
         }
 
         $token = $rs['token'];
+        $activated_at = $rs['activated_at'];
         // Token
         $licenseData = [
             'product_id' => $product['id'],
             'product_name' => $product['name'],
             'product_version' => $product['version'],
-            'license' => $license,
-            'token' => $token
+            'key' => $license,
+            'token' => $token,
+            'activated_at' => $activated_at
         ];
         if (!file_exists(base_path('platform'))) {
             mkdir(base_path('platform'));
         }
         file_put_contents(base_path('platform/.license'), json_encode($licenseData));
         return true;
+    }
+    public function getLicense()
+    {
+        $licenseFile = base_path('platform/.license');
+        if (!file_exists($licenseFile)) {
+            return null;
+        }
+        $licenseData = json_decode(file_get_contents($licenseFile), true);
+        return $licenseData;
     }
     public function getProductInfo()
     {

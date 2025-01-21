@@ -47,10 +47,13 @@ class FormObjectSynth extends Synth
 
         return $form;
     }
-
+    private function checkKeyInTarget($key, $target)
+    {
+        return isset($target->{$key});
+    }
     public function set(&$target, $key, $value)
     {
-        if ($value === null && Utils::propertyIsTyped($target, $key)) {
+        if ($value === null && $this->checkKeyInTarget($key, $target)) {
             unset($target->$key);
         } else {
             $target->$key = $value;

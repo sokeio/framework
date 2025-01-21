@@ -129,4 +129,18 @@ class PlatformManager
         $process->setoptions(['create_new_console' => true]); //Run process in background 
         $process->start();
     }
+    public function randomKey($length = 24, $groupLength = 6, $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')
+    {
+        $randomString = '';
+        for ($i = 0; $i < $groupLength; $i++) {
+            for ($ii = 0; $ii < $length / $groupLength; $ii++) {
+                $randomString .= $characters[rand(0, strlen($characters) - 1)];
+            }
+            if ($i < $groupLength - 1) {
+                $randomString .= "-";
+            }
+        }
+
+        return $randomString;
+    }
 }
