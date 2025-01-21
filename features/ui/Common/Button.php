@@ -74,7 +74,7 @@ class Button extends BaseUI
             });
         }
         return $this->action($actionName, function (...$params) use ($callback) {
-            call_user_func_array($callback, $params);
+            return  call_user_func_array($callback, $params);
         }, $withUIIDKey, $skipRender)
             ->render(function ($base) use ($actionName, $params) {
                 $paraText = '';
