@@ -26,10 +26,7 @@
                             </div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" data-bs-theme="light">
-                            <a href="{{ route('admin.theme-admin-page.account') }}" class="dropdown-item">Profile</a>
-                            <div class="dropdown-divider p-0"></div>
-                            <a href="{{ route('admin.theme-admin-page.account.setting') }}"
-                                class="dropdown-item">Settings</a>
+                          
                             <a @click="$dispatch('logout'); setTimeout(() => window.location.reload(), 1000);"
                                 class="dropdown-item">Logout</a>
                         </div>

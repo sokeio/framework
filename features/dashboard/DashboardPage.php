@@ -2,6 +2,7 @@
 
 namespace Sokeio\Dashboard;
 
+use Sokeio\Livewire\Form;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Common\LivewireUI;
 use Sokeio\UI\PageUI;
@@ -11,10 +12,21 @@ class DashboardPage extends \Sokeio\Page
 {
     use WithUI;
     public $dashboardPageKey = 'dashboard';
+    public Form $dataSearch;
+    public function updatedDataSearch()
+    {
+        Dashboard::setDataDashboard($this->dashboardPageKey, $this->dataSearch->toArray());
+        $this->updateWidgetInDashboard();
+    }
     public function mount()
     {
         $this->dashboardPageKey = 'dashboard-' . time();
     }
+    protected function updateWidgetInDashboard()
+    {
+        $this->dispatch('updateWidgetData' . $this->dashboardPageKey);
+    }
+
     protected function getDashboardKey()
     {
         return 'default';
@@ -39,6 +51,8 @@ class DashboardPage extends \Sokeio\Page
             })->map(function ($item) {
                 return LivewireUI::make()->component('sokeio::widget-component')->attr('widgetId', $item['key'])->attr('dashboardKey', $this->dashboardPageKey);
             }));
-        }));
+        }))->render(function () {
+            $this->updateWidgetInDashboard();
+        });
     }
 }

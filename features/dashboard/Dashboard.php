@@ -10,6 +10,7 @@ use Sokeio\Dashboard\DashboardManager;
  *
  * @method static DashboardManager registerClass($widget)
  * @method static mixed getDashboard($key = 'default')
+ * @method static void setDataDashboard($key,$data);
  */
 class Dashboard extends Facade
 {

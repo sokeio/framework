@@ -1,3 +1,0 @@
-<div>
-    Account Information
-</div>

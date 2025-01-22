@@ -26,10 +26,6 @@
                             </div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" data-bs-theme="light">
-                            <a href="{{ route('admin.theme-admin-page.account') }}" class="dropdown-item">Profile</a>
-                            <div class="dropdown-divider p-0"></div>
-                            <a href="{{ route('admin.theme-admin-page.account.setting') }}"
-                                class="dropdown-item">Settings</a>
                             <a @click="$dispatch('logout'); setTimeout(() => window.location.reload(), 700);"
                                 class="dropdown-item">Logout</a>
                         </div>
@@ -39,7 +35,7 @@
             </div>
             <div class="collapse navbar-collapse" id="navbar-menu">
                 <div class="d-flex flex-column flex-md-row flex-fill align-items-stretch align-items-md-center">
-                    {!! platform()->menu()->render()  !!}
+                    {!! platform()->menu()->render() !!}
                 </div>
             </div>
         </div>

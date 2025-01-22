@@ -10,6 +10,14 @@ use Sokeio\UI\WithUI;
 class WidgetComponent extends Component
 {
     use WithUI;
+    protected function getListeners()
+    {
+        return [
+            'refreshData' => 'soLoadData',
+            'refreshData' . $this->getId() => 'soLoadData',
+            'updateWidgetData' . $this->dashboardKey => 'soLoadData',
+        ];
+    }
     #[Locked]
     public $dashboardKey;
     #[Locked]

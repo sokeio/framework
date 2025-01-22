@@ -2,6 +2,7 @@
 
 namespace Sokeio\Dashboard;
 
+use Illuminate\Support\Facades\Session;
 
 class DashboardManager
 {
@@ -36,5 +37,13 @@ class DashboardManager
         return  collect($this->widgets)->where(function ($value) use ($key) {
             return $value['info']->dasboard === $key;
         });
+    }
+    public function setDataDashboard($key, $value)
+    {
+        Session::put($key, $value);
+    }
+    public function getDataDashboard($key = 'default')
+    {
+        return Session::get($key);
     }
 }
