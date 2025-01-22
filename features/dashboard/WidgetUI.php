@@ -1,17 +1,16 @@
 <?php
 
-namespace Sokeio\Widget;
+namespace Sokeio\Dashboard;
 
 use Sokeio\ILoader;
 use Sokeio\Core\ItemInfo;
 use Sokeio\UI\BaseUI;
-use Sokeio\Widget;
 
 class WidgetUI extends BaseUI implements ILoader
 {
     public static function runLoad(ItemInfo $itemInfo)
     {
-        Widget::registerClass(static::class);
+        Dashboard::registerClass(static::class);
     }
     private $info;
     private $dataParam = [];

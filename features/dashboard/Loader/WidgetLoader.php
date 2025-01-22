@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Widget\Loader;
+namespace Sokeio\Dashboard\Loader;
 
 use Closure;
 use Sokeio\Platform;

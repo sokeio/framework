@@ -8,6 +8,7 @@ use Sokeio\Providers\SocialiteServiceProvider;
 use Sokeio\Livewire\LivewireServiceProvider;
 use Sokeio\MediaStorage\MediaStorageServiceProvider;
 use Sokeio\Core\PlatformServiceProvider;
+use Sokeio\Dashboard\DashboardServiceProvider;
 use Sokeio\Enums\AlertType;
 use Sokeio\Enums\UIKey;
 use Sokeio\Theme\ThemeServiceProvider;
@@ -16,7 +17,6 @@ use Sokeio\UI\Common\Card;
 use Sokeio\UI\Field\Input;
 use Sokeio\UI\Field\MediaIcon;
 use Sokeio\UI\SoUI;
-use Sokeio\Widget\WidgetServiceProvider;
 
 class SokeioServiceProvider extends \Illuminate\Support\ServiceProvider
 {
@@ -50,7 +50,7 @@ class SokeioServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->app->register(ThemeServiceProvider::class);
         $this->app->register(PlatformServiceProvider::class);
         $this->app->register(LivewireServiceProvider::class);
-        $this->app->register(WidgetServiceProvider::class);
+        $this->app->register(DashboardServiceProvider::class);
         $this->app->register(SocialiteServiceProvider::class);
         Theme::bodyAfter(function () {
             if (setting('SOKEIO_SHOW_PROGRESS_TIMER')) {
@@ -65,7 +65,7 @@ class SokeioServiceProvider extends \Illuminate\Support\ServiceProvider
     public function bootingPackage()
     {
         config(['auth.providers.users.model' => config('sokeio.model.user')]);
-        
+
         // packageBooted
         Theme::location('SOKEIO_ADMIN_THEME_HEADER_RIGHT_BEFORE', function () {
             echo "<div class='btn-group me-2 py-1'>

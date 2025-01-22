@@ -10,16 +10,6 @@ use Sokeio\Platform;
 
 class PlatformController extends Controller
 {
-
-    #[RouteInfo(
-        MethodType::GET,
-        'platform/test',
-        isWeb: true
-    )]
-    public function test()
-    {
-        return  Platform::module()->getMarketplate()->getLastVersion('sokeio/framework');
-    }
     #[RouteInfo(
         MethodType::GET,
         'platform/screenshot/{type}/{id}',
@@ -58,15 +48,5 @@ class PlatformController extends Controller
             echo "</tr>";
         }
         echo "</table>";
-    }
-    #[RouteInfo(
-        MethodType::GET,
-        'platform/components',
-        enableKeyInSetting: 'PLATFORM_COMPONENT_ROUTE_ENABLE',
-        enable: false
-    )]
-    public function components()
-    {
-        return Platform::getLivewireComponents();
     }
 }

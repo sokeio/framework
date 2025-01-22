@@ -2,8 +2,8 @@
 
 namespace $NAMESPACE$;
 
-use Sokeio\Widget\WidgetInfo;
-use Sokeio\Widget\WidgetUI;
+use Sokeio\Dashboard\WidgetInfo;
+use Sokeio\Dashboard\WidgetUI;
 
 #[WidgetInfo('$NAMESPACE$:$CLASS$', '$CLASS$', 'ti ti-bar-chart-2')]
 class $CLASS$ extends WidgetUI

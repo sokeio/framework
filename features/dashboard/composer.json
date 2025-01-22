@@ -1,5 +1,5 @@
 {
-  "name": "sokeio/widget",
+  "name": "sokeio/dashboard",
   "description": "Sokeio Theme",
   "license": "MIT",
   "homepage": "https://sokeio.com",
@@ -16,7 +16,7 @@
   "require": {},
   "autoload": {
     "psr-4": {
-      "Sokeio\\Widget\\": ""
+      "Sokeio\\Dashboard\\": ""
     },
     "files": []
   },

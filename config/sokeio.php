@@ -9,8 +9,8 @@ use Sokeio\Console\Commands\SystemUpdateCommand;
 return [
     'version' => '1.0.0',
     'admin_url' => env('PLATFORM_URL_ADMIN', 'admin'),
-    'admin_theme' => env('PLATFORM_THEME_ADMIN', 'sokeio/theme-admin'),
-    'site_theme' => env('PLATFORM_THEME_SITE', 'sokeio/theme-content'),
+    'admin_theme' => env('PLATFORM_THEME_ADMIN', 'sokeio-theme-admin'),
+    'site_theme' => env('PLATFORM_THEME_SITE', 'sokeio-theme-content'),
     'model' => [
         'user' => Sokeio\Models\User::class,
         'role' => Sokeio\Models\Role::class,

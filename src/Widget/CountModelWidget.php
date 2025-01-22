@@ -3,8 +3,8 @@
 namespace Sokeio\Widget;
 
 use Sokeio\Platform;
-use Sokeio\Widget\WidgetInfo;
-use Sokeio\Widget\WidgetUI;
+use Sokeio\Dashboard\WidgetInfo;
+use Sokeio\Dashboard\WidgetUI;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Field\Input;
 use Sokeio\UI\Field\Select;

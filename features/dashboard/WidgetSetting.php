@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Widget;
+namespace Sokeio\Dashboard;
 
 use Sokeio\Widget;
 

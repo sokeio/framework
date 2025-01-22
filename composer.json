@@ -30,7 +30,7 @@
       "Sokeio\\Menu\\": "features/menu/",
       "Sokeio\\Theme\\": "features/theme/",
       "Sokeio\\UI\\": "features/ui/",
-      "Sokeio\\Widget\\": "features/widget/",
+      "Sokeio\\Dashboard\\": "features/dashboard/",
       "Sokeio\\Seeders\\": "database/seeders/",
       "Sokeio\\Database\\Factories\\": "database/factories/",
       "Sokeio\\": "src/"
