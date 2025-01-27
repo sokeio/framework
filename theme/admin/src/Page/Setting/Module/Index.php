@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Page\Setting\Module;
+namespace SokeioTheme\Admin\Page\Setting\Module;
 
 use Livewire\Attributes\Url;
 use Sokeio\Platform;

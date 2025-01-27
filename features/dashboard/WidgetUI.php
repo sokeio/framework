@@ -39,8 +39,15 @@ class WidgetUI extends BaseUI implements ILoader
             }
         });
     }
-
+    public static function columnUI($widget)
+    {
+        return WidgetInfo::COLUMN4;
+    }
     public static function paramUI()
+    {
+        return [];
+    }
+    public static function filterUI()
     {
         return [];
     }

@@ -45,14 +45,23 @@ class DashboardPage extends \Sokeio\Page
     protected function setupUI()
     {
         $widgets = $this->getWidgets();
-        return PageUI::make(collect($this->getGroupWidget())->map(function ($group) use ($widgets) {
-            return Div::make($widgets->where(function ($item) use ($group) {
-                return $item['info']->position == $group;
-            })->map(function ($item) {
-                return LivewireUI::make()->component('sokeio::widget-component')->attr('widgetId', $item['key'])->attr('dashboardKey', $this->dashboardPageKey);
-            }));
-        }))->render(function () {
+        return PageUI::make(
+
+            collect($this->getGroupWidget())
+                ->map(function ($group) use ($widgets) {
+                    return Div::make(
+                        $widgets->where(function ($item) use ($group) {
+                            return $item['info']->position == $group;
+                        })->map(function ($item) {
+                            return LivewireUI::make()
+                                ->component('sokeio::widget-component')
+                                ->attr('widgetId', $item['key'])
+                                ->attr('dashboardKey', $this->dashboardPageKey);
+                        })
+                    )->className(' row g-1 so-dashboard-group-' . $group);
+                })
+        )->render(function () {
             $this->updateWidgetInDashboard();
-        });
+        })->className('so-dashboard');
     }
 }

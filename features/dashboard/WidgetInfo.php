@@ -10,12 +10,9 @@ class WidgetInfo
 {
     use WithAttribute;
     public function __construct(
-        public $key,
-        public $name = '',
-        public $icon = null,
-        public $show = true,
         public $dasboard = 'default',
         public $position = 'default',
+        public $show = true,
     ) {}
     public const COLUMN1 = 'column1';
     public const COLUMN2 = 'column2';
@@ -45,5 +42,9 @@ class WidgetInfo
             'column11' => 'col-lg-11 col-md-6 col-sm-12 col-xs-12',
             'column12' => 'col-lg-12 col-md-6 col-sm-12 col-xs-12',
         ];
+    }
+    public static function getColumn($column)
+    {
+        return self::getColumns()[$column] ?? 'col-12 col-sm-12 col-xs-12';
     }
 }

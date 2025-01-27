@@ -1,17 +1,19 @@
 <?php
 
-namespace Sokeio\Page\Setting\Module;
+namespace SokeioTheme\Admin\Page\Appearance\Theme;
 
 use Sokeio\Attribute\PageInfo;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Common\Button;
+use Sokeio\UI\Field\UploadFile;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\WithUI;
 
-#[PageInfo(admin: true, auth: true,  title: 'Marketplace Module (Not Implemented)')]
-class Marketplace extends \Sokeio\Page
+#[PageInfo(admin: true, auth: true,  title: 'Upload Theme (Not Implemented)')]
+class Upload extends \Sokeio\Page
 {
     use WithUI;
+    public $fileUpload;
     public function saveData()
     {
         $this->sokeioClose();
@@ -20,17 +22,17 @@ class Marketplace extends \Sokeio\Page
     {
         return [
             PageUI::make([
-                Div::make()->className('mt-auto')->viewBlade('sokeio::pages.module.marketplace')
+                UploadFile::make('fileUpload'),
             ])
+                
                 ->afterUI([
                     Div::make([
                         Button::make()->text(__('Cancel'))->className('btn btn-warning me-2')
-                            ->modalClose()->icon('ti ti-x')
+                            ->modalClose()->icon('ti ti-x'),
+                        Button::make()->text(__('Upload'))->wireClick('saveData')->icon('ti ti-upload')
                     ])
                         ->className('px-2 pt-2 d-flex justify-content-end')
                 ])
-                ->icon('ti ti-building-store')
-                ->xxlSize()
 
         ];
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Page\Appearance;
+namespace SokeioTheme\Admin\Page\Appearance;
 
 use Sokeio\Attribute\PageInfo;
 use Sokeio\UI\Common\Div;

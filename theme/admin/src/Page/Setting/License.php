@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Page\Setting;
+namespace SokeioTheme\Admin\Page\Setting;
 
 use Sokeio\Attribute\PageInfo;
 use Sokeio\Marketplate;

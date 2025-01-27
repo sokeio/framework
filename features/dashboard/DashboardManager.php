@@ -30,11 +30,11 @@ class DashboardManager
     }
     public function getWidget($key)
     {
-        return $this->widgets[$key] ?? null;
+        return data_get($this->getWidgets(), $key . '.class');
     }
     public function getDashboard($key = 'default')
     {
-        return  collect($this->widgets)->where(function ($value) use ($key) {
+        return  collect($this->getWidgets())->where(function ($value) use ($key) {
             return $value['info']->dasboard === $key;
         });
     }

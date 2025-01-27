@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Page\Appearance\Theme;
+namespace SokeioTheme\Admin\Page\Appearance\Theme;
 
 use Livewire\Attributes\Rule;
 use Livewire\Attributes\Url;

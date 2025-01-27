@@ -23,19 +23,10 @@ class WidgetComponent extends Component
     #[Locked]
     public $widgetId;
 
-
-
     protected function setupUI()
     {
-        return [
-            Div::make([
-                $this->widgetId,
-                '-',
-                $this->dashboardKey,
-                '-',
-                'This is a widget component',
-            ]),
-
-        ];
+        $widgetClass = Dashboard::getWidget($this->widgetId);
+        $column = WidgetInfo::getColumn(($widgetClass)::columnUI($this));
+        return Div::make(($widgetClass)::make())->className($column);
     }
 }

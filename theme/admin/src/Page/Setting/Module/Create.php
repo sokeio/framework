@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Page\Appearance\Theme;
+namespace SokeioTheme\Admin\Page\Setting\Module;
 
 use Livewire\Attributes\Rule;
 use Sokeio\Platform;
@@ -11,7 +11,7 @@ use Sokeio\UI\Field\Input;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\WithUI;
 
-#[PageInfo(admin: true, auth: true,  title: 'Create Theme ')]
+#[PageInfo(admin: true, auth: true,  title: 'Create Module ')]
 class Create extends \Sokeio\Page
 {
     use WithUI;
@@ -20,7 +20,7 @@ class Create extends \Sokeio\Page
     public function saveData()
     {
         $this->validate();
-        Platform::theme()->generate($this->name);
+        Platform::module()->generate($this->name);
         $this->sokeioClose();
         $this->refreshRef();
     }
@@ -30,7 +30,6 @@ class Create extends \Sokeio\Page
             PageUI::make([
                 Input::make('name')->label(__('Name')),
             ])
-                
                 ->smSize()
                 ->afterUI([
                     Div::make([

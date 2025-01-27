@@ -1,19 +1,12 @@
 <?php
 
-namespace Sokeio\Page\Setting;
+namespace SokeioTheme\Admin\Page\Setting;
 
-use Sokeio\Components\Field\SelectField;
-use Sokeio\Setting;
 use Sokeio\Attribute\PageInfo;
 use Sokeio\MediaStorage as SokeioMediaStorage;
-use Sokeio\Models\Role;
 use Sokeio\UI\Common\Button;
-use Sokeio\UI\Field\ContentEditor;
-use Sokeio\UI\Field\Input;
-use Sokeio\UI\Field\MediaFile;
 use Sokeio\UI\Field\Select;
 use Sokeio\UI\Field\SwitchField;
-use Sokeio\UI\Field\Textarea;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\SettingUI;
 use Sokeio\UI\WithSettingUI;

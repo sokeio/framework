@@ -1,9 +1,7 @@
 <?php
 
-namespace Sokeio\Page\Setting;
+namespace SokeioTheme\Admin\Page\Setting;
 
-use Sokeio\Platform;
-use Sokeio\Setting;
 use Sokeio\Attribute\PageInfo;
 use Sokeio\Theme;
 use Sokeio\UI\Common\Button;
