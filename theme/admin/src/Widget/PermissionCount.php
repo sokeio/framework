@@ -5,7 +5,7 @@ namespace SokeioTheme\Admin\Widget;
 use Sokeio\Dashboard\Common\LabelWidget;
 use Sokeio\Dashboard\WidgetInfo;
 
-#[WidgetInfo()]
+#[WidgetInfo(show: false)]
 class PermissionCount extends LabelWidget
 {
     public function getWidgetLabel()

@@ -57,7 +57,7 @@ class MediaStorage extends \Sokeio\Page
             ])->childWithKey(self::KEY_UI)->row()->rightUI([
                 Button::make()
                     ->className('btn btn-primary')
-                    ->text('Save Setting')
+                    ->label('Save Setting')
                     ->icon('ti ti-save')
                     ->wireClick('saveData')
             ])

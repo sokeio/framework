@@ -3,6 +3,7 @@
 namespace Sokeio\Dashboard;
 
 use Sokeio\Livewire\Form;
+use Sokeio\UI\Common\Button;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Common\LivewireUI;
 use Sokeio\UI\PageUI;
@@ -41,17 +42,19 @@ class DashboardPage extends \Sokeio\Page
     {
         return Dashboard::getDashboard($this->getDashboardKey());
     }
-
+    private function checkShow($item)
+    {
+        return isset($item['info']) && $item['info']->show;
+    }
     protected function setupUI()
     {
         $widgets = $this->getWidgets();
         return PageUI::make(
-
             collect($this->getGroupWidget())
                 ->map(function ($group) use ($widgets) {
                     return Div::make(
                         $widgets->where(function ($item) use ($group) {
-                            return $item['info']->position == $group;
+                            return $item['info']->position == $group && $this->checkShow($item);
                         })->map(function ($item) {
                             return LivewireUI::make()
                                 ->component('sokeio::widget-component')
@@ -62,6 +65,10 @@ class DashboardPage extends \Sokeio\Page
                 })
         )->render(function () {
             $this->updateWidgetInDashboard();
-        })->className('so-dashboard');
+        })->className('so-dashboard')
+            ->rightUI([
+                Button::make()->label(__('Settings'))
+                ->icon('ti ti-dashboard')
+            ]);
     }
 }

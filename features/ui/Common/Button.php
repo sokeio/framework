@@ -18,10 +18,6 @@ class Button extends BaseUI
         });
         return $this->attr('type', 'button');
     }
-    public function text($text)
-    {
-        return $this->attr('type', 'button')->attr('value', $text)->vars('text', $text);
-    }
     public function submit($text = 'Submit')
     {
         return $this->attr('type', 'submit')->attr('value', $text)->vars('text', $text);
@@ -156,7 +152,7 @@ class Button extends BaseUI
     {
         $attr = $this->getAttr();
         $icon = $this->getIcon();
-        $title = $this->getVar('text', '', true);
+        $title = $this->getLabel();
         if ($title) {
             $title = '<span>' . $title . '</span>';
         }
