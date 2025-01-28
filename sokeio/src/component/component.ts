@@ -92,7 +92,7 @@ export default {
   closeApp: function () {
     if (this.$app) {
       if (
-        this.$app.$el.querySelector(".so-modal-close")?.style.display == "none"
+        this.$app?.$el&&this.$app.$el.querySelector(".so-modal-close")?.style.display == "none"
       )
         return;
       this.$app.doDestroy();

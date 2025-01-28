@@ -64,7 +64,10 @@ export default function ({ component, el, name: _name, method, value }: any) {
       el.removeEventListener(method, el["__SOKEIO_HOTKEY"]);
     }
     el["__SOKEIO_HOTKEY"] = (e: any) => {
-      if (el.contains(e.target) || !component.$el.contains(e.target)) {
+      if (
+        el.contains(e.target) ||
+        (component.$el && !component.$el.contains(e.target))
+      ) {
         return;
       }
       let { shift, ctrl, alt, meta, keyCodes } = explodeHotkey(value);

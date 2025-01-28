@@ -2,6 +2,7 @@
 
 namespace Sokeio\Dashboard;
 
+use Illuminate\Support\Facades\Log;
 use Sokeio\Livewire\Form;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Common\Div;
@@ -42,18 +43,29 @@ class DashboardPage extends \Sokeio\Page
     {
         return Dashboard::getDashboard($this->getDashboardKey());
     }
+    public function widgetChange($key, $flg)
+    {
+        Dashboard::settingWidgets($key . '.show', $flg, $this->getDashboardKey());
+        $this->refreshMe();
+        return $this->getArrayWidgets();
+    }
     public function getArrayWidgets()
     {
         return collect($this->getWidgets())->map(function ($item) {
             return [
                 'key' => $item['key'],
                 'name' => $item['info']->name,
-                'status' => $item['info']->show
+                'status' => $this->checkShow($item)
             ];
         })->values();
     }
     private function checkShow($item)
     {
+        $key = $item['key'];
+        $show = Dashboard::settingWidgets($key . '.show', null, $this->getDashboardKey());
+        if ($show !== null) {
+            return $show;
+        }
         return isset($item['info']) && $item['info']->show;
     }
     protected function setupUI()
