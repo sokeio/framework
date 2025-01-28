@@ -73,3 +73,34 @@ if (!function_exists('themeLocation')) {
         return Theme::renderLocation($location);
     }
 }
+
+if (!function_exists('sokeioJS')) {
+    function sokeioJS($name, $main, array $components = null)
+    {
+        if (!File::exists($main)) {
+            return "";
+        }
+        $mainJs = file_get_contents($main);
+        $componentJS = '';
+        if ($components && is_array($components)) {
+            foreach ($components as $key => $component) {
+                if (!File::exists($component)) {
+                    return "";
+                }
+                $componentJS .= "<template sokeio:component=\"{$key}\">" . file_get_contents($component) . "</template>";
+            }
+        }
+
+        $html = <<<HTML
+                <div wire:ignore>
+                    <div sokeio:application="{$name}">
+                        <template sokeio:main>
+                            {$mainJs}
+                        </template>
+                        {$componentJS}
+                    </div>
+                </div>
+                HTML;
+        return $html;
+    }
+}

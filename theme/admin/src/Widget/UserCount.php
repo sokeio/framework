@@ -6,7 +6,7 @@ use Sokeio\Dashboard\Common\LabelWidget;
 use Sokeio\Dashboard\WidgetInfo;
 
 
-#[WidgetInfo()]
+#[WidgetInfo(name: "User count")]
 class UserCount extends LabelWidget
 {
     public function getWidgetLabel()

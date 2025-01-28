@@ -5,10 +5,11 @@ namespace Sokeio\UI\Common;
 use Sokeio\UI\BaseUI;
 use Sokeio\UI\Common\Concerns\WithCol;
 use Sokeio\UI\Common\Concerns\WithTextHtml;
+use Sokeio\UI\Concerns\SokeioJS;
 
 class Button extends BaseUI
 {
-    use WithTextHtml, WithCol;
+    use WithTextHtml, WithCol, SokeioJS;
     protected function initUI()
     {
         $this->render(function () {
@@ -121,7 +122,7 @@ class Button extends BaseUI
                 $this->attr('wire:modal.url', $url);
             }
             $this->attr('wire:modal', '');
-            foreach (['title',  'size', 'icon', 'template-id', 'template'] as $item) {
+            foreach (['title',  'size', 'icon', 'template-id', 'template', 'id'] as $item) {
                 if ($valueItem = data_get($modal, $item)) {
                     $this->attr('wire:modal.' . $item, $valueItem);
                 }
@@ -148,6 +149,15 @@ class Button extends BaseUI
     {
         return $this->registerModal(compact('route', 'title', 'size', 'icon'));
     }
+    public function modalSokeio($main, $components = array())
+    {
+        return $this->render(function () use ($main, $components) {
+            $this->sokeio($main, $components, 'soapp-' . $this->getUIIDkey());
+            $this->attr('wire:modal', '');
+            $this->attr('wire:modal.id',  'soapp-' . $this->getUIIDkey());
+        });
+    }
+
     public function view()
     {
         $attr = $this->getAttr();
@@ -158,6 +168,7 @@ class Button extends BaseUI
         }
         $view = <<<HTML
         <button {$attr}>{$icon} {$title}</button>
+        {$this->renderSokeioJS()}
         HTML;
         if ($this->containsAttr('class', null, 'col')) {
             $attrCol = $this->getAttr('col');

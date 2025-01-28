@@ -21,7 +21,7 @@ class DashboardPage extends \Sokeio\Page
     }
     public function mount()
     {
-        $this->dashboardPageKey = 'dashboard-' . time();
+        $this->dashboardPageKey = 'dashboard-' . $this->getDashboardKey() . '-' . time();
     }
     protected function updateWidgetInDashboard()
     {
@@ -41,6 +41,16 @@ class DashboardPage extends \Sokeio\Page
     private function getWidgets()
     {
         return Dashboard::getDashboard($this->getDashboardKey());
+    }
+    public function getArrayWidgets()
+    {
+        return collect($this->getWidgets())->map(function ($item) {
+            return [
+                'key' => $item['key'],
+                'name' => $item['info']->name,
+                'status' => $item['info']->show
+            ];
+        })->values();
     }
     private function checkShow($item)
     {
@@ -67,8 +77,10 @@ class DashboardPage extends \Sokeio\Page
             $this->updateWidgetInDashboard();
         })->className('so-dashboard')
             ->rightUI([
-                Button::make()->label(__('Settings'))
-                ->icon('ti ti-dashboard')
+                Button::make()
+                    ->label(__('Settings'))
+                    ->modalSokeio(__DIR__ . "/js/settings/index.js")
+                    ->icon('ti ti-dashboard')
             ]);
     }
 }

@@ -1,10 +1,11 @@
 .so-dashboard {
-
-
     .so-widget {
         border: 1px solid rgba(4, 32, 69, 0.1);
         border-radius: 2px;
         background: #fff;
         min-height: 70px;
+        &:hover{
+            background: #f9f9f9;
+        }
     }
 }

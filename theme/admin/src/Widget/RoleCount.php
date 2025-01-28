@@ -6,7 +6,7 @@ use Sokeio\Dashboard\Common\LabelWidget;
 use Sokeio\Dashboard\WidgetInfo;
 
 
-#[WidgetInfo()]
+#[WidgetInfo(name: "Role count")]
 class RoleCount extends LabelWidget
 {
     public function getWidgetLabel()

@@ -10,6 +10,7 @@ class WidgetInfo
 {
     use WithAttribute;
     public function __construct(
+        public $name,
         public $dasboard = 'default',
         public $position = 'default',
         public $show = true,
