@@ -37,7 +37,7 @@ class Index extends \Sokeio\Page
                     'routeName' => $this->getRouteName('info'),
                 ])->className('mt-3'),
             ])->rightUI([
-                Button::make()->text(__('Create'))->icon('ti ti-table-plus')
+                Button::make()->label(__('Create'))->icon('ti ti-table-plus')
                     ->className('btn btn-warning')
                     ->modalRoute($this->getRouteName('create'))
                     ->when(function () {
@@ -46,10 +46,10 @@ class Index extends \Sokeio\Page
                         }
                         return false;
                     }),
-                // Button::make()->text(__('Upload'))->icon('ti ti-upload')
+                // Button::make()->label(__('Upload'))->icon('ti ti-upload')
                 //     ->className('btn btn-primary')
                 //     ->modalRoute($this->getRouteName('upload')),
-                // Button::make()->text(__('Marketplace'))->icon('ti ti-apps')
+                // Button::make()->label(__('Marketplace'))->icon('ti ti-apps')
                 //     ->className('btn btn-success')->modalRoute($this->getRouteName('marketplace')),
             ])
 

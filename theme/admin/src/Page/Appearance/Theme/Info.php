@@ -32,7 +32,7 @@ class Info extends \Sokeio\Page
                 ->xlSize()
                 ->afterUI([
                     Div::make([
-                        Button::make()->text(__('Activate'))->icon('ti ti-checks')
+                        Button::make()->label(__('Activate'))->icon('ti ti-checks')
                             ->wireClick(function () {
                                 Platform::theme()->setActive($this->dataId);
                                 $this->sokeioClose();

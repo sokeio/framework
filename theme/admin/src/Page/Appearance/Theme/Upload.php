@@ -27,9 +27,9 @@ class Upload extends \Sokeio\Page
                 
                 ->afterUI([
                     Div::make([
-                        Button::make()->text(__('Cancel'))->className('btn btn-warning me-2')
+                        Button::make()->label(__('Cancel'))->className('btn btn-warning me-2')
                             ->modalClose()->icon('ti ti-x'),
-                        Button::make()->text(__('Upload'))->wireClick('saveData')->icon('ti ti-upload')
+                        Button::make()->label(__('Upload'))->wireClick('saveData')->icon('ti ti-upload')
                     ])
                         ->className('px-2 pt-2 d-flex justify-content-end')
                 ])

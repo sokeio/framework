@@ -59,7 +59,7 @@ class License extends \Sokeio\Page
                                 ->label(__('License Key'))
                                 ->placeholder('License Key'),
                             Div::make([
-                                Button::make()->text(__('Activate'))
+                                Button::make()->label(__('Activate'))
                                     ->className('btn btn-success mt-3')
                                     ->icon('ti ti-check')
                                     ->wireClick(function (Button $button) {

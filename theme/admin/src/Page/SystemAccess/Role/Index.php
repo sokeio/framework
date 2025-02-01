@@ -34,14 +34,14 @@ class Index extends \Sokeio\Page
                         ->query($this->getQuery())
                         ->enableIndex()
                         ->columnAction([
-                            Button::make()->text(__('Edit'))->className('btn btn-primary btn-sm ')
+                            Button::make()->label(__('Edit'))->className('btn btn-primary btn-sm ')
                                 ->modal(function (Button $button) {
                                     return route($this->getRouteName('edit'), [
                                         'dataId' =>
                                         $button->getParams('row')->id
                                     ]);
                                 }),
-                            Button::make()->text(__('Delete'))
+                            Button::make()->label(__('Delete'))
                                 ->wireClick(function ($params) {
                                     ($this->getModel())::find($params)->delete();
                                 }, 'table_delete', function (Button $button) {

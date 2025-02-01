@@ -80,7 +80,7 @@ class CacheSystem extends \Sokeio\Page
                     collect($this->settingClear())->map(function ($item) {
                         return Card::make([
                             Div::make(
-                                Button::make()->text($item['title'])
+                                Button::make()->label($item['title'])
                                     ->className('btn btn-primary')
                                     ->icon(($item['icon'] ?? 'ti ti-trash') . ' fs-4 ')
                                     ->wireClick(function () use ($item) {
@@ -97,7 +97,7 @@ class CacheSystem extends \Sokeio\Page
                     })->toArray()
                 )->row()
             ])->rightUI([
-                Button::make()->text(__('Clear All Cache'))
+                Button::make()->label(__('Clear All Cache'))
                     ->icon('ti ti-trash')
                     ->className('btn btn-danger')
                     ->wireClick('clearAll')

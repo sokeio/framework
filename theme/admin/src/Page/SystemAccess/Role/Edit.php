@@ -65,8 +65,8 @@ class Edit extends \Sokeio\Page
                 ->prefix('formData')
                 ->afterUI([
                     Div::make([
-                        Button::make()->text(__('Cancel'))->className('btn btn-warning me-2')->modalClose(),
-                        Button::make()->text(__('Save'))->wireClick('saveData')
+                        Button::make()->label(__('Cancel'))->className('btn btn-warning me-2')->modalClose(),
+                        Button::make()->label(__('Save'))->wireClick('saveData')
                     ])->useModalButtonRight()
                 ])
         ];

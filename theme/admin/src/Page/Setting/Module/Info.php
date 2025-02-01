@@ -40,7 +40,7 @@ class Info extends \Sokeio\Page
                 ->xlSize()
                 ->afterUI([
                     Div::make([
-                        Button::make()->text(__('Activate'))->icon('ti ti-checks')
+                        Button::make()->label(__('Activate'))->icon('ti ti-checks')
                             ->wireClick(function () use ($item) {
                                 $item->setActive();
                                 $this->sokeioClose();
@@ -49,7 +49,7 @@ class Info extends \Sokeio\Page
                             ->when(function ()  use ($item) {
                                 return ! $item->isActive();
                             }),
-                        Button::make()->text(__('Block'))->icon('ti ti-lock')
+                        Button::make()->label(__('Block'))->icon('ti ti-lock')
                             ->className('btn btn-danger')
                             ->wireClick(function () use ($item) {
                                 $item->block();

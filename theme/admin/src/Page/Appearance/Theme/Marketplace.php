@@ -27,7 +27,7 @@ class Marketplace extends \Sokeio\Page
                 
                 ->afterUI([
                     Div::make([
-                        Button::make()->text(__('Cancel'))->className('btn btn-warning me-2')
+                        Button::make()->label(__('Cancel'))->className('btn btn-warning me-2')
                             ->modalClose()->icon('ti ti-x')
                     ])
                         ->className('px-2 pt-2 d-flex justify-content-end')

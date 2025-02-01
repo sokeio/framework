@@ -33,13 +33,13 @@ class ButtonEditableAll extends BaseUI
                 // )
             );
             $base->child([
-                Button::make()->text(fn() => $base->getVar('editText', __('Edit All')))
+                Button::make()->label(fn() => $base->getVar('editText', __('Edit All')))
                     ->icon('ti ti-pencil')
                     ->className('btn btn-success')->editRowAllSelected(),
-                Button::make()->text(fn() => $base->getVar('saveText', __('Save All')))
+                Button::make()->label(fn() => $base->getVar('saveText', __('Save All')))
                     ->icon('ti ti-save')
                     ->className('btn btn-success')->SaveRowAllSelected(),
-                Button::make()->text(fn() => $base->getVar('cancelText', __('Cancel All')))
+                Button::make()->label(fn() => $base->getVar('cancelText', __('Cancel All')))
                     ->icon('ti ti-close')
                     ->className('btn btn-danger')->CancelRowAllSelected(),
             ], 'default', true);
