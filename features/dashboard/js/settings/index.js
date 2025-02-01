@@ -39,8 +39,11 @@ export default {
   },
   render() {
     return `    
-        <div class="p-3">    
-        ${this.widgetsRender()}
+        <div >    
+        <h2 class=" fw-bold px-3 mt-2">Setting Widgets</h2>
+        <div class="p-3">
+            <div class="form-check-group">  ${this.widgetsRender()} </div>
+        </div>
         </div>
         `;
   },
