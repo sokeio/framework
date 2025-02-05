@@ -60,12 +60,12 @@ class Index extends \Sokeio\Page
                 ]
             )->rightUI([
                 Button::make()
-                    ->text(__('Upadate Permissions'))
+                    ->label(__('Upadate Permissions'))
                     ->wireClick('updatePermissions')
                     ->className('btn btn-success')
                     ->icon('ti ti-refresh'),
                 Button::make()
-                    ->text(__('Add ' . $this->getPageConfig()->getTitle()))
+                    ->label(__('Add ' . $this->getPageConfig()->getTitle()))
                     ->icon('ti ti-plus')
                     ->modalRoute(
                         $this->getRouteName('edit'),

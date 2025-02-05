@@ -34,13 +34,13 @@ class ButtonEditable extends BaseUI
             );
             $base->child([
                 Button::make()
-                    ->text(fn() => $base->getVar('editText', __('Edit'), true))
+                    ->label(fn() => $base->getVar('editText', __('Edit'), true))
                     ->className('btn btn-primary btn-sm ')
                     ->wireKey(fn() => 'rowEditline-' . $base->getParams('rowValueId'))
                     ->attr('@click', fn() => 'setRowEditline(\'' . $base->getParams('rowValueId') . '\')')
                     ->attr('x-show', fn() => '!checkRowEditline(\'' . $base->getParams('rowValueId') . '\')'),
                 Button::make()
-                    ->text(fn() => $base->getVar('saveText', __('Save'), true))
+                    ->label(fn() => $base->getVar('saveText', __('Save'), true))
                     ->className('btn btn-success btn-sm me-1 ')
                     ->wireKey(fn() => 'rowSave-' . $base->getParams('rowValueId'))
                     ->attr('x-show', fn() => 'checkRowEditline(\'' . $base->getParams('rowValueId') . '\')')
@@ -49,7 +49,7 @@ class ButtonEditable extends BaseUI
                         return [$button->getParams('rowValueId')];
                     }),
                 Button::make()
-                    ->text(fn() => $base->getVar('cancelText', __('Cancel'), true))
+                    ->label(fn() => $base->getVar('cancelText', __('Cancel'), true))
                     ->className('btn btn-warning btn-sm ')
                     ->wireKey(fn() => 'rowCancel-' . $base->getParams('rowValueId'))
                     ->attr('x-show', fn() => 'checkRowEditline(\'' . $base->getParams('rowValueId') . '\')')

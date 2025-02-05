@@ -67,7 +67,11 @@ class Index extends Component
     {
         return view('sokeio::livewire.permission-list.index', [
             'allPermissions' => $this->treePermissions(Permission::all()->map(function ($permission) {
-                $levels = explode('.', explode('-page.', $permission->slug)[1]);
+                //$permission->slug
+                $slug = explode('-page.', $permission->slug);
+                if (count($slug) > 1) $slug = $slug[1];
+                else $slug = $slug[0];
+                $levels = $permission->slug ? explode('.', $slug) : 0;
                 return [
                     'name' => $levels[count($levels) - 1],
                     'group' => $permission->group,
