@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Livewire;
+namespace Sokeio\Core;
 
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
@@ -10,7 +10,6 @@ use Sokeio\Attribute\PageInfo;
 use Sokeio\Pattern\Tap;
 use Sokeio\Platform;
 use Sokeio\Menu\MenuItem;
-use Sokeio\Menu\MenuManager;
 use Sokeio\Theme;
 
 class PageConfig
@@ -128,6 +127,7 @@ class PageConfig
                 && Platform::isUrlAdmin()
             ) {
                 $menuTitle = $config->getMenuTitle() ?? str(str($nameRoute)->afterLast('.'))->replace('-', ' ');
+                Platform::gate()->register($nameRoute, $menuTitle, $shortName);
                 $menuClass = $config->getMenuClass();
                 $target = $config->getMenuTarget();
                 $sort = $config->getSort();

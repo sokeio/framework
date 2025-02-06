@@ -3,7 +3,7 @@
 namespace Sokeio;
 
 use Sokeio\Livewire\Concerns\WithLivewirePage;
-use Sokeio\Livewire\PageConfig;
+use Sokeio\Core\PageConfig;
 use Sokeio\Core\ItemInfo;
 
 class Page extends Component implements ILoader

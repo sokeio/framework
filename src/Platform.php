@@ -27,7 +27,7 @@ use Sokeio\Core\PlatformManager;
  * @method static void routeWeb($group,$isAuth=false)
  * @method static void routeAdmin($group,$isGuest = false)
  * @method static void routeApi($group,$isGuest = false)
- * @method static \Sokeio\Platform\GateManager gate()
+ * @method static \Sokeio\Core\GateManager gate()
  * @method static void scanAllClass($directory, $namespace, callable $callback = null, callable $filter = null)
  * @method static void runLoader(\Sokeio\Core\ItemInfo $item, $path, $namespace, $aliasPrefix = '')
  * @method static string logoFull()

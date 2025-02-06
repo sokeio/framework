@@ -13,11 +13,11 @@ class GateManager
     use Singleton;
     private $user;
 
-    private $ignores = ['admin.dashboard', 'admin.dashboard.setting'];
     private $customes = [];
     private $roles = [];
     private $permissions = [];
     private $hooks = [];
+    private $loaders = [];
     public function filter(callable $filter)
     {
         if (!$filter) {
@@ -35,6 +35,14 @@ class GateManager
             $init = call_user_func($hook, $user, $init);
         }
         return $init;
+    }
+    public function register($permission, $title, $module)
+    {
+        $this->loaders[$permission] = [
+            'permission' => $permission,
+            'name' => $title,
+            'module' => $module
+        ];
     }
     public function getUserId()
     {
