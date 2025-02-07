@@ -31,8 +31,8 @@ class Index extends Component
                 return $item['level'] > $level;
             })
                 ->groupBy(function ($item) use ($level) {
-                    return $item['levels'][$level];
-                }), $level + 1, []);
+                    return $item['levels'][$level+1];
+                })->sortKeys(), $level + 1, []);
             $levels =     $colPers->first()['levels'];
             $subKey = '';
             for ($index = 0; $index < $level - 1; $index++) {
@@ -66,20 +66,19 @@ class Index extends Component
     {
         return view('sokeio::livewire.permission-list.index', [
             'allPermissions' => $this->treePermissions(config('sokeio.model.permission')::all()->map(function ($permission) {
-                //$permission->slug
-                $slug = explode('-page.', $permission->slug);
-                if (count($slug) > 1) $slug = $slug[1];
-                else $slug = $slug[0];
-                $levels = $permission->slug ? explode('.', $slug) : 0;
+                $levels = $permission->slug ? explode('.', $permission->slug) : 0;
+                array_splice($levels, 0, 2);
                 return [
-                    'name' => $levels[count($levels) - 1],
+                    'name' =>  $permission->name,
                     'group' => $permission->group,
                     'slug' => $permission->slug,
                     'id' => $permission->id,
                     'levels' => $levels,
-                    'level' => count($levels)
+                    'level' => count($levels)-1
                 ];
-            })->groupBy('group'))
+            })->groupBy(function ($item) {
+                return $item['levels'][0];
+            })->sortKeys())
         ]);
     }
 }
