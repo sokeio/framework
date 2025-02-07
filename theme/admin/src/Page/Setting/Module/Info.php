@@ -5,14 +5,14 @@ namespace SokeioTheme\Admin\Page\Setting\Module;
 use Livewire\Attributes\Rule;
 use Livewire\Attributes\Url;
 use Sokeio\Platform;
-use Sokeio\Attribute\PageInfo;
+use Sokeio\Attribute\AdminPageInfo;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Field\Input;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\WithUI;
 
-#[PageInfo(admin: true, auth: true,  title: ' Module Info')]
+#[AdminPageInfo(admin: true, auth: true,  title: ' Module Info')]
 class Info extends \Sokeio\Page
 {
     use WithUI;

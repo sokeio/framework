@@ -2,7 +2,7 @@
 
 namespace SokeioTheme\Admin\Page\Setting;
 
-use Sokeio\Attribute\PageInfo;
+use Sokeio\Attribute\AdminPageInfo;
 use Sokeio\Theme;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Field\ContentEditor;
@@ -14,7 +14,7 @@ use Sokeio\UI\PageUI;
 use Sokeio\UI\SettingUI;
 use Sokeio\UI\WithSettingUI;
 
-#[PageInfo(
+#[AdminPageInfo(
     admin: true,
     auth: true,
     title: 'Overview',

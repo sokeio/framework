@@ -2,7 +2,6 @@
 
 namespace Sokeio\Core;
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Sokeio\Models\Permission;
 use Sokeio\Models\UserAccessToken;
@@ -13,7 +12,6 @@ class GateManager
     use Singleton;
     private $user;
 
-    private $customes = [];
     private $roles = [];
     private $permissions = [];
     private $hooks = [];
@@ -36,27 +34,21 @@ class GateManager
         }
         return $init;
     }
-    public function register($permission, $title, $module)
+    public function register($permission, $name, $module)
     {
         $this->loaders[$permission] = [
             'permission' => $permission,
-            'name' => $title,
+            'name' => $name,
             'module' => $module
         ];
+    }
+    public function getLoaders()
+    {
+        return $this->loaders;
     }
     public function getUserId()
     {
         return $this->user?->id;
-    }
-    public function setIgnores($ignores)
-    {
-        $this->ignores = array_merge($this->ignores, $ignores);
-        return $this;
-    }
-    public function setCustomes($customes)
-    {
-        $this->customes = array_merge($this->customes, $customes);
-        return $this;
     }
     public function getUserInfo()
     {
@@ -114,37 +106,19 @@ class GateManager
         Schema::disableForeignKeyConstraints();
         Permission::truncate();
         Schema::enableForeignKeyConstraints();
-        $listRoutes = Route::getRoutes()->getRoutes();
-        foreach ($listRoutes as $item) {
-            $name = $item->getName();
-            $middlewares = $item->gatherMiddleware();
-            if (
-                !$middlewares ||
-                !$this->checkPermissionName($name)
-            ) {
-                continue;
-            }
-            if (in_array('sokeio.admin', $middlewares)) {
-                $group = explode('.', $name)[1];
-                $group = str($group)->replace('-page', '')->replace('theme-admin', 'sokeio')->value();
-                if ($group == 'sokeio') {
-                    $group = 'sokeio-system';
-                }
-                Permission::query()->create([
-                    'name' => $name,
-                    'group' => $group,
-                    'slug' => $name
-                ]);
-            }
-        }
-        foreach ($this->customes as $name) {
-            if ($this->checkPermissionName($name)) {
-                Permission::query()->create([
-                    'name' => $name,
-                    'group' => $name,
-                    'slug' => $name
-                ]);
-            }
+        $loaders = $this->loaders;
+        ksort($loaders);
+        foreach ($loaders as $item) {
+            [
+                'permission' => $permission,
+                'name' => $name,
+                'module' => $module
+            ] = $item;
+            Permission::query()->create([
+                'name' => $name,
+                'group' => $module,
+                'slug' => $permission
+            ]);
         }
     }
 }

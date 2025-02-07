@@ -3,14 +3,14 @@
 namespace SokeioTheme\Admin\Page\Setting;
 
 use Illuminate\Support\Facades\Artisan;
-use Sokeio\Attribute\PageInfo;
+use Sokeio\Attribute\AdminPageInfo;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Common\Card;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\WithUI;
 
-#[PageInfo(
+#[AdminPageInfo(
     admin: true,
     auth: true,
     title: 'Cache System',

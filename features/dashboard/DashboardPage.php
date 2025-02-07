@@ -2,7 +2,6 @@
 
 namespace Sokeio\Dashboard;
 
-use Illuminate\Support\Facades\Log;
 use Sokeio\Livewire\Form;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Common\Div;

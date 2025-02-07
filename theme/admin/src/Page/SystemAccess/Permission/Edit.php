@@ -3,7 +3,7 @@
 namespace SokeioTheme\Admin\Page\SystemAccess\Permission;
 
 use Sokeio\Models\Permission;
-use Sokeio\Attribute\PageInfo;
+use Sokeio\Attribute\AdminPageInfo;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Field\Input;
@@ -11,7 +11,7 @@ use Sokeio\UI\Field\Textarea;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\WithEditUI;
 
-#[PageInfo(admin: true, auth: true,  title: 'Permission', model: Permission::class)]
+#[AdminPageInfo(admin: true, auth: true,  title: 'Permission', model: Permission::class)]
 class Edit extends \Sokeio\Page
 {
     use WithEditUI;

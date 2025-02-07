@@ -3,13 +3,13 @@
 namespace SokeioTheme\Admin\Page\SystemAccess\Role;
 
 use Sokeio\Models\Role;
-use Sokeio\Attribute\PageInfo;
+use Sokeio\Attribute\AdminPageInfo;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\Table\Table;
 use Sokeio\UI\WithUI;
 
-#[PageInfo(
+#[AdminPageInfo(
     admin: true,
     auth: true,
     title: 'Role',

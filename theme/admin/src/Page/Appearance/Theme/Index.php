@@ -4,14 +4,14 @@ namespace SokeioTheme\Admin\Page\Appearance\Theme;
 
 use Livewire\Attributes\Url;
 use Sokeio\Platform;
-use Sokeio\Attribute\PageInfo;
+use Sokeio\Attribute\AdminPageInfo;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Field\Input;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\WithUI;
 
-#[PageInfo(
+#[AdminPageInfo(
     admin: true,
     auth: true,
     title: 'Theme System',

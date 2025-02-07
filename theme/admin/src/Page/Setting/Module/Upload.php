@@ -2,14 +2,14 @@
 
 namespace SokeioTheme\Admin\Page\Setting\Module;
 
-use Sokeio\Attribute\PageInfo;
+use Sokeio\Attribute\AdminPageInfo;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Field\UploadFile;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\WithUI;
 
-#[PageInfo(admin: true, auth: true,  title: 'Upload Module (Not Implemented)')]
+#[AdminPageInfo(admin: true, auth: true,  title: 'Upload Module (Not Implemented)')]
 class Upload extends \Sokeio\Page
 {
     use WithUI;

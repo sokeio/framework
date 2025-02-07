@@ -2,11 +2,12 @@
 
 namespace SokeioTheme\Admin\Page;
 
-use Sokeio\Attribute\PageInfo;
+use Sokeio\Attribute\AdminPageInfo;
 
-#[PageInfo(
+#[AdminPageInfo(
     admin: true,
     auth: true,
+    skipPermision:true,
     url: '/',
     route: 'dashboard',
     title: 'Dashboard',

@@ -2,12 +2,12 @@
 
 namespace SokeioTheme\Admin\Page\Appearance;
 
-use Sokeio\Attribute\PageInfo;
+use Sokeio\Attribute\AdminPageInfo;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\WithUI;
 
-#[PageInfo(
+#[AdminPageInfo(
     admin: true,
     auth: true,
     title: 'Media Storage',

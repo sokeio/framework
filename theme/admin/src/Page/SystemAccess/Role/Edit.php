@@ -4,7 +4,7 @@ namespace SokeioTheme\Admin\Page\SystemAccess\Role;
 
 use Illuminate\Support\Facades\Log;
 use Sokeio\Models\Role;
-use Sokeio\Attribute\PageInfo;
+use Sokeio\Attribute\AdminPageInfo;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Field\Checkbox;
@@ -14,7 +14,7 @@ use Sokeio\UI\Field\Textarea;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\WithEditUI;
 
-#[PageInfo(admin: true, auth: true,  title: 'Role', model: Role::class)]
+#[AdminPageInfo(admin: true, auth: true,  title: 'Role', model: Role::class)]
 class Edit extends \Sokeio\Page
 {
     use WithEditUI;

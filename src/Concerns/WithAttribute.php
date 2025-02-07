@@ -12,7 +12,21 @@ trait WithAttribute
     {
         return $this->className;
     }
-
+    
+    public static function fromClassMuti($className): ?array
+    {
+        if (is_object($className)) {
+            $className = get_class($className);
+        }
+        // use ReflectionClass
+        $reflection = new \ReflectionClass($className);
+        $attributes = $reflection->getAttributes(static::class, \ReflectionAttribute::IS_INSTANCEOF);
+        $inst = [];
+        foreach ($attributes as $attribute) {
+            $inst[] = $attribute->newInstance()->tap(fn(self $info) => $info->className = $className);
+        }
+        return $inst;
+    }
     public static function fromClass($className): ?self
     {
         if (is_object($className)) {

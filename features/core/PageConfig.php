@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use Sokeio\Attribute\PageInfo;
+use Sokeio\Attribute\Permission;
 use Sokeio\Pattern\Tap;
 use Sokeio\Platform;
 use Sokeio\Menu\MenuItem;
@@ -36,6 +37,7 @@ class PageConfig
         'menuTargetId' => null,
         'menuTargetClass' => null,
         'menuTargetSort' => null,
+        'skipPermision' => false,
         'skipHtmlAjax' => false,
         'model' => null,
         'skip' => false,
@@ -120,14 +122,22 @@ class PageConfig
         $nameRoute = $config->getRoute()
             ??  ($shortName . '-page.' . $key);
         $key = 'sokeio-menu.' . $key;
+        $menuTitle = $config->getMenuTitle() ?? str(str($nameRoute)->afterLast('.'))->replace('-', ' ');
+
         if ($config->getAdmin()) {
+            if ($config->getAuth() && !$config->getSkipPermision()) {
+                $per = 'admin.' . $nameRoute;
+                Platform::gate()->register($per, $menuTitle, $shortName);
+                foreach (Permission::fromClassMuti($pageClass) as $itemPer) {
+                    Platform::gate()->register($itemPer->getKey(), $itemPer->getName(), $shortName);
+                }
+            }
+
             if (
                 $config->getAuth()
                 && $config->getMenu()
                 && Platform::isUrlAdmin()
             ) {
-                $menuTitle = $config->getMenuTitle() ?? str(str($nameRoute)->afterLast('.'))->replace('-', ' ');
-                Platform::gate()->register($nameRoute, $menuTitle, $shortName);
                 $menuClass = $config->getMenuClass();
                 $target = $config->getMenuTarget();
                 $sort = $config->getSort();

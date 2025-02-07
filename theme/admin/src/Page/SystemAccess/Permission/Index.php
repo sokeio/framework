@@ -5,13 +5,13 @@ namespace SokeioTheme\Admin\Page\SystemAccess\Permission;
 use Sokeio\Models\Permission;
 use Sokeio\Models\User;
 use Sokeio\Platform;
-use Sokeio\Attribute\PageInfo;
+use Sokeio\Attribute\AdminPageInfo;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\Table\Table;
 use Sokeio\UI\WithUI;
 
-#[PageInfo(
+#[AdminPageInfo(
     admin: true,
     auth: true,
     title: 'Permission',

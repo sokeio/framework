@@ -5,11 +5,11 @@ namespace SokeioTheme\Admin\Page\Auth;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Rule;
 use Livewire\Attributes\Url;
-use Sokeio\Attribute\PageInfo;
+use Sokeio\Attribute\AdminPageInfo;
 use Sokeio\Platform;
 use Sokeio\Theme;
 
-#[PageInfo(admin: true, auth: false, url: '/login', route: 'login', title: 'Login', layout: 'conver')]
+#[AdminPageInfo(admin: true, auth: false, url: '/login', route: 'login', title: 'Login', layout: 'conver')]
 class Login extends \Sokeio\Page
 {
     #[Url('url_ref')]

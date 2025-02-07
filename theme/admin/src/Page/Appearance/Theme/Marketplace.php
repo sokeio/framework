@@ -2,7 +2,7 @@
 
 namespace SokeioTheme\Admin\Page\Appearance\Theme;
 
-use Sokeio\Attribute\PageInfo;
+use Sokeio\Attribute\AdminPageInfo;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Field\Input;
@@ -10,7 +10,7 @@ use Sokeio\UI\Field\UploadFile;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\WithUI;
 
-#[PageInfo(admin: true, auth: true,  title: 'Marketplace Theme (Not Implemented)')]
+#[AdminPageInfo(admin: true, auth: true,  title: 'Marketplace Theme (Not Implemented)')]
 class Marketplace extends \Sokeio\Page
 {
     use WithUI;

@@ -4,14 +4,14 @@ namespace SokeioTheme\Admin\Page\Setting\Module;
 
 use Livewire\Attributes\Rule;
 use Sokeio\Platform;
-use Sokeio\Attribute\PageInfo;
+use Sokeio\Attribute\AdminPageInfo;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Field\Input;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\WithUI;
 
-#[PageInfo(admin: true, auth: true,  title: 'Create Module ')]
+#[AdminPageInfo(admin: true, auth: true,  title: 'Create Module ')]
 class Create extends \Sokeio\Page
 {
     use WithUI;
