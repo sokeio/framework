@@ -31,7 +31,7 @@ class Index extends Component
                 return $item['level'] > $level;
             })
                 ->groupBy(function ($item) use ($level) {
-                    return $item['levels'][$level+1];
+                    return $item['levels'][$level + 1];
                 })->sortKeys(), $level + 1, []);
             $levels =     $colPers->first()['levels'];
             $subKey = '';
@@ -74,7 +74,7 @@ class Index extends Component
                     'slug' => $permission->slug,
                     'id' => $permission->id,
                     'levels' => $levels,
-                    'level' => count($levels)-1
+                    'level' => count($levels) - 1
                 ];
             })->groupBy(function ($item) {
                 return $item['levels'][0];
