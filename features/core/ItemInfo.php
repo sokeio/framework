@@ -144,7 +144,8 @@ class ItemInfo extends ObjectJson
             if (file_exists($pathTarget)) {
                 return $this;
             }
-            if (env('SOKEIO_PUBLIC_COPY')) {
+            if (env('SOKEIO_PUBLIC_COPY', false)) {
+                File::makeDirectory($pathTarget);
                 File::copyDirectory($pathPublic, $pathTarget);
                 return $this;
             }

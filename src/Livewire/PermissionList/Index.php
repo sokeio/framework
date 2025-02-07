@@ -64,21 +64,25 @@ class Index extends Component
     }
     public function render()
     {
+        $allPermissions = $this->treePermissions(
+            config('sokeio.model.permission')::all()
+                ->map(function ($permission) {
+                    $levels = $permission->slug ? explode('.', $permission->slug) : 0;
+                    array_splice($levels, 0, 2);
+                    return [
+                        'name' =>  $permission->name,
+                        'group' => $permission->group,
+                        'slug' => $permission->slug,
+                        'id' => $permission->id,
+                        'levels' => $levels,
+                        'level' => count($levels) - 1
+                    ];
+                })->groupBy(function ($item) {
+                    return $item['levels'][0];
+                })->sortKeys()
+        );
         return view('sokeio::livewire.permission-list.index', [
-            'allPermissions' => $this->treePermissions(config('sokeio.model.permission')::all()->map(function ($permission) {
-                $levels = $permission->slug ? explode('.', $permission->slug) : 0;
-                array_splice($levels, 0, 2);
-                return [
-                    'name' =>  $permission->name,
-                    'group' => $permission->group,
-                    'slug' => $permission->slug,
-                    'id' => $permission->id,
-                    'levels' => $levels,
-                    'level' => count($levels) - 1
-                ];
-            })->groupBy(function ($item) {
-                return $item['levels'][0];
-            })->sortKeys())
+            'allPermissions' => $allPermissions
         ]);
     }
 }
