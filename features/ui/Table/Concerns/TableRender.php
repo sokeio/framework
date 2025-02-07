@@ -213,7 +213,9 @@ trait TableRender
             <div class="col">
             {$this->formSearchRender()}
             </div>
-            <div class="col-auto" style="padding-top: 5px; padding-right: 10px; ">{$this->renderChilds('rightUI')}</div>
+            <div class="col-auto" >
+            <div class="p-1">{$this->renderChilds('rightUI')}</div>
+            </div>
         </div>
         html;
     }

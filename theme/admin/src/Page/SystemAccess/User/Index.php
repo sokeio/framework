@@ -89,19 +89,19 @@ class Index extends \Sokeio\Page
                                 ->when(function (Button $button) {
                                     return $button->getParams('row')->id > 1;
                                 }),
+                        ])->rightUI([
+                            Button::make()
+                                ->label(__('Add ' . $this->getPageConfig()->getTitle()))
+                                ->icon('ti ti-plus')
+                                ->modalRoute(
+                                    $this->getRouteName('edit'),
+                                    __('Add ' . $this->getPageConfig()->getTitle()),
+                                    'lg',
+                                    'ti ti-plus'
+                                )
                         ])
                 ]
-            )->rightUI([
-                Button::make()
-                    ->label(__('Add ' . $this->getPageConfig()->getTitle()))
-                    ->icon('ti ti-plus')
-                    ->modalRoute(
-                        $this->getRouteName('edit'),
-                        __('Add ' . $this->getPageConfig()->getTitle()),
-                        'lg',
-                        'ti ti-plus'
-                    )
-            ])
+            )
         ];
     }
 }
