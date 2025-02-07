@@ -5,8 +5,6 @@ namespace SokeioTheme\Admin\Page;
 use Sokeio\Attribute\AdminPageInfo;
 
 #[AdminPageInfo(
-    admin: true,
-    auth: true,
     skipPermision:true,
     url: '/',
     route: 'dashboard',

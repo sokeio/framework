@@ -8,8 +8,6 @@ use Sokeio\UI\PageUI;
 use Sokeio\UI\WithUI;
 
 #[AdminPageInfo(
-    admin: true,
-    auth: true,
     title: 'Media Storage',
     icon: 'ti ti-cloud-data-connection',
     menu: true,

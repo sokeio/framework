@@ -10,8 +10,6 @@ use Sokeio\UI\Table\Table;
 use Sokeio\UI\WithUI;
 
 #[AdminPageInfo(
-    admin: true,
-    auth: true,
     title: 'Role',
     icon: 'ti ti-user-check',
     menu: true,

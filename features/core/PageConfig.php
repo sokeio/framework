@@ -122,7 +122,14 @@ class PageConfig
         $nameRoute = $config->getRoute()
             ??  ($shortName . '-page.' . $key);
         $key = 'sokeio-menu.' . $key;
-        $menuTitle = $config->getMenuTitle() ?? str(str($nameRoute)->afterLast('.'))->replace('-', ' ');
+        $menuTitle = $config->getMenuTitle();
+        if (!$menuTitle) {
+            $menuTitle = $config->getTitle();
+            dd($menuTitle);
+        }
+        if (!$menuTitle) {
+            $menuTitle = str(str($nameRoute)->afterLast('.'))->replace('-', ' ');
+        }
 
         if ($config->getAdmin()) {
             if ($config->getAuth() && !$config->getSkipPermision()) {

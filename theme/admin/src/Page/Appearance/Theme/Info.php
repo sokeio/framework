@@ -2,17 +2,15 @@
 
 namespace SokeioTheme\Admin\Page\Appearance\Theme;
 
-use Livewire\Attributes\Rule;
 use Livewire\Attributes\Url;
 use Sokeio\Platform;
 use Sokeio\Attribute\AdminPageInfo;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Common\Button;
-use Sokeio\UI\Field\Input;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\WithUI;
 
-#[AdminPageInfo(admin: true, auth: true,  title: ' Theme Info')]
+#[AdminPageInfo(title: 'Theme Info')]
 class Info extends \Sokeio\Page
 {
     use WithUI;

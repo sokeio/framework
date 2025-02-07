@@ -7,7 +7,10 @@ use Sokeio\UI\Concerns\ModalUI;
 class PageUI extends BaseUI
 {
     use ModalUI;
-
+    public function enableLoading()
+    {
+        return $this->vars('enableLoading', true);
+    }
     private function isModal()
     {
         return $this->getWire()->isPageAjax || $this->useModal;
@@ -100,6 +103,17 @@ class PageUI extends BaseUI
                 </div>
             HTML;
     }
+    private function loadingRender()
+    {
+        if (!$this->getVar('enableLoading', $this->isModal() ? true : null)) {
+            return "";
+        }
+        return <<<HTML
+                <div wire:loading class="position-absolute top-50 start-50 translate-middle">
+                    <span  class="spinner-border  text-blue  " role="status"></span>
+                </div>
+            HTML;
+    }
     private function getPageView()
     {
         $attr = $this->getAttr();
@@ -109,6 +123,7 @@ class PageUI extends BaseUI
             <div {$attr}>
                 {$this->getPageHeadView()}
                 <div class="page-body {$card}">
+                    {$this->loadingRender()}
                     {$this->renderChilds('before')}
                     {$this->contentChildrenRender()}
                     {$this->renderChilds('after')}
@@ -124,9 +139,7 @@ class PageUI extends BaseUI
         $icon = $this->getIcon();
         return <<<HTML
         <div {$attr}>
-            <div wire:loading class="position-absolute top-50 start-50 translate-middle">
-                <span  class="spinner-border  text-blue  " role="status"></span>
-            </div>
+        {$this->loadingRender()}
             <div class="row align-items-center sokeio-modal-header">
                 <div class="col">
                     {$icon}

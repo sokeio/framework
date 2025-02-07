@@ -12,8 +12,6 @@ use Sokeio\UI\SettingUI;
 use Sokeio\UI\WithSettingUI;
 
 #[AdminPageInfo(
-    admin: true,
-    auth: true,
     title: 'Media Storage',
     menu: true,
     menuTitle: 'Media Storage',

@@ -8,7 +8,7 @@ use Sokeio\UI\Common\Button;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\WithUI;
 
-#[AdminPageInfo(admin: true, auth: true,  title: 'Marketplace Module (Not Implemented)')]
+#[AdminPageInfo(title: 'Marketplace Module (Not Implemented)')]
 class Marketplace extends \Sokeio\Page
 {
     use WithUI;

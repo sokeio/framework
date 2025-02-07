@@ -14,7 +14,7 @@ use Sokeio\UI\Field\Textarea;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\WithEditUI;
 
-#[AdminPageInfo(admin: true, auth: true,  title: 'Role', model: Role::class)]
+#[AdminPageInfo(title: 'Role', model: Role::class)]
 class Edit extends \Sokeio\Page
 {
     use WithEditUI;

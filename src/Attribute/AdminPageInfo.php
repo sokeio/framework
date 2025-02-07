@@ -10,17 +10,17 @@ class AdminPageInfo extends PageInfo
 {
     use WithAttribute;
     public function __construct(
-        $title = null,
-        $layout = null,
-        $route = null,
-        $url = null,
-        $auth = null,
-        $skipHtmlAjax = null,
-        $urlKeyInSetting = null,
-        $enableKeyInSetting = null,
-        $enable = null,
+        public $title = null,
+        public $layout = null,
+        public $route = null,
+        public $url = null,
+        public $auth = true,
+        public $skipHtmlAjax = null,
+        public $urlKeyInSetting = null,
+        public $enableKeyInSetting = null,
+        public $enable = null,
         public $skipPermision = null,
-        public $admin = null,
+        public $admin = true,
         public $menu = null,
         public $menuTitle = null,
         public $menuClass = null,
@@ -35,6 +35,7 @@ class AdminPageInfo extends PageInfo
         public $icon = null,
         public $model = null
     ) {
+        
         parent::__construct(
             $title,
             $layout,

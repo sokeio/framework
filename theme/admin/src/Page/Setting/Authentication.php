@@ -13,8 +13,6 @@ use Sokeio\UI\SettingUI;
 use Sokeio\UI\WithSettingUI;
 
 #[AdminPageInfo(
-    admin: true,
-    auth: true,
     title: 'Authentication',
     menu: true,
     menuTitle: 'Authentication',

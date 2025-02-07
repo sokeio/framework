@@ -2,13 +2,11 @@
 
 namespace SokeioTheme\Admin\Page\SystemAccess\User;
 
-use Illuminate\Support\Facades\Log;
 use Sokeio\Models\Role;
 use Sokeio\Models\User;
 use Sokeio\Attribute\AdminPageInfo;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Common\Div;
-use Sokeio\UI\Field\Input;
 use Sokeio\UI\Field\Select;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\Table\Column;
@@ -16,8 +14,6 @@ use Sokeio\UI\Table\Table;
 use Sokeio\UI\WithUI;
 
 #[AdminPageInfo(
-    admin: true,
-    auth: true,
     title: 'User',
     menu: true,
     menuTitle: 'Users',

@@ -11,8 +11,6 @@ use Sokeio\UI\PageUI;
 use Sokeio\UI\WithUI;
 
 #[AdminPageInfo(
-    admin: true,
-    auth: true,
     title: 'Cache System',
     menu: true,
     menuTitle: 'Cache System',

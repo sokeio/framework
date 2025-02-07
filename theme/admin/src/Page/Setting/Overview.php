@@ -15,8 +15,6 @@ use Sokeio\UI\SettingUI;
 use Sokeio\UI\WithSettingUI;
 
 #[AdminPageInfo(
-    admin: true,
-    auth: true,
     title: 'Overview',
     menu: true,
     menuTitle: 'Overview',

@@ -12,8 +12,6 @@ use Sokeio\UI\PageUI;
 use Sokeio\UI\WithUI;
 
 #[AdminPageInfo(
-    admin: true,
-    auth: true,
     title: 'License',
     menu: true,
     menuTitle: 'License',

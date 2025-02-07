@@ -10,7 +10,7 @@ use Sokeio\UI\Field\UploadFile;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\WithUI;
 
-#[AdminPageInfo(admin: true, auth: true,  title: 'Marketplace Theme (Not Implemented)')]
+#[AdminPageInfo(title: 'Marketplace Theme (Not Implemented)')]
 class Marketplace extends \Sokeio\Page
 {
     use WithUI;

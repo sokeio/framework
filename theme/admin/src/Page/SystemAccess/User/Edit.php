@@ -15,7 +15,7 @@ use Sokeio\UI\Field\Select;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\WithEditUI;
 
-#[AdminPageInfo(admin: true, auth: true,  title: 'User', model: User::class)]
+#[AdminPageInfo(title: 'User', model: User::class)]
 class Edit extends \Sokeio\Page
 {
     use WithEditUI;

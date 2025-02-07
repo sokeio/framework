@@ -7,6 +7,10 @@ use Sokeio\UI\BaseUI;
 
 class LivewireUI extends BaseUI
 {
+    public static function make($component = null)
+    {
+        return (new static())->component($component);
+    }
     public function component($name)
     {
         return $this->vars('component', $name);
