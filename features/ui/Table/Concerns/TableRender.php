@@ -170,7 +170,7 @@ trait TableRender
         }
         return   $html;
     }
-    public function formSearchRender()
+    private function formSearchRender()
     {
         if (!$this->hasChilds('formSearch')) {
             return '';
@@ -206,6 +206,17 @@ trait TableRender
         </div>
         html;
     }
+    private function TopTableRender()
+    {
+        return <<<html
+        <div class="row">
+            <div class="col">
+            {$this->formSearchRender()}
+            </div>
+            <div class="col-auto" style="padding-top: 5px; padding-right: 10px; ">{$this->renderChilds('rightUI')}</div>
+        </div>
+        html;
+    }
     public function view()
     {
 
@@ -232,7 +243,7 @@ trait TableRender
         }
         return <<<HTML
         <div {$attrWrapper}  x-data="sokeioTable">
-        {$this->formSearchRender()}
+            {$this->TopTableRender()}
         <div class="table-responsive position-relative"
          x-init="tableInit"
           data-sokeio-table-order-by="{$orderBy}">

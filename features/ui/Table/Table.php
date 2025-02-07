@@ -208,7 +208,10 @@ class Table extends BaseUI
             $isAfterIndex ? -2 : 0
         )->vars('enableCheckBox', true);
     }
-
+    public function rightUI($rightUI): self
+    {
+        return $this->child($rightUI, 'rightUI');
+    }
     public function formSearch($fields, $fieldExtra = null): self
     {
         return $this->child($fields, 'formSearch')

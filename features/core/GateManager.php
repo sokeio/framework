@@ -101,24 +101,31 @@ class GateManager
             && !str_starts_with($permssion, '_')
             && (count($this->ignores) == 0 || !in_array($permssion, $this->ignores));
     }
-    public function updatePermission()
+    public function updatePermission($truncate = false)
     {
-        Schema::disableForeignKeyConstraints();
-        Permission::truncate();
-        Schema::enableForeignKeyConstraints();
+        if ($truncate) {
+            Schema::disableForeignKeyConstraints();
+            Permission::truncate();
+            Schema::enableForeignKeyConstraints();
+        }
         $loaders = $this->loaders;
         ksort($loaders);
+        $keys = array_keys($loaders);
+        Permission::query()->whereNotIn('slug', $keys)->delete();
+        $keysInDB = Permission::query()->get(['slug'])->pluck('slug', 'slug')->keys()->toArray();
         foreach ($loaders as $item) {
             [
                 'permission' => $permission,
                 'name' => $name,
                 'module' => $module
             ] = $item;
-            Permission::query()->create([
-                'name' => $name,
-                'group' => $module,
-                'slug' => $permission
-            ]);
+            if (!in_array($permission, $keysInDB)) {
+                Permission::query()->create([
+                    'name' => $name,
+                    'group' => $module,
+                    'slug' => $permission
+                ]);
+            }
         }
     }
 }
