@@ -50,7 +50,6 @@ class PageConfig
             if (!isset($info->{$key}) || $info->{$key} === null) {
                 continue;
             }
-
             $this->config[$key] = $info->{$key};
         }
         $key = $this->getEnableKeyInSetting();
@@ -125,7 +124,6 @@ class PageConfig
         $menuTitle = $config->getMenuTitle();
         if (!$menuTitle) {
             $menuTitle = $config->getTitle();
-            dd($menuTitle);
         }
         if (!$menuTitle) {
             $menuTitle = str(str($nameRoute)->afterLast('.'))->replace('-', ' ');

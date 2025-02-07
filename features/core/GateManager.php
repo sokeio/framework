@@ -80,13 +80,10 @@ class GateManager
     }
     public function check($permssion)
     {
-        if ($this->isSupperAdmin()) {
+        if ($this->isSupperAdmin() || str_starts_with($permssion, '_')) {
             return true;
         }
-        return
-            str_starts_with($permssion, '_')
-            || in_array($permssion, $this->ignores)
-            || in_array($permssion, $this->permissions);
+        return in_array($permssion, $this->permissions);
     }
     public function role($role)
     {
@@ -98,8 +95,7 @@ class GateManager
     private function checkPermissionName($permssion)
     {
         return $permssion
-            && !str_starts_with($permssion, '_')
-            && (count($this->ignores) == 0 || !in_array($permssion, $this->ignores));
+            && !str_starts_with($permssion, '_');
     }
     public function updatePermission($truncate = false)
     {

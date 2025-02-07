@@ -53,6 +53,7 @@ export default {
     return this.fileSelected.includes(path);
   },
   selectFile(path) {
+    
     if (this.fileSelected.includes(path)) {
       this.fileSelected = this.fileSelected.filter((item) => item != path);
     } else {

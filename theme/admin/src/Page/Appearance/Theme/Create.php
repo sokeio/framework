@@ -11,7 +11,7 @@ use Sokeio\UI\Field\Input;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\WithUI;
 
-#[AdminPageInfo(title: 'Create Theme ')]
+#[AdminPageInfo(title: 'Create Theme')]
 class Create extends \Sokeio\Page
 {
     use WithUI;

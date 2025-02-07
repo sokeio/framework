@@ -5,7 +5,6 @@ namespace Sokeio\Livewire\PermissionList;
 use Illuminate\Support\Facades\Route;
 use Livewire\Attributes\Modelable;
 use Sokeio\Component;
-use Sokeio\Models\Permission;
 
 class Index extends Component
 {
@@ -66,7 +65,7 @@ class Index extends Component
     public function render()
     {
         return view('sokeio::livewire.permission-list.index', [
-            'allPermissions' => $this->treePermissions(Permission::all()->map(function ($permission) {
+            'allPermissions' => $this->treePermissions(config('sokeio.model.permission')::all()->map(function ($permission) {
                 //$permission->slug
                 $slug = explode('-page.', $permission->slug);
                 if (count($slug) > 1) $slug = $slug[1];

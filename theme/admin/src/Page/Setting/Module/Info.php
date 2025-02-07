@@ -12,7 +12,7 @@ use Sokeio\UI\Field\Input;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\WithUI;
 
-#[AdminPageInfo(title: ' Module Info')]
+#[AdminPageInfo(title: 'Module Info')]
 class Info extends \Sokeio\Page
 {
     use WithUI;
