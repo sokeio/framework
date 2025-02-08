@@ -56,11 +56,11 @@ $ composer require sokeio/framework
 
 **Website**: https://sokeio.com/
 
-**Email**: nguyenvanhau@gmail.com
+**Email**: haustartup@gmail.com
 
-**Discord**: https://discord.gg/eaj9nR3n
+**Discord**: https://discord.gg/5XePqYxyjm
 
-**Facebook***: https://www.facebook.com/groups/sokeio
+**Facebook**: https://www.facebook.com/groups/sokeio
 
 **Youtube**: https://www.youtube.com/@DevHau
 
