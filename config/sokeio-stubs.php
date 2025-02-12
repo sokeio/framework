@@ -269,6 +269,11 @@ return [
             'name' => '$STUDLY_NAME$ServiceProvider.php',
             'replacements' => ['LOWER_NAME', 'NAMESPACE', 'STUDLY_NAME']
         ],
+        'provider-base-theme' => [
+            'path' => 'src',
+            'name' => '$STUDLY_NAME$ServiceProvider.php',
+            'replacements' => ['LOWER_NAME', 'NAMESPACE', 'STUDLY_NAME']
+        ],
         'gitignore' => [
             'name' => '.gitignore',
         ],
@@ -710,7 +715,7 @@ return [
             'share-header',
             'share-footer',
             'composer',
-            'provider-base',
+            'provider-base-theme',
             'json-theme'
         ],
         'plugin' => [
