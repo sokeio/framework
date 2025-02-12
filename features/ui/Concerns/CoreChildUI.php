@@ -109,7 +109,7 @@ trait CoreChildUI
             $html = $this->getHtmlItems($ui, $params, $callback);
         }
         if (!is_string($ui) && is_callable($ui)) {
-            $html = call_user_func($ui, $this);
+            $ui = call_user_func($ui, $this);
         }
         if ($ui instanceof BaseUI) {
             $ui->savePramas();
@@ -130,6 +130,13 @@ trait CoreChildUI
             $ui->restorePramas();
         } elseif (is_string($ui)) {
             $html = $ui;
+        } elseif (is_object($ui) && enum_exists(get_class($ui))) // check $ui is enum
+        {
+            if (method_exists($ui, 'toString')) {
+                $html = $ui->toString();
+            } else {
+                $html = $ui->name;
+            }
         }
 
         return $html;
