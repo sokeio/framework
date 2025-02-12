@@ -188,8 +188,18 @@ class ThemeManager
         }
         return $this->getNamespace($isAdmin) . '::layouts.' . $name;
     }
-    public function view(string $view, array $data = [], array $mergeData = [], $noScope = false)
+    public function view(string $view, array $data = [], array $mergeData = [], $noScope = false, $template = null)
     {
+        if ($template) {
+            $info = $this->getTemplate($template);
+            $layout = $info['layout'];
+            if ($layout) {
+                $this->setLayout($layout);
+            }
+            if ($info['view']) {
+                $view = $info['view'];
+            }
+        }
         $viewParts = explode('::', $view);
 
         if (count($viewParts) === 1) {
