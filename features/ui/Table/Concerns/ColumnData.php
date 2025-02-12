@@ -2,7 +2,6 @@
 
 namespace Sokeio\UI\Table\Concerns;
 
-use Sokeio\UI\Table\Table;
 
 trait ColumnData
 {
