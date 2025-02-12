@@ -4,7 +4,7 @@ namespace Sokeio\Livewire\Concerns;
 
 use Illuminate\Support\Facades\Request;
 use Livewire\Attributes\Locked;
-use Sokeio\Concerns\WithHelpers;
+use Sokeio\Core\Concerns\WithHelpers;
 
 trait WithLivewire
 {

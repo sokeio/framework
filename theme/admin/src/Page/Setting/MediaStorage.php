@@ -2,7 +2,7 @@
 
 namespace SokeioTheme\Admin\Page\Setting;
 
-use Sokeio\Attribute\AdminPageInfo;
+use Sokeio\Core\Attribute\AdminPageInfo;
 use Sokeio\MediaStorage as SokeioMediaStorage;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Field\Select;

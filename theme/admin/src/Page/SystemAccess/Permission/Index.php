@@ -3,7 +3,7 @@
 namespace SokeioTheme\Admin\Page\SystemAccess\Permission;
 
 use Sokeio\Platform;
-use Sokeio\Attribute\AdminPageInfo;
+use Sokeio\Core\Attribute\AdminPageInfo;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Common\LivewireUI;
 use Sokeio\UI\PageUI;

@@ -3,7 +3,7 @@
 namespace Sokeio;
 
 use Livewire\Livewire;
-use Sokeio\Concerns\WithServiceProvider;
+use Sokeio\Core\Concerns\WithServiceProvider;
 use Sokeio\Providers\SocialiteServiceProvider;
 use Sokeio\Livewire\LivewireServiceProvider;
 use Sokeio\MediaStorage\MediaStorageServiceProvider;

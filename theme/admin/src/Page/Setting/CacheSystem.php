@@ -3,7 +3,7 @@
 namespace SokeioTheme\Admin\Page\Setting;
 
 use Illuminate\Support\Facades\Artisan;
-use Sokeio\Attribute\AdminPageInfo;
+use Sokeio\Core\Attribute\AdminPageInfo;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Common\Card;
 use Sokeio\UI\Common\Div;

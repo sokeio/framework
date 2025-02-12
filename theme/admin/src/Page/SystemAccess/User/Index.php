@@ -4,7 +4,7 @@ namespace SokeioTheme\Admin\Page\SystemAccess\User;
 
 use Sokeio\Models\Role;
 use Sokeio\Models\User;
-use Sokeio\Attribute\AdminPageInfo;
+use Sokeio\Core\Attribute\AdminPageInfo;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Field\Select;

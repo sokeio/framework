@@ -1,9 +1,9 @@
 <?php
 
-namespace Sokeio\Attribute;
+namespace Sokeio\Core\Attribute;
 
 use Attribute;
-use Sokeio\Concerns\WithAttribute;
+use Sokeio\Core\Concerns\WithAttribute;
 use Sokeio\Enums\MethodType;
 
 #[Attribute(Attribute::TARGET_METHOD | Attribute::TARGET_CLASS)]

@@ -4,7 +4,7 @@ namespace Sokeio\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Route as FacadesRoute;
-use Sokeio\Attribute\RouteInfo;
+use Sokeio\Core\Attribute\RouteInfo;
 use Sokeio\Enums\MethodType;
 use Sokeio\Platform;
 

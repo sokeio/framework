@@ -5,7 +5,7 @@ namespace SokeioTheme\Admin\Page\Auth;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Rule;
 use Livewire\Attributes\Url;
-use Sokeio\Attribute\AdminPageInfo;
+use Sokeio\Core\Attribute\AdminPageInfo;
 use Sokeio\Platform;
 use Sokeio\Theme;
 

@@ -3,7 +3,7 @@
 namespace Sokeio\UI;
 
 use Illuminate\Support\Facades\DB;
-use Sokeio\Attribute\ModelInfo;
+use Sokeio\Core\Attribute\ModelInfo;
 use Sokeio\FormData;
 use Sokeio\Platform;
 

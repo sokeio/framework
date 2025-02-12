@@ -3,7 +3,7 @@
 namespace SokeioTheme\Admin;
 
 use Illuminate\Support\ServiceProvider;
-use Sokeio\Concerns\WithServiceProvider;
+use Sokeio\Core\Concerns\WithServiceProvider;
 use Sokeio\Platform;
 use Sokeio\ServicePackage;
 use Sokeio\Theme;

@@ -5,7 +5,7 @@ namespace Sokeio\Core\Loader;
 use Closure;
 use Exception;
 use Illuminate\Support\Facades\Route as FacadesRoute;
-use Sokeio\Attribute\RouteInfo;
+use Sokeio\Core\Attribute\RouteInfo;
 use Sokeio\Platform;
 use Sokeio\Core\IPipeLoader;
 use Sokeio\Core\ItemInfo;

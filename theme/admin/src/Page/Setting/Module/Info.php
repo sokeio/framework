@@ -5,7 +5,7 @@ namespace SokeioTheme\Admin\Page\Setting\Module;
 use Livewire\Attributes\Rule;
 use Livewire\Attributes\Url;
 use Sokeio\Platform;
-use Sokeio\Attribute\AdminPageInfo;
+use Sokeio\Core\Attribute\AdminPageInfo;
 use Sokeio\UI\Common\Div;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Field\Input;

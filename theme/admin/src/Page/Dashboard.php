@@ -2,7 +2,7 @@
 
 namespace SokeioTheme\Admin\Page;
 
-use Sokeio\Attribute\AdminPageInfo;
+use Sokeio\Core\Attribute\AdminPageInfo;
 
 #[AdminPageInfo(
     skipPermision:true,

@@ -4,7 +4,7 @@ namespace SokeioTheme\Admin\Page\Auth;
 
 use Illuminate\Support\Facades\Hash;
 use Livewire\Attributes\Rule;
-use Sokeio\Attribute\AdminPageInfo;
+use Sokeio\Core\Attribute\AdminPageInfo;
 use Sokeio\Theme;
 
 #[AdminPageInfo(

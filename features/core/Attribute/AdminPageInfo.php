@@ -1,9 +1,9 @@
 <?php
 
-namespace Sokeio\Attribute;
+namespace Sokeio\Core\Attribute;
 
 use Attribute;
-use Sokeio\Concerns\WithAttribute;
+use Sokeio\Core\Concerns\WithAttribute;
 
 #[Attribute(Attribute::TARGET_CLASS)]
 class AdminPageInfo extends PageInfo

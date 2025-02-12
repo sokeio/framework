@@ -2,12 +2,12 @@
 
 namespace Sokeio\Models;
 
-use Sokeio\Concerns\WithModelHook;
+use Sokeio\Core\Concerns\WithModelHook;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Sokeio\Concerns\WithPermission;
+use Sokeio\Core\Concerns\WithPermission;
 use Illuminate\Support\Facades\Hash;
-use Sokeio\Attribute\ModelInfo;
+use Sokeio\Core\Attribute\ModelInfo;
 use Illuminate\Support\Str;
 use DateTimeInterface;
 

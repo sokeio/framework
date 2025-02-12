@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Concerns;
+namespace Sokeio\Core\Concerns;
 
 use BadMethodCallException;
 use Illuminate\Support\Str;

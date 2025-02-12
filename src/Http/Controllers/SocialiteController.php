@@ -4,7 +4,7 @@ namespace Sokeio\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Laravel\Socialite\Facades\Socialite;
-use Sokeio\Attribute\RouteInfo;
+use Sokeio\Core\Attribute\RouteInfo;
 use Sokeio\Enums\MethodType;
 
 class SocialiteController extends Controller

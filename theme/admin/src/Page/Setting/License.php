@@ -2,7 +2,7 @@
 
 namespace SokeioTheme\Admin\Page\Setting;
 
-use Sokeio\Attribute\AdminPageInfo;
+use Sokeio\Core\Attribute\AdminPageInfo;
 use Sokeio\Marketplate;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\Common\Card;

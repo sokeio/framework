@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Attribute;
+namespace Sokeio\Core\Attribute;
 
 use Attribute;
 

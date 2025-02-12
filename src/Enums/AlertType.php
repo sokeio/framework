@@ -2,8 +2,8 @@
 
 namespace Sokeio\Enums;
 
-use Sokeio\Attribute\Label;
-use Sokeio\Concerns\AttributableEnum;
+use Sokeio\Core\Attribute\Label;
+use Sokeio\Core\Concerns\AttributableEnum;
 
 enum AlertType: string
 {

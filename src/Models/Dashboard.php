@@ -2,7 +2,7 @@
 
 namespace Sokeio\Models;
 
-use Sokeio\Attribute\ModelInfo;
+use Sokeio\Core\Attribute\ModelInfo;
 
 #[ModelInfo()]
 class Dashboard extends \Sokeio\Model

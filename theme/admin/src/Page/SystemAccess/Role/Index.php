@@ -3,7 +3,7 @@
 namespace SokeioTheme\Admin\Page\SystemAccess\Role;
 
 use Sokeio\Models\Role;
-use Sokeio\Attribute\AdminPageInfo;
+use Sokeio\Core\Attribute\AdminPageInfo;
 use Sokeio\UI\Common\Button;
 use Sokeio\UI\PageUI;
 use Sokeio\UI\Table\Table;

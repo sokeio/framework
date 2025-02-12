@@ -5,7 +5,7 @@ namespace Sokeio\Livewire\Concerns;
 use Livewire\Features\SupportPageComponents\PageComponentConfig;
 use Livewire\Features\SupportPageComponents\SupportPageComponents;
 use Sokeio\Core\PageConfig;
-use Sokeio\Attribute\PageInfo;
+use Sokeio\Core\Attribute\PageInfo;
 
 trait WithLivewirePage
 {

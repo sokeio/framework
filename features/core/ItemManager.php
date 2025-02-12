@@ -171,6 +171,16 @@ class ItemManager
             return $item->id == $id;
         })->first();
     }
+    public function findByName($name): ?ItemInfo
+    {
+        return collect($this->arrItems)->where(function ($item) use ($name) {
+            return $item->name == $name;
+        })->first();
+    }
+    public function hasByName($name)
+    {
+        return $this->findByName($name) !== null;
+    }
     public function has($id): bool
     {
         return $this->find($id) !== null;
@@ -185,6 +195,18 @@ class ItemManager
             File::deleteDirectory($item->getPath());
         }
         unset($this->arrItems[$id]);
+        return true;
+    }
+    public function deleteByName($name): bool
+    {
+        $item = $this->findByName($name);
+        if (!$item) {
+            return false;
+        }
+        if (File::exists($item->getPath())) {
+            File::deleteDirectory($item->getPath());
+        }
+        unset($this->arrItems[$item->getId()]);
         return true;
     }
     public function getAll()

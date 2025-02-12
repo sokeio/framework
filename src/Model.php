@@ -2,7 +2,7 @@
 
 namespace Sokeio;
 
-use Sokeio\Concerns\WithModelHook;
+use Sokeio\Core\Concerns\WithModelHook;
 
 if (class_exists('\MongoDB\Laravel\Eloquent\Model')) {
     class Model extends \MongoDB\Laravel\Eloquent\Model

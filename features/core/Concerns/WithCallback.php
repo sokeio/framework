@@ -1,6 +1,6 @@
 <?php
 
-namespace Sokeio\Concerns;
+namespace Sokeio\Core\Concerns;
 
 use Illuminate\Support\Traits\Macroable;
 
