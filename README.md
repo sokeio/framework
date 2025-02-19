@@ -56,7 +56,7 @@ $ composer require sokeio/framework
 
 **Website**: https://sokeio.com/
 
-**Email**: haustartup@gmail.com
+**Email**: nguyenvanhaudev@gmail.com
 
 **Discord**: https://discord.gg/5XePqYxyjm
 
