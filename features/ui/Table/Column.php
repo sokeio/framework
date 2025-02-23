@@ -99,10 +99,11 @@ class Column extends BaseUI
                 $div->prefix($div->getParent()->getPrefix());
             }), 'editUI');
     }
-    public function cellUI($ui, $when = null): static
+    public function cellUI($ui, $when = null, $withKey = null): static
     {
         return $this->child(
             Div::make($ui)
+                ->childWithKey($withKey, null)
                 ->attr('style', 'display: none')
                 ->attr(
                     'x-show',

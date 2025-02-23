@@ -18,6 +18,7 @@ class PageInfo
         public $skipHtmlAjax = null,
         public $urlKeyInSetting = null,
         public $enableKeyInSetting = null,
-        public $enable = null
+        public $enable = null,
+        public $model = null
     ) {}
 }

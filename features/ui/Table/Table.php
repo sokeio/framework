@@ -133,11 +133,11 @@ class Table extends BaseUI
 
         return $this; // $this->setupChild(fn($c) => $label && $c->label($label));
     }
-    public function columnAction($array, $title = 'Actions', $callback = null, $with = 200)
+    public function columnAction($array, $title = 'Actions', $callback = null, $with = 200, $withKey = null)
     {
         return $this->column(
             Column::make()
-                ->cellUI($array)
+                ->cellUI($array, null, $withKey)
                 ->label($title)
                 ->disableSort()
                 ->width($with)
@@ -208,9 +208,10 @@ class Table extends BaseUI
             $isAfterIndex ? -2 : 0
         )->vars('enableCheckBox', true);
     }
-    public function rightUI($rightUI): self
+    public function rightUI($rightUI, $withKey = null): self
     {
-        return $this->child($rightUI, 'rightUI');
+        return $this->child($rightUI, 'rightUI')
+            ->childWithKey($withKey, null, 'rightUI');
     }
     public function formSearch($fields, $fieldExtra = null): self
     {

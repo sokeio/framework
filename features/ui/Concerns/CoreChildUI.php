@@ -95,6 +95,9 @@ trait CoreChildUI
     }
     public function childWithKey($key,  $tap = null, $group = 'default')
     {
+        if (!$key) {
+            return $this;
+        }
         return $this->childNone(SoUI::getUI($key), $tap, $group);
     }
     public function childWithGroupKey($key,  $tap = null, $group = 'default')

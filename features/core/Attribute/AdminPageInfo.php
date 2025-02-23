@@ -35,7 +35,7 @@ class AdminPageInfo extends PageInfo
         public $icon = null,
         public $model = null
     ) {
-        
+
         parent::__construct(
             $title,
             $layout,
@@ -46,6 +46,7 @@ class AdminPageInfo extends PageInfo
             $urlKeyInSetting,
             $enableKeyInSetting,
             $enable,
+            $model
         );
     }
 }
